@@ -1,0 +1,428 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
+		F4CACA1A1B1EBE16003C6301 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA191B1EBE16003C6301 /* ViewController.swift */; };
+		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
+		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
+		F4CACA221B1EBE16003C6301 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */; };
+		F4CACA2E1B1EBE16003C6301 /* HoroscopesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA2D1B1EBE16003C6301 /* HoroscopesTests.swift */; };
+		F4CACA381B1EE882003C6301 /* MainTabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA371B1EE882003C6301 /* MainTabBarVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F4CACA281B1EBE16003C6301 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F4CACA0A1B1EBE16003C6301 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F4CACA111B1EBE16003C6301;
+			remoteInfo = Horoscopes;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F4CACA191B1EBE16003C6301 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F4CACA1C1B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F4CACA1E1B1EBE16003C6301 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F4CACA211B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
+		F4CACA271B1EBE16003C6301 /* HoroscopesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoroscopesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4CACA2C1B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4CACA2D1B1EBE16003C6301 /* HoroscopesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopesTests.swift; sourceTree = "<group>"; };
+		F4CACA371B1EE882003C6301 /* MainTabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainTabBarVC.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F4CACA0F1B1EBE16003C6301 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4CACA241B1EBE16003C6301 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F4CACA091B1EBE16003C6301 = {
+			isa = PBXGroup;
+			children = (
+				F4CACA141B1EBE16003C6301 /* Horoscopes */,
+				F4CACA2A1B1EBE16003C6301 /* HoroscopesTests */,
+				F4CACA131B1EBE16003C6301 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F4CACA131B1EBE16003C6301 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA121B1EBE16003C6301 /* Horoscopes.app */,
+				F4CACA271B1EBE16003C6301 /* HoroscopesTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F4CACA141B1EBE16003C6301 /* Horoscopes */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
+				F4CACA191B1EBE16003C6301 /* ViewController.swift */,
+				F4CACA371B1EE882003C6301 /* MainTabBarVC.swift */,
+				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
+				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
+				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
+				F4CACA151B1EBE16003C6301 /* Supporting Files */,
+			);
+			path = Horoscopes;
+			sourceTree = "<group>";
+		};
+		F4CACA151B1EBE16003C6301 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA161B1EBE16003C6301 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F4CACA2A1B1EBE16003C6301 /* HoroscopesTests */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA2D1B1EBE16003C6301 /* HoroscopesTests.swift */,
+				F4CACA2B1B1EBE16003C6301 /* Supporting Files */,
+			);
+			path = HoroscopesTests;
+			sourceTree = "<group>";
+		};
+		F4CACA2B1B1EBE16003C6301 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA2C1B1EBE16003C6301 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F4CACA111B1EBE16003C6301 /* Horoscopes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4CACA311B1EBE16003C6301 /* Build configuration list for PBXNativeTarget "Horoscopes" */;
+			buildPhases = (
+				F4CACA0E1B1EBE16003C6301 /* Sources */,
+				F4CACA0F1B1EBE16003C6301 /* Frameworks */,
+				F4CACA101B1EBE16003C6301 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Horoscopes;
+			productName = Horoscopes;
+			productReference = F4CACA121B1EBE16003C6301 /* Horoscopes.app */;
+			productType = "com.apple.product-type.application";
+		};
+		F4CACA261B1EBE16003C6301 /* HoroscopesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F4CACA341B1EBE16003C6301 /* Build configuration list for PBXNativeTarget "HoroscopesTests" */;
+			buildPhases = (
+				F4CACA231B1EBE16003C6301 /* Sources */,
+				F4CACA241B1EBE16003C6301 /* Frameworks */,
+				F4CACA251B1EBE16003C6301 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4CACA291B1EBE16003C6301 /* PBXTargetDependency */,
+			);
+			name = HoroscopesTests;
+			productName = HoroscopesTests;
+			productReference = F4CACA271B1EBE16003C6301 /* HoroscopesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F4CACA0A1B1EBE16003C6301 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0630;
+				ORGANIZATIONNAME = "Binh Dang";
+				TargetAttributes = {
+					F4CACA111B1EBE16003C6301 = {
+						CreatedOnToolsVersion = 6.3.2;
+					};
+					F4CACA261B1EBE16003C6301 = {
+						CreatedOnToolsVersion = 6.3.2;
+						TestTargetID = F4CACA111B1EBE16003C6301;
+					};
+				};
+			};
+			buildConfigurationList = F4CACA0D1B1EBE16003C6301 /* Build configuration list for PBXProject "Horoscopes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = F4CACA091B1EBE16003C6301;
+			productRefGroup = F4CACA131B1EBE16003C6301 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F4CACA111B1EBE16003C6301 /* Horoscopes */,
+				F4CACA261B1EBE16003C6301 /* HoroscopesTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F4CACA101B1EBE16003C6301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */,
+				F4CACA221B1EBE16003C6301 /* LaunchScreen.xib in Resources */,
+				F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4CACA251B1EBE16003C6301 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F4CACA0E1B1EBE16003C6301 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4CACA1A1B1EBE16003C6301 /* ViewController.swift in Sources */,
+				F4CACA381B1EE882003C6301 /* MainTabBarVC.swift in Sources */,
+				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F4CACA231B1EBE16003C6301 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F4CACA2E1B1EBE16003C6301 /* HoroscopesTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F4CACA291B1EBE16003C6301 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F4CACA111B1EBE16003C6301 /* Horoscopes */;
+			targetProxy = F4CACA281B1EBE16003C6301 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		F4CACA1B1B1EBE16003C6301 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4CACA1C1B1EBE16003C6301 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F4CACA211B1EBE16003C6301 /* Base */,
+			);
+			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F4CACA2F1B1EBE16003C6301 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		F4CACA301B1EBE16003C6301 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F4CACA321B1EBE16003C6301 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Horoscopes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		F4CACA331B1EBE16003C6301 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = Horoscopes/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		F4CACA351B1EBE16003C6301 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoroscopesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Horoscopes.app/Horoscopes";
+			};
+			name = Debug;
+		};
+		F4CACA361B1EBE16003C6301 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = HoroscopesTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Horoscopes.app/Horoscopes";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F4CACA0D1B1EBE16003C6301 /* Build configuration list for PBXProject "Horoscopes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4CACA2F1B1EBE16003C6301 /* Debug */,
+				F4CACA301B1EBE16003C6301 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F4CACA311B1EBE16003C6301 /* Build configuration list for PBXNativeTarget "Horoscopes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4CACA321B1EBE16003C6301 /* Debug */,
+				F4CACA331B1EBE16003C6301 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		F4CACA341B1EBE16003C6301 /* Build configuration list for PBXNativeTarget "HoroscopesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4CACA351B1EBE16003C6301 /* Debug */,
+				F4CACA361B1EBE16003C6301 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F4CACA0A1B1EBE16003C6301 /* Project object */;
+}
