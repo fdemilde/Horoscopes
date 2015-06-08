@@ -61,7 +61,7 @@ static int CLOVER_SYMBOL_TAG = 101;
     for (int i = 0; i < numberOfSections; i++) {
         //get the sign
         Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
-        
+        DebugLog(@"horoscope name = %@", horoscope.sign);
         UIImageView *im = [[UIImageView alloc] init];
         
         im.layer.anchorPoint = CGPointMake(1.0f, 0.5f);

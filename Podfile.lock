@@ -19,6 +19,7 @@ PODS:
     - GoogleAnalytics-iOS-SDK/Core (= 3.12)
   - GoogleAnalytics-iOS-SDK/Core (3.12)
   - JSONKit-NoWarning (1.2)
+  - MBProgressHUD (0.9.1)
   - Reachability (3.2)
   - UIImage+animatedGif (0.1.0)
 
@@ -27,6 +28,7 @@ DEPENDENCIES:
   - Google-Mobile-Ads-SDK
   - GoogleAnalytics-iOS-SDK
   - JSONKit-NoWarning
+  - MBProgressHUD
   - Reachability
   - UIImage+animatedGif
 
@@ -36,6 +38,7 @@ SPEC CHECKSUMS:
   Google-Mobile-Ads-SDK: 3647bfddc7384c514ab96a8bed86d98b31e623e4
   GoogleAnalytics-iOS-SDK: 0a3327a993b8ed2b8fe1c6c4a8dcf5b76d2237a8
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
 

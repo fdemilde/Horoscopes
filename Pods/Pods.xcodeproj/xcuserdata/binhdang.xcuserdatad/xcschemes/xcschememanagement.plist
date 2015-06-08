@@ -19,6 +19,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Horoscopes-MBProgressHUD.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Horoscopes-Reachability.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>12793CDA1A7EDE3B3945D612</key>
+		<key>1BFE7CBA6F2796A931E002F8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>357B291C348DD5B6429D5FED</key>
+		<key>268F0406B664D953A0E531E2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C754B28D7A50F77DA0EA4F9</key>
+		<key>637D8DBCAC266E1CA1B1F459</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F5F5CCC1E5D0B29AC58A187</key>
+		<key>99805CC6AA811D51089C63F3</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BD5993498193950A7429C683</key>
+		<key>A039DA517670DE5659CFCDEA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DCB4EEA809163C106F9FC3B4</key>
+		<key>A7C190ADFC57834D5C1E6548</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CD5AA2137211FBB77795CBAC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

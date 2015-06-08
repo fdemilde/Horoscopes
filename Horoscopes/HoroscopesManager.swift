@@ -21,17 +21,21 @@ class HoroscopesManager : NSObject {
         
         if horoscopesSigns.isEmpty {
             
+            print("setup horo signs")
+            
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd-MM";
             
+            print("Add sign 1 -- ")
             horoscopesSigns.append(Horoscope(sign:"Aries",
                                         startFrom: dateFormatter.dateFromString("21-03"),
                                                to:dateFormatter.dateFromString("19-04")))
-            
+            println(horoscopesSigns.count)
+            print("Add sign 2")
             horoscopesSigns.append(Horoscope(sign:"Taurus",
                 startFrom: dateFormatter.dateFromString("20-04"),
                 to:dateFormatter.dateFromString("20-05")))
-            
+            println(horoscopesSigns.count)
             horoscopesSigns.append(Horoscope(sign:"Gemini",
                 startFrom: dateFormatter.dateFromString("21-05"),
                 to:dateFormatter.dateFromString("20-06")))
@@ -71,7 +75,10 @@ class HoroscopesManager : NSObject {
             horoscopesSigns.append(Horoscope(sign:"Pisces",
                 startFrom: dateFormatter.dateFromString("19-02"),
                 to:dateFormatter.dateFromString("20-03")))
+            print("alll count")
+            println(horoscopesSigns.count)
         }
+        println(horoscopesSigns)
         return horoscopesSigns
     }
     
@@ -122,21 +129,23 @@ class HoroscopesManager : NSObject {
             postData.setObject(devideType, forKey: "device_model")
             
             XAppDelegate.mobilePlatform.sc.sendRequest(GET_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                self.data = self.parseResponseObjToDictionary(response)
-                print(self.data)
+                self.data = Utilities.parseNSDictionaryToDictionary(response)
+//                print(self.data)
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object:nil)
             })
         } else {
             postData.setObject(offsetString, forKey: "tz")
             XAppDelegate.mobilePlatform.sc.sendRequest(REFRESH_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                self.data = self.parseResponseObjToDictionary(response)
-                print(self.data)
+                self.data = Utilities.parseNSDictionaryToDictionary(response)
+//                print(self.data)
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
             })
         }
         
     }
     
     func getFortune() {
-//        var fbRequest = FBSDKGraphRequest()
+        var fbRequest = FBSDKGraphRequest()
     }
     
     func registerNotificationToken(token : String){
@@ -163,21 +172,11 @@ class HoroscopesManager : NSObject {
         XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             print(response)
             
-            var result = self.parseResponseObjToDictionary(response)
+            var result = Utilities.parseNSDictionaryToDictionary(response)
             NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
         })
         
         
-    }
-    
-    func parseResponseObjToDictionary(dict : NSDictionary) -> Dictionary<String, AnyObject>{
-        var result = Dictionary<String, AnyObject>()
-        var keys = dict.allKeys
-        for key in keys{
-            var keyString = key as! String
-            result[keyString] = dict.objectForKey(keyString)
-        }
-        return result
     }
     
 }

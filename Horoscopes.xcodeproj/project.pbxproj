@@ -10,6 +10,8 @@
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
 		F47BAB2B1B21605C002031AB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB2A1B21605C002031AB /* Config.swift */; };
+		F47C029B1B257D3D00C0BA83 /* SpinWheelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029A1B257D3D00C0BA83 /* SpinWheelVC.swift */; };
+		F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029C1B258B9B00C0BA83 /* Utilities.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -93,6 +95,8 @@
 		F47BAB271B205617002031AB /* HoroscopesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoroscopesManager.swift; sourceTree = "<group>"; };
 		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F47BAB2C1B218817002031AB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F47C029A1B257D3D00C0BA83 /* SpinWheelVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelVC.swift; sourceTree = "<group>"; };
+		F47C029C1B258B9B00C0BA83 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -235,6 +239,7 @@
 			isa = PBXGroup;
 			children = (
 				F47BAB2A1B21605C002031AB /* Config.swift */,
+				F47C029C1B258B9B00C0BA83 /* Utilities.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -271,6 +276,7 @@
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
 				F4CACA761B1EFB72003C6301 /* CustomTabBarController.swift */,
 				F4CACA781B1FFBBE003C6301 /* ChooseSignWheelVC.swift */,
+				F47C029A1B257D3D00C0BA83 /* SpinWheelVC.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
@@ -702,9 +708,11 @@
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
+				F47C029B1B257D3D00C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
+				F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */,
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F4CACA771B1EFB72003C6301 /* CustomTabBarController.swift in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
@@ -794,7 +802,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -832,7 +840,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -848,6 +856,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -862,6 +871,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 			};
 			name = Release;
 		};

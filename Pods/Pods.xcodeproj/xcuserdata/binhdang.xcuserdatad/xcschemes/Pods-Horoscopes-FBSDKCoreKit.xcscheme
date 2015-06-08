@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "BD5993498193950A7429C683"
+               BlueprintIdentifier = "637D8DBCAC266E1CA1B1F459"
                BuildableName = "libPods-Horoscopes-FBSDKCoreKit.a"
                BlueprintName = "Pods-Horoscopes-FBSDKCoreKit"
                ReferencedContainer = "container:Pods.xcodeproj">

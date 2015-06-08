@@ -6,16 +6,16 @@
 //  Copyright (c) 2015 Binh Dang. All rights reserved.
 //
 
-#ifndef Horoscopes_Horoscopes_Bridging_Header_h
-#define Horoscopes_Horoscopes_Bridging_Header_h
+#ifndef Horoscopes_Bridging_Header_h
+#define Horoscopes_Bridging_Header_h
 
 #import "CollectedHoroscope.h"
 #import "MobilePlatform.h"
 #import "Horoscope.h"
 #import "UserSettings.h"
-//#import "FBSDKCoreKit.h"
-//#import "Reachability.h"
-//#import "JSONKit.h"
+#import "FBSDKCoreKit.h"
+#import "MBProgressHUD.h"
+#import "RotateControl.h"
 
 
 #endif
