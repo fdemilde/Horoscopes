@@ -1,0 +1,42 @@
+PODS:
+  - Bolts (1.2.0):
+    - Bolts/AppLinks (= 1.2.0)
+    - Bolts/Tasks (= 1.2.0)
+  - Bolts/AppLinks (1.2.0):
+    - Bolts/Tasks
+  - Bolts/Tasks (1.2.0)
+  - FBSDKCoreKit (4.2.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc (= 4.2.0)
+    - FBSDKCoreKit/no-arc (= 4.2.0)
+  - FBSDKCoreKit/arc (4.2.0):
+    - Bolts (~> 1.1)
+  - FBSDKCoreKit/no-arc (4.2.0):
+    - Bolts (~> 1.1)
+    - FBSDKCoreKit/arc
+  - Google-Mobile-Ads-SDK (7.3.1)
+  - GoogleAnalytics-iOS-SDK (3.12):
+    - GoogleAnalytics-iOS-SDK/Core (= 3.12)
+  - GoogleAnalytics-iOS-SDK/Core (3.12)
+  - JSONKit-NoWarning (1.2)
+  - Reachability (3.2)
+  - UIImage+animatedGif (0.1.0)
+
+DEPENDENCIES:
+  - FBSDKCoreKit
+  - Google-Mobile-Ads-SDK
+  - GoogleAnalytics-iOS-SDK
+  - JSONKit-NoWarning
+  - Reachability
+  - UIImage+animatedGif
+
+SPEC CHECKSUMS:
+  Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
+  Google-Mobile-Ads-SDK: 3647bfddc7384c514ab96a8bed86d98b31e623e4
+  GoogleAnalytics-iOS-SDK: 0a3327a993b8ed2b8fe1c6c4a8dcf5b76d2237a8
+  JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
+
+COCOAPODS: 0.37.2

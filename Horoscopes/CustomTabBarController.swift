@@ -13,6 +13,8 @@ class CustomTabBarController : UITabBarController {
     
     override func viewDidLoad() {
         self.setupTabBarItems()
+        var manager = HoroscopesManager()
+        manager.getAllHoroscopes(false)
     }
     
     func setupTabBarItems(){

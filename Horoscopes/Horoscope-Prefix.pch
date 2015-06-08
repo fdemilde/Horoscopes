@@ -1,0 +1,40 @@
+//
+// Prefix header for all source files of the 'FCSHoroscope' target in the 'FCSHoroscope' project
+//
+
+#import <Availability.h>
+
+#ifndef __IPHONE_5_0
+#warning "This project uses features only available in iOS SDK 5.0 and later."
+#endif
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <Foundation/Foundation.h>
+#endif
+
+#define defaultNumberOfTimesAppOpenSaveKey @"App_Open_Couter_Save_key"
+
+// event tracker constances
+#define defaultAppOpenAction            @"OpenApp"
+#define defaultNotificationQuestion     @"notif_qn"
+#define defaultHoroscopeChooser         @"chooser"
+#define defaultViewHoroscope            @"view"
+#define defaultViewArchive              @"archive_view"
+#define defaultChangeSetting            @"setting_change"
+#define defaultFacebook                 @"facebook"
+#define defaultNotification             @"notification"
+#define defaultRefreshClick             @"refresh"
+#define defaultIDFAEventKey             @"IDFA"
+
+#define AdMob_ID @"ca-app-pub-3099085126740540/3213172514"
+
+
+// Enable/disable log
+#define DEBUG_MODE
+
+#ifdef DEBUG_MODE
+#define DebugLog( s, ... ) NSLog( @"<%p %@:(%d)> %@", self, [[NSString stringWithUTF8String:__FILE__] lastPathComponent], __LINE__, [NSString stringWithFormat:(s), ##__VA_ARGS__] )
+#else
+#define DebugLog( s, ... )
+#endif

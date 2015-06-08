@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
+		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
+		F47BAB2B1B21605C002031AB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB2A1B21605C002031AB /* Config.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -43,6 +46,33 @@
 		F4CACA741B1EEE72003C6301 /* tabbar_profile@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA561B1EEE72003C6301 /* tabbar_profile@2x.png */; };
 		F4CACA751B1EEE72003C6301 /* tabbar_profile@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA571B1EEE72003C6301 /* tabbar_profile@3x.png */; };
 		F4CACA771B1EFB72003C6301 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA761B1EFB72003C6301 /* CustomTabBarController.swift */; };
+		F4CACA791B1FFBBE003C6301 /* ChooseSignWheelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA781B1FFBBE003C6301 /* ChooseSignWheelVC.swift */; };
+		F4CACA801B200149003C6301 /* RotateControl.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA7C1B200149003C6301 /* RotateControl.m */; };
+		F4CACA811B200149003C6301 /* SMCLove.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA7E1B200149003C6301 /* SMCLove.m */; };
+		F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA841B2003E1003C6301 /* CollectedHoroscope.m */; };
+		F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA861B2003E1003C6301 /* CollectedItem.m */; };
+		F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA881B2003E1003C6301 /* Horoscope.m */; };
+		F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA8C1B2003E1003C6301 /* MessageInfo.m */; };
+		F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA8E1B2003E1003C6301 /* UserSettings.m */; };
+		F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA9A1B2010F2003C6301 /* CrossSellButtonInfo.m */; };
+		F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA9D1B2010F2003C6301 /* CrossSellMainView.m */; };
+		F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA9F1B2010F2003C6301 /* CrossSellManager.m */; };
+		F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAA11B2010F2003C6301 /* CrossSellMessage.m */; };
+		F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAA31B2010F2003C6301 /* CrossSellMessageDialog.m */; };
+		F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAA51B2010F2003C6301 /* CrossSellServerMessenging.m */; };
+		F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAAA1B2010F2003C6301 /* EventsTracker.m */; };
+		F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAAD1B2010F2003C6301 /* ExternalRequest.m */; };
+		F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAB01B2010F2003C6301 /* NotificationObject.m */; };
+		F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAB21B2010F2003C6301 /* PlatformNotification.m */; };
+		F4CACAD91B2010F2003C6301 /* ServerCommunication.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAB51B2010F2003C6301 /* ServerCommunication.m */; };
+		F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAB91B2010F2003C6301 /* UserModule.m */; };
+		F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACABB1B2010F2003C6301 /* MobilePlatform.m */; };
+		F4CACADC1B2010F2003C6301 /* Alert.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACABE1B2010F2003C6301 /* Alert.m */; };
+		F4CACADD1B2010F2003C6301 /* Request.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC01B2010F2003C6301 /* Request.m */; };
+		F4CACADE1B2010F2003C6301 /* Router.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC21B2010F2003C6301 /* Router.m */; };
+		F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC41B2010F2003C6301 /* UserCreds.m */; };
+		F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC81B2010F2003C6301 /* RegExCategories.m */; };
+		F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACACB1B2010F2003C6301 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +86,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
+		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
+		F47BAB261B204969002031AB /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
+		F47BAB271B205617002031AB /* HoroscopesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoroscopesManager.swift; sourceTree = "<group>"; };
+		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		F47BAB2C1B218817002031AB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +133,65 @@
 		F4CACA561B1EEE72003C6301 /* tabbar_profile@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_profile@2x.png"; sourceTree = "<group>"; };
 		F4CACA571B1EEE72003C6301 /* tabbar_profile@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tabbar_profile@3x.png"; sourceTree = "<group>"; };
 		F4CACA761B1EFB72003C6301 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		F4CACA781B1FFBBE003C6301 /* ChooseSignWheelVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignWheelVC.swift; sourceTree = "<group>"; };
+		F4CACA7B1B200149003C6301 /* RotateControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RotateControl.h; sourceTree = "<group>"; };
+		F4CACA7C1B200149003C6301 /* RotateControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RotateControl.m; sourceTree = "<group>"; };
+		F4CACA7D1B200149003C6301 /* SMCLove.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMCLove.h; sourceTree = "<group>"; };
+		F4CACA7E1B200149003C6301 /* SMCLove.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMCLove.m; sourceTree = "<group>"; };
+		F4CACA7F1B200149003C6301 /* SMRotaryProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMRotaryProtocol.h; sourceTree = "<group>"; };
+		F4CACA831B2003E1003C6301 /* CollectedHoroscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectedHoroscope.h; sourceTree = "<group>"; };
+		F4CACA841B2003E1003C6301 /* CollectedHoroscope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectedHoroscope.m; sourceTree = "<group>"; };
+		F4CACA851B2003E1003C6301 /* CollectedItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CollectedItem.h; sourceTree = "<group>"; };
+		F4CACA861B2003E1003C6301 /* CollectedItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CollectedItem.m; sourceTree = "<group>"; };
+		F4CACA871B2003E1003C6301 /* Horoscope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Horoscope.h; sourceTree = "<group>"; };
+		F4CACA881B2003E1003C6301 /* Horoscope.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Horoscope.m; sourceTree = "<group>"; };
+		F4CACA8B1B2003E1003C6301 /* MessageInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MessageInfo.h; sourceTree = "<group>"; };
+		F4CACA8C1B2003E1003C6301 /* MessageInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MessageInfo.m; sourceTree = "<group>"; };
+		F4CACA8D1B2003E1003C6301 /* UserSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserSettings.h; sourceTree = "<group>"; };
+		F4CACA8E1B2003E1003C6301 /* UserSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserSettings.m; sourceTree = "<group>"; };
+		F4CACA951B20083A003C6301 /* Horoscopes-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Horoscopes-Bridging-Header.h"; sourceTree = "<group>"; };
+		F4CACA991B2010F2003C6301 /* CrossSellButtonInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellButtonInfo.h; sourceTree = "<group>"; };
+		F4CACA9A1B2010F2003C6301 /* CrossSellButtonInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellButtonInfo.m; sourceTree = "<group>"; };
+		F4CACA9B1B2010F2003C6301 /* CrossSellConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellConfig.h; sourceTree = "<group>"; };
+		F4CACA9C1B2010F2003C6301 /* CrossSellMainView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellMainView.h; sourceTree = "<group>"; };
+		F4CACA9D1B2010F2003C6301 /* CrossSellMainView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellMainView.m; sourceTree = "<group>"; };
+		F4CACA9E1B2010F2003C6301 /* CrossSellManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellManager.h; sourceTree = "<group>"; };
+		F4CACA9F1B2010F2003C6301 /* CrossSellManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellManager.m; sourceTree = "<group>"; };
+		F4CACAA01B2010F2003C6301 /* CrossSellMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellMessage.h; sourceTree = "<group>"; };
+		F4CACAA11B2010F2003C6301 /* CrossSellMessage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellMessage.m; sourceTree = "<group>"; };
+		F4CACAA21B2010F2003C6301 /* CrossSellMessageDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellMessageDialog.h; sourceTree = "<group>"; };
+		F4CACAA31B2010F2003C6301 /* CrossSellMessageDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellMessageDialog.m; sourceTree = "<group>"; };
+		F4CACAA41B2010F2003C6301 /* CrossSellServerMessenging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrossSellServerMessenging.h; sourceTree = "<group>"; };
+		F4CACAA51B2010F2003C6301 /* CrossSellServerMessenging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CrossSellServerMessenging.m; sourceTree = "<group>"; };
+		F4CACAA71B2010F2003C6301 /* PrefixHeader.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
+		F4CACAA91B2010F2003C6301 /* EventsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EventsTracker.h; sourceTree = "<group>"; };
+		F4CACAAA1B2010F2003C6301 /* EventsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EventsTracker.m; sourceTree = "<group>"; };
+		F4CACAAC1B2010F2003C6301 /* ExternalRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ExternalRequest.h; sourceTree = "<group>"; };
+		F4CACAAD1B2010F2003C6301 /* ExternalRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ExternalRequest.m; sourceTree = "<group>"; };
+		F4CACAAF1B2010F2003C6301 /* NotificationObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotificationObject.h; sourceTree = "<group>"; };
+		F4CACAB01B2010F2003C6301 /* NotificationObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotificationObject.m; sourceTree = "<group>"; };
+		F4CACAB11B2010F2003C6301 /* PlatformNotification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlatformNotification.h; sourceTree = "<group>"; };
+		F4CACAB21B2010F2003C6301 /* PlatformNotification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlatformNotification.m; sourceTree = "<group>"; };
+		F4CACAB41B2010F2003C6301 /* ServerCommunication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunication.h; sourceTree = "<group>"; };
+		F4CACAB51B2010F2003C6301 /* ServerCommunication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ServerCommunication.m; sourceTree = "<group>"; };
+		F4CACAB61B2010F2003C6301 /* ServerCommunicationConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ServerCommunicationConfig.h; sourceTree = "<group>"; };
+		F4CACAB81B2010F2003C6301 /* UserModule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserModule.h; sourceTree = "<group>"; };
+		F4CACAB91B2010F2003C6301 /* UserModule.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserModule.m; sourceTree = "<group>"; };
+		F4CACABA1B2010F2003C6301 /* MobilePlatform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobilePlatform.h; sourceTree = "<group>"; };
+		F4CACABB1B2010F2003C6301 /* MobilePlatform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobilePlatform.m; sourceTree = "<group>"; };
+		F4CACABD1B2010F2003C6301 /* Alert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alert.h; sourceTree = "<group>"; };
+		F4CACABE1B2010F2003C6301 /* Alert.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alert.m; sourceTree = "<group>"; };
+		F4CACABF1B2010F2003C6301 /* Request.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Request.h; sourceTree = "<group>"; };
+		F4CACAC01B2010F2003C6301 /* Request.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Request.m; sourceTree = "<group>"; };
+		F4CACAC11B2010F2003C6301 /* Router.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Router.h; sourceTree = "<group>"; };
+		F4CACAC21B2010F2003C6301 /* Router.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Router.m; sourceTree = "<group>"; };
+		F4CACAC31B2010F2003C6301 /* UserCreds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserCreds.h; sourceTree = "<group>"; };
+		F4CACAC41B2010F2003C6301 /* UserCreds.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserCreds.m; sourceTree = "<group>"; };
+		F4CACAC71B2010F2003C6301 /* RegExCategories.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RegExCategories.h; sourceTree = "<group>"; };
+		F4CACAC81B2010F2003C6301 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegExCategories.m; sourceTree = "<group>"; };
+		F4CACACA1B2010F2003C6301 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
+		F4CACACB1B2010F2003C6301 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
+		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -116,12 +213,40 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		9F7B59D55821D70466BE0668 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F47BAB2C1B218817002031AB /* CoreTelephony.framework */,
+				C42BBE61572323217476FD56 /* libPods-Horoscopes.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DE01A043101911957E0EAC06 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */,
+				D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F47BAB291B216050002031AB /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				F47BAB2A1B21605C002031AB /* Config.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		F4CACA091B1EBE16003C6301 = {
 			isa = PBXGroup;
 			children = (
 				F4CACA141B1EBE16003C6301 /* Horoscopes */,
 				F4CACA2A1B1EBE16003C6301 /* HoroscopesTests */,
 				F4CACA131B1EBE16003C6301 /* Products */,
+				DE01A043101911957E0EAC06 /* Pods */,
+				9F7B59D55821D70466BE0668 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -137,13 +262,20 @@
 		F4CACA141B1EBE16003C6301 /* Horoscopes */ = {
 			isa = PBXGroup;
 			children = (
+				F47BAB291B216050002031AB /* Utilities */,
+				F4CACA961B2010F2003C6301 /* MobilePlatformiOS */,
+				F4CACA821B2003E1003C6301 /* models */,
 				F4CACA391B1EEE72003C6301 /* Resources */,
+				F4CACA7A1B200149003C6301 /* RotateControl */,
+				F47BAB271B205617002031AB /* HoroscopesManager.swift */,
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
 				F4CACA761B1EFB72003C6301 /* CustomTabBarController.swift */,
+				F4CACA781B1FFBBE003C6301 /* ChooseSignWheelVC.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
 				F4CACA151B1EBE16003C6301 /* Supporting Files */,
+				F4CACA951B20083A003C6301 /* Horoscopes-Bridging-Header.h */,
 			);
 			path = Horoscopes;
 			sourceTree = "<group>";
@@ -151,6 +283,7 @@
 		F4CACA151B1EBE16003C6301 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */,
 				F4CACA161B1EBE16003C6301 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -210,6 +343,180 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		F4CACA7A1B200149003C6301 /* RotateControl */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA7B1B200149003C6301 /* RotateControl.h */,
+				F4CACA7C1B200149003C6301 /* RotateControl.m */,
+				F4CACA7D1B200149003C6301 /* SMCLove.h */,
+				F4CACA7E1B200149003C6301 /* SMCLove.m */,
+				F4CACA7F1B200149003C6301 /* SMRotaryProtocol.h */,
+			);
+			path = RotateControl;
+			sourceTree = "<group>";
+		};
+		F4CACA821B2003E1003C6301 /* models */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA831B2003E1003C6301 /* CollectedHoroscope.h */,
+				F4CACA841B2003E1003C6301 /* CollectedHoroscope.m */,
+				F4CACA851B2003E1003C6301 /* CollectedItem.h */,
+				F4CACA861B2003E1003C6301 /* CollectedItem.m */,
+				F4CACA871B2003E1003C6301 /* Horoscope.h */,
+				F4CACA881B2003E1003C6301 /* Horoscope.m */,
+				F4CACA8B1B2003E1003C6301 /* MessageInfo.h */,
+				F4CACA8C1B2003E1003C6301 /* MessageInfo.m */,
+				F4CACA8D1B2003E1003C6301 /* UserSettings.h */,
+				F4CACA8E1B2003E1003C6301 /* UserSettings.m */,
+			);
+			path = models;
+			sourceTree = "<group>";
+		};
+		F4CACA961B2010F2003C6301 /* MobilePlatformiOS */ = {
+			isa = PBXGroup;
+			children = (
+				F47BAB261B204969002031AB /* ServerConfig.h */,
+				F4CACA971B2010F2003C6301 /* Library */,
+				F4CACABA1B2010F2003C6301 /* MobilePlatform.h */,
+				F4CACABB1B2010F2003C6301 /* MobilePlatform.m */,
+				F4CACABC1B2010F2003C6301 /* Models */,
+				F4CACAC51B2010F2003C6301 /* OpenSources */,
+			);
+			path = MobilePlatformiOS;
+			sourceTree = "<group>";
+		};
+		F4CACA971B2010F2003C6301 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA981B2010F2003C6301 /* CrossSellMessage */,
+				F4CACAA81B2010F2003C6301 /* EventTracker */,
+				F4CACAAB1B2010F2003C6301 /* ExternalRequest */,
+				F4CACAAE1B2010F2003C6301 /* PlatformNotification */,
+				F4CACAB31B2010F2003C6301 /* ServerCommunication */,
+				F4CACAB71B2010F2003C6301 /* UserModule */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		F4CACA981B2010F2003C6301 /* CrossSellMessage */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACA991B2010F2003C6301 /* CrossSellButtonInfo.h */,
+				F4CACA9A1B2010F2003C6301 /* CrossSellButtonInfo.m */,
+				F4CACA9B1B2010F2003C6301 /* CrossSellConfig.h */,
+				F4CACA9C1B2010F2003C6301 /* CrossSellMainView.h */,
+				F4CACA9D1B2010F2003C6301 /* CrossSellMainView.m */,
+				F4CACA9E1B2010F2003C6301 /* CrossSellManager.h */,
+				F4CACA9F1B2010F2003C6301 /* CrossSellManager.m */,
+				F4CACAA01B2010F2003C6301 /* CrossSellMessage.h */,
+				F4CACAA11B2010F2003C6301 /* CrossSellMessage.m */,
+				F4CACAA21B2010F2003C6301 /* CrossSellMessageDialog.h */,
+				F4CACAA31B2010F2003C6301 /* CrossSellMessageDialog.m */,
+				F4CACAA41B2010F2003C6301 /* CrossSellServerMessenging.h */,
+				F4CACAA51B2010F2003C6301 /* CrossSellServerMessenging.m */,
+				F4CACAA61B2010F2003C6301 /* Images */,
+				F4CACAA71B2010F2003C6301 /* PrefixHeader.pch */,
+			);
+			path = CrossSellMessage;
+			sourceTree = "<group>";
+		};
+		F4CACAA61B2010F2003C6301 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		F4CACAA81B2010F2003C6301 /* EventTracker */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAA91B2010F2003C6301 /* EventsTracker.h */,
+				F4CACAAA1B2010F2003C6301 /* EventsTracker.m */,
+			);
+			path = EventTracker;
+			sourceTree = "<group>";
+		};
+		F4CACAAB1B2010F2003C6301 /* ExternalRequest */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAAC1B2010F2003C6301 /* ExternalRequest.h */,
+				F4CACAAD1B2010F2003C6301 /* ExternalRequest.m */,
+			);
+			path = ExternalRequest;
+			sourceTree = "<group>";
+		};
+		F4CACAAE1B2010F2003C6301 /* PlatformNotification */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAAF1B2010F2003C6301 /* NotificationObject.h */,
+				F4CACAB01B2010F2003C6301 /* NotificationObject.m */,
+				F4CACAB11B2010F2003C6301 /* PlatformNotification.h */,
+				F4CACAB21B2010F2003C6301 /* PlatformNotification.m */,
+			);
+			path = PlatformNotification;
+			sourceTree = "<group>";
+		};
+		F4CACAB31B2010F2003C6301 /* ServerCommunication */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAB41B2010F2003C6301 /* ServerCommunication.h */,
+				F4CACAB51B2010F2003C6301 /* ServerCommunication.m */,
+				F4CACAB61B2010F2003C6301 /* ServerCommunicationConfig.h */,
+			);
+			path = ServerCommunication;
+			sourceTree = "<group>";
+		};
+		F4CACAB71B2010F2003C6301 /* UserModule */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAB81B2010F2003C6301 /* UserModule.h */,
+				F4CACAB91B2010F2003C6301 /* UserModule.m */,
+			);
+			path = UserModule;
+			sourceTree = "<group>";
+		};
+		F4CACABC1B2010F2003C6301 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACABD1B2010F2003C6301 /* Alert.h */,
+				F4CACABE1B2010F2003C6301 /* Alert.m */,
+				F4CACABF1B2010F2003C6301 /* Request.h */,
+				F4CACAC01B2010F2003C6301 /* Request.m */,
+				F4CACAC11B2010F2003C6301 /* Router.h */,
+				F4CACAC21B2010F2003C6301 /* Router.m */,
+				F4CACAC31B2010F2003C6301 /* UserCreds.h */,
+				F4CACAC41B2010F2003C6301 /* UserCreds.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F4CACAC51B2010F2003C6301 /* OpenSources */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAC61B2010F2003C6301 /* Objective-C-RegEx-Categories */,
+				F4CACAC91B2010F2003C6301 /* OpenUDID-master */,
+			);
+			path = OpenSources;
+			sourceTree = "<group>";
+		};
+		F4CACAC61B2010F2003C6301 /* Objective-C-RegEx-Categories */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACAC71B2010F2003C6301 /* RegExCategories.h */,
+				F4CACAC81B2010F2003C6301 /* RegExCategories.m */,
+			);
+			path = "Objective-C-RegEx-Categories";
+			sourceTree = "<group>";
+		};
+		F4CACAC91B2010F2003C6301 /* OpenUDID-master */ = {
+			isa = PBXGroup;
+			children = (
+				F4CACACA1B2010F2003C6301 /* OpenUDID.h */,
+				F4CACACB1B2010F2003C6301 /* OpenUDID.m */,
+			);
+			path = "OpenUDID-master";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -217,9 +524,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F4CACA311B1EBE16003C6301 /* Build configuration list for PBXNativeTarget "Horoscopes" */;
 			buildPhases = (
+				E4D19316B1A9333F33C03617 /* Check Pods Manifest.lock */,
 				F4CACA0E1B1EBE16003C6301 /* Sources */,
 				F4CACA0F1B1EBE16003C6301 /* Frameworks */,
 				F4CACA101B1EBE16003C6301 /* Resources */,
+				4A12D8C476D7497CBBD704A1 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -335,13 +644,75 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4A12D8C476D7497CBBD704A1 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E4D19316B1A9333F33C03617 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		F4CACA0E1B1EBE16003C6301 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
+				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
+				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
+				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
+				F4CACA811B200149003C6301 /* SMCLove.m in Sources */,
+				F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */,
+				F4CACAD91B2010F2003C6301 /* ServerCommunication.m in Sources */,
+				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
+				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
+				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
+				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
+				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
+				F4CACA791B1FFBBE003C6301 /* ChooseSignWheelVC.swift in Sources */,
+				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
+				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
+				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
+				F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */,
+				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
+				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
+				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
+				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
+				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
+				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F4CACA771B1EFB72003C6301 /* CustomTabBarController.swift in Sources */,
+				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
+				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
+				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,
+				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
+				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
+				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -423,6 +794,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -460,29 +832,36 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		F4CACA321B1EBE16003C6301 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = Horoscopes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 			};
 			name = Debug;
 		};
 		F4CACA331B1EBE16003C6301 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = Horoscopes/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
 			};
 			name = Release;
 		};
