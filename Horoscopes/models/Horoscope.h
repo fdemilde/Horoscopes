@@ -22,5 +22,6 @@
 - (UIImage*)getIconSelected;
 - (UIImage*)getTodayIcon;
 - (UIImage*)getSymbol;
+- (UIImage*)getSymbolSelected;
 
 @end

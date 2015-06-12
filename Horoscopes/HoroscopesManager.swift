@@ -21,21 +21,14 @@ class HoroscopesManager : NSObject {
         
         if horoscopesSigns.isEmpty {
             
-            print("setup horo signs")
-            
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd-MM";
-            
-            print("Add sign 1 -- ")
             horoscopesSigns.append(Horoscope(sign:"Aries",
                                         startFrom: dateFormatter.dateFromString("21-03"),
                                                to:dateFormatter.dateFromString("19-04")))
-            println(horoscopesSigns.count)
-            print("Add sign 2")
             horoscopesSigns.append(Horoscope(sign:"Taurus",
                 startFrom: dateFormatter.dateFromString("20-04"),
                 to:dateFormatter.dateFromString("20-05")))
-            println(horoscopesSigns.count)
             horoscopesSigns.append(Horoscope(sign:"Gemini",
                 startFrom: dateFormatter.dateFromString("21-05"),
                 to:dateFormatter.dateFromString("20-06")))
@@ -75,10 +68,7 @@ class HoroscopesManager : NSObject {
             horoscopesSigns.append(Horoscope(sign:"Pisces",
                 startFrom: dateFormatter.dateFromString("19-02"),
                 to:dateFormatter.dateFromString("20-03")))
-            print("alll count")
-            println(horoscopesSigns.count)
         }
-        println(horoscopesSigns)
         return horoscopesSigns
     }
     
@@ -153,7 +143,7 @@ class HoroscopesManager : NSObject {
         postData.setObject(token, forKey: "device_token")
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
 //            self.data = self.parseResponseObjToDictionary(response)
-            print(response)
+//            print(response)
         })
     }
     
@@ -170,7 +160,7 @@ class HoroscopesManager : NSObject {
         postData.setObject(ratingString, forKey: "rating")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-            print(response)
+//            print(response)
             
             var result = Utilities.parseNSDictionaryToDictionary(response)
             NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)

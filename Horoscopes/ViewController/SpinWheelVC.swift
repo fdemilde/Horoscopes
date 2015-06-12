@@ -13,6 +13,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     var wheel = RotateControl()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.setupBackground()
         self.setupNotification()
         self.setupWheel()
@@ -21,7 +22,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     }
     
     func setupNotification(){
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
     }
     
     func setupBackground(){
@@ -72,7 +73,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     // MARK: notifications handlers
     
-//    func allSignLoaded(notif: NSNotification) {
-//        println("MyNotification was handled")
-//    }
+    @objc func allSignLoaded(notif: NSNotification) {
+        println("MyNotification was handled")
+    }
 }

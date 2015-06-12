@@ -7,4 +7,7 @@ target "Horoscopes" do
 	pod "FBSDKCoreKit"
 	pod "UIImage+animatedGif"
 	pod 'MBProgressHUD'
+    pod "FBSDKLoginKit"
+    pod 'FBSDKShareKit'
+    
 end

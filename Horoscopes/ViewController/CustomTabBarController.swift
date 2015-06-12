@@ -12,6 +12,7 @@ import UIKit
 class CustomTabBarController : UITabBarController {
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         self.setupTabBarItems()
         var manager = HoroscopesManager()
         manager.getAllHoroscopes(false)

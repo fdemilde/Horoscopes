@@ -13,7 +13,6 @@ class Utilities {
         var keys = dict.allKeys
         for key in keys{
             var keyString = key as! String
-            println("keyString : \(keyString)")
             result[keyString] = dict.objectForKey(keyString)
         }
         return result
@@ -40,10 +39,43 @@ class Utilities {
     }
     
     class func getScreenSize() -> CGSize{
-        var screenRect = UIScreen.mainScreen().bounds;
+        var screenRect = UIScreen.mainScreen().bounds
         var height = screenRect.height
         var width = screenRect.width
         return CGSizeMake(width, height)
+    }
+    
+    class func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
+            completion(data: data)
+            }.resume()
+    }
+    
+    class func loadNIB(file:String) -> AnyObject{
+        var arr = NSBundle.mainBundle().loadNibNamed(file, owner: nil, options: nil)
+            
+        var ret: AnyObject = arr[0];
+        return ret;
+    }
+    
+    class func getPositionBaseOn568hScreenSize(positionX : Float, positionY: Float) -> CGPoint{
+        var screenSize = Utilities.getScreenSize()
+        
+        var percentageX = positionX / 320
+        var percentageY = positionY / 568
+        
+        var result =  CGPointMake(screenSize.width * CGFloat(percentageX), screenSize.height * CGFloat(percentageY))
+        
+        return result
+    }
+    
+    class func getRatio() -> CGFloat {
+        var screenSize = Utilities.getScreenSize()
+        var customScreenSize = screenSize.height - 211
+        
+        var ratio = Float(customScreenSize/(800-211))
+        println("Ratio == \(ratio)")
+        return CGFloat(ratio)
     }
 }
 

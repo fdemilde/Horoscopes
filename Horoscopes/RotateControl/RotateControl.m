@@ -61,7 +61,6 @@ static int CLOVER_SYMBOL_TAG = 101;
     for (int i = 0; i < numberOfSections; i++) {
         //get the sign
         Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
-        DebugLog(@"horoscope name = %@", horoscope.sign);
         UIImageView *im = [[UIImageView alloc] init];
         
         im.layer.anchorPoint = CGPointMake(1.0f, 0.5f);
@@ -361,6 +360,9 @@ static int CLOVER_SYMBOL_TAG = 101;
         UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
         signImage.image = [horoscope getIcon];
         
+        UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
+        iconImage.image = [horoscope getSymbol];
+        
     }
 }
 
@@ -371,6 +373,9 @@ static int CLOVER_SYMBOL_TAG = 101;
     
     UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
     signImage.image = [horoscope getIcon];
+    
+    UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
+    iconImage.image = [horoscope getSymbol];
 }
 
 - (void)highlightSelectedSign
@@ -380,6 +385,9 @@ static int CLOVER_SYMBOL_TAG = 101;
     
     UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
     signImage.image = [horoscope getIconSelected];
+    
+    UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
+    iconImage.image = [horoscope getSymbolSelected];
 }
 
 - (UIImageView *) getCloveByValue:(int)value {

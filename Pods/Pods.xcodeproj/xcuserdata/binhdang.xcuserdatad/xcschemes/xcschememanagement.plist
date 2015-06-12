@@ -14,6 +14,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Horoscopes-FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Horoscopes-FBSDKShareKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Horoscopes-JSONKit-NoWarning.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1BFE7CBA6F2796A931E002F8</key>
+		<key>144BD5564498902359602802</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>268F0406B664D953A0E531E2</key>
+		<key>15672D819AC40AD4435BA41A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>637D8DBCAC266E1CA1B1F459</key>
+		<key>1DA9A58CD114C7E8C0B2490C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>99805CC6AA811D51089C63F3</key>
+		<key>4356D667E3CC5B76FDCADE20</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A039DA517670DE5659CFCDEA</key>
+		<key>4B6CCD4BF0881E9EFF2C2DC4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A7C190ADFC57834D5C1E6548</key>
+		<key>4B9A260338A0F436855BBE66</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>CD5AA2137211FBB77795CBAC</key>
+		<key>6D290E38E3C428EBB392B7CC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>AC8F674C37F4584DA5F8797A</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C782A665BEF59EDEA9137EE2</key>
 		<dict>
 			<key>primary</key>
 			<true/>

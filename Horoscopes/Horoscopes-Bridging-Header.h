@@ -16,6 +16,8 @@
 #import "FBSDKCoreKit.h"
 #import "MBProgressHUD.h"
 #import "RotateControl.h"
+#import "FBSDKLoginKit.h"
+#import "FBSDKShareKit.h"
 
 
 #endif

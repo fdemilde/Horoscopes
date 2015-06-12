@@ -14,6 +14,10 @@ PODS:
   - FBSDKCoreKit/no-arc (4.2.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc
+  - FBSDKLoginKit (4.2.0):
+    - FBSDKCoreKit
+  - FBSDKShareKit (4.2.0):
+    - FBSDKCoreKit
   - Google-Mobile-Ads-SDK (7.3.1)
   - GoogleAnalytics-iOS-SDK (3.12):
     - GoogleAnalytics-iOS-SDK/Core (= 3.12)
@@ -25,6 +29,8 @@ PODS:
 
 DEPENDENCIES:
   - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKShareKit
   - Google-Mobile-Ads-SDK
   - GoogleAnalytics-iOS-SDK
   - JSONKit-NoWarning
@@ -35,6 +41,8 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
   FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
+  FBSDKLoginKit: 57e37106af12c9e264e473dcb75d7decdbb07fe4
+  FBSDKShareKit: 931746fdf8fb95efd6e12310ec14b2b3295e2aec
   Google-Mobile-Ads-SDK: 3647bfddc7384c514ab96a8bed86d98b31e623e4
   GoogleAnalytics-iOS-SDK: 0a3327a993b8ed2b8fe1c6c4a8dcf5b76d2237a8
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb

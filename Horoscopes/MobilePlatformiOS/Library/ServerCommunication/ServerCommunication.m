@@ -178,7 +178,7 @@
     [self doesHTTPRequestExist:urlRequest completion:^(BOOL doesExist) {
         // request exited --> we should wait for response NO need to send another request
         if (doesExist == YES){
-            DebugLog(@"doHttpStringWithStrUrl - the URLRequest existed. Just wait for response");
+//            DebugLog(@"doHttpStringWithStrUrl - the URLRequest existed. Just wait for response");
             return;
         }
         
@@ -217,7 +217,7 @@
     NSData *data = [NSData dataWithContentsOfFile:filePath options:NSDataReadingMappedIfSafe error:nil];
     
     if (data) {
-        DebugLog(@"Data is not nil");
+//        DebugLog(@"Data is not nil");
         body = [self prepareHeaderWithBody:body data:data filePath:filePath fileField:fileField boundaryBody:boundaryBody];
     } else {
         DebugLog(@"ERROR ERROR. Data is nil. Why calling send file request and the file data  == NIL");
@@ -244,7 +244,7 @@
     
     // Data uploading task. We could use NSURLSessionUploadTask instead of NSURLSessionDataTask if we needed to support uploads in the background
     NSURL *url = [NSURL URLWithString:stringUrl];
-    DebugLog(@"stringUrl stringUrl stringUrl: %@\n", stringUrl);
+//    DebugLog(@"stringUrl stringUrl stringUrl: %@\n", stringUrl);
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     request.HTTPMethod = @"POST";
     request.HTTPBody = body;
@@ -307,7 +307,7 @@
 - (void)sendRequest:(NSString *)rpcName
         andPostData:(NSMutableDictionary*)postData
    andCompleteBlock:(void (^)(NSDictionary* responseDict, NSError *error))completeBlock{
-    DebugLog(@"sendRequest sendRequest ");
+//    DebugLog(@"sendRequest sendRequest ");
     [self sendRequestWithFilePath:rpcName andUserCredsLoginRequired:NOT_REQUIRED andPostData:postData andFilePath:nil andCompleteBlock:completeBlock];
 }
 
@@ -338,7 +338,7 @@
                     andPostData:(NSMutableDictionary*)postData
                     andFilePath:(NSString*)filePath
                andCompleteBlock:(void (^)(NSDictionary* responseDict, NSError *error))completeBlock{
-    DebugLog(@"sendRequestWithFilePath sendRequestWithFilePath ");
+//    DebugLog(@"sendRequestWithFilePath sendRequestWithFilePath ");
     long currtime = (long)([[NSDate date] timeIntervalSince1970]);
     postData = [self fillParams:rpcName andUserCredsLoginRequired:loginRequired andPostData:postData andCurrentTime:currtime];
     [self doPost:postData withFilePath:filePath andCompleteBlock:^(NSData* data, NSError *error) {
@@ -376,7 +376,7 @@
             }
         }];
     } else {
-        DebugLog(@"time stamp is correct");
+//        DebugLog(@"time stamp is correct");
         completeBlock(responseDict, error);
     }
 }
@@ -404,7 +404,7 @@
         [postData removeObjectForKey:@"events"];
         [postData setObject:eventValue forKey:@"events"];
     }
-    DebugLog(@"CLIENT ID ===== %d", clientId);
+//    DebugLog(@"CLIENT ID ===== %d", clientId);
     [postData setObject:rpcName forKey:@"method"];
     [postData setObject:VERSION forKey:@"v"];
     [postData setObject:[NSString stringWithFormat:@"%ld", (currentTime + tsoffset)] forKey:@"ts"];
@@ -440,7 +440,7 @@
  */
 - (void)doPost:(NSDictionary*)postData withFilePath:(NSString*)filePath andCompleteBlock:(void (^)(NSData* data, NSError *error))completeBlock{
     NSString* strPost = [self map2qs:postData];
-    DebugLog(@"doPost doPost ");
+//    DebugLog(@"doPost doPost ");
     // Calculate the hash of params
     NSString* sig = [self md5:strPost];
     strPost = [NSString stringWithFormat:@"%@&sig=%@" ,strPost, sig];
