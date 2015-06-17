@@ -74,8 +74,13 @@ class Utilities {
         var customScreenSize = screenSize.height - 211
         
         var ratio = Float(customScreenSize/(800-211))
-        println("Ratio == \(ratio)")
         return CGFloat(ratio)
+    }
+    
+    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
 }
 

@@ -11,14 +11,16 @@ import UIKit
 
 class SpinWheelVC : UIViewController, SMRotaryProtocol{
     var wheel = RotateControl()
+    var selectedIndex = -1
+    var signDescription = ""
+    var signDate = ""
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
         self.setupNotification()
         self.setupWheel()
-        var manager = HoroscopesManager()
-        manager.getAllHoroscopes(false)
     }
     
     func setupNotification(){
@@ -34,9 +36,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     func setupWheel(){
         var frame = CGRectMake(0, self.view.bounds.size.height-480, 450, 450)
-        var horoscopesSigns = XAppDelegate.horoscopesManager.horoscopesSigns
+        var horoscopesSigns = XAppDelegate.horoscopesManager.getHoroscopesSigns()
         var setting = XAppDelegate.userSettings
-        
+//        println("horoscopesSigns == \(horoscopesSigns)")
         if (setting.horoscopeSign != -1){ // not load first time
             var index = setting.horoscopeSign
             if(index < 8){
@@ -56,15 +58,14 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         
         var allSignsArray = Utilities.parseArrayToNSArray(XAppDelegate.horoscopesManager.getHoroscopesSigns()).mutableCopy() as! NSMutableArray
         
-        print(allSignsArray)
+//        print(allSignsArray)
         
         wheel = RotateControl(frame: frame , andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray)
         self.wheel.center = CGPointMake(160, 495);
         self.view.addSubview(self.wheel);
     }
     
-    func wheelDidChangeValue(newValue : Horoscope){
-        
+    func wheelDidChangeValue(newValue : Horoscope?){
     }
     
     func doneSelectedSign(){

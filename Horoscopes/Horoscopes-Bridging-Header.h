@@ -19,5 +19,9 @@
 #import "FBSDKLoginKit.h"
 #import "FBSDKShareKit.h"
 
+// MARK: GAI
+#import "GAI.h"
+#import "GAIDictionaryBuilder.h"
+
 
 #endif

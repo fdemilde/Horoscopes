@@ -32,7 +32,7 @@ class LoginVC : SpinWheelVC {
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
     
-    
+    var startButton : UIButton!
     
     var userFBID = ""
     var userFBName = ""
@@ -55,24 +55,9 @@ class LoginVC : SpinWheelVC {
     
     func setupComponents(){
         var ratio = Utilities.getRatio()
-        println("fbLoginButtonTopConstraint BEFORE = \(fbLoginButtonTopConstraint.constant)")
         fbLoginButtonTopConstraint.constant = (fbLoginButtonTopConstraint.constant * ratio)
-        println("fbLoginButtonTopConstraint LATER = \(fbLoginButtonTopConstraint.constant)")
-        
-        
-        println("fbLoginButtonTopConstraint BEFORE = \(fbLoginLabelTopConstraint.constant)")
         fbLoginLabelTopConstraint.constant = (fbLoginLabelTopConstraint.constant * ratio)
-        
-        println("fbLoginButtonTopConstraint LATER = \(fbLoginLabelTopConstraint.constant)")
-        
-//        println("fbNameLabelTopConstraint BEFORE = \(fbLoginLabelTopConstraint.constant)")
-//        fbNameLabelTopConstraint.constant = ceil(fbNameLabelTopConstraint.constant * ratio)
-        
-//        println("fbNameLabelTopConstraint LATER = \(fbLoginLabelTopConstraint.constant)")
-        
         separatorTopConstraint.constant = (separatorTopConstraint.constant * ratio)
-        
-        
         DOBLabelTopConstraint.constant = (DOBLabelTopConstraint.constant * ratio)
         
         birthdayBgTopConstraint.constant = (birthdayBgTopConstraint.constant * ratio)
@@ -80,9 +65,19 @@ class LoginVC : SpinWheelVC {
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
         starIconTopConstraint.constant = (starIconTopConstraint.constant * ratio)
         
+        var startButtonImage = UIImage(named: "start_button")
+        var startButtonFrame = CGRectMake((Utilities.getScreenSize().width - startButtonImage!.size.width)/2, Utilities.getScreenSize().height - startButtonImage!.size.height, startButtonImage!.size.width, startButtonImage!.size.height)
+        startButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        startButton.frame = startButtonFrame
+        startButton.setImage(startButtonImage, forState: UIControlState.Normal)
+        startButton.setTitle("", forState: UIControlState.Normal)
+//        startButton.backgroundColor = UIColor.blueColor()
+        self.view .addSubview(startButton)
+        
+        startButton.addTarget(self, action: "startButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         self.view .bringSubviewToFront(fbLoginBtn)
         self.view .bringSubviewToFront(loginLabel)
-//        self.view .bringSubviewToFront(nameLabel)
         self.view .bringSubviewToFront(separator)
         self.view .bringSubviewToFront(birthdayBg)
         self.view .bringSubviewToFront(birthdayLabel)
@@ -90,7 +85,7 @@ class LoginVC : SpinWheelVC {
         self.view .bringSubviewToFront(signDateLabel)
         self.view .bringSubviewToFront(DOBLabel)
         self.view .bringSubviewToFront(starIcon)
-        println("LOGIN FRAME = \(loginLabel.frame)")
+        self.view .bringSubviewToFront(startButton)
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
@@ -102,7 +97,6 @@ class LoginVC : SpinWheelVC {
                 println("Error when login FB = \(error)")
             } else if (result.isCancelled) {
                 // Handle cancellations
-                println("login FB Cancelled")
             } else {
                 if (result.grantedPermissions.contains("public_profile")) {
                     // Do work
@@ -165,5 +159,52 @@ class LoginVC : SpinWheelVC {
                 self.fbLoginBtn.imageView!.image = downloadedImage
             }
         }
+    }
+    
+    // MARK: Delegata methods
+    
+    override func wheelDidChangeValue(newValue : Horoscope?){
+        
+        if let newValue = newValue {
+            println("wheelDidChangeValue wheelDidChangeValue")
+            self.signNameLabel.text = newValue.sign.uppercaseString
+            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
+            var index = find(XAppDelegate.horoscopesManager.horoscopesSigns, newValue)
+            if(index != nil){
+                self.selectedIndex = index!;
+            }
+            self.starIcon.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
+            self.signNameLabel.alpha = 0
+            UILabel.beginAnimations("Fade-in", context: nil)
+            UILabel.setAnimationDuration(0.6)
+            self.signNameLabel.alpha = 1
+            UILabel.commitAnimations()
+            
+        } else {
+            self.signNameLabel.text = ""
+            self.signDateLabel.text = ""
+            return
+        }
+        
+    }
+    
+    override func doneSelectedSign(){
+        self.pushToDailyViewController()
+    }
+    
+    // MARK: Button handlers
+    
+    func startButtonTapped(sender:UIButton!)
+    {
+        self.pushToDailyViewController()
+    }
+    
+    func pushToDailyViewController(){
+        XAppDelegate.userSettings.horoscopeSign = Int32(self.selectedIndex)
+        var label = String(format: "type=primary,sign=%d", self.selectedIndex)
+        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CustomTabBarController") as! CustomTabBarController
+        customTabBarController.selectedSign = self.selectedIndex
+        self.navigationController!.pushViewController(customTabBarController, animated: true)
     }
 }

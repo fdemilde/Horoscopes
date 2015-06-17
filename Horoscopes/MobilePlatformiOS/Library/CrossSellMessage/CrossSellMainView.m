@@ -188,7 +188,6 @@ const float movingAnimationDuration = 1.0f;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    DebugLog(@"hitTest hitTest hitTest");
     UIView *hitView = [super hitTest:point withEvent:event];
     
     // If the hitView is THIS view, return nil and allow hitTest:withEvent: to

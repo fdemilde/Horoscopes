@@ -12,4 +12,6 @@
 @property (nonatomic) BOOL notifyOfNewHoroscope;
 @property (nonatomic) int horoscopeSign;
 
+-(void)setHoroscopeSign:(int)horoscopeSign;
+
 @end

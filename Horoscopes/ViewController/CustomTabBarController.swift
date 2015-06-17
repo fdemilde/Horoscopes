@@ -9,13 +9,17 @@
 import Foundation
 import UIKit
 
-class CustomTabBarController : UITabBarController {
+class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
+    
+    var selectedSign = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupTabBarItems()
-        var manager = HoroscopesManager()
-        manager.getAllHoroscopes(false)
+        self.delegate = self
+        
+        
+//        self.reloadView()
     }
     
     func setupTabBarItems(){
@@ -44,7 +48,16 @@ class CustomTabBarController : UITabBarController {
         postItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-        self.tabBar.backgroundColor = UIColor(red: 56.0/255.0, green: 68.0/255.0, blue: 110.0/255.0, alpha: 1)
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        println("didSelectViewController == \(NSStringFromClass(viewController.classForCoder))")
+        if(NSStringFromClass(viewController.classForCoder) == "Horoscopes.DailyViewController"){
+//            if let dailyVC = viewController as? DailyViewController {
+////                dailyVC.selectedSign = selectedSign
+//                if(selectedSign != -1) { dailyVC.reloadView(selectedSign) }
+//            }
+        }
     }
     
 }

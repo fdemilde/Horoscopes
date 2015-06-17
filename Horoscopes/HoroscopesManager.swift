@@ -20,7 +20,7 @@ class HoroscopesManager : NSObject {
     func getHoroscopesSigns() -> [Horoscope] {
         
         if horoscopesSigns.isEmpty {
-            
+            println("getHoroscopesSigns getHoroscopesSigns empty")
             let dateFormatter = NSDateFormatter()
             dateFormatter.dateFormat = "dd-MM";
             horoscopesSigns.append(Horoscope(sign:"Aries",
@@ -68,6 +68,8 @@ class HoroscopesManager : NSObject {
             horoscopesSigns.append(Horoscope(sign:"Pisces",
                 startFrom: dateFormatter.dateFromString("19-02"),
                 to:dateFormatter.dateFromString("20-03")))
+        } else {
+            println("getHoroscopesSigns getHoroscopesSigns not empty!!!")
         }
         return horoscopesSigns
     }

@@ -15,10 +15,11 @@
 @synthesize externalRequest;
 @synthesize userModule;
 @synthesize platformNotiff;
+@synthesize userCred;
 
 -(id)init {
     self = [super init];
-    UserCreds* userCred = [[UserCreds alloc] init];
+    userCred = [[UserCreds alloc] init];
     self.sc = [[ServerCommunication alloc] initWithBaseURL:BASE_URL andUploadBaseUrl:UPLOAD_BASE_URL andClientId:DATA_CLIENT_ID andUserCreds:userCred];
     self.tracker = [[EventsTracker alloc] initWithServerCommunication:self.sc];
     self.externalRequest = [[ExternalRequest alloc] initWithServerCommunocation:self.sc];

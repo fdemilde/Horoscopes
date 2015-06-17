@@ -25,5 +25,6 @@
 @property (nonatomic, strong) PlatformNotification* platformNotiff;
 @property (nonatomic, strong) Router* router;
 @property (nonatomic, strong) CrossSellManager* crossSellManager;
+@property (nonatomic, strong) UserCreds* userCred;
 
 @end

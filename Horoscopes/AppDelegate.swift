@@ -10,20 +10,18 @@ import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     var mobilePlatform = MobilePlatform()
     var userSettings = UserSettings()
     var horoscopesManager = HoroscopesManager()
 
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        var collectedHoro = CollectedHoroscope()
         // hide status bar
         UIApplication.sharedApplication().statusBarHidden = true
-        
-        
+        self.setupGAITracker()
+//        horoscopesManager.getAllHoroscopes(false)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -54,7 +52,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
-
-
+    
+    // ---------------------------------------------
+    // MARK: Event tracker Helper
+    // ---------------------------------------------
+    
+    func setupGAITracker(){
+        GAI.sharedInstance().trackUncaughtExceptions = true
+        GAI.sharedInstance().dispatchInterval = 1
+        GAI.sharedInstance().logger.logLevel = GAILogLevel.Error;
+        GAI.sharedInstance().trackerWithTrackingId(kAnalyticsAccountId)
+    }
+    
+    func sendTrackEventWithActionName(actionName: String, label:String?, value: Int32){
+        // if the value < 0, we should override it with appOpenCounter value
+        var _value = 0
+        
+        if (value < 0) {
+            _value = Int(XAppDelegate.mobilePlatform.tracker.appOpenCounter);
+        }
+        
+        var udid = XAppDelegate.mobilePlatform.userCred.getUDID()
+        var dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: value)).build() as NSDictionary
+        
+        GAI.sharedInstance().defaultTracker.send(dict as [NSObject : AnyObject])
+        
+        var priority = 3
+        if(label == defaultAppOpenAction) { priority = 1 }
+        if(label == defaultNotificationQuestion) { priority = 3 }
+        if(label == defaultViewHoroscope) { priority = 4 }
+        if(label == defaultViewArchive) { priority = 3 }
+        if(label == defaultChangeSetting) { priority = 2 }
+        if(label == defaultFacebook) { priority = 2 }
+        if(label == defaultNotification) { priority = 4 }
+        if(label == defaultRefreshClick) { priority = 3 }
+        if(label == defaultIDFAEventKey) { priority = 1 }
+        
+        if let label = label {
+            XAppDelegate.mobilePlatform.tracker .logWithAction(actionName, label: String(format:"Open=%i,Label=%@", value,label), priority: Int32(priority))
+        } else {
+            XAppDelegate.mobilePlatform.tracker .logWithAction(actionName, label: String(format:"Open=%i,Label=%@", value,""), priority: Int32(priority))
+        }
+    }
 }
 
