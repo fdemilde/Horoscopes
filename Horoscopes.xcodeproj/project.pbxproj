@@ -14,7 +14,9 @@
 		F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */; };
 		F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */; };
 		F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C02A31B2691D200C0BA83 /* LoginVC.swift */; };
-		F47FC5791B2EDB9E00255565 /* DailyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47FC5781B2EDB9E00255565 /* DailyViewController.swift */; };
+		F48A4EAE1B31579C00219414 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48A4EAD1B31579C00219414 /* DailyTableViewController.swift */; };
+		F48BD5F31B32BAAD00EB7074 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BD5F21B32BAAD00EB7074 /* DailyHoroscopeCell.swift */; };
+		F48BD5F51B32C9AE00EB7074 /* DailyHoroscopeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F48BD5F41B32C9AE00EB7074 /* DailyHoroscopeHeaderCell.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -100,7 +102,9 @@
 		F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelVC.swift; sourceTree = "<group>"; };
 		F47C02A31B2691D200C0BA83 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		F47FC5781B2EDB9E00255565 /* DailyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyViewController.swift; sourceTree = "<group>"; };
+		F48A4EAD1B31579C00219414 /* DailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTableViewController.swift; sourceTree = "<group>"; };
+		F48BD5F21B32BAAD00EB7074 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
+		F48BD5F41B32C9AE00EB7074 /* DailyHoroscopeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeHeaderCell.swift; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -252,7 +256,9 @@
 				F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */,
 				F47C02A31B2691D200C0BA83 /* LoginVC.swift */,
 				F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */,
-				F47FC5781B2EDB9E00255565 /* DailyViewController.swift */,
+				F48A4EAD1B31579C00219414 /* DailyTableViewController.swift */,
+				F48BD5F21B32BAAD00EB7074 /* DailyHoroscopeCell.swift */,
+				F48BD5F41B32C9AE00EB7074 /* DailyHoroscopeHeaderCell.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -711,6 +717,7 @@
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
+				F48BD5F51B32C9AE00EB7074 /* DailyHoroscopeHeaderCell.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
@@ -721,7 +728,6 @@
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
-				F47FC5791B2EDB9E00255565 /* DailyViewController.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
@@ -730,6 +736,8 @@
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
 				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,
+				F48A4EAE1B31579C00219414 /* DailyTableViewController.swift in Sources */,
+				F48BD5F31B32BAAD00EB7074 /* DailyHoroscopeCell.swift in Sources */,
 				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,

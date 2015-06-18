@@ -205,6 +205,8 @@ class LoginVC : SpinWheelVC {
         XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CustomTabBarController") as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
+        
         self.navigationController!.pushViewController(customTabBarController, animated: true)
     }
+    
 }

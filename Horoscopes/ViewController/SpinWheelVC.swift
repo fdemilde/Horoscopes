@@ -24,7 +24,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     }
     
     func setupNotification(){
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
     }
     
     func setupBackground(){
@@ -72,9 +72,4 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         
     }
     
-    // MARK: notifications handlers
-    
-    @objc func allSignLoaded(notif: NSNotification) {
-        println("MyNotification was handled")
-    }
 }

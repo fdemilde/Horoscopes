@@ -77,7 +77,8 @@ class HoroscopesManager : NSObject {
     // MARK: Network
     
     func getAllHoroscopes(refreshOnly : Bool) {
-        
+        println("getAllHoroscopes getAllHoroscopes ")
+        Utilities.showHUD()
         
         var offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
         var offsetString = String(format: "%d",offset)
@@ -121,16 +122,31 @@ class HoroscopesManager : NSObject {
             postData.setObject(devideType, forKey: "device_model")
             
             XAppDelegate.mobilePlatform.sc.sendRequest(GET_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                self.data = Utilities.parseNSDictionaryToDictionary(response)
-//                print(self.data)
-                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object:nil)
+                if(error != nil){
+                    println("ERROR == \(error)")
+                    Utilities.hideHUD()
+                } else {
+                    self.data = Utilities.parseNSDictionaryToDictionary(response)
+//                    print(self.data)
+                    self.saveData()
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object:nil)
+                    Utilities.hideHUD()
+                }
+                
             })
         } else {
             postData.setObject(offsetString, forKey: "tz")
             XAppDelegate.mobilePlatform.sc.sendRequest(REFRESH_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                self.data = Utilities.parseNSDictionaryToDictionary(response)
-//                print(self.data)
-                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                if(error != nil){
+                    println("ERROR == \(error)")
+                    Utilities.hideHUD()
+                } else {
+                    self.data = Utilities.parseNSDictionaryToDictionary(response)
+    //                print(self.data)
+                    self.saveData()
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                    Utilities.hideHUD()
+                }
             })
         }
         
@@ -167,9 +183,24 @@ class HoroscopesManager : NSObject {
             var result = Utilities.parseNSDictionaryToDictionary(response)
             NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
         })
-        
-        
     }
+    
+    func saveData(){
+        
+        var todayReadings = Dictionary<String, String>()
+        var tomorrowReadings = Dictionary<String, String>()
+        var horoSigns = self.horoscopesSigns
+        todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
+        tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
+        
+        for var index = 1; index <= 12; index++ {
+            horoSigns[index-1].horoscopes.removeAllObjects()
+            horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
+            horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
+            var dict = horoSigns[index-1].horoscopes
+        }
+    }
+
     
 }
 

@@ -33,3 +33,8 @@ let defaultRefreshClick             = "refresh"
 let defaultIDFAEventKey             = "IDFA"
 
 let kAnalyticsAccountId = "UA-27398873-10"
+
+enum DailyHoroscopeType {
+    case TodayHoroscope
+    case TomorrowHoroscope
+}

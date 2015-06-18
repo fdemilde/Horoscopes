@@ -17,8 +17,6 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.setupTabBarItems()
         self.delegate = self
-        
-        
 //        self.reloadView()
     }
     
@@ -51,13 +49,6 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        println("didSelectViewController == \(NSStringFromClass(viewController.classForCoder))")
-        if(NSStringFromClass(viewController.classForCoder) == "Horoscopes.DailyViewController"){
-//            if let dailyVC = viewController as? DailyViewController {
-////                dailyVC.selectedSign = selectedSign
-//                if(selectedSign != -1) { dailyVC.reloadView(selectedSign) }
-//            }
-        }
     }
     
 }

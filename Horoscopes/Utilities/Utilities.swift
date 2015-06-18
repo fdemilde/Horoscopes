@@ -82,6 +82,36 @@ class Utilities {
         dateFormatter.dateFormat = "MMM dd"
         return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
+    
+    class func showHUD(){
+        
+        dispatch_async(dispatch_get_main_queue(),{
+            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+            let viewController = appDelegate.window!.rootViewController
+            
+            let loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
+            loadingNotification.mode = MBProgressHUDMode.Indeterminate
+            loadingNotification.labelText = "Loading"
+            
+        })
+    }
+    
+    class func hideHUD(){
+        dispatch_async(dispatch_get_main_queue(),{
+            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+            let viewController = appDelegate.window!.rootViewController
+            MBProgressHUD.hideAllHUDsForView(viewController!.view, animated: true)
+        })
+    }
+    
+    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        var date = NSDate(timeIntervalSince1970:ts)
+        var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
+        println("dateString dateString = \(dateString)")
+        return dateString
+    }
 }
 
 
