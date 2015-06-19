@@ -17,8 +17,8 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
-        self.tableView.backgroundColor = UIColor.blueColor()
+        self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
+//        self.tableView.backgroundColor = UIColor.blueColor()
         self.tableView.estimatedRowHeight = 130
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -162,9 +162,8 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         var textViewWidth = Utilities.getScreenSize().width - 17*2
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
         var topSpace = 95 as CGFloat
-//        var bottomPadding = 0 as CGFloat
-        println("table frame = \(self.tableView.frame)")
-        return textViewHeight + topSpace
+        var bottomSpace = 115 as CGFloat
+        return textViewHeight + topSpace + bottomSpace
     }
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {

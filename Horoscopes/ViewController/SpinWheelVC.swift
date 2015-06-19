@@ -56,7 +56,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
             setting.horoscopeSign = 8
         }
         
-        var allSignsArray = Utilities.parseArrayToNSArray(XAppDelegate.horoscopesManager.getHoroscopesSigns()).mutableCopy() as! NSMutableArray
+        var allSignsArray = Utilities.parseArrayToNSArray(horoscopesSigns).mutableCopy() as! NSMutableArray
         
 //        print(allSignsArray)
         

@@ -166,7 +166,6 @@ class LoginVC : SpinWheelVC {
     override func wheelDidChangeValue(newValue : Horoscope?){
         
         if let newValue = newValue {
-            println("wheelDidChangeValue wheelDidChangeValue")
             self.signNameLabel.text = newValue.sign.uppercaseString
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
             var index = find(XAppDelegate.horoscopesManager.horoscopesSigns, newValue)

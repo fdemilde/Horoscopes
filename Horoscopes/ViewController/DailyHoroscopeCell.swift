@@ -15,10 +15,17 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
     @IBOutlet weak var horoscopeDesc: UITextView!
     @IBOutlet weak var todayLabel: UILabel!
     
+    @IBOutlet weak var divider: UIImageView!
+    
+    @IBOutlet weak var cookieButton: UIButton!
+    
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         horoscopeDesc.delegate = self
     }
+    
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
@@ -34,31 +41,26 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
             
             case DailyHoroscopeType.TomorrowHoroscope:
                 todayLabel.text = "Tomorrow"
+                divider.hidden = true
+                cookieButton.hidden = true
             default:
                 println("")
         }
         self.horoscopeDesc.text = desc
     }
     
-    // MARK: textview delegate
+    // MARK: Button Action
     
-    func textViewDidChange(textView: UITextView) {
-        println("textViewDidChange textViewDidChange")
-//        let size = textView.bounds.size
-//        let newSize = textView.sizeThatFits(CGSize(width: size.width, height: CGFloat.max))
-//        
-//        // Resize the cell only when cell's size is changed
-//        if size.height != newSize.height {
-//            UIView.setAnimationsEnabled(false)
-//            tableView?.beginUpdates()
-//            tableView?.endUpdates()
-//            UIView.setAnimationsEnabled(true)
-//            
-//            if let thisIndexPath = tableView?.indexPathForCell(self) {
-//                tableView?.scrollToRowAtIndexPath(thisIndexPath, atScrollPosition: .Bottom, animated: false)
-//            }
-//        }
+    @IBAction func likeButtonTapped(sender: AnyObject) {
+        Utilities.showHUD()
     }
+    
+    @IBAction func dislikeButtonTapped(sender: AnyObject) {
+    }
+    
+    @IBAction func cookieButtonTapped(sender: AnyObject) {
+    }
+    
 }
 
 extension UITableViewCell {

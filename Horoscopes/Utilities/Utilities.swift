@@ -109,7 +109,6 @@ class Utilities {
         dateFormatter.dateFormat = dateFormat
         var date = NSDate(timeIntervalSince1970:ts)
         var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
-        println("dateString dateString = \(dateString)")
         return dateString
     }
 }

@@ -44,7 +44,6 @@ static int CLOVER_SYMBOL_TAG = 101;
 		self.delegate = del;
         self.currentValue = 8;
         self.numberOfSections = sectionsNumber;
-        DebugLog(@"self.numberOfSections self.numberOfSections = %d", self.numberOfSections);
         self.horoscopeSigns = horoscopes;
         [self drawWheel];
         
