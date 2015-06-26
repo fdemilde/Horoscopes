@@ -33,8 +33,15 @@ let defaultRefreshClick             = "refresh"
 let defaultIDFAEventKey             = "IDFA"
 
 let kAnalyticsAccountId = "UA-27398873-10"
+let FACEBOOK_APP_ID = "333713683461"
 
 enum DailyHoroscopeType {
     case TodayHoroscope
     case TomorrowHoroscope
 }
+
+enum ShareControlerType {
+    case ShareControlerTypeDirect
+    case ShareControlerTypeHybrid
+}
+

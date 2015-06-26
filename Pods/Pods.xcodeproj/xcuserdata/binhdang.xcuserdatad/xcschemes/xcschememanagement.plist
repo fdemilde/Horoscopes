@@ -34,6 +34,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Horoscopes-MZAppearance.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Horoscopes-MZFormSheetController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Horoscopes-Reachability.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +62,57 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>144BD5564498902359602802</key>
+		<key>0F1FB31E437373CEDC60B2CB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>15672D819AC40AD4435BA41A</key>
+		<key>25035F263D0AE4874E08BA3D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1DA9A58CD114C7E8C0B2490C</key>
+		<key>338ECFBE175826885B914DA6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4356D667E3CC5B76FDCADE20</key>
+		<key>3D86BFD01C69E9B1D937BB39</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B6CCD4BF0881E9EFF2C2DC4</key>
+		<key>4C2B683386756D4C2AC476D8</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4B9A260338A0F436855BBE66</key>
+		<key>88EA90427157CF1D23850CA6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6D290E38E3C428EBB392B7CC</key>
+		<key>9F2D93631FEA5C3DB2F87DEA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AC8F674C37F4584DA5F8797A</key>
+		<key>BEFB12A2DEB2B6B1CF1CE2E6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C782A665BEF59EDEA9137EE2</key>
+		<key>DF2CE08D769C74EB212FD796</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E05ACF072FC254B71C16FC0F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAB1093E6BE11777743359BF</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -14,6 +14,11 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     var selectedSign = -1
     var timeTags = [AnyObject]()
     var cellArray = [AnyObject]()
+    var lastContentOffset = 0 as CGFloat
+    var isScrolling = false
+    
+    let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
+    var startPositionY = 0 as CGFloat
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,7 +102,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
                     resultTs = NSTimeInterval(timeString.doubleValue)
                 }
 //
-                cell.setupCell(resultDesc, time: resultTs, type: DailyHoroscopeType.TodayHoroscope)
+                cell.setupCell(selectedSign, desc: resultDesc, time: resultTs, type: DailyHoroscopeType.TodayHoroscope)
                 
             } else {
                 var resultDesc = self.getTomorrowDesc()
@@ -107,7 +112,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
                     var timeString = self.timeTags[1] as! NSString
                     resultTs = NSTimeInterval(timeString.doubleValue)
                 }
-                cell.setupCell(resultDesc, time: resultTs, type: DailyHoroscopeType.TomorrowHoroscope)
+                cell.setupCell(selectedSign, desc: resultDesc, time: resultTs, type: DailyHoroscopeType.TomorrowHoroscope)
             }
             
             return cell
@@ -131,7 +136,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         }
     }
     
-    // MARK: notifications handlers
+    // MARK: Notifications handlers
     
     @objc func allSignLoaded(notif: NSNotification) {
         println("MyNotification was handled")
@@ -189,6 +194,83 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
             resultDesc = desc
         }
         return resultDesc
+    }
+    
+    // MARK: Tabbar Hide/show
+    
+    override func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        startPositionY = scrollView.contentOffset.y
+    }
+    
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
+        if(scrollView.contentOffset.y <= 0){
+            showTabbar()
+        } else if (scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - 5) { // then we are at the end
+            showTabbar()
+        } else if ((scrollView.contentOffset.y - startPositionY) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
+            hideTabbar()
+        } else if ((startPositionY - scrollView.contentOffset.y) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
+            showTabbar()
+        }
+        
+        
+    }
+    
+    func showTabbar(){
+        self.setTabbarVisible(true, animated : true)
+    }
+    
+    func hideTabbar(){
+        self.setTabbarVisible(false, animated : true)
+    }
+    
+    func setTabbarVisible(visible : Bool, animated : Bool){
+        if(self.tabbarIsVisible() == visible){
+//            println("Tabbar at curent state, WILL NOT CHANGE!!")
+            return
+        }
+        
+        var frame = self.tabBarController?.tabBar.frame
+        var height = frame!.size.height
+        var offsetY = 0 as CGFloat
+        if(visible){
+            offsetY = -height
+        } else {
+            offsetY = height
+        }
+        
+        var duration = 0.0 as NSTimeInterval
+        if(animated){
+            duration = 0.3
+        } else { duration = 0.0 }
+        
+        UIView.animateWithDuration(duration, animations: { () -> Void in
+            println("set tabbar Animation!!!! \(offsetY)")
+            self.tabBarController!.tabBar.frame = CGRectOffset(frame!, 0, offsetY);
+        })
+    }
+    
+    func tabbarIsVisible() -> Bool{
+        return self.tabBarController?.tabBar.frame.origin.y < CGRectGetMaxY(self.view.frame)
+    }
+    
+    // MARK: Button action
+    
+    @IBAction func chooseSignTapped(sender: AnyObject) {
+//        var label = String(format: "type=primary,sign=%d", self.selectedSign)
+        
+        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        customTabBarController.parentVC = self
+        
+        self.navigationController!.pushViewController(customTabBarController, animated: true)
+    }
+    
+    @IBAction func cookieButtonTapped(sender: AnyObject) {
+        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+//        customTabBarController.parentVC = self
+        
+        self.navigationController!.pushViewController(customTabBarController, animated: true)
     }
     
 }

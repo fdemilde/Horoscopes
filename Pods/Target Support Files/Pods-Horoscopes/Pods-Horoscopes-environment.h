@@ -84,6 +84,24 @@
 #define COCOAPODS_VERSION_MINOR_MBProgressHUD 9
 #define COCOAPODS_VERSION_PATCH_MBProgressHUD 1
 
+// MZAppearance
+#define COCOAPODS_POD_AVAILABLE_MZAppearance
+#define COCOAPODS_VERSION_MAJOR_MZAppearance 1
+#define COCOAPODS_VERSION_MINOR_MZAppearance 1
+#define COCOAPODS_VERSION_PATCH_MZAppearance 5
+
+// MZFormSheetController
+#define COCOAPODS_POD_AVAILABLE_MZFormSheetController
+#define COCOAPODS_VERSION_MAJOR_MZFormSheetController 3
+#define COCOAPODS_VERSION_MINOR_MZFormSheetController 0
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController 5
+
+// MZFormSheetController/Core
+#define COCOAPODS_POD_AVAILABLE_MZFormSheetController_Core
+#define COCOAPODS_VERSION_MAJOR_MZFormSheetController_Core 3
+#define COCOAPODS_VERSION_MINOR_MZFormSheetController_Core 0
+#define COCOAPODS_VERSION_PATCH_MZFormSheetController_Core 5
+
 // Reachability
 #define COCOAPODS_POD_AVAILABLE_Reachability
 #define COCOAPODS_VERSION_MAJOR_Reachability 3

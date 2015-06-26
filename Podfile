@@ -6,8 +6,9 @@ target "Horoscopes" do
 	pod "JSONKit-NoWarning"
 	pod "FBSDKCoreKit"
 	pod "UIImage+animatedGif"
-	pod 'MBProgressHUD'
+	pod "MBProgressHUD"
     pod "FBSDKLoginKit"
-    pod 'FBSDKShareKit'
+    pod "FBSDKShareKit"
+    pod "MZFormSheetController"
     
 end

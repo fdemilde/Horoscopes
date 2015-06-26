@@ -18,6 +18,7 @@
 #import "RotateControl.h"
 #import "FBSDKLoginKit.h"
 #import "FBSDKShareKit.h"
+#import "MZFormSheetController.h"
 
 // MARK: GAI
 #import "GAI.h"

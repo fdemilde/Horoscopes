@@ -170,13 +170,12 @@ class HoroscopesManager : NSObject {
         var base1SignIndex = signIndex + 1
         //prepare post data
         var postData = NSMutableDictionary()
-        var timeTagString = String(format:"@d",timeTag)
-        var base1SignIndexString = String(format:"@d",base1SignIndex)
-        var ratingString = String(format: "@d",rating)
+        var timeTagString = String(format:"%d",timeTag)
+        var base1SignIndexString = String(format:"%d",base1SignIndex)
+        var ratingString = String(format: "%d",rating)
         postData.setObject(timeTagString, forKey: "time_tag")
         postData.setObject(base1SignIndexString, forKey: "sign")
         postData.setObject(ratingString, forKey: "rating")
-        
         XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
 //            print(response)
             

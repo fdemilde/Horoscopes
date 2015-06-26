@@ -111,6 +111,30 @@ class Utilities {
         var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
     }
+    
+    class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return label.frame.size
+    }
+    
+    class func getParentUIViewController(view : UIView) -> UIResponder{
+        var responder = view as UIResponder
+        while(responder.isKindOfClass(UIView.classForCoder())){
+            responder = responder.nextResponder()!
+        }
+        return responder
+    
+    }
+    
+    class func getHoroscopeNameWithIndex(index: Int) -> String{
+        var horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
+        return horo.sign
+    }
 }
 
 
