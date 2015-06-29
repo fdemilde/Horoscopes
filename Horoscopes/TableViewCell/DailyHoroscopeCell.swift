@@ -21,9 +21,6 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
     var timeTag = NSTimeInterval()
     var signIndex = -1
     
-    let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat
-    let SHARE_HYBRID_HEIGHT                     = 400 as CGFloat
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         horoscopeDesc.delegate = self
@@ -86,7 +83,8 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
     func prepareShareVC() -> ShareViewController{
         var storyBoard = UIStoryboard(name: "Main", bundle: nil)
         var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        shareVC.type = ShareControlerType.ShareControlerTypeHybrid
+        shareVC.viewType = ShareViewType.ShareViewTypeHybrid
+        shareVC.shareType = ShareType.ShareTypeDaily
         shareVC.timeTag = timeTag
         shareVC.horoscopeSignName = Utilities.getHoroscopeNameWithIndex(signIndex)
         shareVC.sharingText = String(format: "%@",self.horoscopeDesc.text)

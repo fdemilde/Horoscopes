@@ -11,11 +11,19 @@ import UIKit
 
 class DailyTableViewController : UITableViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
+    let textviewForCalculating = UITextView()
+    
     var selectedSign = -1
     var timeTags = [AnyObject]()
     var cellArray = [AnyObject]()
     var lastContentOffset = 0 as CGFloat
     var isScrolling = false
+    var shouldCollectData = false
+    var shouldReloadData = true
+    var today = NSDate()
+    var collectedHoro = CollectedHoroscope()
+    var firstCell = DailyHoroscopeHeaderCell()
+    
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
     var startPositionY = 0 as CGFloat
@@ -23,7 +31,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.backgroundView = UIImageView(image: UIImage(named: "background"))
-//        self.tableView.backgroundColor = UIColor.blueColor()
         self.tableView.estimatedRowHeight = 130
         tableView.rowHeight = UITableViewAutomaticDimension
         
@@ -31,11 +38,13 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
             self.selectedSign = parentVC.selectedSign
         }
         self.setupData()
+        //app returns to the foreground, reload table
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        self.refreshView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        self.setupNotification()
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -55,27 +64,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
     }
     
-    func setupData(){
-        if(selectedSign != -1){
-            var todayDesc = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as! String
-            var tomorrowDesc = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as! String
-            cellArray.append("")
-            cellArray.append(todayDesc)
-            cellArray.append(tomorrowDesc)
-            if let todayDict = XAppDelegate.horoscopesManager.data["today"] as? Dictionary <String, AnyObject>{
-                if let todayTimeTag = todayDict["time_tag"] as? String{
-                    self.timeTags.append(todayTimeTag)
-                }
-            }
-            
-            if let tomorrowDict = XAppDelegate.horoscopesManager.data["tomorrow"] as? Dictionary <String, AnyObject>{
-                if let tomorrowTimeTag = tomorrowDict["time_tag"] as? String{
-                    self.timeTags.append(tomorrowTimeTag)
-                }
-            }
-        }
-        
-    }
+    
     
     // MARK: table view delegate & datasource
     
@@ -85,12 +74,13 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
+        //TODO: need update
         if(indexPath.row == 0){
-            var cell = DailyHoroscopeHeaderCell()
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopeHeaderCell", forIndexPath: indexPath) as! DailyHoroscopeHeaderCell
-            cell.setupCell(self.selectedSign)
-            return cell
+            firstCell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopeHeaderCell", forIndexPath: indexPath) as! DailyHoroscopeHeaderCell
+            firstCell.setupCell(self.selectedSign)
+            firstCell.collectTextLabel.text = String(format:"%g%",round(collectedHoro.getScore()*100))
+            firstCell.parentVC = self
+            return firstCell
         } else {
             var cell = DailyHoroscopeCell()
             cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopeCell", forIndexPath: indexPath) as! DailyHoroscopeCell
@@ -139,12 +129,32 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     // MARK: Notifications handlers
     
     @objc func allSignLoaded(notif: NSNotification) {
-        println("MyNotification was handled")
-        self.saveData()
-        self.tableView.reloadData()
+        self.reloadData()
     }
     
-    //MARK: Helpers
+    //MARK: Data handlers
+    
+    func setupData(){
+        if(selectedSign != -1){
+            var todayDesc = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as! String
+            var tomorrowDesc = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as! String
+            cellArray.append("")
+            cellArray.append(todayDesc)
+            cellArray.append(tomorrowDesc)
+            if let todayDict = XAppDelegate.horoscopesManager.data["today"] as? Dictionary <String, AnyObject>{
+                if let todayTimeTag = todayDict["time_tag"] as? String{
+                    self.timeTags.append(todayTimeTag)
+                }
+            }
+            
+            if let tomorrowDict = XAppDelegate.horoscopesManager.data["tomorrow"] as? Dictionary <String, AnyObject>{
+                if let tomorrowTimeTag = tomorrowDict["time_tag"] as? String{
+                    self.timeTags.append(tomorrowTimeTag)
+                }
+            }
+        }
+        
+    }
     
     func saveData(){
         var todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
@@ -158,7 +168,96 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         self.cellArray.append("")
         self.cellArray.append(todayDesc)
         self.cellArray.append(tomorrowDesc)
+        
+        // Update collected data
+        self.updateCollectedData()
     }
+    
+    func refreshView(){
+        
+        self.today = NSDate()
+        self.collectedHoro = CollectedHoroscope()
+        var today1 = NSDate()
+        // TODO: not sure about this, old version calendar unit is MAX INTEGER
+        var currentCal = NSCalendar.currentCalendar()
+        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        
+        var todayComp = currentCal.components(components, fromDate: NSDate())
+        todayComp.calendar = currentCal
+        
+        var lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: collectedHoro.lastDateOpenApp)
+        lastOpenComp.calendar = currentCal
+        
+        todayComp.hour = 1
+        todayComp.minute = 1
+        todayComp.second = 1
+        
+//        println(String(format:"todayComp.date todayComp.date = %@",todayComp.date!))
+        let newDate = lastOpenComp.date
+        println(String(format:"lastOpenComp lastOpenComp = %@",newDate!))
+        
+//        var days = 1
+        var days = fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24))) // how many days passed
+        
+        if(days >= 1 || collectedHoro.collectedData.count == 0){
+            self.shouldCollectData = true
+            self.shouldReloadData = true
+        }
+        
+        if(self.shouldReloadData) {
+            self.shouldReloadData = false
+            XAppDelegate.horoscopesManager.getAllHoroscopes(false)
+        }
+        
+        self.setupNotification()
+        var label = String(format:"type=view,sign=%d", self.selectedSign)
+        XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+        
+    }
+    
+    func reloadData(){
+        println("Reload Data!!!")
+        // get data from XAppDelagate and save to local then reload table view
+        self.saveData()
+        self.tableView.reloadData()
+    }
+    
+    func updateCollectedData(){
+        if(self.shouldCollectData == true){
+            self.shouldCollectData = false
+            var currentCal = NSCalendar.currentCalendar()
+            let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+            var todayComp = currentCal.components(components, fromDate: NSDate())
+            todayComp.hour = 1
+            todayComp.minute = 1
+            todayComp.second = 1
+            todayComp.calendar = currentCal
+            println(String(format: "updateCollectedData updateCollectedData %@",currentCal.dateFromComponents(todayComp)!))
+            collectedHoro.mySetLastDateOpenApp(todayComp.date)
+            self.saveCollectedHoroscopeData()
+        } else {
+            var settings = XAppDelegate.userSettings
+            var item = CollectedItem()
+            item.collectedDate = NSDate()
+            item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
+            collectedHoro.collectedData.replaceObjectAtIndex(0, withObject: item)
+            collectedHoro.saveCollectedData()
+        }
+    }
+    
+    func saveCollectedHoroscopeData(){
+        println("saveCollectedHoroscopeData saveCollectedHoroscopeData !!!")
+        var item = CollectedItem()
+        item.collectedDate = NSDate()
+        item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
+        collectedHoro.collectedData.insertObject(item, atIndex: 0)
+        println("saveCollectedHoroscopeData 111 == \(collectedHoro.collectedData)")
+        collectedHoro.saveCollectedData()
+        firstCell.collectTextLabel.text = String(format:"%g",collectedHoro.getScore()*100)
+        firstCell.updateAndAnimateCollectHoroscope()
+    }
+    
+    // MARK: Helpers
     
     func getAboutCellHeight(desc: String) -> CGFloat {
         var font = UIFont(name: "HelveticaNeue", size: 16)
@@ -172,10 +271,8 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     }
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
-        var textView = UITextView()
-        textView.attributedText = string
-        
-        let size = textView.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        textviewForCalculating.attributedText = string
+        let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
         var height = ceil(size.height)
         return height
     }
@@ -227,7 +324,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     
     func setTabbarVisible(visible : Bool, animated : Bool){
         if(self.tabbarIsVisible() == visible){
-//            println("Tabbar at curent state, WILL NOT CHANGE!!")
             return
         }
         
@@ -246,7 +342,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         } else { duration = 0.0 }
         
         UIView.animateWithDuration(duration, animations: { () -> Void in
-            println("set tabbar Animation!!!! \(offsetY)")
             self.tabBarController!.tabBar.frame = CGRectOffset(frame!, 0, offsetY);
         })
     }

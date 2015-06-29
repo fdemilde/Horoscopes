@@ -18,4 +18,5 @@
 - (double)getScore; //calculate the %
 - (void)reset; //reset collected horoscopes 
 - (void)saveCollectedData;
+- (void)mySetLastDateOpenApp:(NSDate *)lastDateOpenApp;
 @end

@@ -13,8 +13,6 @@ import Social
 
 class ShareViewController : UIViewController {
     
-//    let SHARE_DIRECT_HEIGHT                     = 235
-//    let SHARE_HYBRID_HEIGHT                     = 375
     
     let startPosY = 55.0 as CGFloat
     let padding = 15.0 as CGFloat
@@ -34,7 +32,8 @@ class ShareViewController : UIViewController {
     
     var currentButtonIndex = 0
     
-    var type = ShareControlerType.ShareControlerTypeDirect
+    var viewType = ShareViewType.ShareViewTypeDirect
+    var shareType = ShareType.ShareTypeDaily
     
     var separateLineView = UIView()
     
@@ -54,7 +53,7 @@ class ShareViewController : UIViewController {
     }
     
     func setupShareButtons(){
-        if(self.type == ShareControlerType.ShareControlerTypeHybrid){
+        if(self.viewType == ShareViewType.ShareViewTypeHybrid){
             // include Twitter and Facebook
             self.createFacebookButton()
             self.createTwitterButton()
@@ -129,7 +128,7 @@ class ShareViewController : UIViewController {
         var row = 0 as Int
         var col = 0 as Int
         
-        if(type == ShareControlerType.ShareControlerTypeHybrid){
+        if(viewType == ShareViewType.ShareViewTypeHybrid){
             /*
             it should have FB and twitter button
             row 1: 1,2
@@ -188,7 +187,8 @@ class ShareViewController : UIViewController {
     
     func handleFBMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        shareController.shareFbMessage(horoscopeSignName, text: sharingText, url: self.getSharingURL(), pictureURL: pictureURL)
+        var title = self.getTitle()
+        shareController.shareFbMessage(title, text: sharingText, url: self.getSharingURL(), pictureURL: pictureURL)
     }
     
     func handleWhatsappTap(sender: AnyObject){
@@ -227,11 +227,44 @@ class ShareViewController : UIViewController {
     // MARK: Helpers
     
     func getSharingURL() -> String{
-        var urlString = String(format: "http://apps.facebook.com/phonehoroscopes/read.php?rf=nf_iphone&tag=%f&ref_id=%@", timeTag, FACEBOOK_APP_ID)
+        var urlString = ""
+        switch (shareType) {
+            case ShareType.ShareTypeDaily:
+                urlString = String(format: "http://apps.facebook.com/phonehoroscopes/read.php?rf=nf_iphone&tag=%f&ref_id=%@", timeTag, FACEBOOK_APP_ID)
+            break
+            case ShareType.ShareTypeFortune:
+                urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
+            break
+        }
+        
+        
         return urlString
     }
     
     func getTextIncludingTitle() -> String{
-        return String(format: "Daily %@ Horoscope \n %@",horoscopeSignName,sharingText)
+        var text = ""
+        
+        switch (shareType) {
+        case ShareType.ShareTypeDaily:
+            text = String(format: "Daily %@ Horoscope \n %@",horoscopeSignName,sharingText)
+            break
+        case ShareType.ShareTypeFortune:
+            text = String(format: "I read my mobile fortune cookie! \n Lucky Numbers %@",sharingText)
+            break
+        }
+        return text
+    }
+    
+    func getTitle() -> String{
+        var title = ""
+        switch (shareType) {
+        case ShareType.ShareTypeDaily:
+            title = String(format: "Daily %@ Horoscope", horoscopeSignName)
+            break
+        case ShareType.ShareTypeFortune:
+            title = "Read your fortune cookie"
+            break
+        }
+        return title
     }
 }

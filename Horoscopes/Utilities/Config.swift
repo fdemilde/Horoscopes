@@ -16,9 +16,12 @@ let REFRESH_DATA_METHOD  = "app.horoscopes.refresh"
 let REGISTER_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
 let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
+let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
+
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"
 let NOTIFICATION_ALL_SIGNS_LOADED = "NOTIFICATION_ALL_SIGNS_LOADED"
+let NOTIFICATION_SAVE_COLLECTED_HORO_FINISHED = "NOTIFICATION_SAVE_COLLECTED_HORO_FINISHED"
 
 // event tracker constances
 let defaultAppOpenAction            = "OpenApp"
@@ -40,8 +43,16 @@ enum DailyHoroscopeType {
     case TomorrowHoroscope
 }
 
-enum ShareControlerType {
-    case ShareControlerTypeDirect
-    case ShareControlerTypeHybrid
+enum ShareViewType {
+    case ShareViewTypeDirect
+    case ShareViewTypeHybrid
 }
+
+enum ShareType {
+    case ShareTypeDaily
+    case ShareTypeFortune
+}
+
+let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat
+let SHARE_HYBRID_HEIGHT                     = 400 as CGFloat
 

@@ -85,13 +85,21 @@ class HoroscopesManager : NSObject {
         var postData = NSMutableDictionary()
         if(refreshOnly == false){
             
+            var mccString = "123"
+            var mncString = "12"
             var netInfo = CTTelephonyNetworkInfo()
-            var carrier = netInfo.subscriberCellularProvider
+            if let carrier = netInfo.subscriberCellularProvider {
+                if(carrier.mobileCountryCode != nil){
+                    mccString = carrier.mobileCountryCode
+                }
+                
+                if(carrier.mobileNetworkCode != nil){
+                    mncString = carrier.mobileNetworkCode
+                }
+
+            }
             
-            var mcc = carrier.mobileCountryCode
-            var mnc = carrier.mobileNetworkCode
-            if(mcc == "") {mcc = "123"}
-            if(mnc == "") {mcc = "12"}
+            
             
             var iOSVersion = UIDevice.currentDevice().systemVersion;
             var devideType = UIDevice.currentDevice().model;
@@ -111,8 +119,8 @@ class HoroscopesManager : NSObject {
             
             // sc.sendRequest need an NSMutableDictionary to process
             
-            postData.setObject(mcc, forKey: "mcc")
-            postData.setObject(mnc, forKey: "mnc")
+            postData.setObject(mccString, forKey: "mcc")
+            postData.setObject(mncString, forKey: "mnc")
             postData.setObject(strScore, forKey: "score")
             postData.setObject(loadCountString, forKey: "load_count")
             postData.setObject(version, forKey: "version")
@@ -152,16 +160,10 @@ class HoroscopesManager : NSObject {
         
     }
     
-    func getFortune() {
-        var fbRequest = FBSDKGraphRequest()
-    }
-    
     func registerNotificationToken(token : String){
         var postData = NSMutableDictionary()
         postData.setObject(token, forKey: "device_token")
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-//            self.data = self.parseResponseObjToDictionary(response)
-//            print(response)
         })
     }
     
@@ -196,7 +198,7 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
             horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
-            var dict = horoSigns[index-1].horoscopes
+//            var dict = horoSigns[index-1].horoscopes
         }
     }
 

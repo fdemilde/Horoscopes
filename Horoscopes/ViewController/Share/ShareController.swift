@@ -102,10 +102,10 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     }
     
     // MARK: share FBMessage
-    func shareFbMessage(signName : String, text : String, url: String, pictureURL : String){
+    func shareFbMessage(title : String, text : String, url: String, pictureURL : String){
         let content:FBSDKShareLinkContent = FBSDKShareLinkContent()
         content.contentURL = NSURL(string: url)
-        content.contentTitle = String(format: "Daily %@ Horoscope", signName)
+        content.contentTitle = title
         content.contentDescription = text
         content.imageURL = NSURL(string: pictureURL)
         

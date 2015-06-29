@@ -22,6 +22,7 @@
 
 
 - (void)saveCollectedData{
+    NSLog(@"saveCollectedData saveCollectedData saveCollectedData");
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
 }
@@ -43,8 +44,6 @@
 
 - (double)getScore{
     int totalDays = round([self.lastDateOpenApp timeIntervalSinceDate:self.dateInstalledApp] / (3600*24))+1;
-    DebugLog(@"%@", self.lastDateOpenApp);
-    DebugLog(@"%@", self.dateInstalledApp);
     double result = [self.collectedData count] / (double)totalDays;
     if(result >= 2) return 1;
     return result;
@@ -89,7 +88,7 @@
     return  _lastDateOpenApp;
 }
 
-- (void)setLastDateOpenApp:(NSDate *)lastDateOpenApp{
+- (void)mySetLastDateOpenApp:(NSDate *)lastDateOpenApp{
     _lastDateOpenApp = lastDateOpenApp;
     [[NSUserDefaults standardUserDefaults] setObject:lastDateOpenApp forKey:kLastDateOpenApp];
     
