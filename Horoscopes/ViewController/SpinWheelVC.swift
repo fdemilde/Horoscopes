@@ -23,6 +23,11 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         self.setupWheel()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        wheel.removeFromSuperview()
+    }
+    
     func setupNotification(){
 //        NSNotificationCenter.defaultCenter().addObserver(self, selector: "allSignLoaded:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
     }

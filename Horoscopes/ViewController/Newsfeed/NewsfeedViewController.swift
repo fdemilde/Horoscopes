@@ -11,6 +11,9 @@ import UIKit
 
 class NewsfeedViewController : UIViewController, ASTableViewDataSource, ASTableViewDelegate  {
     
+    let TABLE_PADDING_TOP = 20 as CGFloat
+    let TABLE_PADDING_BOTTOM = 49 as CGFloat
+    
     @IBOutlet weak var selectHoroscopeSignButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     var userProfileArray = [UserProfile]()
@@ -18,13 +21,18 @@ class NewsfeedViewController : UIViewController, ASTableViewDataSource, ASTableV
     
     var feedsDisplayNode = ASDisplayNode()
     var tableView = ASTableView()
+    var tabType = NewsfeedTabType.SignTag
+    var currentSelectedSign = 0 // 0 is all
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         self.setupTableView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshViewWithNewData:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshViewWithNewData:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         XAppDelegate.socialManager.getGlobalNewsfeed(0)
+//
+//        XAppDelegate.socialManager.getUserNewsfeed(0,uid: 8)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -33,12 +41,14 @@ class NewsfeedViewController : UIViewController, ASTableViewDataSource, ASTableV
     }
     
     func setupTableView(){
-        self.tableView = ASTableView(frame: CGRectMake(0, selectHoroscopeSignButton.frame.height + 40, Utilities.getScreenSize().width, Utilities.getScreenSize().height - 40), style: UITableViewStyle.Plain)
+        self.tableView = ASTableView(frame: CGRectMake(0, selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
         tableView.bounces = true
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.backgroundColor = UIColor.clearColor()
         tableView.asyncDataSource = self
         tableView.asyncDelegate =  self
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
         self.view.addSubview(tableView)
     }
     
@@ -72,7 +82,19 @@ class NewsfeedViewController : UIViewController, ASTableViewDataSource, ASTableV
     // MARK: Button Actions
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
+        if(tabType != NewsfeedTabType.SignTag){
+            tabType == NewsfeedTabType.SignTag
+            XAppDelegate.socialManager.getGlobalNewsfeed(0)
+        }
+        
     }
     
-    @IBOutlet weak var followingButtonTapped: UIButton!
+    @IBAction func followingButtonTapped(sender: AnyObject) {
+        if(tabType != NewsfeedTabType.Following){
+            tabType == NewsfeedTabType.Following
+            XAppDelegate.socialManager.getFollowingNewsfeed(0)
+        }
+    }
+    
+    
 }

@@ -18,9 +18,9 @@ class SocialManager : NSObject {
     
     // MARK: Network - Newsfeed
     
-    func getUserNewsfeed(pageNo : Int, uid : String){
+    func getUserNewsfeed(pageNo : Int, uid : Int){
         var postData = NSMutableDictionary()
-        var uidString = String(format:"%@",uid)
+        var uidString = String(format:"%d",uid)
         var pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         postData.setObject(uid, forKey: "uid")
@@ -61,7 +61,27 @@ class SocialManager : NSObject {
         })
     }
     
-    func getFollowingNewsfeed(String){
-        
+    func getFollowingNewsfeed(pageNo : Int){
+        var postData = NSMutableDictionary()
+        var pageString = String(format:"%d",pageNo)
+        postData.setObject(pageString, forKey: "page")
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING_FEED,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            if(error != nil){
+                println("Error when get getGlobalNewsfeed = \(error)")
+            } else {
+                println("getFollowingNewsfeed response = \(response)")
+                var result = Utilities.parseNSDictionaryToDictionary(response)
+                var errorCode = result["error"] as! Int
+                if(errorCode != 0){
+                    println("Error code = \(errorCode)")
+                } else { // no error
+                    var userDict = result["user"] as! Dictionary<String, AnyObject>
+                    var postsArray = result["posts"] as! [AnyObject]
+                    var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: feedsArray)
+                }
+            }
+            
+        })
     }
 }

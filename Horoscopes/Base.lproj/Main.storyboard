@@ -37,6 +37,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="followingButtonTapped:" destination="hTE-h3-LDK" eventType="touchUpInside" id="Ube-D8-o5K"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -85,7 +88,6 @@
                     <tabBarItem key="tabBarItem" title="" image="tabbar_newsfeed.png" id="j96-SJ-CFb"/>
                     <connections>
                         <outlet property="followingButton" destination="q62-tP-CNc" id="t1r-1G-pN4"/>
-                        <outlet property="followingButtonTapped" destination="q62-tP-CNc" id="h8F-bQ-XdW"/>
                         <outlet property="selectHoroscopeSignButton" destination="PLI-0c-9gH" id="x9h-iY-UEh"/>
                     </connections>
                 </viewController>
