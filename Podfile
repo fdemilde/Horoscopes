@@ -10,5 +10,7 @@ target "Horoscopes" do
     pod "FBSDKLoginKit"
     pod "FBSDKShareKit"
     pod "MZFormSheetController"
+    pod "AsyncDisplayKit"
+    pod "WebASDKImageManager"
     
 end

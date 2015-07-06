@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-Horoscopes-AsyncDisplayKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Horoscopes-Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -49,7 +54,17 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Horoscopes-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Horoscopes-UIImage+animatedGif.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-Horoscopes-WebASDKImageManager.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -62,57 +77,72 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0F1FB31E437373CEDC60B2CB</key>
+		<key>0F4D2051F09043AEB3011B6C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>25035F263D0AE4874E08BA3D</key>
+		<key>126BDDCB1E4A7689DFDCD64A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>338ECFBE175826885B914DA6</key>
+		<key>1514AC1CB9B76BD5EE43AB51</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>3D86BFD01C69E9B1D937BB39</key>
+		<key>203DB23A2B1A622F91333E85</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C2B683386756D4C2AC476D8</key>
+		<key>3BB6DC3D2CCB415C63D78D0A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88EA90427157CF1D23850CA6</key>
+		<key>64B874B293292B5A96B10C7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F2D93631FEA5C3DB2F87DEA</key>
+		<key>6AE145F716825251EEB1BAFB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BEFB12A2DEB2B6B1CF1CE2E6</key>
+		<key>82FE0F2FE9C426ECD16624E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DF2CE08D769C74EB212FD796</key>
+		<key>A6F0F33D26A0C70B45752AA4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E05ACF072FC254B71C16FC0F</key>
+		<key>A8601F4E358AB4497F9DD8E5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EAB1093E6BE11777743359BF</key>
+		<key>BF7D46FE4953029EB10BB301</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>BFF27E523FACC056EC0F8D71</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F658A487A16479A7427D7E5F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>F871197B40A4E570026F1FDC</key>
 		<dict>
 			<key>primary</key>
 			<true/>

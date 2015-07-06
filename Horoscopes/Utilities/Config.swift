@@ -10,7 +10,7 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
-// Network request
+// MARK: Network request
 let GET_DATA_METHOD  = "app.horoscopes.checkin" //debug.logrequest for testing event.upload for actual
 let REFRESH_DATA_METHOD  = "app.horoscopes.refresh"
 let REGISTER_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
@@ -18,12 +18,18 @@ let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
 let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
 
+// MARK: Network - Social
+let GET_USER_FEED = "app.horoscopes.feed.user"
+let GET_GLOBAL_FEED = "app.horoscopes.feed.global"
+let GET_FOLLOWING_FEED = "app.horoscopes.feed.following"
+
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"
 let NOTIFICATION_ALL_SIGNS_LOADED = "NOTIFICATION_ALL_SIGNS_LOADED"
 let NOTIFICATION_SAVE_COLLECTED_HORO_FINISHED = "NOTIFICATION_SAVE_COLLECTED_HORO_FINISHED"
+let NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED = "NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED"
 
-// event tracker constances
+// MARK: event tracker constances
 let defaultAppOpenAction            = "OpenApp"
 let defaultNotificationQuestion     = "notif_qn"
 let defaultHoroscopeChooser         = "chooser"
@@ -51,6 +57,14 @@ enum ShareViewType {
 enum ShareType {
     case ShareTypeDaily
     case ShareTypeFortune
+}
+
+// Newsfeed
+
+enum NewsfeedType {
+    case OnYourMind
+    case Story
+    case Feeling
 }
 
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat

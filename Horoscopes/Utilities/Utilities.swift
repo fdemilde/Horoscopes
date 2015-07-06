@@ -135,6 +135,40 @@ class Utilities {
         var horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
         return horo.sign
     }
+    
+    // MARK: Newsfeed, User profile and user post parsing helpers
+    
+    class func parseFeedsArray(userDataDict : Dictionary<String, AnyObject>, postsDataArray : [AnyObject]) -> [UserPost]{
+        var resultArray = [UserPost]()
+        var userDict = Dictionary<String, UserProfile>()
+        var user = UserProfile()
+        for (uid, userData) in userDataDict {
+            var userObject = UserProfile(data: userData as! NSDictionary)
+            userDict[uid] = userObject
+        }
+        
+        for postData in postsDataArray{
+            var postObject = UserPost(data: postData as! NSDictionary)
+            var uid = postObject.uid
+            var uidString = String(format: "%d", uid)
+            if let userObj = userDict[uidString] {
+                postObject.user = userObj
+            }
+            resultArray.append(postObject)
+        }
+        
+        println("parseFeedsArray userDict === \(resultArray)")
+        
+        return resultArray
+    }
+    
+    class func getNewsfeedTypeByString(typeString : String) -> NewsfeedType{
+        if(typeString == "onyourmind") {return NewsfeedType.OnYourMind}
+        if(typeString == "story") {return NewsfeedType.Story}
+        if(typeString == "feeling") {return NewsfeedType.Feeling}
+        return NewsfeedType.OnYourMind
+    }
+    
 }
 
 

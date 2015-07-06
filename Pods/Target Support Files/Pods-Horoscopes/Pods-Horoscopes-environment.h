@@ -6,6 +6,18 @@
 // project.
 
 
+// AsyncDisplayKit
+#define COCOAPODS_POD_AVAILABLE_AsyncDisplayKit
+#define COCOAPODS_VERSION_MAJOR_AsyncDisplayKit 1
+#define COCOAPODS_VERSION_MINOR_AsyncDisplayKit 2
+#define COCOAPODS_VERSION_PATCH_AsyncDisplayKit 1
+
+// AsyncDisplayKit/ASDealloc2MainObject
+#define COCOAPODS_POD_AVAILABLE_AsyncDisplayKit_ASDealloc2MainObject
+#define COCOAPODS_VERSION_MAJOR_AsyncDisplayKit_ASDealloc2MainObject 1
+#define COCOAPODS_VERSION_MINOR_AsyncDisplayKit_ASDealloc2MainObject 2
+#define COCOAPODS_VERSION_PATCH_AsyncDisplayKit_ASDealloc2MainObject 1
+
 // Bolts
 #define COCOAPODS_POD_AVAILABLE_Bolts
 #define COCOAPODS_VERSION_MAJOR_Bolts 1
@@ -108,9 +120,21 @@
 #define COCOAPODS_VERSION_MINOR_Reachability 2
 #define COCOAPODS_VERSION_PATCH_Reachability 0
 
+// SDWebImage/Core
+#define COCOAPODS_POD_AVAILABLE_SDWebImage_Core
+#define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
+#define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
+#define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
+
 // UIImage+animatedGif
 #define COCOAPODS_POD_AVAILABLE_UIImage_animatedGif
 #define COCOAPODS_VERSION_MAJOR_UIImage_animatedGif 0
 #define COCOAPODS_VERSION_MINOR_UIImage_animatedGif 1
 #define COCOAPODS_VERSION_PATCH_UIImage_animatedGif 0
+
+// WebASDKImageManager
+#define COCOAPODS_POD_AVAILABLE_WebASDKImageManager
+#define COCOAPODS_VERSION_MAJOR_WebASDKImageManager 1
+#define COCOAPODS_VERSION_MINOR_WebASDKImageManager 0
+#define COCOAPODS_VERSION_PATCH_WebASDKImageManager 1
 

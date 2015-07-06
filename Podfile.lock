@@ -1,4 +1,7 @@
 PODS:
+  - AsyncDisplayKit (1.2.1):
+    - AsyncDisplayKit/ASDealloc2MainObject (= 1.2.1)
+  - AsyncDisplayKit/ASDealloc2MainObject (1.2.1)
   - Bolts (1.2.0):
     - Bolts/AppLinks (= 1.2.0)
     - Bolts/Tasks (= 1.2.0)
@@ -31,9 +34,14 @@ PODS:
   - MZFormSheetController/Core (3.0.5):
     - MZAppearance
   - Reachability (3.2)
+  - SDWebImage/Core (3.7.2)
   - UIImage+animatedGif (0.1.0)
+  - WebASDKImageManager (1.0.1):
+    - AsyncDisplayKit (~> 1.1)
+    - SDWebImage/Core (~> 3.7)
 
 DEPENDENCIES:
+  - AsyncDisplayKit
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -44,8 +52,10 @@ DEPENDENCIES:
   - MZFormSheetController
   - Reachability
   - UIImage+animatedGif
+  - WebASDKImageManager
 
 SPEC CHECKSUMS:
+  AsyncDisplayKit: b2f777da3a246b4aad660b2a55d60bb4328049b9
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
   FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
   FBSDKLoginKit: 57e37106af12c9e264e473dcb75d7decdbb07fe4
@@ -57,6 +67,8 @@ SPEC CHECKSUMS:
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
   MZFormSheetController: 4b351d487e6abaf2d208eba04581723a5b73c4de
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
+  WebASDKImageManager: 8e37e97c115c8e9092fc6111218a71ddec7a73d5
 
 COCOAPODS: 0.37.2

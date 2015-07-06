@@ -22,7 +22,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     var shouldReloadData = true
     var today = NSDate()
     var collectedHoro = CollectedHoroscope()
-    var firstCell = DailyHoroscopeHeaderCell()
+    var firstCell : DailyHoroscopeHeaderCell!
     
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
@@ -77,12 +77,14 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         //TODO: need update
         if(indexPath.row == 0){
             firstCell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopeHeaderCell", forIndexPath: indexPath) as! DailyHoroscopeHeaderCell
-            firstCell.setupCell(self.selectedSign)
-            firstCell.collectTextLabel.text = String(format:"%g%",round(collectedHoro.getScore()*100))
-            firstCell.parentVC = self
+                firstCell.setupCell(self.selectedSign)
+                firstCell.collectTextLabel.text = String(format:"%g%",round(collectedHoro.getScore()*100))
+                firstCell.parentVC = self
+                firstCell.backgroundColor = UIColor.clearColor()
+            
             return firstCell
         } else {
-            var cell = DailyHoroscopeCell()
+            var cell : DailyHoroscopeCell!
             cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopeCell", forIndexPath: indexPath) as! DailyHoroscopeCell
             if(indexPath.row == 1){
                 var resultDesc = self.getTodayDesc()
@@ -91,7 +93,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
                     var timeString = self.timeTags[0] as! NSString
                     resultTs = NSTimeInterval(timeString.doubleValue)
                 }
-//
                 cell.setupCell(selectedSign, desc: resultDesc, time: resultTs, type: DailyHoroscopeType.TodayHoroscope)
                 
             } else {
@@ -104,7 +105,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
                 }
                 cell.setupCell(selectedSign, desc: resultDesc, time: resultTs, type: DailyHoroscopeType.TomorrowHoroscope)
             }
-            
+            cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         
@@ -178,7 +179,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         self.today = NSDate()
         self.collectedHoro = CollectedHoroscope()
         var today1 = NSDate()
-        // TODO: not sure about this, old version calendar unit is MAX INTEGER
         var currentCal = NSCalendar.currentCalendar()
         let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
         

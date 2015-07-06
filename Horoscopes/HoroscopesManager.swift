@@ -74,7 +74,7 @@ class HoroscopesManager : NSObject {
         return horoscopesSigns
     }
     
-    // MARK: Network
+    // MARK: Network - Horoscope
     
     func getAllHoroscopes(refreshOnly : Bool) {
         println("getAllHoroscopes getAllHoroscopes ")
@@ -201,7 +201,6 @@ class HoroscopesManager : NSObject {
 //            var dict = horoSigns[index-1].horoscopes
         }
     }
-
     
 }
 

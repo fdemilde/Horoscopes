@@ -25,6 +25,7 @@ class DailyHoroscopeHeaderCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.bringSubviewToFront(collectHoroscopeButton)
     }
     
     func setupCell(signIndex : Int) {
@@ -44,11 +45,11 @@ class DailyHoroscopeHeaderCell: UITableViewCell {
                 starImage.hidden = true
             }
         }
-        collectHoroscopeButton.backgroundColor = UIColor.blueColor()
         
     }
     
     func updateAndAnimateCollectHoroscope(){
+        println("updateAndAnimateCollectHoroscope updateAndAnimateCollectHoroscope ")
         var collectedHoro = CollectedHoroscope()
         
         var animationView = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))

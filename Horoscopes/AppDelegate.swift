@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mobilePlatform = MobilePlatform()
     var userSettings = UserSettings()
     var horoscopesManager = HoroscopesManager()
+    var socialManager = SocialManager()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
