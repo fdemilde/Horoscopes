@@ -43,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var formSheet = MZFormSheetController(viewController: viewController)
         formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
         formSheet.cornerRadius = 0.0;
-        formSheet.portraitTopInset = -20.0;
+        formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
         self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }

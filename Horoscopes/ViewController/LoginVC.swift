@@ -215,7 +215,7 @@ class LoginVC : SpinWheelVC {
         let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CustomTabBarController") as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
         
-        self.navigationController!.pushViewController(customTabBarController, animated: true)
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
 }
