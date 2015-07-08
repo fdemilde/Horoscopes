@@ -116,6 +116,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 }
             }
         })
+    }
 
     func createPost(type: String, message: String) {
         var postData = NSMutableDictionary()

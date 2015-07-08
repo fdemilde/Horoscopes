@@ -108,7 +108,6 @@
 		F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACACB1B2010F2003C6301 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */; };
 		F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */; };
-		F4FBE56C1B4BE70300F6E79A /* NewsfeedTableViewNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4FBE56B1B4BE70300F6E79A /* NewsfeedTableViewNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -263,7 +262,6 @@
 		F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignVC.swift; sourceTree = "<group>"; };
 		F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
-		F4FBE56B1B4BE70300F6E79A /* NewsfeedTableViewNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableViewNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,7 +407,6 @@
 			isa = PBXGroup;
 			children = (
 				F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */,
-				F4FBE56B1B4BE70300F6E79A /* NewsfeedTableViewNode.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -919,7 +916,6 @@
 				F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */,
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F49EB5631B41C21E00F56092 /* CollectHoroscopeDetailVC.swift in Sources */,
-				F4FBE56C1B4BE70300F6E79A /* NewsfeedTableViewNode.swift in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
 				F49EB5641B41C21E00F56092 /* CollectHoroscopesTableVC.swift in Sources */,
