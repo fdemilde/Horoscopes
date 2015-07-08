@@ -26,7 +26,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         // Do any additional setup after loading the view.
         let backgroundImage = UIImage(named: "background")
         self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dismissPost:", name: NOTIFICATION_CREATE_POST_FINISHED, object: nil)
         
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
@@ -45,6 +44,10 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     override func viewWillAppear(animated: Bool) {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dismissPost:", name: NOTIFICATION_CREATE_POST, object: nil)
+        
+        textView.autocorrectionType = .No
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,6 +57,8 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_CREATE_POST, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
