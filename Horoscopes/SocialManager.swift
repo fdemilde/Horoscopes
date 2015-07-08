@@ -133,7 +133,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 } else { // no error
                     let postId = result["post_id"] as! String
                     // TODO: - Use post id when needed
-                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_CREATE_POST_FINISHED, object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_CREATE_POST, object: nil)
                 }
             }
         }
