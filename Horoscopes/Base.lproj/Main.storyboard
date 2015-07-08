@@ -107,15 +107,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uXY-P7-eXr">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uXY-P7-eXr">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="132" id="Y6t-oH-fD7"/>
                                 </constraints>
+                                <color key="separatorColor" red="0.3411764705882353" green="0.32156862745098036" blue="0.45098039215686275" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostTableViewCell" id="pa5-dn-T8O">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostTableViewCell" id="pa5-dn-T8O">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pa5-dn-T8O" id="72W-kY-1Hh">
                                             <autoresizingMask key="autoresizingMask"/>
@@ -162,6 +163,8 @@
                                 <exclude reference="uXY-P7-eXr"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="ByL-6M-UGr"/>
+                                <exclude reference="P1C-qC-gXU"/>
                                 <exclude reference="5AQ-Db-WNy"/>
                                 <exclude reference="9t7-dG-Tj4"/>
                                 <exclude reference="FoY-DN-Lnh"/>
@@ -173,8 +176,6 @@
                                 <exclude reference="Xfn-UV-GQB"/>
                                 <exclude reference="lCg-SS-PLY"/>
                                 <exclude reference="rea-pO-aHM"/>
-                                <exclude reference="ByL-6M-UGr"/>
-                                <exclude reference="P1C-qC-gXU"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -182,6 +183,8 @@
                                 <include reference="uXY-P7-eXr"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="ByL-6M-UGr"/>
+                                <exclude reference="P1C-qC-gXU"/>
                                 <include reference="5AQ-Db-WNy"/>
                                 <exclude reference="9t7-dG-Tj4"/>
                                 <exclude reference="FoY-DN-Lnh"/>
@@ -193,8 +196,6 @@
                                 <exclude reference="Xfn-UV-GQB"/>
                                 <include reference="lCg-SS-PLY"/>
                                 <exclude reference="rea-pO-aHM"/>
-                                <exclude reference="ByL-6M-UGr"/>
-                                <exclude reference="P1C-qC-gXU"/>
                             </mask>
                         </variation>
                     </view>
@@ -1240,6 +1241,7 @@
                         <viewControllerLayoutGuide type="bottom" id="Qed-Vx-UEz"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="KKB-G9-SQt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8IV-7C-T5H">
@@ -1342,10 +1344,15 @@
                                 <exclude reference="dYE-BJ-Zu8"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="Gaz-8f-H00"/>
+                                <exclude reference="azL-OU-vAW"/>
+                                <exclude reference="vD6-bo-cyk"/>
                                 <exclude reference="4ZL-7l-qPO"/>
                                 <exclude reference="Sdc-ca-BsB"/>
                                 <exclude reference="bmb-uv-Uok"/>
                                 <exclude reference="dgt-uM-CmT"/>
+                                <exclude reference="HiZ-4F-R3U"/>
+                                <exclude reference="les-m0-kqN"/>
                                 <exclude reference="1CT-yr-sNC"/>
                                 <exclude reference="2fZ-Ov-OPn"/>
                                 <exclude reference="5c2-x1-QEp"/>
@@ -1358,11 +1365,6 @@
                                 <exclude reference="sps-l8-hqR"/>
                                 <exclude reference="vCS-Ux-YTW"/>
                                 <exclude reference="xRf-3g-kZU"/>
-                                <exclude reference="HiZ-4F-R3U"/>
-                                <exclude reference="les-m0-kqN"/>
-                                <exclude reference="Gaz-8f-H00"/>
-                                <exclude reference="azL-OU-vAW"/>
-                                <exclude reference="vD6-bo-cyk"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1372,10 +1374,15 @@
                                 <include reference="dYE-BJ-Zu8"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="Gaz-8f-H00"/>
+                                <exclude reference="azL-OU-vAW"/>
+                                <exclude reference="vD6-bo-cyk"/>
                                 <exclude reference="4ZL-7l-qPO"/>
                                 <include reference="Sdc-ca-BsB"/>
                                 <exclude reference="bmb-uv-Uok"/>
                                 <include reference="dgt-uM-CmT"/>
+                                <include reference="HiZ-4F-R3U"/>
+                                <include reference="les-m0-kqN"/>
                                 <include reference="1CT-yr-sNC"/>
                                 <exclude reference="2fZ-Ov-OPn"/>
                                 <exclude reference="5c2-x1-QEp"/>
@@ -1388,11 +1395,6 @@
                                 <include reference="sps-l8-hqR"/>
                                 <exclude reference="vCS-Ux-YTW"/>
                                 <exclude reference="xRf-3g-kZU"/>
-                                <include reference="HiZ-4F-R3U"/>
-                                <include reference="les-m0-kqN"/>
-                                <include reference="Gaz-8f-H00"/>
-                                <exclude reference="azL-OU-vAW"/>
-                                <exclude reference="vD6-bo-cyk"/>
                             </mask>
                         </variation>
                     </view>

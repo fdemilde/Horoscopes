@@ -12,5 +12,4 @@ target "Horoscopes" do
     pod "MZFormSheetController"
     pod "AsyncDisplayKit"
     pod "WebASDKImageManager"
-    
 end
