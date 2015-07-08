@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
+		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */; };
 		F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */; };
@@ -121,6 +123,8 @@
 
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
+		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
 		F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopesFirstCell.swift; sourceTree = "<group>"; };
@@ -281,6 +285,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		702804F31B4B7193001B8A1F /* Post */ = {
+			isa = PBXGroup;
+			children = (
+				702804F41B4B71DD001B8A1F /* PostViewController.swift */,
+				702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */,
+			);
+			path = Post;
+			sourceTree = "<group>";
+		};
 		9F7B59D55821D70466BE0668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -369,6 +382,7 @@
 		F47C029E1B2691A700C0BA83 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				702804F31B4B7193001B8A1F /* Post */,
 				F49EB55E1B41C21E00F56092 /* Daily */,
 				F42E288E1B37C8ED00466CAA /* Share */,
 				F49FAE411B42499500F38E0C /* Newsfeed */,
@@ -865,6 +879,7 @@
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				F4106B7B1B43913F00D58D92 /* NewsfeedCellNode.swift in Sources */,
+				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
@@ -898,6 +913,7 @@
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
+				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
 				F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */,
 				F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */,

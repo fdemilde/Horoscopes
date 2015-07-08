@@ -116,5 +116,25 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 }
             }
         })
+
+    func createPost(type: String, message: String) {
+        var postData = NSMutableDictionary()
+        postData.setObject(type, forKey: "type")
+        postData.setObject(message, forKey: "message")
+        XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if error != nil {
+                println("Error when creating post \(error)")
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                let errorCode = result["error"] as! Int
+                if(errorCode != 0){
+                    println("Error code = \(errorCode)")
+                } else { // no error
+                    let postId = result["post_id"] as! String
+                    // TODO: - Use post id when needed
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_CREATE_POST_FINISHED, object: nil)
+                }
+            }
+        }
     }
 }
