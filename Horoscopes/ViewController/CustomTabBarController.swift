@@ -17,6 +17,10 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         super.viewDidLoad()
         self.setupTabBarItems()
         self.delegate = self
+        selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+        if(selectedSign == -1){
+            selectedSign = 8 // default sign
+        }
 //        self.reloadView()
     }
     

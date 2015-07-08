@@ -67,7 +67,7 @@ class NewsfeedCellNode : ASCellNode {
     func createFeedTypeImage(){
         feedTypeImageNode = ASImageNode()
         feedTypeImageNode?.backgroundColor = UIColor.clearColor()
-        feedTypeImageNode?.image = UIImage(named: (self.getFeedTypeImageName()))
+        feedTypeImageNode?.image = UIImage(named: (Utilities.getFeedTypeImageName(userPost!)))
         self.addSubnode(feedTypeImageNode)
     }
     
@@ -233,7 +233,6 @@ class NewsfeedCellNode : ASCellNode {
 //            :animation forKey:"changeTextTransition"];
         userPost!.hearts++
         // Change the text
-//
         dispatch_async(dispatch_get_main_queue(),{
             let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
             self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
@@ -241,19 +240,6 @@ class NewsfeedCellNode : ASCellNode {
     }
     
     // MARK: Helpers
-    
-    func getFeedTypeImageName() -> String{
-        switch(self.userPost!.type){
-        case NewsfeedType.OnYourMind:
-            return "post_type_mind"
-        case NewsfeedType.Feeling:
-            return "post_type_feel"
-        case NewsfeedType.Story:
-            return "post_type_story"
-        default:
-            break
-        }
-    }
     
     func getFeedTypeText() -> String{
         switch(self.userPost!.type){

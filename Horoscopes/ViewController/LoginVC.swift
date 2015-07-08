@@ -42,7 +42,8 @@ class LoginVC : SpinWheelVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fbLoginBtn.layer.cornerRadius = 0.5 * fbLoginBtn.bounds.size.width
+//        fbLoginBtn.layer.cornerRadius = 0.5 * fbLoginBtn.bounds.size.width
+        fbLoginBtn.layer.cornerRadius = 100
         fbLoginBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         fbLoginBtn.backgroundColor = UIColor.clearColor()
         fbLoginBtn.clipsToBounds = true

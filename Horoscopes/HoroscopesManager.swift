@@ -137,7 +137,7 @@ class HoroscopesManager : NSObject {
                     self.data = Utilities.parseNSDictionaryToDictionary(response)
 //                    print(self.data)
                     self.saveData()
-                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object:nil)
+                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
                     Utilities.hideHUD()
                 }
                 
@@ -152,7 +152,7 @@ class HoroscopesManager : NSObject {
                     self.data = Utilities.parseNSDictionaryToDictionary(response)
     //                print(self.data)
                     self.saveData()
-                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
                     Utilities.hideHUD()
                 }
             })
@@ -182,7 +182,7 @@ class HoroscopesManager : NSObject {
 //            print(response)
             
             var result = Utilities.parseNSDictionaryToDictionary(response)
-            NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+            Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
         })
     }
     

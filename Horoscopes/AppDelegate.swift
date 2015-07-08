@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // hide status bar
         UIApplication.sharedApplication().statusBarHidden = true
         self.setupGAITracker()
+        
+        horoscopesManager.getHoroscopesSigns() // setup Horo array
         horoscopesManager.getAllHoroscopes(false)
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
