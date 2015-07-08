@@ -238,7 +238,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         } else {
             var settings = XAppDelegate.userSettings
             var item = CollectedItem()
-            item.collectedDate = NSDate()
+            item.collectedDate = NSDate(timeIntervalSince1970: (timeTags[0] as! NSString).doubleValue as NSTimeInterval)
             item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
             collectedHoro.collectedData.replaceObjectAtIndex(0, withObject: item)
             collectedHoro.saveCollectedData()
@@ -248,7 +248,8 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     func saveCollectedHoroscopeData(){
         println("saveCollectedHoroscopeData saveCollectedHoroscopeData !!!")
         var item = CollectedItem()
-        item.collectedDate = NSDate()
+        
+        item.collectedDate = NSDate(timeIntervalSince1970: (timeTags[0] as! NSString).doubleValue as NSTimeInterval)
         item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
         collectedHoro.collectedData.insertObject(item, atIndex: 0)
         println("saveCollectedHoroscopeData 111 == \(collectedHoro.collectedData)")

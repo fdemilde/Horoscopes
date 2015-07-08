@@ -8,6 +8,8 @@
 
 import Foundation
 class Utilities {
+    
+    // MARK: Parsing helpers
     class func parseNSDictionaryToDictionary(dict : NSDictionary) -> Dictionary<String, AnyObject>{
         var result = Dictionary<String, AnyObject>()
         var keys = dict.allKeys
@@ -38,24 +40,13 @@ class Utilities {
         return result
     }
     
+    // MARK: Screen size
+    
     class func getScreenSize() -> CGSize{
         var screenRect = UIScreen.mainScreen().bounds
         var height = screenRect.height
         var width = screenRect.width
         return CGSizeMake(width, height)
-    }
-    
-    class func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
-        NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
-            completion(data: data)
-            }.resume()
-    }
-    
-    class func loadNIB(file:String) -> AnyObject{
-        var arr = NSBundle.mainBundle().loadNibNamed(file, owner: nil, options: nil)
-            
-        var ret: AnyObject = arr[0];
-        return ret;
     }
     
     class func getPositionBaseOn568hScreenSize(positionX : Float, positionY: Float) -> CGPoint{
@@ -77,12 +68,7 @@ class Utilities {
         return CGFloat(ratio)
     }
     
-    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
-        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
-    }
-    
+    // MARK: HUD
     class func showHUD(){
         
         dispatch_async(dispatch_get_main_queue(),{
@@ -102,38 +88,6 @@ class Utilities {
             let viewController = appDelegate.window!.rootViewController
             MBProgressHUD.hideAllHUDsForView(viewController!.view, animated: true)
         })
-    }
-    
-    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
-        var dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        var date = NSDate(timeIntervalSince1970:ts)
-        var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
-        return dateString
-    }
-    
-    class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
-        let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
-        label.numberOfLines = 0
-        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
-        label.font = font
-        label.text = text
-        label.sizeToFit()
-        return label.frame.size
-    }
-    
-    class func getParentUIViewController(view : UIView) -> UIResponder{
-        var responder = view as UIResponder
-        while(responder.isKindOfClass(UIView.classForCoder())){
-            responder = responder.nextResponder()!
-        }
-        return responder
-    
-    }
-    
-    class func getHoroscopeNameWithIndex(index: Int) -> String{
-        var horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
-        return horo.sign
     }
     
     // MARK: Newsfeed, User profile and user post parsing helpers
@@ -167,6 +121,72 @@ class Utilities {
         if(typeString == "story") {return NewsfeedType.Story}
         if(typeString == "feeling") {return NewsfeedType.Feeling}
         return NewsfeedType.OnYourMind
+    }
+    
+    // MARK: AlertView
+    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String){
+        dispatch_async(dispatch_get_main_queue(),{
+            var alertView: UIAlertView = UIAlertView()
+            
+            alertView.delegate = delegate
+            alertView.title = title
+            alertView.message = message
+            alertView.addButtonWithTitle("OK")
+            alertView.show()
+        })
+    }
+    
+    // MARK: Helpers
+    
+    class func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
+        NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
+            completion(data: data)
+            }.resume()
+    }
+    
+    class func loadNIB(file:String) -> AnyObject{
+        var arr = NSBundle.mainBundle().loadNibNamed(file, owner: nil, options: nil)
+        
+        var ret: AnyObject = arr[0];
+        return ret;
+    }
+    
+    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
+    }
+    
+    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        var date = NSDate(timeIntervalSince1970:ts)
+        var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
+        return dateString
+    }
+    
+    class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
+        let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
+        label.numberOfLines = 0
+        label.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        label.font = font
+        label.text = text
+        label.sizeToFit()
+        return label.frame.size
+    }
+    
+    class func getParentUIViewController(view : UIView) -> UIResponder{
+        var responder = view as UIResponder
+        while(responder.isKindOfClass(UIView.classForCoder())){
+            responder = responder.nextResponder()!
+        }
+        return responder
+        
+    }
+    
+    class func getHoroscopeNameWithIndex(index: Int) -> String{
+        var horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
+        return horo.sign
     }
     
 }

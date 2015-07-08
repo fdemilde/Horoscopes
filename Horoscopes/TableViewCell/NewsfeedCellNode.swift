@@ -84,9 +84,9 @@ class NewsfeedCellNode : ASCellNode {
         background!.addSubnode(profilePicture)
 //        userPost!.user!.name
         userNameLabelNode = ASTextNode()
-        var nameWithPostTypeString = String(format : "%@ %@","ha hi haosh dhaisdh asdhia hasd" , self.getFeedTypeText())
+        var nameWithPostTypeString = String(format : "%@ %@",userPost!.user!.name , self.getFeedTypeText())
         var attString = NSMutableAttributedString(string: nameWithPostTypeString)
-        var nameStringLength = count("ha hi haosh dhaisdh asdhia hasd")
+        var nameStringLength = count(userPost!.user!.name)
         var nameWithPostTypeStringLength = count(nameWithPostTypeString)
         attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, nameStringLength))
 //        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(11.0), range: NSMakeRange(nameStringLength, nameWithPostTypeStringLength-1))
@@ -105,7 +105,7 @@ class NewsfeedCellNode : ASCellNode {
         feedDescriptionLabelNode = ASTextNode()
         let dict = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
         // data : userPost!.message
-        feedDescriptionLabelNode?.attributedString = NSAttributedString(string: "co ho Hieu hom nay se bi co dau bep chui xoi xa vao mom, khong duoc an com. Co ho Tuan bi dau bung vi an nhieu qua, cuoi ngay con bi tieu chay", attributes: dict)
+        feedDescriptionLabelNode?.attributedString = NSAttributedString(string: userPost!.message, attributes: dict)
         background!.addSubnode(feedDescriptionLabelNode)
     }
     
@@ -211,11 +211,33 @@ class NewsfeedCellNode : ASCellNode {
     
     //MARK: Button Action
     func sendHeartTapped(){
-        println("sendHeartTapped sendHeartTapped")
+        Utilities.showHUD()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(userPost!.post_id, type: SEND_HEART_USER_POST_TYPE)
+        
     }
     
     func shareTapped(){
         println("shareTapped shareTapped")
+    }
+    
+    // Notification handler
+    func sendHeartSuccessful(notif: NSNotification){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        Utilities.hideHUD()
+        var animation = CATransition()
+        animation.duration = 0.5
+        animation.type = kCATransitionFade
+        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        heartNumberLabelNode!.layer.addAnimation(animation, forKey: "changeTextTransition")
+//            :animation forKey:"changeTextTransition"];
+        userPost!.hearts++
+        // Change the text
+//
+        dispatch_async(dispatch_get_main_queue(),{
+            let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
+            self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
+        })
     }
     
     // MARK: Helpers

@@ -12,8 +12,6 @@
 #define DEGREES_TO_RADIANS(x) (x*3.141593)/180
 
 static float deltaAngle;
-static float minAlphavalue = 0.3;
-static float maxAlphavalue = 1.0;
 static int CLOVER_IMAGE_TAG = 100;
 static int CLOVER_SYMBOL_TAG = 101;
 
