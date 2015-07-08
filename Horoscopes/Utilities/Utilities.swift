@@ -189,6 +189,26 @@ class Utilities {
         return horo.sign
     }
     
+    
+    class func getFeedTypeImageName(userPost : UserPost) -> String{
+        switch(userPost.type){
+        case NewsfeedType.OnYourMind:
+            return "post_type_mind"
+        case NewsfeedType.Feeling:
+            return "post_type_feel"
+        case NewsfeedType.Story:
+            return "post_type_story"
+        default:
+            return ""
+        }
+    }
+    
+    // MARK: Notification support
+    class func postNotification(name: String, object:AnyObject?){
+        dispatch_async(dispatch_get_main_queue(),{
+            NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
+        })
+    }
 }
 
 

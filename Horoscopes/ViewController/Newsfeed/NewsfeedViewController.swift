@@ -25,14 +25,14 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     var feedsDisplayNode = ASDisplayNode()
     var tableView : ASTableView!
     var tabType = NewsfeedTabType.SignTag
-//    var followingCollectionView = UICollectionView()
+    @IBOutlet weak var followingCollectionView : FollowingFeedsCollectionView!
     var currentSelectedSign = 0 // 0 is all
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         self.setupTableView()
-//        self.setupFollowingCollectionView()
+        self.setupFollowingCollectionView()
         self.resetTapButtonColor()
         XAppDelegate.socialManager.getGlobalNewsfeed(0)
     }
@@ -62,15 +62,9 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func setupFollowingCollectionView(){
-//        self.followingCollectionView.delegate = self
-//        followingCollectionView.frame = CGRectMake(SCROLLVIEW_PADDING_LEFT, selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width - SCROLLVIEW_PADDING_RIGHT * 2, Utilities.getScreenSize().height - (selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM))
-//        followingCollectionView.layer.cornerRadius = 5
-//        followingCollectionView.layer.masksToBounds = true
-//        followingCollectionView.showsHorizontalScrollIndicator = false
-//        followingCollectionView.showsVerticalScrollIndicator = false
-//        followingCollectionView.backgroundColor = UIColor(red: 241.0/255.0, green: 241.0/255.0, blue: 241.0/255.0, alpha: 1)
-//        followingCollectionView.hidden = true
-//        self.view.addSubview(followingCollectionView)
+        
+        followingCollectionView.hidden = true
+        
     }
 
     
@@ -88,7 +82,7 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
             userPostArray = newDataArray
             dispatch_async(dispatch_get_main_queue(),{
                 self.tableReloadDataWithAnimation()
-//                self.followingCollectionView.hidden = true
+                self.followingCollectionView.hidden = true
                 self.tableView.hidden = false
                 
             })
@@ -99,17 +93,18 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     
     func followingFeedsFinishedLoading(notif : NSNotification){
         
-//        if(notif.object == nil){
-//            Utilities.showAlertView(self,title:"",message:"No feeds available")
-//        } else {
-//            dispatch_async(dispatch_get_main_queue(),{
-//                self.tableView.hidden = true
-//                self.followingCollectionView.hidden = false
-//            })
-//            var followingPostArray = notif.object as! [UserPost]
-////            self.userPostArray = followingPostArray
-//        }
-//        Utilities.hideHUD()
+        if(notif.object == nil){
+            Utilities.showAlertView(self,title:"",message:"No feeds available")
+        } else {
+            dispatch_async(dispatch_get_main_queue(),{
+                self.tableView.hidden = true
+                self.followingCollectionView.hidden = false
+            })
+            var followingPostArray = notif.object as! [UserPost]
+            self.userPostArray = followingPostArray
+            followingCollectionView.populateData(self.userPostArray)
+        }
+        Utilities.hideHUD()
         
     }
     
@@ -167,7 +162,7 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     // MARK: Table datasource and delegate
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        println("tableView tableView nodeForRowAtIndexPath \([indexPath.row])")
+//        println("tableView tableView nodeForRowAtIndexPath \([indexPath.row])")
         var post = userPostArray[indexPath.row] as UserPost
         var cell = NewsfeedCellNode(post: post)
         return cell

@@ -57,7 +57,9 @@ class PostViewController: UIViewController, UITableViewDataSource, UITableViewDe
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         var controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
         controller.type = postTypes[indexPath.row][2]
-        controller.placeholer = postTypes[indexPath.row][0]
+        controller.placeholder = postTypes[indexPath.row][0]
         self.presentViewController(controller, animated: true, completion: nil)
+//        let formSheetController = MZFormSheetController(viewController: controller)
+//        self.mz_presentFormSheetController(formSheetController, animated: true, completionHandler: nil)
     }
 }

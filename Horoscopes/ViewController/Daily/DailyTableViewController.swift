@@ -37,7 +37,8 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         if let parentVC = self.tabBarController as? CustomTabBarController{
             self.selectedSign = parentVC.selectedSign
         }
-        self.setupData()
+        println("selectedSign selectedSign == \(selectedSign)")
+//        self.setupData()
         //app returns to the foreground, reload table
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
         self.refreshView()
@@ -356,10 +357,11 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     @IBAction func chooseSignTapped(sender: AnyObject) {
 //        var label = String(format: "type=primary,sign=%d", self.selectedSign)
         
-        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
-        customTabBarController.parentVC = self
+        let chooseSign = self.storyboard!.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        chooseSign.parentVC = self
         
-        self.navigationController!.pushViewController(customTabBarController, animated: true)
+//        self.tabBarController!.navigationController!.pushViewController(chooseSign, animated: true)
+        self.presentViewController(chooseSign, animated: true, completion: nil)
     }
     
     @IBAction func cookieButtonTapped(sender: AnyObject) {

@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
+		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
+		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */; };
 		F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */; };
@@ -31,6 +33,8 @@
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
+		F465F2C41B4CD1050025644E /* FollowingFeedsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */; };
+		F465F2C61B4CD62D0025644E /* FollowingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */; };
 		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
 		F47BAB2B1B21605C002031AB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB2A1B21605C002031AB /* Config.swift */; };
 		F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029C1B258B9B00C0BA83 /* Utilities.swift */; };
@@ -124,6 +128,8 @@
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
+		705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
+		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
 		F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopesFirstCell.swift; sourceTree = "<group>"; };
@@ -147,6 +153,8 @@
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
+		F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingFeedsCollectionView.swift; sourceTree = "<group>"; };
+		F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingCollectionCell.swift; sourceTree = "<group>"; };
 		F47BAB261B204969002031AB /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
 		F47BAB271B205617002031AB /* HoroscopesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoroscopesManager.swift; sourceTree = "<group>"; };
 		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -292,6 +300,15 @@
 			path = Post;
 			sourceTree = "<group>";
 		};
+		705E59D61B4CE64200D1E613 /* Notification */ = {
+			isa = PBXGroup;
+			children = (
+				705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */,
+				705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */,
+			);
+			path = Notification;
+			sourceTree = "<group>";
+		};
 		9F7B59D55821D70466BE0668 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -380,6 +397,7 @@
 		F47C029E1B2691A700C0BA83 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				705E59D61B4CE64200D1E613 /* Notification */,
 				702804F31B4B7193001B8A1F /* Post */,
 				F49EB55E1B41C21E00F56092 /* Daily */,
 				F42E288E1B37C8ED00466CAA /* Share */,
@@ -407,6 +425,8 @@
 			isa = PBXGroup;
 			children = (
 				F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */,
+				F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */,
+				F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -873,6 +893,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				F4106B7B1B43913F00D58D92 /* NewsfeedCellNode.swift in Sources */,
@@ -892,6 +913,7 @@
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */,
+				F465F2C61B4CD62D0025644E /* FollowingCollectionCell.swift in Sources */,
 				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
@@ -908,6 +930,7 @@
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
+				F465F2C41B4CD1050025644E /* FollowingFeedsCollectionView.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
@@ -918,6 +941,7 @@
 				F49EB5631B41C21E00F56092 /* CollectHoroscopeDetailVC.swift in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
+				705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */,
 				F49EB5641B41C21E00F56092 /* CollectHoroscopesTableVC.swift in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
 				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,

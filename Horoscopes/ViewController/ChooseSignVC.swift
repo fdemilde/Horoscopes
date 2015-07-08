@@ -89,6 +89,6 @@ class ChooseSignVC : SpinWheelVC {
         parentVC.selectedSign = self.selectedIndex
         parentVC.saveData()
         parentVC.tableView.reloadData()
-        self.navigationController!.popViewControllerAnimated(true)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }
