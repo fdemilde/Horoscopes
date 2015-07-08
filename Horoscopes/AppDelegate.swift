@@ -25,7 +25,25 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupGAITracker()
         horoscopesManager.getAllHoroscopes(false)
         
+        if true {
+            self.showLoginVC()
+        } else {
+            
+        }
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func showLoginVC() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+        
+        var formSheet = MZFormSheetController(viewController: viewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = -20.0;
+        formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
+        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {
