@@ -58,7 +58,5 @@ class PostViewController: MyViewController, UITableViewDataSource, UITableViewDe
         controller.type = postTypes[indexPath.row][2]
         controller.placeholder = postTypes[indexPath.row][0]
         self.presentViewController(controller, animated: true, completion: nil)
-//        let formSheetController = MZFormSheetController(viewController: controller)
-//        self.mz_presentFormSheetController(formSheetController, animated: true, completionHandler: nil)
     }
 }

@@ -104,6 +104,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
+                    Utilities.hideHUD()
                     Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
                 } else { // no error
                     var success = result["success"] as! Int
@@ -118,24 +119,29 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         })
     }
 
-    func createPost(type: String, message: String) {
+    class func createPost(type: String, message: String, completionHandler: (response: [NSObject: AnyObject]!, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
         XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
-            if error != nil {
-                println("Error when creating post \(error)")
+            if let error = error {
+                completionHandler(response: nil, error: error)
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(response)
-                let errorCode = result["error"] as! Int
-                if(errorCode != 0){
-                    println("Error code = \(errorCode)")
-                } else { // no error
-                    let postId = result["post_id"] as! String
-                    // TODO: - Use post id when needed
-                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_CREATE_POST, object: nil)
-                }
+                completionHandler(response: response, error: nil)
+//                let errorCode = result["error"] as! Int
+//                if(errorCode != 0){
+//                    completionHandler(response: re
+//                } else { // no error
+//                    let postId = result["post_id"] as! String
+//                    // TODO: - Use post id when needed
+//                    Utilities.postNotification(NOTIFICATION_CREATE_POST, object: nil)
+//                }
             }
         }
+    }
+    
+    class func loginFacebook() {
+        // TODO: - login facebook and may return anything indicating if it has been successful
     }
 }

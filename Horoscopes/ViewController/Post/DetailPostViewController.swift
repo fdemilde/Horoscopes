@@ -15,10 +15,10 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     var type: String?
     var placeholder: String?
-    var isEdited: Bool = false
-    var tapRecognizer: UITapGestureRecognizer?
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
+    var bottomSpaceConstraint: CGFloat!
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         // Do any additional setup after loading the view.
         let backgroundImage = UIImage(named: "background")
         self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+        
+        bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
         
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
@@ -37,28 +39,26 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
         
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        self.view.addGestureRecognizer(tapRecognizer!)
+        self.view.addSubview(activityIndicator)
+        
+        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock({ (result, error) -> Void in
+            println("logging out...")
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dismissPost:", name: NOTIFICATION_CREATE_POST, object: nil)
-        
-        textView.autocorrectionType = .No
+        super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         textView.becomeFirstResponder()
     }
     
     override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_CREATE_POST, object: nil)
+        super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,36 +68,61 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func cancel(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
-//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
 
     @IBAction func post(sender: UIButton) {
-        let socialManager = SocialManager()
-        socialManager.createPost(type!, message: textView.text)
+        if XAppDelegate.mobilePlatform.userCred.hasToken() {
+            activityIndicator.startAnimating()
+            SocialManager.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
+                if let error = error {
+                    self.displayError(error)
+                } else {
+                    self.finishPost()
+                }
+            })
+        } else {
+            self.handleLogin()
+        }
     }
     
-    func dismissPost(notification: NSNotification) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func displayError(error: NSError) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.activityIndicator.isAnimating() {
+                self.activityIndicator.stopAnimating()
+            }
+            let alert = UIAlertController(title: "Post Error", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
+    func finishPost() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.activityIndicator.isAnimating() {
+                self.activityIndicator.stopAnimating()
+            }
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
+    }
+    
+    func handleLogin() {
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        let formSheet = MZFormSheetController(viewController: controller)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.cornerRadius = 5
+        MZFormSheetController.sharedBackgroundWindow()
+        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
     func textViewDidChange(textView: UITextView) {
         placeholderLabel.hidden = count(textView.text) != 0
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillChangeFrame(notification: NSNotification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant += keyboardSize.CGRectValue().height
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant -= keyboardSize.CGRectValue().height
-    }
-    
-    func dismissKeyboard() {
-        self.view.endEditing(true)
+        textViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height + 16
     }
     
     /*

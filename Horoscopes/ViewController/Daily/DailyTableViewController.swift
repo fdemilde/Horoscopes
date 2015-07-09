@@ -15,7 +15,7 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     
     var topSpace = 95 as CGFloat
     var bottomSpace = 115 as CGFloat
-    var separatorSpace = 70 as CGFloat
+    var separatorSpace = 40 as CGFloat
     
     var selectedSign = -1
     var timeTags = [AnyObject]()
