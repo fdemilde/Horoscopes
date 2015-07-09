@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-class PostViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PostViewController: MyViewController, UITableViewDataSource, UITableViewDelegate {
     
     let postTypes = [
         ["What's on your mind?", "post_type_mind", "onyourmind"],

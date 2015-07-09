@@ -16,6 +16,9 @@ class CookieViewController : UIViewController{
         case CookieViewStateOpened
     }
     
+    
+    @IBOutlet weak var scrollView: UIScrollView!
+    
     // firstView
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cookieButton: UIButton!
@@ -38,6 +41,7 @@ class CookieViewController : UIViewController{
     @IBOutlet weak var checkBackTopConstraint: NSLayoutConstraint!
     
     var state = CookieViewState.CookieViewStateUnopened
+    var parentVC : DailyTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,6 +53,9 @@ class CookieViewController : UIViewController{
         self.reloadState()
     }
     
+    override func viewDidLayoutSubviews() {
+    }
+    
     func setupBackground(){
         var screenSize = Utilities.getScreenSize()
         var bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
@@ -57,19 +64,21 @@ class CookieViewController : UIViewController{
     }
     
     func bringFirstViewComponentsToFront(){
-        self.view.bringSubviewToFront(backButton)
-        self.view.bringSubviewToFront(cookieButton)
-        self.view.bringSubviewToFront(dailyCookieLabel)
-        self.view.bringSubviewToFront(openCookieLabel)
+        self.view.bringSubviewToFront(scrollView)
+        
+        scrollView.bringSubviewToFront(backButton)
+        scrollView.bringSubviewToFront(cookieButton)
+        scrollView.bringSubviewToFront(dailyCookieLabel)
+        scrollView.bringSubviewToFront(openCookieLabel)
     }
     
     func bringSecondViewComponentsToFront(){
-        self.view.bringSubviewToFront(cookieOpenedImageView)
-        self.view.bringSubviewToFront(fortuneDescriptionLabel)
-        self.view.bringSubviewToFront(yourLuckyNumberLabel)
-        self.view.bringSubviewToFront(luckyNumberLabel)
-        self.view.bringSubviewToFront(shareButton)
-        self.view.bringSubviewToFront(checkBackLabel)
+        scrollView.bringSubviewToFront(cookieOpenedImageView)
+        scrollView.bringSubviewToFront(fortuneDescriptionLabel)
+        scrollView.bringSubviewToFront(yourLuckyNumberLabel)
+        scrollView.bringSubviewToFront(luckyNumberLabel)
+        scrollView.bringSubviewToFront(shareButton)
+        scrollView.bringSubviewToFront(checkBackLabel)
     }
     
     func setupConstraints(){
@@ -86,6 +95,7 @@ class CookieViewController : UIViewController{
     // MARK: button Actions
     
     @IBAction func backButtonTapped(sender: AnyObject) {
+        parentVC?.isCookieTapped = false
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -141,6 +151,8 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = true
         shareButton.hidden = true
         checkBackLabel.hidden = true
+        
+        scrollView.contentSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height - ADMOD_HEIGHT - TABBAR_HEIGHT)
     }
     
     func loadStateOpened(){
@@ -154,6 +166,8 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = false
         shareButton.hidden = false
         checkBackLabel.hidden = false
+        
+        scrollView.contentSize = CGSizeMake(Utilities.getScreenSize().width, 460)
     }
     
     func hideAll(){
@@ -230,7 +244,7 @@ class CookieViewController : UIViewController{
                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
                 Utilities.hideHUD()
             }
-            
+            println("reloadFortuneData reloadFortuneData reloadFortuneData")
             //set data
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             self.fortuneDescriptionLabel.text = fortuneData["fortune"] as? String

@@ -84,6 +84,7 @@ class Utilities {
     
     class func hideHUD(){
         dispatch_async(dispatch_get_main_queue(),{
+            println("hideHUD hideHUD hideHUD")
             let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
             let viewController = appDelegate.window!.rootViewController
             MBProgressHUD.hideAllHUDsForView(viewController!.view, animated: true)

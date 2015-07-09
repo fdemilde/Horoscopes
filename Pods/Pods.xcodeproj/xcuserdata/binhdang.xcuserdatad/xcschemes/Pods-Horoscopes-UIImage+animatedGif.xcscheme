@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0F4D2051F09043AEB3011B6C"
+               BlueprintIdentifier = "DFB8643B36E2360EA7592F71"
                BuildableName = "libPods-Horoscopes-UIImage+animatedGif.a"
                BlueprintName = "Pods-Horoscopes-UIImage+animatedGif"
                ReferencedContainer = "container:Pods.xcodeproj">

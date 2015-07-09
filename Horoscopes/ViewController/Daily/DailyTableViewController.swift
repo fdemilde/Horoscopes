@@ -9,9 +9,13 @@
 import Foundation
 import UIKit
 
-class DailyTableViewController : UITableViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let textviewForCalculating = UITextView()
+    
+    var topSpace = 95 as CGFloat
+    var bottomSpace = 115 as CGFloat
+    var separatorSpace = 70 as CGFloat
     
     var selectedSign = -1
     var timeTags = [AnyObject]()
@@ -23,6 +27,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     var today = NSDate()
     var collectedHoro = CollectedHoroscope()
     var firstCell : DailyHoroscopeHeaderCell!
+    var isCookieTapped = false // this is for checking scrolling and showing tabbar
     
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
@@ -40,16 +45,18 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         println("selectedSign selectedSign == \(selectedSign)")
 //        self.setupData()
         //app returns to the foreground, reload table
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        
         self.refreshView()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        self.showTabbar(true)
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
@@ -124,7 +131,7 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
             return getAboutCellHeight(descString)
         }  else {
             var descString = self.getTomorrowDesc()
-            return getAboutCellHeight(descString)
+            return getAboutCellHeight(descString) - separatorSpace // last cell doesn't need separator
         }
     }
     
@@ -267,8 +274,6 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         var string = NSMutableAttributedString(string: desc, attributes: attrs as [NSObject : AnyObject])
         var textViewWidth = Utilities.getScreenSize().width - 17*2
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
-        var topSpace = 95 as CGFloat
-        var bottomSpace = 115 as CGFloat
         return textViewHeight + topSpace + bottomSpace
     }
     
@@ -302,26 +307,29 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
     }
     
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        
         if(scrollView.contentOffset.y <= 0){
-            showTabbar()
+            showTabbar(true)
         } else if (scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - 5) { // then we are at the end
-            showTabbar()
+            showTabbar(true)
         } else if ((scrollView.contentOffset.y - startPositionY) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
-            hideTabbar()
+            // when cookie is tapped, this method is called, should check it and ignore hiding if tapped on cookie
+            if(!isCookieTapped){
+                hideTabbar(true)
+            }
+            
         } else if ((startPositionY - scrollView.contentOffset.y) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
-            showTabbar()
+            showTabbar(true)
         }
         
         
     }
     
-    func showTabbar(){
-        self.setTabbarVisible(true, animated : true)
+    func showTabbar(animated: Bool){
+        self.setTabbarVisible(true, animated : animated)
     }
     
-    func hideTabbar(){
-        self.setTabbarVisible(false, animated : true)
+    func hideTabbar(animated: Bool){
+        self.setTabbarVisible(false, animated : animated)
     }
     
     func setTabbarVisible(visible : Bool, animated : Bool){
@@ -360,15 +368,14 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
         let chooseSign = self.storyboard!.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
         chooseSign.parentVC = self
         
-//        self.tabBarController!.navigationController!.pushViewController(chooseSign, animated: true)
         self.presentViewController(chooseSign, animated: true, completion: nil)
     }
     
     @IBAction func cookieButtonTapped(sender: AnyObject) {
-        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
-//        customTabBarController.parentVC = self
-        
-        self.navigationController!.pushViewController(customTabBarController, animated: true)
+        isCookieTapped = true
+        let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+        cookieViewController.parentVC = self
+        self.navigationController!.pushViewController(cookieViewController, animated: true)
     }
     
 }
