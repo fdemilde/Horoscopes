@@ -27,10 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         horoscopesManager.getAllHoroscopes(false)
         
-        if true {
+        if isFirstTimeUsing() {
             self.showLoginVC()
-        } else {
-            
         }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
@@ -45,7 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
-        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -115,6 +113,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             XAppDelegate.mobilePlatform.tracker .logWithAction(actionName, label: String(format:"Open=%i,Label=%@", value,""), priority: Int32(priority))
         }
+    }
+    
+    // MARK: Helpers
+    func isFirstTimeUsing() -> Bool{
+        if(userSettings.horoscopeSign == -1){
+            return true
+        } else { return false }
+        
     }
 }
 
