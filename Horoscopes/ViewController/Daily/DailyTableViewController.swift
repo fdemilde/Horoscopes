@@ -235,13 +235,13 @@ class DailyTableViewController : UITableViewController, UITextViewDelegate, UITa
             todayComp.calendar = currentCal
             println(String(format: "updateCollectedData updateCollectedData %@",currentCal.dateFromComponents(todayComp)!))
             collectedHoro.mySetLastDateOpenApp(todayComp.date)
-            self.saveCollectedHoroscopeData()
+//            self.saveCollectedHoroscopeData()
         } else {
             var settings = XAppDelegate.userSettings
             var item = CollectedItem()
             item.collectedDate = NSDate(timeIntervalSince1970: (timeTags[0] as! NSString).doubleValue as NSTimeInterval)
             item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
-            collectedHoro.collectedData.replaceObjectAtIndex(0, withObject: item)
+//            collectedHoro.collectedData.replaceObjectAtIndex(0, withObject: item)
             collectedHoro.saveCollectedData()
         }
     }
