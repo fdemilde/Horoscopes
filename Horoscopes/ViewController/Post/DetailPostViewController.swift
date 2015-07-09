@@ -15,10 +15,9 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     var type: String?
     var placeholder: String?
-    var isEdited: Bool = false
-    var tapRecognizer: UITapGestureRecognizer?
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
+    var bottomSpaceConstraint: CGFloat!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +25,8 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         // Do any additional setup after loading the view.
         let backgroundImage = UIImage(named: "background")
         self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+        
+        bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
         
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
@@ -36,19 +37,13 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
-        
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "dismissKeyboard")
-        self.view.addGestureRecognizer(tapRecognizer!)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillHide:", name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "dismissPost:", name: NOTIFICATION_CREATE_POST, object: nil)
-        
-        textView.autocorrectionType = .No
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -58,8 +53,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillShowNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillHideNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
         
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_CREATE_POST, object: nil)
     }
@@ -71,7 +65,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func cancel(sender: UIButton) {
         self.dismissViewControllerAnimated(true, completion: nil)
-//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
 
     @IBAction func post(sender: UIButton) {
@@ -87,20 +80,10 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         placeholderLabel.hidden = count(textView.text) != 0
     }
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillChangeFrame(notification: NSNotification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant += keyboardSize.CGRectValue().height
-    }
-    
-    func keyboardWillHide(notification: NSNotification) {
-        let userInfo = notification.userInfo
-        let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant -= keyboardSize.CGRectValue().height
-    }
-    
-    func dismissKeyboard() {
-        self.view.endEditing(true)
+        textViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height + 16
     }
     
     /*

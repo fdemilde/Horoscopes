@@ -10,9 +10,18 @@ import Foundation
 
 class PostCellNode: ASCellNode {
     var userPost: UserPost!
+    var profileImageNode: ASNetworkImageNode?
+    var profileNameTextNode: ASTextNode?
+    var separator: ASDisplayNode?
     
     init!(userPost: UserPost) {
         super.init()
         self.userPost = userPost
+    }
+    
+    func setupHeader() {
+        profileImageNode = ASNetworkImageNode()
+        profileImageNode!.backgroundColor = ASDisplayNodeDefaultPlaceholderColor()
+        profileImageNode!.URL = NSURL(string: userPost.user!.imgURL)
     }
 }
