@@ -1719,6 +1719,80 @@
             </objects>
             <point key="canvasLocation" x="777" y="2711.25"/>
         </scene>
+        <!--Post Login View Controller-->
+        <scene sceneID="Hgg-S2-FYf">
+            <objects>
+                <viewController storyboardIdentifier="PostLoginViewController" id="rUq-XN-FKg" customClass="PostLoginViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="aFz-wV-b8E"/>
+                        <viewControllerLayoutGuide type="bottom" id="iTE-Fq-Gdv"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="h29-xk-lTE">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to Facebook to share this post" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LPf-Ul-2Q2">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ma9-Te-Buk">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="fb_login_icon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginFacebook:" destination="rUq-XN-FKg" eventType="touchUpInside" id="dLK-wR-pvm"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Ma9-Te-Buk" secondAttribute="centerX" id="5hk-e5-9eX"/>
+                            <constraint firstItem="LPf-Ul-2Q2" firstAttribute="top" secondItem="Ma9-Te-Buk" secondAttribute="bottom" constant="10" id="6iC-qG-ku3"/>
+                            <constraint firstAttribute="centerX" secondItem="LPf-Ul-2Q2" secondAttribute="centerX" id="8XR-jb-NaF"/>
+                            <constraint firstAttribute="trailing" secondItem="LPf-Ul-2Q2" secondAttribute="trailing" constant="100" id="DYw-9D-r6Y">
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                            </constraint>
+                            <constraint firstItem="LPf-Ul-2Q2" firstAttribute="leading" secondItem="h29-xk-lTE" secondAttribute="leading" constant="100" id="H4V-GU-VN9">
+                                <variation key="heightClass=regular-widthClass=compact" constant="50"/>
+                            </constraint>
+                            <constraint firstAttribute="centerY" secondItem="Ma9-Te-Buk" secondAttribute="centerY" id="KRc-Yu-6Yv"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="LPf-Ul-2Q2"/>
+                                <exclude reference="Ma9-Te-Buk"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="5hk-e5-9eX"/>
+                                <exclude reference="KRc-Yu-6Yv"/>
+                                <exclude reference="6iC-qG-ku3"/>
+                                <exclude reference="8XR-jb-NaF"/>
+                                <exclude reference="DYw-9D-r6Y"/>
+                                <exclude reference="H4V-GU-VN9"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="LPf-Ul-2Q2"/>
+                                <include reference="Ma9-Te-Buk"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="5hk-e5-9eX"/>
+                                <include reference="KRc-Yu-6Yv"/>
+                                <include reference="6iC-qG-ku3"/>
+                                <include reference="8XR-jb-NaF"/>
+                                <include reference="DYw-9D-r6Y"/>
+                                <include reference="H4V-GU-VN9"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Raj-fE-IH4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1467" y="2711.25"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7r-Wh-oPr">
             <objects>

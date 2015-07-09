@@ -18,6 +18,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat!
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,13 +38,17 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
+        
+        self.view.addSubview(activityIndicator)
+        
+        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock({ (result, error) -> Void in
+            println("logging out...")
+        })
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "dismissPost:", name: NOTIFICATION_CREATE_POST, object: nil)
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -54,8 +59,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
-        
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_CREATE_POST, object: nil)
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,12 +71,48 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func post(sender: UIButton) {
-        let socialManager = SocialManager()
-        socialManager.createPost(type!, message: textView.text)
+        if XAppDelegate.mobilePlatform.userCred.hasToken() {
+            activityIndicator.startAnimating()
+            SocialManager.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
+                if let error = error {
+                    self.displayError(error)
+                } else {
+                    self.finishPost()
+                }
+            })
+        } else {
+            self.handleLogin()
+        }
     }
     
-    func dismissPost(notification: NSNotification) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func displayError(error: NSError) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.activityIndicator.isAnimating() {
+                self.activityIndicator.stopAnimating()
+            }
+            let alert = UIAlertController(title: "Post Error", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(action)
+            self.presentViewController(alert, animated: true, completion: nil)
+        })
+    }
+    
+    func finishPost() {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.activityIndicator.isAnimating() {
+                self.activityIndicator.stopAnimating()
+            }
+            self.dismissViewControllerAnimated(true, completion: nil)
+        })
+    }
+    
+    func handleLogin() {
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        let formSheet = MZFormSheetController(viewController: controller)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.cornerRadius = 5
+        MZFormSheetController.sharedBackgroundWindow()
+        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
     func textViewDidChange(textView: UITextView) {

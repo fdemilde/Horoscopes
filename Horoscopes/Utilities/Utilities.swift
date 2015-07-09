@@ -77,7 +77,7 @@ class Utilities {
             
             let loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
             loadingNotification.mode = MBProgressHUDMode.Indeterminate
-            loadingNotification.labelText = "Loading"
+//            loadingNotification.labelText = "Loading"
             
         })
     }

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ASTableViewDelegate {
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate {
     
     var tableView: ASTableView!
     var userPosts = [UserPost]()
@@ -19,6 +19,7 @@ class ProfileViewController: UIViewController, ASTableViewDelegate {
         // Do any additional setup after loading the view.
         self.setupTableView()
         self.view.addSubview(tableView)
+        // TODO: - Populate user post
     }
 
     override func didReceiveMemoryWarning() {
@@ -28,9 +29,13 @@ class ProfileViewController: UIViewController, ASTableViewDelegate {
     
     func setupTableView() {
         tableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
-//        tableView.asyncDataSource = self
+        tableView.asyncDataSource = self
         tableView.asyncDelegate = self
-        
+    }
+    
+    func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
+//        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
+        return userPosts.count
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
