@@ -306,26 +306,27 @@
                                     <outlet property="delegate" destination="rK9-f6-ywl" id="9ud-B5-kwK"/>
                                 </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ctq-Cg-gWO" customClass="GADBannerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2IB-Yf-8DQ">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="4Qw-3k-F53"/>
+                                    <constraint firstAttribute="height" constant="50" id="RaL-uO-dyT"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
-                                        <exclude reference="4Qw-3k-F53"/>
+                                        <exclude reference="RaL-uO-dyT"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="constraints">
-                                        <include reference="4Qw-3k-F53"/>
+                                        <include reference="RaL-uO-dyT"/>
                                     </mask>
                                 </variation>
                             </view>
                         </subviews>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="2IB-Yf-8DQ" secondAttribute="trailing" id="1Yj-Cy-6Ho"/>
                             <constraint firstAttribute="trailing" secondItem="uXY-P7-eXr" secondAttribute="trailing" id="5AQ-Db-WNy"/>
                             <constraint firstItem="uXY-P7-eXr" firstAttribute="bottom" secondItem="U40-0w-L0O" secondAttribute="top" id="9t7-dG-Tj4"/>
                             <constraint firstItem="U40-0w-L0O" firstAttribute="top" secondItem="uXY-P7-eXr" secondAttribute="bottom" id="ByL-6M-UGr"/>
@@ -340,25 +341,20 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="200"/>
                             </constraint>
                             <constraint firstItem="uXY-P7-eXr" firstAttribute="top" secondItem="NY7-MC-5Bx" secondAttribute="bottom" id="Xfn-UV-GQB"/>
-                            <constraint firstItem="Ctq-Cg-gWO" firstAttribute="top" secondItem="NY7-MC-5Bx" secondAttribute="bottom" id="dhO-xG-R8s"/>
-                            <constraint firstItem="Ctq-Cg-gWO" firstAttribute="leading" secondItem="8xG-BA-NUE" secondAttribute="leading" id="l8Q-IE-8tU"/>
+                            <constraint firstItem="2IB-Yf-8DQ" firstAttribute="leading" secondItem="8xG-BA-NUE" secondAttribute="leading" id="feg-9H-RBI"/>
                             <constraint firstItem="uXY-P7-eXr" firstAttribute="leading" secondItem="8xG-BA-NUE" secondAttribute="leading" id="lCg-SS-PLY"/>
-                            <constraint firstAttribute="trailing" secondItem="Ctq-Cg-gWO" secondAttribute="trailing" constant="200" id="oxe-is-Zoh">
-                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
-                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="uXY-P7-eXr" secondAttribute="trailing" id="rea-pO-aHM"/>
+                            <constraint firstItem="2IB-Yf-8DQ" firstAttribute="top" secondItem="8xG-BA-NUE" secondAttribute="top" id="zbq-Em-c30"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="uXY-P7-eXr"/>
-                                <exclude reference="Ctq-Cg-gWO"/>
+                                <exclude reference="2IB-Yf-8DQ"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ByL-6M-UGr"/>
-                                <exclude reference="P1C-qC-gXU"/>
-                                <exclude reference="dhO-xG-R8s"/>
-                                <exclude reference="l8Q-IE-8tU"/>
-                                <exclude reference="oxe-is-Zoh"/>
+                                <exclude reference="1Yj-Cy-6Ho"/>
+                                <exclude reference="feg-9H-RBI"/>
+                                <exclude reference="zbq-Em-c30"/>
                                 <exclude reference="5AQ-Db-WNy"/>
                                 <exclude reference="9t7-dG-Tj4"/>
                                 <exclude reference="E9k-zz-dtF"/>
@@ -371,19 +367,19 @@
                                 <exclude reference="Xfn-UV-GQB"/>
                                 <exclude reference="lCg-SS-PLY"/>
                                 <exclude reference="rea-pO-aHM"/>
+                                <exclude reference="ByL-6M-UGr"/>
+                                <exclude reference="P1C-qC-gXU"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="subviews">
                                 <include reference="uXY-P7-eXr"/>
-                                <include reference="Ctq-Cg-gWO"/>
+                                <include reference="2IB-Yf-8DQ"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="ByL-6M-UGr"/>
-                                <exclude reference="P1C-qC-gXU"/>
-                                <include reference="dhO-xG-R8s"/>
-                                <include reference="l8Q-IE-8tU"/>
-                                <include reference="oxe-is-Zoh"/>
+                                <include reference="1Yj-Cy-6Ho"/>
+                                <include reference="feg-9H-RBI"/>
+                                <include reference="zbq-Em-c30"/>
                                 <include reference="5AQ-Db-WNy"/>
                                 <exclude reference="9t7-dG-Tj4"/>
                                 <include reference="E9k-zz-dtF"/>
@@ -396,13 +392,15 @@
                                 <exclude reference="Xfn-UV-GQB"/>
                                 <include reference="lCg-SS-PLY"/>
                                 <exclude reference="rea-pO-aHM"/>
+                                <exclude reference="ByL-6M-UGr"/>
+                                <exclude reference="P1C-qC-gXU"/>
                             </mask>
                         </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="tabbar_post.png" id="gcH-cF-ZCq"/>
                     <navigationItem key="navigationItem" id="aJ8-2A-erh"/>
                     <connections>
-                        <outlet property="bannerView" destination="Ctq-Cg-gWO" id="ssH-t0-ENv"/>
+                        <outlet property="headerView" destination="2IB-Yf-8DQ" id="Psl-XR-DJG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C3C-mh-rfP" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1160,7 +1158,7 @@
                         <color key="separatorColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <view key="tableHeaderView" contentMode="scaleToFill" id="tKu-rd-seO">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="568"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         </view>

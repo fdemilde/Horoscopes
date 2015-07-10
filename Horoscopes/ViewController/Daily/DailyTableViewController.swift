@@ -42,7 +42,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
         if let parentVC = self.tabBarController as? CustomTabBarController{
             self.selectedSign = parentVC.selectedSign
         }
-        println("selectedSign selectedSign == \(selectedSign)")
 //        self.setupData()
         //app returns to the foreground, reload table
         
@@ -202,9 +201,7 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
         
 //        println(String(format:"todayComp.date todayComp.date = %@",todayComp.date!))
         let newDate = lastOpenComp.date
-        println(String(format:"lastOpenComp lastOpenComp = %@",newDate!))
         
-//        var days = 1
         var days = fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24))) // how many days passed
         
         if(days >= 1 || collectedHoro.collectedData.count == 0){
@@ -224,7 +221,7 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     }
     
     func reloadData(){
-        println("Reload Data!!!")
+//        println("Reload Data!!!")
         // get data from XAppDelagate and save to local then reload table view
         self.saveData()
         self.tableView.reloadData()

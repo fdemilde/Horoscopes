@@ -22,7 +22,6 @@
 
 
 - (void)saveCollectedData{
-    NSLog(@"saveCollectedData saveCollectedData saveCollectedData");
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
     [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
 }
