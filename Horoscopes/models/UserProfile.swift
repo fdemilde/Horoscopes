@@ -16,7 +16,6 @@ class UserProfile {
     var location : String = ""
     
     init(data: NSDictionary){
-        println("UserProfile init!!")
         self.uid = data.objectForKey("uid") as! Int
         self.name = data.objectForKey("name") as! String
         self.imgURL = data.objectForKey("img") as! String

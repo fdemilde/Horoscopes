@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableViewDataSource, ASTableViewDelegate {
+class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableViewDataSource, ASTableViewDelegate {
     
     let TABLE_PADDING_TOP = 20 as CGFloat
     let TABLE_PADDING_BOTTOM = 49 as CGFloat
@@ -34,6 +34,7 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
         self.setupTableView()
         self.setupFollowingCollectionView()
         self.resetTapButtonColor()
+        println("self.bannerView.frame == \(self.bannerView.frame)" )
         XAppDelegate.socialManager.getGlobalNewsfeed(0)
     }
     
@@ -50,7 +51,8 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func setupTableView(){
-        tableView = ASTableView(frame: CGRectMake(0, selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
+        println("selectHoroscopeSignButton selectHoroscopeSignButton = \(selectHoroscopeSignButton)")
+        tableView = ASTableView(frame: CGRectMake(0, ADMOD_HEIGHT + selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
         self.tableView.bounces = true
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
@@ -169,12 +171,12 @@ class NewsfeedViewController : UIViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        println("numberOfSectionsInTableView numberOfSectionsInTableView")
+//        println("numberOfSectionsInTableView numberOfSectionsInTableView")
         return 1
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
+//        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
         return userPostArray.count
     }
     

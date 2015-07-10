@@ -57,7 +57,7 @@ let defaultIDFAEventKey             = "IDFA"
 // MARK: ID
 let kAnalyticsAccountId = "UA-27398873-10"
 let FACEBOOK_APP_ID = "333713683461"
-let ADMOD_ID = "ca-app-pub-3940256099942544/2934735716"
+let ADMOD_ID = "ca-app-pub-3099085126740540/3213172514"
 
 enum DailyHoroscopeType {
     case TodayHoroscope

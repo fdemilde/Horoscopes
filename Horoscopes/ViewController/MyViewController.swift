@@ -12,18 +12,18 @@ import GoogleMobileAds
 class MyViewController : UIViewController {
     
     var bannerView: GADBannerView!
-    
+    @IBOutlet weak var headerView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.clearColor()
-        self.view.frame = CGRectMake(0, 0, Utilities.getScreenSize().width,50)
+        self.headerView.backgroundColor = UIColor.clearColor()
+        self.headerView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width,50)
         bannerView = GADBannerView()
-        
+        self.bannerView?.frame = CGRectMake(0,0,Utilities.getScreenSize().width,50)
         self.bannerView?.adUnitID = ADMOD_ID
         self.bannerView?.rootViewController = self
-        println("adView adView = \(bannerView)")
         var request = GADRequest()
         self.bannerView?.loadRequest(request)
+        self.navigationController?.view.addSubview(self.bannerView)
     }
 }

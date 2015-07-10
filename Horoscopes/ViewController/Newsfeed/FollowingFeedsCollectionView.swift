@@ -14,7 +14,6 @@ class FollowingFeedsCollectionView : UICollectionView, UICollectionViewDataSourc
     var userPostArray = [UserPost]()
     
     override func awakeFromNib() {
-        println("FollowingFeedsCollectionView awakeFromNib awakeFromNib")
         super.awakeFromNib()
         self.layer.cornerRadius = 5
         self.layer.masksToBounds = true
@@ -33,7 +32,7 @@ class FollowingFeedsCollectionView : UICollectionView, UICollectionViewDataSourc
     // MARK: UICollectionView datasource & delegate
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        println("userPostArray.count userPostArray.count = \(userPostArray.count)")
+//        println("userPostArray.count userPostArray.count = \(userPostArray.count)")
         return userPostArray.count
     }
     
