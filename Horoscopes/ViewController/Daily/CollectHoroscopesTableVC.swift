@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class CollectHoroscopesTableVC : UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class CollectHoroscopesTableVC : MyTableViewController, UITableViewDataSource, UITableViewDelegate {
     
     var collectedHoroscopes = CollectedHoroscope()
     
