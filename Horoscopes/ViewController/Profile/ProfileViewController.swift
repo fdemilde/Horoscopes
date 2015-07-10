@@ -34,7 +34,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-//        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
         return userPosts.count
     }
     
