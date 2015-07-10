@@ -41,9 +41,9 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         
         self.view.addSubview(activityIndicator)
         
-        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock({ (result, error) -> Void in
-            println("logging out...")
-        })
+//        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock({ (result, error) -> Void in
+//            println("logging out...")
+//        })
     }
     
     override func viewWillAppear(animated: Bool) {

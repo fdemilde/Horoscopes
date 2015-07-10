@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -707,9 +707,6 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="89" y="8" width="223" height="21"/>
-                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sbp-3S-1fc">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1662,8 +1659,12 @@
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="32" id="Ag0-Zi-6by"/>
-                                    <constraint firstAttribute="width" constant="34" id="XNE-Mi-4cn"/>
+                                    <constraint firstAttribute="height" constant="32" id="Ag0-Zi-6by">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="44"/>
+                                    </constraint>
+                                    <constraint firstAttribute="width" constant="34" id="XNE-Mi-4cn">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="44"/>
+                                    </constraint>
                                 </constraints>
                                 <state key="normal" image="close_button">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1688,11 +1689,27 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dYE-BJ-Zu8">
                                 <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="097-g7-4eD"/>
+                                    <constraint firstAttribute="width" constant="44" id="fEr-pq-bul"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="19"/>
                                 <state key="normal" title="Post">
                                     <color key="titleColor" red="0.74117647058823533" green="0.76470588235294112" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="097-g7-4eD"/>
+                                        <exclude reference="fEr-pq-bul"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="097-g7-4eD"/>
+                                        <include reference="fEr-pq-bul"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <action selector="post:" destination="2SN-ax-bd4" eventType="touchUpInside" id="oDW-K3-5E4"/>
                                 </connections>
@@ -1713,7 +1730,7 @@
                                 <variation key="heightClass=regular-widthClass=compact" constant="16"/>
                             </constraint>
                             <constraint firstItem="G5V-Mf-7hy" firstAttribute="top" secondItem="iMh-33-YSg" secondAttribute="bottom" id="Sdc-ca-BsB">
-                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="16"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="8IV-7C-T5H" secondAttribute="trailing" id="Zyn-hg-bZO">
                                 <variation key="heightClass=regular-widthClass=compact" constant="16"/>
@@ -1726,7 +1743,7 @@
                             <constraint firstItem="8IV-7C-T5H" firstAttribute="leading" secondItem="KKB-G9-SQt" secondAttribute="leadingMargin" constant="-4" id="jVo-Wm-0Zc"/>
                             <constraint firstItem="8IV-7C-T5H" firstAttribute="leading" secondItem="KKB-G9-SQt" secondAttribute="leading" constant="12" id="kzo-FV-LE8"/>
                             <constraint firstItem="dYE-BJ-Zu8" firstAttribute="top" secondItem="iMh-33-YSg" secondAttribute="bottom" id="les-m0-kqN">
-                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                <variation key="heightClass=regular-widthClass=compact" constant="16"/>
                             </constraint>
                             <constraint firstAttribute="trailing" secondItem="8IV-7C-T5H" secondAttribute="trailing" constant="12" id="mpS-s5-Svz"/>
                             <constraint firstItem="8IV-7C-T5H" firstAttribute="trailing" secondItem="dYE-BJ-Zu8" secondAttribute="trailing" id="oEH-2y-1ce"/>
@@ -1806,6 +1823,75 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6lt-mf-Eoj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="777" y="2711.25"/>
+        </scene>
+        <!--Post Login View Controller-->
+        <scene sceneID="3vG-9u-q4d">
+            <objects>
+                <viewController storyboardIdentifier="PostLoginViewController" id="CHU-QG-0UQ" customClass="PostLoginViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="eiJ-hL-AJB"/>
+                        <viewControllerLayoutGuide type="bottom" id="AJO-fZ-UQ9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="WO4-2g-J2t">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXW-jg-11i">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="fb_login_icon">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginFacebook:" destination="CHU-QG-0UQ" eventType="touchUpInside" id="yeE-bf-hQK"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to Facebook to share this post" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Iea-1O-rLH">
+                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="KXW-jg-11i" secondAttribute="centerY" id="7mi-rT-DyU"/>
+                            <constraint firstItem="Iea-1O-rLH" firstAttribute="top" secondItem="KXW-jg-11i" secondAttribute="bottom" constant="36" id="Hb0-yT-9at">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstAttribute="centerX" secondItem="KXW-jg-11i" secondAttribute="centerX" id="nXb-Yl-AVW"/>
+                            <constraint firstItem="Iea-1O-rLH" firstAttribute="leading" secondItem="WO4-2g-J2t" secondAttribute="leading" constant="50" id="stt-Gk-rxc"/>
+                            <constraint firstAttribute="trailing" secondItem="Iea-1O-rLH" secondAttribute="trailing" constant="50" id="u6H-Mr-XLm"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="KXW-jg-11i"/>
+                                <exclude reference="Iea-1O-rLH"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="7mi-rT-DyU"/>
+                                <exclude reference="nXb-Yl-AVW"/>
+                                <exclude reference="Hb0-yT-9at"/>
+                                <exclude reference="stt-Gk-rxc"/>
+                                <exclude reference="u6H-Mr-XLm"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="KXW-jg-11i"/>
+                                <include reference="Iea-1O-rLH"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="7mi-rT-DyU"/>
+                                <include reference="nXb-Yl-AVW"/>
+                                <include reference="Hb0-yT-9at"/>
+                                <include reference="stt-Gk-rxc"/>
+                                <include reference="u6H-Mr-XLm"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BmP-Jz-6Up" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1419" y="2711.25"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7r-Wh-oPr">
