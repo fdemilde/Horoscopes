@@ -11,6 +11,7 @@ import Foundation
 class SocialManager : NSObject, UIAlertViewDelegate {
     
 //    var globalFeeds = []
+    static let sharedInstance = SocialManager()
     
     override init(){
         
@@ -119,16 +120,16 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         })
     }
 
-    class func createPost(type: String, message: String, completionHandler: (response: [NSObject: AnyObject]!, error: NSError?) -> Void) {
+    func createPost(type: String, message: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
         XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
-                completionHandler(response: nil, error: error)
+                completionHandler(result: nil, error: error)
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(response)
-                completionHandler(response: response, error: nil)
+                completionHandler(result: result, error: nil)
 //                let errorCode = result["error"] as! Int
 //                if(errorCode != 0){
 //                    completionHandler(response: re
@@ -141,7 +142,27 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
-    class func loginFacebook() {
+    func getPost(uid: Int, page: Int = 0, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(page)", forKey: "page")
+        postData.setObject("\(uid)", forKey: "uid")
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+//            if(error != nil){
+//                println("Error when get getUserNewsfeed = \(error)")
+//            } else {
+//                println("getUserNewsfeed response = \(response)")
+//            }
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        })
+    }
+    
+    func loginFacebook() {
         // TODO: - login facebook and may return anything indicating if it has been successful
     }
 }

@@ -73,7 +73,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     @IBAction func post(sender: UIButton) {
         if XAppDelegate.mobilePlatform.userCred.hasToken() {
             activityIndicator.startAnimating()
-            SocialManager.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
+            SocialManager.sharedInstance.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
                 if let error = error {
                     self.displayError(error)
                 } else {

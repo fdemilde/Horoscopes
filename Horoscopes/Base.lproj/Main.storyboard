@@ -672,6 +672,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="89" y="8" width="223" height="21"/>
+                                                    </variation>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sbp-3S-1fc">
                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -1790,6 +1793,7 @@
                         <viewControllerLayoutGuide type="bottom" id="AJO-fZ-UQ9"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="WO4-2g-J2t">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXW-jg-11i">
@@ -1824,11 +1828,11 @@
                                 <exclude reference="Iea-1O-rLH"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="7mi-rT-DyU"/>
-                                <exclude reference="nXb-Yl-AVW"/>
                                 <exclude reference="Hb0-yT-9at"/>
                                 <exclude reference="stt-Gk-rxc"/>
                                 <exclude reference="u6H-Mr-XLm"/>
+                                <exclude reference="7mi-rT-DyU"/>
+                                <exclude reference="nXb-Yl-AVW"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1837,11 +1841,11 @@
                                 <include reference="Iea-1O-rLH"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="7mi-rT-DyU"/>
-                                <include reference="nXb-Yl-AVW"/>
                                 <include reference="Hb0-yT-9at"/>
                                 <include reference="stt-Gk-rxc"/>
                                 <include reference="u6H-Mr-XLm"/>
+                                <include reference="7mi-rT-DyU"/>
+                                <include reference="nXb-Yl-AVW"/>
                             </mask>
                         </variation>
                     </view>

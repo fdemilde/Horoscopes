@@ -22,7 +22,7 @@ class PostLoginViewController: UIViewController {
     }
     
     @IBAction func loginFacebook(sender: UIButton) {
-        SocialManager.loginFacebook()
+        SocialManager.sharedInstance.loginFacebook()
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
 
