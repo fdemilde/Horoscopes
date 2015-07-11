@@ -165,6 +165,30 @@ class ShareViewController : UIViewController {
         return CGRectMake(posX,posY,buttonDefaultSize.width,buttonDefaultSize.height)
     }
     
+    // MARK: Populate sharing data
+    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSignName : String, sharingText: String, pictureURL : String){
+        self.viewType = viewType
+        self.shareType = ShareType.ShareTypeDaily
+        self.timeTag = timeTag
+        self.horoscopeSignName = horoscopeSignName
+        self.sharingText = sharingText
+        self.pictureURL = pictureURL
+    }
+    
+    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String){
+        self.viewType = viewType
+        self.shareType = ShareType.ShareTypeFortune
+        self.sharingText = sharingText
+        self.pictureURL = pictureURL
+    }
+    
+    func populateNewsfeedShareData(viewType: ShareViewType, sharingText: String, pictureURL : String){
+        self.viewType = viewType
+        self.shareType = ShareType.ShareTypeNewsfeed
+        self.sharingText = sharingText
+        self.pictureURL = pictureURL
+    }
+    
     // MARK: Button Tapp gesture handlers
     func handleFBTap(sender: AnyObject){
         
@@ -235,6 +259,9 @@ class ShareViewController : UIViewController {
             case ShareType.ShareTypeFortune:
                 urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
             break
+        case ShareType.ShareTypeNewsfeed:
+            urlString = "https://apps.facebook.com/getyourhoroscope/?rf=mobile"
+            break
         }
         
         
@@ -251,6 +278,9 @@ class ShareViewController : UIViewController {
         case ShareType.ShareTypeFortune:
             text = String(format: "I read my mobile fortune cookie! \n Lucky Numbers %@",sharingText)
             break
+        case ShareType.ShareTypeNewsfeed:
+            text = String(format: "%@",sharingText)
+            break
         }
         return text
     }
@@ -263,6 +293,9 @@ class ShareViewController : UIViewController {
             break
         case ShareType.ShareTypeFortune:
             title = "Read your fortune cookie"
+            break
+        case ShareType.ShareTypeNewsfeed:
+            title = ""
             break
         }
         return title

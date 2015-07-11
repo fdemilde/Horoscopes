@@ -131,10 +131,7 @@ class CookieViewController : UIViewController{
     func prepareShareVC() -> ShareViewController{
         var storyBoard = UIStoryboard(name: "Main", bundle: nil)
         var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        shareVC.viewType = ShareViewType.ShareViewTypeHybrid
-        shareVC.shareType = ShareType.ShareTypeFortune
-        shareVC.sharingText = String(format: "%@",self.luckyNumberLabel.text!)
-        shareVC.pictureURL = String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg")
+        shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"))
         
         return shareVC
     }

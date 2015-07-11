@@ -51,7 +51,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func setupTableView(){
-        println("selectHoroscopeSignButton selectHoroscopeSignButton = \(selectHoroscopeSignButton)")
         tableView = ASTableView(frame: CGRectMake(0, ADMOD_HEIGHT + selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (selectHoroscopeSignButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
         self.tableView.bounces = true
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -73,13 +72,10 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     // MARK: Notification Handlers
     
     func refreshViewWithNewData(notif : NSNotification){
-        
-        
         if(notif.object == nil){
             Utilities.showAlertView(self,title: "",message: "No feeds available")
         } else {
-            println("refreshViewWithNewData refreshViewWithNewData")
-            
+            self.resetTapButtonColor()
             var newDataArray = notif.object as! [UserPost]
             userPostArray = newDataArray
             dispatch_async(dispatch_get_main_queue(),{
@@ -98,13 +94,10 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         if(notif.object == nil){
             Utilities.showAlertView(self,title:"",message:"No feeds available")
         } else {
-            dispatch_async(dispatch_get_main_queue(),{
-                self.tableView.hidden = true
-                self.followingCollectionView.hidden = false
-            })
+            self.resetTapButtonColor()
             var followingPostArray = notif.object as! [UserPost]
             self.userPostArray = followingPostArray
-            followingCollectionView.populateData(self.userPostArray)
+            self.tableReloadDataWithAnimation()
         }
         Utilities.hideHUD()
         
@@ -113,12 +106,10 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     // MARK: Button Actions
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
-        println("selectSignBtnTapped TAPPED!! ")
-        self.printCurrentTabType()
+//        self.printCurrentTabType()
         if(self.tabType != NewsfeedTabType.SignTag){
-            println("selectSignBtnTapped selectSignBtnTapped")
             self.tabType = NewsfeedTabType.SignTag
-            self.resetTapButtonColor()
+            
             XAppDelegate.socialManager.getGlobalNewsfeed(0)
             
         }
@@ -126,11 +117,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
-        println("followingButtonTapped TAPPED!! ")
-        self.printCurrentTabType()
+//        self.printCurrentTabType()
         if(self.tabType != NewsfeedTabType.Following){
-            
-            println("followingButtonTapped followingButtonTapped")
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             XAppDelegate.socialManager.getFollowingNewsfeed(0)

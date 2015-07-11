@@ -46,6 +46,9 @@ class CollectHoroscopesTableVC : MyTableViewController, UITableViewDataSource, U
     }
     
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if(indexPath.row == 0){ // ignore first cell
+            return
+        }
         var collectedItem = self.collectedHoroscopes.collectedData[indexPath.row - 1] as! CollectedItem
         // get signIndex for tracker
         var collectSignIndex = 0
