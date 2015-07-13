@@ -218,7 +218,24 @@ class NewsfeedCellNode : ASCellNode {
     }
     
     func shareTapped(){
-        println("shareTapped shareTapped")
+        var parentVC = Utilities.getParentUIViewController(self.view) as! UIViewController
+        print("VC Class = \(NSStringFromClass(parentVC.classForCoder))")
+        var shareVC = self.prepareShareVC()
+        var formSheet = MZFormSheetController(viewController: shareVC)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
+        formSheet.cornerRadius = 0.0
+        formSheet.portraitTopInset = parentVC.view.frame.height - SHARE_HYBRID_HEIGHT;
+        formSheet.presentedFormSheetSize = CGSizeMake(parentVC.view.frame.width, SHARE_HYBRID_HEIGHT);
+        parentVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    func prepareShareVC() -> ShareViewController{
+        var storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        var sharingText = String(format: "%@ \n %@", userNameLabelNode!.attributedString.string, feedDescriptionLabelNode!.attributedString.string)
+        var pictureURL = ""
+        shareVC.populateNewsfeedShareData(ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL:pictureURL)
+        return shareVC
     }
     
     // Notification handler

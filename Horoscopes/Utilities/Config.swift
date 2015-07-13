@@ -82,6 +82,7 @@ enum ShareViewType {
 enum ShareType {
     case ShareTypeDaily
     case ShareTypeFortune
+    case ShareTypeNewsfeed
 }
 
 // Newsfeed

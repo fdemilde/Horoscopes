@@ -27,7 +27,9 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         composerVC.setInitialText(text)
         
         composerVC.addURL(NSURL(string: url)!)
-        composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+        if(pictureURL != ""){
+            composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+        }
         parentVC.presentViewController(composerVC, animated: true, completion: nil)
     }
     
@@ -45,7 +47,10 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         }
         composerVC.setInitialText(text)
         composerVC.addURL(NSURL(string: url)!)
-        composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+        if(pictureURL != ""){
+            composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+        }
+        
         parentVC.presentViewController(composerVC, animated: true, completion: nil)
     }
     

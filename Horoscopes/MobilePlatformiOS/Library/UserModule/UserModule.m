@@ -193,12 +193,12 @@
 
 -(void)saveFriendListToUserDefaults{
     [userDefaults setObject:friendList forKey:FRIEND_LIST];
-    DebugLog(@"serializeFriendList OUTPUT: %@", [userDefaults objectForKey:FRIEND_LIST]);
+//    DebugLog(@"serializeFriendList OUTPUT: %@", [userDefaults objectForKey:FRIEND_LIST]);
 }
 
 -(void)getFriendListFromUserDefault{
     friendList = [userDefaults objectForKey:FRIEND_LIST];
-    DebugLog(@"serializeFriendList OUTPUT: %@", [userDefaults objectForKey:FRIEND_LIST]);
+//    DebugLog(@"serializeFriendList OUTPUT: %@", [userDefaults objectForKey:FRIEND_LIST]);
     if(friendList == nil){
         friendList = [[NSMutableArray alloc] init];
         return;

@@ -46,13 +46,13 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 println("Error when get getGlobalNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
-//                println("getGlobalNewsfeed response = \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response)
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
+                    
                     var userDict = result["user"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
@@ -69,12 +69,13 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         var pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         // change to test  GET_FOLLOWING_FEED
-        XAppDelegate.mobilePlatform.sc.sendRequest(GET_GLOBAL_FEED,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING_FEED,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             if(error != nil){
-                println("Error when get getGlobalNewsfeed = \(error)")
+                println("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
+//                println("result when get getFollowingNewsfeed = \(result)")
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
@@ -98,9 +99,8 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         postData.setObject(type, forKey: "type")
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_HEART,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             if(error != nil){
-                println("Error when get getGlobalNewsfeed = \(error)")
+                println("Error when get sendHeart = \(error)")
             } else {
-                println("sendHeart sendHeart response = \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response)
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
@@ -110,9 +110,10 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 } else { // no error
                     var success = result["success"] as! Int
                     if success == 1 {
-                        Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: nil)
                     } else {
 //                        Utilities.showAlertView(self, title: "Error", message: "Please try again later!")\
+                        Utilities.hideHUD()
                         println("Post unsuccessful")
                     }
                 }
