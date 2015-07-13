@@ -138,6 +138,7 @@ class LoginVC : SpinWheelVC {
             }
             else {
                 println("responseDict when Login Zwigglers = \(responseDict)")
+//                XAppDelegate.currentUser.uid = ...
             }
             Utilities.hideHUD()
             self.reloadView()

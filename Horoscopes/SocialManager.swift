@@ -131,14 +131,6 @@ class SocialManager : NSObject, UIAlertViewDelegate {
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(response)
                 completionHandler(result: result, error: nil)
-//                let errorCode = result["error"] as! Int
-//                if(errorCode != 0){
-//                    completionHandler(response: re
-//                } else { // no error
-//                    let postId = result["post_id"] as! String
-//                    // TODO: - Use post id when needed
-//                    Utilities.postNotification(NOTIFICATION_CREATE_POST, object: nil)
-//                }
             }
         }
     }
@@ -149,11 +141,6 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         postData.setObject("\(uid)", forKey: "uid")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-//            if(error != nil){
-//                println("Error when get getUserNewsfeed = \(error)")
-//            } else {
-//                println("getUserNewsfeed response = \(response)")
-//            }
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -161,6 +148,54 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 completionHandler(result: result, error: nil)
             }
         })
+    }
+    
+    func follow(userWithId uid: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(uid)", forKey: "uid")
+        XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
+    func getFollowing(completionHandler: (result: [String: AnyObject]?, error: NSError?) -> ()) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
+    func getFollowers(completionHandler: (result: [String: AnyObject]?, error: NSError?) -> ()) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWERS, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
+    func getProfile(usersIdSeparatedByComma usersId: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(usersId)", forKey: "uid")
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_PROFILE, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
     }
     
     func loginFacebook() {
