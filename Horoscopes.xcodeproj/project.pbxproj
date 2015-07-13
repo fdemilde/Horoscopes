@@ -257,7 +257,7 @@
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4CACA1C1B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		F4CACA1E1B1EBE16003C6301 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		F4CACA1E1B1EBE16003C6301 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Horoscopes/Images.xcassets; sourceTree = SOURCE_ROOT; };
 		F4CACA211B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F4CACA271B1EBE16003C6301 /* HoroscopesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoroscopesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA2C1B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -454,6 +454,7 @@
 		F42E28931B37D14100466CAA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F46097E41B50D1F30026F0C9 /* moon animation */,
 				F42E28941B37D14100466CAA /* share */,
 			);
@@ -609,7 +610,6 @@
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F42E28931B37D14100466CAA /* Images */,
-				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
 				F4CACA151B1EBE16003C6301 /* Supporting Files */,
 				F4CACA951B20083A003C6301 /* Horoscopes-Bridging-Header.h */,

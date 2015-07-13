@@ -140,7 +140,6 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
         attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(13.0), range: NSMakeRange(likedStringLength, (voteStringLength + 1))) // +1 for the space between
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 145.0/255.0, green: 146.0/255.0, blue: 180.0/255.0, alpha: 1), range: NSMakeRange(likedStringLength, voteStringLength + 1))
         likePercentageLabel.attributedText = attString
-//        likePercentageLabel.hidden = false
     }
     
     func animateMoon(likePercentage : Int){

@@ -13,10 +13,11 @@ class MyViewController : UIViewController {
     
     var bannerView: GADBannerView!
     @IBOutlet weak var headerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.headerView.backgroundColor = UIColor.clearColor()
+        self.headerView.backgroundColor = UIColor.whiteColor()
         self.headerView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width,50)
         bannerView = GADBannerView()
         self.bannerView?.frame = CGRectMake(0,0,Utilities.getScreenSize().width,50)

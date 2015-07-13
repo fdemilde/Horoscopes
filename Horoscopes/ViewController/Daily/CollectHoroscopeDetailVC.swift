@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CollectHoroscopeDetailVC : UIViewController {
+class CollectHoroscopeDetailVC : MyViewController {
     
     @IBOutlet weak var segment: UISegmentedControl!
     
