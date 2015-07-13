@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         horoscopesManager.getAllHoroscopes(false)
-        
+        currentUser = UserProfile()
         if isFirstTimeUsing() {
             self.showLoginVC()
         }

@@ -31,6 +31,16 @@ let CREATE_POST = "app.horoscopes.post.create"
 let READ_POST = "app.horoscopes.post.get"
 let DELETE_POST = "app.horoscopes.post.remove"
 
+// MARK: Follow methods
+let FOLLOW = "user.follow"
+let UNFOLLOW = "user.unfollow"
+let GET_FOLLOWING = "user.following"
+let GET_FOLLOWERS = "user.followers"
+
+// MARK: Profile methods
+let GET_PROFILE = "app.horoscopes.profile.get"
+let UPDATE_PROFILE = ""
+
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"
 let NOTIFICATION_ALL_SIGNS_LOADED = "NOTIFICATION_ALL_SIGNS_LOADED"
