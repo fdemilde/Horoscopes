@@ -26,6 +26,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var followers = [UserProfile]()
     var currentTab = Tab.Post
     var userId: NSNumber!
+    
+    var clearTable = false
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -62,16 +64,22 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     // MARK: Action
     @IBAction func touchPostButton(sender: UIButton) {
         currentTab = .Post
+        resetProfileTableView()
+        changeProfileTableView()
         reloadPostDataSource()
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
         currentTab = .Followers
+        resetProfileTableView()
+        changeProfileTableView()
         reloadFollowersDataSource()
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
         currentTab = .Following
+        resetProfileTableView()
+        changeProfileTableView()
         reloadFollowingDataSource()
     }
     
@@ -109,13 +117,42 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
         profileTableView!.showsVerticalScrollIndicator = false
+        changeProfileTableView()
+    }
+    
+//    func changeProfileTableViewToPost() {
+//        profileTableView?.layer.cornerRadius = 0
+//        profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
+//        profileTableView!.backgroundColor = UIColor.clearColor()
+//    }
+//    
+//    func changeProfileTableViewToFollow() {
+//        profileTableView?.layer.cornerRadius = 10
+//        profileTableView?.layer.masksToBounds = true
+//        profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
+//        profileTableView?.separatorColor = UIColor.lightGrayColor()
+//        profileTableView?.backgroundColor = UIColor.whiteColor()
+//    }
+    
+    func changeProfileTableView() {
         switch currentTab {
         case .Post:
+            profileTableView?.layer.cornerRadius = 0
             profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
             profileTableView!.backgroundColor = UIColor.clearColor()
         default:
+            profileTableView?.layer.cornerRadius = 10
+            profileTableView?.layer.masksToBounds = true
+            profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             profileTableView?.separatorColor = UIColor.lightGrayColor()
+            profileTableView?.backgroundColor = UIColor.whiteColor()
         }
+    }
+    
+    func resetProfileTableView() {
+        clearTable = true
+        profileTableView?.reloadData()
+        clearTable = false
     }
     
     // MARK: Helper
@@ -128,6 +165,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadPostDataSource() {
+        Utilities.showHUD()
         if userId != -1 {
             userPosts.removeAll(keepCapacity: false)
             SocialManager.sharedInstance.getPost(Int(userId), completionHandler: { (result, error) -> Void in
@@ -143,7 +181,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                         }
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-                            self.profileTableView!.reloadData()
+                            self.profileTableView?.reloadData()
+                            Utilities.hideHUD()
                         })
                     }
                 }
@@ -152,6 +191,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadFollowersDataSource() {
+        Utilities.showHUD()
         if userId != -1 {
             SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
                 if let error = error {
@@ -171,7 +211,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView!.reloadData()
+                                    self.profileTableView?.reloadData()
+                                    Utilities.hideHUD()
                                 })
                             }
                         })
@@ -182,6 +223,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadFollowingDataSource() {
+        Utilities.showHUD()
         if userId != -1 {
             followingUsers.removeAll(keepCapacity: false)
             SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
@@ -202,7 +244,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView!.reloadData()
+                                    self.profileTableView?.reloadData()
+                                    Utilities.hideHUD()
                                 })
                             }
                         })
@@ -214,34 +257,35 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: Datasource and delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        switch currentTab {
-        case .Followers:
-            return followers.count
-        case .Following:
-            return followingUsers.count
-        default:
-            return userPosts.count
+        if clearTable {
+            return 0
+        } else {
+            switch currentTab {
+            case .Followers:
+                return followers.count
+            case .Following:
+                return followingUsers.count
+            default:
+                return userPosts.count
+            }
         }
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        let cellObject = userPosts[indexPath.row] as UserPost
-        return ProfileCellNode(cellObject: cellObject, tab: .Post)
-        // TODO: Implement table cell layout for followers and following then uncomment.
-//        let cellObject: AnyObject
-//        let cell: ASCellNode
-//        switch currentTab {
-//        case .Followers:
-//            cellObject = followers[indexPath.row] as UserProfile
-//            cell = ProfileCellNode(cellObject: cellObject, tab: .Followers)
-//        case .Following:
-//            cellObject = followingUsers[indexPath.row] as UserProfile
-//            cell = ProfileCellNode(cellObject: cellObject, tab: .Following)
-//        default:
-//            cellObject = userPosts[indexPath.row] as UserPost
-//            cell = ProfileCellNode(cellObject: cellObject, tab: .Post)
-//        }
-//        return cell
+        let cellObject: AnyObject
+        let cell: ProfileCellNode
+        switch currentTab {
+        case .Followers:
+            cellObject = followers[indexPath.row] as UserProfile
+            cell = ProfileCellNode(cellObject: cellObject, tab: .Followers)
+        case .Following:
+            cellObject = followingUsers[indexPath.row] as UserProfile
+            cell = ProfileCellNode(cellObject: cellObject, tab: .Following)
+        default:
+            cellObject = userPosts[indexPath.row] as UserPost
+            cell = ProfileCellNode(cellObject: cellObject, tab: .Post)
+        }
+        return cell
     }
     
 
