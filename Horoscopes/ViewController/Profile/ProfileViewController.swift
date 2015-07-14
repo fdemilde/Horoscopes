@@ -14,7 +14,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     
-    var profileTableView: ASTableView!
+    var profileTableView: ASTableView?
     
     var userPosts = [UserPost]()
     enum Tab {
@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
     var currentTab = Tab.Post
+    var userId: NSNumber!
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -32,23 +33,25 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
 
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
-        postButton.titleLabel?.numberOfLines = 2
-        followersButton.titleLabel?.numberOfLines = 2
-        followingButton.titleLabel?.numberOfLines = 2
-        configureProfileTableView()
-        view.addSubview(profileTableView)
+        userId = getUserId()
         
-        reloadPostDataSource()
-        reloadFollowersDataSource()
-        reloadFollowingDataSource()
-        
-//        SocialManager.sharedInstance.follow(userWithId: 3) { (result, error) -> Void in
-//            
-//        }
+        if userId != -1 {
+            configureButtons()
+            configureProfileTableView()
+            view.addSubview(profileTableView!)
+            
+            reloadPostDataSource()
+            reloadFollowersDataSource()
+            reloadFollowingDataSource()
+        } else {
+            configureLoginView()
+        }
     }
     
     override func viewWillLayoutSubviews() {
-        profileTableView.frame = CGRectMake(0, postButton.frame.origin.y + postButton.frame.height, view.frame.width, view.frame.height)
+        if profileTableView != nil {
+            profileTableView!.frame = CGRectMake(0, postButton.frame.origin.y + postButton.frame.height, view.frame.width, view.frame.height)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,14 +76,46 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     // MARK: ConfigureUI
+    
+    func configureLoginView() {
+        let facebookLoginButton = UIButton()
+        let facebookLoginImage = UIImage(named: "fb_login_icon")
+        facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
+        facebookLoginButton.sizeToFit()
+        facebookLoginButton.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton.frame.width/2, view.frame.height/2 - facebookLoginButton.frame.height/2)
+        view.addSubview(facebookLoginButton)
+        let facebookLoginLabel = UILabel()
+        facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
+        facebookLoginLabel.textColor = UIColor.lightTextColor()
+        facebookLoginLabel.numberOfLines = 2
+        facebookLoginLabel.sizeToFit()
+        facebookLoginLabel.textAlignment = NSTextAlignment.Center
+        facebookLoginLabel.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.size.height + 8)
+        view.addSubview(facebookLoginLabel)
+    }
+    
+    func configureButtons() {
+        postButton.titleLabel?.numberOfLines = 2
+        postButton.hidden = false
+        followersButton.titleLabel?.numberOfLines = 2
+        followersButton.hidden = false
+        followingButton.titleLabel?.numberOfLines = 2
+        followingButton.hidden = false
+    }
+    
     func configureProfileTableView() {
         profileTableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
-        profileTableView.asyncDataSource = self
-        profileTableView.asyncDelegate = self
-        profileTableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        profileTableView.backgroundColor = UIColor.clearColor()
-        profileTableView.showsHorizontalScrollIndicator = false
-        profileTableView.showsVerticalScrollIndicator = false
+        profileTableView!.asyncDataSource = self
+        profileTableView!.asyncDelegate = self
+        profileTableView!.showsHorizontalScrollIndicator = false
+        profileTableView!.showsVerticalScrollIndicator = false
+        switch currentTab {
+        case .Post:
+            profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
+            profileTableView!.backgroundColor = UIColor.clearColor()
+        default:
+            profileTableView?.separatorColor = UIColor.lightGrayColor()
+        }
     }
     
     // MARK: Helper
@@ -93,10 +128,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadPostDataSource() {
-        let uid = getUserId()
-        if uid != -1 {
+        if userId != -1 {
             userPosts.removeAll(keepCapacity: false)
-            SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
+            SocialManager.sharedInstance.getPost(Int(userId), completionHandler: { (result, error) -> Void in
                 if let error = error {
                     NSLog("Cannot load user's posts. Error: \(error)")
                 } else {
@@ -104,12 +138,12 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                     if let posts = result!["posts"] as? Array<AnyObject> {
                         for post in posts {
                             let userPost = UserPost(data: post as! NSDictionary)
-                            userPost.user = UserProfile(data: users["\(uid)"] as! NSDictionary)
+                            userPost.user = UserProfile(data: users["\(self.userId)"] as! NSDictionary)
                             self.userPosts.append(userPost)
                         }
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-                            self.profileTableView.reloadData()
+                            self.profileTableView!.reloadData()
                         })
                     }
                 }
@@ -118,8 +152,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadFollowersDataSource() {
-        let uid = getUserId()
-        if uid != -1 {
+        if userId != -1 {
             SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
                 if let error = error {
                     NSLog("Cannot get followers. Error: \(error)")
@@ -138,7 +171,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView.reloadData()
+                                    self.profileTableView!.reloadData()
                                 })
                             }
                         })
@@ -149,8 +182,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadFollowingDataSource() {
-        let uid = getUserId()
-        if uid != -1 {
+        if userId != -1 {
             followingUsers.removeAll(keepCapacity: false)
             SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
                 if let error = error {
@@ -170,7 +202,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                     self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView.reloadData()
+                                    self.profileTableView!.reloadData()
                                 })
                             }
                         })
@@ -194,20 +226,20 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         let cellObject = userPosts[indexPath.row] as UserPost
-        return ProfileCellNode(cellObject: cellObject, type: .Post)
+        return ProfileCellNode(cellObject: cellObject, tab: .Post)
         // TODO: Implement table cell layout for followers and following then uncomment.
 //        let cellObject: AnyObject
 //        let cell: ASCellNode
 //        switch currentTab {
 //        case .Followers:
 //            cellObject = followers[indexPath.row] as UserProfile
-//            cell = ProfileCellNode(cellObject: cellObject, type: .Followers)
+//            cell = ProfileCellNode(cellObject: cellObject, tab: .Followers)
 //        case .Following:
 //            cellObject = followingUsers[indexPath.row] as UserProfile
-//            cell = ProfileCellNode(cellObject: cellObject, type: .Following)
+//            cell = ProfileCellNode(cellObject: cellObject, tab: .Following)
 //        default:
 //            cellObject = userPosts[indexPath.row] as UserPost
-//            cell = ProfileCellNode(cellObject: cellObject, type: .Post)
+//            cell = ProfileCellNode(cellObject: cellObject, tab: .Post)
 //        }
 //        return cell
     }
