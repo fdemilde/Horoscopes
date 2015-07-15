@@ -348,6 +348,22 @@ static int CLOVER_SYMBOL_TAG = 101;
 
 }
 
+-(void) autoRollToSignIndex:(int)index{
+    [self unhighlightSelectedSign];
+    int selectedChange = currentValue - index;
+    currentValue = index;
+    //do the animation
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:0.2];
+    CGAffineTransform t = CGAffineTransformRotate(container.transform, selectedChange*M_PI/6);
+    container.transform = t;
+    [UIView commitAnimations];
+    //set alpha to make it focus
+    [self highlightSelectedSign];
+    //notify the delegate
+    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+}
+
 
 #pragma mark - Helper methods
 

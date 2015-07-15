@@ -12,9 +12,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var loginLabel: UILabel!
     @IBOutlet weak var separator: UIImageView!
-    @IBOutlet weak var birthdayBg: UIView!
-    @IBOutlet weak var birthdayLabel: UILabel!
     
+    @IBOutlet weak var birthdaySelectButton: UIButton!
     @IBOutlet weak var signNameLabel: UILabel!
     @IBOutlet weak var signDateLabel: UILabel!
     @IBOutlet weak var DOBLabel: UILabel!
@@ -30,23 +29,21 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
-    
     var startButton : UIButton!
+    
     
     var userFBID = ""
     var userFBName = ""
     var userFBImageURL = ""
     var userFBBirthdayString = ""
-    
+    var birthday : NSDate!
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        fbLoginBtn.layer.cornerRadius = 0.5 * fbLoginBtn.bounds.size.width
-        fbLoginBtn.layer.cornerRadius = 100
-        fbLoginBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
+        fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * fbLoginBtn.bounds.size.width
         fbLoginBtn.backgroundColor = UIColor.clearColor()
-        fbLoginBtn.clipsToBounds = true
+        fbLoginBtn.imageView!.clipsToBounds = true
         XAppDelegate.socialManager.delegate = self
         self.setupComponents()
     }
@@ -77,8 +74,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
         self.view .bringSubviewToFront(fbLoginBtn)
         self.view .bringSubviewToFront(loginLabel)
         self.view .bringSubviewToFront(separator)
-        self.view .bringSubviewToFront(birthdayBg)
-        self.view .bringSubviewToFront(birthdayLabel)
+        self.view .bringSubviewToFront(birthdaySelectButton)
         self.view .bringSubviewToFront(signNameLabel)
         self.view .bringSubviewToFront(signDateLabel)
         self.view .bringSubviewToFront(DOBLabel)
@@ -114,10 +110,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
     
     func fetchUserInfo(){
         var params = Dictionary<String,String>()
-//            params["fields"] = "name,id,gender,birthday"
+        // params["fields"] = "name,id,gender,birthday"
         FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
             if(error == nil){
-                println("User information = \(result)")
+                // println("User information = \(result)")
                 self.userFBID = result["id"] as! String
                 self.userFBName = result["name"] as! String
                 self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
@@ -133,11 +129,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
         var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
         XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
             if ((error) != nil){
-                println("Error when Login Zwigglers = \(error)")
+                // println("Error when Login Zwigglers = \(error)")
             }
             else {
-                println("responseDict when Login Zwigglers = \(responseDict)")
-//                XAppDelegate.currentUser.uid = ...
+                // println("responseDict when Login Zwigglers = \(responseDict)")
             }
             Utilities.hideHUD()
             self.reloadView()
@@ -216,6 +211,45 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
         customTabBarController.selectedSign = self.selectedIndex
         
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+    }
+    
+    @IBAction func birthdayButtonTapped(sender: AnyObject) {
+        let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
+        selectBirthdayVC.parentVC = self
+        var formSheet = MZFormSheetController(viewController: selectBirthdayVC)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = 0.0;
+        formSheet.presentedFormSheetSize = Utilities.getScreenSize()
+        
+        XAppDelegate.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    func finishedSelectingBirthday(){
+        
+        var signIndex = XAppDelegate.horoscopesManager.getSignIndexOfDate(birthday)
+        self.wheel.autoRollToSignIndex(Int32(signIndex))
+        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+    }
+    
+    func getBirthdayString() -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM d"
+        
+        let dayOfMonthFormatter = NSDateFormatter()
+        dayOfMonthFormatter.dateFormat = "d"
+        
+        var dateString = dateFormatter.stringFromDate(birthday)
+        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(birthday)
+        
+        var date_day = dayOfMonthFormatterString.toInt()
+        var suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
+        var suffixes = suffix_string.componentsSeparatedByString("|")
+        var suffix = suffixes[date_day!]
+        dateString = dateString.stringByAppendingString(suffix)
+        
+        return dateString
     }
     
 }

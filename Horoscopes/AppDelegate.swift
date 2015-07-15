@@ -27,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         horoscopesManager.getAllHoroscopes(false)
         currentUser = UserProfile()
-        if isFirstTimeUsing() {
+//        if isFirstTimeUsing() {
             self.showLoginVC()
-        }
+//        }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }

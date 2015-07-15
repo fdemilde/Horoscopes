@@ -32,10 +32,10 @@ class HoroscopesManager : NSObject {
                 to:dateFormatter.dateFromString("20-05")))
             horoscopesSigns.append(Horoscope(sign:"Gemini",
                 startFrom: dateFormatter.dateFromString("21-05"),
-                to:dateFormatter.dateFromString("20-06")))
+                to:dateFormatter.dateFromString("21-06")))
             
             horoscopesSigns.append(Horoscope(sign:"Cancer",
-                startFrom: dateFormatter.dateFromString("21-06"),
+                startFrom: dateFormatter.dateFromString("22-06"),
                 to:dateFormatter.dateFromString("22-07")))
             
             horoscopesSigns.append(Horoscope(sign:"Leo",
@@ -51,12 +51,12 @@ class HoroscopesManager : NSObject {
                 to:dateFormatter.dateFromString("22-10")))
             
             horoscopesSigns.append(Horoscope(sign:"Scorpio",
-                startFrom: dateFormatter.dateFromString("22-11"),
-                to:dateFormatter.dateFromString("21-12")))
+                startFrom: dateFormatter.dateFromString("23-10"),
+                to:dateFormatter.dateFromString("21-11")))
             
             horoscopesSigns.append(Horoscope(sign:"Sagittarius",
-                startFrom: dateFormatter.dateFromString("21-03"),
-                to:dateFormatter.dateFromString("19-04")))
+                startFrom: dateFormatter.dateFromString("22-11"),
+                to:dateFormatter.dateFromString("21-12")))
             
             horoscopesSigns.append(Horoscope(sign:"Capricorn",
                 startFrom: dateFormatter.dateFromString("22-12"),
@@ -199,8 +199,19 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
             horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
-//            var dict = horoSigns[index-1].horoscopes
         }
+    }
+    
+    func getSignIndexOfDate(date : NSDate) -> Int{
+        for index in 0...11 {
+            if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
+            var horoscope = self.horoscopesSigns[index]
+            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
+                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
+                    return index
+            }
+        }
+        return 9
     }
     
 }

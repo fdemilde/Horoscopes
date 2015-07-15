@@ -22,4 +22,5 @@
 @property (nonatomic, strong) NSMutableArray *horoscopeSigns;
 
 - (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber andArray:(NSMutableArray*)horoscopes;
+-(void) autoRollToSignIndex:(int)index;
 @end

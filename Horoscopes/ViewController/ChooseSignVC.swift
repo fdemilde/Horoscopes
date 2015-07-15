@@ -15,6 +15,7 @@ class ChooseSignVC : SpinWheelVC {
     @IBOutlet weak var signNameLabel: UILabel!
     @IBOutlet weak var signDateLabel: UILabel!
     @IBOutlet weak var starImage: UIImageView!
+    @IBOutlet weak var autoRollBtn: UIButton!
     
     @IBOutlet weak var chooseSignButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
@@ -26,6 +27,7 @@ class ChooseSignVC : SpinWheelVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupComponents()
+        
     }
     
     func setupComponents(){
@@ -39,6 +41,7 @@ class ChooseSignVC : SpinWheelVC {
         self.view .bringSubviewToFront(signNameLabel)
         self.view .bringSubviewToFront(signDateLabel)
         self.view .bringSubviewToFront(starImage)
+        self.view .bringSubviewToFront(autoRollBtn)
     }
     
     // MARK: Delegata methods
@@ -90,5 +93,10 @@ class ChooseSignVC : SpinWheelVC {
         parentVC.saveData()
         parentVC.tableView.reloadData()
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func autoRollTapped(sender: AnyObject) {
+        var index = rand() % 12
+        wheel.autoRollToSignIndex(index)
     }
 }
