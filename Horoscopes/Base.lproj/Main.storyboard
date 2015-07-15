@@ -3063,8 +3063,10 @@
                                     <constraint firstAttribute="width" constant="46" id="Oa2-Zt-bfl"/>
                                     <constraint firstAttribute="height" constant="44" id="eLV-dS-zge"/>
                                 </constraints>
-                                <state key="normal" title="Post 0">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+
+                                <state key="normal">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -3088,8 +3090,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5Di-qq-ThF"/>
                                 </constraints>
-                                <state key="normal" title="Following 0">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+
+                                <state key="normal">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -3111,8 +3115,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="KMA-Ti-QfB"/>
                                 </constraints>
-                                <state key="normal" title="Followers 0">
-                                    <color key="titleColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+
+                                <state key="normal">
+                                    <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">

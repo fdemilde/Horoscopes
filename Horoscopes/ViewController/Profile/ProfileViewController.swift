@@ -15,6 +15,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     @IBOutlet weak var followingButton: UIButton!
     
     var profileTableView: ASTableView?
+    let padding: CGFloat = 10
+    let tabBarHeight: CGFloat = 49
     
     var userPosts = [UserPost]()
     enum Tab {
@@ -24,10 +26,21 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
+    var isFollowedArray = [Bool]()
     var currentTab = Tab.Post
     var userId: NSNumber!
     
     var clearTable = false
+    
+    let postDataSourceNotification = "Finish reloading post data source"
+    let followersDataSourceNotification = "Finish reloading followers data source"
+    let followingDataSourceNotification = "Finish reloading following data source"
+    
+    var isFinishedPostDataSource = false
+    var isFinishedFollowersDataSource = false
+    var isFinishedFollowingDataSource = false
+    
+    var isFirstDataLoad = true
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -36,6 +49,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         userId = getUserId()
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.postDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followersDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followingDataSourceNotification, object: nil)
         
         if userId != -1 {
             configureButtons()
@@ -50,9 +67,15 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.postDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followersDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followingDataSourceNotification, object: nil)
+    }
+    
     override func viewWillLayoutSubviews() {
         if profileTableView != nil {
-            profileTableView!.frame = CGRectMake(0, postButton.frame.origin.y + postButton.frame.height, view.frame.width, view.frame.height)
+            profileTableView!.frame = CGRectMake(padding, postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
         }
     }
 
@@ -63,23 +86,23 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: Action
     @IBAction func touchPostButton(sender: UIButton) {
-        currentTab = .Post
         resetProfileTableView()
-        changeProfileTableView()
+        changeProfileTableViewToPost()
+        currentTab = .Post
         reloadPostDataSource()
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
-        currentTab = .Followers
         resetProfileTableView()
-        changeProfileTableView()
+        changeProfileTableViewToFollow()
+        currentTab = .Followers
         reloadFollowersDataSource()
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
-        currentTab = .Following
         resetProfileTableView()
-        changeProfileTableView()
+        changeProfileTableViewToFollow()
+        currentTab = .Following
         reloadFollowingDataSource()
     }
     
@@ -117,34 +140,23 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
         profileTableView!.showsVerticalScrollIndicator = false
-        changeProfileTableView()
+        profileTableView?.layer.cornerRadius = 10
+        profileTableView?.layer.masksToBounds = true
+        profileTableView?.separatorColor = UIColor.lightGrayColor()
+        profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
+        profileTableView!.backgroundColor = UIColor.clearColor()
     }
     
-//    func changeProfileTableViewToPost() {
-//        profileTableView?.layer.cornerRadius = 0
-//        profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
-//        profileTableView!.backgroundColor = UIColor.clearColor()
-//    }
-//    
-//    func changeProfileTableViewToFollow() {
-//        profileTableView?.layer.cornerRadius = 10
-//        profileTableView?.layer.masksToBounds = true
-//        profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-//        profileTableView?.separatorColor = UIColor.lightGrayColor()
-//        profileTableView?.backgroundColor = UIColor.whiteColor()
-//    }
-    
-    func changeProfileTableView() {
-        switch currentTab {
-        case .Post:
-            profileTableView?.layer.cornerRadius = 0
+    func changeProfileTableViewToPost() {
+        if currentTab != .Post {
             profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
             profileTableView!.backgroundColor = UIColor.clearColor()
-        default:
-            profileTableView?.layer.cornerRadius = 10
-            profileTableView?.layer.masksToBounds = true
+        }
+    }
+    
+    func changeProfileTableViewToFollow() {
+        if currentTab == .Post {
             profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            profileTableView?.separatorColor = UIColor.lightGrayColor()
             profileTableView?.backgroundColor = UIColor.whiteColor()
         }
     }
@@ -180,9 +192,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                             self.userPosts.append(userPost)
                         }
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-                            self.profileTableView?.reloadData()
-                            Utilities.hideHUD()
+                            if !self.isFirstDataLoad {
+                                self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
+                            }
+                            self.isFinishedPostDataSource = true
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
                         })
                     }
                 }
@@ -193,6 +207,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func reloadFollowersDataSource() {
         Utilities.showHUD()
         if userId != -1 {
+            followers.removeAll(keepCapacity: false)
             SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
                 if let error = error {
                     NSLog("Cannot get followers. Error: \(error)")
@@ -210,9 +225,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                     }
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView?.reloadData()
-                                    Utilities.hideHUD()
+                                    if !self.isFirstDataLoad {
+                                        self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+                                    }
+                                    self.isFinishedFollowersDataSource = true
+                                    NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
                                 })
                             }
                         })
@@ -243,15 +260,54 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                     }
                                 }
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                                    self.profileTableView?.reloadData()
-                                    Utilities.hideHUD()
+                                    if !self.isFirstDataLoad {
+                                        self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+                                    }
+                                    self.isFinishedFollowingDataSource = true
+                                    NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
                                 })
                             }
                         })
                     }
                 }
             })
+        }
+    }
+    
+    func reloadData(notification: NSNotification) {
+        if isFirstDataLoad {
+            if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
+                profileTableView?.reloadData()
+                populateIsFollowedArray()
+                self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
+                self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+                self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+                isFirstDataLoad = false
+                isFinishedPostDataSource = false
+                isFinishedFollowersDataSource = false
+                isFinishedFollowingDataSource = false
+                Utilities.hideHUD()
+            }
+        } else {
+            profileTableView?.reloadData()
+            isFinishedPostDataSource = false
+            isFinishedFollowersDataSource = false
+            isFinishedFollowingDataSource = false
+            Utilities.hideHUD()
+        }
+    }
+    
+    func populateIsFollowedArray() {
+        isFollowedArray.removeAll(keepCapacity: true)
+        for follower in followers {
+            var isFollowed = false
+            for followingUser in followingUsers {
+                if follower.uid == followingUser.uid {
+                    isFollowed = true
+                    break
+                }
+            }
+            isFollowedArray.append(isFollowed)
         }
     }
     
@@ -272,18 +328,17 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        let cellObject: AnyObject
         let cell: ProfileCellNode
         switch currentTab {
         case .Followers:
-            cellObject = followers[indexPath.row] as UserProfile
-            cell = ProfileCellNode(cellObject: cellObject, tab: .Followers)
+            let follower = followers[indexPath.row] as UserProfile
+            cell = ProfileCellNode(follower: follower, isFollowed: isFollowedArray[indexPath.row])
         case .Following:
-            cellObject = followingUsers[indexPath.row] as UserProfile
-            cell = ProfileCellNode(cellObject: cellObject, tab: .Following)
+            let followingUser = followingUsers[indexPath.row] as UserProfile
+            cell = ProfileCellNode(followingUser: followingUser)
         default:
-            cellObject = userPosts[indexPath.row] as UserPost
-            cell = ProfileCellNode(cellObject: cellObject, tab: .Post)
+            let userPost = userPosts[indexPath.row] as UserPost
+            cell = ProfileCellNode(userPost: userPost)
         }
         return cell
     }

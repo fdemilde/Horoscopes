@@ -172,6 +172,33 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
+    func unfollow(userWithId uid: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(uid)", forKey: "uid")
+        XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
+    func isFollowing(uid: Int, followerId: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(uid)", forKey: "uid")
+        postData.setObject("\(followerId)", forKey: "follower")
+        XAppDelegate.mobilePlatform.sc.sendRequest(IS_FOLLOWING, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
     func getFollowing(completionHandler: (result: [String: AnyObject]?, error: NSError?) -> ()) {
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
             if let error = error {
