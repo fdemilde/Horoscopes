@@ -39,6 +39,7 @@ static int CLOVER_SYMBOL_TAG = 101;
 - (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber  andArray:(NSMutableArray*)horoscopes{
     
     if ((self = [super initWithFrame:frame])) {
+        NSLog(@"init frame === %@", NSStringFromCGRect(frame));
 		self.delegate = del;
         self.currentValue = 8;
         self.numberOfSections = sectionsNumber;
@@ -50,11 +51,8 @@ static int CLOVER_SYMBOL_TAG = 101;
 }
 
 - (void) drawWheel {
-    
     container = [[UIView alloc] initWithFrame:self.frame];
     CGFloat angleSize = 2*M_PI/numberOfSections;
-    
-    DebugLog(@"%g,%g", container.center.x, container.center.y);
     for (int i = 0; i < numberOfSections; i++) {
         //get the sign
         Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
@@ -69,13 +67,19 @@ static int CLOVER_SYMBOL_TAG = 101;
 //        im.alpha = minAlphavalue;
         im.tag = i;
         
-        UIImageView *cloveImage = [[UIImageView alloc] initWithFrame:CGRectMake(130, 60, 60, 60)];
+        // Frame is hardcode for 568h screen, now calculate for each screen size
+        // (130, 60, 60, 60)
+        int clovePosX = [self getPositionXBaseOnScreen:130];
+        int clovePosY = [self getPositionYBaseOnScreen:60];
+        UIImageView *cloveImage = [[UIImageView alloc] initWithFrame:CGRectMake(clovePosX, clovePosY, 60, 60)];
         cloveImage.image = [horoscope getIcon];
         cloveImage.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         cloveImage.tag = CLOVER_IMAGE_TAG;
         [im addSubview:cloveImage];
-        
-        UIImageView *symbol = [[UIImageView alloc] initWithFrame:CGRectMake(66, 33, 30, 30)];
+        // (66, 33, 30, 30)
+        int symbolPosX = [self getPositionXBaseOnScreen:66];
+        int symbolPosY = [self getPositionYBaseOnScreen:33];
+        UIImageView *symbol = [[UIImageView alloc] initWithFrame:CGRectMake(symbolPosX, symbolPosY, 30, 30)];
         symbol.image = [horoscope getSymbol];
         symbol.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         symbol.tag = CLOVER_SYMBOL_TAG;
@@ -86,7 +90,6 @@ static int CLOVER_SYMBOL_TAG = 101;
         }
         
         [container addSubview:im];
-        
     }
     
     container.userInteractionEnabled = NO;
@@ -136,10 +139,9 @@ static int CLOVER_SYMBOL_TAG = 101;
         }
         //otherwise
         CGPoint p1 = CGPointMake(container.center.x, 0);
-        int selected = [self lengthFrom:p1 toPoint:touchPoint] / 80;
-        DebugLog(@"selected selected = %d | ", selected);
-//        DebugLog(@"%g",p1.x-touchPoint.x);
-        if(selected >= 1 && fabs(p1.x-touchPoint.x) > 40) //if we touch on the sign
+        int selected = [self lengthFrom:p1 toPoint:touchPoint] / [self getHoroscopeSignArea];
+        
+        if(selected >= 1 && fabs(p1.x-touchPoint.x) > ([self getHoroscopeSignArea] / 2)) //if we touch on the sign
         {
             [self unhighlightSelectedSign];
             if(touchPoint.x > p1.x) //touch on the right
@@ -162,7 +164,7 @@ static int CLOVER_SYMBOL_TAG = 101;
             [self highlightSelectedSign];
             //notify the delegate
             [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
-        }   
+        }
         else //user selected the sign => save and go back
         {
             
@@ -488,4 +490,20 @@ static int CLOVER_SYMBOL_TAG = 101;
     return (((float) rand() / RAND_MAX) * diff) + low;
 }
 
+- (float)getPositionYBaseOnScreen:(int)pos568h{
+    float percent = [[UIScreen mainScreen] bounds].size.height / 568;
+    float result = pos568h * percent;
+    if(percent != 1) { result += 10; }
+    return result;
+}
+
+- (float)getPositionXBaseOnScreen:(int)pos568h{
+    return pos568h * ([[UIScreen mainScreen] bounds].size.width/320);
+}
+
+- (float)getHoroscopeSignArea{
+    // because 4 sign will be displayed at the same time
+    float result = [[UIScreen mainScreen] bounds].size.width / 4;
+    return result;
+}
 @end

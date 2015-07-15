@@ -24,6 +24,6 @@ class MyTableViewController : UITableViewController {
         self.bannerView?.rootViewController = self
         var request = GADRequest()
         self.bannerView?.loadRequest(request)
-//        self.navigationController?.view.addSubview(self.bannerView)
+        self.navigationController?.view.addSubview(self.bannerView)
     }
 }

@@ -8,10 +8,19 @@
 
 import Foundation
 
+@objc protocol SocialManagerDelegate
+{
+    optional func facebookLoginFinishsed(result : FBSDKLoginManagerLoginResult, error : NSError?)
+    optional func facebookLoginTokenExists(token : FBSDKAccessToken)
+}
+
 class SocialManager : NSObject, UIAlertViewDelegate {
+
     
 //    var globalFeeds = []
     static let sharedInstance = SocialManager()
+    
+    var delegate : SocialManagerDelegate!
     
     override init(){
         
@@ -200,5 +209,15 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     
     func loginFacebook() {
         // TODO: - login facebook and may return anything indicating if it has been successful
+        Utilities.showHUD()
+        if((FBSDKAccessToken .currentAccessToken()) != nil){
+            self.delegate.facebookLoginTokenExists!(FBSDKAccessToken .currentAccessToken())
+        } else {
+            var loginManager = FBSDKLoginManager()
+            var permissions = ["public_profile", "email", "user_birthday"]
+            loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
+                self.delegate.facebookLoginFinishsed!(result, error: error)
+            })
+        }
     }
 }
