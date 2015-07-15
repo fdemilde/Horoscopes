@@ -36,6 +36,7 @@ let FOLLOW = "user.follow"
 let UNFOLLOW = "user.unfollow"
 let GET_FOLLOWING = "user.following"
 let GET_FOLLOWERS = "user.followers"
+let IS_FOLLOWING = "user.isfollowing"
 
 // MARK: Profile methods
 let GET_PROFILE = "app.horoscopes.profile.get"

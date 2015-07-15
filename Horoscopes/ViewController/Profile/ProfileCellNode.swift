@@ -41,6 +41,8 @@ class ProfileCellNode: ASCellNode {
     var shareImageView : ASImageNode?
     var shareButton : UIButton?
     var horoscopeSignTextNode: ASTextNode?
+    var followButton: ASTextNode?
+    var followedText: ASTextNode?
     
     var userPost : UserPost?
     var user: UserProfile?
@@ -51,25 +53,41 @@ class ProfileCellNode: ASCellNode {
         case Following
     }
     var currentTab: Tab?
+    var isFollowed: Bool?
     
-    init(cellObject: AnyObject, tab: Tab){
-        super.init()
+    func setup() {
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
-        currentTab = tab
-        switch currentTab! {
-        case .Post:
-            self.userPost = cellObject as? UserPost
-            self.createBackground()
-            self.createFeedHeader()
-            self.createFeedDescirption()
-            self.createFeedHeartTextNode()
-            self.createSeparator()
-            self.createButtons()
-        default:
-            user = cellObject as? UserProfile
-            configureCell()
-        }
+    }
+    
+    init(userPost: UserPost) {
+        super.init()
+        self.userPost = userPost
+        currentTab = .Post
+        setup()
+        createBackground()
+        createFeedHeader()
+        createFeedDescirption()
+        createFeedHeartTextNode()
+        createSeparator()
+        createButtons()
+    }
+    
+    init(followingUser: UserProfile) {
+        super.init()
+        user = followingUser
+        currentTab = .Following
+        setup()
+        configureCell()
+    }
+    
+    init(follower: UserProfile, isFollowed: Bool) {
+        super.init()
+        user = follower
+        self.isFollowed = isFollowed
+        currentTab = .Followers
+        setup()
+        configureCell()
     }
     
     // MARK: create components
@@ -166,7 +184,21 @@ class ProfileCellNode: ASCellNode {
         self.addSubnode(horoscopeSignTextNode)
         
         if currentTab == .Followers {
-            // TODO: Add follow button
+            followButton = ASTextNode()
+            var attrs: [String: AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(14)]
+            if isFollowed! {
+                attrs[NSForegroundColorAttributeName] = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
+                let string = NSAttributedString(string: "Followed", attributes: attrs)
+                followButton?.attributedString = string
+            } else {
+                attrs[NSForegroundColorAttributeName] = UIColor.whiteColor()
+                attrs[NSBackgroundColorAttributeName] = UIColor(red: 134/255.0, green: 124/255.0, blue: 170/255.0, alpha: 1)
+                let string = NSAttributedString(string: "Follow", attributes: attrs)
+                followButton?.attributedString = string
+                followButton?.userInteractionEnabled = true
+                followButton?.addTarget(self, action: "followButtonTapped:", forControlEvents: ASControlNodeEvent.TouchUpInside)
+            }
+            self.addSubnode(followButton)
         }
     }
     
@@ -195,6 +227,11 @@ class ProfileCellNode: ASCellNode {
             
             return resultSize
         default:
+            if currentTab == .Followers {
+                followButton?.measure(constrainedSize)
+//                let extendY = roundf((44.0 - followButtonSize!.height) / 2.0)
+//                followButton?.hitTestSlop = UIEdgeInsetsMake(-extendY, 0.0, -extendY, 0.0)
+            }
             let horoscopeSignSize = horoscopeSignTextNode?.measure(CGSizeMake(constrainedSize.width - PROFILE_IMAGE_WIDTH, constrainedSize.height - userNameLabelNodeLabelSize!.height))
             let requiredHeight = max(PROFILE_IMAGE_HEIGHT + TYPE_IMAGE_PADDING_TOP + CELL_PADDING_BOTTOM, userNameLabelNodeLabelSize!.height + horoscopeSignSize!.height)
             return CGSizeMake(constrainedSize.width, requiredHeight)
@@ -224,6 +261,9 @@ class ProfileCellNode: ASCellNode {
             self.separator?.frame = CGRectMake(0, self.background!.frame.height - 26, self.background!.frame.width, 0.5)
             self.heartNumberLabelNode?.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.separator!.frame.origin.y - 18, self.heartNumberLabelNode!.calculatedSize.width, self.heartNumberLabelNode!.calculatedSize.height)
         default:
+            if currentTab == .Followers {
+                followButton?.frame = CGRectMake(calculatedSize.width - 10 - followButton!.calculatedSize.width, calculatedSize.height / 2 - 10, followButton!.calculatedSize.width, followButton!.calculatedSize.height)
+            }
             horoscopeSignTextNode?.frame = CGRectMake(profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, userNameLabelNode!.frame.origin.y + userNameLabelNode!.calculatedSize.height, horoscopeSignTextNode!.calculatedSize.width, horoscopeSignTextNode!.calculatedSize.height)
         }
     }
@@ -232,6 +272,10 @@ class ProfileCellNode: ASCellNode {
     
     func shareTapped(){
         println("shareTapped shareTapped")
+    }
+    
+    func followButtonTapped(sender: AnyObject) {
+        NSLog("follow button tapped")
     }
     
     // MARK: Helpers
