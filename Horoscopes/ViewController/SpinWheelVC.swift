@@ -40,10 +40,8 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     }
     
     func setupWheel(){
-        var frame = CGRectMake(0, self.view.bounds.size.height-480, 450, 450)
         var horoscopesSigns = XAppDelegate.horoscopesManager.getHoroscopesSigns()
         var setting = XAppDelegate.userSettings
-//        println("horoscopesSigns == \(horoscopesSigns)")
         if (setting.horoscopeSign != -1){ // not load first time
             var index = setting.horoscopeSign
             if(index < 8){
@@ -63,10 +61,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         
         var allSignsArray = Utilities.parseArrayToNSArray(horoscopesSigns).mutableCopy() as! NSMutableArray
         
-//        print(allSignsArray)
-        
+        var frame = getProperRotateFrame()
         wheel = RotateControl(frame: frame , andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray)
-        self.wheel.center = CGPointMake(160, 495);
+        self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
         self.view.addSubview(self.wheel);
     }
     
@@ -75,6 +72,14 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     func doneSelectedSign(){
         
+    }
+    
+    func getProperRotateFrame() -> CGRect{
+        // calculate rotate frame width base on screen size width
+        // for 320px screen -> rotate width will be 450
+        var screenWidth = self.view.bounds.size.width
+        var result = 450 * screenWidth / 320
+        return CGRectMake(0, 0, result, result)
     }
     
 }

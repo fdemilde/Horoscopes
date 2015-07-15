@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class LoginVC : SpinWheelVC {
+class LoginVC : SpinWheelVC, SocialManagerDelegate {
     
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var loginLabel: UILabel!
@@ -47,10 +47,8 @@ class LoginVC : SpinWheelVC {
         fbLoginBtn.imageView?.contentMode = UIViewContentMode.ScaleAspectFill
         fbLoginBtn.backgroundColor = UIColor.clearColor()
         fbLoginBtn.clipsToBounds = true
-        
+        XAppDelegate.socialManager.delegate = self
         self.setupComponents()
-        
-        
     }
     
     func setupComponents(){
@@ -89,28 +87,29 @@ class LoginVC : SpinWheelVC {
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
-        Utilities.showHUD()
-        if((FBSDKAccessToken .currentAccessToken()) != nil){
-            fetchUserInfo()
+        XAppDelegate.socialManager.loginFacebook()
+    }
+    
+    
+    
+    func facebookLoginFinishsed(result: FBSDKLoginManagerLoginResult, error: NSError?) {
+        if(error != nil){
+            println("Error when login FB = \(error)")
+        } else if (result.isCancelled) {
+            // Handle cancellations
         } else {
-            var loginManager = FBSDKLoginManager()
-            var permissions = ["public_profile", "email", "user_birthday"]
-            loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
-                if((error) != nil){
-                    println("Error when login FB = \(error)")
-                } else if (result.isCancelled) {
-                    // Handle cancellations
-                } else {
-                    if (result.grantedPermissions.contains("public_profile")) {
-                        // Do work
-                        self.fetchUserInfo()
-                    } else {
-                        // Permission denied
-                        println("Permission denied");
-                    }
-                }
-            })
+            if (result.grantedPermissions.contains("public_profile")) {
+                // Do work
+                fetchUserInfo()
+            } else {
+                // Permission denied
+                println("Permission denied");
+            }
         }
+    }
+    
+    func facebookLoginTokenExists(token: FBSDKAccessToken) {
+        fetchUserInfo()
     }
     
     func fetchUserInfo(){

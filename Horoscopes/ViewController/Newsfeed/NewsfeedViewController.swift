@@ -56,7 +56,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     func setupTableView(){
 //        tableView = ASTableView(frame: CGRectMake(0, ADMOD_HEIGHT + globalButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (globalButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
-        self.tableView.bounces = false
+        self.tableView.bounces = true
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
         self.tableView.showsHorizontalScrollIndicator = false
@@ -179,43 +179,87 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     // MARK: Button Hide/show
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        startPositionY = scrollView.contentOffset.y
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        var moveDistance = 0 as CGFloat
-        var currentYPosition = scrollView.contentOffset.y
-        if currentYPosition < startPositionY {
-            moveButtonsDown(startPositionY - currentYPosition)
-            startPositionY = scrollView.contentOffset.y
-        } else {
-            moveButtonsUp(currentYPosition - startPositionY)
-            startPositionY = scrollView.contentOffset.y
-        }
-        
-    }
-    
-    func moveButtonsDown(moveDistance : CGFloat){
-        var MAX_POS_Y_CONSTRAINT = 18 as CGFloat
-        
-        if(self.followingPosYConstraint.constant +  moveDistance > MAX_POS_Y_CONSTRAINT){
-            followingPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
-            globalButtonPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
-        } else {
-            self.followingPosYConstraint.constant += moveDistance
-            self.globalButtonPosYConstraint.constant += moveDistance
-        }
-    }
-    
-    func moveButtonsUp(moveDistance : CGFloat) {
-        var MIN_POS_Y_CONSTRAINT = -self.followingButton.frame.height-10 // padding
-        if(self.followingPosYConstraint.constant -  moveDistance < MIN_POS_Y_CONSTRAINT){
-            followingPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
-            globalButtonPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
-        } else {
-            self.followingPosYConstraint.constant -= moveDistance
-            self.globalButtonPosYConstraint.constant -= moveDistance
-        }
-    }
+//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+//        startPositionY = scrollView.contentOffset.y
+//    }
+//    
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        var moveDistance = 0 as CGFloat
+//        var currentYPosition = scrollView.contentOffset.y
+//        if currentYPosition < (startPositionY - 20) {
+//            setButtonsVisible(true, animated : true)
+//        } else if currentYPosition > (startPositionY + 20){
+//            setButtonsVisible(false, animated : true)
+//        }
+//        
+//    }
+//    
+//    func setButtonsVisible(visible : Bool, animated : Bool){
+//        if(self.buttonIsVisible() == visible){
+//            return
+//        }
+//        
+//        var followingFrame = self.followingButton.frame
+//        var globalFrame = self.globalButton.frame
+//        var height = followingFrame.size.height
+//        var offsetY = 0 as CGFloat
+//        var tableFrame = self.tableView.frame
+//        if(visible){
+//            offsetY = height
+//        } else {
+//            offsetY = -height
+////            tableFrame = 
+//        }
+//        
+//        var duration = 0.0 as NSTimeInterval
+//        if(animated){
+//            duration = 0.3
+//        } else { duration = 0.0 }
+//        
+//        UIView.animateWithDuration(duration, animations: { () -> Void in
+//            self.followingButton.frame = CGRectOffset(followingFrame, 0, offsetY)
+//            self.globalButton.frame = CGRectOffset(globalFrame, 0, offsetY)
+//        })
+//    }
+//    
+//    func buttonIsVisible() -> Bool{
+//        return self.followingButton.frame.origin.y >= 50
+//    }
+//    
+//    func moveButtonsDown(moveDistance : CGFloat){
+//        var MAX_POS_Y_CONSTRAINT = 18 as CGFloat
+//        var MIN_POS_Y_CONSTRAINT = -self.followingButton.frame.height-10
+//        var maxDistance = MAX_POS_Y_CONSTRAINT - MIN_POS_Y_CONSTRAINT
+//        
+//        if(self.followingPosYConstraint.constant +  moveDistance > MAX_POS_Y_CONSTRAINT){
+//            followingPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
+//            globalButtonPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
+//            self.followingButton.alpha = 1
+//            self.globalButton.alpha = 1
+//        } else {
+//            self.followingPosYConstraint.constant += moveDistance
+//            self.globalButtonPosYConstraint.constant += moveDistance
+//            var alphaChange = moveDistance / maxDistance * 1
+//            self.followingButton.alpha = self.followingButton.alpha + alphaChange
+//            self.globalButton.alpha = self.followingButton.alpha + alphaChange
+//        }
+//    }
+//    
+//    func moveButtonsUp(moveDistance : CGFloat) {
+//        var MAX_POS_Y_CONSTRAINT = 18 as CGFloat
+//        var MIN_POS_Y_CONSTRAINT = -self.followingButton.frame.height-10 // padding
+//        var maxDistance = MAX_POS_Y_CONSTRAINT - MIN_POS_Y_CONSTRAINT
+//        if(self.followingPosYConstraint.constant -  moveDistance < MIN_POS_Y_CONSTRAINT){
+//            followingPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
+//            globalButtonPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
+//            self.followingButton.alpha = 0.01
+//            self.globalButton.alpha = 0.01
+//        } else {
+//            var alphaChange = moveDistance / maxDistance * 1.5
+//            self.followingPosYConstraint.constant -= moveDistance
+//            self.globalButtonPosYConstraint.constant -= moveDistance
+//            self.followingButton.alpha = max(self.followingButton.alpha - alphaChange, 0.01)
+//            self.globalButton.alpha = max(self.followingButton.alpha - alphaChange, 0.01)
+//        }
+//    }
 }

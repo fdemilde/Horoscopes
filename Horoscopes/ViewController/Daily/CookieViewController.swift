@@ -213,14 +213,14 @@ class CookieViewController : UIViewController{
             var params = Dictionary<String,String>()
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
-                    println("User information = \(result)")
+                    // println("User information = \(result)")
                     var userFBID = result["id"] as! String
                     var postData = NSMutableDictionary()
                     postData.setObject(userFBID, forKey: "fb_uid")
                     
                     XAppDelegate.mobilePlatform.sc.sendRequest(GET_FORTUNE_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
                         var result = Utilities.parseNSDictionaryToDictionary(response)
-                        println("fortune result = \(result)")
+                        // println("fortune result = \(result)")
                         self.reloadFortuneData(result)
                     })
                 } else {
@@ -241,16 +241,13 @@ class CookieViewController : UIViewController{
                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
                 Utilities.hideHUD()
             }
-            println("reloadFortuneData reloadFortuneData reloadFortuneData")
             //set data
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             self.fortuneDescriptionLabel.text = fortuneData["fortune"] as? String
             self.luckyNumberLabel.text = "";
             var luckyNumbers = fortuneData["lucky_numbers"] as! [AnyObject]
-            println("luckyNumbers  = \(luckyNumbers) ");
             
             for number in luckyNumbers {
-                println("number  = \(number) ");
                 if(self.luckyNumberLabel.text != ""){
                     self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(" ")
                 }

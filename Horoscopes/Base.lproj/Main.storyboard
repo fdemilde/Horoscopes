@@ -23,7 +23,7 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Ij-PD-hYK">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="88C-nr-M5k"/>
                                 </constraints>
@@ -495,7 +495,9 @@
                             <constraint firstAttribute="centerX" secondItem="yZV-t4-Xdf" secondAttribute="centerX" constant="21.5" id="pea-ZK-juV">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
-                            <constraint firstItem="yZV-t4-Xdf" firstAttribute="top" secondItem="5jl-Nm-MG9" secondAttribute="bottom" constant="-8" id="tFZ-5r-Ril"/>
+                            <constraint firstItem="yZV-t4-Xdf" firstAttribute="top" secondItem="5jl-Nm-MG9" secondAttribute="bottom" constant="-8" id="tFZ-5r-Ril">
+                                <variation key="heightClass=regular-widthClass=compact" constant="-10"/>
+                            </constraint>
                             <constraint firstAttribute="centerX" secondItem="5jl-Nm-MG9" secondAttribute="centerX" id="tXB-c7-r4o"/>
                             <constraint firstItem="k3d-GH-hij" firstAttribute="width" secondItem="hSA-gD-hdU" secondAttribute="width" id="zcD-MN-4r0"/>
                         </constraints>
@@ -845,7 +847,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-Ik-r0h">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JIA-Ik-r0h">
                                 <rect key="frame" x="-20" y="-20" width="440" height="634"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Fortune Cookie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QnR-hC-mTF">
@@ -925,7 +927,7 @@
                                         <color key="textColor" red="0.6705882353" green="0.68235294120000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="&quot;Today is a good day to get started on new things&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrp-7T-uUq">
+                                    <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="&quot;Today is a good day to get started on new things&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrp-7T-uUq">
                                         <rect key="frame" x="35" y="320" width="370" height="41"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1004,6 +1006,7 @@
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
                                     <constraint firstItem="dzH-OU-dYr" firstAttribute="top" secondItem="Hrp-7T-uUq" secondAttribute="bottom" constant="45" id="m0y-U4-Cul"/>
+                                    <constraint firstAttribute="trailing" secondItem="Hrp-7T-uUq" secondAttribute="trailing" id="p3H-pM-1oq"/>
                                     <constraint firstAttribute="centerX" secondItem="Hrp-7T-uUq" secondAttribute="centerX" constant="-5" id="pBD-BV-KMG">
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
@@ -1012,6 +1015,7 @@
                                     </constraint>
                                     <constraint firstItem="Kmm-QP-6Jh" firstAttribute="top" secondItem="xkV-de-N3b" secondAttribute="bottom" constant="50" id="vjt-4X-pcT"/>
                                     <constraint firstAttribute="trailing" secondItem="3ps-gN-wa3" secondAttribute="trailing" id="w1t-dX-qwr"/>
+                                    <constraint firstItem="Hrp-7T-uUq" firstAttribute="leading" secondItem="JIA-Ik-r0h" secondAttribute="leading" id="xFp-yW-12R"/>
                                     <constraint firstItem="NMh-cF-HEv" firstAttribute="top" secondItem="JIA-Ik-r0h" secondAttribute="top" constant="28" id="zCl-zs-Dte">
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
@@ -1025,7 +1029,9 @@
                                         <exclude reference="CgV-t5-6FH"/>
                                         <exclude reference="Vr9-wV-DMO"/>
                                         <exclude reference="RqV-Tc-52c"/>
+                                        <exclude reference="p3H-pM-1oq"/>
                                         <exclude reference="pBD-BV-KMG"/>
+                                        <exclude reference="xFp-yW-12R"/>
                                         <exclude reference="l2M-aw-zPM"/>
                                         <exclude reference="tNo-RL-wNH"/>
                                         <exclude reference="9vw-Fg-ugw"/>
@@ -1052,7 +1058,9 @@
                                         <include reference="CgV-t5-6FH"/>
                                         <include reference="Vr9-wV-DMO"/>
                                         <include reference="RqV-Tc-52c"/>
-                                        <include reference="pBD-BV-KMG"/>
+                                        <include reference="p3H-pM-1oq"/>
+                                        <exclude reference="pBD-BV-KMG"/>
+                                        <include reference="xFp-yW-12R"/>
                                         <include reference="l2M-aw-zPM"/>
                                         <include reference="tNo-RL-wNH"/>
                                         <include reference="9vw-Fg-ugw"/>
@@ -1699,6 +1707,7 @@
                         <outlet property="backButton" destination="H7e-m0-twR" id="5ow-bH-Lq3"/>
                         <outlet property="dateOfHoroscope" destination="4Jh-Xh-KXp" id="FGB-Jg-psO"/>
                         <outlet property="descriptionTextView" destination="wCK-ZP-i5S" id="0T1-BT-7xg"/>
+                        <outlet property="headerView" destination="1sO-2H-esZ" id="SPJ-yG-aWz"/>
                         <outlet property="segment" destination="sQk-lW-Oqh" id="sR0-ZO-KCR"/>
                         <outlet property="signNameLabel" destination="b5Q-fE-lUo" id="pjR-PU-TZg"/>
                     </connections>
@@ -2933,8 +2942,10 @@
                                     <constraint firstAttribute="width" constant="46" id="Oa2-Zt-bfl"/>
                                     <constraint firstAttribute="height" constant="44" id="eLV-dS-zge"/>
                                 </constraints>
+
                                 <state key="normal">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -2958,8 +2969,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="5Di-qq-ThF"/>
                                 </constraints>
+
                                 <state key="normal">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -2981,8 +2994,10 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="44" id="KMA-Ti-QfB"/>
                                 </constraints>
+
                                 <state key="normal">
                                     <color key="titleColor" cocoaTouchSystemColor="lightTextColor"/>
+
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
