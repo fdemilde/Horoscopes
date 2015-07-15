@@ -40,35 +40,36 @@ class ProfileCellNode: ASCellNode {
     var heartImageView : ASImageNode?
     var shareImageView : ASImageNode?
     var shareButton : UIButton?
+    var horoscopeSignTextNode: ASTextNode?
     
     var userPost : UserPost?
-    var follower: UserProfile?
-    var followingUser: UserProfile?
+    var user: UserProfile?
     
-    enum cellType {
+    enum Tab {
         case Post
         case Followers
         case Following
     }
+    var currentTab: Tab?
     
-    init(cellObject: AnyObject, type: cellType){
+    init(cellObject: AnyObject, tab: Tab){
         super.init()
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
-        switch type {
+        currentTab = tab
+        switch currentTab! {
         case .Post:
             self.userPost = cellObject as? UserPost
-        case .Followers:
-            self.follower = cellObject as? UserProfile
-        case .Following:
-            self.followingUser = cellObject as? UserProfile
+            self.createBackground()
+            self.createFeedHeader()
+            self.createFeedDescirption()
+            self.createFeedHeartTextNode()
+            self.createSeparator()
+            self.createButtons()
+        default:
+            user = cellObject as? UserProfile
+            configureCell()
         }
-        self.createBackground()
-        self.createFeedHeader()
-        self.createFeedDescirption()
-        self.createFeedHeartTextNode()
-        self.createSeparator()
-        self.createButtons()
     }
     
     // MARK: create components
@@ -144,53 +145,87 @@ class ProfileCellNode: ASCellNode {
         
     }
     
+    // MARK: Configure UI for Followers and Following Tabs
+    func configureCell() {
+        profilePicture = ASNetworkImageNode(webImage: ())
+        profilePicture?.URL = NSURL(string: user!.imgURL)
+        self.addSubnode(profilePicture)
+        
+        userNameLabelNode = ASTextNode()
+        var nameWithPostTypeString = String(format : "%@", user!.name)
+        var attString = NSMutableAttributedString(string: nameWithPostTypeString)
+        var nameStringLength = count(user!.name)
+        var nameWithPostTypeStringLength = count(nameWithPostTypeString)
+        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, nameStringLength))
+        userNameLabelNode?.attributedString = attString
+        self.addSubnode(userNameLabelNode)
+        
+        horoscopeSignTextNode = ASTextNode()
+        let horoscopeSignAttributes = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
+        horoscopeSignTextNode?.attributedString = NSAttributedString(string: HoroscopesManager.sharedInstance.getHoroscopesSigns()[user!.sign].sign, attributes: horoscopeSignAttributes)
+        self.addSubnode(horoscopeSignTextNode)
+        
+        if currentTab == .Followers {
+            // TODO: Add follow button
+        }
+    }
+    
     // MARK: layout
     
     override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
+        let userNameLabelNodeLabelSize = userNameLabelNode?.measure(CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 - PROFILE_IMAGE_WIDTH - TYPE_IMAGE_PADDING_LEFT * 2, constrainedSize.height / 2))
         
-        var headerHeight = BG_TOP_HEIGHT;
-        var footerHeight = BG_BOTTOM_HEIGHT;
-        /// calculate the text in middle + padding
-        
-        var feedDescriptionLabelSize = CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 , CGFloat(FLT_MAX))
-        
-        var userNameLabelNodeLabelSize = CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 - PROFILE_IMAGE_WIDTH - TYPE_IMAGE_PADDING_LEFT * 2, CGFloat(FLT_MAX))
-        userNameLabelNode?.measure(userNameLabelNodeLabelSize)
-        timePassedLabelNode?.measure(constrainedSize)
-        
-        feedDescriptionLabelNode?.measure(feedDescriptionLabelSize)
-        
-        heartNumberLabelNode?.measure(constrainedSize)
-        separator?.measure(constrainedSize)
-        
-        var resultSize = CGSizeMake(constrainedSize.width, headerHeight + feedDescriptionLabelNode!.calculatedSize.height + footerHeight + CELL_PADDING_BOTTOM)
-        background?.measure(constrainedSize)
-        
-        return resultSize
+        switch currentTab! {
+        case .Post:
+            var headerHeight = BG_TOP_HEIGHT;
+            var footerHeight = BG_BOTTOM_HEIGHT;
+            /// calculate the text in middle + padding
+            
+            var feedDescriptionLabelSize = CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 , CGFloat(FLT_MAX))
+            
+            timePassedLabelNode?.measure(constrainedSize)
+            
+            feedDescriptionLabelNode?.measure(feedDescriptionLabelSize)
+            
+            heartNumberLabelNode?.measure(constrainedSize)
+            separator?.measure(constrainedSize)
+            
+            var resultSize = CGSizeMake(constrainedSize.width, headerHeight + feedDescriptionLabelNode!.calculatedSize.height + footerHeight + CELL_PADDING_BOTTOM)
+            background?.measure(constrainedSize)
+            
+            return resultSize
+        default:
+            let horoscopeSignSize = horoscopeSignTextNode?.measure(CGSizeMake(constrainedSize.width - PROFILE_IMAGE_WIDTH, constrainedSize.height - userNameLabelNodeLabelSize!.height))
+            let requiredHeight = max(PROFILE_IMAGE_HEIGHT + TYPE_IMAGE_PADDING_TOP + CELL_PADDING_BOTTOM, userNameLabelNodeLabelSize!.height + horoscopeSignSize!.height)
+            return CGSizeMake(constrainedSize.width, requiredHeight)
+        }
     }
     
     override func layout(){
-        background!.view.addSubview(shareButton!)
-        background?.layer.cornerRadius = 5
-        background?.layer.masksToBounds = true
-        
-        self.background?.frame = CGRectMake(5, 0, calculatedSize.width - 10, self.calculatedSize.height - 10)
-        
         self.profilePicture!.frame = CGRectMake(10, 10, PROFILE_IMAGE_WIDTH, PROFILE_IMAGE_HEIGHT)
-        
         self.userNameLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, 12, userNameLabelNode!.calculatedSize.width, userNameLabelNode!.calculatedSize.height)
-        
-        self.timePassedLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,timePassedLabelNode!.calculatedSize.width, timePassedLabelNode!.calculatedSize.height)
-        
-        self.feedDescriptionLabelNode!.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.profilePicture!.frame.origin.y + PROFILE_IMAGE_HEIGHT + 20, feedDescriptionLabelNode!.calculatedSize.width, feedDescriptionLabelNode!.calculatedSize.height)
-        
-        let heartImageSizeValue = 12 as CGFloat
-        let sendAHeartButtonSize = CGSizeMake(150, 25)
-        
-        self.shareButton?.frame = CGRectMake(self.background!.frame.width - sendAHeartButtonSize.width - 15, self.background!.frame.height - sendAHeartButtonSize.height, sendAHeartButtonSize.width,sendAHeartButtonSize.height)
-        
-        self.separator?.frame = CGRectMake(0, self.background!.frame.height - 26, self.background!.frame.width, 0.5)
-        self.heartNumberLabelNode?.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.separator!.frame.origin.y - 18, self.heartNumberLabelNode!.calculatedSize.width, self.heartNumberLabelNode!.calculatedSize.height)
+        switch currentTab! {
+        case .Post:
+            background!.view.addSubview(shareButton!)
+            background?.layer.cornerRadius = 5
+            background?.layer.masksToBounds = true
+            
+            self.background?.frame = CGRectMake(5, 0, calculatedSize.width - 10, self.calculatedSize.height - 10)
+            
+            self.timePassedLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,timePassedLabelNode!.calculatedSize.width, timePassedLabelNode!.calculatedSize.height)
+            
+            self.feedDescriptionLabelNode!.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.profilePicture!.frame.origin.y + PROFILE_IMAGE_HEIGHT + 20, feedDescriptionLabelNode!.calculatedSize.width, feedDescriptionLabelNode!.calculatedSize.height)
+            
+            let heartImageSizeValue = 12 as CGFloat
+            let sendAHeartButtonSize = CGSizeMake(150, 25)
+            
+            self.shareButton?.frame = CGRectMake(self.background!.frame.width - sendAHeartButtonSize.width - 15, self.background!.frame.height - sendAHeartButtonSize.height, sendAHeartButtonSize.width,sendAHeartButtonSize.height)
+            
+            self.separator?.frame = CGRectMake(0, self.background!.frame.height - 26, self.background!.frame.width, 0.5)
+            self.heartNumberLabelNode?.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.separator!.frame.origin.y - 18, self.heartNumberLabelNode!.calculatedSize.width, self.heartNumberLabelNode!.calculatedSize.height)
+        default:
+            horoscopeSignTextNode?.frame = CGRectMake(profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, userNameLabelNode!.frame.origin.y + userNameLabelNode!.calculatedSize.height, horoscopeSignTextNode!.calculatedSize.width, horoscopeSignTextNode!.calculatedSize.height)
+        }
     }
     
     //MARK: Button Action

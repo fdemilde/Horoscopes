@@ -12,6 +12,7 @@ import CoreTelephony
 class HoroscopesManager : NSObject {
     var horoscopesSigns = [Horoscope]()
     var data = Dictionary<String,AnyObject>()
+    static let sharedInstance = HoroscopesManager()
     
     override init(){
         

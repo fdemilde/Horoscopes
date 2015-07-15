@@ -18,7 +18,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat!
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,12 +37,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
-        
-        self.view.addSubview(activityIndicator)
-        
-//        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock({ (result, error) -> Void in
-//            println("logging out...")
-//        })
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -71,8 +64,8 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func post(sender: UIButton) {
+        Utilities.showHUD()
         if XAppDelegate.mobilePlatform.userCred.hasToken() {
-            activityIndicator.startAnimating()
             SocialManager.sharedInstance.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
                 if let error = error {
                     self.displayError(error)
@@ -87,9 +80,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     func displayError(error: NSError) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            if self.activityIndicator.isAnimating() {
-                self.activityIndicator.stopAnimating()
-            }
+            Utilities.hideHUD()
             let alert = UIAlertController(title: "Post Error", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
             let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
             alert.addAction(action)
@@ -99,10 +90,8 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     func finishPost() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            if self.activityIndicator.isAnimating() {
-                self.activityIndicator.stopAnimating()
-            }
             self.dismissViewControllerAnimated(true, completion: nil)
+            Utilities.hideHUD()
         })
     }
     
