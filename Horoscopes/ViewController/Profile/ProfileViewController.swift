@@ -48,23 +48,16 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
 
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
-        userId = getUserId()
+        
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            configureUI()
+        } else {
+            configureLoginView()
+        }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.postDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followingDataSourceNotification, object: nil)
-        
-        if userId != -1 {
-            configureButtons()
-            configureProfileTableView()
-            view.addSubview(profileTableView!)
-            
-            reloadPostDataSource()
-            reloadFollowersDataSource()
-            reloadFollowingDataSource()
-        } else {
-            configureLoginView()
-        }
     }
     
     deinit {
@@ -108,12 +101,25 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: ConfigureUI
     
+    func configureUI() {
+        userId = XAppDelegate.mobilePlatform.userCred.getUid()
+        
+        configureButtons()
+        configureProfileTableView()
+        view.addSubview(profileTableView!)
+        
+        reloadPostDataSource()
+        reloadFollowersDataSource()
+        reloadFollowingDataSource()
+    }
+    
     func configureLoginView() {
         let facebookLoginButton = UIButton()
         let facebookLoginImage = UIImage(named: "fb_login_icon")
         facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
         facebookLoginButton.sizeToFit()
         facebookLoginButton.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton.frame.width/2, view.frame.height/2 - facebookLoginButton.frame.height/2)
+        facebookLoginButton.addTarget(self, action: "loginFacebook:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(facebookLoginButton)
         let facebookLoginLabel = UILabel()
         facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
@@ -168,19 +174,23 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     // MARK: Helper
-    func getUserId() -> NSNumber {
-        if XAppDelegate.socialManager.isLoggedInZwigglers() {
-            return XAppDelegate.mobilePlatform.userCred.getUid()
-        } else {
-            return -1
+    func loginFacebook(sender: UIButton) {
+        SocialManager.sharedInstance.loginFacebook { (result, error) -> () in
+            if let error = error {
+                // Show alert. This has been done by the calling method.
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.configureUI()
+                })
+            }
         }
     }
     
     func reloadPostDataSource() {
         Utilities.showHUD()
-        if userId != -1 {
+        if let uid = userId {
             userPosts.removeAll(keepCapacity: false)
-            SocialManager.sharedInstance.getPost(Int(userId), completionHandler: { (result, error) -> Void in
+            SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
                 if let error = error {
                     NSLog("Cannot load user's posts. Error: \(error)")
                 } else {
@@ -188,7 +198,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                     if let posts = result!["posts"] as? Array<AnyObject> {
                         for post in posts {
                             let userPost = UserPost(data: post as! NSDictionary)
-                            userPost.user = UserProfile(data: users["\(self.userId)"] as! NSDictionary)
+                            userPost.user = UserProfile(data: users["\(uid)"] as! NSDictionary)
                             self.userPosts.append(userPost)
                         }
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -206,72 +216,68 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func reloadFollowersDataSource() {
         Utilities.showHUD()
-        if userId != -1 {
-            followers.removeAll(keepCapacity: false)
-            SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
-                if let error = error {
-                    NSLog("Cannot get followers. Error: \(error)")
-                } else {
-                    if let followersId = result!["followers"] as? Array<Int> {
-                        let followersIdString = followersId.map({"\($0)"})
-                        SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followersIdString), completionHandler: { (result, error) -> Void in
-                            if let error = error {
-                                NSLog("Cannot get followers. Error: \(error)")
-                            } else {
-                                for id in followersId {
-                                    if let users = result!["result"] as? Dictionary<String, AnyObject> {
-                                        let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
-                                        self.followers.append(userProfile)
-                                    }
+        followers.removeAll(keepCapacity: false)
+        SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
+            if let error = error {
+                NSLog("Cannot get followers. Error: \(error)")
+            } else {
+                if let followersId = result!["followers"] as? Array<Int> {
+                    let followersIdString = followersId.map({"\($0)"})
+                    SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followersIdString), completionHandler: { (result, error) -> Void in
+                        if let error = error {
+                            NSLog("Cannot get followers. Error: \(error)")
+                        } else {
+                            for id in followersId {
+                                if let users = result!["result"] as? Dictionary<String, AnyObject> {
+                                    let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
+                                    self.followers.append(userProfile)
                                 }
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    if !self.isFirstDataLoad {
-                                        self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                                    }
-                                    self.isFinishedFollowersDataSource = true
-                                    NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
-                                })
                             }
-                        })
-                    }
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                if !self.isFirstDataLoad {
+                                    self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+                                }
+                                self.isFinishedFollowersDataSource = true
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
+                            })
+                        }
+                    })
                 }
-            })
-        }
+            }
+        })
     }
     
     func reloadFollowingDataSource() {
         Utilities.showHUD()
-        if userId != -1 {
-            followingUsers.removeAll(keepCapacity: false)
-            SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
-                if let error = error {
-                    NSLog("Cannot get following users. Error: \(error)")
-                } else {
-                    if let followingUsersId = result!["following"] as? Array<Int> {
-                        let followingUsersIdString = followingUsersId.map({"\($0)"})
-                        SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
-                            if let error = error {
-                                NSLog("Cannot get profile. Error: \(error)")
-                            } else {
-                                for id in followingUsersId {
-                                    if let users = result!["result"] as? Dictionary<String, AnyObject> {
-                                        let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
-                                        self.followingUsers.append(userProfile)
-                                    }
+        followingUsers.removeAll(keepCapacity: false)
+        SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
+            if let error = error {
+                NSLog("Cannot get following users. Error: \(error)")
+            } else {
+                if let followingUsersId = result!["following"] as? Array<Int> {
+                    let followingUsersIdString = followingUsersId.map({"\($0)"})
+                    SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
+                        if let error = error {
+                            NSLog("Cannot get profile. Error: \(error)")
+                        } else {
+                            for id in followingUsersId {
+                                if let users = result!["result"] as? Dictionary<String, AnyObject> {
+                                    let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
+                                    self.followingUsers.append(userProfile)
                                 }
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    if !self.isFirstDataLoad {
-                                        self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                                    }
-                                    self.isFinishedFollowingDataSource = true
-                                    NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
-                                })
                             }
-                        })
-                    }
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                if !self.isFirstDataLoad {
+                                    self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+                                }
+                                self.isFinishedFollowingDataSource = true
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
+                            })
+                        }
+                    })
                 }
-            })
-        }
+            }
+        })
     }
     
     func reloadData(notification: NSNotification) {
