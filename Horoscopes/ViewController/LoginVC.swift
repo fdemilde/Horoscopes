@@ -84,23 +84,16 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     
     @IBAction func loginTapped(sender: AnyObject) {
         XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-            
+            if(error != nil){ // error
+                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+                    if(error != nil){
+                        Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                    } else {
+                        self.fetchUserInfo()
+                    }
+                })
+            }
         }
-    }
-    
-    // MARK: Login delegate
-    
-    func facebookLoginFinished(result: [NSObject : AnyObject]?, error : NSError?) {
-        if(error != nil){
-            // println("Error when login FB - zwiggler = \(error)")
-            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-        } else {
-            fetchUserInfo()
-        }
-    }
-    
-    func facebookLoginTokenExists(token: FBSDKAccessToken) {
-        fetchUserInfo()
     }
     
     func reloadView(){
