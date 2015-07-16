@@ -279,31 +279,29 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
         // TODO: - login facebook and may return anything indicating if it has been successful
         Utilities.showHUD()
-        if isLoggedInFacebook() {
-        } else {
-            var loginManager = FBSDKLoginManager()
-            var permissions = ["public_profile", "email", "user_birthday"]
-            loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
-                if let error = error {
-                    Utilities.showAlertView(self, title: "Login Error", message: "Cannot login to facebook")
+        
+        var loginManager = FBSDKLoginManager()
+        var permissions = ["public_profile", "email", "user_birthday"]
+        loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
+            if let error = error {
+                Utilities.showAlertView(self, title: "Login Error", message: "Cannot login to facebook")
+                completionHandler(result: nil, error : error)
+            } else if let result = result {
+                if result.isCancelled {
+                    Utilities.showAlertView(self, title: "Permission denied", message: "")
                     completionHandler(result: nil, error : error)
-                } else if let result = result {
-                    if result.isCancelled {
+                } else {
+                    if result.grantedPermissions.contains("public_profile") {
+                        completionHandler(result: result, error : nil)
+                    } else {
                         Utilities.showAlertView(self, title: "Permission denied", message: "")
                         completionHandler(result: nil, error : error)
-                    } else {
-                        if result.grantedPermissions.contains("public_profile") {
-                            completionHandler(result: result, error : nil)
-                        } else {
-                            Utilities.showAlertView(self, title: "Permission denied", message: "")
-                            completionHandler(result: nil, error : error)
-                        }
-                        
                     }
+                    
                 }
-                
-            })
-        }
+            }
+            
+        })
     }
     
     func isLoggedInFacebook() -> Bool{

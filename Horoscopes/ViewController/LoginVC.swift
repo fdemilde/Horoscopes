@@ -83,22 +83,26 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
-        XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-            if(error != nil){ // error
-                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
-                    if(error != nil){
-                        Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                    } else {
-                        self.fetchUserInfo()
-                    }
-                })
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){
+            self.fetchUserInfo()
+        } else {
+            XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
+                if(error != nil){ // error
+                    XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+                        if(error != nil){
+                            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                        } else {
+                            self.fetchUserInfo()
+                        }
+                    })
+                }
             }
         }
     }
     
     func reloadView(){
         var image = UIImage(named: "default_avatar")
-        fbLoginBtn.imageView!.image = image
+        self.fbLoginBtn.setImage(image, forState: UIControlState.Normal)
         loginLabel.text = self.userFBName
         loginLabel.textColor = UIColor.whiteColor()
         loginLabel.font = UIFont.systemFontOfSize(14)
@@ -113,7 +117,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         // params["fields"] = "name,id,gender,birthday"
         FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
             if(error == nil){
-                // println("User information = \(result)")
+//                 println("User information = \(result)")
                 self.userFBID = result["id"] as! String
                 self.userFBName = result["name"] as! String
                 self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
@@ -128,12 +132,13 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     // MARK: helpers
     
     func downloadImage(url:NSURL){
-        println("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
+        println("Started downloading \(url.absoluteURL)")
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
                 println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
                 var downloadedImage = UIImage(data: data!)
-                self.fbLoginBtn.imageView!.image = downloadedImage
+                self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
+                self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
             }
         }
     }
