@@ -75,6 +75,8 @@
 		F465F2C41B4CD1050025644E /* FollowingFeedsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */; };
 		F465F2C61B4CD62D0025644E /* FollowingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */; };
 		F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */; };
+		F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */; };
+		F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */; };
 		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
 		F47BAB2B1B21605C002031AB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB2A1B21605C002031AB /* Config.swift */; };
 		F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029C1B258B9B00C0BA83 /* Utilities.swift */; };
@@ -238,6 +240,8 @@
 		F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingFeedsCollectionView.swift; sourceTree = "<group>"; };
 		F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingCollectionCell.swift; sourceTree = "<group>"; };
 		F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerViewController.swift; sourceTree = "<group>"; };
+		F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailCell.swift; sourceTree = "<group>"; };
+		F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailHeaderCell.swift; sourceTree = "<group>"; };
 		F47BAB261B204969002031AB /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
 		F47BAB271B205617002031AB /* HoroscopesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoroscopesManager.swift; sourceTree = "<group>"; };
 		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -431,6 +435,8 @@
 				F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */,
 				F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */,
 				F4106B7A1B43913F00D58D92 /* NewsfeedCellNode.swift */,
+				F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */,
+				F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -1085,7 +1091,9 @@
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
 				70F31C141B4E161A00A8B3A2 /* ProfileViewController.swift in Sources */,
+				F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */,
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
+				F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */,
 				F4CACA811B200149003C6301 /* SMCLove.m in Sources */,
 				F4DA35C51B4E2F1E00B6F165 /* MyTableViewController.swift in Sources */,
 				F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */,

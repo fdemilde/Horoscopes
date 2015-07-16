@@ -213,6 +213,14 @@ class HoroscopesManager : NSObject {
         }
         return 9
     }
+    func getSignIndexOfSignName(name : String) -> Int{
+        for index in 0...11 {
+            if(name == self.horoscopesSigns[index].sign){
+                return index
+            }
+        }
+        return -1
+    }
     
 }
 
