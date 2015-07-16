@@ -169,7 +169,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: Helper
     func getUserId() -> NSNumber {
-        if XAppDelegate.mobilePlatform.userCred.hasToken() {
+        if XAppDelegate.socialManager.isLoggedInZwigglers() {
             return XAppDelegate.mobilePlatform.userCred.getUid()
         } else {
             return -1

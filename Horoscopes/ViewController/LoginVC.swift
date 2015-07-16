@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class LoginVC : SpinWheelVC, SocialManagerDelegate {
+class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var loginLabel: UILabel!
@@ -83,29 +83,36 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
-        XAppDelegate.socialManager.loginFacebook()
+        XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
+            
+        }
     }
     
+    // MARK: Login delegate
     
-    
-    func facebookLoginFinishsed(result: FBSDKLoginManagerLoginResult, error: NSError?) {
+    func facebookLoginFinished(result: [NSObject : AnyObject]?, error : NSError?) {
         if(error != nil){
-            println("Error when login FB = \(error)")
-        } else if (result.isCancelled) {
-            // Handle cancellations
+            // println("Error when login FB - zwiggler = \(error)")
+            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
         } else {
-            if (result.grantedPermissions.contains("public_profile")) {
-                // Do work
-                fetchUserInfo()
-            } else {
-                // Permission denied
-                println("Permission denied");
-            }
+            fetchUserInfo()
         }
     }
     
     func facebookLoginTokenExists(token: FBSDKAccessToken) {
         fetchUserInfo()
+    }
+    
+    func reloadView(){
+        var image = UIImage(named: "default_avatar")
+        fbLoginBtn.imageView!.image = image
+        loginLabel.text = self.userFBName
+        loginLabel.textColor = UIColor.whiteColor()
+        loginLabel.font = UIFont.systemFontOfSize(14)
+        
+        if let url = NSURL(string: userFBImageURL) {
+            self.downloadImage(url)
+        }
     }
     
     func fetchUserInfo(){
@@ -117,7 +124,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
                 self.userFBID = result["id"] as! String
                 self.userFBName = result["name"] as! String
                 self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
-                self.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString)
+                self.reloadView()
             } else {
                 Utilities.hideHUD()
                 println("fetch Info Error = \(error)")
@@ -125,34 +132,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
         })
     }
     
-    func loginZwigglers(token: String){
-        var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
-        XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
-            if ((error) != nil){
-                // println("Error when Login Zwigglers = \(error)")
-            }
-            else {
-                // println("responseDict when Login Zwigglers = \(responseDict)")
-            }
-            Utilities.hideHUD()
-            self.reloadView()
-        })
-    }
-    
     // MARK: helpers
-    func reloadView(){
-        var image = UIImage(named: "default_avatar")
-        println("Image width 1111 === \(image?.size.width)")
-        fbLoginBtn.imageView!.image = image
-        loginLabel.text = self.userFBName
-        loginLabel.textColor = UIColor.whiteColor()
-        loginLabel.font = UIFont.systemFontOfSize(14)
-        
-        if let url = NSURL(string: userFBImageURL) {
-            self.downloadImage(url)
-        }
-        
-    }
     
     func downloadImage(url:NSURL){
         println("Started downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
@@ -160,7 +140,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate {
             dispatch_async(dispatch_get_main_queue()) {
                 println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
                 var downloadedImage = UIImage(data: data!)
-                println("Image width === \(downloadedImage?.size.width)")
                 self.fbLoginBtn.imageView!.image = downloadedImage
             }
         }

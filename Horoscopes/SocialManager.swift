@@ -10,8 +10,9 @@ import Foundation
 
 @objc protocol SocialManagerDelegate
 {
-    optional func facebookLoginFinishsed(result : FBSDKLoginManagerLoginResult, error : NSError?)
+    optional func facebookLoginFinished(result : [NSObject : AnyObject]?, error : NSError?)
     optional func facebookLoginTokenExists(token : FBSDKAccessToken)
+    optional func reloadView(result : [NSObject : AnyObject]?, error : NSError?)
 }
 
 class SocialManager : NSObject, UIAlertViewDelegate {
@@ -134,6 +135,21 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         var postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
+        
+        if(self.isLoggedInZwigglers()){
+            self.doPost(postData, completionHandler: completionHandler)
+        } else {
+            loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+                if(error != nil){ // have error
+                    Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
+                } else {
+                    self.doPost(postData, completionHandler: completionHandler)
+                }
+            })
+        }
+    }
+    
+    func doPost(postData : NSMutableDictionary, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void ){
         XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -234,17 +250,49 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
-    func loginFacebook() {
+    func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
         // TODO: - login facebook and may return anything indicating if it has been successful
         Utilities.showHUD()
-        if((FBSDKAccessToken .currentAccessToken()) != nil){
-            self.delegate.facebookLoginTokenExists!(FBSDKAccessToken .currentAccessToken())
+        if isLoggedInFacebook() {
         } else {
             var loginManager = FBSDKLoginManager()
             var permissions = ["public_profile", "email", "user_birthday"]
             loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
-                self.delegate.facebookLoginFinishsed!(result, error: error)
+                if let error = error {
+                    Utilities.showAlertView(self, title: "Login Error", message: "Cannot login to facebook")
+                    completionHandler(result: nil, error : error)
+                } else if let result = result {
+                    if result.isCancelled {
+                        Utilities.showAlertView(self, title: "Permission denied", message: "")
+                        completionHandler(result: nil, error : error)
+                    } else {
+                        if result.grantedPermissions.contains("public_profile") {
+                            completionHandler(result: result, error : nil)
+                        } else {
+                            Utilities.showAlertView(self, title: "Permission denied", message: "")
+                            completionHandler(result: nil, error : error)
+                        }
+                        
+                    }
+                }
+                
             })
         }
+    }
+    
+    func isLoggedInFacebook() -> Bool{
+        return FBSDKAccessToken .currentAccessToken() != nil
+    }
+    
+    func isLoggedInZwigglers() -> Bool{
+        return XAppDelegate.mobilePlatform.userCred.hasToken()
+    }
+    
+    func loginZwigglers(token: String, completionHandler: (result: [NSObject: AnyObject]?, error: NSError?) -> Void){
+        var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
+        XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
+            completionHandler(result: responseDict, error: error)
+            
+        })
     }
 }

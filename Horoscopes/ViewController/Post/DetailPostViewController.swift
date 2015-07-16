@@ -17,7 +17,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     var placeholder: String?
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
-    var bottomSpaceConstraint: CGFloat!
+    var bottomSpaceConstraint: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +25,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         // Do any additional setup after loading the view.
         let backgroundImage = UIImage(named: "background")
         self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
-        
-        bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
         
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
@@ -46,6 +44,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
     }
     
@@ -63,9 +62,9 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
-    @IBAction func post(sender: UIButton) {
-        Utilities.showHUD()
-        if XAppDelegate.mobilePlatform.userCred.hasToken() {
+    @IBAction func post() {
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            Utilities.showHUD()
             SocialManager.sharedInstance.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
                 if let error = error {
                     self.displayError(error)
@@ -74,7 +73,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
                 }
             })
         } else {
-            self.handleLogin()
+            showLoginFormSheet()
         }
     }
     
@@ -95,12 +94,13 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         })
     }
     
-    func handleLogin() {
+    func showLoginFormSheet() {
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        controller.detailPostViewController = self
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5
-        MZFormSheetController.sharedBackgroundWindow()
+//        MZFormSheetController.sharedBackgroundWindow()
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
@@ -111,7 +111,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     func keyboardWillChangeFrame(notification: NSNotification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height + 16
+        textViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height
     }
     
     /*

@@ -8,12 +8,15 @@
 
 import UIKit
 
-class PostLoginViewController: UIViewController {
+class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertViewDelegate {
+    
+    var detailPostViewController : DetailPostViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        SocialManager.sharedInstance.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -22,8 +25,26 @@ class PostLoginViewController: UIViewController {
     }
     
     @IBAction func loginFacebook(sender: UIButton) {
-        SocialManager.sharedInstance.loginFacebook()
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+        SocialManager.sharedInstance.loginFacebook { (result, error) -> () in
+            if error != nil { // error occured
+                self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+            } else {
+                self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
+                    self.detailPostViewController.post()
+                })
+            }
+        }
+    }
+    
+    func facebookLoginFinished(result: [NSObject : AnyObject]?, error: NSError?) {
+        if let error = error {
+            NSLog("Cannot log in to Facebook. Error: \(error)")
+            Utilities.showAlertView(self, title: "Error occured", message: "Please try again later")
+        } else {
+            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetViewController) -> Void in
+                    self.detailPostViewController.post()
+            })
+        }
     }
 
     /*
