@@ -14,6 +14,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     
+    var facebookLoginButton: UIButton?
+    var facebookLoginLabel: UILabel?
+    
     var profileTableView: ASTableView?
     let padding: CGFloat = 10
     let tabBarHeight: CGFloat = 49
@@ -28,7 +31,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var followers = [UserProfile]()
     var isFollowedArray = [Bool]()
     var currentTab = Tab.Post
-    var userId: NSNumber!
     
     var clearTable = false
     
@@ -49,27 +51,21 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         // Do any additional setup after loading the view.
         view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
         
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingPostDataSource:", name: self.postDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowersDataSource:", name: self.followersDataSourceNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowingDataSource:", name: self.followingDataSourceNotification, object: nil)
+        
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             configureUI()
         } else {
             configureLoginView()
         }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.postDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followersDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reloadData:", name: self.followingDataSourceNotification, object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.postDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followingDataSourceNotification, object: nil)
-    }
-    
-    override func viewWillLayoutSubviews() {
-        if profileTableView != nil {
-            profileTableView!.frame = CGRectMake(padding, postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -102,8 +98,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     // MARK: ConfigureUI
     
     func configureUI() {
-        userId = XAppDelegate.mobilePlatform.userCred.getUid()
-        
         configureButtons()
         configureProfileTableView()
         view.addSubview(profileTableView!)
@@ -114,21 +108,21 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func configureLoginView() {
-        let facebookLoginButton = UIButton()
+        facebookLoginButton = UIButton()
         let facebookLoginImage = UIImage(named: "fb_login_icon")
-        facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
-        facebookLoginButton.sizeToFit()
-        facebookLoginButton.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton.frame.width/2, view.frame.height/2 - facebookLoginButton.frame.height/2)
-        facebookLoginButton.addTarget(self, action: "loginFacebook:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(facebookLoginButton)
-        let facebookLoginLabel = UILabel()
-        facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
-        facebookLoginLabel.textColor = UIColor.lightTextColor()
-        facebookLoginLabel.numberOfLines = 2
-        facebookLoginLabel.sizeToFit()
-        facebookLoginLabel.textAlignment = NSTextAlignment.Center
-        facebookLoginLabel.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.size.height + 8)
-        view.addSubview(facebookLoginLabel)
+        facebookLoginButton!.setImage(facebookLoginImage, forState: UIControlState.Normal)
+        facebookLoginButton!.sizeToFit()
+        facebookLoginButton!.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton!.frame.width/2, view.frame.height/2 - facebookLoginButton!.frame.height/2)
+        facebookLoginButton!.addTarget(self, action: "loginFacebook:", forControlEvents: UIControlEvents.TouchUpInside)
+        view.addSubview(facebookLoginButton!)
+        facebookLoginLabel = UILabel()
+        facebookLoginLabel!.text = "You need to login to Facebook\nto enjoy this feature"
+        facebookLoginLabel!.textColor = UIColor.lightTextColor()
+        facebookLoginLabel!.numberOfLines = 2
+        facebookLoginLabel!.sizeToFit()
+        facebookLoginLabel!.textAlignment = NSTextAlignment.Center
+        facebookLoginLabel!.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginLabel!.frame.width/2, facebookLoginButton!.frame.origin.y + facebookLoginButton!.frame.size.height + 8)
+        view.addSubview(facebookLoginLabel!)
     }
     
     func configureButtons() {
@@ -142,6 +136,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func configureProfileTableView() {
         profileTableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
+        profileTableView!.frame = CGRectMake(padding, postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
         profileTableView!.asyncDataSource = self
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
@@ -180,21 +175,76 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 // Show alert. This has been done by the calling method.
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.facebookLoginButton?.removeFromSuperview()
+                    self.facebookLoginLabel?.removeFromSuperview()
                     self.configureUI()
                 })
             }
         }
     }
     
+    func finishLoadingPostDataSource(notification: NSNotification) {
+        isFinishedPostDataSource = true
+        if isFirstDataLoad {
+            loadDataInitially()
+        } else {
+            isFinishedPostDataSource = false
+            postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
+            profileTableView?.reloadData()
+            Utilities.hideHUD()
+        }
+    }
+    
+    func finishLoadingFollowersDataSource(notification: NSNotification) {
+        isFinishedFollowersDataSource = true
+        if isFirstDataLoad {
+            loadDataInitially()
+        } else {
+            isFinishedFollowersDataSource = false
+            followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+            profileTableView?.reloadData()
+            Utilities.hideHUD()
+        }
+    }
+    
+    func finishLoadingFollowingDataSource(notification: NSNotification) {
+        isFinishedFollowingDataSource = true
+        if isFirstDataLoad {
+            loadDataInitially()
+        } else {
+            isFinishedFollowingDataSource = false
+            followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+            profileTableView?.reloadData()
+            Utilities.hideHUD()
+        }
+    }
+    
+    func loadDataInitially() {
+        if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
+            isFirstDataLoad = false
+            postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
+            followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+            followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+            profileTableView?.reloadData()
+            populateIsFollowedArray()
+            Utilities.hideHUD()
+        }
+    }
+    
     func reloadPostDataSource() {
         Utilities.showHUD()
-        if let uid = userId {
+        if SocialManager.sharedInstance.isLoggedInZwigglers() {
+            let uid = XAppDelegate.mobilePlatform.userCred.getUid()
             userPosts.removeAll(keepCapacity: false)
             SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
                 if let error = error {
                     NSLog("Cannot load user's posts. Error: \(error)")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
+                    })
                 } else {
                     let users = result!["users"] as! Dictionary<String, AnyObject>
+                    let posts = result!["posts"] as? Array<AnyObject>
                     if let posts = result!["posts"] as? Array<AnyObject> {
                         for post in posts {
                             let userPost = UserPost(data: post as! NSDictionary)
@@ -202,13 +252,22 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                             self.userPosts.append(userPost)
                         }
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            if !self.isFirstDataLoad {
-                                self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-                            }
-                            self.isFinishedPostDataSource = true
-                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: self.userPosts)
                         })
                     }
+                }
+            })
+        } else {
+            SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                if let error = error {
+                    NSLog("Cannot load user's posts. Error: \(error)")
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
+                    })
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.reloadPostDataSource()
+                    })
                 }
             })
         }
@@ -220,12 +279,18 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
             if let error = error {
                 NSLog("Cannot get followers. Error: \(error)")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
+                })
             } else {
                 if let followersId = result!["followers"] as? Array<Int> {
                     let followersIdString = followersId.map({"\($0)"})
                     SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followersIdString), completionHandler: { (result, error) -> Void in
                         if let error = error {
                             NSLog("Cannot get followers. Error: \(error)")
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
+                            })
                         } else {
                             for id in followersId {
                                 if let users = result!["result"] as? Dictionary<String, AnyObject> {
@@ -234,11 +299,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                             }
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                if !self.isFirstDataLoad {
-                                    self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                                }
-                                self.isFinishedFollowersDataSource = true
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: self.followers)
                             })
                         }
                     })
@@ -253,12 +314,18 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
             if let error = error {
                 NSLog("Cannot get following users. Error: \(error)")
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
+                })
             } else {
                 if let followingUsersId = result!["following"] as? Array<Int> {
                     let followingUsersIdString = followingUsersId.map({"\($0)"})
                     SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
                         if let error = error {
                             NSLog("Cannot get profile. Error: \(error)")
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
+                            })
                         } else {
                             for id in followingUsersId {
                                 if let users = result!["result"] as? Dictionary<String, AnyObject> {
@@ -267,40 +334,13 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                                 }
                             }
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                if !self.isFirstDataLoad {
-                                    self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                                }
-                                self.isFinishedFollowingDataSource = true
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
+                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: self.followingUsers)
                             })
                         }
                     })
                 }
             }
         })
-    }
-    
-    func reloadData(notification: NSNotification) {
-        if isFirstDataLoad {
-            if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
-                profileTableView?.reloadData()
-                populateIsFollowedArray()
-                self.postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-                self.followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-                self.followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                isFirstDataLoad = false
-                isFinishedPostDataSource = false
-                isFinishedFollowersDataSource = false
-                isFinishedFollowingDataSource = false
-                Utilities.hideHUD()
-            }
-        } else {
-            profileTableView?.reloadData()
-            isFinishedPostDataSource = false
-            isFinishedFollowersDataSource = false
-            isFinishedFollowingDataSource = false
-            Utilities.hideHUD()
-        }
     }
     
     func populateIsFollowedArray() {
