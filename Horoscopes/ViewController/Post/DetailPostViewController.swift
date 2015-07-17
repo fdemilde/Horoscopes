@@ -59,6 +59,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     }
     
     @IBAction func cancel(sender: UIButton) {
+        view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -89,8 +90,9 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     func finishPost() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            self.dismissViewControllerAnimated(true, completion: nil)
             Utilities.hideHUD()
+            self.view.endEditing(true)
+            self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
     

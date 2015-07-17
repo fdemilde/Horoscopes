@@ -247,7 +247,7 @@ class ProfileCellNode: ASCellNode {
             background?.layer.cornerRadius = 5
             background?.layer.masksToBounds = true
             
-            self.background?.frame = CGRectMake(5, 0, calculatedSize.width - 10, self.calculatedSize.height - 10)
+            self.background?.frame = CGRectMake(0, 0, calculatedSize.width, self.calculatedSize.height - 10)
             
             self.timePassedLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,timePassedLabelNode!.calculatedSize.width, timePassedLabelNode!.calculatedSize.height)
             

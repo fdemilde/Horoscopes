@@ -56,6 +56,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowersDataSource:", name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowingDataSource:", name: self.followingDataSourceNotification, object: nil)
         
+        configureButtons()
+        configureProfileTableView()
+        view.addSubview(profileTableView!)
+        
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             configureUI()
         } else {
@@ -67,6 +71,12 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.postDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followingDataSourceNotification, object: nil)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        if profileTableView != nil {
+            profileTableView!.frame = CGRectMake(padding, postButton.bounds.origin.y + postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -80,6 +90,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToPost()
         currentTab = .Post
         reloadPostDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
@@ -87,6 +98,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Followers
         reloadFollowersDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
@@ -94,15 +106,13 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Following
         reloadFollowingDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     // MARK: ConfigureUI
     
     func configureUI() {
-        configureButtons()
-        configureProfileTableView()
-        view.addSubview(profileTableView!)
-        
+        showButtonsAndTable()
         reloadPostDataSource()
         reloadFollowersDataSource()
         reloadFollowingDataSource()
@@ -127,17 +137,28 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func configureButtons() {
+        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         postButton.titleLabel?.numberOfLines = 2
-        postButton.hidden = false
+        postButton.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
         followersButton.titleLabel?.numberOfLines = 2
-        followersButton.hidden = false
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.numberOfLines = 2
+        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    }
+    
+    func showButtonsAndTable() {
+        postButton.hidden = false
+        postButton.enabled = true
+        followersButton.hidden = false
+        followersButton.enabled = true
         followingButton.hidden = false
+        followingButton.enabled = true
+        profileTableView?.hidden = false
     }
     
     func configureProfileTableView() {
         profileTableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
-        profileTableView!.frame = CGRectMake(padding, postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
+        profileTableView?.hidden = true
         profileTableView!.asyncDataSource = self
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
@@ -160,6 +181,17 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if currentTab == .Post {
             profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             profileTableView?.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    
+    func changeButtonUIWhenClicked(sender: UIButton) {
+        sender.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
+        let buttons = [postButton, followersButton, followingButton]
+        for button in buttons {
+            if button != sender {
+                button.setTitleColor(UIColor.darkTextColor(), forState: UIControlState.Normal)
+//                button.setTitleColor(UIColor(red: 46/255.0, green: 52/255.0, blue: 83/255.0, alpha: 1), forState: UIControlState.Normal)
+            }
         }
     }
     
