@@ -55,6 +55,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowersDataSource:", name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowingDataSource:", name: self.followingDataSourceNotification, object: nil)
         
+        configureButtons()
+        configureProfileTableView()
+        view.addSubview(profileTableView!)
+        
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             configureUI()
         } else {
@@ -66,6 +70,12 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.postDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followersDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followingDataSourceNotification, object: nil)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        if profileTableView != nil {
+            profileTableView!.frame = CGRectMake(padding, postButton.bounds.origin.y + postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -98,10 +108,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     // MARK: ConfigureUI
     
     func configureUI() {
-        configureButtons()
-        configureProfileTableView()
-        view.addSubview(profileTableView!)
-        
+        showButtonsAndTable()
         reloadPostDataSource()
         reloadFollowersDataSource()
         reloadFollowingDataSource()
@@ -126,17 +133,25 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func configureButtons() {
+        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         postButton.titleLabel?.numberOfLines = 2
-        postButton.hidden = false
         followersButton.titleLabel?.numberOfLines = 2
-        followersButton.hidden = false
         followingButton.titleLabel?.numberOfLines = 2
+    }
+    
+    func showButtonsAndTable() {
+        postButton.hidden = false
+        postButton.enabled = true
+        followersButton.hidden = false
+        followersButton.enabled = true
         followingButton.hidden = false
+        followingButton.enabled = true
+        profileTableView?.hidden = false
     }
     
     func configureProfileTableView() {
         profileTableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
-        profileTableView!.frame = CGRectMake(padding, postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
+        profileTableView?.hidden = true
         profileTableView!.asyncDataSource = self
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
