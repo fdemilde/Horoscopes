@@ -29,6 +29,8 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        self.view.backgroundColor = UIColor(patternImage: image)
         dateArray = dayArray31
     }
     
@@ -49,13 +51,24 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         }
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+//    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+//        if(component == 0){
+//            return monthArray[row]
+//        } else {
+//            return dateArray[row]
+//        }
+//       
+//    }
+    
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        var string : String
         if(component == 0){
-            return monthArray[row]
+            string =  monthArray[row]
         } else {
-            return dateArray[row]
+            string = dateArray[row]
         }
-       
+        var attString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        return attString
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

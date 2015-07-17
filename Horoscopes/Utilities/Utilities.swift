@@ -68,6 +68,15 @@ class Utilities {
         return CGFloat(ratio)
     }
     
+    // support when set view.backgroundColor with image pattern, we need to get the image with right screensize first or the image will be displayed repeatedly
+    class func getImageToSupportSize(name : String,size : CGSize, frame : CGRect) -> UIImage{
+        UIGraphicsBeginImageContext(size)
+        UIImage(named: name)!.drawInRect(frame)
+        var image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        return image
+    }
+    
     // MARK: HUD
     class func showHUD(){
         
@@ -207,6 +216,7 @@ class Utilities {
             NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
         })
     }
+    
 }
 
 

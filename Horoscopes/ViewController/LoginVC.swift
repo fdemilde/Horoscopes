@@ -194,7 +194,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
         selectBirthdayVC.parentVC = self
         var formSheet = MZFormSheetController(viewController: selectBirthdayVC)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = Utilities.getScreenSize()

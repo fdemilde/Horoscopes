@@ -34,9 +34,17 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     func setupBackground(){
         var screenSize = Utilities.getScreenSize()
-        var bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
-        bgImageView.image = UIImage(named: "choose_sign_bg")
+        var rect = CGRectMake(0,0,screenSize.width,screenSize.height)
+        var bgImageView = UIImageView(frame: rect)
+        println("screenSize.width == \(screenSize.width)")
+        if(screenSize.width == 375){ // iP6
+            bgImageView.image = UIImage(named: "choose_sign_bg-667h.png")
+        } else {
+            bgImageView.image = UIImage(named: "choose_sign_bg")
+        }
+        
         self.view.addSubview(bgImageView)
+//        self.view.backgroundColor = UIColor(patternImage: image)
     }
     
     func setupWheel(){

@@ -19,7 +19,8 @@ class PostViewController: MyViewController, UITableViewDataSource, UITableViewDe
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        self.view.backgroundColor = UIColor(patternImage: image)
     }
 
     override func didReceiveMemoryWarning() {

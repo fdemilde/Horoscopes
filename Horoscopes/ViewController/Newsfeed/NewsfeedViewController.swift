@@ -36,7 +36,10 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        
+        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        self.view.backgroundColor = UIColor(patternImage: image)
+        
         self.setupTableView()
         self.resetTapButtonColor()
         XAppDelegate.socialManager.getGlobalNewsfeed(0)

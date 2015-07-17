@@ -17,7 +17,9 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     override func viewDidLoad() {
         println("Notif view did load !!!")
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        
+        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        self.view.backgroundColor = UIColor(patternImage: image)
         
         tableView.dataSource = self
         tableView.delegate = self

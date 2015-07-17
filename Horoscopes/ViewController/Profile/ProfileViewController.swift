@@ -49,7 +49,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        view.backgroundColor = UIColor(patternImage: UIImage(named: "background")!)
+        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        view.backgroundColor = UIColor(patternImage: image)
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingPostDataSource:", name: self.postDataSourceNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowersDataSource:", name: self.followersDataSourceNotification, object: nil)

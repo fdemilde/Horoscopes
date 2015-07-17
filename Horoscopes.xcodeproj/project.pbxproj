@@ -156,6 +156,11 @@
 		F4DA35C31B4E27B000B6F165 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C21B4E27B000B6F165 /* MyViewController.swift */; };
 		F4DA35C51B4E2F1E00B6F165 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C41B4E2F1E00B6F165 /* MyTableViewController.swift */; };
 		F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */; };
+		F4DDF6AB1B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */; };
+		F4DDF6AC1B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */; };
+		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
+		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
+		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
 		F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -358,6 +363,11 @@
 		F4DA35C21B4E27B000B6F165 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
 		F4DA35C41B4E2F1E00B6F165 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
 		F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignVC.swift; sourceTree = "<group>"; };
+		F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg-568h@2x.png"; sourceTree = "<group>"; };
+		F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg-667h@2x.png"; sourceTree = "<group>"; };
+		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
+		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
+		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
 		F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -463,6 +473,11 @@
 		F42E28931B37D14100466CAA /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */,
+				F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */,
+				F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */,
+				F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */,
+				F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */,
 				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F46097E41B50D1F30026F0C9 /* moon animation */,
 				F42E28941B37D14100466CAA /* share */,
@@ -951,10 +966,12 @@
 				F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */,
 				F4CACA6E1B1EEE72003C6301 /* tabbar_notification@2x.png in Resources */,
 				F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */,
+				F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */,
 				F460981C1B50D1F30026F0C9 /* moon_ani_07@2x.png in Resources */,
 				F4CACA721B1EEE72003C6301 /* tabbar_post@3x.png in Resources */,
 				F4CACA641B1EEE72003C6301 /* selected_tabbar_profile.png in Resources */,
 				F4CACA711B1EEE72003C6301 /* tabbar_post@2x.png in Resources */,
+				F4DDF6AC1B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png in Resources */,
 				F46098171B50D1F30026F0C9 /* moon_ani_05@2x.png in Resources */,
 				F46098101B50D1F30026F0C9 /* moon_ani_03.png in Resources */,
 				F42E28B21B37D14100466CAA /* share_viber@2x.png in Resources */,
@@ -997,12 +1014,14 @@
 				F46098091B50D1F30026F0C9 /* Icon in Resources */,
 				F46098151B50D1F30026F0C9 /* moon_ani_04@3x.png in Resources */,
 				F46098211B50D1F30026F0C9 /* moon_ani_09.png in Resources */,
+				F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */,
 				F460980E1B50D1F30026F0C9 /* moon_ani_02@2x.png in Resources */,
 				F460981D1B50D1F30026F0C9 /* moon_ani_07@3x.png in Resources */,
 				F46098291B50D1F30026F0C9 /* moon_ani_11@3x.png in Resources */,
 				F4CACA6D1B1EEE72003C6301 /* tabbar_notification.png in Resources */,
 				F46098231B50D1F30026F0C9 /* moon_ani_09@3x.png in Resources */,
 				F4CACA651B1EEE72003C6301 /* selected_tabbar_profile@2x.png in Resources */,
+				F4DDF6AB1B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png in Resources */,
 				F42E28B01B37D14100466CAA /* share_twitter@2x.png in Resources */,
 				F46098201B50D1F30026F0C9 /* moon_ani_08@3x.png in Resources */,
 				F4CACA581B1EEE72003C6301 /* selected_tabbar_daily.png in Resources */,
@@ -1015,6 +1034,7 @@
 				F42E28AB1B37D14100466CAA /* share_mail.png in Resources */,
 				F4CACA591B1EEE72003C6301 /* selected_tabbar_daily@2x.png in Resources */,
 				F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */,
+				F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */,
 				F460981A1B50D1F30026F0C9 /* moon_ani_06@3x.png in Resources */,
 				F4CACA671B1EEE72003C6301 /* tabbar_daily.png in Resources */,
 				F460980C1B50D1F30026F0C9 /* moon_ani_01@3x.png in Resources */,
