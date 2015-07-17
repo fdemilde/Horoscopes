@@ -89,6 +89,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToPost()
         currentTab = .Post
         reloadPostDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
@@ -96,6 +97,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Followers
         reloadFollowersDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
@@ -103,6 +105,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Following
         reloadFollowingDataSource()
+        changeButtonUIWhenClicked(sender)
     }
     
     // MARK: ConfigureUI
@@ -135,8 +138,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func configureButtons() {
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         postButton.titleLabel?.numberOfLines = 2
+        postButton.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
         followersButton.titleLabel?.numberOfLines = 2
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.numberOfLines = 2
+        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
     }
     
     func showButtonsAndTable() {
@@ -174,6 +180,17 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if currentTab == .Post {
             profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
             profileTableView?.backgroundColor = UIColor.whiteColor()
+        }
+    }
+    
+    func changeButtonUIWhenClicked(sender: UIButton) {
+        sender.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
+        let buttons = [postButton, followersButton, followingButton]
+        for button in buttons {
+            if button != sender {
+                button.setTitleColor(UIColor.darkTextColor(), forState: UIControlState.Normal)
+//                button.setTitleColor(UIColor(red: 46/255.0, green: 52/255.0, blue: 83/255.0, alpha: 1), forState: UIControlState.Normal)
+            }
         }
     }
     
