@@ -76,7 +76,6 @@ class DailyHoroscopeCell : UITableViewCell, UITextViewDelegate {
     
     @IBAction func shareButtonTapped(sender: AnyObject) {
         var parentVC = Utilities.getParentUIViewController(self) as! UIViewController
-        print("VC Class = \(NSStringFromClass(parentVC.classForCoder))")
         var shareVC = self.prepareShareVC()
         var formSheet = MZFormSheetController(viewController: shareVC)
         formSheet.shouldDismissOnBackgroundViewTap = true

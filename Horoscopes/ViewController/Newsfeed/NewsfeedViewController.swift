@@ -17,6 +17,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     let SCROLLVIEW_PADDING_LEFT = 7 as CGFloat
     let SCROLLVIEW_PADDING_RIGHT = 7 as CGFloat
     
+    let FB_BUTTON_SIZE = 80 as CGFloat
+    
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
 //    var userProfileArray = [UserProfile]()
@@ -24,7 +26,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     var feedsDisplayNode = ASDisplayNode()
     @IBOutlet weak var tableView : ASTableView!
-    var tabType = NewsfeedTabType.SignTag
+    var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
@@ -42,7 +44,12 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         
         self.setupTableView()
         self.resetTapButtonColor()
-        XAppDelegate.socialManager.getGlobalNewsfeed(0)
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
+            dispatch_async(dispatch_get_main_queue(),{
+                self.checkAndLoginZwigglers()
+            })
+        }
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,7 +65,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func setupTableView(){
-//        tableView = ASTableView(frame: CGRectMake(0, ADMOD_HEIGHT + globalButton.frame.height + TABLE_PADDING_TOP, Utilities.getScreenSize().width, Utilities.getScreenSize().height - (globalButton.frame.height + TABLE_PADDING_TOP + TABLE_PADDING_BOTTOM)), style: UITableViewStyle.Plain)
         self.tableView.bounces = true
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         self.tableView.backgroundColor = UIColor.clearColor()
@@ -81,7 +87,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             userPostArray = newDataArray
             dispatch_async(dispatch_get_main_queue(),{
                 self.tableReloadDataWithAnimation()
-                self.tableView.hidden = false
                 
             })
             
@@ -90,7 +95,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func followingFeedsFinishedLoading(notif : NSNotification){
-        
         
         if(notif.object == nil){
             Utilities.hideHUD()
@@ -110,23 +114,24 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     // MARK: Button Actions
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
-//        self.printCurrentTabType()
         if(self.tabType != NewsfeedTabType.SignTag){
             self.tabType = NewsfeedTabType.SignTag
-            
             XAppDelegate.socialManager.getGlobalNewsfeed(0)
-            
         }
         
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
-//        self.printCurrentTabType()
         if(self.tabType != NewsfeedTabType.Following){
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
-            XAppDelegate.socialManager.getFollowingNewsfeed(0)
+            if(XAppDelegate.socialManager.isLoggedInFacebook()){
+                XAppDelegate.socialManager.getFollowingNewsfeed(0)
+            } else {
+                tableView.reloadData()
+            }
         }
+        
     }
     
     func printCurrentTabType(){
@@ -163,8 +168,35 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-//        println("numberOfSectionsInTableView numberOfSectionsInTableView")
-        return 1
+        if(self.tabType == NewsfeedTabType.SignTag){
+            self.tableView.backgroundView = nil
+            self.tableView.backgroundColor = UIColor.clearColor()
+            return 1
+        }
+        
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
+            self.tableView.backgroundColor = UIColor.clearColor()
+            self.tableView.layer.cornerRadius = 0
+            return 1
+        } else {
+            self.tableView.backgroundColor = UIColor.whiteColor()
+            self.tableView.layer.cornerRadius = 5
+            var facebookBtnContainer = UIView(frame: self.tableView.bounds)
+            facebookBtnContainer.backgroundColor = UIColor.clearColor()
+            var facebookButton = UIButton()
+            facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
+            println("facebookButton.addTarget facebookButton.addTarget")
+            facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
+            facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
+            facebookBtnContainer.addSubview(facebookButton)
+            var label = UILabel()
+            label.text = "Login Facebook to follow your friends"
+            label.sizeToFit()
+            label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
+            facebookBtnContainer.addSubview(label)
+            self.tableView.backgroundView = facebookBtnContainer
+            return 0
+        }
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
@@ -173,11 +205,51 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func tableReloadDataWithAnimation(){
-        self.tableView.beginUpdates()
-        var range = NSMakeRange(0, self.tableView.numberOfSections());
-        var sections = NSIndexSet(indexesInRange: range);
-        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.None)
-        self.tableView.endUpdates()
+//        self.tableView.beginUpdates()
+//        var range = NSMakeRange(0, self.tableView.numberOfSections());
+//        var sections = NSIndexSet(indexesInRange: range);
+//        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.None)
+//        self.tableView.endUpdates()
+        self.tableView.reloadData()
+    }
+    
+    func clearEmptyTableBackground(){
+        self.tableView.backgroundView = nil
+    }
+    
+    func checkAndLoginZwigglers(){
+        Utilities.showHUD()
+        XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+            if(error != nil){
+                Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                Utilities.hideHUD()
+            } else {
+                    XAppDelegate.socialManager.getFollowingNewsfeed(0)
+            }
+        })
+    }
+    
+    // MARK: facebook
+    func facebookLogin(sender: UIButton!) {
+        println("facebookLogin facebookLogin facebookLogin")
+        Utilities.showHUD()
+        XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
+            if(error == nil){ // error
+                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+                    if(error != nil){
+                        Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                        Utilities.hideHUD()
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                        })
+                    }
+                })
+            } else {
+                Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                Utilities.hideHUD()
+            }
+        }
     }
     
     // MARK: Button Hide/show

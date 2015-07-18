@@ -25,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupGAITracker()
         
         horoscopesManager.getHoroscopesSigns() // setup Horo array
-        horoscopesManager.getAllHoroscopes(false)
+//        horoscopesManager.getAllHoroscopes(false)
         currentUser = UserProfile()
         if isFirstTimeUsing() {
             self.showLoginVC()
@@ -43,6 +43,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
+        let tabBarVC = self.window?.rootViewController as! UITabBarController
         self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
     }
 

@@ -100,6 +100,7 @@ class CookieViewController : UIViewController{
     }
     
     @IBAction func cookieTapped(sender: AnyObject) {
+        Utilities.showHUD()
         self.getFortune()
         
         
@@ -184,10 +185,8 @@ class CookieViewController : UIViewController{
     func checkPermissionAndGetFortune(){
         var loginManager = FBSDKLoginManager()
         var permissions = ["public_profile", "email", "user_birthday"]
-        Utilities.showHUD()
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if((error) != nil){
-                println("Error when login FB = \(error)")
                 self.showOnlyDescription("Error when login Facebook!")
                 Utilities.hideHUD()
             } else if (result.isCancelled) {
@@ -200,7 +199,6 @@ class CookieViewController : UIViewController{
                     self.getFortune()
                 } else {
                     // Permission denied
-                    println("Permission denied");
                     self.showOnlyDescription("Permission denied!")
                     Utilities.hideHUD()
                 }

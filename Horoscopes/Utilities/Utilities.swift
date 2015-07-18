@@ -78,24 +78,32 @@ class Utilities {
     }
     
     // MARK: HUD
-    class func showHUD(){
+    class func showHUD(viewToShow : UIView? = nil){
         
         dispatch_async(dispatch_get_main_queue(),{
-            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
-            let viewController = appDelegate.window!.rootViewController
-            
-            let loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
+            var loadingNotification : MBProgressHUD!
+            if let viewToShow = viewToShow {
+                loadingNotification = MBProgressHUD.showHUDAddedTo(viewToShow, animated: true)
+            } else {
+                let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+                let viewController = appDelegate.window!.rootViewController
+                
+                loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
+            }
             loadingNotification.mode = MBProgressHUDMode.Indeterminate
-//            loadingNotification.labelText = "Loading"
             
         })
     }
     
-    class func hideHUD(){
+    class func hideHUD(viewToHide : UIView? = nil){
         dispatch_async(dispatch_get_main_queue(),{
-            let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
-            let viewController = appDelegate.window!.rootViewController
-            MBProgressHUD.hideAllHUDsForView(viewController!.view, animated: true)
+            if let viewToHide = viewToHide {
+                MBProgressHUD.hideAllHUDsForView(viewToHide, animated: true)
+            } else {
+                let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
+                let viewController = appDelegate.window!.rootViewController
+                MBProgressHUD.hideAllHUDsForView(viewController!.view, animated: true)
+            }
         })
     }
     

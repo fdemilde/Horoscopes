@@ -142,7 +142,6 @@ class ShareViewController : UIViewController {
                 if (currentButtonIndex <= 4) {row = 1}
                 else {row = 2}
                 col = (currentButtonIndex-2)%3
-                println("button index = \(currentButtonIndex) || separateLine height = \(separateLineView.frame.height)")
                 posY += paddingSeparator + padding // if more than 2 buttons, the other buttons should be after the separate line
             }
             

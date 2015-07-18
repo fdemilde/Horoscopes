@@ -21,7 +21,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         if(selectedSign == -1){
             selectedSign = 8 // default sign
         }
-//        self.reloadView()
+        
     }
     
     func setupTabBarItems(){
@@ -53,6 +53,21 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    }
+    
+    func reload(){
+        if let viewControllers = self.viewControllers {
+            for nav in viewControllers {
+                var nav = nav as! UINavigationController
+                var vc = nav.viewControllers.first as! UIViewController
+                if vc.isKindOfClass( DailyTableViewController.classForCoder() ) {
+                    var dailyVC = vc as! DailyTableViewController
+                    dailyVC.selectedSign = self.selectedSign
+                    dailyVC.reloadData()
+                }
+            }
+        }
+        
     }
     
 }

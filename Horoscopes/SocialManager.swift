@@ -278,8 +278,6 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     
     func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
         // TODO: - login facebook and may return anything indicating if it has been successful
-        Utilities.showHUD()
-        
         var loginManager = FBSDKLoginManager()
         var permissions = ["public_profile", "email", "user_birthday"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in

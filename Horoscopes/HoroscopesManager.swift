@@ -78,7 +78,6 @@ class HoroscopesManager : NSObject {
     // MARK: Network - Horoscope
     
     func getAllHoroscopes(refreshOnly : Bool) {
-        println("getAllHoroscopes getAllHoroscopes ")
         Utilities.showHUD()
         
         var offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
@@ -99,8 +98,6 @@ class HoroscopesManager : NSObject {
                 }
 
             }
-            
-            
             
             var iOSVersion = UIDevice.currentDevice().systemVersion;
             var devideType = UIDevice.currentDevice().model;
@@ -132,7 +129,6 @@ class HoroscopesManager : NSObject {
             
             XAppDelegate.mobilePlatform.sc.sendRequest(GET_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
                 if(error != nil){
-                    println("ERROR == \(error)")
                     Utilities.hideHUD()
                 } else {
                     self.data = Utilities.parseNSDictionaryToDictionary(response)
@@ -147,7 +143,6 @@ class HoroscopesManager : NSObject {
             postData.setObject(offsetString, forKey: "tz")
             XAppDelegate.mobilePlatform.sc.sendRequest(REFRESH_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
                 if(error != nil){
-                    println("ERROR == \(error)")
                     Utilities.hideHUD()
                 } else {
                     self.data = Utilities.parseNSDictionaryToDictionary(response)

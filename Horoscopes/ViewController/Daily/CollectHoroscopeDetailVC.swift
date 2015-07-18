@@ -16,7 +16,7 @@ class CollectHoroscopeDetailVC : MyViewController, UITableViewDataSource, UITabl
     let textviewForCalculating = UITextView()
     var topSpace = 43 as CGFloat
     var bottomSpace = 75 as CGFloat
-    var separatorSpace = 35 as CGFloat
+    var separatorSpace = 25 as CGFloat
     
     var collectedItem = CollectedItem()
     

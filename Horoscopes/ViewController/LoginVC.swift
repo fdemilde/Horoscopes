@@ -83,18 +83,25 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
+        Utilities.showHUD(viewToShow: self.view)
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             self.fetchUserInfo()
         } else {
             XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-                if(error != nil){ // error
+                if(error == nil){ // error
                     XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
                         if(error != nil){
                             Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                            Utilities.hideHUD(viewToHide: self.view)
                         } else {
+                            dispatch_async(dispatch_get_main_queue(),{
                             self.fetchUserInfo()
+                            })
                         }
                     })
+                } else {
+                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                    Utilities.hideHUD(viewToHide: self.view)
                 }
             }
         }
@@ -115,27 +122,27 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     func fetchUserInfo(){
         var params = Dictionary<String,String>()
         // params["fields"] = "name,id,gender,birthday"
-        FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-            if(error == nil){
-//                 println("User information = \(result)")
-                self.userFBID = result["id"] as! String
-                self.userFBName = result["name"] as! String
-                self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
-                self.reloadView()
-            } else {
-                Utilities.hideHUD()
-                println("fetch Info Error = \(error)")
-            }
-        })
+            FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+                println("FBSDKGraphRequest FBSDKGraphRequest = \(result)")
+                if(error == nil){
+                    self.userFBID = result["id"] as! String
+                    self.userFBName = result["name"] as! String
+                    self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
+                    self.reloadView()
+                    Utilities.hideHUD(viewToHide: self.view)
+                } else {
+                    Utilities.hideHUD(viewToHide: self.view)
+                    println("fetch Info Error = \(error)")
+                }
+            })
+        
     }
     
     // MARK: helpers
     
     func downloadImage(url:NSURL){
-        println("Started downloading \(url.absoluteURL)")
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                println("Finished downloading \"\(url.lastPathComponent!.stringByDeletingPathExtension)\".")
                 var downloadedImage = UIImage(data: data!)
                 self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
                 self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
@@ -152,7 +159,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
             var index = find(XAppDelegate.horoscopesManager.horoscopesSigns, newValue)
             if(index != nil){
-                self.selectedIndex = index!;
+                self.selectedIndex = index!
             }
             self.starIcon.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
             self.signNameLabel.alpha = 0
@@ -160,7 +167,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
             UILabel.setAnimationDuration(0.6)
             self.signNameLabel.alpha = 1
             UILabel.commitAnimations()
-            
         } else {
             self.signNameLabel.text = ""
             self.signDateLabel.text = ""
@@ -184,9 +190,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         XAppDelegate.userSettings.horoscopeSign = Int32(self.selectedIndex)
         var label = String(format: "type=primary,sign=%d", self.selectedIndex)
         XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
-        let customTabBarController = self.storyboard!.instantiateViewControllerWithIdentifier("CustomTabBarController") as! CustomTabBarController
+        let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
-        
+        customTabBarController.reload()
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     

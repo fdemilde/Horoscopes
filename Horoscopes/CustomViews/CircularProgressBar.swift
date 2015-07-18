@@ -106,7 +106,6 @@ class CircularProgressBar : CAShapeLayer {
     }
     
     func animateCircleRotation(shapeLayer: CAShapeLayer, rotationPoint: CGPoint, rotationValue: CGFloat, duration: CFTimeInterval) {
-        println("animateCircleRotation animateCircleRotation")
         let strokeFrame = CGRectMake(shapeLayer.position.x, shapeLayer.position.y, strokeWidth, strokeWidth)
         let minX   = CGRectGetMinX(strokeFrame);
         let minY   = CGRectGetMinY(strokeFrame);

@@ -49,7 +49,6 @@ class DailyHoroscopeHeaderCell: UITableViewCell {
     }
     
     func updateAndAnimateCollectHoroscope(){
-        println("updateAndAnimateCollectHoroscope updateAndAnimateCollectHoroscope ")
         var collectedHoro = CollectedHoroscope()
         
         var animationView = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))

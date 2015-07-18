@@ -70,7 +70,6 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
-        println("Finish send message")
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -96,12 +95,11 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     // MARK: Whatsapp
     func shareWhatapps(text : String, url: String){
         var sharingText = String(format:"whatsapp://send?text=%@", text)
-        println("sharingText sharingText = \(sharingText)")
         var whatsappURL = NSURL(string: sharingText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
         if(UIApplication.sharedApplication().canOpenURL(whatsappURL!)){
             UIApplication.sharedApplication().openURL(whatsappURL!)
         } else {
-            println("Cannott open URL")
+            println("Cannot open URL")
         }
 
     }

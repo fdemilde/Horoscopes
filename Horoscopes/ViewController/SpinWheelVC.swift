@@ -36,7 +36,6 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         var screenSize = Utilities.getScreenSize()
         var rect = CGRectMake(0,0,screenSize.width,screenSize.height)
         var bgImageView = UIImageView(frame: rect)
-        println("screenSize.width == \(screenSize.width)")
         if(screenSize.width == 375){ // iP6
             bgImageView.image = UIImage(named: "choose_sign_bg-667h.png")
         } else {

@@ -42,15 +42,18 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
         if let parentVC = self.tabBarController as? CustomTabBarController{
             self.selectedSign = parentVC.selectedSign
         }
-//        self.setupData()
+        
         //app returns to the foreground, reload table
         
         self.refreshView()
     }
     
     override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        super.viewWillAppear(animated)
+        
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -112,7 +115,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
                 }
                 cell.setupCell(selectedSign, desc: resultDesc, time: resultTs, type: DailyHoroscopeType.TomorrowHoroscope)
             }
-            cell.backgroundColor = UIColor.clearColor()
             return cell
         }
         
@@ -182,7 +184,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     }
     
     func refreshView(){
-        
         self.today = NSDate()
         self.collectedHoro = CollectedHoroscope()
         var today1 = NSDate()
@@ -213,7 +214,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
             self.shouldReloadData = false
             XAppDelegate.horoscopesManager.getAllHoroscopes(false)
         }
-        
         self.setupNotification()
         var label = String(format:"type=view,sign=%d", self.selectedSign)
         XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
@@ -221,7 +221,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     }
     
     func reloadData(){
-//        println("Reload Data!!!")
         // get data from XAppDelagate and save to local then reload table view
         self.saveData()
         self.tableView.reloadData()
@@ -237,7 +236,6 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
             todayComp.minute = 1
             todayComp.second = 1
             todayComp.calendar = currentCal
-            println(String(format: "updateCollectedData updateCollectedData %@",currentCal.dateFromComponents(todayComp)!))
             collectedHoro.mySetLastDateOpenApp(todayComp.date)
             self.saveCollectedHoroscopeData()
         } else {
@@ -251,13 +249,11 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     }
     
     func saveCollectedHoroscopeData(){
-        println("saveCollectedHoroscopeData saveCollectedHoroscopeData !!!")
         var item = CollectedItem()
         
         item.collectedDate = NSDate(timeIntervalSince1970: (timeTags[0] as! NSString).doubleValue as NSTimeInterval)
         item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
         collectedHoro.collectedData.insertObject(item, atIndex: 0)
-        println("saveCollectedHoroscopeData 111 == \(collectedHoro.collectedData)")
         collectedHoro.saveCollectedData()
         if let firstCell = firstCell{
             firstCell.collectTextLabel.text = String(format:"%g",collectedHoro.getScore()*100)

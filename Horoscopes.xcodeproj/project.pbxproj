@@ -72,8 +72,6 @@
 		F460982A1B50D1F30026F0C9 /* moon_ani_12.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098061B50D1F30026F0C9 /* moon_ani_12.png */; };
 		F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */; };
 		F460982C1B50D1F30026F0C9 /* moon_ani_12@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */; };
-		F465F2C41B4CD1050025644E /* FollowingFeedsCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */; };
-		F465F2C61B4CD62D0025644E /* FollowingCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */; };
 		F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */; };
 		F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */; };
 		F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */; };
@@ -242,8 +240,6 @@
 		F46098061B50D1F30026F0C9 /* moon_ani_12.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_12.png; sourceTree = "<group>"; };
 		F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@2x.png"; sourceTree = "<group>"; };
 		F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@3x.png"; sourceTree = "<group>"; };
-		F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingFeedsCollectionView.swift; sourceTree = "<group>"; };
-		F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowingCollectionCell.swift; sourceTree = "<group>"; };
 		F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerViewController.swift; sourceTree = "<group>"; };
 		F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailCell.swift; sourceTree = "<group>"; };
 		F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailHeaderCell.swift; sourceTree = "<group>"; };
@@ -592,8 +588,6 @@
 			isa = PBXGroup;
 			children = (
 				F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */,
-				F465F2C31B4CD1050025644E /* FollowingFeedsCollectionView.swift */,
-				F465F2C51B4CD62D0025644E /* FollowingCollectionCell.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -1126,7 +1120,6 @@
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */,
-				F465F2C61B4CD62D0025644E /* FollowingCollectionCell.swift in Sources */,
 				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
@@ -1146,7 +1139,6 @@
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
-				F465F2C41B4CD1050025644E /* FollowingFeedsCollectionView.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,

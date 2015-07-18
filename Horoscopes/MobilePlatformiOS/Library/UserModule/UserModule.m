@@ -166,7 +166,6 @@
     [sc sendRequest:@"user.listfriends" withLoginRequired:REQUIRED andPostData:nil andCompleteBlock:^(NSDictionary *responseDict, NSError *error) {
         
         id friendsObject = [responseDict objectForKey:@"friends"];
-        DebugLog(@"testListFriend testListFriend = %@", friendsObject);
         if(friendsObject != nil){
             NSMutableArray * friends = [[NSMutableArray alloc]initWithArray:friendsObject];
             [self setFriendList:friends];
