@@ -8,7 +8,12 @@
 
 import Foundation
 
+protocol FollowDelegate {
+    func didClickFollowButton(uid: Int)
+}
+
 class ProfileCellNode: ASCellNode {
+    // MARK: Properties
     let BG_PADDING_LEFT = 30 as CGFloat
     let BG_PADDING_RIGHT = 5 as CGFloat
     let BG_PADDING_BOTTOM = 10 as CGFloat
@@ -54,6 +59,10 @@ class ProfileCellNode: ASCellNode {
     }
     var currentTab: Tab?
     var isFollowed: Bool?
+    
+    var followDelegate: FollowDelegate?
+    
+    // MARK: Initialization
     
     func setup() {
         self.backgroundColor = UIColor.clearColor()
@@ -185,7 +194,8 @@ class ProfileCellNode: ASCellNode {
         
         if currentTab == .Followers {
             followButton = ASTextNode()
-            var attrs: [String: AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(14)]
+            var attrs: [String: AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(13)]
+//            followButton?.backgroundColor = UIColor.yellowColor()
             if isFollowed! {
                 attrs[NSForegroundColorAttributeName] = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
                 let string = NSAttributedString(string: "Followed", attributes: attrs)
@@ -262,7 +272,7 @@ class ProfileCellNode: ASCellNode {
             self.heartNumberLabelNode?.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.separator!.frame.origin.y - 18, self.heartNumberLabelNode!.calculatedSize.width, self.heartNumberLabelNode!.calculatedSize.height)
         default:
             if currentTab == .Followers {
-                followButton?.frame = CGRectMake(calculatedSize.width - 10 - followButton!.calculatedSize.width, calculatedSize.height / 2 - 10, followButton!.calculatedSize.width, followButton!.calculatedSize.height)
+                followButton?.frame = CGRectMake(calculatedSize.width - followButton!.calculatedSize.width - 10, calculatedSize.height / 2 - 10, followButton!.calculatedSize.width, followButton!.calculatedSize.height)
             }
             horoscopeSignTextNode?.frame = CGRectMake(profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, userNameLabelNode!.frame.origin.y + userNameLabelNode!.calculatedSize.height, horoscopeSignTextNode!.calculatedSize.width, horoscopeSignTextNode!.calculatedSize.height)
         }
@@ -275,7 +285,10 @@ class ProfileCellNode: ASCellNode {
     }
     
     func followButtonTapped(sender: AnyObject) {
-        NSLog("follow button tapped")
+//        let attrs = [NSForegroundColorAttributeName: UIColor.darkTextColor()]
+//        let string = NSAttributedString(string: "Follow", attributes: attrs)
+//        followButton?.attributedString = string
+        followDelegate?.didClickFollowButton(user!.uid)
     }
     
     // MARK: Helpers

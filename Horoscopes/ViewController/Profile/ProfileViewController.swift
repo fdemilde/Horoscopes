@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate {
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var postButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var isFinishedFollowingDataSource = false
     
     var isFirstDataLoad = true
+    
+    var successfulFollow = false
 
     // MARK: Lifecycle
     override func viewDidLoad() {
@@ -163,7 +165,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
         profileTableView!.showsVerticalScrollIndicator = false
-        profileTableView?.layer.cornerRadius = 10
+        profileTableView?.layer.cornerRadius = 5
         profileTableView?.layer.masksToBounds = true
         profileTableView?.separatorColor = UIColor.lightGrayColor()
         profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
@@ -221,9 +223,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if isFirstDataLoad {
             loadDataInitially()
         } else {
-            isFinishedPostDataSource = false
             postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
             profileTableView?.reloadData()
+            isFinishedPostDataSource = false
             Utilities.hideHUD()
         }
     }
@@ -232,10 +234,12 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         isFinishedFollowersDataSource = true
         if isFirstDataLoad {
             loadDataInitially()
+        } else if successfulFollow {
+            populateIsFollowedArray()
         } else {
-            isFinishedFollowersDataSource = false
             followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
             profileTableView?.reloadData()
+            isFinishedFollowersDataSource = false
             Utilities.hideHUD()
         }
     }
@@ -244,10 +248,12 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         isFinishedFollowingDataSource = true
         if isFirstDataLoad {
             loadDataInitially()
+        } else if successfulFollow {
+            populateIsFollowedArray()
         } else {
-            isFinishedFollowingDataSource = false
             followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
             profileTableView?.reloadData()
+            isFinishedFollowingDataSource = false
             Utilities.hideHUD()
         }
     }
@@ -258,9 +264,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
             followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
             followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-            profileTableView?.reloadData()
+            isFinishedPostDataSource = false
             populateIsFollowedArray()
-            Utilities.hideHUD()
         }
     }
     
@@ -377,16 +382,26 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func populateIsFollowedArray() {
-        isFollowedArray.removeAll(keepCapacity: true)
-        for follower in followers {
-            var isFollowed = false
-            for followingUser in followingUsers {
-                if follower.uid == followingUser.uid {
-                    isFollowed = true
-                    break
+        if isFinishedFollowersDataSource && isFinishedFollowingDataSource {
+            isFollowedArray.removeAll(keepCapacity: true)
+            for follower in followers {
+                var isFollowed = false
+                for followingUser in followingUsers {
+                    if follower.uid == followingUser.uid {
+                        isFollowed = true
+                        break
+                    }
                 }
+                isFollowedArray.append(isFollowed)
             }
-            isFollowedArray.append(isFollowed)
+            if successfulFollow {
+                followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+            }
+            isFinishedFollowersDataSource = false
+            isFinishedFollowingDataSource = false
+            profileTableView?.reloadData()
+            successfulFollow = false
+            Utilities.hideHUD()
         }
     }
     
@@ -412,6 +427,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         case .Followers:
             let follower = followers[indexPath.row] as UserProfile
             cell = ProfileCellNode(follower: follower, isFollowed: isFollowedArray[indexPath.row])
+            cell.followDelegate = self
         case .Following:
             let followingUser = followingUsers[indexPath.row] as UserProfile
             cell = ProfileCellNode(followingUser: followingUser)
@@ -420,6 +436,20 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             cell = ProfileCellNode(userPost: userPost)
         }
         return cell
+    }
+    
+    func didClickFollowButton(uid: Int) {
+        SocialManager.sharedInstance.follow(userWithId: uid) { (result, error) -> Void in
+            if let error = error {
+                Utilities.showAlertView(self, title: "Error", message: "Cannot follow due to error \(error)")
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.successfulFollow = true
+                    self.reloadFollowersDataSource()
+                    self.reloadFollowingDataSource()
+                })
+            }
+        }
     }
     
 
