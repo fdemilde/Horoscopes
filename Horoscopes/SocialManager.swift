@@ -313,7 +313,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
             } else if let result = result {
                 if result.isCancelled {
                     Utilities.showAlertView(self, title: "Permission denied", message: "")
-                    completionHandler(result: nil, error : error)
+                    completionHandler(result: result, error : nil)
                 } else {
                     if result.grantedPermissions.contains("public_profile") {
                         completionHandler(result: result, error : nil)

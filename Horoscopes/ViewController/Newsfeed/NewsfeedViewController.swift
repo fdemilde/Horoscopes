@@ -231,12 +231,11 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     // MARK: facebook
     func facebookLogin(sender: UIButton!) {
-        println("facebookLogin facebookLogin facebookLogin")
         Utilities.showHUD()
         XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-            if(error == nil){ // error
-                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
-                    if(error != nil){
+            if(error == nil && FBSDKAccessToken.currentAccessToken() != nil){ // error
+                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (myresult, myerror) -> Void in
+                    if(myerror != nil){
                         Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                         Utilities.hideHUD()
                     } else {
@@ -246,7 +245,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                     }
                 })
             } else {
-                Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                 Utilities.hideHUD()
             }
         }

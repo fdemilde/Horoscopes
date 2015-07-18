@@ -90,14 +90,14 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
             XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
                 if(error == nil){ // error
                     XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
-                        if(error != nil){
-                            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                            Utilities.hideHUD(viewToHide: self.view)
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(),{
-                            self.fetchUserInfo()
-                            })
-                        }
+//                        if(error != nil){
+//                            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+//                            Utilities.hideHUD(viewToHide: self.view)
+//                        } else {
+//                            dispatch_async(dispatch_get_main_queue(),{
+//                                self.fetchUserInfo()
+//                            })
+//                        }
                     })
                 } else {
                     Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
