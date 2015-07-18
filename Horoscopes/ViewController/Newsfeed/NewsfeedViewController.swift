@@ -177,6 +177,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
             self.tableView.backgroundColor = UIColor.clearColor()
             self.tableView.layer.cornerRadius = 0
+            self.tableView.backgroundView = nil
             return 1
         } else {
             self.tableView.backgroundColor = UIColor.whiteColor()
@@ -184,8 +185,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             var facebookBtnContainer = UIView(frame: self.tableView.bounds)
             facebookBtnContainer.backgroundColor = UIColor.clearColor()
             var facebookButton = UIButton()
+            facebookButton.backgroundColor = UIColor.blueColor()
             facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
-            println("facebookButton.addTarget facebookButton.addTarget")
             facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
             facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
             facebookBtnContainer.addSubview(facebookButton)

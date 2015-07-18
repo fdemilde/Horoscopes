@@ -39,7 +39,6 @@ static int CLOVER_SYMBOL_TAG = 101;
 - (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber  andArray:(NSMutableArray*)horoscopes{
     
     if ((self = [super initWithFrame:frame])) {
-        NSLog(@"init frame === %@", NSStringFromCGRect(frame));
 		self.delegate = del;
         self.currentValue = 8;
         self.numberOfSections = sectionsNumber;

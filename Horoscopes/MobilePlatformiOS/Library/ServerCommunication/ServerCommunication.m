@@ -347,7 +347,8 @@
                 if(data != nil && error == nil){
                     [self checkServerTimestampAndPostData:postData data:data error:error filePath:filePath currentTime:currtime completeBlock:completeBlock];
                 } else {
-                    DebugLog(@"retry failed");
+                    NSDictionary *res = [[NSDictionary alloc] init];
+                    completeBlock(res, error);
                 }
             }];
         } else {
