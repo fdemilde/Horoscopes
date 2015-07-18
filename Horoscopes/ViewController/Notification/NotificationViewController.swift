@@ -15,7 +15,6 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     var startPositionY = 0 as CGFloat
     
     override func viewDidLoad() {
-        println("Notif view did load !!!")
         super.viewDidLoad()
         
         var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)

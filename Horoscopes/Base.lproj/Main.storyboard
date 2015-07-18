@@ -428,6 +428,7 @@
                                     <constraint firstAttribute="width" constant="100" id="Q5b-jG-hXr"/>
                                 </constraints>
                                 <state key="normal" title="Cancel">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">
@@ -453,6 +454,7 @@
                                     <constraint firstAttribute="width" constant="100" id="rw0-ha-8us"/>
                                 </constraints>
                                 <state key="normal" title="Save">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <variation key="default">

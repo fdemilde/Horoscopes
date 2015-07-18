@@ -150,13 +150,16 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         if isLoggedInZwigglers() {
             createPost()
         } else {
-            loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    createPost()
-                }
-            })
+            if(FBSDKAccessToken.currentAccessToken() != nil){
+                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        createPost()
+                    }
+                })
+            }
+            
         }
     }
     
@@ -191,13 +194,15 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         if isLoggedInZwigglers() {
             follow()
         } else {
-            loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    follow()
-                }
-            })
+            if(FBSDKAccessToken.currentAccessToken() != nil){
+                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        follow()
+                    }
+                })
+            }
         }
     }
     
@@ -217,13 +222,15 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         if isLoggedInZwigglers() {
             unfollow()
         } else {
-            loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    unfollow()
-                }
-            })
+            if(FBSDKAccessToken.currentAccessToken() != nil){
+                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        unfollow()
+                    }
+                })
+            }
         }
     }
     
@@ -255,13 +262,16 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         if isLoggedInZwigglers() {
             getFollowing()
         } else {
-            loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    getFollowing()
-                }
-            })
+            if(FBSDKAccessToken.currentAccessToken() != nil){
+                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        getFollowing()
+                    }
+                })
+            }
+            
         }
     }
     
@@ -279,13 +289,15 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         if isLoggedInZwigglers() {
             getFollowers()
         } else {
-            loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    getFollowers()
-                }
-            })
+            if(FBSDKAccessToken.currentAccessToken() != nil){
+                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        getFollowers()
+                    }
+                })
+            }
         }
     }
     

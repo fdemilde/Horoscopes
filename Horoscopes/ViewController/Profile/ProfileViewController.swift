@@ -206,7 +206,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     // MARK: Helper
     func loginFacebook(sender: UIButton) {
         SocialManager.sharedInstance.loginFacebook { (result, error) -> () in
-            if let error = error {
+            if (error != nil || FBSDKAccessToken.currentAccessToken() == nil){
                 // Show alert. This has been done by the calling method.
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -296,18 +296,21 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 }
             })
         } else {
-            SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                if let error = error {
-                    NSLog("Cannot load user's posts. Error: \(error)")
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
-                    })
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.reloadPostDataSource()
-                    })
-                }
-            })
+            if((FBSDKAccessToken.currentAccessToken()) != nil){
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        NSLog("Cannot load user's posts. Error: \(error)")
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
+                        })
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.reloadPostDataSource()
+                        })
+                    }
+                })
+            }
+            
         }
     }
     

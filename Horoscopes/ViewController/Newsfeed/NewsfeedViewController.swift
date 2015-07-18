@@ -169,23 +169,20 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
         if(self.tabType == NewsfeedTabType.SignTag){
-            self.tableView.backgroundView = nil
+            self.tableView.tableHeaderView = nil
             self.tableView.backgroundColor = UIColor.clearColor()
             return 1
         }
         
         if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
-            self.tableView.backgroundColor = UIColor.clearColor()
-            self.tableView.layer.cornerRadius = 0
-            self.tableView.backgroundView = nil
+            self.tableView.tableHeaderView = nil
             return 1
         } else {
-            self.tableView.backgroundColor = UIColor.whiteColor()
-            self.tableView.layer.cornerRadius = 5
             var facebookBtnContainer = UIView(frame: self.tableView.bounds)
-            facebookBtnContainer.backgroundColor = UIColor.clearColor()
+            facebookBtnContainer.layer.cornerRadius = 5
+            facebookBtnContainer.backgroundColor = UIColor.whiteColor()
+            facebookBtnContainer.userInteractionEnabled = true
             var facebookButton = UIButton()
-            facebookButton.backgroundColor = UIColor.blueColor()
             facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
             facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
             facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
@@ -195,7 +192,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             label.sizeToFit()
             label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
             facebookBtnContainer.addSubview(label)
-            self.tableView.backgroundView = facebookBtnContainer
+            self.tableView.tableHeaderView = facebookBtnContainer
+            println("self.tableView.backgroundView")
             return 0
         }
     }
