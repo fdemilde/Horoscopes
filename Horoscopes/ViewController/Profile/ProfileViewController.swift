@@ -96,6 +96,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToPost()
         currentTab = .Post
         reloadPostDataSource()
+        changeButtonTitleLabel(buttonToBeHighlighted: postButton)
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
@@ -103,6 +104,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Followers
         reloadFollowersDataSource()
+        changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
@@ -110,6 +112,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Following
         reloadFollowingDataSource()
+        changeButtonTitleLabel(buttonToBeHighlighted: followingButton)
     }
     
     // MARK: ConfigureUI
