@@ -34,6 +34,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     var clearTable = false
     
+    let postButtonTitleLabel = "Post"
+    let followersButtonTitleLabel = "Followers"
+    let followingButtonTitleLabel = "Following"
+    
     let postDataSourceNotification = "Finish reloading post data source"
     let followersDataSourceNotification = "Finish reloading followers data source"
     let followingDataSourceNotification = "Finish reloading following data source"
@@ -92,7 +96,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToPost()
         currentTab = .Post
         reloadPostDataSource()
-        changeButtonUIWhenClicked(sender)
+        changeButtonTitleLabel(buttonToBeHighlighted: postButton)
     }
     
     @IBAction func touchFollowersButton(sender: UIButton) {
@@ -100,7 +104,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Followers
         reloadFollowersDataSource()
-        changeButtonUIWhenClicked(sender)
+        changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
     }
     
     @IBAction func touchFollowingButton(sender: UIButton) {
@@ -108,7 +112,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         changeProfileTableViewToFollow()
         currentTab = .Following
         reloadFollowingDataSource()
-        changeButtonUIWhenClicked(sender)
+        changeButtonTitleLabel(buttonToBeHighlighted: followingButton)
     }
     
     // MARK: ConfigureUI
@@ -186,17 +190,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func changeButtonUIWhenClicked(sender: UIButton) {
-        sender.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
-        let buttons = [postButton, followersButton, followingButton]
-        for button in buttons {
-            if button != sender {
-                button.setTitleColor(UIColor.darkTextColor(), forState: UIControlState.Normal)
-//                button.setTitleColor(UIColor(red: 46/255.0, green: 52/255.0, blue: 83/255.0, alpha: 1), forState: UIControlState.Normal)
-            }
-        }
-    }
-    
     func resetProfileTableView() {
         clearTable = true
         profileTableView?.reloadData()
@@ -204,6 +197,50 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     // MARK: Helper
+    
+    func changeButtonTitleLabel(buttonToBeHighlighted sender: UIButton) {
+        let buttons = [postButton, followersButton, followingButton]
+        for button in buttons {
+            var string = NSMutableAttributedString()
+            switch button {
+            case postButton:
+                let title = "\(postButtonTitleLabel)\n\(userPosts.count)"
+                string.appendAttributedString(NSAttributedString(string: title))
+                if button == sender {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(postButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(postButtonTitleLabel), count(title) - count(postButtonTitleLabel)))
+                } else {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                }
+            case followersButton:
+                let title = "\(followersButtonTitleLabel)\n\(followers.count)"
+                string.appendAttributedString(NSAttributedString(string: title))
+                if button == sender {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followersButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followersButtonTitleLabel), count(title) - count(followersButtonTitleLabel)))
+                } else {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                }
+            case followingButton:
+                let title = "\(followingButtonTitleLabel)\n\(followingUsers.count)"
+                string.appendAttributedString(NSAttributedString(string: title))
+                if button == sender {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followingButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followingButtonTitleLabel), count(title) - count(followingButtonTitleLabel)))
+                } else {
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                }
+            default:
+                print("Unrecognized button.")
+            }
+            button.setAttributedTitle(string, forState: UIControlState.Normal)
+//            if button != sender {
+//                button.setTitleColor(UIColor.darkTextColor(), forState: UIControlState.Normal)
+//                //                button.setTitleColor(UIColor(red: 46/255.0, green: 52/255.0, blue: 83/255.0, alpha: 1), forState: UIControlState.Normal)
+//            }
+        }
+    }
+    
     func loginFacebook(sender: UIButton) {
         SocialManager.sharedInstance.loginFacebook { (result, error) -> () in
             if (error != nil || FBSDKAccessToken.currentAccessToken() == nil){
@@ -223,7 +260,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if isFirstDataLoad {
             loadDataInitially()
         } else {
-            postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
+            changeButtonTitleLabel(buttonToBeHighlighted: postButton)
             profileTableView?.reloadData()
             isFinishedPostDataSource = false
             Utilities.hideHUD()
@@ -237,7 +274,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         } else if successfulFollow {
             populateIsFollowedArray()
         } else {
-            followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
+            changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
             profileTableView?.reloadData()
             isFinishedFollowersDataSource = false
             Utilities.hideHUD()
@@ -251,7 +288,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         } else if successfulFollow {
             populateIsFollowedArray()
         } else {
-            followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+            changeButtonTitleLabel(buttonToBeHighlighted: followingButton)
             profileTableView?.reloadData()
             isFinishedFollowingDataSource = false
             Utilities.hideHUD()
@@ -261,9 +298,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func loadDataInitially() {
         if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
             isFirstDataLoad = false
-            postButton.setTitle("Post\n\(self.userPosts.count)", forState: UIControlState.Normal)
-            followersButton.setTitle("Followers\n\(self.followers.count)", forState: UIControlState.Normal)
-            followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+            changeButtonTitleLabel(buttonToBeHighlighted: postButton)
             isFinishedPostDataSource = false
             populateIsFollowedArray()
         }
@@ -398,7 +433,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 isFollowedArray.append(isFollowed)
             }
             if successfulFollow {
-                followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+//                followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
+                changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
             }
             isFinishedFollowersDataSource = false
             isFinishedFollowingDataSource = false
