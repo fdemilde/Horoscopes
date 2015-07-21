@@ -41,6 +41,7 @@ let IS_FOLLOWING = "user.isfollowing"
 // MARK: Profile methods
 let GET_PROFILE = "app.horoscopes.profile.get"
 let UPDATE_PROFILE = ""
+let UPDATE_BIRTHDAY = "app.horoscopes.setbirthday"
 
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"
@@ -97,6 +98,21 @@ enum NewsfeedType {
 enum NewsfeedTabType {
     case SignTag
     case Following
+}
+
+// settings
+
+enum SettingsType {
+    case Notification
+    case ChangeName
+    case ChangeDOB
+    case BugsReport
+    case Logout
+}
+
+enum BirthdayParentViewControllerType {
+    case LoginViewController
+    case SettingsViewController
 }
 
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat

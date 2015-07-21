@@ -21,7 +21,7 @@ class MyTableViewController : UITableViewController {
         bannerView = GADBannerView()
         self.bannerView?.frame = CGRectMake(0,0,Utilities.getScreenSize().width,50)
         self.bannerView?.adUnitID = ADMOD_ID
-        self.bannerView?.rootViewController = self
+        self.bannerView?.rootViewController = XAppDelegate.window?.rootViewController
         var request = GADRequest()
         self.bannerView?.loadRequest(request)
         self.navigationController?.view.addSubview(self.bannerView)

@@ -182,6 +182,20 @@ class HoroscopesManager : NSObject {
         })
     }
     
+    func sendUpdateBirthdayRequest(birthdayString : String,completionHandler: ( responseDict : Dictionary<String, AnyObject>?, error : NSError?) -> Void){
+        
+        var postData = NSMutableDictionary()
+        var birthday = String(format:"%@",birthdayString)
+        postData.setObject(birthday, forKey: "birthday")
+        XAppDelegate.mobilePlatform.sc.sendRequest(UPDATE_BIRTHDAY, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+//            println(response)
+            var result = Utilities.parseNSDictionaryToDictionary(response)
+            completionHandler(responseDict: result,error: error)
+        })
+    }
+    
+    // MARK: Helpers
+    
     func saveData(){
         
         var todayReadings = Dictionary<String, String>()
@@ -208,6 +222,7 @@ class HoroscopesManager : NSObject {
         }
         return 9
     }
+    
     func getSignIndexOfSignName(name : String) -> Int{
         for index in 0...11 {
             if(name == self.horoscopesSigns[index].sign){
@@ -215,6 +230,19 @@ class HoroscopesManager : NSObject {
             }
         }
         return -1
+    }
+    
+    func getSignNameOfDate(date : NSDate) -> String{
+        for index in 0...11 {
+            if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
+            var horoscope = self.horoscopesSigns[index]
+            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
+                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
+                    return horoscope.sign
+            }
+        }
+        var horoscope = horoscopesSigns[9]
+        return horoscope.sign
     }
     
 }
