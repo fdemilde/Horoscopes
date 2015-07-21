@@ -163,73 +163,53 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getPost(uid: Int, page: Int = 0, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
-        postData.setObject("\(page)", forKey: "page")
-        postData.setObject("\(uid)", forKey: "uid")
-        
-        XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+    func getPost(uid: Int, page: Int = 0, completionHandler: (result: [UserPost]?, error: NSError?) -> Void) {
+        getProfile("\(uid)", completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                let result = Utilities.parseNSDictionaryToDictionary(response)
-                completionHandler(result: result, error: nil)
+                var userProfile = result![0]
+                var postData = NSMutableDictionary()
+                postData.setObject("\(page)", forKey: "page")
+                postData.setObject("\(uid)", forKey: "uid")
+                
+                XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+                    if let error = error {
+                        completionHandler(result: nil, error: error)
+                    } else {
+                        let json = Utilities.parseNSDictionaryToDictionary(response)
+                        let results = json["posts"] as! [NSDictionary]
+                        let posts = UserPost.postsFromResults(results)
+                        for post in posts {
+                            post.user = userProfile
+                        }
+                        completionHandler(result: posts, error: nil)
+                    }
+                })
             }
         })
     }
     
-    func follow(userWithId uid: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+    func follow(uid: Int, completionHandler: (error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
-        let follow = { () -> Void in
-            XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(result: result, error: nil)
-                }
-            }
-        }
-        if isLoggedInZwigglers() {
-            follow()
-        } else {
-            if(FBSDKAccessToken.currentAccessToken() != nil){
-                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                    if let error = error {
-                        completionHandler(result: nil, error: error)
-                    } else {
-                        follow()
-                    }
-                })
+        XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(error: error)
+            } else {
+                completionHandler(error: nil)
             }
         }
     }
     
-    func unfollow(userWithId uid: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+    func unfollow(uid: Int, completionHandler: (error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
-        let unfollow = { () -> Void in
-            XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(result: result, error: nil)
-                }
-            }
-        }
-        if isLoggedInZwigglers() {
-            unfollow()
-        } else {
-            if(FBSDKAccessToken.currentAccessToken() != nil){
-                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                    if let error = error {
-                        completionHandler(result: nil, error: error)
-                    } else {
-                        unfollow()
-                    }
-                })
+        XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(error: error)
+            } else {
+                completionHandler(error: nil)
             }
         }
     }
@@ -248,74 +228,75 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getFollowing(completionHandler: (result: [String: AnyObject]?, error: NSError?) -> ()) {
-        let getFollowing = { () -> () in
-            XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(result: result, error: nil)
-                }
-            }
-        }
-        if isLoggedInZwigglers() {
-            getFollowing()
-        } else {
-            if(FBSDKAccessToken.currentAccessToken() != nil){
-                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                    if let error = error {
-                        completionHandler(result: nil, error: error)
+    func getFollowingUsersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                if let followingUsersId = json["following"] as? [Int] {
+                    if !followingUsersId.isEmpty {
+                        let followingUsersIdString = followingUsersId.map({"\($0)"})
+                        self.getProfile(",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
+                            if let error = error {
+                                completionHandler(result: nil, error: error)
+                            } else {
+                                completionHandler(result: result, error: nil)
+                            }
+                        })
                     } else {
-                        getFollowing()
+                        completionHandler(result: [UserProfile](), error: nil)
                     }
-                })
-            }
-            
-        }
-    }
-    
-    func getFollowers(completionHandler: (result: [String: AnyObject]?, error: NSError?) -> ()) {
-        let getFollowers = { () -> () in
-            XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWERS, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
-                if let error = error {
-                    completionHandler(result: nil, error: error)
-                } else {
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(result: result, error: nil)
                 }
-            }
-        }
-        if isLoggedInZwigglers() {
-            getFollowers()
-        } else {
-            if(FBSDKAccessToken.currentAccessToken() != nil){
-                loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                    if let error = error {
-                        completionHandler(result: nil, error: error)
-                    } else {
-                        getFollowers()
-                    }
-                })
             }
         }
     }
     
-    func getProfile(usersIdSeparatedByComma usersId: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+    func getFollowersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWERS, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                if let followersId = json["followers"] as? [Int] {
+                    if !followersId.isEmpty {
+                        let followersIdString = followersId.map({"\($0)"})
+                        self.getProfile(",".join(followersIdString), completionHandler: { (result, error) -> Void in
+                            if let error = error {
+                                completionHandler(result: nil, error: error)
+                            } else {
+                                completionHandler(result: result, error: nil)
+                            }
+                        })
+                    } else {
+                        completionHandler(result: [UserProfile](), error: nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getProfile(usersId: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject("\(usersId)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_PROFILE, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                let result = Utilities.parseNSDictionaryToDictionary(response)
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                var result = [UserProfile]()
+                for userId in usersId.componentsSeparatedByString(",") {
+                    if let users = json["result"] as? Dictionary<String, AnyObject> {
+                        let userProfile = UserProfile(data: users[userId] as! NSDictionary)
+                        result.append(userProfile)
+                    }
+                }
                 completionHandler(result: result, error: nil)
             }
         }
     }
     
     func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
-        // TODO: - login facebook and may return anything indicating if it has been successful
         var loginManager = FBSDKLoginManager()
         var permissions = ["public_profile", "email", "user_birthday"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
@@ -353,5 +334,25 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
             completionHandler(responseDict: responseDict, error: error)
         })
+    }
+    
+    func login(completionHandler: (error: NSError?) -> Void) {
+        if !isLoggedInFacebook() {
+            loginFacebook({ (result, error) -> () in
+                if let error = error {
+                    completionHandler(error: error)
+                } else {
+                    if !self.isLoggedInZwigglers() {
+                        self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                            if let error = error {
+                                completionHandler(error: error)
+                            } else {
+                                completionHandler(error: nil)
+                            }
+                        })
+                    }
+                }
+            })
+        }
     }
 }

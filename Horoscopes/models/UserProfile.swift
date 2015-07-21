@@ -26,5 +26,13 @@ class UserProfile {
     init(){
         
     }
+    
+//    static func profilesFromResults(results: [NSDictionary]) -> [UserProfile] {
+//        var profiles = [UserProfile]()
+//        for result in results {
+//            profiles.append(UserProfile(data: result))
+//        }
+//        return profiles
+//    }
 
 }

@@ -27,4 +27,12 @@ class UserPost {
         self.hearts = data.objectForKey("hearts") as! Int
         self.ts = data.objectForKey("ts") as! Int
     }
+    
+    static func postsFromResults(results: [NSDictionary]) -> [UserPost] {
+        var posts = [UserPost]()
+        for result in results {
+            posts.append(UserPost(data: result))
+        }
+        return posts
+    }
 }
