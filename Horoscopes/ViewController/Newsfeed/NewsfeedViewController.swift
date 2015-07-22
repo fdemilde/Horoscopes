@@ -193,7 +193,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
             facebookBtnContainer.addSubview(label)
             self.tableView.tableHeaderView = facebookBtnContainer
-            println("self.tableView.backgroundView")
             return 0
         }
     }

@@ -11,7 +11,9 @@
 @interface UserSettings : NSObject
 @property (nonatomic) BOOL notifyOfNewHoroscope;
 @property (nonatomic) int horoscopeSign;
+@property (nonatomic) NSDate *birthday;
 
 -(void)setHoroscopeSign:(int)horoscopeSign;
+-(void)setBirthday:(NSDate *)birthday;
 
 @end

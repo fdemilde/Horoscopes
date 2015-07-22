@@ -40,7 +40,9 @@
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
-		F46098091B50D1F30026F0C9 /* Icon in Resources */ = {isa = PBXBuildFile; fileRef = F46097E51B50D1F30026F0C9 /* Icon */; };
+		F46098091B50D1F30026F0C9 /* Icon
+ in Resources */ = {isa = PBXBuildFile; fileRef = F46097E51B50D1F30026F0C9 /* Icon
+ */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
 		F460980C1B50D1F30026F0C9 /* moon_ani_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */; };
@@ -77,6 +79,8 @@
 		F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */; };
 		F460982C1B50D1F30026F0C9 /* moon_ani_12@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */; };
 		F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */; };
+		F475DAE71B5C9E9700DF47EA /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F475DAE61B5C9E9700DF47EA /* SettingsViewController.swift */; };
+		F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */; };
 		F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */; };
 		F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */; };
 		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
@@ -212,7 +216,9 @@
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
-		F46097E51B50D1F30026F0C9 /* Icon */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Icon"; sourceTree = "<group>"; };
+		F46097E51B50D1F30026F0C9 /* Icon
+ */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Icon
+"; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
 		F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@3x.png"; sourceTree = "<group>"; };
@@ -249,6 +255,8 @@
 		F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@2x.png"; sourceTree = "<group>"; };
 		F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@3x.png"; sourceTree = "<group>"; };
 		F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerViewController.swift; sourceTree = "<group>"; };
+		F475DAE61B5C9E9700DF47EA /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
+		F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
 		F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailCell.swift; sourceTree = "<group>"; };
 		F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailHeaderCell.swift; sourceTree = "<group>"; };
 		F47BAB261B204969002031AB /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
@@ -423,6 +431,7 @@
 				7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */,
 				70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */,
 				70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */,
+				F475DAE61B5C9E9700DF47EA /* SettingsViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -455,6 +464,7 @@
 				F4106B7A1B43913F00D58D92 /* NewsfeedCellNode.swift */,
 				F47B9D521B57E99000901D8C /* CollectHoroscopeDetailCell.swift */,
 				F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */,
+				F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -517,7 +527,8 @@
 		F46097E41B50D1F30026F0C9 /* moon animation */ = {
 			isa = PBXGroup;
 			children = (
-				F46097E51B50D1F30026F0C9 /* Icon */,
+				F46097E51B50D1F30026F0C9 /* Icon
+ */,
 				F46097E61B50D1F30026F0C9 /* moon_ani_01.png */,
 				F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */,
 				F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */,
@@ -1017,7 +1028,8 @@
 				F4CACA731B1EEE72003C6301 /* tabbar_profile.png in Resources */,
 				F46098281B50D1F30026F0C9 /* moon_ani_11@2x.png in Resources */,
 				F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */,
-				F46098091B50D1F30026F0C9 /* Icon in Resources */,
+				F46098091B50D1F30026F0C9 /* Icon
+ in Resources */,
 				F46098151B50D1F30026F0C9 /* moon_ani_04@3x.png in Resources */,
 				F46098211B50D1F30026F0C9 /* moon_ani_09.png in Resources */,
 				F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */,
@@ -1115,6 +1127,7 @@
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
+				F475DAE71B5C9E9700DF47EA /* SettingsViewController.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
@@ -1154,6 +1167,7 @@
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
+				F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */,

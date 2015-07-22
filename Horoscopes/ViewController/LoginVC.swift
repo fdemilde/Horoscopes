@@ -88,7 +88,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
             self.fetchUserInfo()
         } else {
             XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-                if(error == nil){ // error
+                if(error == nil && FBSDKAccessToken .currentAccessToken() != nil){ // error
                     XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
                         if(error != nil){
                             Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
@@ -100,7 +100,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
                         }
                     })
                 } else {
-                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+//                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                     Utilities.hideHUD(viewToHide: self.view)
                 }
             }
@@ -123,7 +123,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         var params = Dictionary<String,String>()
         // params["fields"] = "name,id,gender,birthday"
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-                println("FBSDKGraphRequest FBSDKGraphRequest = \(result)")
                 if(error == nil){
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String
@@ -198,7 +197,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     
     @IBAction func birthdayButtonTapped(sender: AnyObject) {
         let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
-        selectBirthdayVC.parentVC = self
+        selectBirthdayVC.setupViewController(self, type: BirthdayParentViewControllerType.LoginViewController, currentSetupBirthday: XAppDelegate.userSettings.birthday)
         var formSheet = MZFormSheetController(viewController: selectBirthdayVC)
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
         formSheet.cornerRadius = 0.0;
@@ -208,12 +207,15 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         XAppDelegate.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
-    func finishedSelectingBirthday(){
-        
+    func finishedSelectingBirthday(dateString : String){
         var signIndex = XAppDelegate.horoscopesManager.getSignIndexOfDate(birthday)
         self.wheel.autoRollToSignIndex(Int32(signIndex))
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
         birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+        XAppDelegate.userSettings.birthday = birthday
+        // TODO: sending updating Birthday is wrong, should do it later
+         XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(dateString, completionHandler: { (responseDict, error) -> Void in
+        })
     }
     
     func getBirthdayString() -> String{

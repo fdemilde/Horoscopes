@@ -11,11 +11,11 @@
 @implementation UserSettings
 @synthesize notifyOfNewHoroscope = _notifyOfNewHoroscope;
 @synthesize horoscopeSign = _horoscopeSign;
-
+@synthesize birthday = _birthday;
 
 #define KNotifyNewHoroscope @"UserSettings.notifyOfNewHoroscope"
 #define KHoroscope @"UserSettings.horoscopeSign"
-
+#define KBirthday @"UserSettings.birthday"
 
 - (BOOL)notifyOfNewHoroscope
 {
@@ -52,6 +52,24 @@
 {
     _horoscopeSign = horoscopeSign;
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:_horoscopeSign] forKey:KHoroscope];
+}
+
+- (void)setBirthday:(NSDate*)birthday
+{
+    _birthday = birthday;
+    [[NSUserDefaults standardUserDefaults] setObject:_birthday forKey:KBirthday];
+}
+
+- (NSDate *)birthday
+{
+    if(!_birthday)
+    {
+        NSNumber *obj = [[NSUserDefaults standardUserDefaults] objectForKey:KBirthday];
+        if(!obj)
+            _birthday = nil;
+        else _birthday = (NSDate *)obj;
+    }
+    return _birthday;
 }
 
 
