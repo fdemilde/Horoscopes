@@ -16,7 +16,7 @@
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
 		70F31C141B4E161A00A8B3A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */; };
-		70F31C161B4E1AD100A8B3A2 /* ProfilePostNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C151B4E1AD100A8B3A2 /* ProfilePostNode.swift */; };
+		70F31C161B4E1AD100A8B3A2 /* ProfilePostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */; };
@@ -187,7 +187,7 @@
 		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
 		70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		70F31C151B4E1AD100A8B3A2 /* ProfilePostNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePostNode.swift; sourceTree = "<group>"; };
+		70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePostCellNode.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
@@ -418,10 +418,10 @@
 			isa = PBXGroup;
 			children = (
 				70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */,
-				70F31C151B4E1AD100A8B3A2 /* ProfilePostNode.swift */,
 				7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */,
-				7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */,
 				7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */,
+				7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */,
+				70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */,
 				70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */,
 			);
 			path = Profile;
@@ -1149,7 +1149,7 @@
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
 				F4DA35C31B4E27B000B6F165 /* MyViewController.swift in Sources */,
-				70F31C161B4E1AD100A8B3A2 /* ProfilePostNode.swift in Sources */,
+				70F31C161B4E1AD100A8B3A2 /* ProfilePostCellNode.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,

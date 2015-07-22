@@ -1,5 +1,5 @@
 //
-//  ProfilePostNode.swift
+//  ProfilePostCellNode.swift
 //  Horoscopes
 //
 //  Created by Dang Doan on 7/9/15.
@@ -8,7 +8,7 @@
 
 import Foundation
 
-class ProfilePostNode: ASCellNode {
+class ProfilePostCellNode: ASCellNode {
     // MARK: Properties
     let BG_PADDING_LEFT = 30 as CGFloat
     let BG_PADDING_RIGHT = 5 as CGFloat

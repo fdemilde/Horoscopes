@@ -45,6 +45,7 @@ class ProfileFollowCellNode: ASCellNode {
     func configureUI() {
         backgroundDisplayNode = ASDisplayNode()
         backgroundDisplayNode.backgroundColor = UIColor.whiteColor()
+        backgroundDisplayNode.cornerRadius = 5
         addSubnode(backgroundDisplayNode)
         
         pictureImageNode = ASNetworkImageNode(webImage: ())
@@ -63,6 +64,7 @@ class ProfileFollowCellNode: ASCellNode {
         horoscopeSignTextNode = ASTextNode()
         let horoscopeSignAttributes = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
         horoscopeSignTextNode.attributedString = NSAttributedString(string: HoroscopesManager.sharedInstance.getHoroscopesSigns()[user.sign].sign, attributes: horoscopeSignAttributes)
+        backgroundDisplayNode.addSubnode(horoscopeSignTextNode)
     }
     
     func configureFollowerUI() {
@@ -106,8 +108,6 @@ class ProfileFollowCellNode: ASCellNode {
     }
     
     func followButtonTapped(sender: AnyObject) {
-        if let followDelegate = followDelegate {
-            followDelegate.didClickFollowButton(user.uid)
-        }
+        followDelegate!.didClickFollowButton(user.uid)
     }
 }
