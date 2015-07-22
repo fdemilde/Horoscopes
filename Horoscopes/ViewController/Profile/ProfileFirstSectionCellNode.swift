@@ -43,14 +43,12 @@ class ProfileFirstSectionCellNode: ASCellNode {
         let nameSize = nameTextNode.measure(CGSizeMake(constrainedSize.width, nameHeight))
         let horoscopeSignSize = horoscopeSignTextNode.measure(CGSizeMake(constrainedSize.width, horoscopeSignHeight))
         
-        return CGSizeMake(constrainedSize.width, signInImageSize + nameHeight + horoscopeSignHeight + padding*2)
+        return CGSizeMake(constrainedSize.width, signInImageSize + nameHeight + horoscopeSignHeight + padding)
     }
     
     override func layout() {
         signInImageNode.frame = CGRectMake(calculatedSize.width/2 - signInImageSize/2, 0, signInImageSize, signInImageSize)
         nameTextNode.frame = CGRectMake(calculatedSize.width/2 - nameTextNode.calculatedSize.width/2, signInImageSize + padding, nameTextNode.calculatedSize.width, nameHeight)
-//        println("name text node height: \(nameTextNode.calculatedSize.height)")
         horoscopeSignTextNode.frame = CGRectMake(calculatedSize.width/2 - horoscopeSignTextNode.calculatedSize.width/2, signInImageSize + nameTextNode.calculatedSize.height + padding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignHeight)
-//        println("horoscope sign text node height: \(horoscopeSignTextNode.calculatedSize.height)")
     }
 }

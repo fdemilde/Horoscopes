@@ -118,21 +118,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
         profileTableView!.showsVerticalScrollIndicator = false
-        profileTableView?.layer.cornerRadius = 5
         profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
         profileTableView!.backgroundColor = UIColor.clearColor()
-        
-//        configureSectionHeader()
-    }
-    
-    func configureSectionHeader() {
-        println("configuring section header")
-        firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectZero)
-        
-        
-        secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectZero)
-        
-        
     }
     
     // MARK: - Helper
@@ -363,10 +350,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
         if section == 0 {
-            firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, profileTableView!.bounds.origin.y, profileTableView!.bounds.size.width, 44))
+            firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, profileTableView!.bounds.origin.y, profileTableView!.bounds.size.width, 54))
             return firstSectionHeader
         } else {
-            secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, 174.5, profileTableView!.bounds.size.width, 44))
+            secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, 174.5, profileTableView!.bounds.size.width, 80))
             secondSectionHeader!.buttonDelegate = self
             return secondSectionHeader
         }
@@ -374,7 +361,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 44
+            return 54
         } else {
             return 80
         }

@@ -40,9 +40,6 @@
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
-		F46098091B50D1F30026F0C9 /* Icon
- in Resources */ = {isa = PBXBuildFile; fileRef = F46097E51B50D1F30026F0C9 /* Icon
- */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
 		F460980C1B50D1F30026F0C9 /* moon_ani_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */; };
@@ -216,9 +213,6 @@
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
-		F46097E51B50D1F30026F0C9 /* Icon
- */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "Icon
-"; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
 		F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@3x.png"; sourceTree = "<group>"; };
@@ -527,8 +521,6 @@
 		F46097E41B50D1F30026F0C9 /* moon animation */ = {
 			isa = PBXGroup;
 			children = (
-				F46097E51B50D1F30026F0C9 /* Icon
- */,
 				F46097E61B50D1F30026F0C9 /* moon_ani_01.png */,
 				F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */,
 				F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */,
@@ -1028,8 +1020,6 @@
 				F4CACA731B1EEE72003C6301 /* tabbar_profile.png in Resources */,
 				F46098281B50D1F30026F0C9 /* moon_ani_11@2x.png in Resources */,
 				F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */,
-				F46098091B50D1F30026F0C9 /* Icon
- in Resources */,
 				F46098151B50D1F30026F0C9 /* moon_ani_04@3x.png in Resources */,
 				F46098211B50D1F30026F0C9 /* moon_ani_09.png in Resources */,
 				F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */,

@@ -28,8 +28,6 @@ class ProfileSecondSectionHeaderView: UIView {
         postButton.frame = CGRectMake(0, 36, bounds.size.width / 3, buttonHeight)
         postButton.addTarget(self, action: "postButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         configureButton(postButton)
-//        postButton.backgroundColor = UIColor.redColor()
-//        backgroundColor = UIColor.blueColor()
         
         followersButton = UIButton()
         followersButton.frame = CGRectMake(bounds.size.width / 3, 36, bounds.size.width / 3, buttonHeight)
