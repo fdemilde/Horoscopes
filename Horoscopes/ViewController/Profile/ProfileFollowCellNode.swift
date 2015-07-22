@@ -25,6 +25,7 @@ class ProfileFollowCellNode: ASCellNode {
     var followerTab = false
     var followDelegate: FollowDelegate?
     
+    let tablePadding: CGFloat = 5
     let outterPadding: CGFloat = 15
     let innerPadding: CGFloat = 2
     let pictureSize: CGFloat = 30
@@ -92,17 +93,17 @@ class ProfileFollowCellNode: ASCellNode {
     }
     
     override func layout() {
-        backgroundDisplayNode.frame = CGRectMake(0, 0, calculatedSize.width, calculatedSize.height)
+        backgroundDisplayNode.frame = CGRectMake(tablePadding, 0, calculatedSize.width - tablePadding*2, calculatedSize.height)
         pictureImageNode.frame = CGRectMake(outterPadding - 2, outterPadding, pictureSize, pictureSize)
         nameTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding, nameTextNode.calculatedSize.width, nameTextNode.calculatedSize.height)
         horoscopeSignTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding + nameTextNode.calculatedSize.height + innerPadding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignTextNode.calculatedSize.height)
         if followerTab {
             if isFollowed! {
                 backgroundDisplayNode.view.addSubview(followedLabel)
-                followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width, outterPadding, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
+                followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width - tablePadding, outterPadding, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
             } else {
                 backgroundDisplayNode.view.addSubview(followButton)
-                followButton.frame = CGRectMake(calculatedSize.width - outterPadding - followButton.bounds.size.width, outterPadding, followButton.bounds.size.width, followButton.bounds.size.height)
+                followButton.frame = CGRectMake(calculatedSize.width - outterPadding - followButton.bounds.size.width - tablePadding, outterPadding, followButton.bounds.size.width, followButton.bounds.size.height)
             }
         }
     }

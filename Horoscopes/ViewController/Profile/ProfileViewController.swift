@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate {
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
     
     var facebookLoginButton: UIButton?
     var facebookLoginLabel: UILabel?
@@ -43,6 +43,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     var firstSectionHeader: ProfileFirstSectionHeaderView?
     var secondSectionHeader: ProfileSecondSectionHeaderView?
+    
+    var image: UIImage?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -59,8 +61,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
 //                println("unfollow unsuccessfully")
 //            }
 //        })
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
-        view.backgroundColor = UIColor(patternImage: image)
+        image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        view.backgroundColor = UIColor(patternImage: image!)
         
         configureProfileTableView()
         view.addSubview(profileTableView!)
@@ -74,7 +76,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     override func viewWillLayoutSubviews() {
         if profileTableView != nil {
-            profileTableView!.frame = CGRectMake(padding, 0, view.bounds.width - padding*2, view.bounds.height - tabBarHeight)
+            profileTableView!.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height - tabBarHeight)
             
         }
     }
@@ -157,7 +159,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(postButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(postButtonTitleLabel), count(title) - count(postButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(postButtonTitleLabel), count(title) - count(postButtonTitleLabel)))
                 } else {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
@@ -166,7 +168,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followersButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followersButtonTitleLabel), count(title) - count(followersButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(followersButtonTitleLabel), count(title) - count(followersButtonTitleLabel)))
                 } else {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
@@ -175,7 +177,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followingButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followingButtonTitleLabel), count(title) - count(followingButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(followingButtonTitleLabel), count(title) - count(followingButtonTitleLabel)))
                 } else {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
@@ -187,6 +189,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func login(sender: UIButton) {
+        Utilities.showHUD()
         SocialManager.sharedInstance.login { (error) -> Void in
             if let error = error {
                 // TODO: Let user try again
@@ -205,6 +208,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if isFirstDataLoad {
             loadDataInitially()
         } else {
+            resetSection()
             changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedPostDataSource = false
@@ -217,9 +221,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if isFirstDataLoad {
             loadDataInitially()
         } else if successfulFollow {
+            resetSection()
             populateIsFollowedArray()
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
+            resetSection()
             changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowersDataSource = false
@@ -232,9 +238,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if isFirstDataLoad {
             loadDataInitially()
         } else if successfulFollow {
+            resetSection()
             populateIsFollowedArray()
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
+            resetSection()
             changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followingButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowingDataSource = false
@@ -328,6 +336,28 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
+    func showFirstSection() {
+        firstSectionHeader?.addButton.alpha = 1
+        firstSectionHeader?.settingsButton.alpha = 1
+    }
+    
+    func hideSecondSection() {
+        secondSectionHeader?.backgroundColor = UIColor.clearColor()
+        secondSectionHeader?.hide()
+    }
+    
+    func showSecondSection() {
+        secondSectionHeader?.backgroundColor = UIColor(patternImage: image!)
+        secondSectionHeader?.show()
+    }
+    
+    // MARK: - Convenience
+    
+    func resetSection() {
+        showFirstSection()
+        hideSecondSection()
+    }
+    
     // MARK: Datasource and delegate
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
         return 2
@@ -408,23 +438,46 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func didTapPostButton(sender: UIButton) {
-        currentTab = .Post
-        reloadPostDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        if currentTab != .Post {
+            currentTab = .Post
+            reloadPostDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        }
     }
     
     func didTapFollowersButton(sender: UIButton) {
-        currentTab = .Followers
-        reloadFollowersDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        if currentTab != .Followers {
+            currentTab = .Followers
+            reloadFollowersDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        }
     }
     
     func didTapFollowingButton(sender: UIButton) {
-        currentTab = .Following
-        reloadFollowingDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        if currentTab != .Following {
+            currentTab = .Following
+            reloadFollowingDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        }
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let height: CGFloat = 124.5
+        let position: CGFloat = max(scrollView.contentOffset.y, 0)
+        let percent: CGFloat = min(position / height, 1)
+        firstSectionHeader?.addButton.alpha = 1 - percent
+        firstSectionHeader?.settingsButton.alpha = 1 - percent
+        
+        if scrollView.contentOffset.y >= 174.5 {
+            if secondSectionHeader?.backgroundColor == UIColor.clearColor() {
+                showSecondSection()
+            }
+        } else {
+            if secondSectionHeader?.backgroundColor != UIColor.clearColor() {
+                hideSecondSection()
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
