@@ -102,10 +102,10 @@ class ProfileFollowCellNode: ASCellNode {
         if followerTab {
             if isFollowed! {
                 backgroundDisplayNode.view.addSubview(followedLabel)
-                followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width - tablePadding, outterPadding, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
+                followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width - tablePadding, calculatedSize.height/2 - followedLabel.bounds.size.height/2, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
             } else {
                 backgroundDisplayNode.view.addSubview(followButton)
-                followButton.frame = CGRectMake(calculatedSize.width - outterPadding - followButton.bounds.size.width - tablePadding, outterPadding, followButton.bounds.size.width, followButton.bounds.size.height)
+                followButton.frame = CGRectMake(calculatedSize.width - outterPadding - followButton.bounds.size.width - tablePadding, calculatedSize.height/2 - followButton.bounds.size.height/2, followButton.bounds.size.width, followButton.bounds.size.height)
             }
         }
     }

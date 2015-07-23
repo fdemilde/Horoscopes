@@ -13,7 +13,7 @@ class ProfileFirstSectionCellNode: ASCellNode {
     var signInImageNode: ASNetworkImageNode!
     var nameTextNode: ASTextNode!
     var horoscopeSignTextNode: ASTextNode!
-    let signInImageSize: CGFloat = 80
+    let signInImageSize: CGFloat = 100
     let nameHeight: CGFloat = 16
     let horoscopeSignHeight: CGFloat = 14.5
     let padding: CGFloat = 10
