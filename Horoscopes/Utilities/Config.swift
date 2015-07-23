@@ -17,6 +17,7 @@ let REGISTER_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
 let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
 let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
+let REPORT_ISSUE_METHOD = "app.horoscopes.reportissue"
 
 // MARK: Network - Social
 let GET_USER_FEED = "app.horoscopes.feed.user"

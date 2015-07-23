@@ -23,7 +23,7 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
     // MARK: - Table view datasource and delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return 5
+        return 4
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -38,21 +38,18 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
                 cell.setupCell(SettingsType.Notification)
                 break
             case 1:
-                cell.setupCell(SettingsType.ChangeName)
-                break
-            case 2:
                 cell.setupCell(SettingsType.ChangeDOB)
                 break
-            case 3:
+            case 2:
                 cell.setupCell(SettingsType.BugsReport)
                     break
-            case 4:
+            case 3:
                 cell.setupCell(SettingsType.Logout)
                 break
             default:
                 break
         }
-        if(indexPath.row == 4){ // last row doesn't need separator
+        if(indexPath.row == 3){ // last row doesn't need separator
             cell.separator.hidden == true
         }
         return cell
@@ -63,23 +60,39 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
             case 0:
                 break
             case 1:
+                var birthdayViewController = self.setupBirthdayViewController()
+                self.displayViewController(birthdayViewController)
                 break
             case 2:
-                self.pushToViewController("MyDatePickerViewController")
+                var bugsReportViewController = self.setupBugsReportViewController()
+                self.displayViewController(bugsReportViewController)
                 break
             case 3:
-                break
-            case 4:
                 break
             default:
                 break
         }
     }
     
-    func pushToViewController(viewControllerIdentifier : String) {
-        let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier(viewControllerIdentifier) as! MyDatePickerViewController
+    func setupBirthdayViewController() -> UIViewController {
+        let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
         selectBirthdayVC.setupViewController(self, type: BirthdayParentViewControllerType.SettingsViewController, currentSetupBirthday: birthday)
-        self.navigationController?.pushViewController(selectBirthdayVC, animated: true)
+        return selectBirthdayVC
+    }
+    
+    func setupBugsReportViewController() -> UIViewController {
+        let bugsReportViewController = self.storyboard!.instantiateViewControllerWithIdentifier("BugReportViewController") as! BugReportViewController
+        return bugsReportViewController
+    }
+    
+    func displayViewController(viewController : UIViewController){
+        var formSheet = MZFormSheetController(viewController: viewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = 0.0;
+        formSheet.presentedFormSheetSize = Utilities.getScreenSize()
+        
+        XAppDelegate.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
     @IBAction func backButtonTapped(sender: AnyObject) {

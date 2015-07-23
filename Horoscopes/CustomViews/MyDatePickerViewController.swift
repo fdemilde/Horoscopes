@@ -130,6 +130,7 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
             picker.selectRow(dateArray[1], inComponent: 1, animated: false)
             selectedDayIndex = dateArray[1]
             selectedMonthIndex = dateArray[0]
+            signName.text = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
         }
         
     }
@@ -148,12 +149,7 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
     // MARK: Button actions
     
     @IBAction func cancelTapped(sender: AnyObject) {
-        if(type == BirthdayParentViewControllerType.LoginViewController){
-            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
-        } else {
-            self.navigationController!.popViewControllerAnimated(true)
-        }
-        
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
     @IBAction func saveTapped(sender: AnyObject) {
@@ -172,8 +168,11 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
             var castedParentVC = parentVC as! SettingsViewController
             castedParentVC.birthday = selectedDate
             castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-            self.navigationController!.popViewControllerAnimated(true)
+            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
+                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
+            })
         }
+        
         
         
     }

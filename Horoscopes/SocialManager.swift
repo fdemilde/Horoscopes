@@ -340,6 +340,28 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         })
     }
     
+    // MARK: Network - Report Issue
+    
+    func reportIssue(message : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
+        
+        var postData = NSMutableDictionary()
+        postData.setObject(message, forKey: "user_message")
+        var systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
+        postData.setObject(systemMessage, forKey: "system_message")
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(REPORT_ISSUE_METHOD, andPostData: postData) { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(result)
+                completionHandler(result: result, error: nil)
+            }
+        }
+        
+    }
+    
+    // MARK: Helpers
+    
     func isLoggedInFacebook() -> Bool{
         return FBSDKAccessToken .currentAccessToken() != nil
     }

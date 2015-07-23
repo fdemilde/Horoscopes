@@ -139,7 +139,7 @@ class Utilities {
     }
     
     // MARK: AlertView
-    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String){
+    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String, tag : Int? = -1){
         dispatch_async(dispatch_get_main_queue(),{
             var alertView: UIAlertView = UIAlertView()
             
@@ -147,6 +147,7 @@ class Utilities {
             alertView.title = title
             alertView.message = message
             alertView.addButtonWithTitle("OK")
+            alertView.tag = tag!
             alertView.show()
         })
     }
