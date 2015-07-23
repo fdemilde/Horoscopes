@@ -51,6 +51,8 @@ class ProfileFollowCellNode: ASCellNode {
         
         pictureImageNode = ASNetworkImageNode(webImage: ())
         pictureImageNode.URL = NSURL(string: user.imgURL)
+        pictureImageNode.cornerRadius = pictureSize / 2
+        pictureImageNode.clipsToBounds = true
         backgroundDisplayNode.addSubnode(pictureImageNode)
         
         nameTextNode = ASTextNode()

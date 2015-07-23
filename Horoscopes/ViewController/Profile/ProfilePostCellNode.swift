@@ -78,6 +78,8 @@ class ProfilePostCellNode: ASCellNode {
         // header includes profile image, user name, user share text and time passed
         profilePicture = ASNetworkImageNode(webImage: ())
         profilePicture?.URL = NSURL(string: userPost!.user!.imgURL)
+        profilePicture?.cornerRadius = PROFILE_IMAGE_WIDTH / 2
+        profilePicture?.clipsToBounds = true
         background!.addSubnode(profilePicture)
         //        userPost!.user!.name
         userNameLabelNode = ASTextNode()
