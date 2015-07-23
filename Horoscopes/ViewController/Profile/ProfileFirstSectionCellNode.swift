@@ -13,7 +13,7 @@ class ProfileFirstSectionCellNode: ASCellNode {
     var signInImageNode: ASNetworkImageNode!
     var nameTextNode: ASTextNode!
     var horoscopeSignTextNode: ASTextNode!
-    let signInImageSize: CGFloat = 80
+    let signInImageSize: CGFloat = 100
     let nameHeight: CGFloat = 16
     let horoscopeSignHeight: CGFloat = 14.5
     let padding: CGFloat = 10
@@ -22,6 +22,8 @@ class ProfileFirstSectionCellNode: ASCellNode {
         super.init()
         signInImageNode = ASNetworkImageNode(webImage: ())
         signInImageNode.URL = NSURL(string: userProfile.imgURL)
+        signInImageNode.cornerRadius = signInImageSize / 2
+        signInImageNode.clipsToBounds = true
         addSubnode(signInImageNode)
         
         nameTextNode = ASTextNode()

@@ -43,6 +43,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     var firstSectionHeader: ProfileFirstSectionHeaderView?
     var secondSectionHeader: ProfileSecondSectionHeaderView?
+    let firstSectionHeaderHeight: CGFloat = 54
+    let firstSectionCellHeight: CGFloat = 140.5
+    var secondSectionHeaderHeight: CGFloat = 80
     
     var image: UIImage?
 
@@ -64,20 +67,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         view.backgroundColor = UIColor(patternImage: image!)
         
-        configureProfileTableView()
-        view.addSubview(profileTableView!)
-        
         if SocialManager.sharedInstance.isLoggedInZwigglers() {
             getCurrentUserProfile()
         } else {
             configureLoginView()
-        }
-    }
-    
-    override func viewWillLayoutSubviews() {
-        if profileTableView != nil {
-            profileTableView!.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height - tabBarHeight)
-            
         }
     }
 
@@ -122,6 +115,14 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.showsVerticalScrollIndicator = false
         profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
         profileTableView!.backgroundColor = UIColor.clearColor()
+        profileTableView!.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height - tabBarHeight)
+    }
+    
+    func configureSectionHeaderView() {
+        firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, profileTableView!.bounds.origin.y, profileTableView!.bounds.size.width, firstSectionHeaderHeight))
+        secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, profileTableView!.bounds.size.width, secondSectionHeaderHeight), userProfile: currentUser!)
+        configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
+        secondSectionHeader!.buttonDelegate = self
     }
     
     // MARK: - Helper
@@ -140,13 +141,16 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.currentUser = result![0]
+                    self.configureProfileTableView()
+                    self.configureSectionHeaderView()
+                    self.view.addSubview(self.profileTableView!)
                     self.configureUI()
                 })
             }
         })
     }
     
-    func changeButtonTitleLabel(buttonToBeHighlighted sender: UIButton) {
+    func configureButtonTitleLabel(buttonToBeHighlighted sender: UIButton) {
         let postButton = secondSectionHeader!.postButton
         let followersButton = secondSectionHeader!.followersButton
         let followingButton = secondSectionHeader!.followingButton
@@ -209,7 +213,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             loadDataInitially()
         } else {
             resetSection()
-            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
+            configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedPostDataSource = false
             Utilities.hideHUD()
@@ -223,10 +227,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         } else if successfulFollow {
             resetSection()
             populateIsFollowedArray()
-            reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
             resetSection()
-            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
+            configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowersDataSource = false
             Utilities.hideHUD()
@@ -240,10 +243,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         } else if successfulFollow {
             resetSection()
             populateIsFollowedArray()
-            reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
             resetSection()
-            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followingButton)
+            configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followingButton)
             reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowingDataSource = false
             Utilities.hideHUD()
@@ -253,12 +255,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func loadDataInitially() {
         if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
             isFirstDataLoad = false
-            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
+            configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
             isFinishedPostDataSource = false
-            populateIsFollowedArray()
             reloadSection(0, withRowAnimation: UITableViewRowAnimation.Automatic)
-            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
-            Utilities.hideHUD()
+            populateIsFollowedArray()
         }
     }
     
@@ -328,11 +328,13 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 isFollowedArray.append(isFollowed)
             }
             if successfulFollow {
-                changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
+                configureButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
             }
             isFinishedFollowersDataSource = false
             isFinishedFollowingDataSource = false
             successfulFollow = false
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+            Utilities.hideHUD()
         }
     }
     
@@ -380,20 +382,17 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
         if section == 0 {
-            firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, profileTableView!.bounds.origin.y, profileTableView!.bounds.size.width, 54))
             return firstSectionHeader
         } else {
-            secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, 174.5, profileTableView!.bounds.size.width, 80))
-            secondSectionHeader!.buttonDelegate = self
             return secondSectionHeader
         }
     }
     
     func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            return 54
+            return firstSectionHeaderHeight
         } else {
-            return 80
+            return secondSectionHeaderHeight
         }
     }
     
@@ -441,7 +440,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if currentTab != .Post {
             currentTab = .Post
             reloadPostDataSource()
-            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+            configureButtonTitleLabel(buttonToBeHighlighted: sender)
         }
     }
     
@@ -449,7 +448,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if currentTab != .Followers {
             currentTab = .Followers
             reloadFollowersDataSource()
-            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+            configureButtonTitleLabel(buttonToBeHighlighted: sender)
         }
     }
     
@@ -457,18 +456,19 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         if currentTab != .Following {
             currentTab = .Following
             reloadFollowingDataSource()
-            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+            configureButtonTitleLabel(buttonToBeHighlighted: sender)
         }
     }
     
+    
+    
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        let height: CGFloat = 124.5
         let position: CGFloat = max(scrollView.contentOffset.y, 0)
-        let percent: CGFloat = min(position / height, 1)
+        let percent: CGFloat = min(position / firstSectionCellHeight, 1)
         firstSectionHeader?.addButton.alpha = 1 - percent
         firstSectionHeader?.settingsButton.alpha = 1 - percent
         
-        if scrollView.contentOffset.y >= 174.5 {
+        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight {
             if secondSectionHeader?.backgroundColor == UIColor.clearColor() {
                 showSecondSection()
             }
