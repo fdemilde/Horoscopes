@@ -181,6 +181,12 @@ class Utilities {
         return dateString
     }
     
+    class func getDateFromDateString(dateString : String, format : String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.dateFromString(dateString)!
+    }
+    
     class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
         label.numberOfLines = 0

@@ -96,6 +96,7 @@
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
 		F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */; };
+		F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -272,6 +273,7 @@
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
+		F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -423,13 +425,11 @@
 			children = (
 				F4B566CC1B5F487D00C91073 /* Settings */,
 				70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */,
-				70F31C151B4E1AD100A8B3A2 /* ProfileCellNode.swift */,
 				7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */,
 				7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */,
 				7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */,
 				70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */,
 				70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */,
-				F475DAE61B5C9E9700DF47EA /* SettingsViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -614,6 +614,7 @@
 		F4B566CC1B5F487D00C91073 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */,
 				F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */,
 				F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */,
 			);
@@ -1183,6 +1184,7 @@
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
 				705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */,
+				F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */,
 				7047A5AB1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift in Sources */,
 				F49EB5641B41C21E00F56092 /* CollectHoroscopesTableVC.swift in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
