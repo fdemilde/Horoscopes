@@ -8,11 +8,7 @@
 
 import UIKit
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, UIAlertViewDelegate {
-    
-    @IBOutlet weak var postButton: UIButton!
-    @IBOutlet weak var followersButton: UIButton!
-    @IBOutlet weak var followingButton: UIButton!
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
     
     var facebookLoginButton: UIButton?
     var facebookLoginLabel: UILabel?
@@ -27,20 +23,15 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         case Followers
         case Following
     }
+    var currentUser: UserProfile?
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
     var isFollowedArray = [Bool]()
     var currentTab = Tab.Post
     
-    var clearTable = false
-    
     let postButtonTitleLabel = "Post"
     let followersButtonTitleLabel = "Followers"
     let followingButtonTitleLabel = "Following"
-    
-    let postDataSourceNotification = "Finish reloading post data source"
-    let followersDataSourceNotification = "Finish reloading followers data source"
-    let followingDataSourceNotification = "Finish reloading following data source"
     
     var isFinishedPostDataSource = false
     var isFinishedFollowersDataSource = false
@@ -49,39 +40,44 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var isFirstDataLoad = true
     
     var successfulFollow = false
+    
+    var firstSectionHeader: ProfileFirstSectionHeaderView?
+    var secondSectionHeader: ProfileSecondSectionHeaderView?
+    
+    var image: UIImage?
 
-    // MARK: Lifecycle
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
-        view.backgroundColor = UIColor(patternImage: image)
+//        SocialManager.sharedInstance.unfollow(8, completionHandler: { (error) -> Void in
+//            if let error = error {
+//                println("unfollow unsuccessfully")
+//            }
+//        })
+//        SocialManager.sharedInstance.follow(3, completionHandler: { (error) -> Void in
+//            if let error = error {
+//                println("unfollow unsuccessfully")
+//            }
+//        })
+        image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        view.backgroundColor = UIColor(patternImage: image!)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingPostDataSource:", name: self.postDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowersDataSource:", name: self.followersDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingFollowingDataSource:", name: self.followingDataSourceNotification, object: nil)
-        
-        configureButtons()
         configureProfileTableView()
         view.addSubview(profileTableView!)
         
-        if SocialManager.sharedInstance.isLoggedInFacebook() {
-            configureUI()
+        if SocialManager.sharedInstance.isLoggedInZwigglers() {
+            getCurrentUserProfile()
         } else {
             configureLoginView()
         }
     }
     
-    deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.postDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followersDataSourceNotification, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: self.followingDataSourceNotification, object: nil)
-    }
-    
     override func viewWillLayoutSubviews() {
         if profileTableView != nil {
-            profileTableView!.frame = CGRectMake(padding, postButton.bounds.origin.y + postButton.bounds.height, view.frame.width - padding*2, view.bounds.height - postButton.bounds.height - tabBarHeight)
+            profileTableView!.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height - tabBarHeight)
+            
         }
     }
 
@@ -90,35 +86,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: Action
-    @IBAction func touchPostButton(sender: UIButton) {
-        resetProfileTableView()
-        changeProfileTableViewToPost()
-        currentTab = .Post
-        reloadPostDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: postButton)
-    }
-    
-    @IBAction func touchFollowersButton(sender: UIButton) {
-        resetProfileTableView()
-        changeProfileTableViewToFollow()
-        currentTab = .Followers
-        reloadFollowersDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
-    }
-    
-    @IBAction func touchFollowingButton(sender: UIButton) {
-        resetProfileTableView()
-        changeProfileTableViewToFollow()
-        currentTab = .Following
-        reloadFollowingDataSource()
-        changeButtonTitleLabel(buttonToBeHighlighted: followingButton)
-    }
-    
-    // MARK: ConfigureUI
+    // MARK: - ConfigureUI
     
     func configureUI() {
-        showButtonsAndTable()
+        profileTableView?.hidden = false
         reloadPostDataSource()
         reloadFollowersDataSource()
         reloadFollowingDataSource()
@@ -130,7 +101,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         facebookLoginButton!.setImage(facebookLoginImage, forState: UIControlState.Normal)
         facebookLoginButton!.sizeToFit()
         facebookLoginButton!.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton!.frame.width/2, view.frame.height/2 - facebookLoginButton!.frame.height/2)
-        facebookLoginButton!.addTarget(self, action: "loginFacebook:", forControlEvents: UIControlEvents.TouchUpInside)
+        facebookLoginButton!.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
         view.addSubview(facebookLoginButton!)
         facebookLoginLabel = UILabel()
         facebookLoginLabel!.text = "You need to login to Facebook\nto enjoy this feature"
@@ -142,26 +113,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         view.addSubview(facebookLoginLabel!)
     }
     
-    func configureButtons() {
-        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        postButton.titleLabel?.numberOfLines = 2
-        postButton.setTitleColor(UIColor.lightTextColor(), forState: UIControlState.Normal)
-        followersButton.titleLabel?.numberOfLines = 2
-        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followingButton.titleLabel?.numberOfLines = 2
-        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
-    }
-    
-    func showButtonsAndTable() {
-        postButton.hidden = false
-        postButton.enabled = true
-        followersButton.hidden = false
-        followersButton.enabled = true
-        followingButton.hidden = false
-        followingButton.enabled = true
-        profileTableView?.hidden = false
-    }
-    
     func configureProfileTableView() {
         profileTableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
         profileTableView?.hidden = true
@@ -169,36 +120,36 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         profileTableView!.asyncDelegate = self
         profileTableView!.showsHorizontalScrollIndicator = false
         profileTableView!.showsVerticalScrollIndicator = false
-        profileTableView?.layer.cornerRadius = 5
-        profileTableView?.layer.masksToBounds = true
-        profileTableView?.separatorColor = UIColor.lightGrayColor()
         profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
         profileTableView!.backgroundColor = UIColor.clearColor()
     }
     
-    func changeProfileTableViewToPost() {
-        if currentTab != .Post {
-            profileTableView!.separatorStyle = UITableViewCellSeparatorStyle.None
-            profileTableView!.backgroundColor = UIColor.clearColor()
-        }
+    // MARK: - Helper
+    
+    func reloadSection(section: Int, withRowAnimation: UITableViewRowAnimation) {
+        let range = NSMakeRange(section, 1)
+        let section = NSIndexSet(indexesInRange: range)
+        profileTableView?.reloadSections(section, withRowAnimation: withRowAnimation)
     }
     
-    func changeProfileTableViewToFollow() {
-        if currentTab == .Post {
-            profileTableView?.separatorStyle = UITableViewCellSeparatorStyle.SingleLine
-            profileTableView?.backgroundColor = UIColor.whiteColor()
-        }
+    func getCurrentUserProfile() {
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+            if let error = error {
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.currentUser = result![0]
+                    self.configureUI()
+                })
+            }
+        })
     }
-    
-    func resetProfileTableView() {
-        clearTable = true
-        profileTableView?.reloadData()
-        clearTable = false
-    }
-    
-    // MARK: Helper
     
     func changeButtonTitleLabel(buttonToBeHighlighted sender: UIButton) {
+        let postButton = secondSectionHeader!.postButton
+        let followersButton = secondSectionHeader!.followersButton
+        let followingButton = secondSectionHeader!.followingButton
         let buttons = [postButton, followersButton, followingButton]
         for button in buttons {
             var string = NSMutableAttributedString()
@@ -208,88 +159,92 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(postButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(postButtonTitleLabel), count(title) - count(postButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(postButtonTitleLabel), count(title) - count(postButtonTitleLabel)))
                 } else {
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
             case followersButton:
                 let title = "\(followersButtonTitleLabel)\n\(followers.count)"
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followersButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followersButtonTitleLabel), count(title) - count(followersButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(followersButtonTitleLabel), count(title) - count(followersButtonTitleLabel)))
                 } else {
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
             case followingButton:
                 let title = "\(followingButtonTitleLabel)\n\(followingUsers.count)"
                 string.appendAttributedString(NSAttributedString(string: title))
                 if button == sender {
                     string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(followingButtonTitleLabel)))
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightTextColor(), range: NSMakeRange(count(followingButtonTitleLabel), count(title) - count(followingButtonTitleLabel)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(followingButtonTitleLabel), count(title) - count(followingButtonTitleLabel)))
                 } else {
-                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkTextColor(), range: NSMakeRange(0, count(title)))
+                    string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(title)))
                 }
             default:
                 print("Unrecognized button.")
             }
             button.setAttributedTitle(string, forState: UIControlState.Normal)
-//            if button != sender {
-//                button.setTitleColor(UIColor.darkTextColor(), forState: UIControlState.Normal)
-//                //                button.setTitleColor(UIColor(red: 46/255.0, green: 52/255.0, blue: 83/255.0, alpha: 1), forState: UIControlState.Normal)
-//            }
         }
     }
     
-    func loginFacebook(sender: UIButton) {
-        SocialManager.sharedInstance.loginFacebook { (result, error) -> () in
-            if (error != nil || FBSDKAccessToken.currentAccessToken() == nil){
-                // Show alert. This has been done by the calling method.
+    func login(sender: UIButton) {
+        Utilities.showHUD()
+        SocialManager.sharedInstance.login { (error) -> Void in
+            if let error = error {
+                // TODO: Let user try again
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.facebookLoginButton?.removeFromSuperview()
                     self.facebookLoginLabel?.removeFromSuperview()
-                    self.configureUI()
+                    self.getCurrentUserProfile()
                 })
             }
         }
     }
     
-    func finishLoadingPostDataSource(notification: NSNotification) {
+    func finishLoadingPostDataSource(error: NSError?) {
         isFinishedPostDataSource = true
         if isFirstDataLoad {
             loadDataInitially()
         } else {
-            changeButtonTitleLabel(buttonToBeHighlighted: postButton)
-            profileTableView?.reloadData()
+            resetSection()
+            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedPostDataSource = false
             Utilities.hideHUD()
         }
     }
     
-    func finishLoadingFollowersDataSource(notification: NSNotification) {
+    func finishLoadingFollowersDataSource(error: NSError?) {
         isFinishedFollowersDataSource = true
         if isFirstDataLoad {
             loadDataInitially()
         } else if successfulFollow {
+            resetSection()
             populateIsFollowedArray()
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
-            changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
-            profileTableView?.reloadData()
+            resetSection()
+            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowersDataSource = false
             Utilities.hideHUD()
         }
     }
     
-    func finishLoadingFollowingDataSource(notification: NSNotification) {
+    func finishLoadingFollowingDataSource(error: NSError?) {
         isFinishedFollowingDataSource = true
         if isFirstDataLoad {
             loadDataInitially()
         } else if successfulFollow {
+            resetSection()
             populateIsFollowedArray()
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.None)
         } else {
-            changeButtonTitleLabel(buttonToBeHighlighted: followingButton)
-            profileTableView?.reloadData()
+            resetSection()
+            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followingButton)
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
             isFinishedFollowingDataSource = false
             Utilities.hideHUD()
         }
@@ -298,125 +253,65 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func loadDataInitially() {
         if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
             isFirstDataLoad = false
-            changeButtonTitleLabel(buttonToBeHighlighted: postButton)
+            changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.postButton)
             isFinishedPostDataSource = false
             populateIsFollowedArray()
+            reloadSection(0, withRowAnimation: UITableViewRowAnimation.Automatic)
+            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+            Utilities.hideHUD()
         }
     }
     
     func reloadPostDataSource() {
         Utilities.showHUD()
-        if SocialManager.sharedInstance.isLoggedInZwigglers() {
-            let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-            userPosts.removeAll(keepCapacity: false)
-            SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
-                if let error = error {
-                    NSLog("Cannot load user's posts. Error: \(error)")
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
-                    })
-                } else {
-                    let users = result!["users"] as! Dictionary<String, AnyObject>
-                    let posts = result!["posts"] as? Array<AnyObject>
-                    if let posts = result!["posts"] as? Array<AnyObject> {
-                        for post in posts {
-                            let userPost = UserPost(data: post as! NSDictionary)
-                            userPost.user = UserProfile(data: users["\(uid)"] as! NSDictionary)
-                            self.userPosts.append(userPost)
-                        }
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: self.userPosts)
-                        })
-                    }
-                }
-            })
-        } else {
-            if((FBSDKAccessToken.currentAccessToken()) != nil){
-                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                    if let error = error {
-                        NSLog("Cannot load user's posts. Error: \(error)")
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            NSNotificationCenter.defaultCenter().postNotificationName(self.postDataSourceNotification, object: nil)
-                        })
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.reloadPostDataSource()
-                        })
-                    }
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        userPosts.removeAll(keepCapacity: false)
+        SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
+            if let error = error {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.finishLoadingPostDataSource(error)
+                })
+            } else {
+                self.userPosts = result!
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.finishLoadingPostDataSource(nil)
                 })
             }
-            
-        }
+        })
     }
     
     func reloadFollowersDataSource() {
         Utilities.showHUD()
         followers.removeAll(keepCapacity: false)
-        SocialManager.sharedInstance.getFollowers({ (result, error) -> () in
+        SocialManager.sharedInstance.getFollowersProfile { (result, error) -> Void in
             if let error = error {
-                NSLog("Cannot get followers. Error: \(error)")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
+                    self.finishLoadingFollowersDataSource(error)
                 })
             } else {
-                if let followersId = result!["followers"] as? Array<Int> {
-                    let followersIdString = followersId.map({"\($0)"})
-                    SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followersIdString), completionHandler: { (result, error) -> Void in
-                        if let error = error {
-                            NSLog("Cannot get followers. Error: \(error)")
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: nil)
-                            })
-                        } else {
-                            for id in followersId {
-                                if let users = result!["result"] as? Dictionary<String, AnyObject> {
-                                    let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
-                                    self.followers.append(userProfile)
-                                }
-                            }
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followersDataSourceNotification, object: self.followers)
-                            })
-                        }
-                    })
-                }
+                self.followers = result!
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.finishLoadingFollowersDataSource(nil)
+                })
             }
-        })
+        }
     }
     
     func reloadFollowingDataSource() {
         Utilities.showHUD()
         followingUsers.removeAll(keepCapacity: false)
-        SocialManager.sharedInstance.getFollowing({ (result, error) -> () in
+        SocialManager.sharedInstance.getFollowingUsersProfile { (result, error) -> Void in
             if let error = error {
-                NSLog("Cannot get following users. Error: \(error)")
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
+                    self.finishLoadingFollowingDataSource(error)
                 })
             } else {
-                if let followingUsersId = result!["following"] as? Array<Int> {
-                    let followingUsersIdString = followingUsersId.map({"\($0)"})
-                    SocialManager.sharedInstance.getProfile(usersIdSeparatedByComma: ",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
-                        if let error = error {
-                            NSLog("Cannot get profile. Error: \(error)")
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: nil)
-                            })
-                        } else {
-                            for id in followingUsersId {
-                                if let users = result!["result"] as? Dictionary<String, AnyObject> {
-                                    let userProfile = UserProfile(data: users[String(id)] as! NSDictionary)
-                                    self.followingUsers.append(userProfile)
-                                }
-                            }
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                NSNotificationCenter.defaultCenter().postNotificationName(self.followingDataSourceNotification, object: self.followingUsers)
-                            })
-                        }
-                    })
-                }
+                self.followingUsers = result!
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.finishLoadingFollowingDataSource(nil)
+                })
             }
-        })
+        }
     }
     
     func populateIsFollowedArray() {
@@ -433,21 +328,44 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 isFollowedArray.append(isFollowed)
             }
             if successfulFollow {
-//                followingButton.setTitle("Following\n\(self.followingUsers.count)", forState: UIControlState.Normal)
-                changeButtonTitleLabel(buttonToBeHighlighted: followersButton)
+                changeButtonTitleLabel(buttonToBeHighlighted: secondSectionHeader!.followersButton)
             }
             isFinishedFollowersDataSource = false
             isFinishedFollowingDataSource = false
-            profileTableView?.reloadData()
             successfulFollow = false
-            Utilities.hideHUD()
         }
     }
     
+    func showFirstSection() {
+        firstSectionHeader?.addButton.alpha = 1
+        firstSectionHeader?.settingsButton.alpha = 1
+    }
+    
+    func hideSecondSection() {
+        secondSectionHeader?.backgroundColor = UIColor.clearColor()
+        secondSectionHeader?.hide()
+    }
+    
+    func showSecondSection() {
+        secondSectionHeader?.backgroundColor = UIColor(patternImage: image!)
+        secondSectionHeader?.show()
+    }
+    
+    // MARK: - Convenience
+    
+    func resetSection() {
+        showFirstSection()
+        hideSecondSection()
+    }
+    
     // MARK: Datasource and delegate
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return 2
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if clearTable {
-            return 0
+        if section == 0 {
+            return 1
         } else {
             switch currentTab {
             case .Followers:
@@ -460,27 +378,55 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        let cell: ProfileCellNode
-        switch currentTab {
-        case .Followers:
-            let follower = followers[indexPath.row] as UserProfile
-            cell = ProfileCellNode(follower: follower, isFollowed: isFollowedArray[indexPath.row])
-            cell.followDelegate = self
-        case .Following:
-            let followingUser = followingUsers[indexPath.row] as UserProfile
-            cell = ProfileCellNode(followingUser: followingUser)
-        default:
-            let userPost = userPosts[indexPath.row] as UserPost
-            cell = ProfileCellNode(userPost: userPost)
+    func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
+        if section == 0 {
+            firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, profileTableView!.bounds.origin.y, profileTableView!.bounds.size.width, 54))
+            return firstSectionHeader
+        } else {
+            secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(profileTableView!.bounds.origin.x, 174.5, profileTableView!.bounds.size.width, 80))
+            secondSectionHeader!.buttonDelegate = self
+            return secondSectionHeader
         }
-        return cell
+    }
+    
+    func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return 54
+        } else {
+            return 80
+        }
+    }
+    
+    func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
+        if indexPath.section == 0 {
+            if let currentUser = currentUser {
+                let cell = ProfileFirstSectionCellNode(userProfile: currentUser)
+                return cell
+            }
+            return ASCellNode()
+        } else {
+            switch currentTab {
+            case .Followers:
+                let follower = followers[indexPath.row] as UserProfile
+                let cell = ProfileFollowCellNode(user: follower, isFollowed: isFollowedArray[indexPath.row])
+                cell.followDelegate = self
+                return cell
+            case .Following:
+                let followingUser = followingUsers[indexPath.row] as UserProfile
+                let cell = ProfileFollowCellNode(user: followingUser)
+                return cell
+            default:
+                let userPost = userPosts[indexPath.row] as UserPost
+                let cell = ProfilePostCellNode(userPost: userPost)
+                return cell
+            }
+        }
     }
     
     func didClickFollowButton(uid: Int) {
-        SocialManager.sharedInstance.follow(userWithId: uid) { (result, error) -> Void in
+        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
             if let error = error {
-                Utilities.showAlertView(self, title: "Error", message: "Cannot follow due to error \(error)")
+                
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.successfulFollow = true
@@ -488,9 +434,50 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                     self.reloadFollowingDataSource()
                 })
             }
+        })
+    }
+    
+    func didTapPostButton(sender: UIButton) {
+        if currentTab != .Post {
+            currentTab = .Post
+            reloadPostDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
         }
     }
     
+    func didTapFollowersButton(sender: UIButton) {
+        if currentTab != .Followers {
+            currentTab = .Followers
+            reloadFollowersDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        }
+    }
+    
+    func didTapFollowingButton(sender: UIButton) {
+        if currentTab != .Following {
+            currentTab = .Following
+            reloadFollowingDataSource()
+            changeButtonTitleLabel(buttonToBeHighlighted: sender)
+        }
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let height: CGFloat = 124.5
+        let position: CGFloat = max(scrollView.contentOffset.y, 0)
+        let percent: CGFloat = min(position / height, 1)
+        firstSectionHeader?.addButton.alpha = 1 - percent
+        firstSectionHeader?.settingsButton.alpha = 1 - percent
+        
+        if scrollView.contentOffset.y >= 174.5 {
+            if secondSectionHeader?.backgroundColor == UIColor.clearColor() {
+                showSecondSection()
+            }
+        } else {
+            if secondSectionHeader?.backgroundColor != UIColor.clearColor() {
+                hideSecondSection()
+            }
+        }
+    }
 
     /*
     // MARK: - Navigation
