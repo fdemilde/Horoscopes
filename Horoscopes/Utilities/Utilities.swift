@@ -139,7 +139,7 @@ class Utilities {
     }
     
     // MARK: AlertView
-    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String){
+    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String, tag : Int? = -1){
         dispatch_async(dispatch_get_main_queue(),{
             var alertView: UIAlertView = UIAlertView()
             
@@ -147,6 +147,7 @@ class Utilities {
             alertView.title = title
             alertView.message = message
             alertView.addButtonWithTitle("OK")
+            alertView.tag = tag!
             alertView.show()
         })
     }
@@ -178,6 +179,12 @@ class Utilities {
         var date = NSDate(timeIntervalSince1970:ts)
         var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
+    }
+    
+    class func getDateFromDateString(dateString : String, format : String) -> NSDate {
+        var dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.dateFromString(dateString)!
     }
     
     class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {

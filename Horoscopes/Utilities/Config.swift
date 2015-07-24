@@ -17,6 +17,7 @@ let REGISTER_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
 let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
 let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
+let REPORT_ISSUE_METHOD = "app.horoscopes.reportissue"
 
 // MARK: Network - Social
 let GET_USER_FEED = "app.horoscopes.feed.user"
@@ -70,6 +71,12 @@ let defaultIDFAEventKey             = "IDFA"
 let kAnalyticsAccountId = "UA-27398873-10"
 let FACEBOOK_APP_ID = "333713683461"
 let ADMOD_ID = "ca-app-pub-3099085126740540/3213172514"
+
+// MARK: Settings
+let NOTIFICATION_SETTING_DATE_FORMAT = "hh:mm a"
+let NOTIFICATION_SETTING_DEFAULT_TIME = "08:00 AM"
+
+// MARK: Enum Type
 
 enum DailyHoroscopeType {
     case TodayHoroscope
