@@ -42,6 +42,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var isFinishedFollowingDataSource = false
     var isFirstDataLoad = true
     var successfulFollow = false
+    
+    var temporarySecondSectionHeaderView: ProfileSecondSectionHeaderView?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -307,18 +309,53 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func hideSecondSection() {
         if let var headerView = tableView?.viewWithTag(SECOND_HEADER_VIEW_TAG) as? ProfileSecondSectionHeaderView {
-            if headerView.backgroundColor != UIColor.clearColor() {
-                headerView.backgroundColor = UIColor.clearColor()
-                headerView.hide()
+            if !headerView.hidden {
+                headerView.hidden = true
             }
         }
     }
     
     func showSecondSection() {
         if let var headerView = tableView?.viewWithTag(SECOND_HEADER_VIEW_TAG) as? ProfileSecondSectionHeaderView {
-            if headerView.backgroundColor == UIColor.clearColor() {
-                headerView.backgroundColor = UIColor(patternImage: backgroundImage!)
-                headerView.show()
+            if headerView.hidden {
+                headerView.hidden = false
+            }
+        }
+    }
+    
+    func addTempSecondSection() {
+        if temporarySecondSectionHeaderView == nil {
+            temporarySecondSectionHeaderView = ProfileSecondSectionHeaderView(frame: CGRectMake(0, 0, tableView!.bounds.size.width, secondSectionHeaderHeight), userProfile: currentUser!, parentViewController: self)
+            temporarySecondSectionHeaderView?.buttonDelegate = self
+            temporarySecondSectionHeaderView?.backgroundColor = UIColor(patternImage: backgroundImage!)
+            temporarySecondSectionHeaderView?.show()
+            view.addSubview(temporarySecondSectionHeaderView!)
+        }
+    }
+    
+    func removeTempSecondSection() {
+        if temporarySecondSectionHeaderView != nil {
+            temporarySecondSectionHeaderView!.removeFromSuperview()
+            temporarySecondSectionHeaderView = nil
+        }
+    }
+    
+    func hideTempSecondSection() {
+        if let headerView = temporarySecondSectionHeaderView {
+            if headerView.frame.origin.y == 0 {
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    headerView.frame.origin.y -= self.secondSectionHeaderHeight
+                })
+            }
+        }
+    }
+    
+    func showTempSecondSection() {
+        if let headerView = temporarySecondSectionHeaderView {
+            if headerView.frame.origin.y != 0 {
+                UIView.animateWithDuration(0.5, animations: { () -> Void in
+                    headerView.frame.origin.y = 0
+                })
             }
         }
     }
@@ -327,7 +364,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func resetSection() {
         showFirstSection()
-        hideSecondSection()
+        showSecondSection()
+        removeTempSecondSection()
     }
     
     func reloadData() {
@@ -451,9 +489,17 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
         
         if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight {
-            showSecondSection()
-        } else {
             hideSecondSection()
+            addTempSecondSection()
+        } else {
+            showSecondSection()
+            removeTempSecondSection()
+        }
+        
+        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight + secondSectionHeaderHeight {
+            hideTempSecondSection()
+        } else {
+            showTempSecondSection()
         }
     }
 

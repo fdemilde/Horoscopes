@@ -14,6 +14,7 @@
 		7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */; };
 		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
+		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
 		70F31C141B4E161A00A8B3A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */; };
 		70F31C161B4E1AD100A8B3A2 /* ProfilePostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */; };
@@ -188,6 +189,7 @@
 		7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSecondSectionHeaderView.swift; sourceTree = "<group>"; };
 		705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		70A4E2771B623F5100711B4F /* ApplicationColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationColor.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
 		70F31C131B4E161A00A8B3A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePostCellNode.swift; sourceTree = "<group>"; };
@@ -655,6 +657,7 @@
 				F47BAB271B205617002031AB /* HoroscopesManager.swift */,
 				F49FAE481B4290E500F38E0C /* SocialManager.swift */,
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
+				70A4E2771B623F5100711B4F /* ApplicationColor.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F42E28931B37D14100466CAA /* Images */,
 				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
@@ -1126,6 +1129,7 @@
 				7047A5A91B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
+				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
 				F4106B7B1B43913F00D58D92 /* NewsfeedCellNode.swift in Sources */,
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,

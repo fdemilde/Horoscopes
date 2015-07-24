@@ -42,6 +42,7 @@ class ProfilePostCellNode: ASCellNode {
     var heartImageView : ASImageNode?
     var shareImageView : ASImageNode?
     var shareButton : UIButton?
+    let imageColor = UIColor(red: 185, green: 191, blue: 234, alpha: 1)
     
     var userPost : UserPost?
     
@@ -77,9 +78,10 @@ class ProfilePostCellNode: ASCellNode {
     func createFeedHeader(){
         // header includes profile image, user name, user share text and time passed
         profilePicture = ASNetworkImageNode(webImage: ())
-        profilePicture?.URL = NSURL(string: userPost!.user!.imgURL)
         profilePicture?.cornerRadius = PROFILE_IMAGE_WIDTH / 2
         profilePicture?.clipsToBounds = true
+        profilePicture?.backgroundColor = UIColor.profileImagePurpleColor()
+        profilePicture?.URL = NSURL(string: userPost!.user!.imgURL)
         background!.addSubnode(profilePicture)
         //        userPost!.user!.name
         userNameLabelNode = ASTextNode()
