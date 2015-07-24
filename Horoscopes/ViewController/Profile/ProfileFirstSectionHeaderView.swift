@@ -33,7 +33,13 @@ class ProfileFirstSectionHeaderView: UIView {
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
+    // MARK: Helpers
+    func show() {
+        self.addButton.alpha = 1
+        self.settingsButton.alpha = 1
+    }
+    
     /*
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.

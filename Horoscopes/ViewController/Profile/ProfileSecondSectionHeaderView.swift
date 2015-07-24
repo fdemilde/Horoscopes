@@ -28,9 +28,15 @@ class ProfileSecondSectionHeaderView: UIView {
     let padding: CGFloat = 3
     let pictureSize: CGFloat = 30
     var buttonDelegate: ButtonDelegate?
+    var parentViewController: ProfileViewController!
+    let postButtonTitleLabel = "Post"
+    let followersButtonTitleLabel = "Followers"
+    let followingButtonTitleLabel = "Following"
     
-    init(frame: CGRect, userProfile: UserProfile) {
+    init(frame: CGRect, userProfile: UserProfile, parentViewController: ProfileViewController) {
         super.init(frame: frame)
+        self.parentViewController = parentViewController
+        
         postButton = UIButton()
         postButton.frame = CGRectMake(0, 36, bounds.size.width / 3, buttonHeight)
         postButton.addTarget(self, action: "postButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -45,6 +51,8 @@ class ProfileSecondSectionHeaderView: UIView {
         followingButton.frame = CGRectMake(bounds.size.width / 3 * 2, 36, bounds.size.width / 3, buttonHeight)
         followingButton.addTarget(self, action: "followingButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         configureButton(followingButton)
+        
+        configureButtonTitleLabel()
         
         signInImageView = UIImageView()
         let url = NSURL(string: userProfile.imgURL)
@@ -106,6 +114,49 @@ class ProfileSecondSectionHeaderView: UIView {
         button.titleLabel?.textAlignment = NSTextAlignment.Center
         button.titleLabel?.numberOfLines = 2
         addSubview(button)
+    }
+    
+    func configureButtonTitleLabel() {
+        switch parentViewController.currentTab {
+        case .Post:
+            reloadButtonTitleLabel(postButton)
+        case .Followers:
+            reloadButtonTitleLabel(followersButton)
+        case .Following:
+            reloadButtonTitleLabel(followingButton)
+        }
+    }
+    
+    func reloadButtonTitleLabel(highlightedButton: UIButton) {
+        let buttons = [postButton, followersButton, followingButton]
+        for button in buttons {
+            var string = NSMutableAttributedString()
+            var title: String
+            var number: Int
+            switch button {
+            case postButton:
+                title = postButtonTitleLabel
+                number = parentViewController.userPosts.count
+            case followersButton:
+                title = followersButtonTitleLabel
+                number = parentViewController.followers.count
+            case followingButton:
+                title = followingButtonTitleLabel
+                number = parentViewController.followingUsers.count
+            default:
+                title = ""
+                number = 0
+            }
+            let fullTitle = "\(title)\n\(number)"
+            string.appendAttributedString(NSAttributedString(string: fullTitle))
+            if button == highlightedButton {
+                string.addAttribute(NSForegroundColorAttributeName, value: UIColor.whiteColor(), range: NSMakeRange(0, count(title)))
+                string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1), range: NSMakeRange(count(title), count(fullTitle) - count(title)))
+            } else {
+                string.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 68/255.0, green: 66/255.0, blue: 96/255.0, alpha: 1), range: NSMakeRange(0, count(fullTitle)))
+            }
+            button.setAttributedTitle(string, forState: UIControlState.Normal)
+        }
     }
     
     func hide() {
