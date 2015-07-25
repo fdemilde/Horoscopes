@@ -21,9 +21,10 @@ class ProfileFirstSectionCellNode: ASCellNode {
     init(userProfile: UserProfile) {
         super.init()
         signInImageNode = ASNetworkImageNode(webImage: ())
-        signInImageNode.URL = NSURL(string: userProfile.imgURL)
         signInImageNode.cornerRadius = signInImageSize / 2
         signInImageNode.clipsToBounds = true
+        signInImageNode.backgroundColor = UIColor.profileImagePurpleColor()
+        signInImageNode.URL = NSURL(string: userProfile.imgURL)
         addSubnode(signInImageNode)
         
         nameTextNode = ASTextNode()

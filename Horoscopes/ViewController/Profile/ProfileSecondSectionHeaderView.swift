@@ -55,6 +55,9 @@ class ProfileSecondSectionHeaderView: UIView {
         configureButtonTitleLabel()
         
         signInImageView = UIImageView()
+        signInImageView.layer.cornerRadius = self.pictureSize / 2
+        signInImageView.clipsToBounds = true
+        signInImageView.backgroundColor = UIColor.profileImagePurpleColor()
         let url = NSURL(string: userProfile.imgURL)
         let request = NSURLRequest(URL: url!)
         let session = NSURLSession.sharedSession()
@@ -66,8 +69,6 @@ class ProfileSecondSectionHeaderView: UIView {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.signInImageView.image = image
                     self.signInImageView.sizeToFit()
-                    self.signInImageView.layer.cornerRadius = self.pictureSize / 2
-                    self.signInImageView.clipsToBounds = true
                 })
             }
         })
