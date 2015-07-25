@@ -13,4 +13,5 @@ target 'Horoscopes' do
     pod 'AsyncDisplayKit'
     pod 'WebASDKImageManager'
     pod 'Google-Mobile-Ads-SDK', '~> 7.0'
+    pod 'AFNetworking', '~> 2.0'
 end

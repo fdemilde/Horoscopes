@@ -341,6 +341,22 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         
     }
     
+    func sendUserUpdateLocation(location : String?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
+        
+        var postData = NSMutableDictionary()
+        postData.setObject(location!, forKey: "location_result")
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(result)
+                completionHandler(result: result, error: nil)
+            }
+        })
+        
+    }
+    
     // MARK: Helpers
     
     func isLoggedInFacebook() -> Bool{
@@ -369,6 +385,8 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                             if let error = error {
                                 completionHandler(error: error)
                             } else {
+                                println("Social Manager Following setupLocationService ")
+                                XAppDelegate.locationManager.setupLocationService()
                                 completionHandler(error: nil)
                             }
                         })

@@ -95,7 +95,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
                             Utilities.hideHUD(viewToHide: self.view)
                         } else {
                             dispatch_async(dispatch_get_main_queue(),{
+                                println("login VC setupLocationService ")
+                                XAppDelegate.locationManager.setupLocationService()
                                 self.fetchUserInfo()
+                                
                             })
                         }
                     })

@@ -97,6 +97,8 @@
 		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
 		F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */; };
 		F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */; };
+		F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */; };
+		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -166,6 +168,7 @@
 		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
+		F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */; };
 		F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -274,6 +277,9 @@
 		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
+		F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
+		F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
+		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -378,6 +384,7 @@
 		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
+		F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -567,6 +574,9 @@
 		F47BAB291B216050002031AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */,
+				F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */,
+				F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */,
 				F47BAB2A1B21605C002031AB /* Config.swift */,
 				F47C029C1B258B9B00C0BA83 /* Utilities.swift */,
 			);
@@ -652,6 +662,7 @@
 				F41E80C31B340D8B00C2DA95 /* TableViewCell */,
 				F41E80C81B340DAE00C2DA95 /* CustomViews */,
 				F47C029E1B2691A700C0BA83 /* ViewController */,
+				F4BF7B421B623D0400E3A491 /* LocationManager.swift */,
 				F47BAB271B205617002031AB /* HoroscopesManager.swift */,
 				F49FAE481B4290E500F38E0C /* SocialManager.swift */,
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
@@ -1125,12 +1136,14 @@
 				705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */,
 				7047A5A91B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
+				F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				F4106B7B1B43913F00D58D92 /* NewsfeedCellNode.swift in Sources */,
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
+				F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
@@ -1167,6 +1180,7 @@
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
 				F4DA35C31B4E27B000B6F165 /* MyViewController.swift in Sources */,
+				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				70F31C161B4E1AD100A8B3A2 /* ProfilePostCellNode.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,

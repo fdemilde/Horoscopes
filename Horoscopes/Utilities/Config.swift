@@ -18,6 +18,7 @@ let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
 let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
 let REPORT_ISSUE_METHOD = "app.horoscopes.reportissue"
+let SEND_USER_UPDATE = "app.horoscopes.profile.update"
 
 // MARK: Network - Social
 let GET_USER_FEED = "app.horoscopes.feed.user"
@@ -75,6 +76,9 @@ let ADMOD_ID = "ca-app-pub-3099085126740540/3213172514"
 // MARK: Settings
 let NOTIFICATION_SETTING_DATE_FORMAT = "hh:mm a"
 let NOTIFICATION_SETTING_DEFAULT_TIME = "08:00 AM"
+
+// MARK: Location
+let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng="
 
 // MARK: Enum Type
 

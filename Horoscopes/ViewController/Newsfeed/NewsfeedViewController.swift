@@ -222,6 +222,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                 Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                 Utilities.hideHUD()
             } else {
+                println("Newsfeed setupLocationService ")
+                XAppDelegate.locationManager.setupLocationService()
                     XAppDelegate.socialManager.getFollowingNewsfeed(0)
             }
         })
@@ -238,6 +240,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                         Utilities.hideHUD()
                     } else {
                         dispatch_async(dispatch_get_main_queue(),{
+                            println("Newsfeed Following setupLocationService ")
+                            XAppDelegate.locationManager.setupLocationService()
                             XAppDelegate.socialManager.getFollowingNewsfeed(0)
                         })
                     }

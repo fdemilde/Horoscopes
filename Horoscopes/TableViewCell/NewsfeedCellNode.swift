@@ -37,7 +37,7 @@ class NewsfeedCellNode : ASCellNode {
     var profilePicture : ASNetworkImageNode?
     var userNameLabelNode : ASTextNode?
     var feedTypeLabelNode : ASTextNode?
-    var timePassedLabelNode : ASTextNode?
+    var userDescLabelNode : ASTextNode?
     var feedDescriptionLabelNode : ASTextNode?
     var heartNumberLabelNode : ASTextNode?
     var separator : ASDisplayNode?
@@ -94,10 +94,10 @@ class NewsfeedCellNode : ASCellNode {
         userNameLabelNode?.attributedString = attString
         background!.addSubnode(userNameLabelNode)
         
-        timePassedLabelNode = ASTextNode()
+        userDescLabelNode = ASTextNode()
         let timeDict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
-        timePassedLabelNode?.attributedString = NSAttributedString(string: self.getTimePassedString(), attributes: timeDict)
-        background!.addSubnode(timePassedLabelNode)
+        userDescLabelNode?.attributedString = NSAttributedString(string: self.getUserDescString(), attributes: timeDict)
+        background!.addSubnode(userDescLabelNode)
         
     }
     
@@ -166,7 +166,7 @@ class NewsfeedCellNode : ASCellNode {
         
         var userNameLabelNodeLabelSize = CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 - PROFILE_IMAGE_WIDTH - TYPE_IMAGE_PADDING_LEFT * 2, CGFloat(FLT_MAX))
         userNameLabelNode?.measure(userNameLabelNodeLabelSize)
-        timePassedLabelNode?.measure(constrainedSize)
+        userDescLabelNode?.measure(constrainedSize)
         
         feedDescriptionLabelNode?.measure(feedDescriptionLabelSize)
         
@@ -193,7 +193,7 @@ class NewsfeedCellNode : ASCellNode {
         
         self.userNameLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, 12, userNameLabelNode!.calculatedSize.width, userNameLabelNode!.calculatedSize.height)
         
-        self.timePassedLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,timePassedLabelNode!.calculatedSize.width, timePassedLabelNode!.calculatedSize.height)
+        self.userDescLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,userDescLabelNode!.calculatedSize.width, userDescLabelNode!.calculatedSize.height)
         
         self.feedDescriptionLabelNode!.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.profilePicture!.frame.origin.y + PROFILE_IMAGE_HEIGHT + 20, feedDescriptionLabelNode!.calculatedSize.width, feedDescriptionLabelNode!.calculatedSize.height)
         
@@ -219,7 +219,6 @@ class NewsfeedCellNode : ASCellNode {
     
     func shareTapped(){
         var parentVC = Utilities.getParentUIViewController(self.view) as! UIViewController
-        print("VC Class = \(NSStringFromClass(parentVC.classForCoder))")
         var shareVC = self.prepareShareVC()
         var formSheet = MZFormSheetController(viewController: shareVC)
         formSheet.shouldDismissOnBackgroundViewTap = true
@@ -271,8 +270,75 @@ class NewsfeedCellNode : ASCellNode {
         }
     }
     
-    func getTimePassedString() -> String {
-        var timePassSecond = Int(NSDate().timeIntervalSince1970) - userPost!.ts
-        return String(format: "%d mins ago", timePassSecond/60)
+    func getUserDescString() -> String {
+        var result = ""
+        var signName = getSignName()
+        var timePassed = getTimePassedString()
+        var location = getLocation()
+        if(signName != ""){
+            result.extend(String(format: "%@ \u{00B7} ", signName))
+        }
+        if(timePassed != ""){
+            result.extend(String(format: "%@ \u{00B7} ", timePassed))
+        }
+        // TODO: Location is now hardcoded
+        if(location != ""){
+            result.extend(String(format: "%@ ", "Viet Nam"))
+        } else { // remove last 2 character
+            result = result.substringToIndex(advance(result.startIndex, count(result) - 2))
+        }
+        return result
     }
+    
+    func getTimePassedString() -> String {
+        var result = ""
+        if let ts = userPost?.ts {
+            var timePassSecond = Int(NSDate().timeIntervalSince1970) - userPost!.ts
+            // if time passed more than 2 days, show the date
+            var dateFormatter = NSDateFormatter()
+            var date = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
+            if(timePassSecond / (3600 * 24) >= 2){
+                dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
+                result =  dateFormatter.stringFromDate(date)
+            } else if (timePassSecond / (3600 * 24) >= 1){
+                dateFormatter.dateFormat = "Yesterday hh:mm a"
+                result =  dateFormatter.stringFromDate(date)
+            } else {
+                var timePassedMinute = timePassSecond/60 as Int
+                if(timePassedMinute >= 60){
+                    var timePassHour = timePassedMinute / 60 as Int
+                    var remainingMinute = timePassedMinute % 60 as Int
+                    var hourString = (timePassHour == 1) ? "hour" : "hours"
+                    
+                    if(remainingMinute != 0){
+                        var minuteString = (remainingMinute == 1) ? "minute" : "minutes"
+                        result = String(format:"%d %@ %d %@",timePassHour,hourString,remainingMinute,minuteString)
+                    } else {
+                        result = String(format:"%d %@",timePassHour,hourString)
+                    }
+                } else if (timePassedMinute >= 1){
+                    var minuteString = (timePassedMinute == 1) ? "minute" : "minutes"
+                    result = String(format:"%d %@",timePassedMinute,minuteString)
+                } else {
+                    var secondString = (timePassSecond == 1) ? "second" : "seconds"
+                    result = String(format:"%d %@",timePassSecond,secondString)
+                }
+            }
+        }
+        
+        
+        return result
+    }
+    
+    func getSignName() -> String {
+        if(userPost?.user?.sign != 0){
+            return Utilities.getHoroscopeNameWithIndex(userPost!.user!.sign)
+        }
+        return ""
+    }
+    
+    func getLocation()-> String{
+        return userPost!.user!.location
+    }
+    
 }
