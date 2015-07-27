@@ -44,6 +44,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var successfulFollow = false
     
     var temporarySecondSectionHeaderView: ProfileSecondSectionHeaderView?
+    var previousScrollViewYOffset: CGFloat = 0
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
@@ -131,10 +132,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func reloadSection(section: Int, withRowAnimation: UITableViewRowAnimation) {
+    func reloadSection(section: Int) {
         let range = NSMakeRange(section, 1)
         let section = NSIndexSet(indexesInRange: range)
-        tableView?.reloadSections(section, withRowAnimation: withRowAnimation)
+        tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
     func getCurrentUserProfile() {
@@ -295,7 +296,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             if successfulFollow {
                 reloadButton()
             }
-            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+            reloadSection(1)
             isFinishedFollowersDataSource = false
             isFinishedFollowingDataSource = false
             successfulFollow = false
@@ -373,7 +374,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func reloadData() {
         resetSection()
         reloadButton()
-        reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+        reloadSection(1)
         Utilities.hideHUD()
     }
     
@@ -500,10 +501,15 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
         
         if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight + secondSectionHeaderHeight {
-            hideTempSecondSection()
+            if scrollView.contentOffset.y > previousScrollViewYOffset {
+                hideTempSecondSection()
+            } else {
+                showTempSecondSection()
+            }
         } else {
             showTempSecondSection()
         }
+        previousScrollViewYOffset = scrollView.contentOffset.y
     }
 
     /*
