@@ -96,6 +96,7 @@ class ProfileSecondSectionHeaderView: UIView {
         
         settingsButton = UIButton()
         settingsButton.setImage(UIImage(named: "settings_btn_small"), forState: UIControlState.Normal)
+        settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
         settingsButton.sizeToFit()
         addSubview(settingsButton)
         
@@ -194,6 +195,17 @@ class ProfileSecondSectionHeaderView: UIView {
     
     func followingButtonTapped(sender: UIButton) {
         buttonDelegate?.didTapFollowingButton(followingButton)
+    }
+    
+    func settingsButtonTapped(){
+        let settingViewController = parentViewController.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        var formSheet = MZFormSheetController(viewController: settingViewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = 0.0;
+        formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
+        let tabBarVC = self.window?.rootViewController as! UITabBarController
+        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
 
     /*

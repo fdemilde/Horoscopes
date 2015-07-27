@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class SettingsViewController: MyViewController, UITableViewDataSource, UITableViewDelegate {
+class SettingsViewController: MyViewController, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var birthday : NSDate!
@@ -78,6 +78,7 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
                 self.displayViewController(bugsReportViewController)
                 break
             case 3:
+//                showLogoutAlertView()
                 break
             default:
                 break
@@ -106,13 +107,15 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
     // MARK: Button action
     
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()
         self.saveBirthdaySetting()
-        self.navigationController?.popViewControllerAnimated(true)
+        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: save changes
@@ -121,6 +124,12 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
             XAppDelegate.userSettings.birthday = self.birthday
             if(self.birthdayString != nil){
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
+                    if(error == nil){
+                        XAppDelegate.userSettings.horoscopeSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
+                        let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
+                        customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+                        customTabBarController.reload()
+                    }
                 })
             }
             
@@ -230,5 +239,31 @@ class SettingsViewController: MyViewController, UITableViewDataSource, UITableVi
     
     func sendSetNotificationTracker(label: String){
         XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+    }
+    
+    func showLogoutAlertView(){
+        dispatch_async(dispatch_get_main_queue(),{
+            var alertView: UIAlertView = UIAlertView()
+            alertView.delegate = self
+            alertView.title = "Log Out"
+            alertView.message = "Are you sure you want to log out?"
+            alertView.addButtonWithTitle("Yes")
+            alertView.addButtonWithTitle("Cancel")
+            alertView.show()
+        })
+    }
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+        switch buttonIndex{
+        case 0:
+            println("YES")
+            let loginManager = FBSDKLoginManager()
+            loginManager.logOut()
+        case 1:
+            println("NO")
+        default:
+            println("ERROR")
+        }
+        
     }
 }

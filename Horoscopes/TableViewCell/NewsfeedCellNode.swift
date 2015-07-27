@@ -299,6 +299,7 @@ class NewsfeedCellNode : ASCellNode {
             var date = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
             if(timePassSecond / (3600 * 24) >= 2){
                 dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
+                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
                 result =  dateFormatter.stringFromDate(date)
             } else if (timePassSecond / (3600 * 24) >= 1){
                 dateFormatter.dateFormat = "Yesterday hh:mm a"

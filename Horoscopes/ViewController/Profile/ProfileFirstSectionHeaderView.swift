@@ -14,6 +14,7 @@ class ProfileFirstSectionHeaderView: UIView {
     var settingsButton: UIButton!
     let margin: CGFloat = 10
     let buttonHeight: CGFloat = 44
+    var parentVC : ProfileViewController!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,6 +28,7 @@ class ProfileFirstSectionHeaderView: UIView {
         settingsButton.setImage(UIImage(named: "settings_btn"), forState: UIControlState.Normal)
         settingsButton.sizeToFit()
         settingsButton.frame = CGRectMake(bounds.size.width - settingsButton.bounds.size.width - margin, margin, settingsButton.bounds.size.width, buttonHeight)
+        settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
         addSubview(settingsButton)
     }
 
@@ -39,6 +41,20 @@ class ProfileFirstSectionHeaderView: UIView {
         self.addButton.alpha = 1
         self.settingsButton.alpha = 1
     }
+    
+    // MARK: Buttons action
+    func settingsButtonTapped(){
+        let settingViewController = parentVC.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        var formSheet = MZFormSheetController(viewController: settingViewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = 0.0;
+        formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
+        let tabBarVC = self.window?.rootViewController as! UITabBarController
+        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    
     
     /*
     // Only override drawRect: if you perform custom drawing.

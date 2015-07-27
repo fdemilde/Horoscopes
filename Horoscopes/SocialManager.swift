@@ -283,15 +283,18 @@ class SocialManager : NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                let json = Utilities.parseNSDictionaryToDictionary(response)
-                var result = [UserProfile]()
-                for userId in usersId.componentsSeparatedByString(",") {
-                    if let users = json["result"] as? Dictionary<String, AnyObject> {
-                        let userProfile = UserProfile(data: users[userId] as! NSDictionary)
-                        result.append(userProfile)
+                if(response != nil){
+                    let json = Utilities.parseNSDictionaryToDictionary(response)
+                    var result = [UserProfile]()
+                    for userId in usersId.componentsSeparatedByString(",") {
+                        if let users = json["result"] as? Dictionary<String, AnyObject> {
+                            let userProfile = UserProfile(data: users[userId] as! NSDictionary)
+                            result.append(userProfile)
+                        }
                     }
+                    completionHandler(result: result, error: nil)
                 }
-                completionHandler(result: result, error: nil)
+                
             }
         }
     }

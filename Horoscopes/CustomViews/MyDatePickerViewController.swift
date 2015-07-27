@@ -107,17 +107,22 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
     
     func changeSignNameLabel(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MM"
+        dateFormatter.dateFormat = "dd-MMMM"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         var dateString = String(format:"%@-%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
+        var todayString = dateFormatter.stringFromDate(NSDate())
         var selectedDate = dateFormatter.dateFromString(dateString)
-        var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(selectedDate!)
-        self.signName.text = signName
         
-        self.signName.alpha = 0
-        UILabel.beginAnimations("Fade-in", context: nil)
-        UILabel.setAnimationDuration(0.6)
-        self.signName.alpha = 1
-        UILabel.commitAnimations()
+        var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(selectedDate!)
+        if(self.signName.text != signName){
+            self.signName.text = signName
+            
+            self.signName.alpha = 0
+            UILabel.beginAnimations("Fade-in", context: nil)
+            UILabel.setAnimationDuration(0.6)
+            self.signName.alpha = 1
+            UILabel.commitAnimations()
+        }
     }
     
     func setCurrentBirthdaySign(){
@@ -139,6 +144,7 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
     func getMonthAndDayIndexByDate(date : NSDate) -> [Int]{
         var dateArray = [Int]()
         let dateFormatter: NSDateFormatter = NSDateFormatter()
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.dateFormat = "M"
         dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
         dateFormatter.dateFormat = "d"
@@ -155,6 +161,7 @@ class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIP
     @IBAction func saveTapped(sender: AnyObject) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
         var selectedDate = dateFormatter.dateFromString(dateString)
         var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)

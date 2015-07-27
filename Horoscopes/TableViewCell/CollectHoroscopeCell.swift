@@ -22,6 +22,7 @@ class CollectHoroscopeCell : UITableViewCell {
         var item = collectHoro.collectedData[index] as! CollectedItem
         var dateformatter = NSDateFormatter()
         dateformatter.dateFormat = "MMM dd, yyyy"
+        dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         self.dateLabel.text = dateformatter.stringFromDate(item.collectedDate)
     }
     

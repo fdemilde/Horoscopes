@@ -1353,6 +1353,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 			};

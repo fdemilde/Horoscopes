@@ -144,9 +144,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.currentUser = result![0]
-                    self.configureTableView()
-                    self.configureUI()
+                    if(result!.count > 0){
+                        self.currentUser = result![0]
+                        self.configureTableView()
+                        self.configureUI()
+                    }
                 })
             }
         })
@@ -398,6 +400,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
         if section == 0 {
             let firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView!.bounds.origin.x, tableView!.bounds.origin.y, tableView!.bounds.size.width, firstSectionHeaderHeight))
+            firstSectionHeader.parentVC = self
             firstSectionHeader.tag = FIRST_HEADER_VIEW_TAG
             return firstSectionHeader
         } else {

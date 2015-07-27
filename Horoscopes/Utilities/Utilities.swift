@@ -170,12 +170,14 @@ class Utilities {
     class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
     
     class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         var date = NSDate(timeIntervalSince1970:ts)
         var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
@@ -184,6 +186,7 @@ class Utilities {
     class func getDateFromDateString(dateString : String, format : String) -> NSDate {
         var dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return dateFormatter.dateFromString(dateString)!
     }
     

@@ -224,8 +224,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     func getBirthdayString() -> String{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM d"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         
         let dayOfMonthFormatter = NSDateFormatter()
+        dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dayOfMonthFormatter.dateFormat = "d"
         
         var dateString = dateFormatter.stringFromDate(birthday)

@@ -369,12 +369,9 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     
     @IBAction func cookieButtonTapped(sender: AnyObject) {
         isCookieTapped = true
-//        let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
-//        cookieViewController.parentVC = self
-//        self.navigationController!.pushViewController(cookieViewController, animated: true)\
-        let settingView = self.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
-//        settingView.parentVC = self
-        self.navigationController!.pushViewController(settingView, animated: true)
+        let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+        cookieViewController.parentVC = self
+        self.navigationController!.pushViewController(cookieViewController, animated: true)
     }
     
 }
