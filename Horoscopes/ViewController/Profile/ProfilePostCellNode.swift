@@ -97,7 +97,7 @@ class ProfilePostCellNode: ASCellNode {
         
         timePassedLabelNode = ASTextNode()
         let timeDict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
-        timePassedLabelNode?.attributedString = NSAttributedString(string: self.getTimePassedString(), attributes: timeDict)
+        timePassedLabelNode?.attributedString = NSAttributedString(string: getTimeAgo(), attributes: timeDict)
         background!.addSubnode(timePassedLabelNode)
         
     }
@@ -198,8 +198,8 @@ class ProfilePostCellNode: ASCellNode {
     
     // MARK: Helpers
     
-    func getTimePassedString() -> String {
-        var timePassSecond = Int(NSDate().timeIntervalSince1970) - userPost!.ts
-        return String(format: "%d mins ago", timePassSecond/60)
+    func getTimeAgo() -> String {
+        let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(userPost!.ts))
+        return timeAgoDate.timeAgoSinceNow()
     }
 }
