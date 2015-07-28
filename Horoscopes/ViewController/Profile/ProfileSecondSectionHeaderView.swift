@@ -9,9 +9,9 @@
 import UIKit
 
 protocol ButtonDelegate {
-    func didTapPostButton(sender: UIButton)
-    func didTapFollowersButton(sender: UIButton)
-    func didTapFollowingButton(sender: UIButton)
+    func didTapPostButton()
+    func didTapFollowersButton()
+    func didTapFollowingButton()
 }
 
 class ProfileSecondSectionHeaderView: UIView {
@@ -186,15 +186,15 @@ class ProfileSecondSectionHeaderView: UIView {
     }
     
     func postButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapPostButton(postButton)
+        buttonDelegate?.didTapPostButton()
     }
     
     func followersButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapFollowersButton(followersButton)
+        buttonDelegate?.didTapFollowersButton()
     }
     
     func followingButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapFollowingButton(followingButton)
+        buttonDelegate?.didTapFollowingButton()
     }
     
     func settingsButtonTapped(){

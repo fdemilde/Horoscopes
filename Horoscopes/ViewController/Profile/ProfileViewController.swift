@@ -14,7 +14,7 @@ enum ProfileTab {
     case Following
 }
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate, UITabBarControllerDelegate {
     // MARK: - Properties
     let FIRST_HEADER_VIEW_TAG = 1
     let SECOND_HEADER_VIEW_TAG = 2
@@ -53,6 +53,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        tabBarController?.delegate = self
         backgroundImage = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
@@ -452,7 +453,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         })
     }
     
-    func didTapPostButton(sender: UIButton) {
+    func didTapPostButton() {
         if currentTab != .Post {
             currentTab = .Post
             reloadButton()
@@ -460,7 +461,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func didTapFollowersButton(sender: UIButton) {
+    func didTapFollowersButton() {
         if currentTab != .Followers {
             currentTab = .Followers
             reloadButton()
@@ -468,7 +469,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func didTapFollowingButton(sender: UIButton) {
+    func didTapFollowingButton() {
         if currentTab != .Following {
             currentTab = .Following
             reloadButton()
@@ -517,6 +518,19 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         
         previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
         previousScrollViewYOffset = currentYOffset
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if tabBarController.selectedIndex == 4 {
+            switch currentTab {
+            case .Post:
+                reloadPostDataSource()
+            case .Followers:
+                reloadFollowersDataSource()
+            case .Following:
+                reloadFollowingDataSource()
+            }
+        }
     }
 
     /*
