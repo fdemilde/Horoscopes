@@ -29,8 +29,7 @@ class ProfileFirstSectionCellNode: ASCellNode {
         profilePictureImageNode.URL = NSURL(string: userProfile.imgURL)
         addSubnode(profilePictureImageNode)
         
-//        let horoscopeSignString = HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign
-        let horoscopeSignString = "Pisces"
+        let horoscopeSignString = HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign
         let horoscopeSignImageName = horoscopeSignString + "_icon_selected"
         horoscopeSignImageNode = ASImageNode()
         horoscopeSignImageNode.backgroundColor = UIColor.horoscopeSignImagePurpleCorlor()
