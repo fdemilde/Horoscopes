@@ -45,22 +45,14 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     var temporarySecondSectionHeaderView: ProfileSecondSectionHeaderView?
     var previousScrollViewYOffset: CGFloat = 0
+    var beginningScrollViewYOffset: CGFloat?
+    var previousScrollViewYOffsetIncreasing: Bool?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        SocialManager.sharedInstance.unfollow(8, completionHandler: { (error) -> Void in
-//            if let error = error {
-//                println("unfollow unsuccessfully")
-//            }
-//        })
-//        SocialManager.sharedInstance.follow(3, completionHandler: { (error) -> Void in
-//            if let error = error {
-//                println("unfollow unsuccessfully")
-//            }
-//        })
         backgroundImage = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
@@ -485,31 +477,46 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        let currentYOffset = scrollView.contentOffset.y
         if let headerView = tableView?.viewWithTag(FIRST_HEADER_VIEW_TAG) as? ProfileFirstSectionHeaderView {
-            let position: CGFloat = max(scrollView.contentOffset.y, 0)
+            let position: CGFloat = max(currentYOffset, 0)
             let percent: CGFloat = min(position / firstSectionCellHeight, 1)
             headerView.addButton.alpha = 1 - percent
             headerView.settingsButton.alpha = 1 - percent
         }
         
-        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight {
+        if currentYOffset >= firstSectionHeaderHeight + firstSectionCellHeight {
             hideSecondSection()
             addTempSecondSection()
+            
+            if previousScrollViewYOffsetIncreasing == nil {
+                previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
+            }
+            if beginningScrollViewYOffset == nil {
+                beginningScrollViewYOffset = currentYOffset
+            } else {
+                if (currentYOffset > previousScrollViewYOffset) != previousScrollViewYOffsetIncreasing {
+                    beginningScrollViewYOffset = currentYOffset
+                }
+            }
+            let difference = abs(currentYOffset - beginningScrollViewYOffset!)
+            if currentYOffset + scrollView.frame.size.height >= scrollView.contentSize.height {
+                showTempSecondSection()
+                beginningScrollViewYOffset = nil
+            } else {
+                if difference >= secondSectionHeaderHeight {
+                    currentYOffset > previousScrollViewYOffset ? hideTempSecondSection() : showTempSecondSection()
+                }
+            }
         } else {
             showSecondSection()
             removeTempSecondSection()
+            
+            beginningScrollViewYOffset = nil
         }
         
-        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight + secondSectionHeaderHeight {
-            if scrollView.contentOffset.y > previousScrollViewYOffset {
-                hideTempSecondSection()
-            } else {
-                showTempSecondSection()
-            }
-        } else {
-            showTempSecondSection()
-        }
-        previousScrollViewYOffset = scrollView.contentOffset.y
+        previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
+        previousScrollViewYOffset = currentYOffset
     }
 
     /*
