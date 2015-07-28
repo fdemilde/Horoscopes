@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     let padding: CGFloat = 10
     let tabBarHeight: CGFloat = 49
     let firstSectionHeaderHeight: CGFloat = 54
-    let firstSectionCellHeight: CGFloat = 140.5
+    let firstSectionCellHeight: CGFloat = 233
     var secondSectionHeaderHeight: CGFloat = 80
     
     var userPosts = [UserPost]()

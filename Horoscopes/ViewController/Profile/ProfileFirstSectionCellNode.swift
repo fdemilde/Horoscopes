@@ -10,22 +10,35 @@ import Foundation
 import UIKit
 
 class ProfileFirstSectionCellNode: ASCellNode {
-    var signInImageNode: ASNetworkImageNode!
+    var profilePictureImageNode: ASNetworkImageNode!
+    var horoscopeSignImageNode: ASImageNode!
     var nameTextNode: ASTextNode!
     var horoscopeSignTextNode: ASTextNode!
-    let signInImageSize: CGFloat = 100
+    let profilePictureSize: CGFloat = 165
+    let horoscopeSignImageSize: CGFloat = 55
     let nameHeight: CGFloat = 16
-    let horoscopeSignHeight: CGFloat = 14.5
+    let horoscopeSignTextHeight: CGFloat = 14.5
     let padding: CGFloat = 10
     
     init(userProfile: UserProfile) {
         super.init()
-        signInImageNode = ASNetworkImageNode(webImage: ())
-        signInImageNode.cornerRadius = signInImageSize / 2
-        signInImageNode.clipsToBounds = true
-        signInImageNode.backgroundColor = UIColor.profileImagePurpleColor()
-        signInImageNode.URL = NSURL(string: userProfile.imgURL)
-        addSubnode(signInImageNode)
+        profilePictureImageNode = ASNetworkImageNode(webImage: ())
+        profilePictureImageNode.cornerRadius = profilePictureSize / 2
+        profilePictureImageNode.clipsToBounds = true
+        profilePictureImageNode.backgroundColor = UIColor.profileImagePurpleColor()
+        profilePictureImageNode.URL = NSURL(string: userProfile.imgURL)
+        addSubnode(profilePictureImageNode)
+        
+//        let horoscopeSignString = HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign
+        let horoscopeSignString = "Pisces"
+        let horoscopeSignImageName = horoscopeSignString + "_icon_selected"
+        horoscopeSignImageNode = ASImageNode()
+        horoscopeSignImageNode.backgroundColor = UIColor.horoscopeSignImagePurpleCorlor()
+        horoscopeSignImageNode.image = UIImage(named: horoscopeSignImageName)
+        horoscopeSignImageNode.contentMode = UIViewContentMode.Center
+        horoscopeSignImageNode.cornerRadius = horoscopeSignImageSize / 2
+        horoscopeSignImageNode.clipsToBounds = true
+        addSubnode(horoscopeSignImageNode)
         
         nameTextNode = ASTextNode()
         var attrs: [String: AnyObject] = [NSFontAttributeName: UIFont.systemFontOfSize(13)]
@@ -37,21 +50,22 @@ class ProfileFirstSectionCellNode: ASCellNode {
         horoscopeSignTextNode = ASTextNode()
         attrs[NSFontAttributeName] = UIFont.systemFontOfSize(12)
         attrs[NSForegroundColorAttributeName] = UIColor(red: 186/255.0, green: 192/255.0, blue: 235/255.0, alpha: 1)
-        let horoscopeSign = NSAttributedString(string: HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign, attributes: attrs)
-        horoscopeSignTextNode.attributedString = horoscopeSign
+        let horoscopeSignAttributedString = NSAttributedString(string: horoscopeSignString, attributes: attrs)
+        horoscopeSignTextNode.attributedString = horoscopeSignAttributedString
         addSubnode(horoscopeSignTextNode)
     }
     
     override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
         let nameSize = nameTextNode.measure(CGSizeMake(constrainedSize.width, nameHeight))
-        let horoscopeSignSize = horoscopeSignTextNode.measure(CGSizeMake(constrainedSize.width, horoscopeSignHeight))
+        let horoscopeSignSize = horoscopeSignTextNode.measure(CGSizeMake(constrainedSize.width, horoscopeSignTextHeight))
         
-        return CGSizeMake(constrainedSize.width, signInImageSize + nameHeight + horoscopeSignHeight + padding)
+        return CGSizeMake(constrainedSize.width, profilePictureSize + horoscopeSignImageSize / 2 + nameHeight + horoscopeSignTextHeight + padding)
     }
     
     override func layout() {
-        signInImageNode.frame = CGRectMake(calculatedSize.width/2 - signInImageSize/2, 0, signInImageSize, signInImageSize)
-        nameTextNode.frame = CGRectMake(calculatedSize.width/2 - nameTextNode.calculatedSize.width/2, signInImageSize + padding, nameTextNode.calculatedSize.width, nameHeight)
-        horoscopeSignTextNode.frame = CGRectMake(calculatedSize.width/2 - horoscopeSignTextNode.calculatedSize.width/2, signInImageSize + nameTextNode.calculatedSize.height + padding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignHeight)
+        profilePictureImageNode.frame = CGRectMake(calculatedSize.width/2 - profilePictureSize/2, 0, profilePictureSize, profilePictureSize)
+        horoscopeSignImageNode.frame = CGRectMake(calculatedSize.width/2 - horoscopeSignImageSize/2, profilePictureSize - horoscopeSignImageSize/2, horoscopeSignImageSize, horoscopeSignImageSize)
+        nameTextNode.frame = CGRectMake(calculatedSize.width/2 - nameTextNode.calculatedSize.width/2, profilePictureSize + horoscopeSignImageSize/2 + padding, nameTextNode.calculatedSize.width, nameHeight)
+        horoscopeSignTextNode.frame = CGRectMake(calculatedSize.width/2 - horoscopeSignTextNode.calculatedSize.width/2, profilePictureSize + horoscopeSignImageSize/2 + nameTextNode.calculatedSize.height + padding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignTextHeight)
     }
 }
