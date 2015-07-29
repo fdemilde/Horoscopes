@@ -14,7 +14,7 @@ enum ProfileTab {
     case Following
 }
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate {
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate, UITabBarControllerDelegate {
     // MARK: - Properties
     let FIRST_HEADER_VIEW_TAG = 1
     let SECOND_HEADER_VIEW_TAG = 2
@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     let padding: CGFloat = 10
     let tabBarHeight: CGFloat = 49
     let firstSectionHeaderHeight: CGFloat = 54
-    let firstSectionCellHeight: CGFloat = 140.5
+    let firstSectionCellHeight: CGFloat = 233
     var secondSectionHeaderHeight: CGFloat = 80
     
     var userPosts = [UserPost]()
@@ -44,22 +44,16 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var successfulFollow = false
     
     var temporarySecondSectionHeaderView: ProfileSecondSectionHeaderView?
+    var previousScrollViewYOffset: CGFloat = 0
+    var beginningScrollViewYOffset: CGFloat?
+    var previousScrollViewYOffsetIncreasing: Bool?
 
     // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        SocialManager.sharedInstance.unfollow(8, completionHandler: { (error) -> Void in
-//            if let error = error {
-//                println("unfollow unsuccessfully")
-//            }
-//        })
-//        SocialManager.sharedInstance.follow(3, completionHandler: { (error) -> Void in
-//            if let error = error {
-//                println("unfollow unsuccessfully")
-//            }
-//        })
+        tabBarController?.delegate = self
         backgroundImage = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
@@ -131,10 +125,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func reloadSection(section: Int, withRowAnimation: UITableViewRowAnimation) {
+    func reloadSection(section: Int) {
         let range = NSMakeRange(section, 1)
         let section = NSIndexSet(indexesInRange: range)
-        tableView?.reloadSections(section, withRowAnimation: withRowAnimation)
+        tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
     func getCurrentUserProfile() {
@@ -295,7 +289,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             if successfulFollow {
                 reloadButton()
             }
-            reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+            reloadSection(1)
             isFinishedFollowersDataSource = false
             isFinishedFollowingDataSource = false
             successfulFollow = false
@@ -373,7 +367,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func reloadData() {
         resetSection()
         reloadButton()
-        reloadSection(1, withRowAnimation: UITableViewRowAnimation.Automatic)
+        reloadSection(1)
         Utilities.hideHUD()
     }
     
@@ -459,7 +453,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         })
     }
     
-    func didTapPostButton(sender: UIButton) {
+    func didTapPostButton() {
         if currentTab != .Post {
             currentTab = .Post
             reloadButton()
@@ -467,7 +461,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func didTapFollowersButton(sender: UIButton) {
+    func didTapFollowersButton() {
         if currentTab != .Followers {
             currentTab = .Followers
             reloadButton()
@@ -475,7 +469,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         }
     }
     
-    func didTapFollowingButton(sender: UIButton) {
+    func didTapFollowingButton() {
         if currentTab != .Following {
             currentTab = .Following
             reloadButton()
@@ -484,25 +478,58 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
+        let currentYOffset = scrollView.contentOffset.y
         if let headerView = tableView?.viewWithTag(FIRST_HEADER_VIEW_TAG) as? ProfileFirstSectionHeaderView {
-            let position: CGFloat = max(scrollView.contentOffset.y, 0)
+            let position: CGFloat = max(currentYOffset, 0)
             let percent: CGFloat = min(position / firstSectionCellHeight, 1)
             headerView.addButton.alpha = 1 - percent
             headerView.settingsButton.alpha = 1 - percent
         }
         
-        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight {
+        if currentYOffset >= firstSectionHeaderHeight + firstSectionCellHeight {
             hideSecondSection()
             addTempSecondSection()
+            
+            if previousScrollViewYOffsetIncreasing == nil {
+                previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
+            }
+            if beginningScrollViewYOffset == nil {
+                beginningScrollViewYOffset = currentYOffset
+            } else {
+                if (currentYOffset > previousScrollViewYOffset) != previousScrollViewYOffsetIncreasing {
+                    beginningScrollViewYOffset = currentYOffset
+                }
+            }
+            let difference = abs(currentYOffset - beginningScrollViewYOffset!)
+            if currentYOffset + scrollView.frame.size.height >= scrollView.contentSize.height {
+                showTempSecondSection()
+                beginningScrollViewYOffset = nil
+            } else {
+                if difference >= secondSectionHeaderHeight {
+                    currentYOffset > previousScrollViewYOffset ? hideTempSecondSection() : showTempSecondSection()
+                }
+            }
         } else {
             showSecondSection()
             removeTempSecondSection()
+            
+            beginningScrollViewYOffset = nil
         }
         
-        if scrollView.contentOffset.y >= firstSectionHeaderHeight + firstSectionCellHeight + secondSectionHeaderHeight {
-            hideTempSecondSection()
-        } else {
-            showTempSecondSection()
+        previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
+        previousScrollViewYOffset = currentYOffset
+    }
+    
+    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        if tabBarController.selectedIndex == 4 {
+            switch currentTab {
+            case .Post:
+                reloadPostDataSource()
+            case .Followers:
+                reloadFollowersDataSource()
+            case .Following:
+                reloadFollowingDataSource()
+            }
         }
     }
 
