@@ -34,7 +34,8 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         println("setupLocationService updating location ")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-        
+        locationManager.distanceFilter = kCLDistanceFilterNone
+        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.NotDetermined {
             // TODO: handle if location service disable or denied
             if CLLocationManager.locationServicesEnabled() {

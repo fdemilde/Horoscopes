@@ -207,7 +207,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = Utilities.getScreenSize()
         
-        XAppDelegate.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
     func finishedSelectingBirthday(dateString : String){

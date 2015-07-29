@@ -205,7 +205,7 @@ class ProfileSecondSectionHeaderView: UIView {
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
         let tabBarVC = self.window?.rootViewController as! UITabBarController
-        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        parentViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
 
     /*

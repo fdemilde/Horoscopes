@@ -39,6 +39,7 @@ class NewsfeedCellNode : ASCellNode {
     var feedTypeLabelNode : ASTextNode?
     var userDescLabelNode : ASTextNode?
     var feedDescriptionLabelNode : ASTextNode?
+    var locationLabelNode : ASTextNode?
     var heartNumberLabelNode : ASTextNode?
     var separator : ASDisplayNode?
     var heartImageView : ASImageNode?
@@ -99,6 +100,10 @@ class NewsfeedCellNode : ASCellNode {
         userDescLabelNode?.attributedString = NSAttributedString(string: self.getUserDescString(), attributes: timeDict)
         background!.addSubnode(userDescLabelNode)
         
+        locationLabelNode = ASTextNode()
+        println("userPost!.user!.location == \(userPost!.user!.location)")
+        locationLabelNode?.attributedString = NSAttributedString(string: userPost!.user!.location, attributes: timeDict)
+        background!.addSubnode(locationLabelNode)
     }
     
     func createFeedDescirption(){
@@ -107,6 +112,8 @@ class NewsfeedCellNode : ASCellNode {
         // data : userPost!.message
         feedDescriptionLabelNode?.attributedString = NSAttributedString(string: userPost!.message, attributes: dict)
         background!.addSubnode(feedDescriptionLabelNode)
+        
+        
     }
     
     func createFeedHeartTextNode(){
@@ -167,13 +174,14 @@ class NewsfeedCellNode : ASCellNode {
         var userNameLabelNodeLabelSize = CGSizeMake(constrainedSize.width - BG_PADDING_LEFT - BG_PADDING_RIGHT - DESCRIPTION_PADDING_LEFT * 2 - PROFILE_IMAGE_WIDTH - TYPE_IMAGE_PADDING_LEFT * 2, CGFloat(FLT_MAX))
         userNameLabelNode?.measure(userNameLabelNodeLabelSize)
         userDescLabelNode?.measure(constrainedSize)
-        
+        locationLabelNode?.measure(constrainedSize)
         feedDescriptionLabelNode?.measure(feedDescriptionLabelSize)
+        
         
         heartNumberLabelNode?.measure(constrainedSize)
         separator?.measure(constrainedSize)
         
-        var resultSize = CGSizeMake(constrainedSize.width, headerHeight + feedDescriptionLabelNode!.calculatedSize.height + footerHeight + CELL_PADDING_BOTTOM)
+        var resultSize = CGSizeMake(constrainedSize.width, headerHeight + feedDescriptionLabelNode!.calculatedSize.height + locationLabelNode!.calculatedSize.height + footerHeight + CELL_PADDING_BOTTOM)
         
 
         return resultSize
@@ -191,11 +199,14 @@ class NewsfeedCellNode : ASCellNode {
         
         self.profilePicture!.frame = CGRectMake(10, 10, PROFILE_IMAGE_WIDTH, PROFILE_IMAGE_HEIGHT)
         
-        self.userNameLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, 12, userNameLabelNode!.calculatedSize.width, userNameLabelNode!.calculatedSize.height)
+        self.userNameLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.profilePicture!.frame.origin.y - 2, userNameLabelNode!.calculatedSize.width, userNameLabelNode!.calculatedSize.height) // 2px is padding of text node
         
         self.userDescLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userNameLabelNode!.frame.origin.y + self.userNameLabelNode!.calculatedSize.height,userDescLabelNode!.calculatedSize.width, userDescLabelNode!.calculatedSize.height)
+        locationLabelNode!.frame = CGRectMake(self.profilePicture!.frame.origin.x + PROFILE_IMAGE_WIDTH + 10, self.userDescLabelNode!.frame.origin.y + userDescLabelNode!.calculatedSize.height + 2, locationLabelNode!.calculatedSize.width, locationLabelNode!.calculatedSize.height)
         
-        self.feedDescriptionLabelNode!.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.profilePicture!.frame.origin.y + PROFILE_IMAGE_HEIGHT + 20, feedDescriptionLabelNode!.calculatedSize.width, feedDescriptionLabelNode!.calculatedSize.height)
+        self.feedDescriptionLabelNode!.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.profilePicture!.frame.origin.y + PROFILE_IMAGE_HEIGHT + 25, feedDescriptionLabelNode!.calculatedSize.width, feedDescriptionLabelNode!.calculatedSize.height)
+        
+        
         
         let heartImageSizeValue = 12 as CGFloat
         self.heartImageView?.frame = CGRectMake(DESCRIPTION_PADDING_LEFT, self.background!.frame.height - heartImageSizeValue - 10, heartImageSizeValue, heartImageSizeValue)
@@ -274,19 +285,15 @@ class NewsfeedCellNode : ASCellNode {
         var result = ""
         var signName = getSignName()
         var timePassed = getTimePassedString()
-        var location = getLocation()
         if(signName != ""){
             result.extend(String(format: "%@ \u{00B7} ", signName))
         }
         if(timePassed != ""){
-            result.extend(String(format: "%@ \u{00B7} ", timePassed))
-        }
-        // TODO: Location is now hardcoded
-        if(location != ""){
-            result.extend(String(format: "%@ ", "Viet Nam"))
-        } else { // remove last 2 character
+            result.extend(String(format: "%@", timePassed))
+        } else {
             result = result.substringToIndex(advance(result.startIndex, count(result) - 2))
         }
+        
         return result
     }
     

@@ -192,13 +192,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 success: { (operation, responseObject) -> Void in
                     
                     var responseDict = responseObject as! Dictionary<String, AnyObject>
-                    var array = responseDict["results"] as! [AnyObject]
-                    let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
+//                    var array = responseDict["results"] as! [AnyObject]
+                    let data = NSJSONSerialization.dataWithJSONObject(responseDict, options: nil, error: nil)
                     let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+                    println("finishedGettingLocation string == \(string)")
                     XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
                         if(error == nil){
                             var errorCode = result?["error"] as! Int
                             if(errorCode == 0){
+                                println("finishedGettingLocation result == \(result)")
                                 var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
                                 for (uid, profileDetail) in profileDict {
                                     var profile = UserProfile(data: profileDetail as! NSDictionary)
@@ -217,6 +219,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     
             })
         }
+    }
+    
+    // MARK: Notification handler
+    
+    func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
+        var deviceTokenString = String(format:"%@",deviceToken)
+        XAppDelegate.horoscopesManager.registerNotificationToken(deviceTokenString, completionHandler: { (response, error) -> Void in
+            
+        })
+    }
+    
+    func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
+        
+    }
+    
+    // ios 8
+    
+    func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
     }
 }

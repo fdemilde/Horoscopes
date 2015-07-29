@@ -44,6 +44,7 @@ let IS_FOLLOWING = "user.isfollowing"
 let GET_PROFILE = "app.horoscopes.profile.get"
 let UPDATE_PROFILE = ""
 let UPDATE_BIRTHDAY = "app.horoscopes.setbirthday"
+let GET_FRIEND_LIST = "app.horoscopes.profile.facebookfriends"
 
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"

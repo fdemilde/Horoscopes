@@ -63,7 +63,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
                     
-                    var userDict = result["user"] as! Dictionary<String, AnyObject>
+                    var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: feedsArray)
@@ -92,7 +92,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    var userDict = result["user"] as! Dictionary<String, AnyObject>
+                    var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: feedsArray)
@@ -130,6 +130,8 @@ class SocialManager : NSObject, UIAlertViewDelegate {
             }
         })
     }
+    
+    // MARK: Post
 
     func createPost(type: String, message: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
@@ -189,6 +191,8 @@ class SocialManager : NSObject, UIAlertViewDelegate {
             }
         })
     }
+    
+    // MARK: Profile
     
     func follow(uid: Int, completionHandler: (error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
@@ -301,7 +305,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     
     func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
         var loginManager = FBSDKLoginManager()
-        var permissions = ["public_profile", "email", "user_birthday"]
+        var permissions = ["public_profile", "email", "user_birthday","user_friends"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
             if let error = error {
                 Utilities.showAlertView(self, title: "Login Error", message: "Cannot login to facebook")
@@ -397,5 +401,30 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 }
             })
         }
+    }
+    
+    func retrieveFriendList(completionHandler: (result: [UserProfile]!, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject(FACEBOOK_APP_ID, forKey: "app_id")
+        var systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
+        if(isLoggedInFacebook()){
+            postData.setObject(FBSDKAccessToken.currentAccessToken().tokenString, forKey: "access_token")
+        }
+
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FRIEND_LIST, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(result)
+                var userArray = [UserProfile]()
+                if let profiles = result["profiles"] as? Dictionary<String, AnyObject>{
+                    var userDict = Utilities.parseUsersArray(profiles)
+                    for (uid, user) in userDict {
+                        userArray.append(user)
+                    }
+                }
+                completionHandler(result: userArray, error: nil)
+            }
+        })
     }
 }

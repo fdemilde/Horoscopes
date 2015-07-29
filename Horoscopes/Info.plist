@@ -20,6 +20,10 @@
 	<string>????</string>
     <key>NSLocationWhenInUseUsageDescription</key>
     <string></string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string></string>
+    <key>privacy - location usage description</key>
+    <string></string>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>

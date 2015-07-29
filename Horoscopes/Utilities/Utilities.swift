@@ -111,12 +111,7 @@ class Utilities {
     
     class func parseFeedsArray(userDataDict : Dictionary<String, AnyObject>, postsDataArray : [AnyObject]) -> [UserPost]{
         var resultArray = [UserPost]()
-        var userDict = Dictionary<String, UserProfile>()
-        var user = UserProfile()
-        for (uid, userData) in userDataDict {
-            var userObject = UserProfile(data: userData as! NSDictionary)
-            userDict[uid] = userObject
-        }
+        var userDict = Utilities.parseUsersArray(userDataDict)
         
         for postData in postsDataArray{
             var postObject = UserPost(data: postData as! NSDictionary)
@@ -129,6 +124,16 @@ class Utilities {
         }
         
         return resultArray
+    }
+    
+    class func parseUsersArray(userDataDict : Dictionary<String, AnyObject>) -> Dictionary<String, UserProfile>{ // return Dict<uid,UserProfile>
+        var userDict = Dictionary<String, UserProfile>()
+        var user = UserProfile()
+        for (uid, userData) in userDataDict {
+            var userObject = UserProfile(data: userData as! NSDictionary)
+            userDict[uid] = userObject
+        }
+        return userDict
     }
     
     class func getNewsfeedTypeByString(typeString : String) -> NewsfeedType{
@@ -233,6 +238,17 @@ class Utilities {
         dispatch_async(dispatch_get_main_queue(),{
             NSNotificationCenter.defaultCenter().postNotificationName(name, object: object)
         })
+    }
+    
+    // MARK: Show MZ Formsheet
+    
+    class func showFormSheet(viewController : UIViewController, fromVC : UIViewController){
+        var formSheet = MZFormSheetController(viewController: viewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
+        formSheet.cornerRadius = 0.0;
+        formSheet.portraitTopInset = 0.0;
+        formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
+        fromVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
 }

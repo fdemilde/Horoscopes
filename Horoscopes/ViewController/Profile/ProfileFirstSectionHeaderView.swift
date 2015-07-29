@@ -22,6 +22,7 @@ class ProfileFirstSectionHeaderView: UIView {
         addButton.setImage(UIImage(named: "add_btn"), forState: UIControlState.Normal)
         addButton.sizeToFit()
         addButton.frame = CGRectMake(margin, margin, addButton.bounds.size.width, buttonHeight)
+        addButton.addTarget(self, action: "addFriendButtonTapped", forControlEvents: .TouchUpInside)
         addSubview(addButton)
         
         settingsButton = UIButton()
@@ -51,10 +52,14 @@ class ProfileFirstSectionHeaderView: UIView {
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
         let tabBarVC = self.window?.rootViewController as! UITabBarController
-        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        parentVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
-    
+    func addFriendButtonTapped(){
+        let addFriendVC = parentVC.storyboard!.instantiateViewControllerWithIdentifier("AddFriendViewController") as! AddFriendViewController
+        addFriendVC.parentVC = parentVC
+        Utilities.showFormSheet(addFriendVC, fromVC: parentVC)
+    }
     
     /*
     // Only override drawRect: if you perform custom drawing.

@@ -156,10 +156,12 @@ class HoroscopesManager : NSObject {
         
     }
     
-    func registerNotificationToken(token : String){
+    func registerNotificationToken(token : String, completionHandler:(response : Dictionary<String,AnyObject>?, error : NSError?) -> Void ){
         var postData = NSMutableDictionary()
         postData.setObject(token, forKey: "device_token")
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            var result = Utilities.parseNSDictionaryToDictionary(response)
+            completionHandler(response: result, error: error)
         })
     }
     
