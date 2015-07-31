@@ -31,7 +31,6 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     I was creating a CLLocationManager instance in my viewDidLoad method. Since this was a local instance to the method, the instance was released by ARC after the method completed executing. As soon as the instance was released, the dialog disappeared. The solution was rather simple. Change the CLLocationManager instance from being a method-level variable to be a class-level instance variable. Now the CLLocationManager instance is only released once the class is unloaded.
     */
     func setupLocationService() {
-        println("setupLocationService updating location ")
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = kCLDistanceFilterNone
@@ -39,17 +38,13 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.NotDetermined {
             // TODO: handle if location service disable or denied
             if CLLocationManager.locationServicesEnabled() {
-                println("locationServicesEnabled")
                 locationManager.startUpdatingLocation()
             }
         } else {
-            println("authorizationStatus() == .NotDetermined")
             if locationManager.respondsToSelector(Selector("requestWhenInUseAuthorization")){
-                println("setupLocationService requestWhenInUseAuthorization IOS 8")
                 // for iOS 8
                 locationManager.requestWhenInUseAuthorization()
             } else {
-                println("setupLocationService requestWhenInUseAuthorization IOS 7")
                 // for iOS 7 <
                 locationManager.startUpdatingLocation()
             }
@@ -65,7 +60,6 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     }
     
     func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
-        println("setupLocationService didUpdateLocations ")
         //stop updating location to save battery life
         locationManager.stopUpdatingLocation()
         XAppDelegate.finishedGettingLocation(manager.location)

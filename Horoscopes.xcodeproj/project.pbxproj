@@ -86,7 +86,7 @@
 		F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */; };
 		F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */; };
 		F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C02A31B2691D200C0BA83 /* LoginVC.swift */; };
-		F498447B1B663589001B3246 /* AddFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F498447A1B663589001B3246 /* AddFriendViewController.swift */; };
+		F498447B1B663589001B3246 /* AddFriendTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F498447A1B663589001B3246 /* AddFriendTableViewController.swift */; };
 		F49EB5631B41C21E00F56092 /* CollectHoroscopeDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB55F1B41C21E00F56092 /* CollectHoroscopeDetailVC.swift */; };
 		F49EB5641B41C21E00F56092 /* CollectHoroscopesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB5601B41C21E00F56092 /* CollectHoroscopesTableVC.swift */; };
 		F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB5611B41C21E00F56092 /* CookieViewController.swift */; };
@@ -269,7 +269,7 @@
 		F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
 		F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelVC.swift; sourceTree = "<group>"; };
 		F47C02A31B2691D200C0BA83 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
-		F498447A1B663589001B3246 /* AddFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendViewController.swift; sourceTree = "<group>"; };
+		F498447A1B663589001B3246 /* AddFriendTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendTableViewController.swift; sourceTree = "<group>"; };
 		F49EB55F1B41C21E00F56092 /* CollectHoroscopeDetailVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeDetailVC.swift; sourceTree = "<group>"; };
 		F49EB5601B41C21E00F56092 /* CollectHoroscopesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopesTableVC.swift; sourceTree = "<group>"; };
 		F49EB5611B41C21E00F56092 /* CookieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieViewController.swift; sourceTree = "<group>"; };
@@ -443,7 +443,7 @@
 				7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */,
 				70F31C151B4E1AD100A8B3A2 /* ProfilePostCellNode.swift */,
 				70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */,
-				F498447A1B663589001B3246 /* AddFriendViewController.swift */,
+				F498447A1B663589001B3246 /* AddFriendTableViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1150,7 +1150,7 @@
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
 				F4106B7B1B43913F00D58D92 /* NewsfeedCellNode.swift in Sources */,
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
-				F498447B1B663589001B3246 /* AddFriendViewController.swift in Sources */,
+				F498447B1B663589001B3246 /* AddFriendTableViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,

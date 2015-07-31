@@ -36,10 +36,10 @@
         if(uidObject != nil){
             NSNumber * uid = uidObject;
             [creds setUid:uid];
-            DebugLog(@"testInvalidLogin uid = %@",uid);
+//            DebugLog(@"testInvalidLogin uid = %@",uid);
         }
         [self refreshFriendsWithCompleteBlock:^(NSArray *responseArray) {
-            DebugLog(@"loginWithParams refresh list = %@", responseArray);
+//            DebugLog(@"loginWithParams refresh list = %@", responseArray);
             completeBlock(responseDict, error);
         }];
         

@@ -56,9 +56,10 @@ class ProfileFirstSectionHeaderView: UIView {
     }
     
     func addFriendButtonTapped(){
-        let addFriendVC = parentVC.storyboard!.instantiateViewControllerWithIdentifier("AddFriendViewController") as! AddFriendViewController
+        let addFriendVC = parentVC.storyboard!.instantiateViewControllerWithIdentifier("AddFriendTableViewController") as! AddFriendTableViewController
         addFriendVC.parentVC = parentVC
-        Utilities.showFormSheet(addFriendVC, fromVC: parentVC)
+        self.parentVC.navigationController?.pushViewController(addFriendVC, animated: true)
+//        Utilities.showFormSheet(addFriendVC, fromVC: parentVC)
     }
     
     /*

@@ -101,7 +101,6 @@ class NewsfeedCellNode : ASCellNode {
         background!.addSubnode(userDescLabelNode)
         
         locationLabelNode = ASTextNode()
-        println("userPost!.user!.location == \(userPost!.user!.location)")
         locationLabelNode?.attributedString = NSAttributedString(string: userPost!.user!.location, attributes: timeDict)
         background!.addSubnode(locationLabelNode)
     }

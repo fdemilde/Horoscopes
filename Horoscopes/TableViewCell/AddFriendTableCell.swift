@@ -13,6 +13,8 @@ class AddFriendTableCell : UITableViewCell {
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var followButton: UIButton!
     @IBOutlet weak var followedLabel: UILabel!
+    
+    
     var userProfile : UserProfile!
     var followingDelegate : FollowDelegate!
     
@@ -54,6 +56,7 @@ class AddFriendTableCell : UITableViewCell {
         followingDelegate.didClickFollowButton(userProfile.uid)
         self.followButton.hidden = true
     }
+    
     
     
 }
