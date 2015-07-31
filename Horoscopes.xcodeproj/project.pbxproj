@@ -41,6 +41,7 @@
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
+		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
 		F460980C1B50D1F30026F0C9 /* moon_ani_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */; };
@@ -222,6 +223,7 @@
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
+		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
 		F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@3x.png"; sourceTree = "<group>"; };
@@ -675,6 +677,7 @@
 				F49FAE481B4290E500F38E0C /* SocialManager.swift */,
 				F4CACA171B1EBE16003C6301 /* AppDelegate.swift */,
 				70A4E2771B623F5100711B4F /* ApplicationColor.swift */,
+				F43D43201B6B31D800FB94A7 /* DataStore.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F42E28931B37D14100466CAA /* Images */,
 				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
@@ -1155,6 +1158,7 @@
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
+				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,

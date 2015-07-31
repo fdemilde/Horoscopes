@@ -18,8 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var horoscopesManager = HoroscopesManager()
     var socialManager = SocialManager()
     var locationManager = LocationManager()
+    var dataStore = DataStore()
     var currentUser : UserProfile?
-    var userLocation: CLLocation!
+    var userLocation : CLLocation!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
