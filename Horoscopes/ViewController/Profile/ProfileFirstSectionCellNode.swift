@@ -22,6 +22,7 @@ class ProfileFirstSectionCellNode: ASCellNode {
     
     init(userProfile: UserProfile) {
         super.init()
+        self.selectionStyle = UITableViewCellSelectionStyle.None
         profilePictureImageNode = ASNetworkImageNode(webImage: ())
         profilePictureImageNode.cornerRadius = profilePictureSize / 2
         profilePictureImageNode.clipsToBounds = true
