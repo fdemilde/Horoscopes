@@ -95,18 +95,17 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func followingFeedsFinishedLoading(notif : NSNotification){
-        
+        Utilities.hideHUD()
         if(notif.object == nil){
-            Utilities.hideHUD()
             Utilities.showAlertView(self,title:"",message:"No feeds available")
-            self.tabType = NewsfeedTabType.SignTag
+            self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
         } else {
             self.resetTapButtonColor()
             var followingPostArray = notif.object as! [UserPost]
             self.userPostArray = followingPostArray
             self.tableReloadDataWithAnimation()
-            Utilities.hideHUD()
+            
         }
         
     }
@@ -114,10 +113,13 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     // MARK: Button Actions
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
-        if(self.tabType != NewsfeedTabType.SignTag){
-            self.tabType = NewsfeedTabType.SignTag
-            XAppDelegate.socialManager.getGlobalNewsfeed(0)
+        if(self.tabType != NewsfeedTabType.Global){
+            self.tabType = NewsfeedTabType.Global
+            self.resetTapButtonColor()
+            userPostArray = XAppDelegate.dataStore.newsfeedGlobal
+            tableView.reloadData()
         }
+        XAppDelegate.socialManager.getGlobalNewsfeed(0)
         
     }
     
@@ -126,18 +128,27 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
+                userPostArray = XAppDelegate.dataStore.newsfeedFollowing
+                tableView.reloadData()
+            } else {
+                tableView.reloadData()
+            }
+        } else {
+            if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 XAppDelegate.socialManager.getFollowingNewsfeed(0)
             } else {
                 tableView.reloadData()
             }
         }
         
+        
+        
     }
     
     func printCurrentTabType(){
         switch self.tabType {
             // Use Internationalization, as appropriate.
-            case NewsfeedTabType.SignTag: println("SignTag")
+            case NewsfeedTabType.Global: println("Global")
             case NewsfeedTabType.Following: println("Following")
         }
     }
@@ -147,7 +158,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     func resetTapButtonColor(){ // change button color based on state
         switch self.tabType {
             // Use Internationalization, as appropriate.
-            case NewsfeedTabType.SignTag:
+            case NewsfeedTabType.Global:
                 globalButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
                 followingButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
                 break
@@ -168,7 +179,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        if(self.tabType == NewsfeedTabType.SignTag){
+        if(self.tabType == NewsfeedTabType.Global){
             self.tableView.tableHeaderView = nil
             self.tableView.backgroundColor = UIColor.clearColor()
             return 1
@@ -223,6 +234,9 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                 Utilities.hideHUD()
             } else {
                 println("Newsfeed setupLocationService ")
+//                XAppDelegate.socialManager.unfollow(11, completionHandler: { (error) -> Void in
+//                    println("Did unfollow")
+//                })
                 XAppDelegate.locationManager.setupLocationService()
                     XAppDelegate.socialManager.getFollowingNewsfeed(0)
             }

@@ -3773,8 +3773,7 @@
                                                     <exclude reference="t9E-nI-lIB"/>
                                                 </mask>
                                             </variation>
-                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                <rect key="frame" x="10" y="56" width="390" height="1"/>
+                                            <variation key="heightClass=regular-widthClass=compact">
                                                 <mask key="constraints">
                                                     <include reference="t9E-nI-lIB"/>
                                                 </mask>

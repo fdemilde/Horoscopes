@@ -47,11 +47,14 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     }
     
     func getGlobalNewsfeed(pageNo : Int){
-        Utilities.showHUD()
+        if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
+            Utilities.showHUD()
+        }
         var postData = NSMutableDictionary()
         var pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_GLOBAL_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            Utilities.hideHUD()
             if(error != nil){
                 println("Error when get getGlobalNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
@@ -66,7 +69,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: feedsArray)
+                    XAppDelegate.dataStore.updateNewsfeedGlobalData(feedsArray)
                 }
             }
             
@@ -74,12 +77,16 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     }
     
     func getFollowingNewsfeed(pageNo : Int){
-        Utilities.showHUD()
+        if(XAppDelegate.dataStore.newsfeedFollowing.count == 0){
+            Utilities.showHUD()
+        }
+        
         var postData = NSMutableDictionary()
         var pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         // change to test  GET_FOLLOWING_FEED
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING_FEED,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            Utilities.hideHUD()
             if(error != nil){
                 println("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
@@ -95,7 +102,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: feedsArray)
+                    XAppDelegate.dataStore.updateNewsfeedFollowingData(feedsArray)
                 }
             }
             

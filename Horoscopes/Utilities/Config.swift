@@ -108,7 +108,7 @@ enum NewsfeedType {
 }
 
 enum NewsfeedTabType {
-    case SignTag
+    case Global
     case Following
 }
 
