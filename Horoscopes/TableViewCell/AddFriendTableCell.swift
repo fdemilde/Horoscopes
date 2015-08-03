@@ -36,7 +36,8 @@ class AddFriendTableCell : UITableViewCell {
         if(isFollowing){
             followButton.hidden = true
         }
-        followingDelegate = profileVC
+        // TODO: Uncomment this code when finish refactoring ProfileViewController
+//        followingDelegate = profileVC
     }
     
     // MARK: helpers
