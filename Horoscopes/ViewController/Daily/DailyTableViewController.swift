@@ -28,7 +28,7 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
     var collectedHoro = CollectedHoroscope()
     var firstCell : DailyHoroscopeHeaderCell!
     var isCookieTapped = false // this is for checking scrolling and showing tabbar
-    
+    var router : Router!
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
     var startPositionY = 0 as CGFloat
@@ -44,12 +44,12 @@ class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITa
         }
         
         //app returns to the foreground, reload table
-        
         self.refreshView()
     }
     
     override func viewWillAppear(animated: Bool) {
-        
+        router = XAppDelegate.mobilePlatform.router
+//        router.handleRoute("/today")
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
         super.viewWillAppear(animated)
         

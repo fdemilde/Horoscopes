@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserPost {
+public class UserPost : Equatable{
     var post_id : String = ""
     var uid : Int = -1
     var type : NewsfeedType
@@ -35,4 +35,10 @@ class UserPost {
         }
         return posts
     }
+    
+}
+
+// note that this is OUTSIDE of your class impl to make it global
+public func ==(lhs: UserPost, rhs: UserPost) -> Bool {
+    return lhs.post_id == rhs.post_id
 }

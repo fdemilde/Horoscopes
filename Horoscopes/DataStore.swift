@@ -87,19 +87,21 @@ class DataStore : NSObject{
     
     // Helpers
     func compareAndUpdateArrayData(oldDataArray : [UserPost], newDataArray : [UserPost]) -> [UserPost]{
-        var removeIndexArray = [Int]()
+        var removedArray = [UserPost]()
         var mutableOldArray = oldDataArray
         var oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
         var newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
+        
         // loop through new Data array first and check with old data, if old data not exist in new data, remove it
         for (index,oldPostId) in enumerate(oldPostIDArray) {
             if(!contains(newPostIDArray, oldPostId)){
-                removeIndexArray.append(index)
+                removedArray.append(oldDataArray[index])
             }
         }
-        for index in removeIndexArray {
+        
+        for post in removedArray {
             if(!newsfeedIsUpdated) { newsfeedIsUpdated = true }
-            mutableOldArray.removeAtIndex(index)
+            mutableOldArray.remove(post)
         }
         
         // check if any new post, update old array with new items
@@ -110,6 +112,9 @@ class DataStore : NSObject{
             }
         }
         
+        // sort new data with post ts
+        mutableOldArray.sort { $0.ts > $1.ts }
+        
         return mutableOldArray
     }
     
@@ -119,6 +124,19 @@ class DataStore : NSObject{
             result.append(post.post_id)
         }
         return result
+    }
+    
+}
+
+extension Array {
+    mutating func remove <U: Equatable> (object: U) {
+        for i in stride(from: self.count-1, through: 0, by: -1) {
+            if let element = self[i] as? U {
+                if element == object {
+                    self.removeAtIndex(i)
+                }
+            }
+        }
     }
 }
 
