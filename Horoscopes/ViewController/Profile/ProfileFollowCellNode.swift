@@ -33,6 +33,7 @@ class ProfileFollowCellNode: ASCellNode {
     init(user: UserProfile) {
         super.init()
         self.user = user
+        self.selectionStyle = .None
         configureUI()
     }
     
