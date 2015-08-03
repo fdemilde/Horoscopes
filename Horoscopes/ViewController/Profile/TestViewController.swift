@@ -125,13 +125,13 @@ class TestViewController: UIViewController {
 //            }
 //        }
 //    }
-//    
+//
 //    func reloadSection(section: Int) {
 //        let range = NSMakeRange(section, 1)
 //        let section = NSIndexSet(indexesInRange: range)
 //        tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
 //    }
-//    
+//
 //    func getCurrentUserProfile() {
 //        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
 //        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in

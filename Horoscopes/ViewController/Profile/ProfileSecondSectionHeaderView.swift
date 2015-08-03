@@ -102,6 +102,8 @@ class ProfileSecondSectionHeaderView: UIView {
             addSubview(settingsButton)
             
             hide()
+        } else {
+            
         }
     }
     
@@ -140,13 +142,13 @@ class ProfileSecondSectionHeaderView: UIView {
             switch button {
             case postButton:
                 title = postButtonTitleLabel
-                number = XAppDelegate.dataStore.userPosts.count
+                number = DataStore.sharedInstance.userPosts.count
             case followersButton:
                 title = followersButtonTitleLabel
-                number = XAppDelegate.dataStore.followers.count
+                number = DataStore.sharedInstance.followers.count
             case followingButton:
                 title = followingButtonTitleLabel
-                number = XAppDelegate.dataStore.followingUsers.count
+                number = DataStore.sharedInstance.followingUsers.count
             default:
                 title = ""
                 number = 0
