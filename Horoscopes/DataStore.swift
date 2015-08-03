@@ -12,9 +12,32 @@ class DataStore : NSObject{
     var newsfeedGlobal = [UserPost]()
     var newsfeedFollowing = [UserPost]()
     var newsfeedIsUpdated : Bool = false
+    var userPosts = [UserPost]()
+    var followers = [UserProfile]()
+    var followingUsers = [UserProfile]()
+    
+    static let sharedInstance = DataStore()
     
     override init(){
         
+    }
+    
+    func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
+        let oldDataIdSet = getDataIds(oldData)
+        let newDataIdSet = getDataIds(newData)
+        return oldDataIdSet != newDataIdSet
+    }
+    
+    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
+        var result = Set<String>()
+        for item in data {
+            if let post = item as? UserPost {
+                result.insert(post.post_id)
+            } else if let profile = item as? UserProfile {
+                result.insert("\(profile.uid)")
+            }
+        }
+        return result
     }
     
     func updateNewsfeedFollowingData(data : [UserPost]){

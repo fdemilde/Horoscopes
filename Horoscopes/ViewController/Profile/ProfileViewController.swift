@@ -2,66 +2,58 @@
 //  ProfileViewController.swift
 //  Horoscopes
 //
-//  Created by Dang Doan on 7/9/15.
+//  Created by Dang Doan on 7/30/15.
 //  Copyright (c) 2015 Binh Dang. All rights reserved.
 //
 
 import UIKit
 
-enum ProfileTab {
-    case Post
-    case Followers
-    case Following
+enum ProfileType {
+    case CurrentUser
+    case OtherUser
 }
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, FollowDelegate, ButtonDelegate, UIAlertViewDelegate, UIScrollViewDelegate, UITabBarControllerDelegate {
-    // MARK: - Properties
-    let FIRST_HEADER_VIEW_TAG = 1
-    let SECOND_HEADER_VIEW_TAG = 2
+class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileTabDelegate {
     
-    var facebookLoginButton: UIButton?
-    var facebookLoginLabel: UILabel?
-    var backgroundImage: UIImage!
-    
-    var tableView: ASTableView?
-    let padding: CGFloat = 10
-    let tabBarHeight: CGFloat = 49
-    let firstSectionHeaderHeight: CGFloat = 54
-    let firstSectionCellHeight: CGFloat = 233
-    var secondSectionHeaderHeight: CGFloat = 80
-    
-    var userPosts = [UserPost]()
+    var profileType: ProfileType!
     var currentUser: UserProfile?
-    var followingUsers = [UserProfile]()
-    var followers = [UserProfile]()
-    var isFollowedArray = [Bool]()
-    var currentTab = ProfileTab.Post
-    
-    var isFinishedPostDataSource = false
-    var isFinishedFollowersDataSource = false
-    var isFinishedFollowingDataSource = false
+    enum Tab {
+        case Post
+        case Followers
+        case Following
+    }
+    var currentTab = Tab.Post
+    var backgroundImage: UIImage!
+    var tableView: ASTableView!
     var isFirstDataLoad = true
-    var successfulFollow = false
+    var isFinishedGettingUserPosts = false
+    var isFinishedGettingFollowers = false
+    var isFinishedGettingFollowingUsers = false
+    var isDataChanged = false
+    let secondSectionHeaderHeight: CGFloat = 80
     
-    var temporarySecondSectionHeaderView: ProfileSecondSectionHeaderView?
-    var previousScrollViewYOffset: CGFloat = 0
-    var beginningScrollViewYOffset: CGFloat?
-    var previousScrollViewYOffsetIncreasing: Bool?
+    // MARK: - Initialization
+//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//    }
+//    
+//    convenience init(profileType: ProfileType) {
+//        self.init(nibName: nil, bundle: nil)
+//        self.profileType = profileType
+//    }
+//
+//    required init(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
 
-    // MARK: - Lifecycle
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        tabBarController?.delegate = self
-        backgroundImage = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
-        view.backgroundColor = UIColor(patternImage: backgroundImage)
-        
-        if SocialManager.sharedInstance.isLoggedInZwigglers() {
-            getCurrentUserProfile()
-        } else {
-            configureLoginView()
-        }
+        configureUI()
+        // TODO: Comment this code when finish refactoring
+        profileType = .CurrentUser
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,469 +61,279 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - ConfigureUI
-    
-    func configureUI() {
-        reloadPostDataSource()
-        reloadFollowersDataSource()
-        reloadFollowingDataSource()
-        tableView?.hidden = false
+    override func viewWillLayoutSubviews() {
+//        println("viewWillLayoutSubviews")
+        tableView.frame = view.bounds
     }
     
-    func configureLoginView() {
-        facebookLoginButton = UIButton()
-        let facebookLoginImage = UIImage(named: "fb_login_icon")
-        facebookLoginButton!.setImage(facebookLoginImage, forState: UIControlState.Normal)
-        facebookLoginButton!.sizeToFit()
-        facebookLoginButton!.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginButton!.frame.width/2, view.frame.height/2 - facebookLoginButton!.frame.height/2)
-        facebookLoginButton!.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
-        view.addSubview(facebookLoginButton!)
-        
-        facebookLoginLabel = UILabel()
-        facebookLoginLabel!.text = "You need to login to Facebook\nto enjoy this feature"
-        facebookLoginLabel!.textColor = UIColor.lightTextColor()
-        facebookLoginLabel!.numberOfLines = 2
-        facebookLoginLabel!.sizeToFit()
-        facebookLoginLabel!.textAlignment = NSTextAlignment.Center
-        facebookLoginLabel!.frame.origin = CGPointMake(view.frame.width/2 - facebookLoginLabel!.frame.width/2, facebookLoginButton!.frame.origin.y + facebookLoginButton!.frame.size.height + 8)
-        view.addSubview(facebookLoginLabel!)
-    }
-    
-    func configureTableView() {
-        tableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain)
-        tableView?.hidden = true
-        tableView!.asyncDataSource = self
-        tableView!.asyncDelegate = self
-        tableView!.showsHorizontalScrollIndicator = false
-        tableView!.showsVerticalScrollIndicator = false
-        tableView!.separatorStyle = UITableViewCellSeparatorStyle.None
-        tableView!.backgroundColor = UIColor.clearColor()
-        tableView!.frame = CGRectMake(0, 0, view.bounds.width, view.bounds.height - tabBarHeight)
-        view.addSubview(tableView!)
-    }
-    
-    // MARK: - Helper
-    
-    func reloadButton() {
-        if let headerView = tableView?.viewWithTag(SECOND_HEADER_VIEW_TAG) as? ProfileSecondSectionHeaderView {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+//        println("viewWillAppear")
+        if !isFirstDataLoad {
             switch currentTab {
             case .Post:
-                headerView.reloadButtonTitleLabel(headerView.postButton)
+                getUserPosts()
             case .Followers:
-                headerView.reloadButtonTitleLabel(headerView.followersButton)
+                getFollowers()
             case .Following:
-                headerView.reloadButtonTitleLabel(headerView.followingButton)
+                getFollowingUsers()
             }
         }
     }
     
-    func reloadSection(section: Int) {
-        let range = NSMakeRange(section, 1)
-        let section = NSIndexSet(indexesInRange: range)
-        tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
+    // MARK: - UI Configuration
+    func configureUI() {
+        backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
+        view.backgroundColor = UIColor(patternImage: backgroundImage)
+        configureTableView()
     }
     
-    func getCurrentUserProfile() {
-        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
-            if let error = error {
-                
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    if(result!.count > 0){
-                        self.currentUser = result![0]
-                        self.configureTableView()
-                        self.configureUI()
-                    }
-                })
-            }
-        })
+    func configureTableView() {
+        tableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain, asyncDataFetching: false)
+//        tableView.frame = view.bounds
+        tableView.asyncDataSource = self
+        tableView.asyncDelegate = self
+        tableView.showsHorizontalScrollIndicator = false
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+        tableView.backgroundColor = UIColor.clearColor()
+        view.addSubview(tableView)
+        if SocialManager.sharedInstance.isLoggedInZwigglers() {
+            getDataInitially()
+        } else {
+            configureLoginView()
+        }
     }
     
+    func configureLoginView() {
+//        println("configureLoginView")
+        let headerFrame = UIScreen.mainScreen().bounds
+        let headerView = UIView(frame: headerFrame)
+        let padding: CGFloat = 8
+        tableView.tableHeaderView = headerView
+        
+        let facebookLoginButton = UIButton()
+        let facebookLoginImage = UIImage(named: "fb_login_icon")
+        facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
+        facebookLoginButton.sizeToFit()
+        facebookLoginButton.frame = CGRectMake(headerFrame.width/2 - facebookLoginButton.frame.width/2, headerFrame.height/2 - facebookLoginButton.frame.height/2, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
+        facebookLoginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.addSubview(facebookLoginButton)
+        
+        let facebookLoginLabel = UILabel()
+        facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
+        facebookLoginLabel.textColor = UIColor.lightTextColor()
+        facebookLoginLabel.numberOfLines = 2
+        facebookLoginLabel.sizeToFit()
+        facebookLoginLabel.textAlignment = NSTextAlignment.Center
+        facebookLoginLabel.frame = CGRectMake(headerFrame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.height + padding, facebookLoginLabel.frame.width, facebookLoginLabel.frame.height)
+        headerView.addSubview(facebookLoginLabel)
+    }
+    
+    // MARK: - Action
     func login(sender: UIButton) {
-        Utilities.showHUD()
         SocialManager.sharedInstance.login { (error) -> Void in
             if let error = error {
                 
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.facebookLoginButton?.removeFromSuperview()
-                    self.facebookLoginLabel?.removeFromSuperview()
-                    self.getCurrentUserProfile()
+                    self.tableView.tableHeaderView = nil
+                    self.getDataInitially()
                 })
             }
         }
     }
     
-    func finishLoadingPostDataSource(error: NSError?) {
-        isFinishedPostDataSource = true
-        if let error = error {
-            
-        } else {
-            if isFirstDataLoad {
-                loadDataInitially()
-            } else {
-                reloadData()
-                isFinishedPostDataSource = false
-            }
-        }
-    }
-    
-    func finishLoadingFollowersDataSource(error: NSError?) {
-        isFinishedFollowersDataSource = true
-        if let error = error {
-            
-        } else {
-            if isFirstDataLoad {
-                loadDataInitially()
-            } else if successfulFollow {
-                resetSection()
-                populateIsFollowedArray()
-            } else {
-                reloadData()
-                isFinishedFollowersDataSource = false
-            }
-        }
-    }
-    
-    func finishLoadingFollowingDataSource(error: NSError?) {
-        isFinishedFollowingDataSource = true
-        if let error = error {
-            
-        } else {
-            if isFirstDataLoad {
-                loadDataInitially()
-            } else if successfulFollow {
-                resetSection()
-                populateIsFollowedArray()
-            } else {
-                reloadData()
-                isFinishedFollowingDataSource = false
-            }
-        }
-    }
-    
-    func loadDataInitially() {
-        if isFinishedPostDataSource && isFinishedFollowersDataSource && isFinishedFollowingDataSource {
-            currentTab = .Post
-            reloadButton()
-            populateIsFollowedArray()
-            isFirstDataLoad = false
-            isFinishedPostDataSource = false
-        }
-    }
-    
-    func reloadPostDataSource() {
-        Utilities.showHUD()
+    // MARK: - Helper
+    func getUserPosts() {
         let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-        userPosts.removeAll(keepCapacity: false)
+//        println("\(uid)")
         SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingPostDataSource(error)
-                })
+                
             } else {
-                self.userPosts = result!
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingPostDataSource(nil)
-                })
+                self.isFinishedGettingUserPosts = true
+                if self.isFirstDataLoad {
+                    XAppDelegate.dataStore.userPosts = result!
+                    self.finishGettingDataInitially()
+                } else {
+                    self.finishGettingUserPosts(result!)
+                }
             }
         })
     }
     
-    func reloadFollowersDataSource() {
-        Utilities.showHUD()
-        followers.removeAll(keepCapacity: false)
+    func getFollowers() {
         SocialManager.sharedInstance.getFollowersProfile { (result, error) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingFollowersDataSource(error)
-                })
+                
             } else {
-                self.followers = result!
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingFollowersDataSource(nil)
-                })
+                self.isFinishedGettingFollowers = true
+                if self.isFirstDataLoad {
+                    XAppDelegate.dataStore.followers = result!
+                    self.finishGettingDataInitially()
+                } else {
+                    self.finishGettingFollowers(result!)
+                }
             }
         }
     }
     
-    func reloadFollowingDataSource() {
-        Utilities.showHUD()
-        followingUsers.removeAll(keepCapacity: false)
+    func getFollowingUsers() {
+//        println("retrieveFollowingUsers")
         SocialManager.sharedInstance.getFollowingUsersProfile { (result, error) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingFollowingDataSource(error)
-                })
+                
             } else {
-                self.followingUsers = result!
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.finishLoadingFollowingDataSource(nil)
-                })
-            }
-        }
-    }
-    
-    func populateIsFollowedArray() {
-        if isFinishedFollowersDataSource && isFinishedFollowingDataSource {
-            isFollowedArray.removeAll(keepCapacity: true)
-            for follower in followers {
-                var isFollowed = false
-                for followingUser in followingUsers {
-                    if follower.uid == followingUser.uid {
-                        isFollowed = true
-                        break
-                    }
+                self.isFinishedGettingFollowingUsers = true
+                if self.isFirstDataLoad {
+                    XAppDelegate.dataStore.followingUsers = result!
+                    self.finishGettingDataInitially()
+                } else {
+                    self.finishGettingFollowingUsers(result!)
                 }
-                isFollowedArray.append(isFollowed)
-            }
-            if successfulFollow {
-                reloadButton()
-            }
-            reloadSection(1)
-            isFinishedFollowersDataSource = false
-            isFinishedFollowingDataSource = false
-            successfulFollow = false
-            Utilities.hideHUD()
-        }
-    }
-    
-    func showFirstSection() {
-        if let var headerView = tableView?.viewWithTag(FIRST_HEADER_VIEW_TAG) as? ProfileFirstSectionHeaderView {
-            headerView.show()
-        }
-    }
-    
-    func hideSecondSection() {
-        if let var headerView = tableView?.viewWithTag(SECOND_HEADER_VIEW_TAG) as? ProfileSecondSectionHeaderView {
-            if !headerView.hidden {
-                headerView.hidden = true
             }
         }
     }
     
-    func showSecondSection() {
-        if let var headerView = tableView?.viewWithTag(SECOND_HEADER_VIEW_TAG) as? ProfileSecondSectionHeaderView {
-            if headerView.hidden {
-                headerView.hidden = false
+    func finishGettingDataInitially() {
+        if isFirstDataLoad {
+            if isFinishedGettingUserPosts && isFinishedGettingFollowers && isFinishedGettingFollowingUsers {
+                tableView.reloadData()
+                isFirstDataLoad = false
+                isFinishedGettingUserPosts = false
+                isFinishedGettingFollowers = false
+                isFinishedGettingFollowingUsers = false
+                Utilities.hideHUD()
             }
         }
     }
     
-    func addTempSecondSection() {
-        if temporarySecondSectionHeaderView == nil {
-            temporarySecondSectionHeaderView = ProfileSecondSectionHeaderView(frame: CGRectMake(0, 0, tableView!.bounds.size.width, secondSectionHeaderHeight), userProfile: currentUser!, parentViewController: self)
-            temporarySecondSectionHeaderView?.buttonDelegate = self
-            temporarySecondSectionHeaderView?.backgroundColor = UIColor(patternImage: backgroundImage!)
-            temporarySecondSectionHeaderView?.show()
-            view.addSubview(temporarySecondSectionHeaderView!)
-        }
+    func finishGettingUserPosts(userPosts: [UserPost]) {
+        reloadDataIfNeeded(&DataStore.sharedInstance.userPosts, newData: userPosts)
+        isFinishedGettingUserPosts = false
     }
     
-    func removeTempSecondSection() {
-        if temporarySecondSectionHeaderView != nil {
-            temporarySecondSectionHeaderView!.removeFromSuperview()
-            temporarySecondSectionHeaderView = nil
-        }
+    func finishGettingFollowers(followers: [UserProfile]) {
+        reloadDataIfNeeded(&DataStore.sharedInstance.followers, newData: followers)
+        isFinishedGettingFollowers = false
     }
     
-    func hideTempSecondSection() {
-        if let headerView = temporarySecondSectionHeaderView {
-            if headerView.frame.origin.y == 0 {
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    headerView.frame.origin.y -= self.secondSectionHeaderHeight
-                })
-            }
-        }
+    func finishGettingFollowingUsers(followingUsers: [UserProfile]) {
+        reloadDataIfNeeded(&DataStore.sharedInstance.followingUsers, newData: followingUsers)
+        isFinishedGettingFollowingUsers = false
     }
     
-    func showTempSecondSection() {
-        if let headerView = temporarySecondSectionHeaderView {
-            if headerView.frame.origin.y != 0 {
-                UIView.animateWithDuration(0.5, animations: { () -> Void in
-                    headerView.frame.origin.y = 0
-                })
-            }
+    func reloadDataIfNeeded<T: SequenceType>(inout oldData: T, newData: T) {
+        if DataStore.sharedInstance.isDataUpdated(oldData, newData: newData) {
+            oldData = newData
+            tableView.reloadData()
         }
     }
     
     // MARK: - Convenience
-    
-    func resetSection() {
-        showFirstSection()
-        showSecondSection()
-        removeTempSecondSection()
+    func getDataInitially() {
+        Utilities.showHUD()
+        // TODO: Delete get user profile if app delegate has user profile already
+        getCurrentUserProfile()
+        currentTab = .Post
+        getUserPosts()
+        getFollowers()
+        getFollowingUsers()
     }
     
-    func reloadData() {
-        resetSection()
-        reloadButton()
-        reloadSection(1)
-        Utilities.hideHUD()
+    func tapButton() {
+        tableView.reloadData()
+//        Utilities.showHUD()
+        switch currentTab {
+        case .Post:
+            getUserPosts()
+        case .Followers:
+            getFollowers()
+        case .Following:
+            getFollowingUsers()
+        }
     }
     
-    // MARK: - Datasource and delegate
-    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        return 2
-    }
-    
+    // MARK: - Data source and delegate
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return 1
-        } else {
-            switch currentTab {
-            case .Followers:
-                return followers.count
-            case .Following:
-                return followingUsers.count
-            default:
-                return userPosts.count
-            }
-        }
-    }
-    
-    func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
-        if section == 0 {
-            let firstSectionHeader = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView!.bounds.origin.x, tableView!.bounds.origin.y, tableView!.bounds.size.width, firstSectionHeaderHeight))
-            firstSectionHeader.parentVC = self
-            firstSectionHeader.tag = FIRST_HEADER_VIEW_TAG
-            return firstSectionHeader
-        } else {
-            let secondSectionHeader = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView!.bounds.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView!.bounds.size.width, secondSectionHeaderHeight), userProfile: currentUser!, parentViewController: self)
-            secondSectionHeader.buttonDelegate = self
-            secondSectionHeader.tag = SECOND_HEADER_VIEW_TAG
-            return secondSectionHeader
-        }
-    }
-    
-    func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return firstSectionHeaderHeight
-        } else {
-            return secondSectionHeaderHeight
+        switch currentTab {
+        case .Post:
+            return XAppDelegate.dataStore.userPosts.count
+        case .Followers:
+            return XAppDelegate.dataStore.followers.count
+        case .Following:
+            return XAppDelegate.dataStore.followingUsers.count
         }
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        if indexPath.section == 0 {
-            if let currentUser = currentUser {
-                let cell = ProfileFirstSectionCellNode(userProfile: currentUser)
-                return cell
-            }
-            return nil
-        } else {
-            switch currentTab {
-            case .Followers:
-                let follower = followers[indexPath.row] as UserProfile
-                let cell = ProfileFollowCellNode(user: follower, isFollowed: isFollowedArray[indexPath.row])
-                cell.followDelegate = self
-                return cell
-            case .Following:
-                let followingUser = followingUsers[indexPath.row] as UserProfile
-                let cell = ProfileFollowCellNode(user: followingUser)
-                return cell
-            default:
-                let userPost = userPosts[indexPath.row] as UserPost
-                let cell = ProfilePostCellNode(userPost: userPost)
-                return cell
-            }
+        switch currentTab {
+        case .Post:
+            let post = XAppDelegate.dataStore.userPosts[indexPath.row] as UserPost
+            return ProfilePostCellNode(userPost: post)
+        case .Followers:
+            let follower = XAppDelegate.dataStore.followers[indexPath.row] as UserProfile
+            let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
+//            cell.delegate
+            return cell
+        case .Following:
+            let followingUser = XAppDelegate.dataStore.followingUsers[indexPath.row] as UserProfile
+            return ProfileFollowCellNode(user: followingUser)
         }
     }
     
-    func didClickFollowButton(uid: Int) {
-        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
-            if let error = error {
-                
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.successfulFollow = true
-                    self.reloadFollowersDataSource()
-                    self.reloadFollowingDataSource()
-                })
-            }
-        })
+    func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
+        return secondSectionHeaderHeight
+    }
+    
+    func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
+        if let currentUser = currentUser {
+            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, secondSectionHeaderHeight), userProfile: currentUser, parentViewController: self)
+            view.delegate = self
+            return view
+        }
+        return nil
     }
     
     func didTapPostButton() {
         if currentTab != .Post {
             currentTab = .Post
-            reloadButton()
-            reloadPostDataSource()
+//            reloadButton()
+            tapButton()
         }
     }
     
     func didTapFollowersButton() {
         if currentTab != .Followers {
             currentTab = .Followers
-            reloadButton()
-            reloadFollowersDataSource()
+//            reloadButton()
+            tapButton()
         }
     }
     
     func didTapFollowingButton() {
         if currentTab != .Following {
             currentTab = .Following
-            reloadButton()
-            reloadFollowingDataSource()
+//            reloadButton()
+            tapButton()
         }
     }
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        let currentYOffset = scrollView.contentOffset.y
-        if let headerView = tableView?.viewWithTag(FIRST_HEADER_VIEW_TAG) as? ProfileFirstSectionHeaderView {
-            let position: CGFloat = max(currentYOffset, 0)
-            let percent: CGFloat = min(position / firstSectionCellHeight, 1)
-            headerView.addButton.alpha = 1 - percent
-            headerView.settingsButton.alpha = 1 - percent
-        }
-        
-        if currentYOffset >= firstSectionHeaderHeight + firstSectionCellHeight {
-            hideSecondSection()
-            addTempSecondSection()
-            
-            if previousScrollViewYOffsetIncreasing == nil {
-                previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
-            }
-            if beginningScrollViewYOffset == nil {
-                beginningScrollViewYOffset = currentYOffset
+    // MARK: - Temporary function
+    func getCurrentUserProfile() {
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+            if let error = error {
+                
             } else {
-                if (currentYOffset > previousScrollViewYOffset) != previousScrollViewYOffsetIncreasing {
-                    beginningScrollViewYOffset = currentYOffset
+                if result!.count > 0 {
+                    self.currentUser = result![0]
                 }
             }
-            let difference = abs(currentYOffset - beginningScrollViewYOffset!)
-            if currentYOffset + scrollView.frame.size.height >= scrollView.contentSize.height {
-                showTempSecondSection()
-                beginningScrollViewYOffset = nil
-            } else {
-                if difference >= secondSectionHeaderHeight {
-                    currentYOffset > previousScrollViewYOffset ? hideTempSecondSection() : showTempSecondSection()
-                }
-            }
-        } else {
-            showSecondSection()
-            removeTempSecondSection()
-            
-            beginningScrollViewYOffset = nil
-        }
-        
-        previousScrollViewYOffsetIncreasing = currentYOffset > previousScrollViewYOffset
-        previousScrollViewYOffset = currentYOffset
+        })
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
-        if tabBarController.selectedIndex == 4 {
-            switch currentTab {
-            case .Post:
-                reloadPostDataSource()
-            case .Followers:
-                reloadFollowersDataSource()
-            case .Following:
-                reloadFollowingDataSource()
-            }
-        }
-    }
 
     /*
     // MARK: - Navigation

@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ButtonDelegate {
+protocol ProfileTabDelegate {
     func didTapPostButton()
     func didTapFollowersButton()
     func didTapFollowingButton()
@@ -27,7 +27,7 @@ class ProfileSecondSectionHeaderView: UIView {
     let buttonHeight: CGFloat = 44
     let padding: CGFloat = 3
     let pictureSize: CGFloat = 30
-    var buttonDelegate: ButtonDelegate?
+    var delegate: ProfileTabDelegate?
     var parentViewController: ProfileViewController!
     let postButtonTitleLabel = "Post"
     let followersButtonTitleLabel = "Followers"
@@ -54,53 +54,55 @@ class ProfileSecondSectionHeaderView: UIView {
         
         configureButtonTitleLabel()
         
-        signInImageView = UIImageView()
-        signInImageView.layer.cornerRadius = self.pictureSize / 2
-        signInImageView.clipsToBounds = true
-        signInImageView.backgroundColor = UIColor.profileImagePurpleColor()
-        let url = NSURL(string: userProfile.imgURL)
-        let request = NSURLRequest(URL: url!)
-        let session = NSURLSession.sharedSession()
-        let task = session.downloadTaskWithRequest(request, completionHandler: { (location, response, error) -> Void in
-            if let error = error {
-                
-            } else {
-                let image = UIImage(data: NSData(contentsOfURL: location)!)
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.signInImageView.image = image
-                    self.signInImageView.sizeToFit()
-                })
-            }
-        })
-        task.resume()
-        addSubview(signInImageView)
-        
-        nameLabel = UILabel()
-        nameLabel.text = userProfile.name
-        nameLabel.font = UIFont.systemFontOfSize(13)
-        nameLabel.sizeToFit()
-        nameLabel.textColor = UIColor.whiteColor()
-        addSubview(nameLabel)
-        
-        horoscopeSignLabel = UILabel()
-        horoscopeSignLabel.text = HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign
-        horoscopeSignLabel.font = UIFont.systemFontOfSize(11)
-        horoscopeSignLabel.sizeToFit()
-        horoscopeSignLabel.textColor = UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1)
-        addSubview(horoscopeSignLabel)
-        
-        addButton = UIButton()
-        addButton.setImage(UIImage(named: "add_btn_small"), forState: UIControlState.Normal)
-        addButton.sizeToFit()
-        addSubview(addButton)
-        
-        settingsButton = UIButton()
-        settingsButton.setImage(UIImage(named: "settings_btn_small"), forState: UIControlState.Normal)
-        settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
-        settingsButton.sizeToFit()
-        addSubview(settingsButton)
-        
-        hide()
+        if parentViewController.profileType == ProfileType.CurrentUser {
+            signInImageView = UIImageView()
+            signInImageView.layer.cornerRadius = self.pictureSize / 2
+            signInImageView.clipsToBounds = true
+            signInImageView.backgroundColor = UIColor.profileImagePurpleColor()
+            let url = NSURL(string: userProfile.imgURL)
+            let request = NSURLRequest(URL: url!)
+            let session = NSURLSession.sharedSession()
+            let task = session.downloadTaskWithRequest(request, completionHandler: { (location, response, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    let image = UIImage(data: NSData(contentsOfURL: location)!)
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.signInImageView.image = image
+                        self.signInImageView.sizeToFit()
+                    })
+                }
+            })
+            task.resume()
+            addSubview(signInImageView)
+            
+            nameLabel = UILabel()
+            nameLabel.text = userProfile.name
+            nameLabel.font = UIFont.systemFontOfSize(13)
+            nameLabel.sizeToFit()
+            nameLabel.textColor = UIColor.whiteColor()
+            addSubview(nameLabel)
+            
+            horoscopeSignLabel = UILabel()
+            horoscopeSignLabel.text = HoroscopesManager.sharedInstance.getHoroscopesSigns()[userProfile.sign].sign
+            horoscopeSignLabel.font = UIFont.systemFontOfSize(11)
+            horoscopeSignLabel.sizeToFit()
+            horoscopeSignLabel.textColor = UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1)
+            addSubview(horoscopeSignLabel)
+            
+            addButton = UIButton()
+            addButton.setImage(UIImage(named: "add_btn_small"), forState: UIControlState.Normal)
+            addButton.sizeToFit()
+            addSubview(addButton)
+            
+            settingsButton = UIButton()
+            settingsButton.setImage(UIImage(named: "settings_btn_small"), forState: UIControlState.Normal)
+            settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
+            settingsButton.sizeToFit()
+            addSubview(settingsButton)
+            
+            hide()
+        }
     }
     
     override func layoutSubviews() {
@@ -138,13 +140,13 @@ class ProfileSecondSectionHeaderView: UIView {
             switch button {
             case postButton:
                 title = postButtonTitleLabel
-                number = parentViewController.userPosts.count
+                number = XAppDelegate.dataStore.userPosts.count
             case followersButton:
                 title = followersButtonTitleLabel
-                number = parentViewController.followers.count
+                number = XAppDelegate.dataStore.followers.count
             case followingButton:
                 title = followingButtonTitleLabel
-                number = parentViewController.followingUsers.count
+                number = XAppDelegate.dataStore.followingUsers.count
             default:
                 title = ""
                 number = 0
@@ -186,15 +188,15 @@ class ProfileSecondSectionHeaderView: UIView {
     }
     
     func postButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapPostButton()
+        delegate?.didTapPostButton()
     }
     
     func followersButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapFollowersButton()
+        delegate?.didTapFollowersButton()
     }
     
     func followingButtonTapped(sender: UIButton) {
-        buttonDelegate?.didTapFollowingButton()
+        delegate?.didTapFollowingButton()
     }
     
     func settingsButtonTapped(){
