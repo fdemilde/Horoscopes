@@ -30,7 +30,10 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var isFinishedGettingFollowers = false
     var isFinishedGettingFollowingUsers = false
     var isDataChanged = false
+    let firstSectionHeaderHeight: CGFloat = 54
+    let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
+    let secondSectionHeaderTag = 1
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -132,6 +135,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: - Action
     func login(sender: UIButton) {
+        Utilities.showHUD()
         SocialManager.sharedInstance.login { (error) -> Void in
             if let error = error {
                 
@@ -154,7 +158,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             } else {
                 self.isFinishedGettingUserPosts = true
                 if self.isFirstDataLoad {
-                    XAppDelegate.dataStore.userPosts = result!
+                    DataStore.sharedInstance.userPosts = result!
                     self.finishGettingDataInitially()
                 } else {
                     self.finishGettingUserPosts(result!)
@@ -170,7 +174,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             } else {
                 self.isFinishedGettingFollowers = true
                 if self.isFirstDataLoad {
-                    XAppDelegate.dataStore.followers = result!
+                    DataStore.sharedInstance.followers = result!
                     self.finishGettingDataInitially()
                 } else {
                     self.finishGettingFollowers(result!)
@@ -187,7 +191,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             } else {
                 self.isFinishedGettingFollowingUsers = true
                 if self.isFirstDataLoad {
-                    XAppDelegate.dataStore.followingUsers = result!
+                    DataStore.sharedInstance.followingUsers = result!
                     self.finishGettingDataInitially()
                 } else {
                     self.finishGettingFollowingUsers(result!)
@@ -204,6 +208,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
                 isFinishedGettingUserPosts = false
                 isFinishedGettingFollowers = false
                 isFinishedGettingFollowingUsers = false
+                tableView.hidden = false
                 Utilities.hideHUD()
             }
         }
@@ -224,16 +229,23 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         isFinishedGettingFollowingUsers = false
     }
     
-    func reloadDataIfNeeded<T: SequenceType>(inout oldData: T, newData: T) {
-        if DataStore.sharedInstance.isDataUpdated(oldData, newData: newData) {
-            oldData = newData
-            tableView.reloadData()
+    func reloadButton() {
+        if let headerView = tableView?.viewWithTag(secondSectionHeaderTag) as? ProfileSecondSectionHeaderView {
+            switch currentTab {
+            case .Post:
+                headerView.reloadButtonTitleLabel(headerView.postButton)
+            case .Followers:
+                headerView.reloadButtonTitleLabel(headerView.followersButton)
+            case .Following:
+                headerView.reloadButtonTitleLabel(headerView.followingButton)
+            }
         }
     }
     
     // MARK: - Convenience
     func getDataInitially() {
         Utilities.showHUD()
+        tableView.hidden = true
         // TODO: Delete get user profile if app delegate has user profile already
         getCurrentUserProfile()
         currentTab = .Post
@@ -242,8 +254,22 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
         getFollowingUsers()
     }
     
+    func reloadDataIfNeeded<T: SequenceType>(inout oldData: T, newData: T) {
+        if DataStore.sharedInstance.isDataUpdated(oldData, newData: newData) {
+            oldData = newData
+            reloadSection(1)
+        }
+    }
+    
+    func reloadSection(section: Int) {
+        let range = NSMakeRange(section, 1)
+        let section = NSIndexSet(indexesInRange: range)
+        tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
+    }
+    
     func tapButton() {
-        tableView.reloadData()
+        reloadButton()
+        reloadSection(1)
 //        Utilities.showHUD()
         switch currentTab {
         case .Post:
@@ -256,41 +282,65 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     // MARK: - Data source and delegate
+    func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
+        return 2
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            return 1
+        }
         switch currentTab {
         case .Post:
-            return XAppDelegate.dataStore.userPosts.count
+            return DataStore.sharedInstance.userPosts.count
         case .Followers:
-            return XAppDelegate.dataStore.followers.count
+            return DataStore.sharedInstance.followers.count
         case .Following:
-            return XAppDelegate.dataStore.followingUsers.count
+            return DataStore.sharedInstance.followingUsers.count
         }
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-        switch currentTab {
-        case .Post:
-            let post = XAppDelegate.dataStore.userPosts[indexPath.row] as UserPost
-            return ProfilePostCellNode(userPost: post)
-        case .Followers:
-            let follower = XAppDelegate.dataStore.followers[indexPath.row] as UserProfile
-            let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
-//            cell.delegate
-            return cell
-        case .Following:
-            let followingUser = XAppDelegate.dataStore.followingUsers[indexPath.row] as UserProfile
-            return ProfileFollowCellNode(user: followingUser)
+        if indexPath.section == 0 {
+            if let currentUser = currentUser {
+                let cell = ProfileFirstSectionCellNode(userProfile: currentUser)
+                return cell
+            }
+            return ASCellNode()
+        } else {
+            switch currentTab {
+            case .Post:
+                let post = DataStore.sharedInstance.userPosts[indexPath.row] as UserPost
+                return ProfilePostCellNode(userPost: post)
+            case .Followers:
+                let follower = DataStore.sharedInstance.followers[indexPath.row] as UserProfile
+                let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
+                //            cell.delegate
+                return cell
+            case .Following:
+                let followingUser = DataStore.sharedInstance.followingUsers[indexPath.row] as UserProfile
+                return ProfileFollowCellNode(user: followingUser)
+            }
         }
     }
     
     func tableView(tableView: UITableView!, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 0 {
+            return firstSectionHeaderHeight
+        }
         return secondSectionHeaderHeight
     }
     
     func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
+        if section == 0 {
+            let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight))
+            view.parentVC = self
+            return view
+        }
         if let currentUser = currentUser {
-            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, secondSectionHeaderHeight), userProfile: currentUser, parentViewController: self)
+            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: currentUser, parentViewController: self)
             view.delegate = self
+            view.tag = secondSectionHeaderTag
             return view
         }
         return nil

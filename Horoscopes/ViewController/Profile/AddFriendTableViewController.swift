@@ -156,7 +156,7 @@ class AddFriendTableViewController : MyTableViewController, UITableViewDelegate,
     
     // after get friend list, should loop through the list and check if user is following or not
     func checkAndAddToFollowingArray(uid : Int){
-        for user in XAppDelegate.dataStore.followingUsers{
+        for user in DataStore.sharedInstance.followingUsers{
             if(user.uid == uid){
                 followingCheckArray.append(true)
                 return
