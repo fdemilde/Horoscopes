@@ -31,6 +31,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
     var startPositionY = 0 as CGFloat
+    var currentPage = 0
     
     @IBOutlet weak var globalButtonPosYConstraint : NSLayoutConstraint!
     
@@ -54,7 +55,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshViewWithNewData:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        currentPage = 0
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "globalFeedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "followingFeedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         
     }
@@ -78,7 +80,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     // MARK: Notification Handlers
     
-    func refreshViewWithNewData(notif : NSNotification){
+    func globalFeedsFinishedLoading(notif : NSNotification){
         if(notif.object == nil){
             Utilities.showAlertView(self,title: "",message: "No feeds available")
         } else {
@@ -87,9 +89,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             userPostArray = newDataArray
             dispatch_async(dispatch_get_main_queue(),{
                 self.tableReloadDataWithAnimation()
-                
             })
-            
         }
         Utilities.hideHUD()
     }
@@ -105,7 +105,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             var followingPostArray = notif.object as! [UserPost]
             self.userPostArray = followingPostArray
             self.tableReloadDataWithAnimation()
-            
         }
         
     }
@@ -114,17 +113,19 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
         if(self.tabType != NewsfeedTabType.Global){
+            currentPage = 0
             self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
             userPostArray = XAppDelegate.dataStore.newsfeedGlobal
             tableView.reloadData()
         }
-        XAppDelegate.socialManager.getGlobalNewsfeed(0)
+        XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
         if(self.tabType != NewsfeedTabType.Following){
+            currentPage = 0
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
@@ -135,7 +136,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             }
         } else {
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
-                XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
                 tableView.reloadData()
             }
@@ -174,7 +175,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
 //        println("tableView tableView nodeForRowAtIndexPath \([indexPath.row])")
         var post = userPostArray[indexPath.row] as UserPost
-        var cell = NewsfeedCellNode(post: post)
+        var cell = PostCellNode(post: post, type: PostCellType.Newsfeed)
         return cell
     }
     
@@ -214,12 +215,13 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func tableReloadDataWithAnimation(){
-//        self.tableView.beginUpdates()
-//        var range = NSMakeRange(0, self.tableView.numberOfSections());
-//        var sections = NSIndexSet(indexesInRange: range);
-//        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.None)
-//        self.tableView.endUpdates()
-        self.tableView.reloadData()
+        self.tableView.beginUpdates()
+        var range = NSMakeRange(0, self.tableView.numberOfSections());
+        var sections = NSIndexSet(indexesInRange: range);
+        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
+//        self.tableView.reloadRowsAtIndexPaths(tableView.indexPathsForVisibleRows(), withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.endUpdates()
+//        self.tableView.reloadData()
     }
     
     func clearEmptyTableBackground(){
@@ -238,7 +240,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
 //                    println("Did unfollow")
 //                })
                 XAppDelegate.locationManager.setupLocationService()
-                    XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                    XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             }
         })
     }
@@ -256,7 +258,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                         dispatch_async(dispatch_get_main_queue(),{
                             println("Newsfeed Following setupLocationService ")
                             XAppDelegate.locationManager.setupLocationService()
-                            XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                         })
                     }
                 })
@@ -268,87 +270,19 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     // MARK: Button Hide/show
     
-//    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-//        startPositionY = scrollView.contentOffset.y
-//    }
-//    
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        var moveDistance = 0 as CGFloat
-//        var currentYPosition = scrollView.contentOffset.y
-//        if currentYPosition < (startPositionY - 20) {
-//            setButtonsVisible(true, animated : true)
-//        } else if currentYPosition > (startPositionY + 20){
-//            setButtonsVisible(false, animated : true)
-//        }
-//        
-//    }
-//    
-//    func setButtonsVisible(visible : Bool, animated : Bool){
-//        if(self.buttonIsVisible() == visible){
-//            return
-//        }
-//        
-//        var followingFrame = self.followingButton.frame
-//        var globalFrame = self.globalButton.frame
-//        var height = followingFrame.size.height
-//        var offsetY = 0 as CGFloat
-//        var tableFrame = self.tableView.frame
-//        if(visible){
-//            offsetY = height
-//        } else {
-//            offsetY = -height
-////            tableFrame = 
-//        }
-//        
-//        var duration = 0.0 as NSTimeInterval
-//        if(animated){
-//            duration = 0.3
-//        } else { duration = 0.0 }
-//        
-//        UIView.animateWithDuration(duration, animations: { () -> Void in
-//            self.followingButton.frame = CGRectOffset(followingFrame, 0, offsetY)
-//            self.globalButton.frame = CGRectOffset(globalFrame, 0, offsetY)
-//        })
-//    }
-//    
-//    func buttonIsVisible() -> Bool{
-//        return self.followingButton.frame.origin.y >= 50
-//    }
-//    
-//    func moveButtonsDown(moveDistance : CGFloat){
-//        var MAX_POS_Y_CONSTRAINT = 18 as CGFloat
-//        var MIN_POS_Y_CONSTRAINT = -self.followingButton.frame.height-10
-//        var maxDistance = MAX_POS_Y_CONSTRAINT - MIN_POS_Y_CONSTRAINT
-//        
-//        if(self.followingPosYConstraint.constant +  moveDistance > MAX_POS_Y_CONSTRAINT){
-//            followingPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
-//            globalButtonPosYConstraint.constant = MAX_POS_Y_CONSTRAINT
-//            self.followingButton.alpha = 1
-//            self.globalButton.alpha = 1
-//        } else {
-//            self.followingPosYConstraint.constant += moveDistance
-//            self.globalButtonPosYConstraint.constant += moveDistance
-//            var alphaChange = moveDistance / maxDistance * 1
-//            self.followingButton.alpha = self.followingButton.alpha + alphaChange
-//            self.globalButton.alpha = self.followingButton.alpha + alphaChange
-//        }
-//    }
-//    
-//    func moveButtonsUp(moveDistance : CGFloat) {
-//        var MAX_POS_Y_CONSTRAINT = 18 as CGFloat
-//        var MIN_POS_Y_CONSTRAINT = -self.followingButton.frame.height-10 // padding
-//        var maxDistance = MAX_POS_Y_CONSTRAINT - MIN_POS_Y_CONSTRAINT
-//        if(self.followingPosYConstraint.constant -  moveDistance < MIN_POS_Y_CONSTRAINT){
-//            followingPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
-//            globalButtonPosYConstraint.constant = MIN_POS_Y_CONSTRAINT
-//            self.followingButton.alpha = 0.01
-//            self.globalButton.alpha = 0.01
-//        } else {
-//            var alphaChange = moveDistance / maxDistance * 1.5
-//            self.followingPosYConstraint.constant -= moveDistance
-//            self.globalButtonPosYConstraint.constant -= moveDistance
-//            self.followingButton.alpha = max(self.followingButton.alpha - alphaChange, 0.01)
-//            self.globalButton.alpha = max(self.followingButton.alpha - alphaChange, 0.01)
-//        }
-//    }
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var currentOffset = scrollView.contentOffset.y;
+        var maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if (maximumOffset - currentOffset <= -40) {
+            self.currentPage++
+            
+            if(self.tabType == NewsfeedTabType.Following){
+                XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
+            } else {
+                XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
+            }
+            
+        }
+    }
 }
