@@ -35,7 +35,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
-    var requestCount = 0
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -160,7 +159,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
-                self.requestCount++
                 self.isFinishedGettingUserPosts = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.userPosts = result!
@@ -177,7 +175,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
-                self.requestCount++
                 self.isFinishedGettingFollowers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followers = result!
@@ -195,7 +192,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
-                self.requestCount++
                 self.isFinishedGettingFollowingUsers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followingUsers = result!
@@ -210,7 +206,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func finishGettingDataInitially() {
         if isFirstDataLoad {
             if isFinishedGettingUserPosts && isFinishedGettingFollowers && isFinishedGettingFollowingUsers {
-                println("request count: \(requestCount)")
                 tableView.reloadData()
                 isFirstDataLoad = false
                 isFinishedGettingUserPosts = false
@@ -309,7 +304,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
             if let userProfile = DataStore.sharedInstance.currentUserProfile {
-                println("has current user profile")
                 let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
                 return cell
             }

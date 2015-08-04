@@ -95,18 +95,18 @@ class ProfileSecondSectionHeaderView: UIView {
             horoscopeSignLabel.frame = CGRectMake(22 + pictureSize + padding, padding + nameLabel.bounds.height, horoscopeSignLabel.bounds.width, horoscopeSignLabel.bounds.height)
             addSubview(horoscopeSignLabel)
             
-            addButton = UIButton()
-            addButton.setImage(UIImage(named: "add_btn_small"), forState: UIControlState.Normal)
-            addButton.sizeToFit()
-            addButton.frame = CGRectMake(bounds.width - addButton.bounds.width - settingsButton.bounds.width - padding*2, padding, addButton.bounds.width, addButton.bounds.height)
-            addSubview(addButton)
-            
             settingsButton = UIButton()
             settingsButton.setImage(UIImage(named: "settings_btn_small"), forState: UIControlState.Normal)
             settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
             settingsButton.sizeToFit()
             settingsButton.frame = CGRectMake(bounds.width - settingsButton.bounds.width - padding, padding, settingsButton.bounds.width, settingsButton.bounds.height)
             addSubview(settingsButton)
+            
+            addButton = UIButton()
+            addButton.setImage(UIImage(named: "add_btn_small"), forState: UIControlState.Normal)
+            addButton.sizeToFit()
+            addButton.frame = CGRectMake(bounds.width - addButton.bounds.width - settingsButton.bounds.width - padding*2, padding, addButton.bounds.width, addButton.bounds.height)
+            addSubview(addButton)
             
             hide()
         } else {
