@@ -31,6 +31,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
     var startPositionY = 0 as CGFloat
+    var currentPage = 0
     
     @IBOutlet weak var globalButtonPosYConstraint : NSLayoutConstraint!
     
@@ -54,6 +55,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        currentPage = 0
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshViewWithNewData:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "followingFeedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         
@@ -105,7 +107,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             var followingPostArray = notif.object as! [UserPost]
             self.userPostArray = followingPostArray
             self.tableReloadDataWithAnimation()
-            
         }
         
     }
@@ -114,17 +115,19 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBAction func selectSignBtnTapped(sender: AnyObject) {
         if(self.tabType != NewsfeedTabType.Global){
+            currentPage = 0
             self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
             userPostArray = XAppDelegate.dataStore.newsfeedGlobal
             tableView.reloadData()
         }
-        XAppDelegate.socialManager.getGlobalNewsfeed(0)
+        XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
         if(self.tabType != NewsfeedTabType.Following){
+            currentPage = 0
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
@@ -135,7 +138,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             }
         } else {
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
-                XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
                 tableView.reloadData()
             }
@@ -214,12 +217,13 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func tableReloadDataWithAnimation(){
-//        self.tableView.beginUpdates()
-//        var range = NSMakeRange(0, self.tableView.numberOfSections());
-//        var sections = NSIndexSet(indexesInRange: range);
-//        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.None)
-//        self.tableView.endUpdates()
-        self.tableView.reloadData()
+        self.tableView.beginUpdates()
+        var range = NSMakeRange(0, self.tableView.numberOfSections());
+        var sections = NSIndexSet(indexesInRange: range);
+        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
+//        self.tableView.reloadRowsAtIndexPaths(tableView.indexPathsForVisibleRows(), withRowAnimation: UITableViewRowAnimation.Fade)
+        self.tableView.endUpdates()
+//        self.tableView.reloadData()
     }
     
     func clearEmptyTableBackground(){
@@ -238,7 +242,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
 //                    println("Did unfollow")
 //                })
                 XAppDelegate.locationManager.setupLocationService()
-                    XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                    XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             }
         })
     }
@@ -256,7 +260,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                         dispatch_async(dispatch_get_main_queue(),{
                             println("Newsfeed Following setupLocationService ")
                             XAppDelegate.locationManager.setupLocationService()
-                            XAppDelegate.socialManager.getFollowingNewsfeed(0)
+                            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                         })
                     }
                 })
@@ -267,6 +271,21 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     // MARK: Button Hide/show
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        var currentOffset = scrollView.contentOffset.y;
+        var maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
+        
+        if (maximumOffset - currentOffset <= -40) {
+            self.currentPage++
+            if(self.tabType == NewsfeedTabType.Following){
+                XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
+            } else {
+                XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
+            }
+            
+        }
+    }
     
 //    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
 //        startPositionY = scrollView.contentOffset.y

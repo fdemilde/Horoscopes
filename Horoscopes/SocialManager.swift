@@ -46,7 +46,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         })
     }
     
-    func getGlobalNewsfeed(pageNo : Int){
+    func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool){
         if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
             Utilities.showHUD()
         }
@@ -65,18 +65,22 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     println("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    
+//                    println("result == \(result)")
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
-                    XAppDelegate.dataStore.updateNewsfeedGlobalData(feedsArray)
+                    if(isAddingData){
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global)
+                    } else {
+                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Global)
+                    }
                 }
             }
             
         })
     }
     
-    func getFollowingNewsfeed(pageNo : Int){
+    func getFollowingNewsfeed(pageNo : Int, isAddingData : Bool){
         if(XAppDelegate.dataStore.newsfeedFollowing.count == 0){
             Utilities.showHUD()
         }
@@ -96,13 +100,17 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
-                    
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 } else { // no error
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
-                    XAppDelegate.dataStore.updateNewsfeedFollowingData(feedsArray)
+                    if(isAddingData){
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following)
+                    } else {
+                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Following)
+                    }
+                    
                 }
             }
             
