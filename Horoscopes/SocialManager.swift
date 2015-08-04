@@ -399,6 +399,16 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                             if let error = error {
                                 completionHandler(error: error)
                             } else {
+                                let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+                                self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+                                    if let error = error {
+                                        
+                                    } else {
+                                        if result!.count > 0 {
+                                            DataStore.sharedInstance.currentUserProfile = result![0]
+                                        }
+                                    }
+                                })
                                 println("Social Manager Following setupLocationService ")
                                 XAppDelegate.locationManager.setupLocationService()
                                 completionHandler(error: nil)

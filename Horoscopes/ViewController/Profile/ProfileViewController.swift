@@ -13,10 +13,10 @@ enum ProfileType {
     case OtherUser
 }
 
-class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileTabDelegate {
+class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileTabDelegate {
     
     var profileType: ProfileType!
-    var currentUser: UserProfile?
+//    var currentUser: UserProfile?
     enum Tab {
         case Post
         case Followers
@@ -25,6 +25,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     var currentTab = Tab.Post
     var backgroundImage: UIImage!
     var tableView: ASTableView!
+//    var headerFrame = CGRectZero
     var isFirstDataLoad = true
     var isFinishedGettingUserPosts = false
     var isFinishedGettingFollowers = false
@@ -34,6 +35,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
+    var requestCount = 0
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -66,7 +68,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     override func viewWillLayoutSubviews() {
 //        println("viewWillLayoutSubviews")
-        tableView.frame = view.bounds
+        tableView.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
+//        tableView.frame = view.bounds
+//        println("\(view.frame.origin.y)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -93,7 +97,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func configureTableView() {
         tableView = ASTableView(frame: CGRectZero, style: UITableViewStyle.Plain, asyncDataFetching: false)
-//        tableView.frame = view.bounds
         tableView.asyncDataSource = self
         tableView.asyncDelegate = self
         tableView.showsHorizontalScrollIndicator = false
@@ -110,7 +113,8 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func configureLoginView() {
 //        println("configureLoginView")
-        let headerFrame = UIScreen.mainScreen().bounds
+//        let headerFrame = CGRectMake(view.bounds.origin.x, view.bounds.origin.y + ADMOD_HEIGHT, view.bounds.width, view.bounds.height - ADMOD_HEIGHT)
+        let headerFrame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
         let headerView = UIView(frame: headerFrame)
         let padding: CGFloat = 8
         tableView.tableHeaderView = headerView
@@ -156,6 +160,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
+                self.requestCount++
                 self.isFinishedGettingUserPosts = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.userPosts = result!
@@ -172,6 +177,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
+                self.requestCount++
                 self.isFinishedGettingFollowers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followers = result!
@@ -189,6 +195,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
+                self.requestCount++
                 self.isFinishedGettingFollowingUsers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followingUsers = result!
@@ -203,6 +210,7 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func finishGettingDataInitially() {
         if isFirstDataLoad {
             if isFinishedGettingUserPosts && isFinishedGettingFollowers && isFinishedGettingFollowingUsers {
+                println("request count: \(requestCount)")
                 tableView.reloadData()
                 isFirstDataLoad = false
                 isFinishedGettingUserPosts = false
@@ -246,8 +254,6 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     func getDataInitially() {
         Utilities.showHUD()
         tableView.hidden = true
-        // TODO: Delete get user profile if app delegate has user profile already
-        getCurrentUserProfile()
         currentTab = .Post
         getUserPosts()
         getFollowers()
@@ -302,8 +308,9 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if let currentUser = currentUser {
-                let cell = ProfileFirstSectionCellNode(userProfile: currentUser)
+            if let userProfile = DataStore.sharedInstance.currentUserProfile {
+                println("has current user profile")
+                let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
                 return cell
             }
             return ASCellNode()
@@ -333,12 +340,11 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: UITableView!, viewForHeaderInSection section: Int) -> UIView! {
         if section == 0 {
-            let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight))
-            view.parentVC = self
+            let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight), parentViewController: self)
             return view
         }
-        if let currentUser = currentUser {
-            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: currentUser, parentViewController: self)
+        if let userProfile = DataStore.sharedInstance.currentUserProfile {
+            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
             view.delegate = self
             view.tag = secondSectionHeaderTag
             return view
@@ -371,18 +377,18 @@ class ProfileViewController: UIViewController, ASTableViewDataSource, ASTableVie
     }
     
     // MARK: - Temporary function
-    func getCurrentUserProfile() {
-        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
-            if let error = error {
-                
-            } else {
-                if result!.count > 0 {
-                    self.currentUser = result![0]
-                }
-            }
-        })
-    }
+//    func getCurrentUserProfile() {
+//        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+//        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+//            if let error = error {
+//                
+//            } else {
+//                if result!.count > 0 {
+//                    self.currentUser = result![0]
+//                }
+//            }
+//        })
+//    }
     
 
     /*

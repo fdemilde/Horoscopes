@@ -3303,14 +3303,37 @@
                     <view key="view" contentMode="scaleToFill" id="JDV-9k-7ru">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qyY-ye-wiG">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="cFX-ol-3Ki"/>
+                                    <constraint firstAttribute="height" constant="50" id="unO-bH-qS8"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="cFX-ol-3Ki"/>
+                                    </mask>
+                                </variation>
+                            </view>
+                        </subviews>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="qyY-ye-wiG" firstAttribute="top" secondItem="yBF-jZ-EQQ" secondAttribute="bottom" id="Rgs-Ui-QvN"/>
+                            <constraint firstAttribute="trailing" secondItem="qyY-ye-wiG" secondAttribute="trailing" id="W18-Dq-3gC"/>
+                            <constraint firstItem="qyY-ye-wiG" firstAttribute="leading" secondItem="JDV-9k-7ru" secondAttribute="leading" id="xhr-dN-cEQ"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="tabbar_profile.png" id="qIl-2J-Yrn"/>
                     <navigationItem key="navigationItem" id="VVY-Tu-8VC"/>
+                    <connections>
+                        <outlet property="headerView" destination="qyY-ye-wiG" id="0Z9-16-Ecb"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vna-aU-mef" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1395" y="2041.5"/>
+            <point key="canvasLocation" x="1395" y="2041"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="Bfs-mB-ZVB">

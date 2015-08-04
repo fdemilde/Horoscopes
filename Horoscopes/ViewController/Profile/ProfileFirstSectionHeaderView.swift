@@ -12,25 +12,36 @@ class ProfileFirstSectionHeaderView: UIView {
     
     var addButton: UIButton!
     var settingsButton: UIButton!
+    var backButton: UIButton?
     let margin: CGFloat = 10
     let buttonHeight: CGFloat = 44
     var parentVC : ProfileViewController!
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, parentViewController: ProfileViewController) {
         super.init(frame: frame)
-        addButton = UIButton()
-        addButton.setImage(UIImage(named: "add_btn"), forState: UIControlState.Normal)
-        addButton.sizeToFit()
-        addButton.frame = CGRectMake(margin, margin, addButton.bounds.size.width, buttonHeight)
-        addButton.addTarget(self, action: "addFriendButtonTapped", forControlEvents: .TouchUpInside)
-        addSubview(addButton)
-        
-        settingsButton = UIButton()
-        settingsButton.setImage(UIImage(named: "settings_btn"), forState: UIControlState.Normal)
-        settingsButton.sizeToFit()
-        settingsButton.frame = CGRectMake(bounds.size.width - settingsButton.bounds.size.width - margin, margin, settingsButton.bounds.size.width, buttonHeight)
-        settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
-        addSubview(settingsButton)
+        self.parentVC = parentViewController
+        if parentViewController.profileType == ProfileType.CurrentUser {
+            addButton = UIButton()
+            addButton.setImage(UIImage(named: "add_btn"), forState: UIControlState.Normal)
+            addButton.sizeToFit()
+            addButton.frame = CGRectMake(margin, margin, addButton.bounds.size.width, buttonHeight)
+            addButton.addTarget(self, action: "addFriendButtonTapped", forControlEvents: .TouchUpInside)
+            addSubview(addButton)
+            
+            settingsButton = UIButton()
+            settingsButton.setImage(UIImage(named: "settings_btn"), forState: UIControlState.Normal)
+            settingsButton.sizeToFit()
+            settingsButton.frame = CGRectMake(bounds.size.width - settingsButton.bounds.size.width - margin, margin, settingsButton.bounds.size.width, buttonHeight)
+            settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
+            addSubview(settingsButton)
+        } else {
+            backButton = UIButton()
+            backButton?.setImage(UIImage(named: "back_button"), forState: .Normal)
+            backButton?.sizeToFit()
+            backButton?.frame = CGRectMake(margin, margin, backButton!.frame.width, backButton!.frame.height)
+            backButton?.addTarget(self, action: "backButtonTapped:", forControlEvents: .TouchUpInside)
+            addSubview(backButton!)
+        }
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -60,6 +71,10 @@ class ProfileFirstSectionHeaderView: UIView {
         addFriendVC.parentVC = parentVC
         self.parentVC.navigationController?.pushViewController(addFriendVC, animated: true)
 //        Utilities.showFormSheet(addFriendVC, fromVC: parentVC)
+    }
+    
+    func backButtonTapped(sender: UIButton) {
+        removeFromSuperview()
     }
     
     /*

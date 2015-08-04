@@ -19,6 +19,7 @@ class ProfileSecondSectionHeaderView: UIView {
     var postButton: UIButton!
     var followingButton: UIButton!
     var followersButton: UIButton!
+    var followButton: UIButton?
     var signInImageView: UIImageView!
     var nameLabel: UILabel!
     var horoscopeSignLabel: UILabel!
@@ -27,6 +28,7 @@ class ProfileSecondSectionHeaderView: UIView {
     let buttonHeight: CGFloat = 44
     let padding: CGFloat = 3
     let pictureSize: CGFloat = 30
+    let buttonOriginY: CGFloat = 36
     var delegate: ProfileTabDelegate?
     var parentViewController: ProfileViewController!
     let postButtonTitleLabel = "Post"
@@ -38,17 +40,17 @@ class ProfileSecondSectionHeaderView: UIView {
         self.parentViewController = parentViewController
         
         postButton = UIButton()
-        postButton.frame = CGRectMake(0, 36, bounds.size.width / 3, buttonHeight)
+        postButton.frame = CGRectMake(0, buttonOriginY, bounds.size.width / 3, buttonHeight)
         postButton.addTarget(self, action: "postButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         configureButton(postButton)
         
         followersButton = UIButton()
-        followersButton.frame = CGRectMake(bounds.size.width / 3, 36, bounds.size.width / 3, buttonHeight)
+        followersButton.frame = CGRectMake(bounds.size.width / 3, buttonOriginY, bounds.size.width / 3, buttonHeight)
         followersButton.addTarget(self, action: "followersButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         configureButton(followersButton)
         
         followingButton = UIButton()
-        followingButton.frame = CGRectMake(bounds.size.width / 3 * 2, 36, bounds.size.width / 3, buttonHeight)
+        followingButton.frame = CGRectMake(bounds.size.width / 3 * 2, buttonOriginY, bounds.size.width / 3, buttonHeight)
         followingButton.addTarget(self, action: "followingButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         configureButton(followingButton)
         
@@ -74,6 +76,7 @@ class ProfileSecondSectionHeaderView: UIView {
                 }
             })
             task.resume()
+            signInImageView.frame = CGRectMake(15, padding, pictureSize, pictureSize)
             addSubview(signInImageView)
             
             nameLabel = UILabel()
@@ -81,6 +84,7 @@ class ProfileSecondSectionHeaderView: UIView {
             nameLabel.font = UIFont.systemFontOfSize(13)
             nameLabel.sizeToFit()
             nameLabel.textColor = UIColor.whiteColor()
+            nameLabel.frame = CGRectMake(22 + pictureSize + padding, padding, nameLabel.bounds.width, nameLabel.bounds.height)
             addSubview(nameLabel)
             
             horoscopeSignLabel = UILabel()
@@ -88,31 +92,30 @@ class ProfileSecondSectionHeaderView: UIView {
             horoscopeSignLabel.font = UIFont.systemFontOfSize(11)
             horoscopeSignLabel.sizeToFit()
             horoscopeSignLabel.textColor = UIColor(red: 190/255.0, green: 196/255.0, blue: 239/255.0, alpha: 1)
+            horoscopeSignLabel.frame = CGRectMake(22 + pictureSize + padding, padding + nameLabel.bounds.height, horoscopeSignLabel.bounds.width, horoscopeSignLabel.bounds.height)
             addSubview(horoscopeSignLabel)
             
             addButton = UIButton()
             addButton.setImage(UIImage(named: "add_btn_small"), forState: UIControlState.Normal)
             addButton.sizeToFit()
+            addButton.frame = CGRectMake(bounds.width - addButton.bounds.width - settingsButton.bounds.width - padding*2, padding, addButton.bounds.width, addButton.bounds.height)
             addSubview(addButton)
             
             settingsButton = UIButton()
             settingsButton.setImage(UIImage(named: "settings_btn_small"), forState: UIControlState.Normal)
             settingsButton.addTarget(self, action: "settingsButtonTapped", forControlEvents: .TouchUpInside)
             settingsButton.sizeToFit()
+            settingsButton.frame = CGRectMake(bounds.width - settingsButton.bounds.width - padding, padding, settingsButton.bounds.width, settingsButton.bounds.height)
             addSubview(settingsButton)
             
             hide()
         } else {
-            
+            followButton = UIButton()
+            followButton?.setImage(UIImage(named: "friend_follow"), forState: .Normal)
+            followButton?.sizeToFit()
+            followButton?.frame = CGRectMake(frame.width/2 - followButton!.frame.width/2, buttonOriginY/2 - followButton!.frame.height/2, followButton!.frame.width, followButton!.frame.height)
+            addSubview(followButton!)
         }
-    }
-    
-    override func layoutSubviews() {
-        signInImageView.frame = CGRectMake(15, padding, pictureSize, pictureSize)
-        nameLabel.frame = CGRectMake(22 + pictureSize + padding, padding, nameLabel.bounds.width, nameLabel.bounds.height)
-        horoscopeSignLabel.frame = CGRectMake(22 + pictureSize + padding, padding + nameLabel.bounds.height, horoscopeSignLabel.bounds.width, horoscopeSignLabel.bounds.height)
-        addButton.frame = CGRectMake(bounds.width - addButton.bounds.width - settingsButton.bounds.width - padding*2, padding, addButton.bounds.width, addButton.bounds.height)
-        settingsButton.frame = CGRectMake(bounds.width - settingsButton.bounds.width - padding, padding, settingsButton.bounds.width, settingsButton.bounds.height)
     }
     
     func configureButton(button: UIButton) {
