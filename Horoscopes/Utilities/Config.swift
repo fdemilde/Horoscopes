@@ -112,6 +112,13 @@ enum NewsfeedTabType {
     case Following
 }
 
+// Post cell type
+
+enum PostCellType {
+    case Newsfeed
+    case Profile
+}
+
 // settings
 
 enum SettingsType {

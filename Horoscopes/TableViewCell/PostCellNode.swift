@@ -1,5 +1,5 @@
 //
-//  NewsfeedCellNode.swift
+//  PostCellNode.swift
 //  Horoscopes
 //
 //  Created by Binh Dang on 7/1/15.
@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewsfeedCellNode : ASCellNode {
+class PostCellNode : ASCellNode {
     
     let BG_PADDING_LEFT = 30 as CGFloat
     let BG_PADDING_RIGHT = 5 as CGFloat
@@ -48,6 +48,7 @@ class NewsfeedCellNode : ASCellNode {
     var shareButton : UIButton?
     
     var userPost : UserPost?
+    var type = PostCellType.Newsfeed
     
     init(post : UserPost){
         super.init()
@@ -61,6 +62,11 @@ class NewsfeedCellNode : ASCellNode {
         self.createFeedHeartTextNode()
         self.createSeparator()
         self.createButtons()
+    }
+    
+    convenience init(post : UserPost, type : PostCellType){
+        self.init(post : post)
+        self.type = type
     }
     
     // MARK: create components
@@ -191,9 +197,17 @@ class NewsfeedCellNode : ASCellNode {
         background!.view.addSubview(shareButton!)
         background?.layer.cornerRadius = 5
         background?.layer.masksToBounds = true
-        self.feedTypeImageNode!.frame = CGRectMake(TYPE_IMAGE_PADDING_LEFT, TYPE_IMAGE_PADDING_TOP, TYPE_IMAGE_WIDTH, TYPE_IMAGE_HEIGHT)
         
-        var backgroundXPosition = self.feedTypeImageNode!.frame.origin.x + self.feedTypeImageNode!.frame.width + 5
+        var backgroundXPosition = 0 as CGFloat
+        
+        if(self.type == PostCellType.Newsfeed){
+            self.feedTypeImageNode!.frame = CGRectMake(TYPE_IMAGE_PADDING_LEFT, TYPE_IMAGE_PADDING_TOP, TYPE_IMAGE_WIDTH, TYPE_IMAGE_HEIGHT)
+            
+            backgroundXPosition = self.feedTypeImageNode!.frame.origin.x + self.feedTypeImageNode!.frame.width + 5
+        } else {
+            
+        }
+        
         self.background?.frame = CGRectMake(backgroundXPosition, 0, Utilities.getScreenSize().width - backgroundXPosition - 5, self.calculatedSize.height - 10)
         
         self.profilePicture!.frame = CGRectMake(10, 10, PROFILE_IMAGE_WIDTH, PROFILE_IMAGE_HEIGHT)
