@@ -308,7 +308,8 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             switch currentTab {
             case .Post:
                 let post = DataStore.sharedInstance.userPosts[indexPath.row] as UserPost
-                return ProfilePostCellNode(userPost: post)
+                return PostCellNode(post: post, type: .Profile)
+//                return ProfilePostCellNode(userPost: post)
             case .Followers:
                 let follower = DataStore.sharedInstance.followers[indexPath.row] as UserProfile
                 let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
