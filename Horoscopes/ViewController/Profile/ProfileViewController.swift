@@ -16,7 +16,6 @@ enum ProfileType {
 class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileTabDelegate {
     
     var profileType: ProfileType!
-//    var currentUser: UserProfile?
     enum Tab {
         case Post
         case Followers
@@ -25,7 +24,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     var currentTab = Tab.Post
     var backgroundImage: UIImage!
     var tableView: ASTableView!
-//    var headerFrame = CGRectZero
     var isFirstDataLoad = true
     var isFinishedGettingUserPosts = false
     var isFinishedGettingFollowers = false
@@ -68,8 +66,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     override func viewWillLayoutSubviews() {
 //        println("viewWillLayoutSubviews")
         tableView.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
-//        tableView.frame = view.bounds
-//        println("\(view.frame.origin.y)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -303,8 +299,8 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if let userProfile = DataStore.sharedInstance.currentUserProfile {
-                let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
+            if XAppDelegate.currentUser?.uid != -1 {
+                let cell = ProfileFirstSectionCellNode(userProfile: XAppDelegate.currentUser!)
                 return cell
             }
             return ASCellNode()
@@ -337,8 +333,8 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight), parentViewController: self)
             return view
         }
-        if let userProfile = DataStore.sharedInstance.currentUserProfile {
-            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
+        if XAppDelegate.currentUser?.uid != -1 {
+            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: XAppDelegate.currentUser!, parentViewController: self)
             view.delegate = self
             view.tag = secondSectionHeaderTag
             return view

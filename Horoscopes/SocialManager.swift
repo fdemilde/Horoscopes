@@ -410,16 +410,18 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                                 let uid = XAppDelegate.mobilePlatform.userCred.getUid()
                                 self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
                                     if let error = error {
-                                        
+                                        completionHandler(error: error)
                                     } else {
                                         if result!.count > 0 {
-                                            DataStore.sharedInstance.currentUserProfile = result![0]
+                                            let userProfile = result![0]
+                                            XAppDelegate.currentUser = userProfile
+                                            NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
+                                            completionHandler(error: nil)
                                         }
                                     }
                                 })
-                                println("Social Manager Following setupLocationService ")
+//                                println("Social Manager Following setupLocationService ")
                                 XAppDelegate.locationManager.setupLocationService()
-                                completionHandler(error: nil)
                             }
                         })
                     }

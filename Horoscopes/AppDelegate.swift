@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
 //        horoscopesManager.getAllHoroscopes(false)
-        currentUser = UserProfile()
+        currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         router = mobilePlatform.router
         self.setupRouter()
         if isFirstTimeUsing() {

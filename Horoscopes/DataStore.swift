@@ -15,7 +15,7 @@ class DataStore : NSObject{
     var userPosts = [UserPost]()
     var followers = [UserProfile]()
     var followingUsers = [UserProfile]()
-    var currentUserProfile: UserProfile?
+//    var currentUserProfile: UserProfile?
     
     static let sharedInstance = DataStore()
     
