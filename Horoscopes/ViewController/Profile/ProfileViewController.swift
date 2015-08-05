@@ -309,7 +309,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             case .Post:
                 let post = DataStore.sharedInstance.userPosts[indexPath.row] as UserPost
                 return PostCellNode(post: post, type: .Profile)
-//                return ProfilePostCellNode(userPost: post)
             case .Followers:
                 let follower = DataStore.sharedInstance.followers[indexPath.row] as UserProfile
                 let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
@@ -346,7 +345,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func didTapPostButton() {
         if currentTab != .Post {
             currentTab = .Post
-//            reloadButton()
             tapButton()
         }
     }
@@ -354,7 +352,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func didTapFollowersButton() {
         if currentTab != .Followers {
             currentTab = .Followers
-//            reloadButton()
             tapButton()
         }
     }
@@ -362,25 +359,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func didTapFollowingButton() {
         if currentTab != .Following {
             currentTab = .Following
-//            reloadButton()
             tapButton()
         }
     }
-    
-    // MARK: - Temporary function
-//    func getCurrentUserProfile() {
-//        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-//        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
-//            if let error = error {
-//                
-//            } else {
-//                if result!.count > 0 {
-//                    self.currentUser = result![0]
-//                }
-//            }
-//        })
-//    }
-    
 
     /*
     // MARK: - Navigation

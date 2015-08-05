@@ -50,15 +50,11 @@ class PostCellNode : ASCellNode {
     var userPost : UserPost?
     var type = PostCellType.Newsfeed
     
-    init(post : UserPost){
+    required init(post : UserPost, type : PostCellType){
         super.init()
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.userPost = post
-    }
-    
-    convenience init(post : UserPost, type : PostCellType){
-        self.init(post : post)
         self.type = type
         self.createFeedTypeImage()
         self.createBackground()
