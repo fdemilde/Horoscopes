@@ -243,7 +243,7 @@ class TestViewController: UIViewController {
 //    func reloadFollowersDataSource() {
 //        Utilities.showHUD()
 //        followers.removeAll(keepCapacity: false)
-//        SocialManager.sharedInstance.getFollowersProfile { (result, error) -> Void in
+//        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
 //            if let error = error {
 //                dispatch_async(dispatch_get_main_queue(), { () -> Void in
 //                    self.finishLoadingFollowersDataSource(error)
@@ -260,7 +260,7 @@ class TestViewController: UIViewController {
 //    func reloadFollowingDataSource() {
 //        Utilities.showHUD()
 //        followingUsers.removeAll(keepCapacity: false)
-//        SocialManager.sharedInstance.getFollowingUsersProfile { (result, error) -> Void in
+//        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
 //            if let error = error {
 //                dispatch_async(dispatch_get_main_queue(), { () -> Void in
 //                    self.finishLoadingFollowingDataSource(error)

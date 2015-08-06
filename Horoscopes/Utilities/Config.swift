@@ -36,8 +36,8 @@ let DELETE_POST = "app.horoscopes.post.remove"
 // MARK: Follow methods
 let FOLLOW = "user.follow"
 let UNFOLLOW = "user.unfollow"
-let GET_FOLLOWING = "user.following"
-let GET_FOLLOWERS = "user.followers"
+let GET_CURRENT_USER_FOLLOWING = "user.following"
+let GET_CURRENT_USER_FOLLOWERS = "user.followers"
 let IS_FOLLOWING = "user.isfollowing"
 
 // MARK: Profile methods
@@ -45,6 +45,8 @@ let GET_PROFILE = "app.horoscopes.profile.get"
 let UPDATE_PROFILE = ""
 let UPDATE_BIRTHDAY = "app.horoscopes.setbirthday"
 let GET_FRIEND_LIST = "app.horoscopes.profile.facebookfriends"
+let GET_OTHER_USER_FOLLOWING = "app.horoscopes.profile.following"
+let GET_OTHER_USER_FOLLOWERS = "app.horoscopes.profile.followers"
 
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"

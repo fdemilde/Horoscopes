@@ -33,6 +33,8 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
+    var userProfile: UserProfile!
+    var userPosts: [UserPost]!
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -53,9 +55,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        configureUI()
         // TODO: Comment this code when finish refactoring
         profileType = .CurrentUser
+        configureUI()
     }
 
     override func didReceiveMemoryWarning() {
@@ -88,6 +90,16 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         configureTableView()
+        if profileType == .CurrentUser {
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                userProfile = XAppDelegate.currentUser
+                getDataInitially()
+            } else {
+                configureLoginView()
+            }
+        } else {
+            getDataInitially()
+        }
     }
     
     func configureTableView() {
@@ -99,11 +111,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.backgroundColor = UIColor.clearColor()
         view.addSubview(tableView)
-        if SocialManager.sharedInstance.isLoggedInZwigglers() {
-            getDataInitially()
-        } else {
-            configureLoginView()
-        }
     }
     
     func configureLoginView() {
@@ -141,6 +148,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.tableHeaderView = nil
+                    self.userProfile = XAppDelegate.currentUser
                     self.getDataInitially()
                 })
             }
@@ -149,9 +157,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: - Helper
     func getUserPosts() {
-        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+//        let uid = userProfile.uid
 //        println("\(uid)")
-        SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
+        SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 
             } else {
@@ -167,7 +175,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func getFollowers() {
-        SocialManager.sharedInstance.getFollowersProfile { (result, error) -> Void in
+        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
             if let error = error {
                 
             } else {
@@ -184,7 +192,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getFollowingUsers() {
 //        println("retrieveFollowingUsers")
-        SocialManager.sharedInstance.getFollowingUsersProfile { (result, error) -> Void in
+        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
             if let error = error {
                 
             } else {
@@ -299,10 +307,15 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if XAppDelegate.currentUser?.uid != -1 {
-                let cell = ProfileFirstSectionCellNode(userProfile: XAppDelegate.currentUser!)
-                return cell
+            if profileType == .CurrentUser {
+                if XAppDelegate.currentUser?.uid != -1 {
+                    let cell = ProfileFirstSectionCellNode(userProfile: XAppDelegate.currentUser!)
+                    return cell
+                }
+            } else {
+                
             }
+            
             return ASCellNode()
         } else {
             switch currentTab {
