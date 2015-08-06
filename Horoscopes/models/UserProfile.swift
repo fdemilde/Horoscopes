@@ -40,11 +40,11 @@ class UserProfile: NSObject, NSCoding {
     }
     
     required init(coder aDecoder: NSCoder) {
-        aDecoder.decodeIntegerForKey(Keys.uid)
-        aDecoder.decodeObjectForKey(Keys.name)
-        aDecoder.decodeObjectForKey(Keys.imgUrl)
-        aDecoder.decodeIntegerForKey(Keys.sign)
-        aDecoder.decodeObjectForKey(Keys.location)
+        uid = aDecoder.decodeIntegerForKey(Keys.uid)
+        name = aDecoder.decodeObjectForKey(Keys.name) as! String
+        imgURL = aDecoder.decodeObjectForKey(Keys.imgUrl) as! String
+        sign = aDecoder.decodeIntegerForKey(Keys.sign)
+        location = aDecoder.decodeObjectForKey(Keys.location) as! String
     }
     
     func encodeWithCoder(aCoder: NSCoder) {

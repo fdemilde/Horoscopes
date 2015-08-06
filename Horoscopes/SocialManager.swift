@@ -384,7 +384,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else {
                     key = "following"
                 }
-                if let usersId = json["followers"] as? [Int] {
+                if let usersId = json[key] as? [Int] {
                     if !usersId.isEmpty {
                         self.getProfile(usersId, completionHandler: { (result, error) -> Void in
                             if let error = error {
@@ -442,6 +442,22 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
+    func persistUserProfile(completionHandler: (error: NSError?) -> Void) {
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(error: error)
+            } else {
+                if result!.count > 0 {
+                    let userProfile = result![0]
+                    XAppDelegate.currentUser = userProfile
+                    NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
+                    completionHandler(error: nil)
+                }
+            }
+        })
+    }
+    
     func login(completionHandler: (error: NSError?) -> Void) {
         if !isLoggedInFacebook() {
             loginFacebook({ (result, error) -> () in
@@ -453,21 +469,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             if let error = error {
                                 completionHandler(error: error)
                             } else {
-                                let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-                                self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+                                XAppDelegate.locationManager.setupLocationService()
+                                self.persistUserProfile({ (error) -> Void in
                                     if let error = error {
                                         completionHandler(error: error)
                                     } else {
-                                        if result!.count > 0 {
-                                            let userProfile = result![0]
-                                            XAppDelegate.currentUser = userProfile
-                                            NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
-                                            completionHandler(error: nil)
-                                        }
+                                        completionHandler(error: nil)
                                     }
                                 })
-//                                println("Social Manager Following setupLocationService ")
-                                XAppDelegate.locationManager.setupLocationService()
                             }
                         })
                     }

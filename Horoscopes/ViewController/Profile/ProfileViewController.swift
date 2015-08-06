@@ -34,7 +34,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
     var userProfile: UserProfile!
-    var userPosts: [UserPost]!
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -115,7 +114,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func configureLoginView() {
 //        println("configureLoginView")
-//        let headerFrame = CGRectMake(view.bounds.origin.x, view.bounds.origin.y + ADMOD_HEIGHT, view.bounds.width, view.bounds.height - ADMOD_HEIGHT)
         let headerFrame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
         let headerView = UIView(frame: headerFrame)
         let padding: CGFloat = 8
@@ -157,13 +155,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: - Helper
     func getUserPosts() {
-//        let uid = userProfile.uid
-//        println("\(uid)")
         SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
+            self.isFinishedGettingUserPosts = true
             if let error = error {
                 
             } else {
-                self.isFinishedGettingUserPosts = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.userPosts = result!
                     self.finishGettingDataInitially()
@@ -176,10 +172,10 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getFollowers() {
         SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+            self.isFinishedGettingFollowers = true
             if let error = error {
                 
             } else {
-                self.isFinishedGettingFollowers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followers = result!
                     self.finishGettingDataInitially()
@@ -191,12 +187,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func getFollowingUsers() {
-//        println("retrieveFollowingUsers")
         SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
+            self.isFinishedGettingFollowingUsers = true
             if let error = error {
                 
             } else {
-                self.isFinishedGettingFollowingUsers = true
                 if self.isFirstDataLoad {
                     DataStore.sharedInstance.followingUsers = result!
                     self.finishGettingDataInitially()
@@ -307,16 +302,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if profileType == .CurrentUser {
-                if XAppDelegate.currentUser?.uid != -1 {
-                    let cell = ProfileFirstSectionCellNode(userProfile: XAppDelegate.currentUser!)
-                    return cell
-                }
-            } else {
-                
+            if userProfile == nil {
+                return ASCellNode()
             }
-            
-            return ASCellNode()
+            let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
+            return cell
         } else {
             switch currentTab {
             case .Post:
