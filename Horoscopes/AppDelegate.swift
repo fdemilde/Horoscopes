@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var socialManager = SocialManager()
     var locationManager = LocationManager()
     var dataStore = DataStore.sharedInstance
-    var currentUser : UserProfile?
+    var currentUser : UserProfile!
     var userLocation : CLLocation!
     var router : Router!
 

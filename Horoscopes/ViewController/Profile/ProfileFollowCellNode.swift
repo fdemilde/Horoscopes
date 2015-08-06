@@ -47,7 +47,6 @@ class ProfileFollowCellNode: ASCellNode {
     func configureUI() {
         backgroundDisplayNode = ASDisplayNode()
         backgroundDisplayNode.backgroundColor = UIColor.whiteColor()
-        backgroundDisplayNode.cornerRadius = 5
         addSubnode(backgroundDisplayNode)
         
         pictureImageNode = ASNetworkImageNode(webImage: ())

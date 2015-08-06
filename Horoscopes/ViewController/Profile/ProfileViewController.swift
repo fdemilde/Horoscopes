@@ -33,7 +33,10 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
-    var userProfile: UserProfile!
+    var userProfile = UserProfile()
+    var userPosts = [UserPost]()
+    var followers = [UserProfile]()
+    var followingUsers = [UserProfile]()
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -156,12 +159,15 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     // MARK: - Helper
     func getUserPosts() {
         SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
-            self.isFinishedGettingUserPosts = true
             if let error = error {
                 
             } else {
-                if self.isFirstDataLoad {
+                if self.profileType == .CurrentUser {
                     DataStore.sharedInstance.userPosts = result!
+                }
+                if self.isFirstDataLoad {
+                    self.isFinishedGettingUserPosts = true
+                    self.userPosts = result!
                     self.finishGettingDataInitially()
                 } else {
                     self.finishGettingUserPosts(result!)
@@ -171,34 +177,68 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func getFollowers() {
-        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
-            self.isFinishedGettingFollowers = true
-            if let error = error {
-                
-            } else {
-                if self.isFirstDataLoad {
-                    DataStore.sharedInstance.followers = result!
-                    self.finishGettingDataInitially()
+        if profileType == .CurrentUser {
+            SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+                if let error = error {
+                    
                 } else {
-                    self.finishGettingFollowers(result!)
+                    DataStore.sharedInstance.followers = result!
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowers = true
+                        self.followers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowers(result!)
+                    }
                 }
             }
+        } else {
+            SocialManager.sharedInstance.getOtherUserFollowersProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowers = true
+                        self.followers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowers(result!)
+                    }
+                }
+            })
         }
     }
     
     func getFollowingUsers() {
-        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
-            self.isFinishedGettingFollowingUsers = true
-            if let error = error {
-                
-            } else {
-                if self.isFirstDataLoad {
-                    DataStore.sharedInstance.followingUsers = result!
-                    self.finishGettingDataInitially()
+        if profileType == .CurrentUser {
+            SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
+                if let error = error {
+                    
                 } else {
-                    self.finishGettingFollowingUsers(result!)
+                    DataStore.sharedInstance.followingUsers = result!
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowingUsers = true
+                        self.followingUsers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowingUsers(result!)
+                    }
                 }
             }
+        } else {
+            SocialManager.sharedInstance.getOtherUserFollowingProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowingUsers = true
+                        self.followingUsers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowingUsers(result!)
+                    }
+                }
+            })
         }
     }
     
@@ -217,18 +257,15 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func finishGettingUserPosts(userPosts: [UserPost]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.userPosts, newData: userPosts)
-        isFinishedGettingUserPosts = false
+        reloadDataIfNeeded(&self.userPosts, newData: userPosts)
     }
     
     func finishGettingFollowers(followers: [UserProfile]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.followers, newData: followers)
-        isFinishedGettingFollowers = false
+        reloadDataIfNeeded(&self.followers, newData: followers)
     }
     
     func finishGettingFollowingUsers(followingUsers: [UserProfile]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.followingUsers, newData: followingUsers)
-        isFinishedGettingFollowingUsers = false
+        reloadDataIfNeeded(&self.followingUsers, newData: followingUsers)
     }
     
     func reloadButton() {
@@ -292,33 +329,30 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         }
         switch currentTab {
         case .Post:
-            return DataStore.sharedInstance.userPosts.count
+            return userPosts.count
         case .Followers:
-            return DataStore.sharedInstance.followers.count
+            return followers.count
         case .Following:
-            return DataStore.sharedInstance.followingUsers.count
+            return followingUsers.count
         }
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if userProfile == nil {
-                return ASCellNode()
-            }
             let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
             return cell
         } else {
             switch currentTab {
             case .Post:
-                let post = DataStore.sharedInstance.userPosts[indexPath.row] as UserPost
+                let post = userPosts[indexPath.row] as UserPost
                 return PostCellNode(post: post, type: .Profile)
             case .Followers:
-                let follower = DataStore.sharedInstance.followers[indexPath.row] as UserProfile
+                let follower = followers[indexPath.row] as UserProfile
                 let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
                 //            cell.delegate
                 return cell
             case .Following:
-                let followingUser = DataStore.sharedInstance.followingUsers[indexPath.row] as UserProfile
+                let followingUser = followingUsers[indexPath.row] as UserProfile
                 return ProfileFollowCellNode(user: followingUser)
             }
         }
@@ -336,13 +370,10 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight), parentViewController: self)
             return view
         }
-        if XAppDelegate.currentUser?.uid != -1 {
-            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: XAppDelegate.currentUser!, parentViewController: self)
-            view.delegate = self
-            view.tag = secondSectionHeaderTag
-            return view
-        }
-        return nil
+        let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
+        view.delegate = self
+        view.tag = secondSectionHeaderTag
+        return view
     }
     
     func didTapPostButton() {

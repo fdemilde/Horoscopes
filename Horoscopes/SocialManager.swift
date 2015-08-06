@@ -405,13 +405,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         var postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         postData.setObject("\(page)", forKey: "page")
-        println("postData \(postData)")
         XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response)
-                println(json)
+                let profiles = Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values.array
+                completionHandler(result: profiles, error: nil)
             }
         }
     }
