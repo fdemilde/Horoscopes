@@ -15,7 +15,7 @@ import Foundation
     optional func reloadView(result : [NSObject : AnyObject]?, error : NSError?)
 }
 
-class SocialManager : NSObject, UIAlertViewDelegate {
+class SocialManager: NSObject, UIAlertViewDelegate {
 
     
 //    var globalFeeds = []
@@ -249,57 +249,9 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getFollowingUsersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
-        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
-            if let error = error {
-                completionHandler(result: nil, error: error)
-            } else {
-                let json = Utilities.parseNSDictionaryToDictionary(response)
-                if let followingUsersId = json["following"] as? [Int] {
-                    if !followingUsersId.isEmpty {
-                        let followingUsersIdString = followingUsersId.map({"\($0)"})
-                        self.getProfile(",".join(followingUsersIdString), completionHandler: { (result, error) -> Void in
-                            if let error = error {
-                                completionHandler(result: nil, error: error)
-                            } else {
-                                completionHandler(result: result, error: nil)
-                            }
-                        })
-                    } else {
-                        completionHandler(result: [UserProfile](), error: nil)
-                    }
-                }
-            }
-        }
-    }
-    
-    func getFollowersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
-        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWERS, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
-            if let error = error {
-                completionHandler(result: nil, error: error)
-            } else {
-                let json = Utilities.parseNSDictionaryToDictionary(response)
-                if let followersId = json["followers"] as? [Int] {
-                    if !followersId.isEmpty {
-                        let followersIdString = followersId.map({"\($0)"})
-                        self.getProfile(",".join(followersIdString), completionHandler: { (result, error) -> Void in
-                            if let error = error {
-                                completionHandler(result: nil, error: error)
-                            } else {
-                                completionHandler(result: result, error: nil)
-                            }
-                        })
-                    } else {
-                        completionHandler(result: [UserProfile](), error: nil)
-                    }
-                }
-            }
-        }
-    }
-    
-    func getProfile(usersId: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfile(usersIdString: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
-        postData.setObject("\(usersId)", forKey: "uid")
+        postData.setObject(usersIdString, forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_PROFILE, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -307,7 +259,7 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 if(response != nil){
                     let json = Utilities.parseNSDictionaryToDictionary(response)
                     var result = [UserProfile]()
-                    for userId in usersId.componentsSeparatedByString(",") {
+                    for userId in usersIdString.componentsSeparatedByString(",") {
                         if let users = json["result"] as? Dictionary<String, AnyObject> {
                             let userProfile = UserProfile(data: users[userId] as! NSDictionary)
                             result.append(userProfile)
@@ -316,6 +268,46 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                     completionHandler(result: result, error: nil)
                 }
                 
+            }
+        }
+    }
+    
+    func getCurrentUserFollowingProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        getCurrentUserFollowProfile(GET_CURRENT_USER_FOLLOWING, completionHandler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                completionHandler(result: result, error: nil)
+            }
+        })
+    }
+    
+    func getCurrentUserFollowersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        getCurrentUserFollowProfile(GET_CURRENT_USER_FOLLOWERS, completionHandler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                completionHandler(result: result, error: nil)
+            }
+        })
+    }
+    
+    func getOtherUserFollowersProfile(uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWERS) { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
+    
+    func getOtherUserFollowingProfile(uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWING) { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                completionHandler(result: result, error: nil)
             }
         }
     }
@@ -382,6 +374,60 @@ class SocialManager : NSObject, UIAlertViewDelegate {
     }
     
     // MARK: Helpers
+    func getCurrentUserFollowProfile(method: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                var key = ""
+                if method == GET_CURRENT_USER_FOLLOWERS {
+                    key = "followers"
+                } else {
+                    key = "following"
+                }
+                if let usersId = json[key] as? [Int] {
+                    if !usersId.isEmpty {
+                        self.getProfile(usersId, completionHandler: { (result, error) -> Void in
+                            if let error = error {
+                                completionHandler(result: nil, error: error)
+                            } else {
+                                completionHandler(result: result, error: nil)
+                            }
+                        })
+                    } else {
+                        completionHandler(result: [UserProfile](), error: nil)
+                    }
+                }
+            }
+        }
+    }
+    
+    func getOtherUserFollowProfile(uid: Int, page: Int = 0, method: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        var postData = NSMutableDictionary()
+        postData.setObject("\(uid)", forKey: "uid")
+        postData.setObject("\(page)", forKey: "page")
+        XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                let profiles = Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values.array
+                completionHandler(result: profiles, error: nil)
+            }
+        }
+    }
+    
+    private func getProfile(usersId: [Int], completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        let usersIdString = usersId.map({"\($0)"})
+        self.getProfile(",".join(usersIdString), completionHandler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                completionHandler(result: result, error: nil)
+            }
+        })
+    }
     
     func isLoggedInFacebook() -> Bool{
         return FBSDKAccessToken .currentAccessToken() != nil
@@ -398,6 +444,22 @@ class SocialManager : NSObject, UIAlertViewDelegate {
         })
     }
     
+    func persistUserProfile(completionHandler: (error: NSError?) -> Void) {
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(error: error)
+            } else {
+                if result!.count > 0 {
+                    let userProfile = result![0]
+                    XAppDelegate.currentUser = userProfile
+                    NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
+                    completionHandler(error: nil)
+                }
+            }
+        })
+    }
+    
     func login(completionHandler: (error: NSError?) -> Void) {
         if !isLoggedInFacebook() {
             loginFacebook({ (result, error) -> () in
@@ -409,19 +471,14 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                             if let error = error {
                                 completionHandler(error: error)
                             } else {
-                                let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-                                self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+                                XAppDelegate.locationManager.setupLocationService()
+                                self.persistUserProfile({ (error) -> Void in
                                     if let error = error {
-                                        
+                                        completionHandler(error: error)
                                     } else {
-                                        if result!.count > 0 {
-                                            DataStore.sharedInstance.currentUserProfile = result![0]
-                                        }
+                                        completionHandler(error: nil)
                                     }
                                 })
-                                println("Social Manager Following setupLocationService ")
-                                XAppDelegate.locationManager.setupLocationService()
-                                completionHandler(error: nil)
                             }
                         })
                     }

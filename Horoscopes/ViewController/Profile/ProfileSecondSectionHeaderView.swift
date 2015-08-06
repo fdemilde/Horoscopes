@@ -145,13 +145,13 @@ class ProfileSecondSectionHeaderView: UIView {
             switch button {
             case postButton:
                 title = postButtonTitleLabel
-                number = DataStore.sharedInstance.userPosts.count
+                number = parentViewController.userPosts.count
             case followersButton:
                 title = followersButtonTitleLabel
-                number = DataStore.sharedInstance.followers.count
+                number = parentViewController.followers.count
             case followingButton:
                 title = followingButtonTitleLabel
-                number = DataStore.sharedInstance.followingUsers.count
+                number = parentViewController.followingUsers.count
             default:
                 title = ""
                 number = 0

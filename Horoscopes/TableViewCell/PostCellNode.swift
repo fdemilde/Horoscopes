@@ -50,11 +50,12 @@ class PostCellNode : ASCellNode {
     var userPost : UserPost?
     var type = PostCellType.Newsfeed
     
-    init(post : UserPost){
+    required init(post : UserPost, type : PostCellType){
         super.init()
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.userPost = post
+        self.type = type
         self.createFeedTypeImage()
         self.createBackground()
         self.createFeedHeader()
@@ -62,11 +63,6 @@ class PostCellNode : ASCellNode {
         self.createFeedHeartTextNode()
         self.createSeparator()
         self.createButtons()
-    }
-    
-    convenience init(post : UserPost, type : PostCellType){
-        self.init(post : post)
-        self.type = type
     }
     
     // MARK: create components
@@ -87,6 +83,11 @@ class PostCellNode : ASCellNode {
     func createFeedHeader(){
         // header includes profile image, user name, user share text and time passed
         profilePicture = ASNetworkImageNode(webImage: ())
+        if type == .Profile {
+            profilePicture?.cornerRadius = PROFILE_IMAGE_WIDTH / 2
+            profilePicture?.clipsToBounds = true
+            profilePicture?.backgroundColor = UIColor.profileImagePurpleColor()
+        }
         profilePicture?.URL = NSURL(string: userPost!.user!.imgURL)
         background!.addSubnode(profilePicture)
 //        userPost!.user!.name
@@ -146,6 +147,9 @@ class PostCellNode : ASCellNode {
         sendAHeartButton!.imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, 10);
         sendAHeartButton!.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
         sendAHeartButton!.addTarget(self, action: "sendHeartTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        if type == .Profile {
+            sendAHeartButton?.hidden = true
+        }
         
         
         shareImageView = ASImageNode()
@@ -205,7 +209,7 @@ class PostCellNode : ASCellNode {
             
             backgroundXPosition = self.feedTypeImageNode!.frame.origin.x + self.feedTypeImageNode!.frame.width + 5
         } else {
-            
+            backgroundXPosition = 5
         }
         
         self.background?.frame = CGRectMake(backgroundXPosition, 0, Utilities.getScreenSize().width - backgroundXPosition - 5, self.calculatedSize.height - 10)

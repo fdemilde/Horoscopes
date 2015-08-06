@@ -16,7 +16,6 @@ enum ProfileType {
 class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileTabDelegate {
     
     var profileType: ProfileType!
-//    var currentUser: UserProfile?
     enum Tab {
         case Post
         case Followers
@@ -25,7 +24,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     var currentTab = Tab.Post
     var backgroundImage: UIImage!
     var tableView: ASTableView!
-//    var headerFrame = CGRectZero
     var isFirstDataLoad = true
     var isFinishedGettingUserPosts = false
     var isFinishedGettingFollowers = false
@@ -35,6 +33,10 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
     let secondSectionHeaderTag = 1
+    var userProfile = UserProfile()
+    var userPosts = [UserPost]()
+    var followers = [UserProfile]()
+    var followingUsers = [UserProfile]()
     
     // MARK: - Initialization
 //    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
@@ -55,9 +57,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        configureUI()
         // TODO: Comment this code when finish refactoring
         profileType = .CurrentUser
+        configureUI()
     }
 
     override func didReceiveMemoryWarning() {
@@ -68,8 +70,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     override func viewWillLayoutSubviews() {
 //        println("viewWillLayoutSubviews")
         tableView.frame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
-//        tableView.frame = view.bounds
-//        println("\(view.frame.origin.y)")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -92,6 +92,16 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         configureTableView()
+        if profileType == .CurrentUser {
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                userProfile = XAppDelegate.currentUser
+                getDataInitially()
+            } else {
+                configureLoginView()
+            }
+        } else {
+            getDataInitially()
+        }
     }
     
     func configureTableView() {
@@ -103,16 +113,10 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         tableView.separatorStyle = UITableViewCellSeparatorStyle.None
         tableView.backgroundColor = UIColor.clearColor()
         view.addSubview(tableView)
-        if SocialManager.sharedInstance.isLoggedInZwigglers() {
-            getDataInitially()
-        } else {
-            configureLoginView()
-        }
     }
     
     func configureLoginView() {
 //        println("configureLoginView")
-//        let headerFrame = CGRectMake(view.bounds.origin.x, view.bounds.origin.y + ADMOD_HEIGHT, view.bounds.width, view.bounds.height - ADMOD_HEIGHT)
         let headerFrame = CGRectMake(view.frame.origin.x, view.frame.origin.y + ADMOD_HEIGHT, view.frame.width, view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
         let headerView = UIView(frame: headerFrame)
         let padding: CGFloat = 8
@@ -145,6 +149,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.tableHeaderView = nil
+                    self.userProfile = XAppDelegate.currentUser
                     self.getDataInitially()
                 })
             }
@@ -153,15 +158,16 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     // MARK: - Helper
     func getUserPosts() {
-        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-//        println("\(uid)")
-        SocialManager.sharedInstance.getPost(Int(uid), completionHandler: { (result, error) -> Void in
+        SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 
             } else {
-                self.isFinishedGettingUserPosts = true
-                if self.isFirstDataLoad {
+                if self.profileType == .CurrentUser {
                     DataStore.sharedInstance.userPosts = result!
+                }
+                if self.isFirstDataLoad {
+                    self.isFinishedGettingUserPosts = true
+                    self.userPosts = result!
                     self.finishGettingDataInitially()
                 } else {
                     self.finishGettingUserPosts(result!)
@@ -171,35 +177,68 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func getFollowers() {
-        SocialManager.sharedInstance.getFollowersProfile { (result, error) -> Void in
-            if let error = error {
-                
-            } else {
-                self.isFinishedGettingFollowers = true
-                if self.isFirstDataLoad {
-                    DataStore.sharedInstance.followers = result!
-                    self.finishGettingDataInitially()
+        if profileType == .CurrentUser {
+            SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+                if let error = error {
+                    
                 } else {
-                    self.finishGettingFollowers(result!)
+                    DataStore.sharedInstance.followers = result!
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowers = true
+                        self.followers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowers(result!)
+                    }
                 }
             }
+        } else {
+            SocialManager.sharedInstance.getOtherUserFollowersProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowers = true
+                        self.followers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowers(result!)
+                    }
+                }
+            })
         }
     }
     
     func getFollowingUsers() {
-//        println("retrieveFollowingUsers")
-        SocialManager.sharedInstance.getFollowingUsersProfile { (result, error) -> Void in
-            if let error = error {
-                
-            } else {
-                self.isFinishedGettingFollowingUsers = true
-                if self.isFirstDataLoad {
-                    DataStore.sharedInstance.followingUsers = result!
-                    self.finishGettingDataInitially()
+        if profileType == .CurrentUser {
+            SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
+                if let error = error {
+                    
                 } else {
-                    self.finishGettingFollowingUsers(result!)
+                    DataStore.sharedInstance.followingUsers = result!
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowingUsers = true
+                        self.followingUsers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowingUsers(result!)
+                    }
                 }
             }
+        } else {
+            SocialManager.sharedInstance.getOtherUserFollowingProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    if self.isFirstDataLoad {
+                        self.isFinishedGettingFollowingUsers = true
+                        self.followingUsers = result!
+                        self.finishGettingDataInitially()
+                    } else {
+                        self.finishGettingFollowingUsers(result!)
+                    }
+                }
+            })
         }
     }
     
@@ -218,18 +257,15 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func finishGettingUserPosts(userPosts: [UserPost]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.userPosts, newData: userPosts)
-        isFinishedGettingUserPosts = false
+        reloadDataIfNeeded(&self.userPosts, newData: userPosts)
     }
     
     func finishGettingFollowers(followers: [UserProfile]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.followers, newData: followers)
-        isFinishedGettingFollowers = false
+        reloadDataIfNeeded(&self.followers, newData: followers)
     }
     
     func finishGettingFollowingUsers(followingUsers: [UserProfile]) {
-        reloadDataIfNeeded(&DataStore.sharedInstance.followingUsers, newData: followingUsers)
-        isFinishedGettingFollowingUsers = false
+        reloadDataIfNeeded(&self.followingUsers, newData: followingUsers)
     }
     
     func reloadButton() {
@@ -293,33 +329,30 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         }
         switch currentTab {
         case .Post:
-            return DataStore.sharedInstance.userPosts.count
+            return userPosts.count
         case .Followers:
-            return DataStore.sharedInstance.followers.count
+            return followers.count
         case .Following:
-            return DataStore.sharedInstance.followingUsers.count
+            return followingUsers.count
         }
     }
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         if indexPath.section == 0 {
-            if let userProfile = DataStore.sharedInstance.currentUserProfile {
-                let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
-                return cell
-            }
-            return ASCellNode()
+            let cell = ProfileFirstSectionCellNode(userProfile: userProfile)
+            return cell
         } else {
             switch currentTab {
             case .Post:
-                let post = DataStore.sharedInstance.userPosts[indexPath.row] as UserPost
-                return ProfilePostCellNode(userPost: post)
+                let post = userPosts[indexPath.row] as UserPost
+                return PostCellNode(post: post, type: .Profile)
             case .Followers:
-                let follower = DataStore.sharedInstance.followers[indexPath.row] as UserProfile
+                let follower = followers[indexPath.row] as UserProfile
                 let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
                 //            cell.delegate
                 return cell
             case .Following:
-                let followingUser = DataStore.sharedInstance.followingUsers[indexPath.row] as UserProfile
+                let followingUser = followingUsers[indexPath.row] as UserProfile
                 return ProfileFollowCellNode(user: followingUser)
             }
         }
@@ -337,19 +370,15 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             let view = ProfileFirstSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, tableView.frame.origin.y, tableView.frame.width, firstSectionHeaderHeight), parentViewController: self)
             return view
         }
-        if let userProfile = DataStore.sharedInstance.currentUserProfile {
-            let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
-            view.delegate = self
-            view.tag = secondSectionHeaderTag
-            return view
-        }
-        return nil
+        let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
+        view.delegate = self
+        view.tag = secondSectionHeaderTag
+        return view
     }
     
     func didTapPostButton() {
         if currentTab != .Post {
             currentTab = .Post
-//            reloadButton()
             tapButton()
         }
     }
@@ -357,7 +386,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func didTapFollowersButton() {
         if currentTab != .Followers {
             currentTab = .Followers
-//            reloadButton()
             tapButton()
         }
     }
@@ -365,25 +393,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     func didTapFollowingButton() {
         if currentTab != .Following {
             currentTab = .Following
-//            reloadButton()
             tapButton()
         }
     }
-    
-    // MARK: - Temporary function
-//    func getCurrentUserProfile() {
-//        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-//        SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
-//            if let error = error {
-//                
-//            } else {
-//                if result!.count > 0 {
-//                    self.currentUser = result![0]
-//                }
-//            }
-//        })
-//    }
-    
 
     /*
     // MARK: - Navigation

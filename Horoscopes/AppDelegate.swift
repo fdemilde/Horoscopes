@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var socialManager = SocialManager()
     var locationManager = LocationManager()
     var dataStore = DataStore.sharedInstance
-    var currentUser : UserProfile?
+    var currentUser : UserProfile!
     var userLocation : CLLocation!
     var router : Router!
 
@@ -31,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
 //        horoscopesManager.getAllHoroscopes(false)
-        currentUser = UserProfile()
+        currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         router = mobilePlatform.router
         self.setupRouter()
         if isFirstTimeUsing() {
