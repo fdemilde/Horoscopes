@@ -68,9 +68,10 @@ class SocialManager : NSObject, UIAlertViewDelegate {
 //                    println("result == \(result)")
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
+                    var isLastAsNumber = result["last"] as! Int
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     if(isAddingData){
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global)
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global, isLastPage: Bool(isLastAsNumber))
                     } else {
                         XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Global)
                     }
@@ -104,9 +105,10 @@ class SocialManager : NSObject, UIAlertViewDelegate {
                 } else { // no error
                     var userDict = result["users"] as! Dictionary<String, AnyObject>
                     var postsArray = result["posts"] as! [AnyObject]
+                    var isLastAsNumber = result["last"] as! Int
                     var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     if(isAddingData){
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following)
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following, isLastPage: Bool(isLastAsNumber))
                     } else {
                         XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Following)
                     }

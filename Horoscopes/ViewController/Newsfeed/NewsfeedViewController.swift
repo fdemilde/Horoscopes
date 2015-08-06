@@ -21,9 +21,9 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
-//    var userProfileArray = [UserProfile]()
+    //    var userProfileArray = [UserProfile]()
     var userPostArray = [UserPost]()
-    
+    var oldUserPostArray = [UserPost]()
     var feedsDisplayNode = ASDisplayNode()
     @IBOutlet weak var tableView : ASTableView!
     var tabType = NewsfeedTabType.Following
@@ -45,6 +45,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         
         self.setupTableView()
         self.resetTapButtonColor()
+        self.setupInfiniteScroll()
         if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
             dispatch_async(dispatch_get_main_queue(),{
                 self.checkAndLoginZwigglers()
@@ -56,9 +57,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         currentPage = 0
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "globalFeedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "followingFeedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -76,81 +76,75 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         self.tableView.asyncDelegate = self
         self.view.addSubview(tableView)
     }
-
+    
     
     // MARK: Notification Handlers
     
-    func globalFeedsFinishedLoading(notif : NSNotification){
+    func feedsFinishedLoading(notif : NSNotification){
+        Utilities.hideHUD()
         if(notif.object == nil){
-            Utilities.showAlertView(self,title: "",message: "No feeds available")
+            tableView.finishInfiniteScroll()
         } else {
             self.resetTapButtonColor()
             var newDataArray = notif.object as! [UserPost]
-            userPostArray = newDataArray
-            dispatch_async(dispatch_get_main_queue(),{
-                self.tableReloadDataWithAnimation()
-            })
+            self.insertRowsAtBottom(newDataArray)
         }
-        Utilities.hideHUD()
-    }
-    
-    func followingFeedsFinishedLoading(notif : NSNotification){
-        Utilities.hideHUD()
-        if(notif.object == nil){
-            Utilities.showAlertView(self,title:"",message:"No feeds available")
-            self.tabType = NewsfeedTabType.Global
-            self.resetTapButtonColor()
-        } else {
-            self.resetTapButtonColor()
-            var followingPostArray = notif.object as! [UserPost]
-            self.userPostArray = followingPostArray
-            self.tableReloadDataWithAnimation()
-        }
-        
     }
     
     // MARK: Button Actions
     
-    @IBAction func selectSignBtnTapped(sender: AnyObject) {
+    @IBAction func globalBtnTapped(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+        currentPage = 0
+        tableView.finishInfiniteScroll()
         if(self.tabType != NewsfeedTabType.Global){
-            currentPage = 0
             self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
-            userPostArray = XAppDelegate.dataStore.newsfeedGlobal
-            tableView.reloadData()
         }
+        XAppDelegate.dataStore.resetPage()
+        userPostArray = XAppDelegate.dataStore.newsfeedGlobal
+//        tableView.reloadData()
+        self.tableReloadWithAnimation()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED,object: nil)
+        // when button is tapped, we load data again
+        currentPage = 0
+        tableView.finishInfiniteScroll()
         if(self.tabType != NewsfeedTabType.Following){
-            currentPage = 0
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 userPostArray = XAppDelegate.dataStore.newsfeedFollowing
-                tableView.reloadData()
+//                tableView.reloadData()
+                self.tableReloadWithAnimation()
+                XAppDelegate.dataStore.resetPage()
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
-                tableView.reloadData()
+//                tableView.reloadData()
+                self.tableReloadWithAnimation()
             }
         } else {
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
-                tableView.reloadData()
+//                tableView.reloadData()
+                self.tableReloadWithAnimation()
             }
         }
-        
-        
-        
     }
     
     func printCurrentTabType(){
         switch self.tabType {
             // Use Internationalization, as appropriate.
-            case NewsfeedTabType.Global: println("Global")
-            case NewsfeedTabType.Following: println("Following")
+        case NewsfeedTabType.Global: println("Global")
+        case NewsfeedTabType.Following: println("Following")
         }
     }
     
@@ -159,69 +153,106 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     func resetTapButtonColor(){ // change button color based on state
         switch self.tabType {
             // Use Internationalization, as appropriate.
-            case NewsfeedTabType.Global:
-                globalButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                followingButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-                break
-            case NewsfeedTabType.Following:
-                globalButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-                followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-                break
+        case NewsfeedTabType.Global:
+            globalButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            followingButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            break
+        case NewsfeedTabType.Following:
+            globalButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            break
         }
     }
     
     // MARK: Table datasource and delegate
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
-//        println("tableView tableView nodeForRowAtIndexPath \([indexPath.row])")
         var post = userPostArray[indexPath.row] as UserPost
         var cell = PostCellNode(post: post, type: PostCellType.Newsfeed)
         return cell
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        if(self.tabType == NewsfeedTabType.Global){
-            self.tableView.tableHeaderView = nil
-            self.tableView.backgroundColor = UIColor.clearColor()
-            return 1
-        }
         
         if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
-            self.tableView.tableHeaderView = nil
-            return 1
         } else {
-            var facebookBtnContainer = UIView(frame: self.tableView.bounds)
-            facebookBtnContainer.layer.cornerRadius = 5
-            facebookBtnContainer.backgroundColor = UIColor.whiteColor()
-            facebookBtnContainer.userInteractionEnabled = true
+            var bg = self.createEmptyTableHeaderBackground()
             var facebookButton = UIButton()
             facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
             facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
             facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
-            facebookBtnContainer.addSubview(facebookButton)
+            bg.addSubview(facebookButton)
             var label = UILabel()
             label.text = "Login Facebook to follow your friends"
             label.sizeToFit()
             label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
-            facebookBtnContainer.addSubview(label)
-            self.tableView.tableHeaderView = facebookBtnContainer
-            return 0
+            bg.addSubview(label)
+            tableView.tableHeaderView = bg
         }
+        return 1
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-//        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
+        //        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
         return userPostArray.count
     }
     
     func tableReloadDataWithAnimation(){
+        
         self.tableView.beginUpdates()
-        var range = NSMakeRange(0, self.tableView.numberOfSections());
+        var range = NSMakeRange(0, tableView.numberOfSections());
         var sections = NSIndexSet(indexesInRange: range);
-        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
-//        self.tableView.reloadRowsAtIndexPaths(tableView.indexPathsForVisibleRows(), withRowAnimation: UITableViewRowAnimation.Fade)
+        //        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
+        
+        var deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
+            var p1 = post1 as! UserPost
+            var p2 = post2 as! UserPost
+            return (p1.post_id == p2.post_id);
+        }
+        var delta = deltaCalculator.deltaFromOldArray(userPostArray, toNewArray:userPostArray)
+        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
+        //        _items = [newItems copy];
+        if(self.userPostArray.count != 0){
+            self.tableView.tableHeaderView = nil
+            self.tableView.backgroundColor = UIColor.clearColor()
+        } else {
+            self.tableView.tableHeaderView = self.createEmptyTableHeaderBackgroundWithMessage()
+        }
         self.tableView.endUpdates()
-//        self.tableView.reloadData()
+        self.tableView.setContentOffset(CGPointZero, animated:true)
+        tableView.finishInfiniteScroll()
+    }
+    
+    func insertRowsAtBottom(newData : [UserPost]){
+        self.tableView.beginUpdates()
+        var deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
+            var p1 = post1 as! UserPost
+            var p2 = post2 as! UserPost
+            return (p1.post_id == p2.post_id);
+        }
+        var delta = deltaCalculator.deltaFromOldArray(self.userPostArray, toNewArray:newData)
+        self.userPostArray = newData
+        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
+        
+        
+        if(self.userPostArray.count != 0){
+            self.tableView.tableHeaderView = nil
+            self.tableView.backgroundColor = UIColor.clearColor()
+        } else {
+            self.tableView.tableHeaderView = self.createEmptyTableHeaderBackgroundWithMessage()
+        }
+        self.tableView.endUpdates()
+//        var timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("finishInfiniteScroll"), userInfo: nil, repeats: false)
+        tableView.finishInfiniteScroll()
+        
+    }
+    
+    func tableReloadWithAnimation(){
+        tableView.reloadSections(NSIndexSet(index: 0),withRowAnimation:UITableViewRowAnimation.Fade)
+    }
+    
+    func finishInfiniteScroll() {
+        tableView.finishInfiniteScroll()
     }
     
     func clearEmptyTableBackground(){
@@ -235,12 +266,8 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                 Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                 Utilities.hideHUD()
             } else {
-                println("Newsfeed setupLocationService ")
-//                XAppDelegate.socialManager.unfollow(11, completionHandler: { (error) -> Void in
-//                    println("Did unfollow")
-//                })
                 XAppDelegate.locationManager.setupLocationService()
-                    XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             }
         })
     }
@@ -270,19 +297,73 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     // MARK: Button Hide/show
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        var currentOffset = scrollView.contentOffset.y;
-        var maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height;
-        
-        if (maximumOffset - currentOffset <= -40) {
-            self.currentPage++
+    func setupInfiniteScroll(){
+        tableView.infiniteScrollIndicatorStyle = .White
+//        tableView.addInfiniteScrollingWithActionHandler { () -> Void in
+//            if(XAppDelegate.dataStore.isLastPage){
+//                self.tableView.infiniteScrollingView.stopAnimating()
+//                //                self.tableView.infiniteScrollingView.removeInfiniteScrollingBottomSpace()
+//                return
+//            } // last page dont need to request more
+//            self.currentPage++
+//            if(self.tabType == NewsfeedTabType.Following){
+//                XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
+//            } else {
+//                XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
+//            }
+//        }
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            let tableView = scrollView as! UITableView
             
+            if(XAppDelegate.dataStore.isLastPage){
+                self.tableView.finishInfiniteScroll()
+                return
+            } // last page dont need to request more
+            self.currentPage++
             if(self.tabType == NewsfeedTabType.Following){
                 XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
             } else {
                 XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
             }
             
+            
         }
+    }
+    
+    // MARK: Helpers
+    
+    // if no feed to show or user doesn't log in, show white background
+    func createEmptyTableHeaderBackground() -> UIView{
+        var bg = UIView(frame: self.tableView.bounds)
+        bg.layer.cornerRadius = 5
+        bg.backgroundColor = UIColor.whiteColor()
+        bg.userInteractionEnabled = true
+        return bg
+    }
+    
+    func createEmptyTableHeaderBackgroundWithMessage() -> UIView{
+        var bg = self.createEmptyTableHeaderBackground()
+        if(tabType == NewsfeedTabType.Following){
+            if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+                var facebookButton = UIButton()
+                facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
+                facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
+                facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
+                bg.addSubview(facebookButton)
+                var label = UILabel()
+                label.text = "Login Facebook to follow your friends"
+                label.sizeToFit()
+                label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
+                bg.addSubview(label)
+                return bg
+            }
+        }
+        
+        var label = UILabel()
+        label.text = "No feeds available"
+        label.sizeToFit()
+        label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, (tableView.bounds.height - label.frame.size.height)/2, label.frame.size.width, label.frame.size.height)
+        bg.addSubview(label)
+        return bg
     }
 }

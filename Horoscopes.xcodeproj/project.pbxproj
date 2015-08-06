@@ -41,7 +41,6 @@
 		F42E28B21B37D14100466CAA /* share_viber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A21B37D14100466CAA /* share_viber@2x.png */; };
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
-		F430E40D1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.m in Sources */ = {isa = PBXBuildFile; fileRef = F430E40C1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.m */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
@@ -94,7 +93,6 @@
 		F49EB5641B41C21E00F56092 /* CollectHoroscopesTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB5601B41C21E00F56092 /* CollectHoroscopesTableVC.swift */; };
 		F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB5611B41C21E00F56092 /* CookieViewController.swift */; };
 		F49EB5661B41C21E00F56092 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49EB5621B41C21E00F56092 /* DailyTableViewController.swift */; };
-		F49FAE431B424A7700F38E0C /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */; };
 		F49FAE471B42899700F38E0C /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE461B42899700F38E0C /* UserPost.swift */; };
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
@@ -175,6 +173,10 @@
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
 		F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */; };
+		F4E723481B7288E000A6B162 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E723471B7288E000A6B162 /* NewsfeedViewController.swift */; };
+		F4E7234F1B728A8E00A6B162 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E7234B1B728A8E00A6B162 /* BKDelta.m */; };
+		F4E723501B728A8E00A6B162 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */; };
+		F4EC673A1B73887800F231DC /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */; };
 		F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -225,8 +227,6 @@
 		F42E28A21B37D14100466CAA /* share_viber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_viber@2x.png"; sourceTree = "<group>"; };
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
-		F430E40B1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+SVInfiniteScrolling.h"; sourceTree = "<group>"; };
-		F430E40C1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+SVInfiniteScrolling.m"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
@@ -281,7 +281,6 @@
 		F49EB5601B41C21E00F56092 /* CollectHoroscopesTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopesTableVC.swift; sourceTree = "<group>"; };
 		F49EB5611B41C21E00F56092 /* CookieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieViewController.swift; sourceTree = "<group>"; };
 		F49EB5621B41C21E00F56092 /* DailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTableViewController.swift; sourceTree = "<group>"; };
-		F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
 		F49FAE461B42899700F38E0C /* UserPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
@@ -398,6 +397,14 @@
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
 		F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
+		F4E723471B7288E000A6B162 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
+		F4E7234A1B728A8E00A6B162 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
+		F4E7234B1B728A8E00A6B162 /* BKDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDelta.m; sourceTree = "<group>"; };
+		F4E7234C1B728A8E00A6B162 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
+		F4E7234D1B728A8E00A6B162 /* BKDeltaCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDeltaCalculator.h; sourceTree = "<group>"; };
+		F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDeltaCalculator.m; sourceTree = "<group>"; };
+		F4EC67381B73887800F231DC /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
+		F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -590,8 +597,9 @@
 		F47BAB291B216050002031AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F430E40B1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.h */,
-				F430E40C1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.m */,
+				F4E723491B728A8E00A6B162 /* BKDeltaCalculator */,
+				F4EC67381B73887800F231DC /* UIScrollView+InfiniteScroll.h */,
+				F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */,
 				F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */,
 				F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */,
 				F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */,
@@ -634,7 +642,7 @@
 		F49FAE411B42499500F38E0C /* Newsfeed */ = {
 			isa = PBXGroup;
 			children = (
-				F49FAE421B424A7700F38E0C /* NewsfeedViewController.swift */,
+				F4E723471B7288E000A6B162 /* NewsfeedViewController.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -934,6 +942,18 @@
 			path = "OpenUDID-master";
 			sourceTree = "<group>";
 		};
+		F4E723491B728A8E00A6B162 /* BKDeltaCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				F4E7234A1B728A8E00A6B162 /* BKDelta.h */,
+				F4E7234B1B728A8E00A6B162 /* BKDelta.m */,
+				F4E7234C1B728A8E00A6B162 /* BKDelta_Internal.h */,
+				F4E7234D1B728A8E00A6B162 /* BKDeltaCalculator.h */,
+				F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */,
+			);
+			path = BKDeltaCalculator;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1178,7 +1198,6 @@
 				F4DA35C51B4E2F1E00B6F165 /* MyTableViewController.swift in Sources */,
 				F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */,
 				F41E80C71B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift in Sources */,
-				F49FAE431B424A7700F38E0C /* NewsfeedViewController.swift in Sources */,
 				F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */,
 				F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */,
 				F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */,
@@ -1192,12 +1211,12 @@
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
+				F4EC673A1B73887800F231DC /* UIScrollView+InfiniteScroll.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
 				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
 				F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */,
 				F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */,
-				F430E40D1B706B3400D17211 /* UIScrollView+SVInfiniteScrolling.m in Sources */,
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */,
@@ -1209,9 +1228,11 @@
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
+				F4E723481B7288E000A6B162 /* NewsfeedViewController.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
+				F4E723501B728A8E00A6B162 /* BKDeltaCalculator.m in Sources */,
 				F4AB3A841B672F0D00EFF0A1 /* AddFriendTableCell.swift in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */,
@@ -1232,6 +1253,7 @@
 				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
+				F4E7234F1B728A8E00A6B162 /* BKDelta.m in Sources */,
 				F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,6 +16,7 @@ class DataStore : NSObject{
     var followers = [UserProfile]()
     var followingUsers = [UserProfile]()
     var currentUserProfile: UserProfile?
+    var isLastPage = false
     
     static let sharedInstance = DataStore()
     
@@ -41,23 +42,36 @@ class DataStore : NSObject{
         return result
     }
     
-    func addDataArray(data : [UserPost], type: NewsfeedTabType){
-        if(data.count == 0){
-            return // no new data
-        }
+    func addDataArray(data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){
         newsfeedIsUpdated = false
+        self.isLastPage = isLastPage
         switch type {
             case NewsfeedTabType.Following:
+                if(data.count == 0){
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                    return // no new data
+                }
+
                 newsfeedFollowing = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
             }
             case NewsfeedTabType.Global:
+                if(data.count == 0){
+                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+                    return // no new data
+                }
+
                 newsfeedGlobal = addData(newsfeedGlobal, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
             }
             default:
+                if(data.count == 0){
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                    return // no new data
+                }
+
                 newsfeedFollowing = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
@@ -68,7 +82,7 @@ class DataStore : NSObject{
     
     func updateData(data : [UserPost], type: NewsfeedTabType){
         newsfeedIsUpdated = false // reset updated flag to false
-        
+        self.isLastPage = false // reset
         switch type {
             case NewsfeedTabType.Following:
                 if(newsfeedFollowing.count == 0){
@@ -78,6 +92,9 @@ class DataStore : NSObject{
                     // do compare to update current newsfeed
                     self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
                 }
+                if (newsfeedIsUpdated) {
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
+                }
             case NewsfeedTabType.Global:
                 if(newsfeedGlobal.count == 0){
                     newsfeedIsUpdated = true
@@ -85,6 +102,9 @@ class DataStore : NSObject{
                 } else {
                     // do compare to update current newsfeed
                     self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Global)
+                }
+                if (newsfeedIsUpdated) {
+                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
                 }
             default:
                 if(newsfeedFollowing.count == 0){
@@ -94,9 +114,9 @@ class DataStore : NSObject{
                     // do compare to update current newsfeed
                     self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
                 }
-        }
-        if (newsfeedIsUpdated) {
-            Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
+                if (newsfeedIsUpdated) {
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
+                }
         }
         
     }
@@ -132,6 +152,10 @@ class DataStore : NSObject{
         // sort new data with post ts
         mutableOldArray.sort { $0.ts > $1.ts }
         return mutableOldArray
+    }
+    
+    func resetPage(){
+        isLastPage = false
     }
     
     // Helpers

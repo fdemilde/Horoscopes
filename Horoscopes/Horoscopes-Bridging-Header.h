@@ -34,5 +34,8 @@
 #import "GAIDictionaryBuilder.h"
 
 #import "UILabel+WhiteUIDatePickerLabels.h"
+#import "UIScrollView+InfiniteScroll.h"
+#import "BKDeltaCalculator.h"
+#import "BKDelta.h"
 
 #endif

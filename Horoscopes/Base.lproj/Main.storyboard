@@ -60,7 +60,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="selectSignBtnTapped:" destination="hTE-h3-LDK" eventType="touchUpInside" id="ZmG-Qf-Gaq"/>
+                                    <action selector="globalBtnTapped:" destination="hTE-h3-LDK" eventType="touchUpInside" id="VQR-B9-sZ4"/>
                                 </connections>
                             </button>
                         </subviews>

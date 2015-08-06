@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class UserPost : Equatable{
+public class UserPost : NSObject, Equatable{
     var post_id : String = ""
     var uid : Int = -1
     var type : NewsfeedType
@@ -34,6 +34,11 @@ public class UserPost : Equatable{
             posts.append(UserPost(data: result))
         }
         return posts
+    }
+    
+    override public var description: String {
+        let string = ("User Post \(post_id)")
+        return string
     }
     
 }

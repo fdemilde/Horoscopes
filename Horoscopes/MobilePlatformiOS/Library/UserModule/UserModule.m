@@ -30,7 +30,7 @@
         if(tokenObject != nil){
             NSString * tokenValue = tokenObject;
             [creds setToken:tokenValue];
-            DebugLog(@"testInvalidLogin tokenValue = %@",tokenValue);
+//            DebugLog(@"testInvalidLogin tokenValue = %@",tokenValue);
         }
         id uidObject = [responseDict objectForKey:@"uid"];
         if(uidObject != nil){
