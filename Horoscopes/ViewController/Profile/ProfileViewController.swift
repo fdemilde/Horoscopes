@@ -366,7 +366,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             switch currentTab {
             case .Post:
                 let post = userPosts[indexPath.row]
-                return PostCellNode(post: post, type: .Profile)
+                return PostCellNode(post: post, type: .Profile, parentViewController: self)
             case .Followers:
                 let follower = followers[indexPath.row]
                 let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed)

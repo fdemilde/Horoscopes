@@ -168,7 +168,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     func tableView(tableView: ASTableView!, nodeForRowAtIndexPath indexPath: NSIndexPath!) -> ASCellNode! {
         var post = userPostArray[indexPath.row] as UserPost
-        var cell = PostCellNode(post: post, type: PostCellType.Newsfeed)
+        var cell = PostCellNode(post: post, type: PostCellType.Newsfeed, parentViewController: self)
         return cell
     }
     
