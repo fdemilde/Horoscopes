@@ -13,7 +13,7 @@ enum ProfileType {
     case OtherUser
 }
 
-class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate {
+class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
     
     var profileType: ProfileType!
     enum Tab {
@@ -29,6 +29,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     var isFinishedGettingFollowers = false
     var isFinishedGettingFollowingUsers = false
     var isDataChanged = false
+    var successfulFollowed = false
     let firstSectionHeaderHeight: CGFloat = 54
     let firstSectionCellHeight: CGFloat = 233
     let secondSectionHeaderHeight: CGFloat = 80
@@ -59,7 +60,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         // Do any additional setup after loading the view.
         // TODO: Comment this code when finish refactoring
         profileType = .CurrentUser
-//        userProfile = XAppDelegate.currentUser
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePost:", name: NOTIFICATION_UPDATE_POST, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollower:", name: NOTIFICATION_UPDATE_FOLLOWERS, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowing:", name: NOTIFICATION_UPDATE_FOLLOWING, object: nil)
@@ -173,7 +173,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                 if self.profileType == .CurrentUser {
                     DataStore.sharedInstance.userPosts = result!
                 } else {
-                    self.updateLocalData(&self.userPosts, newData: result!)
+                    self.updateData(&self.userPosts, newData: result!)
                 }
             }
         })
@@ -195,7 +195,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                     
                 } else {
                     self.isFinishedGettingFollowers = true
-                    self.updateLocalData(&self.followers, newData: result!)
+                    self.updateData(&self.followers, newData: result!)
                 }
             })
         }
@@ -217,7 +217,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                     
                 } else {
                     self.isFinishedGettingFollowingUsers = true
-                    self.updateLocalData(&self.followingUsers, newData: result!)
+                    self.updateData(&self.followingUsers, newData: result!)
                 }
             })
         }
@@ -237,23 +237,42 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     func reloadTableView() {
-        if self.isFirstDataLoad {
-            if self.isFinishedGettingUserPosts && self.isFinishedGettingFollowers && self.isFinishedGettingFollowingUsers {
-                self.tableView.reloadData()
-                self.isFirstDataLoad = false
-                self.isFinishedGettingUserPosts = false
-                self.isFinishedGettingFollowers = false
-                self.isFinishedGettingFollowingUsers = false
-                self.tableView.hidden = false
-                Utilities.hideHUD()
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            if self.isFirstDataLoad {
+                if self.isFinishedGettingUserPosts && self.isFinishedGettingFollowers && self.isFinishedGettingFollowingUsers {
+                    self.finishGettingDataInitially()
+                }
+            } else {
+                self.reloadSection(1)
             }
-        } else {
-            self.reloadSection(1)
+        })
+    }
+    
+    func checkFollowerStatus() {
+        for (index, follower) in enumerate(followers) {
+            for followingUser in followingUsers {
+                if follower.uid == followingUser.uid {
+                    DataStore.sharedInstance.followers[index].isFollowed = true
+                    follower.isFollowed = true
+                    break
+                }
+            }
         }
     }
     
+    func finishGettingDataInitially() {
+        checkFollowerStatus()
+        self.tableView.reloadData()
+        self.isFirstDataLoad = false
+        self.isFinishedGettingUserPosts = false
+        self.isFinishedGettingFollowers = false
+        self.isFinishedGettingFollowingUsers = false
+        self.tableView.hidden = false
+        Utilities.hideHUD()
+    }
+    
     // MARK: - Convenience
-    func updateLocalData<T: SequenceType>(inout oldData: T, newData: T) {
+    func updateData<T: SequenceType>(inout oldData: T, newData: T) {
         if isFirstDataLoad {
             oldData = newData
             reloadTableView()
@@ -270,11 +289,23 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func updateFollower(notification: NSNotification) {
         followers = DataStore.sharedInstance.followers
+        if !isFirstDataLoad {
+            checkFollowerStatus()
+        }
         reloadTableView()
     }
     
     func updateFollowing(notification: NSNotification) {
         followingUsers = DataStore.sharedInstance.followingUsers
+        if successfulFollowed {
+            checkFollowerStatus()
+            successfulFollowed = false
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.reloadButton()
+                Utilities.hideHUD()
+            })
+            
+        }
         reloadTableView()
     }
     
@@ -336,8 +367,8 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                 return PostCellNode(post: post, type: .Profile)
             case .Followers:
                 let follower = followers[indexPath.row]
-                let cell = ProfileFollowCellNode(user: follower, isFollowed: false)
-                //            cell.delegate
+                let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed)
+                cell.delegate = self
                 return cell
             case .Following:
                 let followingUser = followingUsers[indexPath.row]
@@ -383,6 +414,18 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             currentTab = .Following
             tapButton()
         }
+    }
+    
+    func didClickFollowButton(uid: Int) {
+        Utilities.showHUD()
+        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
+            if let error = error {
+                
+            } else {
+                self.successfulFollowed = true
+                self.getFollowingUsers()
+            }
+        })
     }
 
     /*
