@@ -252,7 +252,9 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         for (index, follower) in enumerate(followers) {
             for followingUser in followingUsers {
                 if follower.uid == followingUser.uid {
-                    DataStore.sharedInstance.followers[index].isFollowed = true
+                    if profileType == .CurrentUser {
+                        DataStore.sharedInstance.followers[index].isFollowed = true
+                    }
                     follower.isFollowed = true
                     break
                 }
