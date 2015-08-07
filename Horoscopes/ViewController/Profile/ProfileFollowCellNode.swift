@@ -37,11 +37,13 @@ class ProfileFollowCellNode: ASCellNode {
         configureUI()
     }
     
-    convenience init(user: UserProfile, isFollowed: Bool) {
+    convenience init(user: UserProfile, isFollowed: Bool, parentViewController: ProfileViewController) {
         self.init(user: user)
         self.isFollowed = isFollowed
-        followerTab = true
-        configureFollowerUI()
+        if parentViewController.profileType == ProfileType.CurrentUser {
+            followerTab = true
+            configureFollowerUI()
+        }
     }
     
     func configureUI() {

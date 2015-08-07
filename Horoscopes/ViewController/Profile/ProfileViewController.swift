@@ -369,7 +369,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                 return PostCellNode(post: post, type: .Profile, parentViewController: self)
             case .Followers:
                 let follower = followers[indexPath.row]
-                let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed)
+                let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed, parentViewController: self)
                 cell.delegate = self
                 return cell
             case .Following:
