@@ -14,6 +14,7 @@ class UserProfile: NSObject, NSCoding {
     var imgURL : String = ""
     var sign : Int = 0
     var location : String = ""
+    var isFollowed = false
     static var filePath: String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL

@@ -17,7 +17,6 @@
 		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
 		70CF2EB31B69C7FA002AE7A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */; };
-		70F31C141B4E161A00A8B3A2 /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C131B4E161A00A8B3A2 /* TestViewController.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */; };
@@ -201,7 +200,6 @@
 		70A4E2771B623F5100711B4F /* ApplicationColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationColor.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
 		70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
-		70F31C131B4E161A00A8B3A2 /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
@@ -449,7 +447,6 @@
 			isa = PBXGroup;
 			children = (
 				F4B566CC1B5F487D00C91073 /* Settings */,
-				70F31C131B4E161A00A8B3A2 /* TestViewController.swift */,
 				70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */,
 				7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */,
 				7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */,
@@ -1187,7 +1184,6 @@
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
-				70F31C141B4E161A00A8B3A2 /* TestViewController.swift in Sources */,
 				F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */,
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
 				F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */,
