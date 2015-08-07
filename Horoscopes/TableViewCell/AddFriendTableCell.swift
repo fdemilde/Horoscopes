@@ -16,7 +16,7 @@ class AddFriendTableCell : UITableViewCell {
     
     
     var userProfile : UserProfile!
-    var followingDelegate : FollowDelegate!
+    var followingDelegate : ProfileFollowCellNodeDelegate!
     
     override func awakeFromNib() {
         super.awakeFromNib()

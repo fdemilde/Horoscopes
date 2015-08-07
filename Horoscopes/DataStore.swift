@@ -12,9 +12,27 @@ class DataStore : NSObject{
     var newsfeedGlobal = [UserPost]()
     var newsfeedFollowing = [UserPost]()
     var newsfeedIsUpdated : Bool = false
-    var userPosts = [UserPost]()
-    var followers = [UserProfile]()
-    var followingUsers = [UserProfile]()
+    var userPosts = [UserPost]() {
+        didSet {
+            if isDataUpdated(oldValue, newData: userPosts) {
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UPDATE_POST, object: userPosts)
+            }
+        }
+    }
+    var followers = [UserProfile]() {
+        didSet {
+            if isDataUpdated(oldValue, newData: followers) {
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UPDATE_FOLLOWERS, object: followers)
+            }
+        }
+    }
+    var followingUsers = [UserProfile]() {
+        didSet {
+            if isDataUpdated(oldValue, newData: followingUsers) {
+                NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UPDATE_FOLLOWING, object: followingUsers)
+            }
+        }
+    }
     var currentUserProfile: UserProfile?
     var isLastPage = false
     
@@ -22,24 +40,6 @@ class DataStore : NSObject{
     
     override init(){
         
-    }
-    
-    func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
-        let oldDataIdSet = getDataIds(oldData)
-        let newDataIdSet = getDataIds(newData)
-        return oldDataIdSet != newDataIdSet
-    }
-    
-    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
-        var result = Set<String>()
-        for item in data {
-            if let post = item as? UserPost {
-                result.insert(post.post_id)
-            } else if let profile = item as? UserProfile {
-                result.insert("\(profile.uid)")
-            }
-        }
-        return result
     }
     
     func addDataArray(data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){
@@ -158,7 +158,25 @@ class DataStore : NSObject{
         isLastPage = false
     }
     
-    // Helpers
+    // MARK: - Helpers
+    func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
+        let oldDataIdSet = getDataIds(oldData)
+        let newDataIdSet = getDataIds(newData)
+        return oldDataIdSet != newDataIdSet
+    }
+    
+    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
+        var result = Set<String>()
+        for item in data {
+            if let post = item as? UserPost {
+                result.insert(post.post_id)
+            } else if let profile = item as? UserProfile {
+                result.insert("\(profile.uid)")
+            }
+        }
+        return result
+    }
+    
     func compareAndUpdateArrayData(oldDataArray : [UserPost], newDataArray : [UserPost]) -> [UserPost]{
         var removedArray = [UserPost]()
         var mutableOldArray = oldDataArray

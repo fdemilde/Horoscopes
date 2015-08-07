@@ -54,13 +54,4 @@ class UserProfile: NSObject, NSCoding {
         aCoder.encodeInteger(sign, forKey: Keys.sign)
         aCoder.encodeObject(location, forKey: Keys.location)
     }
-    
-//    static func profilesFromResults(results: [NSDictionary]) -> [UserProfile] {
-//        var profiles = [UserProfile]()
-//        for result in results {
-//            profiles.append(UserProfile(data: result))
-//        }
-//        return profiles
-//    }
-
 }
