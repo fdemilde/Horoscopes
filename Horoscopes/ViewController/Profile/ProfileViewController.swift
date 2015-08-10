@@ -15,7 +15,7 @@ enum ProfileType {
 
 class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
     
-    var profileType: ProfileType!
+    var profileType: ProfileType = .CurrentUser
     enum Tab {
         case Post
         case Followers
@@ -39,27 +39,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     var followers = [UserProfile]()
     var followingUsers = [UserProfile]()
     
-    // MARK: - Initialization
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//    }
-//    
-//    convenience init(profileType: ProfileType) {
-//        self.init(nibName: nil, bundle: nil)
-//        self.profileType = profileType
-//    }
-//
-//    required init(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        // TODO: Comment this code when finish refactoring
-        profileType = .CurrentUser
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePost:", name: NOTIFICATION_UPDATE_POST, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollower:", name: NOTIFICATION_UPDATE_FOLLOWERS, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowing:", name: NOTIFICATION_UPDATE_FOLLOWING, object: nil)
@@ -264,12 +248,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func finishGettingDataInitially() {
         checkFollowerStatus()
-        self.tableView.reloadData()
+        reloadData()
         self.isFirstDataLoad = false
         self.isFinishedGettingUserPosts = false
         self.isFinishedGettingFollowers = false
         self.isFinishedGettingFollowingUsers = false
-        self.tableView.hidden = false
         Utilities.hideHUD()
     }
     
@@ -303,7 +286,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             checkFollowerStatus()
             successfulFollowed = false
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.reloadButton()
                 Utilities.hideHUD()
             })
             
@@ -313,21 +295,25 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getDataInitially() {
         Utilities.showHUD()
-        tableView.hidden = true
         currentTab = .Post
         getUserPosts()
         getFollowers()
         getFollowingUsers()
     }
     
+    func reloadData() {
+        reloadSection(0)
+        reloadSection(1)
+    }
+    
     func reloadSection(section: Int) {
+        reloadButton()
         let range = NSMakeRange(section, 1)
         let section = NSIndexSet(indexesInRange: range)
         tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
     func tapButton() {
-        reloadButton()
         reloadSection(1)
         switch currentTab {
         case .Post:
@@ -369,12 +355,12 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                 return PostCellNode(post: post, type: .Profile, parentViewController: self)
             case .Followers:
                 let follower = followers[indexPath.row]
-                let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed, parentViewController: self)
+                let cell = ProfileFollowCellNode(user: follower, parentViewController: self)
                 cell.delegate = self
                 return cell
             case .Following:
                 let followingUser = followingUsers[indexPath.row]
-                return ProfileFollowCellNode(user: followingUser)
+                return ProfileFollowCellNode(user: followingUser, parentViewController: self)
             }
         }
     }
@@ -393,6 +379,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         }
         let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
         view.delegate = self
+        view.followDelegate = self
         view.tag = secondSectionHeaderTag
         return view
     }
@@ -424,8 +411,12 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
-                self.successfulFollowed = true
-                self.getFollowingUsers()
+                if self.profileType == .CurrentUser {
+                    self.successfulFollowed = true
+                    self.getFollowingUsers()
+                } else {
+                    Utilities.hideHUD()
+                }
             }
         })
     }

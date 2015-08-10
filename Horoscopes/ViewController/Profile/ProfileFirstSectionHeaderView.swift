@@ -15,11 +15,11 @@ class ProfileFirstSectionHeaderView: UIView {
     var backButton: UIButton?
     let margin: CGFloat = 10
     let buttonHeight: CGFloat = 44
-    var parentVC : ProfileViewController!
+    var parentViewController : ProfileViewController!
     
     init(frame: CGRect, parentViewController: ProfileViewController) {
         super.init(frame: frame)
-        self.parentVC = parentViewController
+        self.parentViewController = parentViewController
         if parentViewController.profileType == ProfileType.CurrentUser {
             addButton = UIButton()
             addButton.setImage(UIImage(named: "add_btn"), forState: UIControlState.Normal)
@@ -56,25 +56,25 @@ class ProfileFirstSectionHeaderView: UIView {
     
     // MARK: Buttons action
     func settingsButtonTapped(){
-        let settingViewController = parentVC.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        let settingViewController = parentViewController.storyboard!.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
         var formSheet = MZFormSheetController(viewController: settingViewController)
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
         let tabBarVC = self.window?.rootViewController as! UITabBarController
-        parentVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        parentViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
     func addFriendButtonTapped(){
-        let addFriendVC = parentVC.storyboard!.instantiateViewControllerWithIdentifier("AddFriendTableViewController") as! AddFriendTableViewController
-        addFriendVC.parentVC = parentVC
-        self.parentVC.navigationController?.pushViewController(addFriendVC, animated: true)
-//        Utilities.showFormSheet(addFriendVC, fromVC: parentVC)
+        let addFriendVC = parentViewController.storyboard!.instantiateViewControllerWithIdentifier("AddFriendTableViewController") as! AddFriendTableViewController
+        addFriendVC.parentVC = parentViewController
+        self.parentViewController.navigationController?.pushViewController(addFriendVC, animated: true)
+//        Utilities.showFormSheet(addFriendVC, fromVC: parentViewController)
     }
     
     func backButtonTapped(sender: UIButton) {
-        removeFromSuperview()
+        parentViewController.navigationController?.popViewControllerAnimated(true)
     }
     
     /*

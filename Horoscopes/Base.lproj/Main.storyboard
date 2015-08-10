@@ -1028,6 +1028,12 @@
                                 <exclude reference="i1d-IS-VOF"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="7nb-AQ-FSN"/>
+                                <exclude reference="CoK-4Z-xlR"/>
+                                <exclude reference="rxR-4O-Fuh"/>
+                                <exclude reference="6hW-1l-lUd"/>
+                                <exclude reference="gfL-sz-jS5"/>
+                                <exclude reference="gzb-ZO-31B"/>
                                 <exclude reference="V4m-82-htu"/>
                                 <exclude reference="vqq-KW-5UQ"/>
                                 <exclude reference="xVg-A2-vPb"/>
@@ -1058,6 +1064,12 @@
                                 <include reference="i1d-IS-VOF"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="7nb-AQ-FSN"/>
+                                <include reference="CoK-4Z-xlR"/>
+                                <include reference="rxR-4O-Fuh"/>
+                                <include reference="6hW-1l-lUd"/>
+                                <include reference="gfL-sz-jS5"/>
+                                <include reference="gzb-ZO-31B"/>
                                 <include reference="V4m-82-htu"/>
                                 <include reference="vqq-KW-5UQ"/>
                                 <include reference="xVg-A2-vPb"/>
@@ -3329,7 +3341,7 @@
         <!--Profile-->
         <scene sceneID="6ql-jo-iWW">
             <objects>
-                <viewController title="Profile" id="VFF-tC-3uB" customClass="ProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="VFF-tC-3uB" customClass="ProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yBF-jZ-EQQ"/>
                         <viewControllerLayoutGuide type="bottom" id="VdN-TL-7vf"/>

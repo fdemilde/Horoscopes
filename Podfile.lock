@@ -29,7 +29,6 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
-  - DateTools (1.6.1)
   - FBSDKCoreKit (4.2.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.2.0)
@@ -65,7 +64,6 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.0)
   - AsyncDisplayKit
-  - DateTools
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -82,7 +80,6 @@ SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   AsyncDisplayKit: b2f777da3a246b4aad660b2a55d60bb4328049b9
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
-  DateTools: 9bcc89e4f2f9004d8a7a2bd1b49269cf78968e65
   FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
   FBSDKLoginKit: 57e37106af12c9e264e473dcb75d7decdbb07fe4
   FBSDKShareKit: 931746fdf8fb95efd6e12310ec14b2b3295e2aec
@@ -97,4 +94,4 @@ SPEC CHECKSUMS:
   UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
   WebASDKImageManager: 8e37e97c115c8e9092fc6111218a71ddec7a73d5
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.38.2

@@ -21,31 +21,30 @@ class ProfileFollowCellNode: ASCellNode {
     var followedLabel: UILabel!
     
     var user: UserProfile!
-    var isFollowed: Bool!
+//    var isFollowed: Bool!
     var followerTab = false
     var delegate: ProfileFollowCellNodeDelegate?
+    var parentViewController: ProfileViewController!
     
     let tablePadding: CGFloat = 5
     let outterPadding: CGFloat = 15
     let innerPadding: CGFloat = 2
     let pictureSize: CGFloat = 30
     
-    init(user: UserProfile) {
+    // MARK: - Initialization
+    required init(user: UserProfile, parentViewController: ProfileViewController) {
         super.init()
         self.user = user
         self.selectionStyle = .None
+        self.parentViewController = parentViewController
         configureUI()
-    }
-    
-    convenience init(user: UserProfile, isFollowed: Bool, parentViewController: ProfileViewController) {
-        self.init(user: user)
-        self.isFollowed = isFollowed
-        if parentViewController.profileType == ProfileType.CurrentUser {
+        if parentViewController.profileType == ProfileType.CurrentUser && parentViewController.currentTab == .Followers {
             followerTab = true
             configureFollowerUI()
         }
     }
     
+    // MARK: - UI Configuration
     func configureUI() {
         backgroundDisplayNode = ASDisplayNode()
         backgroundDisplayNode.backgroundColor = UIColor.whiteColor()
@@ -71,10 +70,12 @@ class ProfileFollowCellNode: ASCellNode {
         let horoscopeSignAttributes = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
         horoscopeSignTextNode.attributedString = NSAttributedString(string: HoroscopesManager.sharedInstance.getHoroscopesSigns()[user.sign].sign, attributes: horoscopeSignAttributes)
         backgroundDisplayNode.addSubnode(horoscopeSignTextNode)
+        
+        enableUserProfileInteraction()
     }
     
     func configureFollowerUI() {
-        if isFollowed! {
+        if user.isFollowed {
             followedLabel = UILabel()
             followedLabel.text = "Followed"
             followedLabel.font = UIFont.systemFontOfSize(13)
@@ -88,6 +89,7 @@ class ProfileFollowCellNode: ASCellNode {
         }
     }
     
+    // MARK: - Calculate size and layout
     override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
         backgroundDisplayNode.measure(constrainedSize)
         let nameSize = nameTextNode.measure(CGSizeMake(constrainedSize.width - pictureSize - 2*outterPadding - innerPadding, CGFloat.max))
@@ -103,7 +105,7 @@ class ProfileFollowCellNode: ASCellNode {
         nameTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding, nameTextNode.calculatedSize.width, nameTextNode.calculatedSize.height)
         horoscopeSignTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding + nameTextNode.calculatedSize.height + innerPadding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignTextNode.calculatedSize.height)
         if followerTab {
-            if isFollowed! {
+            if user.isFollowed {
                 backgroundDisplayNode.view.addSubview(followedLabel)
                 followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width - tablePadding, calculatedSize.height/2 - followedLabel.bounds.size.height/2, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
             } else {
@@ -113,7 +115,23 @@ class ProfileFollowCellNode: ASCellNode {
         }
     }
     
+    // MARK: - Action
+    func userProfileTapped(sender: AnyObject) {
+        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = user
+        parentViewController.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func followButtonTapped(sender: AnyObject) {
         delegate!.didClickFollowButton(user.uid)
+    }
+    
+    // MARK: - Helper
+    func enableUserProfileInteraction() {
+        pictureImageNode?.userInteractionEnabled = true
+        pictureImageNode?.addTarget(self, action: "userProfileTapped:", forControlEvents: .TouchUpInside)
+        nameTextNode?.userInteractionEnabled = true
+        nameTextNode?.addTarget(self, action: "userProfileTapped:", forControlEvents: ASControlNodeEvent.TouchUpInside)
     }
 }

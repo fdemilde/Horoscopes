@@ -50,6 +50,7 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     var userPost : UserPost?
     var type = PostCellType.Newsfeed
     var parentViewController: UIViewController!
+    var gestureRecognizer: UITapGestureRecognizer!
     
     required init(post : UserPost, type : PostCellType, parentViewController: UIViewController){
         super.init()
@@ -112,6 +113,16 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
         locationLabelNode = ASTextNode()
         locationLabelNode?.attributedString = NSAttributedString(string: userPost!.user!.location, attributes: timeDict)
         background!.addSubnode(locationLabelNode)
+        
+        if type == .Profile {
+            if let viewController = parentViewController as? ProfileViewController {
+                if viewController.profileType == ProfileType.OtherUser {
+                    enableUserProfileInteraction()
+                }
+            }
+        } else {
+            enableUserProfileInteraction()
+        }
     }
     
     func createFeedDescirption(){
@@ -244,6 +255,13 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     }
     
     //MARK: Button Action
+    func userProfileTapped(sender: AnyObject) {
+        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = userPost!.user!
+        parentViewController.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func sendHeartTapped(){
         
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
@@ -297,6 +315,12 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     }
     
     // MARK: Helpers
+    func enableUserProfileInteraction() {
+        profilePicture?.userInteractionEnabled = true
+        profilePicture?.addTarget(self, action: "userProfileTapped:", forControlEvents: .TouchUpInside)
+        userNameLabelNode?.userInteractionEnabled = true
+        userNameLabelNode?.addTarget(self, action: "userProfileTapped:", forControlEvents: ASControlNodeEvent.TouchUpInside)
+    }
     
     func getFeedTypeText() -> String{
         switch(self.userPost!.type){
