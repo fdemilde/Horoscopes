@@ -21,6 +21,10 @@ class NotificationTableViewCell: UITableViewCell {
     
     // MARK: for Testing now, only fake data
     func populateData(){
+        self.defaultCell()
+    }
+    
+    func defaultCell(){
         var imageURL = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/p160x160/11210415_976351309044730_8258958221771799158_n.jpg?oh=8e218674b285255d08cc6506ba1d27a1&oe=561997A7&__gda__=1448374830_c84a435124e10413bed7cd7774800790")
         Utilities.getDataFromUrl(imageURL!) { data -> Void in
             dispatch_async(dispatch_get_main_queue()) {
@@ -29,7 +33,7 @@ class NotificationTableViewCell: UITableViewCell {
             }
         }
         
-        var desc = "Cedric Chin, Binh Dang and 1 other people send you hearts"
+        var desc = "Cedric Chin, Binh Dang and 2 other people send you hearts"
         
         var attString = NSMutableAttributedString(string: desc)
         

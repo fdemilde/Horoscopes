@@ -23,7 +23,7 @@
 //     (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 }
 
--(void) sendTo:(NSString*)to withRoute:(NSString*) route withAlert:(Alert*) alert withRef:(NSString*) ref withPush:(int) push withData:(NSString*) data andCompleteBlock:(void (^)(int responseDict))completeBlock{
+-(void) sendTo:(NSString*)to withRoute:(NSString*) route withAlert:(Alert*) alert withRef:(NSString*) ref withPush:(int) push withData:(NSString*) data andCompleteBlock:(void (^)(NSDictionary* responseDict))completeBlock{
     
     NSMutableDictionary* params = [[NSMutableDictionary alloc]init];
     [params setObject:to forKey:@"to"];
@@ -42,16 +42,9 @@
         [params setObject:@"1" forKey:@"push"];
         [params setObject:@"1" forKey:@"get_nopush"];
     }
-    
+    NSLog(@"notification.send params = %@", params);
     [sc sendRequest:@"notification.send" withLoginRequired:REQUIRED andPostData:params andCompleteBlock:^(NSDictionary *responseDict, NSError *error) {
-        
-        id uidObject = [responseDict objectForKey:@"base_id"];
-        if(uidObject != nil){
-            int uid = [uidObject intValue];
-            completeBlock(uid);
-            return;
-        }
-        completeBlock(0);
+        completeBlock(responseDict);
     }];
 
 }

@@ -357,6 +357,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
     }
     
+    // MARK: Location
+    
     func sendUserUpdateLocation(location : String?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         
         var postData = NSMutableDictionary()
@@ -371,6 +373,58 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             }
         })
         
+    }
+    
+    // MARK: Server Notification
+    
+    
+    
+    func registerAPNSNotificationToken(token : String, completionHandler:(response : Dictionary<String,AnyObject>?, error : NSError?) -> Void ){
+        var postData = NSMutableDictionary()
+        postData.setObject(token, forKey: "device_token")
+        XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_APNS_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            var result = Utilities.parseNSDictionaryToDictionary(response)
+            completionHandler(response: result, error: error)
+        })
+    }
+    
+    
+    
+    func registerServerNotificationToken(token : String){
+        var postData = NSMutableDictionary()
+        postData.setObject(token, forKey: "device_token")
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SERVER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            println("registerServerNotificationToken == \(response)")
+            var success = response["success"] as! Int
+            if(success == 1){
+                println("registerServerNotificationToken successful")
+            } else {
+                println("registerServerNotificationToken failed")
+            }
+        })
+    }
+    
+    func sendHeartServerNotification(userPostId : Int, postId : String){
+        var alert = Alert()
+        alert.title = "Send heart"
+        alert.body = "Send heart"
+        alert.priority = 5
+        var routeString = "test1"
+        var userPostIdString = "\(userPostId)"
+        XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "ref", withPush: 0, withData: "data") { (result) -> Void in
+            println("sendHeartServerNotification result = \(result)")
+        }
+    }
+    
+    func sendFollowNotification(){
+        
+    }
+    
+    func getAllNotification(since : Int, completionHandler:(result : [AnyObject]?) -> Void ){
+        XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(since), andCompleteBlock: { (result) -> Void in
+            completionHandler(result: result)
+        })
     }
     
     // MARK: Helpers

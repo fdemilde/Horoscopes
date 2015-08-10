@@ -103,8 +103,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         }
         XAppDelegate.dataStore.resetPage()
         userPostArray = XAppDelegate.dataStore.newsfeedGlobal
-//        tableView.reloadData()
-        self.tableReloadWithAnimation()
+        tableView.reloadData()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         
@@ -120,22 +119,20 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 userPostArray = XAppDelegate.dataStore.newsfeedFollowing
-//                tableView.reloadData()
-                self.tableReloadWithAnimation()
+                tableView.reloadData()
                 XAppDelegate.dataStore.resetPage()
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
-//                tableView.reloadData()
-                self.tableReloadWithAnimation()
+                userPostArray.removeAll(keepCapacity: false)
+                self.tableView.reloadData()
             }
         } else {
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
-//                tableView.reloadData()
-                self.tableReloadWithAnimation()
+                tableView.reloadData()
             }
         }
     }
@@ -173,8 +170,9 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        
-        if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
+        println("numberOfSectionsInTableView numberOfSectionsInTableView")
+        if(XAppDelegate.socialManager.isLoggedInFacebook() || self.tabType == NewsfeedTabType.Global){ // user already loggin facebook
+            tableView.tableHeaderView = nil
         } else {
             var bg = self.createEmptyTableHeaderBackground()
             var facebookButton = UIButton()
@@ -193,34 +191,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func tableView(tableView: UITableView!, numberOfRowsInSection section: Int) -> Int {
-        //        println("numberOfRowsInSection numberOfRowsInSection \(userPostArray.count) ")
         return userPostArray.count
-    }
-    
-    func tableReloadDataWithAnimation(){
-        
-        self.tableView.beginUpdates()
-        var range = NSMakeRange(0, tableView.numberOfSections());
-        var sections = NSIndexSet(indexesInRange: range);
-        //        self.tableView.reloadSections(sections, withRowAnimation: UITableViewRowAnimation.Fade)
-        
-        var deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
-            var p1 = post1 as! UserPost
-            var p2 = post2 as! UserPost
-            return (p1.post_id == p2.post_id);
-        }
-        var delta = deltaCalculator.deltaFromOldArray(userPostArray, toNewArray:userPostArray)
-        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
-        //        _items = [newItems copy];
-        if(self.userPostArray.count != 0){
-            self.tableView.tableHeaderView = nil
-            self.tableView.backgroundColor = UIColor.clearColor()
-        } else {
-            self.tableView.tableHeaderView = self.createEmptyTableHeaderBackgroundWithMessage()
-        }
-        self.tableView.endUpdates()
-        self.tableView.setContentOffset(CGPointZero, animated:true)
-        tableView.finishInfiniteScroll()
     }
     
     func insertRowsAtBottom(newData : [UserPost]){
@@ -242,12 +213,12 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
             self.tableView.tableHeaderView = self.createEmptyTableHeaderBackgroundWithMessage()
         }
         self.tableView.endUpdates()
-//        var timer = NSTimer.scheduledTimerWithTimeInterval(0.5, target: self, selector: Selector("finishInfiniteScroll"), userInfo: nil, repeats: false)
         tableView.finishInfiniteScroll()
         
     }
     
     func tableReloadWithAnimation(){
+        self.tableView.dataSource?.numberOfSectionsInTableView!(self.tableView)
         tableView.reloadSections(NSIndexSet(index: 0),withRowAnimation:UITableViewRowAnimation.Fade)
     }
     
@@ -299,21 +270,13 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White
-//        tableView.addInfiniteScrollingWithActionHandler { () -> Void in
-//            if(XAppDelegate.dataStore.isLastPage){
-//                self.tableView.infiniteScrollingView.stopAnimating()
-//                //                self.tableView.infiniteScrollingView.removeInfiniteScrollingBottomSpace()
-//                return
-//            } // last page dont need to request more
-//            self.currentPage++
-//            if(self.tabType == NewsfeedTabType.Following){
-//                XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
-//            } else {
-//                XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
-//            }
-//        }
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
             let tableView = scrollView as! UITableView
+            
+            if(!XAppDelegate.socialManager.isLoggedInFacebook() && self.tabType == NewsfeedTabType.Following){
+                self.tableView.finishInfiniteScroll()
+                return
+            }
             
             if(XAppDelegate.dataStore.isLastPage){
                 self.tableView.finishInfiniteScroll()

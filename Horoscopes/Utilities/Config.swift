@@ -13,7 +13,8 @@ let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 // MARK: Network request
 let GET_DATA_METHOD  = "app.horoscopes.checkin" //debug.logrequest for testing event.upload for actual
 let REFRESH_DATA_METHOD  = "app.horoscopes.refresh"
-let REGISTER_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
+let REGISTER_APNS_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
+let REGISTER_SERVER_NOTIFICATION_TOKEN = "notification.registerpush"
 let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
 let GET_FORTUNE_METHOD = "app.horoscopes.getfortune"
@@ -47,6 +48,9 @@ let UPDATE_BIRTHDAY = "app.horoscopes.setbirthday"
 let GET_FRIEND_LIST = "app.horoscopes.profile.facebookfriends"
 let GET_OTHER_USER_FOLLOWING = "app.horoscopes.profile.following"
 let GET_OTHER_USER_FOLLOWERS = "app.horoscopes.profile.followers"
+
+// MARK: Notification method
+
 
 // Notification
 let NOTIFICATION_RATE_HOROSCOPE_RESULT = "NOTIFICATION_RATE_HOROSCOPE_RESULT"
@@ -137,6 +141,12 @@ enum SettingsType {
 enum BirthdayParentViewControllerType {
     case LoginViewController
     case SettingsViewController
+}
+
+// server notification
+enum ServerNotificationType {
+    case SendHeart
+    case Follow
 }
 
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat

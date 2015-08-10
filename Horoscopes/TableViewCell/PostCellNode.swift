@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostCellNode : ASCellNode {
+class PostCellNode : ASCellNode, UIAlertViewDelegate {
     
     let BG_PADDING_LEFT = 30 as CGFloat
     let BG_PADDING_RIGHT = 5 as CGFloat
@@ -263,6 +263,12 @@ class PostCellNode : ASCellNode {
     }
     
     func sendHeartTapped(){
+        
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            return
+        }
+        
         Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         XAppDelegate.socialManager.sendHeart(userPost!.post_id, type: SEND_HEART_USER_POST_TYPE)
@@ -305,6 +311,7 @@ class PostCellNode : ASCellNode {
             let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
             self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
         })
+        XAppDelegate.socialManager.sendHeartServerNotification(userPost!.user!.uid, postId: userPost!.post_id)
     }
     
     // MARK: Helpers

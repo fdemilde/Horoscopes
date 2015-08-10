@@ -24,6 +24,11 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         tableView.delegate = self
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
+        
+        XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
+            
+            println("getAllNotification result = \(result)")
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,25 +60,9 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         return 70
     }
     
-    // MARK: Title Hide/show
+    // MARK: Button actions
     
-    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        startPositionY = scrollView.contentOffset.y
-    }
-    
-    func scrollViewDidScroll(scrollView: UIScrollView) {
-        if(scrollView.contentOffset.y <= 0){
-            //            showTabbar(true)
-            //            println("at top or over top of table view")
-        } else if (scrollView.contentOffset.y + scrollView.frame.size.height >= scrollView.contentSize.height - 5) { // then we are at the end
-            //            println("at the end of table view")
-            //            showTabbar(true)
-        } else if ((scrollView.contentOffset.y - startPositionY) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
-            //            println("scroll down")
-            
-        } else if ((startPositionY - scrollView.contentOffset.y) > MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR){
-            //            showTabbar(true)
-            //            println("scroll up")
-        }
+    @IBAction func refreshButtonTapped(sender: AnyObject) {
+        
     }
 }
