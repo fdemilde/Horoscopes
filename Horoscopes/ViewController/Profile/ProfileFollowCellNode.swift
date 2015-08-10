@@ -38,7 +38,7 @@ class ProfileFollowCellNode: ASCellNode {
         self.selectionStyle = .None
         self.parentViewController = parentViewController
         configureUI()
-        if parentViewController.profileType == ProfileType.CurrentUser {
+        if parentViewController.profileType == ProfileType.CurrentUser && parentViewController.currentTab == .Followers {
             followerTab = true
             configureFollowerUI()
         }
@@ -117,10 +117,14 @@ class ProfileFollowCellNode: ASCellNode {
     
     // MARK: - Action
     func userProfileTapped(sender: AnyObject) {
-        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-        controller.profileType = ProfileType.OtherUser
-        controller.userProfile = user
-        parentViewController.navigationController?.pushViewController(controller, animated: true)
+        if user.uid == XAppDelegate.currentUser.uid {
+            
+        } else {
+            let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+            controller.profileType = ProfileType.OtherUser
+            controller.userProfile = user
+            parentViewController.navigationController?.pushViewController(controller, animated: true)
+        }
     }
     
     func followButtonTapped(sender: AnyObject) {

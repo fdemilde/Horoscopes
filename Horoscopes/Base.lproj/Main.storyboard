@@ -1015,6 +1015,12 @@
                                 <exclude reference="i1d-IS-VOF"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="7nb-AQ-FSN"/>
+                                <exclude reference="CoK-4Z-xlR"/>
+                                <exclude reference="rxR-4O-Fuh"/>
+                                <exclude reference="6hW-1l-lUd"/>
+                                <exclude reference="gfL-sz-jS5"/>
+                                <exclude reference="gzb-ZO-31B"/>
                                 <exclude reference="V4m-82-htu"/>
                                 <exclude reference="vqq-KW-5UQ"/>
                                 <exclude reference="xVg-A2-vPb"/>
@@ -1026,12 +1032,6 @@
                                 <exclude reference="hMC-CB-RLP"/>
                                 <exclude reference="vy2-Gp-OOn"/>
                                 <exclude reference="wFu-Ef-Xe9"/>
-                                <exclude reference="7nb-AQ-FSN"/>
-                                <exclude reference="CoK-4Z-xlR"/>
-                                <exclude reference="rxR-4O-Fuh"/>
-                                <exclude reference="gfL-sz-jS5"/>
-                                <exclude reference="gzb-ZO-31B"/>
-                                <exclude reference="6hW-1l-lUd"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -1042,6 +1042,12 @@
                                 <include reference="i1d-IS-VOF"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="7nb-AQ-FSN"/>
+                                <include reference="CoK-4Z-xlR"/>
+                                <include reference="rxR-4O-Fuh"/>
+                                <include reference="6hW-1l-lUd"/>
+                                <include reference="gfL-sz-jS5"/>
+                                <include reference="gzb-ZO-31B"/>
                                 <include reference="V4m-82-htu"/>
                                 <include reference="vqq-KW-5UQ"/>
                                 <include reference="xVg-A2-vPb"/>
@@ -1053,12 +1059,6 @@
                                 <include reference="hMC-CB-RLP"/>
                                 <exclude reference="vy2-Gp-OOn"/>
                                 <exclude reference="wFu-Ef-Xe9"/>
-                                <include reference="7nb-AQ-FSN"/>
-                                <include reference="CoK-4Z-xlR"/>
-                                <include reference="rxR-4O-Fuh"/>
-                                <include reference="gfL-sz-jS5"/>
-                                <include reference="gzb-ZO-31B"/>
-                                <include reference="6hW-1l-lUd"/>
                             </mask>
                         </variation>
                     </view>

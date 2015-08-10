@@ -286,7 +286,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             checkFollowerStatus()
             successfulFollowed = false
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.reloadButton()
                 Utilities.hideHUD()
             })
             
@@ -304,18 +303,17 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func reloadData() {
         reloadSection(0)
-        reloadButton()
         reloadSection(1)
     }
     
     func reloadSection(section: Int) {
+        reloadButton()
         let range = NSMakeRange(section, 1)
         let section = NSIndexSet(indexesInRange: range)
         tableView?.reloadSections(section, withRowAnimation: UITableViewRowAnimation.Fade)
     }
     
     func tapButton() {
-        reloadButton()
         reloadSection(1)
         switch currentTab {
         case .Post:
@@ -381,6 +379,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         }
         let view = ProfileSecondSectionHeaderView(frame: CGRectMake(tableView.frame.origin.x, firstSectionHeaderHeight + firstSectionCellHeight, tableView.frame.width, secondSectionHeaderHeight), userProfile: userProfile, parentViewController: self)
         view.delegate = self
+        view.followDelegate = self
         view.tag = secondSectionHeaderTag
         return view
     }
@@ -412,8 +411,12 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
-                self.successfulFollowed = true
-                self.getFollowingUsers()
+                if self.profileType == .CurrentUser {
+                    self.successfulFollowed = true
+                    self.getFollowingUsers()
+                } else {
+                    Utilities.hideHUD()
+                }
             }
         })
     }
