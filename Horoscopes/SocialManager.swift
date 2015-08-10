@@ -60,6 +60,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
+//                println("getGlobalNewsfeed result = \(result)")
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
@@ -412,7 +413,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         alert.priority = 5
         var routeString = "test1"
         var userPostIdString = "\(userPostId)"
-        XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "ref", withPush: 0, withData: "data") { (result) -> Void in
+        XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
             println("sendHeartServerNotification result = \(result)")
         }
     }
@@ -421,9 +422,20 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
     }
     
-    func getAllNotification(since : Int, completionHandler:(result : [AnyObject]?) -> Void ){
+    func getAllNotification(since : Int, completionHandler:(result : [NotificationObject]?) -> Void ){
         XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(since), andCompleteBlock: { (result) -> Void in
-            completionHandler(result: result)
+            var resultArray = result as AnyObject as! [NotificationObject]
+            completionHandler(result: resultArray)
+        })
+    }
+    
+    func clearAllNotification(){
+        var listIds = [String]()
+        listIds.append("2_8")
+        listIds.append("3_8")
+        listIds.append("4_8")
+        XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
+            println("clearAllNotification result = \(result)")
         })
     }
     

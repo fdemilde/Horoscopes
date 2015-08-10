@@ -195,7 +195,7 @@ class DataStore : NSObject{
             mutableOldArray.remove(post)
         }
         
-        self.addData(mutableOldArray, newDataArray: newDataArray)
+        mutableOldArray = self.addData(mutableOldArray, newDataArray: newDataArray)
         
         return mutableOldArray
     }

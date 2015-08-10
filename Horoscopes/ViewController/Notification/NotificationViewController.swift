@@ -13,6 +13,7 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
     var startPositionY = 0 as CGFloat
+    var notifArray = [NotificationObject]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +23,13 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.backgroundColor = UIColor.whiteColor()
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
         
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
-            
-            println("getAllNotification result = \(result)")
+            self.notifArray = result!
+            self.tableView.reloadData()
         })
     }
 
@@ -37,15 +39,14 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 10
+        return notifArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell : NotificationTableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
-        cell.populateData()
+        cell.populateData(notifArray[indexPath.row])
         if(indexPath.row % 2 == 1){
             cell.backgroundColor = UIColor(red: 247/255.0, green: 247/255.0, blue: 247/255.0, alpha: 1)
         }
@@ -63,6 +64,14 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     // MARK: Button actions
     
     @IBAction func refreshButtonTapped(sender: AnyObject) {
-        
+        XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
+            
+            println("getAllNotification result = \(result)")
+        })
     }
+    
+    @IBAction func clearAllTapped(sender: AnyObject) {
+        XAppDelegate.socialManager.clearAllNotification()
+    }
+    
 }

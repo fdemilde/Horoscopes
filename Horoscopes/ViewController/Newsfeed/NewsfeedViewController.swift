@@ -87,6 +87,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         } else {
             self.resetTapButtonColor()
             var newDataArray = notif.object as! [UserPost]
+//            println("feedsFinishedLoading newDataArray = \(newDataArray)")
             self.insertRowsAtBottom(newDataArray)
         }
     }
@@ -95,15 +96,16 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         currentPage = 0
         tableView.finishInfiniteScroll()
+        XAppDelegate.dataStore.resetPage()
         if(self.tabType != NewsfeedTabType.Global){
             self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
+            userPostArray = XAppDelegate.dataStore.newsfeedGlobal
+            tableView.reloadData()
         }
-        XAppDelegate.dataStore.resetPage()
-        userPostArray = XAppDelegate.dataStore.newsfeedGlobal
-        tableView.reloadData()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         
@@ -111,16 +113,18 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED,object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         // when button is tapped, we load data again
         currentPage = 0
         tableView.finishInfiniteScroll()
+        XAppDelegate.dataStore.resetPage()
         if(self.tabType != NewsfeedTabType.Following){
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 userPostArray = XAppDelegate.dataStore.newsfeedFollowing
                 tableView.reloadData()
-                XAppDelegate.dataStore.resetPage()
+                
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
@@ -170,7 +174,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView!) -> Int {
-        println("numberOfSectionsInTableView numberOfSectionsInTableView")
         if(XAppDelegate.socialManager.isLoggedInFacebook() || self.tabType == NewsfeedTabType.Global){ // user already loggin facebook
             tableView.tableHeaderView = nil
         } else {
