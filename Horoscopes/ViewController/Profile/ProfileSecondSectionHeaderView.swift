@@ -113,12 +113,22 @@ class ProfileSecondSectionHeaderView: UIView {
             
             hide()
         } else {
-            followButton = UIButton()
-            followButton?.setImage(UIImage(named: "friend_follow"), forState: .Normal)
-            followButton?.sizeToFit()
-            followButton?.frame = CGRectMake(frame.width/2 - followButton!.frame.width/2, buttonOriginY/2 - followButton!.frame.height/2, followButton!.frame.width, followButton!.frame.height)
-            followButton!.addTarget(self, action: "followButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
-            addSubview(followButton!)
+            if XAppDelegate.currentUser.uid != -1 {
+                SocialManager.sharedInstance.isFollowing(XAppDelegate.currentUser.uid, followerId: userProfile.uid, completionHandler: { (result, error) -> Void in
+                    if let error = error {
+                        
+                    } else {
+                        let n = result!["isfollowing"] as! Int
+                        if n == 0 {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.configureFollowButton()
+                            })
+                        }
+                    }
+                })
+            } else {
+                configureFollowButton()
+            }
         }
     }
     
@@ -127,6 +137,15 @@ class ProfileSecondSectionHeaderView: UIView {
         button.titleLabel?.textAlignment = NSTextAlignment.Center
         button.titleLabel?.numberOfLines = 2
         addSubview(button)
+    }
+    
+    func configureFollowButton() {
+        followButton = UIButton()
+        followButton?.setImage(UIImage(named: "friend_follow"), forState: .Normal)
+        followButton?.sizeToFit()
+        followButton?.frame = CGRectMake(frame.width/2 - followButton!.frame.width/2, buttonOriginY/2 - followButton!.frame.height/2, followButton!.frame.width, followButton!.frame.height)
+        followButton!.addTarget(self, action: "followButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        addSubview(followButton!)
     }
     
     func configureButtonTitleLabel() {
