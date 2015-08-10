@@ -15,7 +15,7 @@ enum ProfileType {
 
 class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
     
-    var profileType: ProfileType!
+    var profileType: ProfileType = .CurrentUser
     enum Tab {
         case Post
         case Followers
@@ -58,8 +58,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        // TODO: Comment this code when finish refactoring
-        profileType = .CurrentUser
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updatePost:", name: NOTIFICATION_UPDATE_POST, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollower:", name: NOTIFICATION_UPDATE_FOLLOWERS, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowing:", name: NOTIFICATION_UPDATE_FOLLOWING, object: nil)

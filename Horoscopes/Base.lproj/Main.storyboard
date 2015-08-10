@@ -3295,7 +3295,7 @@
         <!--Profile-->
         <scene sceneID="6ql-jo-iWW">
             <objects>
-                <viewController title="Profile" id="VFF-tC-3uB" customClass="ProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ProfileViewController" title="Profile" id="VFF-tC-3uB" customClass="ProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yBF-jZ-EQQ"/>
                         <viewControllerLayoutGuide type="bottom" id="VdN-TL-7vf"/>

@@ -24,12 +24,14 @@ class ProfileFollowCellNode: ASCellNode {
     var isFollowed: Bool!
     var followerTab = false
     var delegate: ProfileFollowCellNodeDelegate?
+    var parentViewController: ProfileViewController!
     
     let tablePadding: CGFloat = 5
     let outterPadding: CGFloat = 15
     let innerPadding: CGFloat = 2
     let pictureSize: CGFloat = 30
     
+    // MARK: - Initialization
     init(user: UserProfile) {
         super.init()
         self.user = user
@@ -40,12 +42,14 @@ class ProfileFollowCellNode: ASCellNode {
     convenience init(user: UserProfile, isFollowed: Bool, parentViewController: ProfileViewController) {
         self.init(user: user)
         self.isFollowed = isFollowed
+        self.parentViewController = parentViewController
         if parentViewController.profileType == ProfileType.CurrentUser {
             followerTab = true
             configureFollowerUI()
         }
     }
     
+    // MARK: - UI Configuration
     func configureUI() {
         backgroundDisplayNode = ASDisplayNode()
         backgroundDisplayNode.backgroundColor = UIColor.whiteColor()
@@ -71,6 +75,8 @@ class ProfileFollowCellNode: ASCellNode {
         let horoscopeSignAttributes = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
         horoscopeSignTextNode.attributedString = NSAttributedString(string: HoroscopesManager.sharedInstance.getHoroscopesSigns()[user.sign].sign, attributes: horoscopeSignAttributes)
         backgroundDisplayNode.addSubnode(horoscopeSignTextNode)
+        
+        enableUserProfileInteraction()
     }
     
     func configureFollowerUI() {
@@ -88,6 +94,7 @@ class ProfileFollowCellNode: ASCellNode {
         }
     }
     
+    // MARK: - Calculate size and layout
     override func calculateSizeThatFits(constrainedSize: CGSize) -> CGSize {
         backgroundDisplayNode.measure(constrainedSize)
         let nameSize = nameTextNode.measure(CGSizeMake(constrainedSize.width - pictureSize - 2*outterPadding - innerPadding, CGFloat.max))
@@ -113,7 +120,23 @@ class ProfileFollowCellNode: ASCellNode {
         }
     }
     
+    // MARK: - Action
+    func userProfileTapped(sender: AnyObject) {
+        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = user
+        parentViewController.navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func followButtonTapped(sender: AnyObject) {
         delegate!.didClickFollowButton(user.uid)
+    }
+    
+    // MARK: - Helper
+    func enableUserProfileInteraction() {
+        pictureImageNode?.userInteractionEnabled = true
+        pictureImageNode?.addTarget(self, action: "userProfileTapped:", forControlEvents: .TouchUpInside)
+        nameTextNode?.userInteractionEnabled = true
+        nameTextNode?.addTarget(self, action: "userProfileTapped:", forControlEvents: ASControlNodeEvent.TouchUpInside)
     }
 }
