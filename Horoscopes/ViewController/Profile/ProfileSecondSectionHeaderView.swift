@@ -114,7 +114,7 @@ class ProfileSecondSectionHeaderView: UIView {
             hide()
         } else {
             if XAppDelegate.currentUser.uid != -1 {
-                SocialManager.sharedInstance.isFollowing(XAppDelegate.currentUser.uid, followerId: userProfile.uid, completionHandler: { (result, error) -> Void in
+                SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
                     if let error = error {
                         
                     } else {
