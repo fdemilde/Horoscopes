@@ -49,13 +49,15 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     
     var userPost : UserPost?
     var type = PostCellType.Newsfeed
+    var parentViewController: UIViewController!
     
-    required init(post : UserPost, type : PostCellType){
+    required init(post : UserPost, type : PostCellType, parentViewController: UIViewController){
         super.init()
         self.backgroundColor = UIColor.clearColor()
         self.selectionStyle = UITableViewCellSelectionStyle.None
         self.userPost = post
         self.type = type
+        self.parentViewController = parentViewController
         self.createFeedTypeImage()
         self.createBackground()
         self.createFeedHeader()
@@ -148,7 +150,11 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
         sendAHeartButton!.titleEdgeInsets = UIEdgeInsetsMake(0, 10, 0, 0);
         sendAHeartButton!.addTarget(self, action: "sendHeartTapped", forControlEvents: UIControlEvents.TouchUpInside)
         if type == .Profile {
-            sendAHeartButton?.hidden = true
+            if let viewController = parentViewController as? ProfileViewController {
+                if viewController.profileType == ProfileType.CurrentUser {
+                    sendAHeartButton?.hidden = true
+                }
+            }
         }
         
         

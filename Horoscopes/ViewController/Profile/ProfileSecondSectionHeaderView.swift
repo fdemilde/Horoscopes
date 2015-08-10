@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol ProfileTabDelegate {
+protocol ProfileSecondSectionHeaderViewDelegate {
     func didTapPostButton()
     func didTapFollowersButton()
     func didTapFollowingButton()
@@ -29,7 +29,7 @@ class ProfileSecondSectionHeaderView: UIView {
     let padding: CGFloat = 3
     let pictureSize: CGFloat = 30
     let buttonOriginY: CGFloat = 36
-    var delegate: ProfileTabDelegate?
+    var delegate: ProfileSecondSectionHeaderViewDelegate?
     var parentViewController: ProfileViewController!
     let postButtonTitleLabel = "Post"
     let followersButtonTitleLabel = "Followers"

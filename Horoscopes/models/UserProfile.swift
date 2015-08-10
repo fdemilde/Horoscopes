@@ -14,6 +14,7 @@ class UserProfile: NSObject, NSCoding {
     var imgURL : String = ""
     var sign : Int = 0
     var location : String = ""
+    var isFollowed = false
     static var filePath: String {
         let manager = NSFileManager.defaultManager()
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
@@ -54,13 +55,4 @@ class UserProfile: NSObject, NSCoding {
         aCoder.encodeInteger(sign, forKey: Keys.sign)
         aCoder.encodeObject(location, forKey: Keys.location)
     }
-    
-//    static func profilesFromResults(results: [NSDictionary]) -> [UserProfile] {
-//        var profiles = [UserProfile]()
-//        for result in results {
-//            profiles.append(UserProfile(data: result))
-//        }
-//        return profiles
-//    }
-
 }

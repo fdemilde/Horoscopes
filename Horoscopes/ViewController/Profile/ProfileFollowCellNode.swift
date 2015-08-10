@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol FollowDelegate {
+protocol ProfileFollowCellNodeDelegate {
     func didClickFollowButton(uid: Int)
 }
 
@@ -23,7 +23,7 @@ class ProfileFollowCellNode: ASCellNode {
     var user: UserProfile!
     var isFollowed: Bool!
     var followerTab = false
-    var followDelegate: FollowDelegate?
+    var delegate: ProfileFollowCellNodeDelegate?
     
     let tablePadding: CGFloat = 5
     let outterPadding: CGFloat = 15
@@ -37,11 +37,13 @@ class ProfileFollowCellNode: ASCellNode {
         configureUI()
     }
     
-    convenience init(user: UserProfile, isFollowed: Bool) {
+    convenience init(user: UserProfile, isFollowed: Bool, parentViewController: ProfileViewController) {
         self.init(user: user)
         self.isFollowed = isFollowed
-        followerTab = true
-        configureFollowerUI()
+        if parentViewController.profileType == ProfileType.CurrentUser {
+            followerTab = true
+            configureFollowerUI()
+        }
     }
     
     func configureUI() {
@@ -112,6 +114,6 @@ class ProfileFollowCellNode: ASCellNode {
     }
     
     func followButtonTapped(sender: AnyObject) {
-        followDelegate!.didClickFollowButton(user.uid)
+        delegate!.didClickFollowButton(user.uid)
     }
 }
