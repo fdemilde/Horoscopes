@@ -21,7 +21,7 @@ class ProfileFollowCellNode: ASCellNode {
     var followedLabel: UILabel!
     
     var user: UserProfile!
-    var isFollowed: Bool!
+//    var isFollowed: Bool!
     var followerTab = false
     var delegate: ProfileFollowCellNodeDelegate?
     var parentViewController: ProfileViewController!
@@ -32,17 +32,12 @@ class ProfileFollowCellNode: ASCellNode {
     let pictureSize: CGFloat = 30
     
     // MARK: - Initialization
-    init(user: UserProfile) {
+    required init(user: UserProfile, parentViewController: ProfileViewController) {
         super.init()
         self.user = user
         self.selectionStyle = .None
-        configureUI()
-    }
-    
-    convenience init(user: UserProfile, isFollowed: Bool, parentViewController: ProfileViewController) {
-        self.init(user: user)
-        self.isFollowed = isFollowed
         self.parentViewController = parentViewController
+        configureUI()
         if parentViewController.profileType == ProfileType.CurrentUser {
             followerTab = true
             configureFollowerUI()
@@ -80,7 +75,7 @@ class ProfileFollowCellNode: ASCellNode {
     }
     
     func configureFollowerUI() {
-        if isFollowed! {
+        if user.isFollowed {
             followedLabel = UILabel()
             followedLabel.text = "Followed"
             followedLabel.font = UIFont.systemFontOfSize(13)
@@ -110,7 +105,7 @@ class ProfileFollowCellNode: ASCellNode {
         nameTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding, nameTextNode.calculatedSize.width, nameTextNode.calculatedSize.height)
         horoscopeSignTextNode.frame = CGRectMake((outterPadding - 4)*2 + pictureSize, outterPadding + nameTextNode.calculatedSize.height + innerPadding, horoscopeSignTextNode.calculatedSize.width, horoscopeSignTextNode.calculatedSize.height)
         if followerTab {
-            if isFollowed! {
+            if user.isFollowed {
                 backgroundDisplayNode.view.addSubview(followedLabel)
                 followedLabel.frame = CGRectMake(calculatedSize.width - outterPadding - followedLabel.bounds.size.width - tablePadding, calculatedSize.height/2 - followedLabel.bounds.size.height/2, followedLabel.bounds.size.width, followedLabel.bounds.size.height)
             } else {

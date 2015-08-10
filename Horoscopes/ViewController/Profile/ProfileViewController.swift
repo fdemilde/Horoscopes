@@ -39,20 +39,6 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     var followers = [UserProfile]()
     var followingUsers = [UserProfile]()
     
-    // MARK: - Initialization
-//    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-//        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//    }
-//    
-//    convenience init(profileType: ProfileType) {
-//        self.init(nibName: nil, bundle: nil)
-//        self.profileType = profileType
-//    }
-//
-//    required init(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-
     // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -262,12 +248,11 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func finishGettingDataInitially() {
         checkFollowerStatus()
-        self.tableView.reloadData()
+        reloadData()
         self.isFirstDataLoad = false
         self.isFinishedGettingUserPosts = false
         self.isFinishedGettingFollowers = false
         self.isFinishedGettingFollowingUsers = false
-        self.tableView.hidden = false
         Utilities.hideHUD()
     }
     
@@ -311,11 +296,16 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getDataInitially() {
         Utilities.showHUD()
-        tableView.hidden = true
         currentTab = .Post
         getUserPosts()
         getFollowers()
         getFollowingUsers()
+    }
+    
+    func reloadData() {
+        reloadSection(0)
+        reloadButton()
+        reloadSection(1)
     }
     
     func reloadSection(section: Int) {
@@ -367,12 +357,12 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                 return PostCellNode(post: post, type: .Profile, parentViewController: self)
             case .Followers:
                 let follower = followers[indexPath.row]
-                let cell = ProfileFollowCellNode(user: follower, isFollowed: follower.isFollowed, parentViewController: self)
+                let cell = ProfileFollowCellNode(user: follower, parentViewController: self)
                 cell.delegate = self
                 return cell
             case .Following:
                 let followingUser = followingUsers[indexPath.row]
-                return ProfileFollowCellNode(user: followingUser)
+                return ProfileFollowCellNode(user: followingUser, parentViewController: self)
             }
         }
     }
