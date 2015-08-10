@@ -117,14 +117,10 @@ class ProfileFollowCellNode: ASCellNode {
     
     // MARK: - Action
     func userProfileTapped(sender: AnyObject) {
-        if user.uid == XAppDelegate.currentUser.uid {
-            
-        } else {
-            let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-            controller.profileType = ProfileType.OtherUser
-            controller.userProfile = user
-            parentViewController.navigationController?.pushViewController(controller, animated: true)
-        }
+        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = user
+        parentViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
     func followButtonTapped(sender: AnyObject) {

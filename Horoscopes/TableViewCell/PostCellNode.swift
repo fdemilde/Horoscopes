@@ -256,14 +256,10 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     
     //MARK: Button Action
     func userProfileTapped(sender: AnyObject) {
-        if userPost?.user?.uid == XAppDelegate.currentUser.uid {
-            
-        } else {
-            let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
-            controller.profileType = ProfileType.OtherUser
-            controller.userProfile = userPost!.user!
-            parentViewController.navigationController?.pushViewController(controller, animated: true)
-        }
+        let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = userPost!.user!
+        parentViewController.navigationController?.pushViewController(controller, animated: true)
     }
     
     func sendHeartTapped(){
