@@ -18,7 +18,7 @@
 
 -(id)initWithServerCommunication:(ServerCommunication*)sc;
 
--(void) sendTo:(NSString*)to withRoute:(NSString*) route withAlert:(Alert*) alert withRef:(NSString*) ref withPush:(int) push withData:(NSString*) data andCompleteBlock:(void (^)(int responseDict))completeBlock;
+-(void) sendTo:(NSString*)to withRoute:(NSString*) route withAlert:(Alert*) alert withRef:(NSString*) ref withPush:(int) push withData:(NSString*) data andCompleteBlock:(void (^)(NSDictionary* responseDict))completeBlock;
 
 -(void) getWithIDString:(NSString*)idString withClear:(BOOL)clear andCompleteBlock:(void (^)(NotificationObject* responseDict))completeBlock;
 

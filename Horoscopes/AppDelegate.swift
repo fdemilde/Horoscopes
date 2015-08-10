@@ -30,7 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupGAITracker()
         registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
-//        horoscopesManager.getAllHoroscopes(false)
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         router = mobilePlatform.router
         self.setupRouter()
@@ -226,9 +225,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         var deviceTokenString = String(format:"%@",deviceToken)
-        XAppDelegate.horoscopesManager.registerNotificationToken(deviceTokenString, completionHandler: { (response, error) -> Void in
+        XAppDelegate.socialManager.registerAPNSNotificationToken(deviceTokenString, completionHandler: { (response, error) -> Void in
             
         })
+        XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
