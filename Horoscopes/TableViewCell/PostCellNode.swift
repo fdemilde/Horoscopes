@@ -314,7 +314,10 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     func getUserDescString() -> String {
         var result = ""
         var signName = getSignName()
-        var timePassed = getTimePassedString()
+        var timePassed = ""
+        if let ts = userPost?.ts {
+            timePassed = Utilities.getTimePassedString(ts)
+        }
         if(signName != ""){
             result.extend(String(format: "%@ \u{00B7} ", signName))
         }
@@ -323,47 +326,6 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
         } else {
             result = result.substringToIndex(advance(result.startIndex, count(result) - 2))
         }
-        
-        return result
-    }
-    
-    func getTimePassedString() -> String {
-        var result = ""
-        if let ts = userPost?.ts {
-            var timePassSecond = Int(NSDate().timeIntervalSince1970) - userPost!.ts
-            // if time passed more than 2 days, show the date
-            var dateFormatter = NSDateFormatter()
-            var date = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
-            if(timePassSecond / (3600 * 24) >= 2){
-                dateFormatter.dateFormat = "MMM dd, yyyy hh:mm a"
-                dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                result =  dateFormatter.stringFromDate(date)
-            } else if (timePassSecond / (3600 * 24) >= 1){
-                dateFormatter.dateFormat = "Yesterday hh:mm a"
-                result =  dateFormatter.stringFromDate(date)
-            } else {
-                var timePassedMinute = timePassSecond/60 as Int
-                if(timePassedMinute >= 60){
-                    var timePassHour = timePassedMinute / 60 as Int
-                    var remainingMinute = timePassedMinute % 60 as Int
-                    var hourString = (timePassHour == 1) ? "hour" : "hours"
-                    
-                    if(remainingMinute != 0){
-                        var minuteString = (remainingMinute == 1) ? "minute" : "minutes"
-                        result = String(format:"%d %@ %d %@",timePassHour,hourString,remainingMinute,minuteString)
-                    } else {
-                        result = String(format:"%d %@",timePassHour,hourString)
-                    }
-                } else if (timePassedMinute >= 1){
-                    var minuteString = (timePassedMinute == 1) ? "minute" : "minutes"
-                    result = String(format:"%d %@",timePassedMinute,minuteString)
-                } else {
-                    var secondString = (timePassSecond == 1) ? "second" : "seconds"
-                    result = String(format:"%d %@",timePassSecond,secondString)
-                }
-            }
-        }
-        
         
         return result
     }

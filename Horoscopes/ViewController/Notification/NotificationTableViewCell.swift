@@ -14,14 +14,44 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var notificationDescLabel: UILabel!
     @IBOutlet weak var notifTypeImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
+    var notification : NotificationObject!
+    var type = ServerNotificationType.Follow
     
     override func awakeFromNib() {
         super.awakeFromNib()
     }
     
     // MARK: for Testing now, only fake data
-    func populateData(){
-        self.defaultCell()
+    func populateData(notif : NotificationObject){
+        notification = notif
+        self.setNotificationType()
+        setupComponents()
+        
+//        self.defaultCell()
+        
+        
+    }
+    
+    // MARK: Populate UI
+    func setupComponents(){
+        var desc = "send you hearts"
+//        notificationDescLabel.attributedText = self.createDescAttributedString(desc)
+        notificationDescLabel.text = desc
+        timeLabel.text = "10 minutes ago"
+        notifTypeImageView.image = UIImage(named: "send_heart_icon")
+    }
+    
+    // MARK: Helpers
+    func setNotificationType(){
+        switch(self.notification.ref){
+            case "send_heart":
+                self.type = ServerNotificationType.SendHeart
+            case "follow":
+                self.type = ServerNotificationType.Follow
+            default:
+                println("getNotificationType type is not available")
+                self.type = ServerNotificationType.SendHeart
+        }
     }
     
     func defaultCell(){
@@ -35,16 +65,21 @@ class NotificationTableViewCell: UITableViewCell {
         
         var desc = "Cedric Chin, Binh Dang and 2 other people send you hearts"
         
-        var attString = NSMutableAttributedString(string: desc)
+        
+        notificationDescLabel.attributedText = self.createDescAttributedString(desc)
+        timeLabel.text = "10 minutes ago"
+        notifTypeImageView.image = UIImage(named: "send_heart_icon")
+    }
+    
+    func createDescAttributedString(string : String) -> NSMutableAttributedString {
+        var attString = NSMutableAttributedString(string: string)
         
         attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, 21))
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, 21))
         
         attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(21, 34)) // +1 for the space between
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(21, 34))
-        notificationDescLabel.attributedText = attString
-        timeLabel.text = "10 minutes ago"
-        notifTypeImageView.image = UIImage(named: "send_heart_icon")
+        return attString
     }
 
 }

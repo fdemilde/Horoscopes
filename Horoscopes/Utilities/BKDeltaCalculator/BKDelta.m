@@ -46,12 +46,14 @@
     }];
     [tableView insertRowsAtIndexPaths:addedIndexPaths withRowAnimation:rowAnimation];
     
-    [_movedIndexPairs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
-        NSNumber *fromIndex = [obj objectAtIndex:0], *toIndex = [obj objectAtIndex:1];
-        NSIndexPath *fromIndexPath = [NSIndexPath indexPathForRow:[fromIndex unsignedIntegerValue] inSection:section];
-        NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:[toIndex unsignedIntegerValue] inSection:section];
-        [tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
-    }];
+    // BINH MODIFIER: since we only update to add more and the time is sorted on server, do not need to check this MOVE INDEX PAIRS, this will break the sorting array
+    
+//    [_movedIndexPairs enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+//        NSNumber *fromIndex = [obj objectAtIndex:0], *toIndex = [obj objectAtIndex:1];
+//        NSIndexPath *fromIndexPath = [NSIndexPath indexPathForRow:[fromIndex unsignedIntegerValue] inSection:section];
+//        NSIndexPath *toIndexPath = [NSIndexPath indexPathForRow:[toIndex unsignedIntegerValue] inSection:section];
+//        [tableView moveRowAtIndexPath:fromIndexPath toIndexPath:toIndexPath];
+//    }];
 }
 
 - (void)applyUpdatesToCollectionView:(UICollectionView *)collectionView inSection:(NSUInteger)section

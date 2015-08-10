@@ -98,7 +98,7 @@
         
         NSArray* notifArray = [[NSArray alloc] initWithArray:[self convertNSArrayToNotificationObjectAndFireLocalNotiff:uidObject]];
         
-        DebugLog(@"getall return = %@" , responseDict);
+//        DebugLog(@"getall return = %@" , responseDict);
         
         completeBlock(notifArray);
     }];
@@ -119,7 +119,7 @@
         no.notification_id = [notif objectForKey:@"notification_id"];
     
         [arrayNotiffs addObject:no];
-        NSLog(@"data = %@" , [no toString]);
+//        NSLog(@"data = %@" , [no toString]);
     }
     
     

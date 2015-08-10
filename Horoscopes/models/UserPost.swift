@@ -37,7 +37,7 @@ public class UserPost : NSObject, Equatable{
     }
     
     override public var description: String {
-        let string = ("User Post \(post_id)")
+        let string = ("id = \(post_id) || desc = \(message)")
         return string
     }
     
