@@ -40,7 +40,7 @@ class NotificationTableViewCell: UITableViewCell {
     func setupComponents(){
         var desc = ""
         
-        timeLabel.text = Utilities.getTimePassedString(notification.created)
+        timeLabel.text = Utilities.getTimeAgoString(notification.created)
         notificationDescLabel.text = desc
         switch(type){
             case ServerNotificationType.SendHeart:
