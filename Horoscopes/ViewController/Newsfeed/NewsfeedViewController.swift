@@ -21,7 +21,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
-    //    var userProfileArray = [UserProfile]()
     var userPostArray = [UserPost]()
     var oldUserPostArray = [UserPost]()
     var feedsDisplayNode = ASDisplayNode()
@@ -51,19 +50,17 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                 self.checkAndLoginZwigglers()
             })
         }
-        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        currentPage = 0
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
     }
     
     override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
         super.viewWillDisappear(animated)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func setupTableView(){
@@ -87,7 +84,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         } else {
             self.resetTapButtonColor()
             var newDataArray = notif.object as! [UserPost]
-//            println("feedsFinishedLoading newDataArray = \(newDataArray)")
             self.insertRowsAtBottom(newDataArray)
         }
     }
@@ -108,7 +104,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
-        
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
@@ -257,7 +252,6 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                         Utilities.hideHUD()
                     } else {
                         dispatch_async(dispatch_get_main_queue(),{
-                            println("Newsfeed Following setupLocationService ")
                             XAppDelegate.locationManager.setupLocationService()
                             XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                         })

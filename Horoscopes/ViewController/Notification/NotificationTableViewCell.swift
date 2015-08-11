@@ -41,6 +41,7 @@ class NotificationTableViewCell: UITableViewCell {
         var desc = ""
         
         timeLabel.text = Utilities.getTimePassedString(notification.created)
+        notificationDescLabel.text = desc
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")

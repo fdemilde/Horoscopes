@@ -340,7 +340,7 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
         var signName = getSignName()
         var timePassed = ""
         if let ts = userPost?.ts {
-            timePassed = Utilities.getTimePassedString(ts)
+            timePassed = Utilities.getTimeAgoString(ts)
         }
         if(signName != ""){
             result.extend(String(format: "%@ \u{00B7} ", signName))

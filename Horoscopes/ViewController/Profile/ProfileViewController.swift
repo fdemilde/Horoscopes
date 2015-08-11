@@ -74,9 +74,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_POST, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_FOLLOWERS, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_FOLLOWING, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - UI Configuration
@@ -253,6 +251,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         self.isFinishedGettingUserPosts = false
         self.isFinishedGettingFollowers = false
         self.isFinishedGettingFollowingUsers = false
+        tableView.hidden = false
         Utilities.hideHUD()
     }
     
@@ -295,6 +294,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getDataInitially() {
         Utilities.showHUD()
+        tableView.hidden = true
         currentTab = .Post
         getUserPosts()
         getFollowers()
