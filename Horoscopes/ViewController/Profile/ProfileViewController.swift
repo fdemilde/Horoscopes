@@ -74,9 +74,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_POST, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_FOLLOWERS, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_UPDATE_FOLLOWING, object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: - UI Configuration
