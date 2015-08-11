@@ -411,7 +411,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         alert.title = "Send heart"
         alert.body = "Send heart"
         alert.priority = 5
-        var routeString = "test1"
+        var routeString = "/post/\(postId)/hearts"
         var userPostIdString = "\(userPostId)"
         XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
             println("sendHeartServerNotification result = \(result)")
@@ -431,9 +431,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func clearAllNotification(){
         var listIds = [String]()
-        listIds.append("2_8")
-        listIds.append("3_8")
-        listIds.append("4_8")
+        listIds.append("5_8")
+        listIds.append("6_8")
+        listIds.append("7_8")
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
             println("clearAllNotification result = \(result)")
         })

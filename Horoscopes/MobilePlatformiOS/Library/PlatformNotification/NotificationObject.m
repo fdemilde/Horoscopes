@@ -37,7 +37,7 @@
 }
 
 -(NSString* ) toString {
-    NSString* result = [NSString stringWithFormat:@" _notification_id = %@ _sender = %@  _data = %@" , _notification_id , _sender , _data];
+    NSString* result = [NSString stringWithFormat:@" _notification_id = %@ || _sender = %@ || route = %@" , _notification_id , _sender , _route];
     return result;
 }
 

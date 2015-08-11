@@ -42,7 +42,7 @@
         [params setObject:@"1" forKey:@"push"];
         [params setObject:@"1" forKey:@"get_nopush"];
     }
-    NSLog(@"notification.send params = %@", params);
+//    NSLog(@"notification.send params = %@", params);
     [sc sendRequest:@"notification.send" withLoginRequired:REQUIRED andPostData:params andCompleteBlock:^(NSDictionary *responseDict, NSError *error) {
         completeBlock(responseDict);
     }];
@@ -63,7 +63,7 @@
     [sc sendRequest:@"notification.get" withLoginRequired:OPTIONAL andPostData:params andCompleteBlock:^(NSDictionary *responseDict, NSError *error) {
         
         NSDictionary* uidObject = [responseDict objectForKey:@"notif"];
-        DebugLog(@"getWithIDString return = %@" , responseDict);
+//        DebugLog(@"getWithIDString return = %@" , responseDict);
         NotificationObject* no  = [[NotificationObject alloc] init];
         
         for (NSString* key in uidObject) {
@@ -116,6 +116,7 @@
         no.created = [[notif objectForKey:@"created"] longValue];
         no.ref = [notif objectForKey:@"ref"];
         no.sender = [[notif objectForKey:@"sender"] stringValue];
+        no.route = [notif objectForKey:@"route"];
         no.notification_id = [notif objectForKey:@"notification_id"];
     
         [arrayNotiffs addObject:no];
@@ -175,7 +176,7 @@
     UILocalNotification *notification = [[UILocalNotification alloc]init];
     notification.repeatInterval = NSCalendarUnitDay;
     [notification setAlertBody:notiff.data];
-    DebugLog(@"data notiff = %@" , notiff.data);
+//    DebugLog(@"data notiff = %@" , notiff.data);
     NSDate* date = [[NSDate date] dateByAddingTimeInterval:1];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
@@ -183,7 +184,7 @@
     NSInteger minute = [components minute];
     
     [notification setFireDate:date];
-    DebugLog(@"hour = %ld , minute = %ld" ,(long)hour , (long)minute );
+//    DebugLog(@"hour = %ld , minute = %ld" ,(long)hour , (long)minute );
     
     [notification setTimeZone:[NSTimeZone  defaultTimeZone]];
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];

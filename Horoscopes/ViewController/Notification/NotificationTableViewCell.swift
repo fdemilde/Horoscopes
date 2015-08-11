@@ -16,6 +16,8 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     var notification : NotificationObject!
     var type = ServerNotificationType.Follow
+    let SEND_HEART_TEXT = " send you a heart"
+    let FOLLOWING_TEXT = " is following you"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,6 +30,7 @@ class NotificationTableViewCell: UITableViewCell {
         self.setNotificationType()
         self.setupComponents()
         self.getUserProfile()
+        
 //        self.defaultCell()
         
         
@@ -35,18 +38,19 @@ class NotificationTableViewCell: UITableViewCell {
     
     // MARK: Populate UI
     func setupComponents(){
-        var desc = "send you heart"
-//        notificationDescLabel.attributedText = self.createDescAttributedString(desc)
-        notificationDescLabel.text = desc
+        var desc = ""
+        
         timeLabel.text = Utilities.getTimePassedString(notification.created)
-//        timeLabel.text = "10 minutes ago"
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                notificationDescLabel.text = SEND_HEART_TEXT
             case ServerNotificationType.Follow:
                 notifTypeImageView.image = UIImage(named: "follow_icon")
+                notificationDescLabel.text = FOLLOWING_TEXT
             default:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                notificationDescLabel.text = SEND_HEART_TEXT
         }
         
     }
@@ -82,13 +86,27 @@ class NotificationTableViewCell: UITableViewCell {
     }
     
     func createDescAttributedString(nameString : String) -> NSMutableAttributedString {
-        var attString = NSMutableAttributedString(string: nameString)
+        var string = nameString
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, 21))
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, 21))
+        switch(self.notification.ref){
+        case "send_heart":
+            self.type = ServerNotificationType.SendHeart
+            string += SEND_HEART_TEXT
+        case "follow":
+            self.type = ServerNotificationType.Follow
+            string += FOLLOWING_TEXT
+        default:
+            println("getNotificationType type is not available")
+            self.type = ServerNotificationType.SendHeart
+            string += SEND_HEART_TEXT
+        }
+        var attString = NSMutableAttributedString(string: string)
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(21, 34)) // +1 for the space between
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(21, 34))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, count(nameString)))
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, count(nameString)))
+        
+        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(count(nameString), count(string) - count(nameString))) // +1 for the space between
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(count(nameString), count(string) - count(nameString)))
         return attString
     }
     
@@ -96,13 +114,17 @@ class NotificationTableViewCell: UITableViewCell {
     func getUserProfile(){
         XAppDelegate.socialManager.getProfile(notification.sender, completionHandler: { (result, error) -> Void in
 //            println("getProfile getProfile == \(result)")
-            if let result = result {
-                for user in result {
-                    if let url = NSURL(string: user.imgURL) {
-                        self.downloadImage(url)
+            dispatch_async(dispatch_get_main_queue(),{
+                if let result = result {
+                    for user in result {
+                        if let url = NSURL(string: user.imgURL) {
+                            self.downloadImage(url)
+                        }
+                        self.notificationDescLabel.attributedText = self.createDescAttributedString(user.name)
                     }
                 }
-            }
+            })
+            
         })
     }
     

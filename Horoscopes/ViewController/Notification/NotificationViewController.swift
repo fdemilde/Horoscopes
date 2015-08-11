@@ -54,7 +54,12 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+        var cell = tableView.cellForRowAtIndexPath(indexPath)
+        if let cell = cell {
+            var notifCell = cell as! NotificationTableViewCell
+//            XAppDelegate.
+            println("cell route == \(notifCell.notification.route)")
+        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -66,7 +71,7 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             
-            println("getAllNotification result = \(result)")
+//            println("getAllNotification result = \(result)")
         })
     }
     
