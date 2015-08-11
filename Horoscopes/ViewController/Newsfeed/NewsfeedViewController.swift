@@ -286,6 +286,7 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
                 return
             } // last page dont need to request more
             self.currentPage++
+            
             if(self.tabType == NewsfeedTabType.Following){
                 XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
             } else {

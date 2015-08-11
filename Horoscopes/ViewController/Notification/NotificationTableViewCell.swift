@@ -24,9 +24,10 @@ class NotificationTableViewCell: UITableViewCell {
     // MARK: for Testing now, only fake data
     func populateData(notif : NotificationObject){
         notification = notif
+        self.profilePictureImageView.backgroundColor = UIColor.profileImageGrayColor()
         self.setNotificationType()
-        setupComponents()
-        
+        self.setupComponents()
+        self.getUserProfile()
 //        self.defaultCell()
         
         
@@ -34,11 +35,20 @@ class NotificationTableViewCell: UITableViewCell {
     
     // MARK: Populate UI
     func setupComponents(){
-        var desc = "send you hearts"
+        var desc = "send you heart"
 //        notificationDescLabel.attributedText = self.createDescAttributedString(desc)
         notificationDescLabel.text = desc
-        timeLabel.text = "10 minutes ago"
-        notifTypeImageView.image = UIImage(named: "send_heart_icon")
+        timeLabel.text = Utilities.getTimePassedString(notification.created)
+//        timeLabel.text = "10 minutes ago"
+        switch(type){
+            case ServerNotificationType.SendHeart:
+                notifTypeImageView.image = UIImage(named: "send_heart_icon")
+            case ServerNotificationType.Follow:
+                notifTypeImageView.image = UIImage(named: "follow_icon")
+            default:
+                notifTypeImageView.image = UIImage(named: "send_heart_icon")
+        }
+        
     }
     
     // MARK: Helpers
@@ -71,8 +81,8 @@ class NotificationTableViewCell: UITableViewCell {
         notifTypeImageView.image = UIImage(named: "send_heart_icon")
     }
     
-    func createDescAttributedString(string : String) -> NSMutableAttributedString {
-        var attString = NSMutableAttributedString(string: string)
+    func createDescAttributedString(nameString : String) -> NSMutableAttributedString {
+        var attString = NSMutableAttributedString(string: nameString)
         
         attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, 21))
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, 21))
@@ -80,6 +90,32 @@ class NotificationTableViewCell: UITableViewCell {
         attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(21, 34)) // +1 for the space between
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(21, 34))
         return attString
+    }
+    
+    // Network
+    func getUserProfile(){
+        XAppDelegate.socialManager.getProfile(notification.sender, completionHandler: { (result, error) -> Void in
+//            println("getProfile getProfile == \(result)")
+            if let result = result {
+                for user in result {
+                    if let url = NSURL(string: user.imgURL) {
+                        self.downloadImage(url)
+                    }
+                }
+            }
+        })
+    }
+    
+    // MARK: helpers
+    
+    func downloadImage(url:NSURL){
+        Utilities.getDataFromUrl(url) { data in
+            dispatch_async(dispatch_get_main_queue()) {
+                var downloadedImage = UIImage(data: data!)
+                self.profilePictureImageView.image = downloadedImage
+                self.profilePictureImageView.backgroundColor = UIColor.clearColor()
+            }
+        }
     }
 
 }

@@ -115,7 +115,7 @@
         no.alert = [notif objectForKey:@"alert"];
         no.created = [[notif objectForKey:@"created"] longValue];
         no.ref = [notif objectForKey:@"ref"];
-        no.sender = [notif objectForKey:@"sender"];
+        no.sender = [[notif objectForKey:@"sender"] stringValue];
         no.notification_id = [notif objectForKey:@"notification_id"];
     
         [arrayNotiffs addObject:no];

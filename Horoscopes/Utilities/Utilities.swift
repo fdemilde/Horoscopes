@@ -256,16 +256,16 @@ class Utilities {
                     
                     if(remainingMinute != 0){
                         var minuteString = (remainingMinute == 1) ? "minute" : "minutes"
-                        result = String(format:"%d %@ %d %@",timePassHour,hourString,remainingMinute,minuteString)
+                        result = String(format:"%d %@ %d %@ ago",timePassHour,hourString,remainingMinute,minuteString)
                     } else {
                         result = String(format:"%d %@",timePassHour,hourString)
                     }
                 } else if (timePassedMinute >= 1){
                     var minuteString = (timePassedMinute == 1) ? "minute" : "minutes"
-                    result = String(format:"%d %@",timePassedMinute,minuteString)
+                    result = String(format:"%d %@ ago",timePassedMinute,minuteString)
                 } else {
                     var secondString = (timePassSecond == 1) ? "second" : "seconds"
-                    result = String(format:"%d %@",timePassSecond,secondString)
+                    result = String(format:"%d %@ ago",timePassSecond,secondString)
                 }
         }
         
