@@ -233,9 +233,11 @@ class Utilities {
         }
     }
     
-    class func getTimePassedString(ts : Int) -> String {
+    class func getTimeAgoString(ts : Int) -> String {
         let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
-        return timeAgoDate.timeAgoSinceNow()
+        let facebookTimeAgoString = timeAgoDate.formattedAsTimeAgo()
+        let twitterTimeAgoString = timeAgoDate.shortTimeAgoSinceNow()
+        return facebookTimeAgoString
     }
     
     // MARK: Notification support

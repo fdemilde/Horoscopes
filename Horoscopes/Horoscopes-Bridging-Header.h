@@ -21,6 +21,7 @@
 #import "MZFormSheetController.h"
 #import "AFNetworking.h"
 #import "DateTools.h"
+#import "NSDate+NVTimeAgo.h"
 
 //MARK: AsyncDisplayKit
 #import "ASDisplayNode.h"

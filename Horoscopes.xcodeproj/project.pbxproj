@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
+		702B4D1D1B79B587002BA9DB /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */; };
 		7047A5A91B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */; };
 		7047A5AB1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */; };
 		7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */; };
@@ -192,6 +193,8 @@
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
+		702B4D1B1B79B587002BA9DB /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
+		702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFirstSectionHeaderView.swift; sourceTree = "<group>"; };
 		7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFirstSectionCellNode.swift; sourceTree = "<group>"; };
 		7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSecondSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -594,6 +597,8 @@
 				F4E723491B728A8E00A6B162 /* BKDeltaCalculator */,
 				F4EC67381B73887800F231DC /* UIScrollView+InfiniteScroll.h */,
 				F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */,
+				702B4D1B1B79B587002BA9DB /* NSDate+NVTimeAgo.h */,
+				702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */,
 				F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */,
 				F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */,
 				F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */,
@@ -1177,6 +1182,7 @@
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
 				F498447B1B663589001B3246 /* AddFriendTableViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
+				702B4D1D1B79B587002BA9DB /* NSDate+NVTimeAgo.m in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,

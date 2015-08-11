@@ -38,7 +38,7 @@ class NotificationTableViewCell: UITableViewCell {
         var desc = "send you heart"
 //        notificationDescLabel.attributedText = self.createDescAttributedString(desc)
         notificationDescLabel.text = desc
-        timeLabel.text = Utilities.getTimePassedString(notification.created)
+        timeLabel.text = Utilities.getTimeAgoString(notification.created)
 //        timeLabel.text = "10 minutes ago"
         switch(type){
             case ServerNotificationType.SendHeart:
