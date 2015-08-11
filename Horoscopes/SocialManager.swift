@@ -418,8 +418,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func sendFollowNotification(){
-        
+    func sendFollowNotification(currentUserId: Int, followedUserId: Int) {
+        var alert = Alert()
+        alert.title = "Follow"
+        alert.body = "Follow"
+        alert.priority = 5
+        let route = "/profile/\(currentUserId)/feed"
+        XAppDelegate.mobilePlatform.platformNotiff.sendTo("\(followedUserId)", withRoute: route, withAlert: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
+            println("sendFollowNotification result \(result)")
+        }
     }
     
     func getAllNotification(since : Int, completionHandler:(result : [NotificationObject]?) -> Void ){

@@ -411,6 +411,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
             if let error = error {
                 
             } else {
+                SocialManager.sharedInstance.sendFollowNotification(XAppDelegate.currentUser.uid, followedUserId: uid)
                 if self.profileType == .CurrentUser {
                     self.successfulFollowed = true
                     self.getFollowingUsers()

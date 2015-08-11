@@ -180,8 +180,6 @@
     NSDate* date = [[NSDate date] dateByAddingTimeInterval:1];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
-    NSInteger hour = [components hour];
-    NSInteger minute = [components minute];
     
     [notification setFireDate:date];
 //    DebugLog(@"hour = %ld , minute = %ld" ,(long)hour , (long)minute );
