@@ -234,43 +234,8 @@ class Utilities {
     }
     
     class func getTimePassedString(ts : Int) -> String {
-        var result = ""
-            var timePassSecond = Int(NSDate().timeIntervalSince1970) - ts
-            // if time passed more than 2 days, show the date
-            var dateFormatter = NSDateFormatter()
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            var date = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
-            if(timePassSecond / (3600 * 24) >= 2){
-                dateFormatter.dateFormat = "MMM dd"
-                
-                result =  dateFormatter.stringFromDate(date)
-            } else if (timePassSecond / (3600 * 24) >= 1){
-                dateFormatter.dateFormat = "Yesterday"
-                result =  dateFormatter.stringFromDate(date)
-            } else {
-                var timePassedMinute = timePassSecond/60 as Int
-                if(timePassedMinute >= 60){
-                    var timePassHour = timePassedMinute / 60 as Int
-                    var remainingMinute = timePassedMinute % 60 as Int
-                    var hourString = (timePassHour == 1) ? "hour" : "hours"
-                    
-                    if(remainingMinute != 0){
-                        var minuteString = (remainingMinute == 1) ? "minute" : "minutes"
-                        result = String(format:"%d %@ %d %@ ago",timePassHour,hourString,remainingMinute,minuteString)
-                    } else {
-                        result = String(format:"%d %@",timePassHour,hourString)
-                    }
-                } else if (timePassedMinute >= 1){
-                    var minuteString = (timePassedMinute == 1) ? "minute" : "minutes"
-                    result = String(format:"%d %@ ago",timePassedMinute,minuteString)
-                } else {
-                    var secondString = (timePassSecond == 1) ? "second" : "seconds"
-                    result = String(format:"%d %@ ago",timePassSecond,secondString)
-                }
-        }
-        
-        
-        return result
+        let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
+        return timeAgoDate.timeAgoSinceNow()
     }
     
     // MARK: Notification support

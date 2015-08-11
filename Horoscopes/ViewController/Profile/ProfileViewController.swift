@@ -253,6 +253,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         self.isFinishedGettingUserPosts = false
         self.isFinishedGettingFollowers = false
         self.isFinishedGettingFollowingUsers = false
+        tableView.hidden = false
         Utilities.hideHUD()
     }
     
@@ -295,6 +296,7 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     
     func getDataInitially() {
         Utilities.showHUD()
+        tableView.hidden = true
         currentTab = .Post
         getUserPosts()
         getFollowers()
