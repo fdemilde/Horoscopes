@@ -415,6 +415,13 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
                     self.successfulFollowed = true
                     self.getFollowingUsers()
                 } else {
+                    if let view = self.view.viewWithTag(self.secondSectionHeaderTag) as? ProfileSecondSectionHeaderView {
+                        if let button = view.followButton {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                button.removeFromSuperview()
+                            })
+                        }
+                    }
                     Utilities.hideHUD()
                 }
             }
