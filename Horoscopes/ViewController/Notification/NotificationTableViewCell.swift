@@ -41,13 +41,10 @@ class NotificationTableViewCell: UITableViewCell {
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                notificationDescLabel.text = SEND_HEART_TEXT
             case ServerNotificationType.Follow:
                 notifTypeImageView.image = UIImage(named: "follow_icon")
-                notificationDescLabel.text = FOLLOWING_TEXT
             default:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                notificationDescLabel.text = SEND_HEART_TEXT
         }
         self.setupCellImage()
         

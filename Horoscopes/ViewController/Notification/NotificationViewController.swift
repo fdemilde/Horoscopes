@@ -26,8 +26,13 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
-        self.getNotificationAndReloadData()
+        
 //        self.unfollowTest()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.getNotificationAndReloadData()
     }
     
     func unfollowTest(){
