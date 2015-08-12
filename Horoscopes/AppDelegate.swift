@@ -21,7 +21,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataStore = DataStore.sharedInstance
     var currentUser : UserProfile!
     var userLocation : CLLocation!
-    var router : Router!
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -31,8 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
-        router = mobilePlatform.router
-        self.setupRouter()
         if isFirstTimeUsing() {
             self.showLoginVC()
         }
@@ -239,70 +236,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
-    }
-    
-    // MARK: Router handler
-    
-    func setupRouter(){
-        router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
-            println("Route == today param dict = \(param)")
-        })
-        
-        router.addRoute("/today/fortunecookie", blockCode: { (param) -> Void in
-            println("Route == fortunecookie param dict = \(param)")
-        })
-        
-        router.addRoute("/archive", blockCode: { (param) -> Void in
-            println("Route == archive param dict = \(param)")
-        })
-        
-        router.addRoute("/archive/:date/:sign", blockCode: { (param) -> Void in
-            println("Route == archive param dict = \(param)")
-        })
-        
-        router.addRoute("/feed/global", blockCode: { (param) -> Void in
-            println("Route == global param dict = \(param)")
-        })
-        
-        router.addRoute("/feed/following", blockCode: { (param) -> Void in
-            println("Route == feed following param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
-            println("Route == feed param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/:uid/followers", blockCode: { (param) -> Void in
-            println("Route == followers param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/:uid/following", blockCode: { (param) -> Void in
-            println("Route == following param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me", blockCode: { (param) -> Void in
-            println("Route == profile me param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me/setsign", blockCode: { (param) -> Void in
-            println("Route == profile me setsign param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me/findfriends", blockCode: { (param) -> Void in
-            println("Route == profile findfriends param dict = \(param)")
-        })
-        
-        router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
-            println("Route == post with param dict = \(param)")
-        })
-        
-        router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
-            println("Route == post hearts param dict = \(param)")
-        })
-        
-        router.addRoute("/settings", blockCode: { (param) -> Void in
-            println("Route == settings with param dict = \(param)")
-        })
     }
 }
 
