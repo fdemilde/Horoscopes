@@ -22,6 +22,7 @@
 @synthesize cancel_loc_key;
 @synthesize type;
 @synthesize priority;
+@synthesize imageURL;
 
 -(id)init{
     self = [super init];
@@ -56,6 +57,8 @@
     NSMutableDictionary *returnDict = [[NSMutableDictionary alloc]init];
     if(self.body != nil && ![self.body  isEqual: @""]){
         [returnDict setValue:self.body forKey:@"body"];
+    } else {
+        [returnDict setValue:@"You have received a notification" forKey:@"body"];
     }
     if(self.body_loc_key != nil && ![self.body_loc_key  isEqual: @""]){
         [returnDict setValue:self.body_loc_key forKey:@"body_loc_key"];
@@ -85,7 +88,12 @@
         [returnDict setValue:self.cancel_loc_key forKey:@"cancel_loc_key"];
     }
     if(self.type != nil && ![self.type  isEqual: @""]){
-        [returnDict setValue:self.type forKey:@"cancel"];
+        [returnDict setValue:self.type forKey:@"type"];
+    } else {
+        [returnDict setValue:@"default" forKey:@"type"];
+    }
+    if(self.imageURL != nil && ![self.imageURL  isEqual: @""]){
+        [returnDict setValue:self.imageURL forKey:@"img_url"];
     }
     [returnDict setValue:[NSString stringWithFormat:@"%d", self.priority] forKey:@"priority"];
     
@@ -102,6 +110,8 @@
     NSString* bodyValue = [alertDict objectForKey:@"body"];
     if(bodyValue != nil){
         alert.body = bodyValue;
+    } else {
+        alert.body = @"You have received a notification";
     }
     NSString* bodyLocKeyValue = [alertDict objectForKey:@"body_loc_key"];
     if(bodyLocKeyValue != nil){
@@ -142,6 +152,15 @@
     NSString* typeValue = [alertDict objectForKey:@"type"];
     if(typeValue != nil){
         alert.type = typeValue;
+    } else {
+        alert.type = @"default";
+    }
+    
+    NSString* imageURLValue = [alertDict objectForKey:@"img_url"];
+    if(imageURLValue != nil){
+        alert.imageURL = imageURLValue;
+    } else {
+        alert.imageURL = @"";
     }
     
     int priorityValue = [[alertDict objectForKey:@"priority"] intValue];

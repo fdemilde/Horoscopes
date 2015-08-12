@@ -23,10 +23,11 @@
 @property (nonatomic, strong) NSString* cancel;
 @property (nonatomic, strong) NSString* cancel_loc_key;
 @property (nonatomic, strong) NSString* type;
+@property (nonatomic, strong) NSString* imageURL;
 @property (nonatomic)  int priority;
 
 -(id)init;
 -(NSString *)toJson;
 -(NSString *)toString;
-
+-(Alert *)fromJson:(NSString *)json;
 @end

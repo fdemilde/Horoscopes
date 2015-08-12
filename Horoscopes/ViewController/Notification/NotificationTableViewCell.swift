@@ -10,11 +10,12 @@ import UIKit
 
 class NotificationTableViewCell: UITableViewCell {
     
-    @IBOutlet weak var profilePictureImageView: UIImageView!
+    @IBOutlet weak var cellImageView: UIImageView!
     @IBOutlet weak var notificationDescLabel: UILabel!
     @IBOutlet weak var notifTypeImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
     var notification : NotificationObject!
+    var alertObject = Alert()
     var type = ServerNotificationType.Follow
     let SEND_HEART_TEXT = " send you a heart"
     let FOLLOWING_TEXT = " is following you"
@@ -26,22 +27,17 @@ class NotificationTableViewCell: UITableViewCell {
     // MARK: for Testing now, only fake data
     func populateData(notif : NotificationObject){
         notification = notif
-        self.profilePictureImageView.backgroundColor = UIColor.profileImageGrayColor()
+        self.cellImageView.backgroundColor = UIColor.profileImageGrayColor()
+        self.parseAlertObject()
         self.setNotificationType()
         self.setupComponents()
-        self.getUserProfile()
-        
-//        self.defaultCell()
-        
-        
+//        self.getUserProfile()
     }
     
     // MARK: Populate UI
     func setupComponents(){
-        var desc = ""
-        
         timeLabel.text = Utilities.getTimeAgoString(notification.created)
-        notificationDescLabel.text = desc
+        notificationDescLabel.text = alertObject.body
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
@@ -53,19 +49,26 @@ class NotificationTableViewCell: UITableViewCell {
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
                 notificationDescLabel.text = SEND_HEART_TEXT
         }
+        self.setupCellImage()
         
+    }
+    
+    func setupCellImage(){
+        if let url = NSURL(string: alertObject.imageURL) {
+            self.downloadImageAndSetToImageHolder(url, imageHolder: self.cellImageView)
+        }
     }
     
     // MARK: Helpers
     func setNotificationType(){
-        switch(self.notification.ref){
+        
+        switch(self.alertObject.type){
             case "send_heart":
                 self.type = ServerNotificationType.SendHeart
             case "follow":
                 self.type = ServerNotificationType.Follow
             default:
-                println("getNotificationType type is not available")
-                self.type = ServerNotificationType.SendHeart
+                self.type = ServerNotificationType.Default
         }
     }
     
@@ -74,7 +77,7 @@ class NotificationTableViewCell: UITableViewCell {
         Utilities.getDataFromUrl(imageURL!) { data -> Void in
             dispatch_async(dispatch_get_main_queue()) {
                 var downloadedImage = UIImage(data: data!)
-                self.profilePictureImageView.image = downloadedImage
+                self.cellImageView.image = downloadedImage
             }
         }
         
@@ -119,7 +122,7 @@ class NotificationTableViewCell: UITableViewCell {
                 if let result = result {
                     for user in result {
                         if let url = NSURL(string: user.imgURL) {
-                            self.downloadImage(url)
+                            self.downloadImageAndSetToImageHolder(url, imageHolder: self.cellImageView)
                         }
                         self.notificationDescLabel.attributedText = self.createDescAttributedString(user.name)
                     }
@@ -131,13 +134,21 @@ class NotificationTableViewCell: UITableViewCell {
     
     // MARK: helpers
     
-    func downloadImage(url:NSURL){
+    func downloadImageAndSetToImageHolder(url:NSURL, imageHolder : UIImageView){
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
                 var downloadedImage = UIImage(data: data!)
-                self.profilePictureImageView.image = downloadedImage
-                self.profilePictureImageView.backgroundColor = UIColor.clearColor()
+                imageHolder.image = downloadedImage
+                imageHolder.backgroundColor = UIColor.clearColor()
             }
+        }
+    }
+    
+    func parseAlertObject(){
+        if let alert = notification.alert{
+            var alertObject = Alert()
+            alertObject = alertObject.fromJson(alert)
+            self.alertObject = alertObject
         }
     }
 

@@ -26,11 +26,7 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
-        
-        XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
-            self.notifArray = result!
-            self.tableView.reloadData()
-        })
+        self.getNotificationAndReloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -69,14 +65,20 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
     // MARK: Button actions
     
     @IBAction func refreshButtonTapped(sender: AnyObject) {
-        XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
-            
-//            println("getAllNotification result = \(result)")
-        })
+        self.getNotificationAndReloadData()
     }
     
     @IBAction func clearAllTapped(sender: AnyObject) {
         XAppDelegate.socialManager.clearAllNotification()
     }
     
+    // MARK: Helpers
+    func getNotificationAndReloadData(){
+        XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
+            dispatch_async(dispatch_get_main_queue(),{
+                self.notifArray = result!
+                self.tableView.reloadData()
+            })
+        })
+    }
 }

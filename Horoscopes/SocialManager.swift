@@ -406,13 +406,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func sendHeartServerNotification(userPostId : Int, postId : String){
+    func sendHeartServerNotification(sender : UserProfile, postId : String){
         var alert = Alert()
         alert.title = "Send heart"
-        alert.body = "Send heart"
+        alert.body = "\(sender.name) sent you a heart"
+        alert.imageURL = "\(sender.imgURL)"
         alert.priority = 5
+        
         var routeString = "/post/\(postId)/hearts"
-        var userPostIdString = "\(userPostId)"
+        var userPostIdString = "\(sender.uid)"
         XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
             println("sendHeartServerNotification result = \(result)")
         }

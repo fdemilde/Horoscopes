@@ -147,6 +147,7 @@ enum BirthdayParentViewControllerType {
 enum ServerNotificationType {
     case SendHeart
     case Follow
+    case Default
 }
 
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat
