@@ -27,6 +27,13 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         tableView.layer.cornerRadius = 5
         tableView.layer.masksToBounds = true
         self.getNotificationAndReloadData()
+//        self.unfollowTest()
+    }
+    
+    func unfollowTest(){
+        XAppDelegate.socialManager.unfollow(11, completionHandler: { (error) -> Void in
+            
+        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,8 +60,12 @@ class NotificationViewController: MyViewController, UITableViewDataSource, UITab
         var cell = tableView.cellForRowAtIndexPath(indexPath)
         if let cell = cell {
             var notifCell = cell as! NotificationTableViewCell
-//            XAppDelegate.
+            var route = notifCell.notification.route
             println("cell route == \(notifCell.notification.route)")
+            println("cell notif id == \(notifCell.notification.notification_id)")
+            if(route != nil && route != ""){
+                XAppDelegate.mobilePlatform.router .handleRoute(notifCell.notification.route);
+            }
         }
     }
     
