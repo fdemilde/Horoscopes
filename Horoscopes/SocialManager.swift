@@ -313,31 +313,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func loginFacebook(completionHandler: (result: FBSDKLoginManagerLoginResult?, error: NSError?) -> ()) {
-        var loginManager = FBSDKLoginManager()
-        var permissions = ["public_profile", "email", "user_birthday","user_friends"]
-        loginManager.logInWithReadPermissions(permissions, handler: { (result, error : NSError?) -> Void in
-            if let error = error {
-                Utilities.showAlertView(self, title: "Login Error", message: "Cannot login to facebook")
-                completionHandler(result: nil, error : error)
-            } else if let result = result {
-                if result.isCancelled {
-                    Utilities.showAlertView(self, title: "Permission denied", message: "")
-                    completionHandler(result: result, error : nil)
-                } else {
-                    if result.grantedPermissions.contains("public_profile") {
-                        completionHandler(result: result, error : nil)
-                    } else {
-                        Utilities.showAlertView(self, title: "Permission denied", message: "")
-                        completionHandler(result: nil, error : error)
-                    }
-                    
-                }
-            }
-            
-        })
-    }
-    
     // MARK: Network - Report Issue
     
     func reportIssue(message : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
@@ -356,6 +331,71 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             }
         }
         
+    }
+    
+    // MARK: Log in
+    func isLoggedInFacebook() -> Bool{
+        return FBSDKAccessToken .currentAccessToken() != nil
+    }
+    
+    func loginFacebook(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+        var loginManager = FBSDKLoginManager()
+        var permissions = ["public_profile", "email", "user_birthday","user_friends"]
+        loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(error: error, permissionGranted: false)
+            } else {
+                if result.isCancelled {
+                    completionHandler(error: nil, permissionGranted: false)
+                } else {
+                    if result.grantedPermissions.contains("public_profile") {
+                        completionHandler(error: nil, permissionGranted: true)
+                    } else {
+                        completionHandler(error: nil, permissionGranted: false)
+                    }
+                }
+            }
+        })
+    }
+    
+    func isLoggedInZwigglers() -> Bool{
+        return XAppDelegate.mobilePlatform.userCred.hasToken()
+    }
+    
+    func loginZwigglers(token: String, completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
+        var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
+        XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
+            if let error = error {
+                completionHandler(responseDict: nil, error: error)
+            } else {
+                XAppDelegate.locationManager.setupLocationService()
+                self.persistUserProfile({ (error) -> Void in
+                    
+                })
+                completionHandler(responseDict: responseDict, error: nil)
+            }
+        })
+    }
+    
+    // Convenience method that log in Facebook then log in Zwigglers
+    func login(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+        loginFacebook { (error, permissionGranted) -> Void in
+            if let error = error {
+                completionHandler(error: error, permissionGranted: false)
+            } else {
+                if permissionGranted {
+                    self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                        if let error = error {
+                            completionHandler(error: error, permissionGranted: false)
+                        } else {
+                            completionHandler(error: nil, permissionGranted: true)
+                        }
+                    })
+                } else {
+                    completionHandler(error: nil, permissionGranted: false)
+                }
+            }
+        }
     }
     
     // MARK: Location
@@ -502,62 +542,18 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func isLoggedInFacebook() -> Bool{
-        return FBSDKAccessToken .currentAccessToken() != nil
-    }
-    
-    func isLoggedInZwigglers() -> Bool{
-        return XAppDelegate.mobilePlatform.userCred.hasToken()
-    }
-    
-    func loginZwigglers(token: String, completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
-        var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
-        XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
-            completionHandler(responseDict: responseDict, error: error)
-        })
-    }
-    
     func persistUserProfile(completionHandler: (error: NSError?) -> Void) {
         let uid = XAppDelegate.mobilePlatform.userCred.getUid()
         self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error)
             } else {
-                if result!.count > 0 {
-                    let userProfile = result![0]
-                    XAppDelegate.currentUser = userProfile
-                    NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
-                    completionHandler(error: nil)
-                }
+                let userProfile = result![0]
+                XAppDelegate.currentUser = userProfile
+                NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
+                completionHandler(error: nil)
             }
         })
-    }
-    
-    func login(completionHandler: (error: NSError?) -> Void) {
-        if !isLoggedInFacebook() {
-            loginFacebook({ (result, error) -> () in
-                if let error = error {
-                    completionHandler(error: error)
-                } else {
-                    if !self.isLoggedInZwigglers() {
-                        self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                            if let error = error {
-                                completionHandler(error: error)
-                            } else {
-                                XAppDelegate.locationManager.setupLocationService()
-                                self.persistUserProfile({ (error) -> Void in
-                                    if let error = error {
-                                        completionHandler(error: error)
-                                    } else {
-                                        completionHandler(error: nil)
-                                    }
-                                })
-                            }
-                        })
-                    }
-                }
-            })
-        }
     }
     
     func retrieveFriendList(completionHandler: (result: [UserProfile]!, error: NSError?) -> Void) {
