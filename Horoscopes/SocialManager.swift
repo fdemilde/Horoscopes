@@ -446,27 +446,32 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func sendHeartServerNotification(sender : UserProfile, postId : String){
+    func sendHeartServerNotification(receiverId : Int, postId : String){
         var alert = Alert()
+        var currentUser = XAppDelegate.currentUser
         alert.title = "Send heart"
-        alert.body = "\(sender.name) sent you a heart"
-        alert.imageURL = "\(sender.imgURL)"
+        alert.body = "\(currentUser.name) sent you a heart"
+        alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
         
         var routeString = "/post/\(postId)/hearts"
-        var userPostIdString = "\(sender.uid)"
-        XAppDelegate.mobilePlatform.platformNotiff.sendTo(userPostIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
+        var recieverIdString = "\(receiverId)"
+        XAppDelegate.mobilePlatform.platformNotiff.sendTo(recieverIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
             println("sendHeartServerNotification result = \(result)")
         }
     }
     
-    func sendFollowNotification(currentUserId: Int, followedUserId: Int) {
+    func sendFollowNotification(receiverId : Int) {
         var alert = Alert()
         alert.title = "Follow"
-        alert.body = "Follow"
+        var currentUser = XAppDelegate.currentUser
+        alert.body = "\(currentUser.name) followed you"
+        alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
-        let route = "/profile/\(currentUserId)/feed"
-        XAppDelegate.mobilePlatform.platformNotiff.sendTo("\(followedUserId)", withRoute: route, withAlert: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
+        
+        var receiverIdString = "\(receiverId)"
+        let route = "/profile/\(currentUser.uid)/feed"
+        XAppDelegate.mobilePlatform.platformNotiff.sendTo(receiverIdString, withRoute: route, withAlert: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
             println("sendFollowNotification result \(result)")
         }
     }

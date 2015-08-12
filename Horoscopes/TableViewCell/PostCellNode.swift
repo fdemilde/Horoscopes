@@ -315,7 +315,7 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
             let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
             self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
         })
-        XAppDelegate.socialManager.sendHeartServerNotification(userPost!.user!, postId: userPost!.post_id)
+        XAppDelegate.socialManager.sendHeartServerNotification(userPost!.user!.uid, postId: userPost!.post_id)
     }
     
     // MARK: Helpers
