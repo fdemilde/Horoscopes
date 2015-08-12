@@ -143,7 +143,7 @@ class Utilities {
         return NewsfeedType.OnYourMind
     }
     
-    // MARK: AlertView
+    // MARK: Alert
     class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String, tag : Int? = -1){
         dispatch_async(dispatch_get_main_queue(),{
             var alertView: UIAlertView = UIAlertView()
@@ -154,6 +154,15 @@ class Utilities {
             alertView.addButtonWithTitle("OK")
             alertView.tag = tag!
             alertView.show()
+        })
+    }
+    
+    class func showAlert(viewController: UIViewController, title: String, message: String?, error: NSError?) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            let alert = UIAlertController(title: title, message: "\(message) \(error)", preferredStyle: UIAlertControllerStyle.Alert)
+            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+            alert.addAction(action)
+            viewController.presentViewController(alert, animated: true, completion: nil)
         })
     }
     

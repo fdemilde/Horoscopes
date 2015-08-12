@@ -1891,18 +1891,12 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="20" y="57" width="280" height="100"/>
-                                                    </variation>
                                                 </textView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="obj-iQ-lNo">
                                                     <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                     <state key="normal" image="daily_share_button">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="250" y="177" width="50" height="30"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="shareButtonTapped:" destination="D9c-Zd-US1" eventType="touchUpInside" id="vDD-LT-Bay"/>
                                                     </connections>
@@ -1919,8 +1913,7 @@
                                                             <exclude reference="qJy-kM-Tw4"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="40" y="227" width="240" height="2"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="SJR-15-mDI"/>
                                                             <include reference="qJy-kM-Tw4"/>
@@ -2017,8 +2010,7 @@
                                                             <exclude reference="p2E-uT-v6d"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="120" y="16" width="80" height="80"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="Zk8-oi-W9e"/>
                                                             <include reference="p2E-uT-v6d"/>
@@ -4020,7 +4012,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2710.5" y="2040.75"/>
+            <point key="canvasLocation" x="2116.5" y="2043"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="F1W-2R-5eY">
@@ -4083,8 +4075,7 @@
                                                             <exclude reference="fuZ-h4-See"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="20" y="55" width="300" height="1"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="fuZ-h4-See"/>
                                                         </mask>
@@ -4099,9 +4090,6 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFz-31-SdH">
                                                     <rect key="frame" x="-25" y="-15" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.72549019607843135" green="0.74901960784313726" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="251" y="17" width="51" height="31"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="Su4-2H-nmt" eventType="valueChanged" id="RNX-JP-BOe"/>
                                                     </connections>
@@ -4118,8 +4106,7 @@
                                                             <exclude reference="bV3-CH-sfc"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="270" y="16" width="30" height="30"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="FpO-bh-Xey"/>
                                                             <include reference="bV3-CH-sfc"/>
@@ -4601,24 +4588,6 @@
             </objects>
             <point key="canvasLocation" x="2758.5" y="2711.25"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="iTn-U3-7bj">
-            <objects>
-                <viewController id="xiG-Sq-rEV" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Z9m-77-TSJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="nc9-sP-Obb"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="cS0-QJ-XW3">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="p8g-KK-fEo" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="220.5" y="398.25"/>
-        </scene>
         <!--Table View Controller-->
         <scene sceneID="3nW-yE-yOd">
             <objects>
@@ -4929,7 +4898,6 @@
         <image name="follow_btn" width="50" height="30"/>
         <image name="login_divider" width="208" height="2"/>
         <image name="next_button" width="30" height="30"/>
-        <image name="search_icon" width="15" height="15"/>
         <image name="share_copy" width="70" height="35"/>
         <image name="tabbar_daily.png" width="30" height="30"/>
         <image name="tabbar_newsfeed.png" width="30" height="30"/>
