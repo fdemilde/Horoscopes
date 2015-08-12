@@ -64,28 +64,32 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     }
 
     @IBAction func post() {
-        if SocialManager.sharedInstance.isLoggedInFacebook() {
+        let createPost = { () -> Void in
             Utilities.showHUD()
-            SocialManager.sharedInstance.createPost(type!, message: textView.text, completionHandler: { (response, error) -> Void in
+            SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, completionHandler: { (result, error) -> Void in
                 if let error = error {
-                    self.displayError(error)
+                    Utilities.hideHUD()
+                    Utilities.showAlert(self, title: "Post Error", message: "Your post cannot be created.", error: error)
                 } else {
                     self.finishPost()
                 }
             })
+        }
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                createPost()
+            } else {
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                    } else {
+                        createPost()
+                    }
+                })
+            }
         } else {
             showLoginFormSheet()
         }
-    }
-    
-    func displayError(error: NSError) {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            Utilities.hideHUD()
-            let alert = UIAlertController(title: "Post Error", message: "\(error)", preferredStyle: UIAlertControllerStyle.Alert)
-            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            alert.addAction(action)
-            self.presentViewController(alert, animated: true, completion: nil)
-        })
     }
     
     func finishPost() {
@@ -102,7 +106,6 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5
-//        MZFormSheetController.sharedBackgroundWindow()
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     

@@ -83,9 +83,31 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         configureTableView()
         if profileType == .CurrentUser {
-            if SocialManager.sharedInstance.isLoggedInZwigglers() {
-                userProfile = XAppDelegate.currentUser
-                getDataInitially()
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
+                if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                    if XAppDelegate.currentUser.uid == -1 {
+                        SocialManager.sharedInstance.persistUserProfile({ (error) -> Void in
+                            if let error = error {
+                                Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                            } else {
+                                self.userProfile = XAppDelegate.currentUser
+                                self.getDataInitially()
+                            }
+                        })
+                    } else {
+                        self.userProfile = XAppDelegate.currentUser
+                        self.getDataInitially()
+                    }
+                } else {
+                    SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                        if let error = error {
+                            Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                        } else {
+                            self.userProfile = XAppDelegate.currentUser
+                            self.getDataInitially()
+                        }
+                    })
+                }
             } else {
                 configureLoginView()
             }
@@ -132,15 +154,33 @@ class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableVie
     // MARK: - Action
     func login(sender: UIButton) {
         Utilities.showHUD()
-        SocialManager.sharedInstance.login { (error) -> Void in
+        SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
             if let error = error {
-                
+                Utilities.showAlert(self, title: "Log In Error", message: "Could not log in to Facebook. Please try again later.", error: error)
             } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.tableHeaderView = nil
-                    self.userProfile = XAppDelegate.currentUser
-                    self.getDataInitially()
-                })
+                if permissionGranted {
+                    if XAppDelegate.currentUser.uid == -1 {
+                        SocialManager.sharedInstance.persistUserProfile({ (error) -> Void in
+                            if let error = error {
+                                Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                            } else {
+                                self.userProfile = XAppDelegate.currentUser
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.tableView.tableHeaderView = nil
+                                    self.getDataInitially()
+                                })
+                            }
+                        })
+                    } else {
+                        self.userProfile = XAppDelegate.currentUser
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.tableHeaderView = nil
+                            self.getDataInitially()
+                        })
+                    }
+                } else {
+                    Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
+                }
             }
         }
     }
