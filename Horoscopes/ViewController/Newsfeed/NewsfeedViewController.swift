@@ -244,23 +244,38 @@ class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableVie
     // MARK: facebook
     func facebookLogin(sender: UIButton!) {
         Utilities.showHUD()
-        XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-            if(error == nil && FBSDKAccessToken.currentAccessToken() != nil){ // error
-                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (myresult, myerror) -> Void in
-                    if(myerror != nil){
-                        Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                        Utilities.hideHUD()
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(),{
-                            XAppDelegate.locationManager.setupLocationService()
-                            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
-                        })
-                    }
-                })
+        XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
+            Utilities.hideHUD()
+            if(error != nil){
+                Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                return
             } else {
-                Utilities.hideHUD()
+                if(permissionGranted == false){
+                    Utilities.showAlertView(self, title: "Permission denied", message: "Please check your permission again")
+                    return
+                } else {
+                    dispatch_async(dispatch_get_main_queue(),{
+                        XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+                    })
+                }
             }
         }
+//        XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
+//            if(error == nil && FBSDKAccessToken.currentAccessToken() != nil){ // error
+//                XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (myresult, myerror) -> Void in
+//                    if(myerror != nil){
+//                        Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+//                        Utilities.hideHUD()
+//                    } else {
+//                        dispatch_async(dispatch_get_main_queue(),{
+//                            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+//                        })
+//                    }
+//                })
+//            } else {
+//                Utilities.hideHUD()
+//            }
+//        }
     }
     
     // MARK: Button Hide/show

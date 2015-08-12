@@ -87,24 +87,20 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             self.fetchUserInfo()
         } else {
-            XAppDelegate.socialManager.loginFacebook { (result, error) -> () in
-                if(error == nil && FBSDKAccessToken .currentAccessToken() != nil){ // error
-                    XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
-                        if(error != nil){
-                            Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                            Utilities.hideHUD(viewToHide: self.view)
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(),{
-                                println("login VC setupLocationService ")
-                                XAppDelegate.locationManager.setupLocationService()
-                                self.fetchUserInfo()
-                                
-                            })
-                        }
-                    })
+            XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
+                Utilities.hideHUD(viewToHide: self.view)
+                if(error != nil){
+                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                    return
                 } else {
-//                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                    Utilities.hideHUD(viewToHide: self.view)
+                    if(permissionGranted == false){
+                        Utilities.showAlertView(self, title: "Permission denied", message: "Please check your permission again")
+                        return
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(),{
+                            self.fetchUserInfo()
+                        })
+                    }
                 }
             }
         }
