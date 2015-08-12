@@ -25,30 +25,25 @@ class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertV
     }
     
     @IBAction func loginFacebook(sender: UIButton) {
+        Utilities.showHUD(viewToShow: view)
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
-            if let error = error {
-                Utilities.showAlert(self, title: "Log In Error", message: "Could not log in to Facebook. Please try again later.", error: error)
-                self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
-            } else {
-                if permissionGranted {
-                    self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
-                        self.detailPostViewController.post()
-                    })
-                } else {
-                    Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                if let error = error {
+                    Utilities.hideHUD(viewToHide: self.view)
+                    Utilities.showAlert(self, title: "Log In Error", message: "Could not log in to Facebook. Please try again later.", error: error)
                     self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+                } else {
+                    if permissionGranted {
+                        Utilities.hideHUD(viewToHide: self.view)
+                        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
+                            self.detailPostViewController.post()
+                        })
+                    } else {
+                        Utilities.hideHUD(viewToHide: self.view)
+                        Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
+                        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+                    }
                 }
-            }
-        }
-    }
-    
-    func facebookLoginFinished(result: [NSObject : AnyObject]?, error: NSError?) {
-        if let error = error {
-            NSLog("Cannot log in to Facebook. Error: \(error)")
-            Utilities.showAlertView(self, title: "Error occured", message: "Please try again later")
-        } else {
-            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetViewController) -> Void in
-                    self.detailPostViewController.post()
             })
         }
     }
