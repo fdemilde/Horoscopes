@@ -480,9 +480,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func clearAllNotification(){
         var listIds = [String]()
-        listIds.append("5_8")
-        listIds.append("6_8")
-        listIds.append("7_8")
+        listIds.append("8_8")
+        listIds.append("9_8")
+        listIds.append("10_8")
+        listIds.append("11_8")
+        listIds.append("12_8")
+        listIds.append("16_8")
+        listIds.append("17_8")
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
             println("clearAllNotification result = \(result)")
         })
