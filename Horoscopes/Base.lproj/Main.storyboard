@@ -2335,74 +2335,46 @@
             <point key="canvasLocation" x="777" y="2711.25"/>
         </scene>
         <!--Post Login View Controller-->
-        <scene sceneID="3vG-9u-q4d">
+        <scene sceneID="mjV-cE-Vgc">
             <objects>
-                <viewController storyboardIdentifier="PostLoginViewController" id="CHU-QG-0UQ" customClass="PostLoginViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PostLoginViewController" id="G2M-w7-vdM" customClass="PostLoginViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="eiJ-hL-AJB"/>
-                        <viewControllerLayoutGuide type="bottom" id="AJO-fZ-UQ9"/>
+                        <viewControllerLayoutGuide type="top" id="1Rh-0Q-28l"/>
+                        <viewControllerLayoutGuide type="bottom" id="oGp-K9-p1n"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="WO4-2g-J2t">
+                    <view key="view" contentMode="scaleToFill" id="4VK-II-K4Q">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KXW-jg-11i">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhp-cq-3rV">
+                                <rect key="frame" x="263" y="263" width="75" height="75"/>
                                 <state key="normal" image="fb_login_icon">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="loginFacebook:" destination="CHU-QG-0UQ" eventType="touchUpInside" id="yeE-bf-hQK"/>
+                                    <action selector="loginFacebook:" destination="G2M-w7-vdM" eventType="touchUpInside" id="3hE-B8-kaW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to Facebook to share this post" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="Iea-1O-rLH">
-                                <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to Facebook to share this post" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="e2P-gG-l85">
+                                <rect key="frame" x="20" y="348" width="560" height="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="KXW-jg-11i" secondAttribute="centerY" id="7mi-rT-DyU"/>
-                            <constraint firstItem="Iea-1O-rLH" firstAttribute="top" secondItem="KXW-jg-11i" secondAttribute="bottom" constant="36" id="Hb0-yT-9at">
-                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
-                            </constraint>
-                            <constraint firstAttribute="centerX" secondItem="KXW-jg-11i" secondAttribute="centerX" id="nXb-Yl-AVW"/>
-                            <constraint firstItem="Iea-1O-rLH" firstAttribute="leading" secondItem="WO4-2g-J2t" secondAttribute="leading" constant="50" id="stt-Gk-rxc"/>
-                            <constraint firstAttribute="trailing" secondItem="Iea-1O-rLH" secondAttribute="trailing" constant="50" id="u6H-Mr-XLm"/>
+                            <constraint firstAttribute="trailing" secondItem="e2P-gG-l85" secondAttribute="trailing" constant="20" id="Dp6-Pr-f2k"/>
+                            <constraint firstItem="e2P-gG-l85" firstAttribute="top" secondItem="zhp-cq-3rV" secondAttribute="bottom" constant="10" id="Uzw-nE-ZXi"/>
+                            <constraint firstItem="e2P-gG-l85" firstAttribute="leading" secondItem="4VK-II-K4Q" secondAttribute="leading" constant="20" id="Y4O-qJ-Erg"/>
+                            <constraint firstAttribute="centerX" secondItem="zhp-cq-3rV" secondAttribute="centerX" id="ava-XX-RhV"/>
+                            <constraint firstAttribute="centerY" secondItem="zhp-cq-3rV" secondAttribute="centerY" id="vL0-79-mTx"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="KXW-jg-11i"/>
-                                <exclude reference="Iea-1O-rLH"/>
-                            </mask>
-                            <mask key="constraints">
-                                <exclude reference="Hb0-yT-9at"/>
-                                <exclude reference="stt-Gk-rxc"/>
-                                <exclude reference="u6H-Mr-XLm"/>
-                                <exclude reference="7mi-rT-DyU"/>
-                                <exclude reference="nXb-Yl-AVW"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="KXW-jg-11i"/>
-                                <include reference="Iea-1O-rLH"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="Hb0-yT-9at"/>
-                                <include reference="stt-Gk-rxc"/>
-                                <include reference="u6H-Mr-XLm"/>
-                                <include reference="7mi-rT-DyU"/>
-                                <include reference="nXb-Yl-AVW"/>
-                            </mask>
-                        </variation>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="BmP-Jz-6Up" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2X8-TK-QgQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1419" y="2711.25"/>
+            <point key="canvasLocation" x="1433" y="2711"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="o7r-Wh-oPr">
