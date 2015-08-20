@@ -1,6 +1,6 @@
 platform :ios, '7.0'
 target 'Horoscopes' do
-	pod 'GoogleAnalytics-iOS-SDK'
+	pod 'GoogleAnalytics', '~> 3.13'
 	pod 'Reachability'
 	pod 'JSONKit-NoWarning'
 	pod 'FBSDKCoreKit'
@@ -11,7 +11,7 @@ target 'Horoscopes' do
     pod 'MZFormSheetController'
     pod 'AsyncDisplayKit'
     pod 'WebASDKImageManager'
-    pod 'Google-Mobile-Ads-SDK', '~> 7.0'
-    pod 'AFNetworking', '~> 2.0'
+    pod 'Google-Mobile-Ads-SDK', '~> 7.4'
+    pod 'AFNetworking', '~> 2.6'
     pod 'DateTools'
 end

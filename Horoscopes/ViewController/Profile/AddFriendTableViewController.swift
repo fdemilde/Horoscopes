@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class AddFriendTableViewController : MyTableViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
+class AddFriendTableViewController : TableViewControllerWithAds, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate, UIGestureRecognizerDelegate {
     var searchIcon: UIImageView!
     var searchFBHolderLabel: UILabel!
     var searchTextfield: UITextField!

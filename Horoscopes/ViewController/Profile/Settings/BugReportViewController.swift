@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class BugReportViewController : MyViewController, UITextViewDelegate, UIAlertViewDelegate {
+class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var textView : UITextView!
     @IBOutlet weak var textViewBottomSpaceConstraint: NSLayoutConstraint!

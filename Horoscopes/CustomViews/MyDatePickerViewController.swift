@@ -8,7 +8,7 @@
 
 import Foundation
 
-class MyDatePickerViewController : MyViewController, UIPickerViewDataSource, UIPickerViewDelegate {
+class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet var picker : UIPickerView!
     var parentVC : UIViewController!
     var type : BirthdayParentViewControllerType!

@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.4):
-    - AFNetworking/NSURLConnection (= 2.5.4)
-    - AFNetworking/NSURLSession (= 2.5.4)
-    - AFNetworking/Reachability (= 2.5.4)
-    - AFNetworking/Security (= 2.5.4)
-    - AFNetworking/Serialization (= 2.5.4)
-    - AFNetworking/UIKit (= 2.5.4)
-  - AFNetworking/NSURLConnection (2.5.4):
+  - AFNetworking (2.6.0):
+    - AFNetworking/NSURLConnection (= 2.6.0)
+    - AFNetworking/NSURLSession (= 2.6.0)
+    - AFNetworking/Reachability (= 2.6.0)
+    - AFNetworking/Security (= 2.6.0)
+    - AFNetworking/Serialization (= 2.6.0)
+    - AFNetworking/UIKit (= 2.6.0)
+  - AFNetworking/NSURLConnection (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.4):
+  - AFNetworking/NSURLSession (2.6.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.4)
-  - AFNetworking/Security (2.5.4)
-  - AFNetworking/Serialization (2.5.4)
-  - AFNetworking/UIKit (2.5.4):
+  - AFNetworking/Reachability (2.6.0)
+  - AFNetworking/Security (2.6.0)
+  - AFNetworking/Serialization (2.6.0)
+  - AFNetworking/UIKit (2.6.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AsyncDisplayKit (1.2.1):
@@ -43,10 +43,8 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.2.0):
     - FBSDKCoreKit
-  - Google-Mobile-Ads-SDK (7.3.1)
-  - GoogleAnalytics-iOS-SDK (3.12):
-    - GoogleAnalytics-iOS-SDK/Core (= 3.12)
-  - GoogleAnalytics-iOS-SDK/Core (3.12)
+  - Google-Mobile-Ads-SDK (7.4.1)
+  - GoogleAnalytics (3.13.0)
   - JSONKit-NoWarning (1.2)
   - MBProgressHUD (0.9.1)
   - MZAppearance (1.1.5)
@@ -63,14 +61,14 @@ PODS:
     - SDWebImage/Core (~> 3.7)
 
 DEPENDENCIES:
-  - AFNetworking (~> 2.0)
+  - AFNetworking (~> 2.6)
   - AsyncDisplayKit
   - DateTools
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
-  - Google-Mobile-Ads-SDK (~> 7.0)
-  - GoogleAnalytics-iOS-SDK
+  - Google-Mobile-Ads-SDK (~> 7.4)
+  - GoogleAnalytics (~> 3.13)
   - JSONKit-NoWarning
   - MBProgressHUD
   - MZFormSheetController
@@ -79,15 +77,15 @@ DEPENDENCIES:
   - WebASDKImageManager
 
 SPEC CHECKSUMS:
-  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
+  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   AsyncDisplayKit: b2f777da3a246b4aad660b2a55d60bb4328049b9
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
   DateTools: 9bcc89e4f2f9004d8a7a2bd1b49269cf78968e65
   FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7
   FBSDKLoginKit: 57e37106af12c9e264e473dcb75d7decdbb07fe4
   FBSDKShareKit: 931746fdf8fb95efd6e12310ec14b2b3295e2aec
-  Google-Mobile-Ads-SDK: 3647bfddc7384c514ab96a8bed86d98b31e623e4
-  GoogleAnalytics-iOS-SDK: 13241762fa4aea845eb75bef6c0da3427a26e7b3
+  Google-Mobile-Ads-SDK: dce4c2728daa0bcbd88b6e3dc111b718a07b1eb6
+  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
   MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab

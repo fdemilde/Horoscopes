@@ -182,9 +182,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 Copyright 2011 Google Inc. All Rights Reserved.
 
-## GoogleAnalytics-iOS-SDK
+## GoogleAnalytics
 
-Copyright 2009 - 2015 Google, Inc. All rights reserved.
+Copyright 2015 Google Inc.
 
 ## JSONKit-NoWarning
 

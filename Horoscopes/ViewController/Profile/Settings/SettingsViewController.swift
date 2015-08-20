@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class SettingsViewController: MyViewController, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
+class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var birthday : NSDate!

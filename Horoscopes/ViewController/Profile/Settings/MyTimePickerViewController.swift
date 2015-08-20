@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MyTimePickerViewController : MyViewController{
+class MyTimePickerViewController : ViewControllerWithAds{
     
     @IBOutlet weak var picker: UIDatePicker!
     var parentVC : SettingsViewController!

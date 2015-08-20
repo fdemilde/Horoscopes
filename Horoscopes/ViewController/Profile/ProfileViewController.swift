@@ -13,7 +13,7 @@ enum ProfileType {
     case OtherUser
 }
 
-class ProfileViewController: MyViewController, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
+class ProfileViewController: ViewControllerWithAds, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
     
     var profileType: ProfileType = .CurrentUser
     enum Tab {

@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CollectHoroscopeDetailVC : MyViewController, UITableViewDataSource, UITableViewDelegate {
+class CollectHoroscopeDetailVC : ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var dateOfHoroscope: UILabel!

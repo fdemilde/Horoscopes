@@ -193,7 +193,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 postData.setObject("\(page)", forKey: "page")
                 postData.setObject("\(uid)", forKey: "uid")
                 
-                XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+                XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
                     if let error = error {
                         completionHandler(result: nil, error: error)
                     } else {

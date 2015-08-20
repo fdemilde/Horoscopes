@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class DailyTableViewController : MyTableViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
+class DailyTableViewController : TableViewControllerWithAds, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate {
     
     let textviewForCalculating = UITextView()
     

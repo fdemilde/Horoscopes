@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class NewsfeedViewController : MyViewController, UIAlertViewDelegate, ASTableViewDataSource, ASTableViewDelegate {
+class NewsfeedViewController : ViewControllerWithAds, UIAlertViewDelegate, ASTableViewDataSource, ASTableViewDelegate {
     
     let TABLE_PADDING_TOP = 20 as CGFloat
     let TABLE_PADDING_BOTTOM = 49 as CGFloat

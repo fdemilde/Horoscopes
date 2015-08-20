@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NotificationViewController: MyViewController, UITableViewDataSource, UITableViewDelegate {
+class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate {
     @IBOutlet weak var tableView: UITableView!
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat

@@ -16,7 +16,11 @@
 		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
 		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
+		70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */; };
+		70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */; };
+		70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
+		70CB8FD51B8481E300A70C41 /* DailyHoroscopesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* DailyHoroscopesTableViewController.swift */; };
 		70CF2EB31B69C7FA002AE7A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
@@ -163,8 +167,8 @@
 		F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC41B2010F2003C6301 /* UserCreds.m */; };
 		F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC81B2010F2003C6301 /* RegExCategories.m */; };
 		F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACACB1B2010F2003C6301 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		F4DA35C31B4E27B000B6F165 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C21B4E27B000B6F165 /* MyViewController.swift */; };
-		F4DA35C51B4E2F1E00B6F165 /* MyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C41B4E2F1E00B6F165 /* MyTableViewController.swift */; };
+		F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */; };
+		F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */; };
 		F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */; };
 		F4DDF6AB1B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */; };
 		F4DDF6AC1B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */; };
@@ -201,7 +205,11 @@
 		705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		70A4E2771B623F5100711B4F /* ApplicationColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationColor.swift; sourceTree = "<group>"; };
+		70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyContentTableViewCell.swift; sourceTree = "<group>"; };
+		70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyButtonTableViewCell.swift; sourceTree = "<group>"; };
+		70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopesTableViewCell.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
+		70CB8FD41B8481E300A70C41 /* DailyHoroscopesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopesTableViewController.swift; sourceTree = "<group>"; };
 		70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -387,8 +395,8 @@
 		F4CACAC81B2010F2003C6301 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegExCategories.m; sourceTree = "<group>"; };
 		F4CACACA1B2010F2003C6301 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		F4CACACB1B2010F2003C6301 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
-		F4DA35C21B4E27B000B6F165 /* MyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
-		F4DA35C41B4E2F1E00B6F165 /* MyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTableViewController.swift; sourceTree = "<group>"; };
+		F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithAds.swift; sourceTree = "<group>"; };
+		F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerWithAds.swift; sourceTree = "<group>"; };
 		F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignVC.swift; sourceTree = "<group>"; };
 		F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg-568h@2x.png"; sourceTree = "<group>"; };
 		F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg-667h@2x.png"; sourceTree = "<group>"; };
@@ -621,8 +629,8 @@
 				F47C02A31B2691D200C0BA83 /* LoginVC.swift */,
 				F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */,
 				F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */,
-				F4DA35C41B4E2F1E00B6F165 /* MyTableViewController.swift */,
-				F4DA35C21B4E27B000B6F165 /* MyViewController.swift */,
+				F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */,
+				F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */,
 			);
 			path = ViewController;
 			sourceTree = "<group>";
@@ -634,6 +642,10 @@
 				F49EB5601B41C21E00F56092 /* CollectHoroscopesTableVC.swift */,
 				F49EB5611B41C21E00F56092 /* CookieViewController.swift */,
 				F49EB5621B41C21E00F56092 /* DailyTableViewController.swift */,
+				70CB8FD41B8481E300A70C41 /* DailyHoroscopesTableViewController.swift */,
+				70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */,
+				70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */,
+				70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */,
 			);
 			path = Daily;
 			sourceTree = "<group>";
@@ -1175,6 +1187,7 @@
 				705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */,
 				7047A5A91B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
+				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
 				F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
@@ -1194,8 +1207,9 @@
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
 				F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */,
 				F4CACA811B200149003C6301 /* SMCLove.m in Sources */,
-				F4DA35C51B4E2F1E00B6F165 /* MyTableViewController.swift in Sources */,
+				F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */,
 				F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */,
+				70CB8FD51B8481E300A70C41 /* DailyHoroscopesTableViewController.swift in Sources */,
 				F41E80C71B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift in Sources */,
 				F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */,
 				F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */,
@@ -1220,12 +1234,14 @@
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */,
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
+				70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
-				F4DA35C31B4E27B000B6F165 /* MyViewController.swift in Sources */,
+				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
+				70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */,
 				F4E723481B7288E000A6B162 /* NewsfeedViewController.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */,
