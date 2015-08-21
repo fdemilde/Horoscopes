@@ -1,5 +1,5 @@
 //
-//  DailyHoroscopesTableViewController.swift
+//  NewDailyTableViewController.swift
 //  Horoscopes
 //
 //  Created by Dang Doan on 8/19/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DailyHoroscopesTableViewController: TableViewControllerWithAds {
+class NewDailyTableViewController: TableViewControllerWithAds {
     
     let defaultEstimatedRowHeight: CGFloat = 96
     let spaceBetweenCell: CGFloat = 16
