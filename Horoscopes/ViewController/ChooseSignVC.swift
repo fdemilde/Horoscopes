@@ -9,6 +9,10 @@
 import Foundation
 import UIKit
 
+protocol ChooseSignViewControllerDelegate {
+    func didSelectHoroscopeSign(selectedSign: Int)
+}
+
 class ChooseSignVC : SpinWheelVC {
     
     @IBOutlet weak var chooseSignButton: UIButton!
@@ -22,6 +26,7 @@ class ChooseSignVC : SpinWheelVC {
     @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
     
     var parentVC = DailyTableViewController()
+    var delegate: ChooseSignViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,9 +92,10 @@ class ChooseSignVC : SpinWheelVC {
         var label = String(format:"type=view,sign=%d", self.selectedIndex)
         
         XAppDelegate.sendTrackEventWithActionName(defaultHoroscopeChooser, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
-        parentVC.selectedSign = self.selectedIndex
-        parentVC.saveData()
-        parentVC.tableView.reloadData()
-        self.dismissViewControllerAnimated(true, completion: nil)
+        delegate.didSelectHoroscopeSign(selectedIndex)
+//        parentVC.selectedSign = self.selectedIndex
+//        parentVC.saveData()
+//        parentVC.tableView.reloadData()
+//        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

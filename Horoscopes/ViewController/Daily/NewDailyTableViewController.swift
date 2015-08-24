@@ -8,21 +8,32 @@
 
 import UIKit
 
-class NewDailyTableViewController: TableViewControllerWithAds {
+class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate {
     
     let defaultEstimatedRowHeight: CGFloat = 96
     let spaceBetweenCell: CGFloat = 16
+    var selectedSign = -1
+    var collectedHoroscope = CollectedHoroscope()
+    var shouldCollectData = false
+    var shouldReloadData = true
+    var isEmptyDataSource = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = defaultEstimatedRowHeight
+        if let parentViewController = self.tabBarController as? CustomTabBarController{
+            selectedSign = parentViewController.selectedSign
+        }
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+        
+        refreshView()
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -30,9 +41,12 @@ class NewDailyTableViewController: TableViewControllerWithAds {
         // Dispose of any resources that can be recreated.
     }
 
-    // MARK: - Table view data source
+    // MARK: - Table view data source and delegate
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        if isEmptyDataSource {
+            return 0
+        }
         return 4
     }
 
@@ -45,17 +59,20 @@ class NewDailyTableViewController: TableViewControllerWithAds {
         switch indexPath.section {
         case 0:
             cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+            configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
         case 2:
             cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! UITableViewCell
         default:
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.layer.cornerRadius = 5
             cell.clipsToBounds = true
             if indexPath.section == 1 {
-                
+                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign)
             } else {
-                
+                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign)
             }
+            
+            return cell
         }
 
         return cell
@@ -70,42 +87,7 @@ class NewDailyTableViewController: TableViewControllerWithAds {
         view.backgroundColor = UIColor.clearColor()
         return view
     }
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
+    
     /*
     // MARK: - Navigation
 
@@ -116,6 +98,74 @@ class NewDailyTableViewController: TableViewControllerWithAds {
     }
     */
     
-    //MARK: - Helper
+    // MARK: - Data handler
+    
+    func refreshView() {
+        if daysPassed() >= 1 || collectedHoroscope.collectedData.count == 0 {
+            shouldCollectData = true
+            shouldReloadData = true
+        }
+        if shouldReloadData {
+            shouldReloadData = false
+            XAppDelegate.horoscopesManager.getAllHoroscopes(false)
+        }
+        let label = String(format:"type=view,sign=%d", self.selectedSign)
+        XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+    }
+    
+    // MARK: - Helper
+    
+    func configureDailyHoroscopesTableViewCell(cell: DailyHoroscopesTableViewCell) {
+        if selectedSign != -1 {
+            let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign] as Horoscope
+            let image = UIImage(named: String(format: "%@_selected", horoscope.sign))
+            cell.horoscopesSignButton.setImage(image, forState: .Normal)
+            cell.horoscopesSignLabel.text = horoscope.sign
+            cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
+            cell.collectedPercentageLabel.text = String(format:"%g%%", round(collectedHoroscope.getScore() * 100))
+        }
+    }
+    
+    func daysPassed() -> Double {
+        let today = NSDate()
+        collectedHoroscope = CollectedHoroscope()
+        var today1 = NSDate()
+        var currentCal = NSCalendar.currentCalendar()
+        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        
+        var todayComp = currentCal.components(components, fromDate: NSDate())
+        todayComp.calendar = currentCal
+        
+        var lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: collectedHoroscope.lastDateOpenApp)
+        lastOpenComp.calendar = currentCal
+        
+        todayComp.hour = 1
+        todayComp.minute = 1
+        todayComp.second = 1
+        
+        let newDate = lastOpenComp.date
+        
+        return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
+    }
+    
+    // MARK: - Notification Handler
+    
+    func finishLoadingAllSigns(notification: NSNotification) {
+        isEmptyDataSource = false
+        tableView.reloadData()
+    }
 
+    @IBAction func chooseHoroscopeSign(sender: UIButton) {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        controller.delegate = self
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    // MARK: - Choose sign view controller delegate
+    
+    func didSelectHoroscopeSign(selectedSign: Int) {
+        self.selectedSign = selectedSign
+        presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        tableView.reloadData()
+    }
 }

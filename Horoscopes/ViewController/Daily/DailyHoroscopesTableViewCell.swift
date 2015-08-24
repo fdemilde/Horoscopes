@@ -10,6 +10,11 @@ import UIKit
 
 class DailyHoroscopesTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var horoscopesSignButton: UIButton!
+    @IBOutlet weak var horoscopesSignLabel: UILabel!
+    @IBOutlet weak var horoscopesDateLabel: UILabel!
+    @IBOutlet weak var collectedPercentageLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

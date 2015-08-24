@@ -26,7 +26,7 @@
                                     <constraint firstAttribute="height" constant="50" id="88C-nr-M5k"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2vJ-rl-ggo" customClass="ASTableView">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2vJ-rl-ggo" customClass="ASTableView">
                                 <rect key="frame" x="0.0" y="103" width="600" height="448"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </tableView>
@@ -1452,7 +1452,7 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZaA-bZ-hqG" id="Sct-Dm-QWu">
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWr-sP-RJ7">
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jWr-sP-RJ7">
                                             <rect key="frame" x="8" y="8" width="80" height="80"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="80" id="JJX-jX-6hG"/>
@@ -1461,6 +1461,9 @@
                                             <state key="normal" backgroundImage="daily_sign_bg">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="chooseHoroscopeSign:" destination="efF-06-zfn" eventType="touchUpInside" id="R5c-jE-f5a"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03V-qI-T2d">
                                             <rect key="frame" x="96" y="27" width="76" height="22"/>
@@ -1480,9 +1483,9 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                         </button>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="80%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuO-Av-7nC">
-                                            <rect key="frame" x="568" y="35" width="24" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuO-Av-7nC">
+                                            <rect key="frame" x="562" y="35" width="30" height="14"/>
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
@@ -1512,12 +1515,18 @@
                                             <exclude reference="Saq-JU-bWT"/>
                                             <exclude reference="eZp-Pl-Y4f"/>
                                             <exclude reference="t0B-4O-7PB"/>
-                                            <exclude reference="1sC-ez-52z"/>
                                             <exclude reference="0r8-Iv-Aat"/>
+                                            <exclude reference="1sC-ez-52z"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="collectedPercentageLabel" destination="WuO-Av-7nC" id="qXY-cX-ADQ"/>
+                                    <outlet property="horoscopesDateLabel" destination="Qbb-1a-0V2" id="faU-tm-sQx"/>
+                                    <outlet property="horoscopesSignButton" destination="jWr-sP-RJ7" id="TLX-gV-uBV"/>
+                                    <outlet property="horoscopesSignLabel" destination="03V-qI-T2d" id="6yW-JG-lTq"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DailyContentTableViewCell" rowHeight="257" id="IHe-gV-0dx" customClass="DailyContentTableViewCell" customModule="Horoscopes" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
@@ -1675,6 +1684,11 @@
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="dateLabel" destination="Fxt-nK-Zss" id="67R-tq-NEg"/>
+                                    <outlet property="dayLabel" destination="R1G-0n-uKd" id="7Rw-TD-StG"/>
+                                    <outlet property="textView" destination="tWe-yV-7ML" id="XAQ-Kp-wNV"/>
+                                </connections>
                             </tableViewCell>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="DailyButtonTableViewCell" rowHeight="96" id="Lnf-AN-JeY" customClass="DailyButtonTableViewCell" customModule="Horoscopes" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
