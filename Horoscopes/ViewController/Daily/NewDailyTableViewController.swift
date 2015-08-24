@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate {
+class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate {
     
     let defaultEstimatedRowHeight: CGFloat = 96
     let spaceBetweenCell: CGFloat = 16
@@ -44,10 +44,8 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     // MARK: - Table view data source and delegate
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if isEmptyDataSource {
-            return 0
-        }
-        return 4
+        let section = isEmptyDataSource ? 0 : 4
+        return section
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -64,6 +62,7 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
             cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! UITableViewCell
         default:
             var cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
+            cell.delegate = self
             cell.layer.cornerRadius = 5
             cell.clipsToBounds = true
             if indexPath.section == 1 {
@@ -113,6 +112,43 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
     }
     
+    func updateCollectedData() {
+        if shouldCollectData {
+            shouldCollectData = false
+            var currentCal = NSCalendar.currentCalendar()
+            let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+            var todayComp = currentCal.components(components, fromDate: NSDate())
+            todayComp.hour = 1
+            todayComp.minute = 1
+            todayComp.second = 1
+            todayComp.calendar = currentCal
+            collectedHoroscope.mySetLastDateOpenApp(todayComp.date)
+            saveCollectedHoroscopeData()
+        } else {
+            var settings = XAppDelegate.userSettings
+            var item = CollectedItem()
+            let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
+            item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
+            item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
+            collectedHoroscope.collectedData.replaceObjectAtIndex(0, withObject: item)
+            collectedHoroscope.saveCollectedData()
+        }
+    }
+    
+    func saveCollectedHoroscopeData(){
+        let item = CollectedItem()
+        let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
+        item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
+        item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
+        collectedHoroscope.collectedData.insertObject(item, atIndex: 0)
+        collectedHoroscope.saveCollectedData()
+//        if let firstCell = firstCell{
+//            firstCell.collectTextLabel.text = String(format:"%g",collectedHoro.getScore()*100)
+//            firstCell.updateAndAnimateCollectHoroscope()
+//        }
+        
+    }
+    
     // MARK: - Helper
     
     func configureDailyHoroscopesTableViewCell(cell: DailyHoroscopesTableViewCell) {
@@ -148,12 +184,25 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
     }
     
+    func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval) -> ShareViewController{
+        var storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        var sharingText = String(format: "%@", horoscopeDescription)
+        var pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
+        var horoscopeSignName = Utilities.getHoroscopeNameWithIndex(selectedSign)
+        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
+        return shareVC
+    }
+    
     // MARK: - Notification Handler
     
     func finishLoadingAllSigns(notification: NSNotification) {
         isEmptyDataSource = false
+        updateCollectedData()
         tableView.reloadData()
     }
+    
+    // MARK: - Action
 
     @IBAction func chooseHoroscopeSign(sender: UIButton) {
         let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
@@ -161,11 +210,23 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    // MARK: - Choose sign view controller delegate
+    // MARK: - Delegate
     
     func didSelectHoroscopeSign(selectedSign: Int) {
-        self.selectedSign = selectedSign
         presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.selectedSign = selectedSign
+        updateCollectedData()
         tableView.reloadData()
+    }
+    
+    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval) {
+        let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag)
+        var formSheet = MZFormSheetController(viewController: controller)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
+        formSheet.cornerRadius = 0.0
+        formSheet.portraitTopInset = view.frame.height - SHARE_HYBRID_HEIGHT
+        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width, SHARE_HYBRID_HEIGHT)
+        mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
 }
