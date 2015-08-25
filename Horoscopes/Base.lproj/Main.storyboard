@@ -806,26 +806,26 @@
                                 <rect key="frame" x="0.0" y="50" width="600" height="501"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fortune Cookie" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QnR-hC-mTF">
-                                        <rect key="frame" x="233" y="23" width="135" height="23"/>
+                                        <rect key="frame" x="233" y="24" width="135" height="23"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="19"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="daily_cookie_open" translatesAutoresizingMaskIntoConstraints="NO" id="LJa-3W-m8n">
-                                        <rect key="frame" x="188" y="91" width="225" height="120"/>
+                                        <rect key="frame" x="188" y="92" width="225" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="HRs-7b-nPY"/>
                                             <constraint firstAttribute="width" constant="225" id="KMl-xs-kvy"/>
                                         </constraints>
                                     </imageView>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your lucky number today" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dzH-OU-dYr">
-                                        <rect key="frame" x="205" y="329" width="191" height="21"/>
+                                        <rect key="frame" x="205" y="330" width="191" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.6705882353" green="0.68235294120000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 38 29 12" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xkV-de-N3b">
-                                        <rect key="frame" x="225" y="363" width="151" height="39"/>
+                                        <rect key="frame" x="225" y="364" width="151" height="39"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="32"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -844,7 +844,7 @@
                                         </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kmm-QP-6Jh">
-                                        <rect key="frame" x="180" y="452" width="240" height="35"/>
+                                        <rect key="frame" x="180" y="453" width="240" height="35"/>
                                         <state key="normal" image="daily_cookie_share">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -853,13 +853,13 @@
                                         </connections>
                                     </button>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check back tomorrow for a new fortune" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ost-iI-bc9">
-                                        <rect key="frame" x="148" y="532" width="305" height="21"/>
+                                        <rect key="frame" x="148" y="533" width="305" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.6705882353" green="0.68235294120000001" blue="0.85490196080000003" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="&quot;Today is a good day to get started on new things&quot;" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hrp-7T-uUq">
-                                        <rect key="frame" x="0.0" y="263" width="600" height="21"/>
+                                        <rect key="frame" x="0.0" y="264" width="600" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -1478,13 +1478,20 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
-                                            <rect key="frame" x="562" y="41" width="30" height="30"/>
+                                            <rect key="frame" x="548" y="27" width="44" height="44"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="44" id="TFs-23-rQ3"/>
+                                                <constraint firstAttribute="width" constant="44" id="vMw-Zj-b0n"/>
+                                            </constraints>
                                             <state key="normal" image="daily_archive_icon">
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <segue destination="NJN-da-LHb" kind="show" id="aSD-EL-wEi"/>
+                                            </connections>
                                         </button>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuO-Av-7nC">
-                                            <rect key="frame" x="562" y="35" width="30" height="14"/>
+                                            <rect key="frame" x="555" y="24" width="30" height="14"/>
                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -1494,14 +1501,14 @@
                                         <constraint firstItem="jWr-sP-RJ7" firstAttribute="leading" secondItem="Sct-Dm-QWu" secondAttribute="leadingMargin" id="0DF-ln-X5T"/>
                                         <constraint firstItem="WuO-Av-7nC" firstAttribute="trailing" secondItem="Sct-Dm-QWu" secondAttribute="trailingMargin" id="0r8-Iv-Aat"/>
                                         <constraint firstItem="lzP-8H-CW4" firstAttribute="trailing" secondItem="Sct-Dm-QWu" secondAttribute="trailingMargin" id="1sC-ez-52z"/>
-                                        <constraint firstAttribute="trailing" secondItem="WuO-Av-7nC" secondAttribute="trailing" constant="8" id="8Q4-wK-JWC"/>
+                                        <constraint firstAttribute="trailing" secondItem="WuO-Av-7nC" secondAttribute="trailing" constant="15" id="8Q4-wK-JWC"/>
                                         <constraint firstItem="Qbb-1a-0V2" firstAttribute="leading" secondItem="jWr-sP-RJ7" secondAttribute="trailing" constant="8" id="9c3-Y0-xhi"/>
                                         <constraint firstItem="lzP-8H-CW4" firstAttribute="bottom" secondItem="Qbb-1a-0V2" secondAttribute="bottom" id="LJM-Tz-aZU"/>
                                         <constraint firstItem="jWr-sP-RJ7" firstAttribute="top" secondItem="Sct-Dm-QWu" secondAttribute="top" constant="8" id="O7h-bI-pVx"/>
                                         <constraint firstItem="03V-qI-T2d" firstAttribute="leading" secondItem="jWr-sP-RJ7" secondAttribute="trailing" constant="8" id="RCu-1A-WB4"/>
                                         <constraint firstItem="jWr-sP-RJ7" firstAttribute="leading" secondItem="Sct-Dm-QWu" secondAttribute="leading" constant="8" id="SEo-j8-LXB"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="jWr-sP-RJ7" secondAttribute="bottom" id="Saq-JU-bWT"/>
-                                        <constraint firstItem="03V-qI-T2d" firstAttribute="bottom" secondItem="WuO-Av-7nC" secondAttribute="bottom" id="TQA-ye-bnq"/>
+                                        <constraint firstItem="03V-qI-T2d" firstAttribute="bottom" secondItem="WuO-Av-7nC" secondAttribute="bottom" constant="11" id="TQA-ye-bnq"/>
                                         <constraint firstAttribute="trailing" secondItem="lzP-8H-CW4" secondAttribute="trailing" constant="8" id="YZ6-Aq-GVK"/>
                                         <constraint firstAttribute="bottomMargin" secondItem="jWr-sP-RJ7" secondAttribute="bottom" priority="999" id="eZp-Pl-Y4f"/>
                                         <constraint firstItem="03V-qI-T2d" firstAttribute="top" secondItem="Sct-Dm-QWu" secondAttribute="top" constant="27" id="hxY-uS-AGT"/>
@@ -1553,13 +1560,13 @@
                                                 </mask>
                                             </variation>
                                         </textView>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25% Liked it." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUL-Tv-Wtv">
-                                            <rect key="frame" x="60" y="160" width="69" height="14"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
-                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                        <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="25% Liked it. 7290 votes" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xUL-Tv-Wtv">
+                                            <rect key="frame" x="60" y="158" width="150" height="16"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="moon_ani_03.png" translatesAutoresizingMaskIntoConstraints="NO" id="etm-Rg-tfF">
+                                        <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" image="moon_ani_01.png" translatesAutoresizingMaskIntoConstraints="NO" id="etm-Rg-tfF">
                                             <rect key="frame" x="8" y="145" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="fXl-I8-AHp"/>
@@ -1696,6 +1703,10 @@
                                 <connections>
                                     <outlet property="dateLabel" destination="Fxt-nK-Zss" id="67R-tq-NEg"/>
                                     <outlet property="dayLabel" destination="R1G-0n-uKd" id="7Rw-TD-StG"/>
+                                    <outlet property="dislikeButton" destination="oTl-Bo-P8A" id="Obv-NH-Ygr"/>
+                                    <outlet property="likeButton" destination="TzW-oh-bXP" id="c78-OH-oI6"/>
+                                    <outlet property="likedImageView" destination="etm-Rg-tfF" id="SfO-IF-wvO"/>
+                                    <outlet property="likedLabel" destination="xUL-Tv-Wtv" id="WjX-fh-eGo"/>
                                     <outlet property="textView" destination="tWe-yV-7ML" id="XAQ-Kp-wNV"/>
                                 </connections>
                             </tableViewCell>
@@ -2295,6 +2306,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="33Y-wg-RjJ"/>
                                                     </constraints>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="10" y="56" width="582" height="1"/>
+                                                    </variation>
                                                 </view>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="Sq6-7q-ndG">
                                                     <rect key="frame" x="10" y="14" width="30" height="30"/>
@@ -2308,6 +2322,9 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="531" y="21" width="51" height="15"/>
+                                                    </variation>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9FO-4G-F4g">
                                                     <rect key="frame" x="330" y="14" width="50" height="30"/>
@@ -2318,6 +2335,9 @@
                                                     <state key="normal" image="follow_btn">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="532" y="14" width="50" height="30"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="followButtonTapped:" destination="0BM-VK-VPt" eventType="touchUpInside" id="HjJ-Dd-105"/>
                                                     </connections>
@@ -2552,7 +2572,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dFz-31-SdH">
-                                                    <rect key="frame" x="331" y="17" width="51" height="31"/>
+                                                    <rect key="frame" x="333" y="15" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.72549019607843135" green="0.74901960784313726" blue="0.91764705882352937" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="Su4-2H-nmt" eventType="valueChanged" id="RNX-JP-BOe"/>
@@ -2944,7 +2964,7 @@
         <image name="fb_login_icon" width="75" height="75"/>
         <image name="follow_btn" width="50" height="30"/>
         <image name="login_divider" width="208" height="2"/>
-        <image name="moon_ani_03.png" width="21" height="21"/>
+        <image name="moon_ani_01.png" width="21" height="21"/>
         <image name="next_button" width="30" height="30"/>
         <image name="search_icon" width="15" height="15"/>
         <image name="share_copy" width="70" height="35"/>
