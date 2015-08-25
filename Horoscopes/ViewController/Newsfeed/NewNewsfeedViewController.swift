@@ -12,12 +12,15 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
 
     @IBOutlet weak var tableView: UITableView!
     let defaultEstimatedRowHeight: CGFloat = 400
-    let spaceBetweenCell: CGFloat = 16
+    let spaceBetweenCell: CGFloat = 11
+    let addButtonSize: CGFloat = 44
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
+        view.backgroundColor = UIColor(patternImage: backgroundImage)
         tableView.estimatedRowHeight = defaultEstimatedRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
     }
@@ -62,5 +65,11 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         view.backgroundColor = UIColor.clearColor()
         return view
     }
+    
+//    func scrollViewDidScroll(scrollView: UIScrollView) {
+//        let addButton = UIButton(frame: CGRect(x: tableView.frame.width - addButtonSize, y: tableView.frame.height - addButtonSize, width: addButtonSize, height: addButtonSize))
+//        addButton.frame.origin.y = scrollView.contentOffset.y + tableView.frame.height - addButton.frame.height
+//        view.bringSubviewToFront(addButton)
+//    }
 
 }
