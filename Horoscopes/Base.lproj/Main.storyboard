@@ -588,6 +588,9 @@
                                                 <exclude reference="n21-ZI-gm7"/>
                                             </mask>
                                         </variation>
+                                        <connections>
+                                            <action selector="followingButtonTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="JXg-qn-rde"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMz-mH-Bym">
                                         <rect key="frame" x="300" y="0.0" width="300" height="50"/>
@@ -596,6 +599,9 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="globalBtnTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="0Nu-3l-9Hz"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -869,6 +875,8 @@
                     </view>
                     <navigationItem key="navigationItem" id="Po5-1T-5z9"/>
                     <connections>
+                        <outlet property="followingButton" destination="sEy-K2-xYA" id="WAo-ok-5Sd"/>
+                        <outlet property="globalButton" destination="iMz-mH-Bym" id="h6a-qr-God"/>
                         <outlet property="headerView" destination="8J2-52-Pvz" id="y5F-TC-Zjr"/>
                         <outlet property="tabView" destination="5fH-aR-kRE" id="ng6-Yd-B9c"/>
                         <outlet property="tableView" destination="yC6-cW-xQa" id="uzV-Me-nzh"/>

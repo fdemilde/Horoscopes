@@ -27,6 +27,10 @@ class NewsfeedTableViewCell: UITableViewCell {
         profileImageView.layer.shadowRadius = 2
         profileImageView.clipsToBounds = false
     }
+    
+    func populateData(post : UserPost, type: PostCellType, parentViewController : UIViewController){
+        
+    }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

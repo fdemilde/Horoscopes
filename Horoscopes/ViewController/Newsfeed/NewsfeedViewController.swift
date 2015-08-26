@@ -144,8 +144,6 @@ class NewsfeedViewController : ViewControllerWithAds, UIAlertViewDelegate, ASTab
         }
     }
     
-    
-    
     func resetTapButtonColor(){ // change button color based on state
         switch self.tabType {
             // Use Internationalization, as appropriate.
