@@ -111,8 +111,8 @@ class DailyContentTableViewCell: UITableViewCell {
     
     func updateLikedLabel(votes : Int, likedPercentage: Int){
         
-        var likedString = String(format :"%d%% liked it.", likedPercentage)
-        var voteString = String(format :" %d votes", votes)
+        var likedString = String(format :"%d%% liked it \u{00B7}", likedPercentage)
+        var voteString = String(format :"%d votes", votes)
         
         var resultString = String(format : "%@ %@",likedString, voteString)
         
