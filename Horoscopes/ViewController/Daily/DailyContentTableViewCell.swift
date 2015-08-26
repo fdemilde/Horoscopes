@@ -157,7 +157,6 @@ class DailyContentTableViewCell: UITableViewCell {
         for index in 1...lastImageNumber {
             result.append(UIImage(named: String(format:"moon_ani_%02d.png",index))!)
         }
-        
         return result
     }
     

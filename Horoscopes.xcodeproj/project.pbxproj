@@ -30,6 +30,7 @@
 		F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */; };
 		F4106B7B1B43913F00D58D92 /* PostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4106B7A1B43913F00D58D92 /* PostCellNode.swift */; };
 		F41E80C71B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E80C51B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift */; };
+		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
 		F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E288F1B37C8ED00466CAA /* ShareViewController.swift */; };
 		F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E28911B37CA8F00466CAA /* ShareButton.swift */; };
 		F42E28A71B37D14100466CAA /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28971B37D14100466CAA /* share_facebook.png */; };
@@ -222,6 +223,7 @@
 		F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4106B7A1B43913F00D58D92 /* PostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellNode.swift; sourceTree = "<group>"; };
 		F41E80C51B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeHeaderCell.swift; sourceTree = "<group>"; };
+		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
 		F42E288F1B37C8ED00466CAA /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F42E28911B37CA8F00466CAA /* ShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		F42E28971B37D14100466CAA /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 		F46097E41B50D1F30026F0C9 /* moon animation */ = {
 			isa = PBXGroup;
 			children = (
+				F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */,
 				F46097E61B50D1F30026F0C9 /* moon_ani_01.png */,
 				F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */,
 				F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */,
@@ -1121,6 +1124,7 @@
 				F42E28B11B37D14100466CAA /* share_viber.png in Resources */,
 				F4CACA621B1EEE72003C6301 /* selected_tabbar_post@2x.png in Resources */,
 				F4CACA5B1B1EEE72003C6301 /* selected_tabbar_newsfeed.png in Resources */,
+				F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */,
 				F42E28AB1B37D14100466CAA /* share_mail.png in Resources */,
 				F4CACA591B1EEE72003C6301 /* selected_tabbar_daily@2x.png in Resources */,
 				F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */,
