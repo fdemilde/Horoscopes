@@ -23,8 +23,8 @@ class NewsfeedTableViewCell: UITableViewCell {
         horoscopeSignView.layer.cornerRadius = 4
         horoscopeSignView.clipsToBounds = true
         profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        profileImageView.layer.shadowOpacity = 0.5
-        profileImageView.layer.shadowRadius = 1
+        profileImageView.layer.shadowOpacity = 0.6
+        profileImageView.layer.shadowRadius = 2
         profileImageView.clipsToBounds = false
     }
 

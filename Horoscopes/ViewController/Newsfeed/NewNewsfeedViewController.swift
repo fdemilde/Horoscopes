@@ -16,6 +16,8 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     let addButtonSize: CGFloat = 44
     var addButton: UIButton!
     
+    @IBOutlet weak var tabView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -28,6 +30,12 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         addButton.setImage(UIImage(named: "newsfeed_add_btn"), forState: .Normal)
         view.addSubview(addButton)
         view.bringSubviewToFront(addButton)
+        
+        // create tabView shadow
+        
+        tabView.layer.shadowOffset = CGSize(width: 0, height: 1)
+        tabView.layer.shadowOpacity = 0.2
+        tabView.layer.shadowRadius = 1
     }
 
     override func didReceiveMemoryWarning() {
