@@ -206,6 +206,8 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
                     Utilities.showAlertView(self, title: "Permission denied", message: "Please check your permission again")
                     return
                 } else {
+                    
+                    NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                     dispatch_async(dispatch_get_main_queue(),{
                         XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                     })
