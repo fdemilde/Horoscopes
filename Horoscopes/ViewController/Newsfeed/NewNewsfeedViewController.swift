@@ -14,6 +14,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     let defaultEstimatedRowHeight: CGFloat = 400
     let spaceBetweenCell: CGFloat = 11
     let addButtonSize: CGFloat = 44
+    var addButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +24,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         tableView.estimatedRowHeight = defaultEstimatedRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
+        addButton = UIButton(frame: CGRect(x: view.frame.width - addButtonSize, y: view.frame.height - addButtonSize - TABBAR_HEIGHT, width: addButtonSize, height: addButtonSize))
+        addButton.setImage(UIImage(named: "newsfeed_add_btn"), forState: .Normal)
+        view.addSubview(addButton)
+        view.bringSubviewToFront(addButton)
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,11 +70,5 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         view.backgroundColor = UIColor.clearColor()
         return view
     }
-    
-//    func scrollViewDidScroll(scrollView: UIScrollView) {
-//        let addButton = UIButton(frame: CGRect(x: tableView.frame.width - addButtonSize, y: tableView.frame.height - addButtonSize, width: addButtonSize, height: addButtonSize))
-//        addButton.frame.origin.y = scrollView.contentOffset.y + tableView.frame.height - addButton.frame.height
-//        view.bringSubviewToFront(addButton)
-//    }
 
 }
