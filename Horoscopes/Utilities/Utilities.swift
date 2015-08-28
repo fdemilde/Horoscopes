@@ -204,6 +204,10 @@ class Utilities {
         return dateFormatter.dateFromString(dateString)!
     }
     
+    class func getTimestampFromDateString(dateString: String, dateFormat: String) -> NSTimeInterval {
+        return getDateFromDateString(dateString, format: dateFormat).timeIntervalSince1970
+    }
+    
     class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
         label.numberOfLines = 0
@@ -265,6 +269,25 @@ class Utilities {
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
         fromVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    // MARK: - Share helper
+    
+    class func presentShareFormSheetController(hostViewController: UIViewController, shareViewController: ShareViewController) {
+        let formSheet = MZFormSheetController(viewController: shareViewController)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
+        formSheet.cornerRadius = 0.0
+        formSheet.portraitTopInset = hostViewController.view.frame.height - SHARE_HYBRID_HEIGHT;
+        formSheet.presentedFormSheetSize = CGSizeMake(hostViewController.view.frame.width, SHARE_HYBRID_HEIGHT);
+        hostViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    class func shareViewControllerForType(viewType: ShareViewType, shareType: ShareType, timeTag: NSTimeInterval = 0, horoscopeSignName : String = "", sharingText: String, pictureURL : String = "") -> ShareViewController {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let shareViewController = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        shareViewController.populateShareData(viewType, shareType: shareType, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
+        return shareViewController
     }
     
 }

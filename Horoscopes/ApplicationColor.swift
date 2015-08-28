@@ -20,4 +20,16 @@ extension UIColor {
     class func horoscopeSignImagePurpleCorlor() -> UIColor {
         return UIColor(red: 158/255.0, green: 164/255.0, blue: 205/255.0, alpha: 1)
     }
+    
+    class func newsfeedMindColor() -> UIColor {
+        return UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1)
+    }
+    
+    class func newsfeedFeelColor() -> UIColor {
+        return UIColor(red: 243/255.0, green: 156/255.0, blue: 18/255.0, alpha: 1)
+    }
+    
+    class func newsfeedStoryColor() -> UIColor {
+        return UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 1)
+    }
 }

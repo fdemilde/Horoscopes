@@ -165,6 +165,15 @@ class ShareViewController : UIViewController {
     }
     
     // MARK: Populate sharing data
+    func populateShareData(viewType: ShareViewType, shareType: ShareType, timeTag: NSTimeInterval = 0, horoscopeSignName : String, sharingText: String, pictureURL : String) {
+        self.viewType = viewType
+        self.shareType = shareType
+        self.timeTag = timeTag
+        self.horoscopeSignName = horoscopeSignName
+        self.sharingText = sharingText
+        self.pictureURL = pictureURL
+    }
+    
     func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSignName : String, sharingText: String, pictureURL : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeDaily
