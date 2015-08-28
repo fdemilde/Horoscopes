@@ -303,6 +303,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
         case .Post:
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
+            cell.type = PostCellType.Profile
             configureCell(cell, post: post)
             cell.delegate = self
             return cell

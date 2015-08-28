@@ -907,7 +907,7 @@
                         <outlet property="headerView" destination="bST-kb-bMI" id="xeX-lM-Zg7"/>
                         <outlet property="horoscopeSignImageView" destination="m31-Vq-8yn" id="ueq-YA-0ME"/>
                         <outlet property="horoscopeSignLabel" destination="SID-QG-e9w" id="Vc1-23-gvF"/>
-                        <outlet property="horoscopeSignView" destination="uLX-7P-QFG" id="W6I-VA-HNE"/>
+                        <outlet property="horoscopeSignView" destination="uLX-7P-QFG" id="Srd-d2-ZvN"/>
                         <outlet property="postButton" destination="hFG-WA-e7k" id="i65-H1-5sl"/>
                         <outlet property="profileImageView" destination="YOS-0S-1he" id="ggs-7D-mKX"/>
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
@@ -1098,6 +1098,13 @@
                                                                                 </mask>
                                                                             </variation>
                                                                         </view>
+                                                                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post_type_feel" translatesAutoresizingMaskIntoConstraints="NO" id="KDj-6R-ejn">
+                                                                            <rect key="frame" x="552" y="92" width="20" height="20"/>
+                                                                            <constraints>
+                                                                                <constraint firstAttribute="width" constant="20" id="fLq-cU-Xtt"/>
+                                                                                <constraint firstAttribute="height" constant="20" id="zuZ-4T-Z0d"/>
+                                                                            </constraints>
+                                                                        </imageView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                                     <constraints>
@@ -1108,9 +1115,11 @@
                                                                         <constraint firstItem="4MM-TI-ig3" firstAttribute="top" secondItem="KSC-qN-6gT" secondAttribute="bottom" constant="10" id="2Ua-vG-y5R"/>
                                                                         <constraint firstAttribute="trailing" secondItem="4MM-TI-ig3" secondAttribute="trailing" id="B7D-O0-Ns8"/>
                                                                         <constraint firstItem="fiI-bz-aJe" firstAttribute="centerY" secondItem="KSC-qN-6gT" secondAttribute="centerY" id="CrB-x1-VDH"/>
+                                                                        <constraint firstAttribute="trailing" secondItem="KDj-6R-ejn" secondAttribute="trailing" constant="8" id="L2a-Zf-jdi"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" constant="20" id="Rj3-c0-8ZB"/>
                                                                         <constraint firstItem="4MM-TI-ig3" firstAttribute="top" secondItem="KSC-qN-6gT" secondAttribute="bottom" constant="10" id="S3C-5y-cCC"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" constant="10" id="SnN-WB-r8v"/>
+                                                                        <constraint firstItem="4MM-TI-ig3" firstAttribute="top" secondItem="KDj-6R-ejn" secondAttribute="bottom" constant="8" id="V56-Xk-cha"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="top" secondItem="T1l-BR-e57" secondAttribute="top" constant="46" id="c6H-49-Bxp"/>
                                                                         <constraint firstItem="KSC-qN-6gT" firstAttribute="centerY" secondItem="fiI-bz-aJe" secondAttribute="centerY" id="fBn-Eb-t3B"/>
                                                                         <constraint firstAttribute="height" constant="150" id="fe3-Bf-dVR"/>
@@ -1278,8 +1287,16 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="containerView" destination="9Y8-nM-GZK" id="oql-yy-Dj8"/>
+                                            <outlet property="headerView" destination="4MM-TI-ig3" id="m1B-wo-2nm"/>
+                                            <outlet property="horoscopeSignImageView" destination="Hk2-a5-WFc" id="qAz-94-l1i"/>
+                                            <outlet property="horoscopeSignLabel" destination="dB4-Nk-FWl" id="FMr-I6-Z6o"/>
                                             <outlet property="horoscopeSignView" destination="fiI-bz-aJe" id="RzN-iE-ZKr"/>
+                                            <outlet property="postDateLabel" destination="AUz-OP-Buw" id="cbz-SA-MOf"/>
+                                            <outlet property="postTypeImageView" destination="KDj-6R-ejn" id="VR7-Bl-r04"/>
                                             <outlet property="profileImageView" destination="rU9-3P-TxU" id="b1D-xJ-My8"/>
+                                            <outlet property="profileNameLabel" destination="6Dr-gD-tyy" id="MoG-sm-tBz"/>
+                                            <outlet property="profileView" destination="T1l-BR-e57" id="00d-kM-dy9"/>
+                                            <outlet property="textView" destination="1wk-sX-mES" id="igk-Tj-89D"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1945,11 +1962,11 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="eZW-Jy-kre"/>
+                                                <exclude reference="rgf-H2-8BF"/>
+                                                <exclude reference="saS-gE-5Aw"/>
                                                 <exclude reference="Emw-kc-knb"/>
                                                 <exclude reference="GBc-51-x8S"/>
                                                 <exclude reference="kEl-0t-OfM"/>
-                                                <exclude reference="rgf-H2-8BF"/>
-                                                <exclude reference="saS-gE-5Aw"/>
                                                 <exclude reference="3FY-qH-ptW"/>
                                                 <exclude reference="ahE-xR-k6t"/>
                                                 <exclude reference="t0G-JW-XmL"/>
@@ -1963,11 +1980,11 @@
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="eZW-Jy-kre"/>
+                                                <include reference="rgf-H2-8BF"/>
+                                                <include reference="saS-gE-5Aw"/>
                                                 <include reference="Emw-kc-knb"/>
                                                 <include reference="GBc-51-x8S"/>
                                                 <include reference="kEl-0t-OfM"/>
-                                                <include reference="rgf-H2-8BF"/>
-                                                <include reference="saS-gE-5Aw"/>
                                                 <include reference="3FY-qH-ptW"/>
                                                 <include reference="ahE-xR-k6t"/>
                                                 <include reference="t0G-JW-XmL"/>
@@ -2000,13 +2017,13 @@
                                         <exclude reference="8H8-Rx-eHE"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="8O3-If-jjE"/>
-                                        <exclude reference="Lea-nX-S5a"/>
-                                        <exclude reference="itr-4E-Jz8"/>
                                         <exclude reference="JyP-2S-O9Y"/>
                                         <exclude reference="VoO-uz-A3t"/>
                                         <exclude reference="aed-d3-Ehg"/>
                                         <exclude reference="ctQ-lQ-8rO"/>
+                                        <exclude reference="8O3-If-jjE"/>
+                                        <exclude reference="Lea-nX-S5a"/>
+                                        <exclude reference="itr-4E-Jz8"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -2015,13 +2032,13 @@
                                         <include reference="8H8-Rx-eHE"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="8O3-If-jjE"/>
-                                        <include reference="Lea-nX-S5a"/>
-                                        <include reference="itr-4E-Jz8"/>
                                         <include reference="JyP-2S-O9Y"/>
                                         <include reference="VoO-uz-A3t"/>
                                         <include reference="aed-d3-Ehg"/>
                                         <include reference="ctQ-lQ-8rO"/>
+                                        <include reference="8O3-If-jjE"/>
+                                        <include reference="Lea-nX-S5a"/>
+                                        <include reference="itr-4E-Jz8"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -2041,13 +2058,13 @@
                                 <exclude reference="Pru-Qu-tbF"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="TlU-T4-lD2"/>
                                 <exclude reference="0Eo-zw-KW3"/>
                                 <exclude reference="J1O-tL-zvm"/>
                                 <exclude reference="Lqw-Lo-AAE"/>
                                 <exclude reference="65W-M9-I9p"/>
                                 <exclude reference="E9u-uA-bqD"/>
                                 <exclude reference="op8-Mi-mPf"/>
-                                <exclude reference="TlU-T4-lD2"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -2056,13 +2073,13 @@
                                 <include reference="Pru-Qu-tbF"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="TlU-T4-lD2"/>
                                 <include reference="0Eo-zw-KW3"/>
                                 <include reference="J1O-tL-zvm"/>
                                 <include reference="Lqw-Lo-AAE"/>
                                 <include reference="65W-M9-I9p"/>
                                 <include reference="E9u-uA-bqD"/>
                                 <include reference="op8-Mi-mPf"/>
-                                <include reference="TlU-T4-lD2"/>
                             </mask>
                         </variation>
                     </view>
@@ -3696,6 +3713,7 @@
         <image name="newsfeed_heart_icon" width="47" height="20"/>
         <image name="newsfeed_share_icon" width="57" height="17"/>
         <image name="next_button" width="30" height="30"/>
+        <image name="post_type_feel" width="20" height="20"/>
         <image name="post_type_mind" width="21" height="19"/>
         <image name="search_icon" width="15" height="15"/>
         <image name="share_copy" width="70" height="35"/>

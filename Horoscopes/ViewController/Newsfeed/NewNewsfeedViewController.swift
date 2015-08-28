@@ -28,7 +28,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     ]
     
     let defaultEstimatedRowHeight: CGFloat = 400
-    let spaceBetweenCell: CGFloat = 11
     let addButtonSize: CGFloat = 40
     var addButton: DCPathButton!
     
@@ -114,6 +113,34 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         view.bringSubviewToFront(overlay)
         view.addSubview(addButton)
         view.bringSubviewToFront(addButton)
+    }
+    
+    func configureCell(cell: PostTableViewCell, post: UserPost) {
+        switch post.type {
+        case .OnYourMind:
+            cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
+            cell.postTypeImageView.image = UIImage(named: "post_type_mind")
+        case .Feeling:
+            cell.profileView.backgroundColor = UIColor.newsfeedFeelColor()
+            cell.postTypeImageView.image = UIImage(named: "post_type_feel")
+        case .Story:
+            cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
+            cell.postTypeImageView.image = UIImage(named: "post_type_story")
+        }
+        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
+        cell.textView.text = post.message
+        let url = NSURL(string: post.user!.imgURL)
+        Utilities.imageFromUrl(url!, completionHandler: { (image, error) -> Void in
+            if let error = error {
+                
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.profileImageView.image = image
+                })
+            }
+        })
+        cell.profileNameLabel.text = post.user?.name
+        cell.configureNewsfeedUi()
     }
     
     // MARK: Post buttons clicked
@@ -227,18 +254,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         var post = userPostArray[indexPath.row] as UserPost
 //        cell.populateData(post, type: PostCellType.Newsfeed, parentViewController: self)
+        cell.type = PostCellType.Newsfeed
+        configureCell(cell, post: post)
         return cell
     }
-    
-//    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//        return spaceBetweenCell
-//    }
-    
-//    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//        let view = UIView()
-//        view.backgroundColor = UIColor.clearColor()
-//        return view
-//    }
     
     // Networks 
     func checkAndLoginZwigglers(){
@@ -278,6 +297,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: Helpers
+    
     func resetTapButtonColor(){ // change button color based on state
         switch self.tabType {
             // Use Internationalization, as appropriate.

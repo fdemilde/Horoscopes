@@ -168,6 +168,27 @@ class Utilities {
     
     // MARK: Helpers
     
+    class func dataFromUrl(url: NSURL, completionHandler: (data: NSData?, error: NSError?) -> Void) {
+        NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
+            if let error = error {
+                completionHandler(data: nil, error: error)
+            } else {
+                completionHandler(data: data, error: nil)
+            }
+        }).resume()
+    }
+    
+    class func imageFromUrl(url: NSURL, completionHandler: (image: UIImage?, error: NSError?) -> Void) {
+        dataFromUrl(url, completionHandler: { (data, error) -> Void in
+            if let error = error {
+                completionHandler(image: nil, error: error)
+            } else {
+                let image = UIImage(data: data!)
+                completionHandler(image: image, error: nil)
+            }
+        })
+    }
+    
     class func getDataFromUrl(urL:NSURL, completion: ((data: NSData?) -> Void)) {
         NSURLSession.sharedSession().dataTaskWithURL(urL) { (data, response, error) in
             completion(data: data)
