@@ -282,6 +282,7 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
     func shareTapped(){
         var parentVC = Utilities.getParentUIViewController(self.view) as! UIViewController
         var shareVC = self.prepareShareVC()
+        
         var formSheet = MZFormSheetController(viewController: shareVC)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom

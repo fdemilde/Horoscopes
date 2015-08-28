@@ -8,24 +8,30 @@
 
 import UIKit
 
-class DetailPostViewController: UIViewController, UITextViewDelegate {
+class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var textViewBottomSpaceConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var postTitle: UILabel!
     
     var type: String?
     var placeholder: String?
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat = 0
+    var parentVC : NewNewsfeedViewController!
+    
+    @IBOutlet weak var contentView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        contentView.layer.cornerRadius = 4
+        contentView.clipsToBounds = true
         // Do any additional setup after loading the view.
         let backgroundImage = UIImage(named: "background")
         self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
-        
+        postTitle.text = placeholder
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
         placeholderLabel.frame.origin = CGPointMake(textView.frame.origin.x + 4, textView.frame.origin.y + 7)
@@ -60,6 +66,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
     
     @IBAction func cancel(sender: UIButton) {
         view.endEditing(true)
+//        parentVC.navigationController?.popViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -96,6 +103,7 @@ class DetailPostViewController: UIViewController, UITextViewDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             Utilities.hideHUD()
             self.view.endEditing(true)
+//            self.parentVC.navigationController?.popViewControllerAnimated(true)
             self.dismissViewControllerAnimated(true, completion: nil)
         })
     }
