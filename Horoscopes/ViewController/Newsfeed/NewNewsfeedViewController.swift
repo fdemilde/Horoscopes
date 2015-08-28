@@ -224,9 +224,9 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("NewsfeedTableViewCell", forIndexPath: indexPath) as! NewsfeedTableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         var post = userPostArray[indexPath.row] as UserPost
-        cell.populateData(post, type: PostCellType.Newsfeed, parentViewController: self)
+//        cell.populateData(post, type: PostCellType.Newsfeed, parentViewController: self)
         return cell
     }
     
