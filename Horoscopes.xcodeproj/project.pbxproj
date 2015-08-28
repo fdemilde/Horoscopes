@@ -11,7 +11,6 @@
 		7027F5CE1B86DED800988956 /* NewsfeedTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CD1B86DED800988956 /* NewsfeedTableViewCell.swift */; };
 		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
-		702B4D1D1B79B587002BA9DB /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = 702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */; };
 		7047A5A91B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */; };
 		7047A5AB1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */; };
 		7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */; };
@@ -109,8 +108,17 @@
 		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
 		F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */; };
 		F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */; };
-		F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
+		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
+		F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */; };
+		F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F921B8EC58000910E56 /* DCPathButton.m */; };
+		F4C44FA21B8EC58000910E56 /* DCPathItemButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F941B8EC58000910E56 /* DCPathItemButton.m */; };
+		F4C44FA31B8EC58000910E56 /* bloom.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F961B8EC58000910E56 /* bloom.caf */; };
+		F4C44FA41B8EC58000910E56 /* fold.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F971B8EC58000910E56 /* fold.caf */; };
+		F4C44FA51B8EC58000910E56 /* selected.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F981B8EC58000910E56 /* selected.caf */; };
+		F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */; };
+		F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */; };
+		F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -180,11 +188,7 @@
 		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
-		F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */; };
 		F4E723481B7288E000A6B162 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E723471B7288E000A6B162 /* NewsfeedViewController.swift */; };
-		F4E7234F1B728A8E00A6B162 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E7234B1B728A8E00A6B162 /* BKDelta.m */; };
-		F4E723501B728A8E00A6B162 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */; };
-		F4EC673A1B73887800F231DC /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */; };
 		F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -204,8 +208,6 @@
 		7027F5CD1B86DED800988956 /* NewsfeedTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableViewCell.swift; sourceTree = "<group>"; };
 		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
-		702B4D1B1B79B587002BA9DB /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
-		702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		7047A5A81B5CDE6700024D5A /* ProfileFirstSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFirstSectionHeaderView.swift; sourceTree = "<group>"; };
 		7047A5AA1B5CEAA600024D5A /* ProfileFirstSectionCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFirstSectionCellNode.swift; sourceTree = "<group>"; };
 		7047A5AC1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileSecondSectionHeaderView.swift; sourceTree = "<group>"; };
@@ -306,9 +308,25 @@
 		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
-		F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
-		F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
+		F4C44F8B1B8EC58000910E56 /* BKDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDelta.m; sourceTree = "<group>"; };
+		F4C44F8C1B8EC58000910E56 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
+		F4C44F8D1B8EC58000910E56 /* BKDeltaCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDeltaCalculator.h; sourceTree = "<group>"; };
+		F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDeltaCalculator.m; sourceTree = "<group>"; };
+		F4C44F911B8EC58000910E56 /* DCPathButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPathButton.h; sourceTree = "<group>"; };
+		F4C44F921B8EC58000910E56 /* DCPathButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPathButton.m; sourceTree = "<group>"; };
+		F4C44F931B8EC58000910E56 /* DCPathItemButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPathItemButton.h; sourceTree = "<group>"; };
+		F4C44F941B8EC58000910E56 /* DCPathItemButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPathItemButton.m; sourceTree = "<group>"; };
+		F4C44F961B8EC58000910E56 /* bloom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bloom.caf; sourceTree = "<group>"; };
+		F4C44F971B8EC58000910E56 /* fold.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fold.caf; sourceTree = "<group>"; };
+		F4C44F981B8EC58000910E56 /* selected.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = selected.caf; sourceTree = "<group>"; };
+		F4C44F991B8EC58000910E56 /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
+		F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
+		F4C44F9B1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
+		F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
+		F4C44F9D1B8EC58000910E56 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
+		F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -413,15 +431,7 @@
 		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
-		F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftyJSON.swift; sourceTree = "<group>"; };
 		F4E723471B7288E000A6B162 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
-		F4E7234A1B728A8E00A6B162 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
-		F4E7234B1B728A8E00A6B162 /* BKDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDelta.m; sourceTree = "<group>"; };
-		F4E7234C1B728A8E00A6B162 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
-		F4E7234D1B728A8E00A6B162 /* BKDeltaCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDeltaCalculator.h; sourceTree = "<group>"; };
-		F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDeltaCalculator.m; sourceTree = "<group>"; };
-		F4EC67381B73887800F231DC /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
-		F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
 		F4EE72241B3D3B0100AFD120 /* DailyHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -615,14 +625,6 @@
 		F47BAB291B216050002031AB /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				F4E723491B728A8E00A6B162 /* BKDeltaCalculator */,
-				F4EC67381B73887800F231DC /* UIScrollView+InfiniteScroll.h */,
-				F4EC67391B73887800F231DC /* UIScrollView+InfiniteScroll.m */,
-				702B4D1B1B79B587002BA9DB /* NSDate+NVTimeAgo.h */,
-				702B4D1C1B79B587002BA9DB /* NSDate+NVTimeAgo.m */,
-				F4DDFC221B634F7C002A7692 /* SwiftyJSON.swift */,
-				F4BF7B3F1B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.h */,
-				F4BF7B401B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m */,
 				F47BAB2A1B21605C002031AB /* Config.swift */,
 				F47C029C1B258B9B00C0BA83 /* Utilities.swift */,
 			);
@@ -683,6 +685,63 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		F4C44F881B8EC58000910E56 /* OpenSources */ = {
+			isa = PBXGroup;
+			children = (
+				F4C44F891B8EC58000910E56 /* BKDeltaCalculator */,
+				F4C44F8F1B8EC58000910E56 /* DCPathButton */,
+				F4C44F991B8EC58000910E56 /* NSDate+NVTimeAgo.h */,
+				F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */,
+				F4C44F9B1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.h */,
+				F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */,
+				F4C44F9D1B8EC58000910E56 /* UIScrollView+InfiniteScroll.h */,
+				F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */,
+			);
+			path = OpenSources;
+			sourceTree = "<group>";
+		};
+		F4C44F891B8EC58000910E56 /* BKDeltaCalculator */ = {
+			isa = PBXGroup;
+			children = (
+				F4C44F8A1B8EC58000910E56 /* BKDelta.h */,
+				F4C44F8B1B8EC58000910E56 /* BKDelta.m */,
+				F4C44F8C1B8EC58000910E56 /* BKDelta_Internal.h */,
+				F4C44F8D1B8EC58000910E56 /* BKDeltaCalculator.h */,
+				F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */,
+			);
+			path = BKDeltaCalculator;
+			sourceTree = "<group>";
+		};
+		F4C44F8F1B8EC58000910E56 /* DCPathButton */ = {
+			isa = PBXGroup;
+			children = (
+				F4C44F901B8EC58000910E56 /* Classes */,
+				F4C44F951B8EC58000910E56 /* Sounds */,
+			);
+			path = DCPathButton;
+			sourceTree = "<group>";
+		};
+		F4C44F901B8EC58000910E56 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				F4C44F911B8EC58000910E56 /* DCPathButton.h */,
+				F4C44F921B8EC58000910E56 /* DCPathButton.m */,
+				F4C44F931B8EC58000910E56 /* DCPathItemButton.h */,
+				F4C44F941B8EC58000910E56 /* DCPathItemButton.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		F4C44F951B8EC58000910E56 /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				F4C44F961B8EC58000910E56 /* bloom.caf */,
+				F4C44F971B8EC58000910E56 /* fold.caf */,
+				F4C44F981B8EC58000910E56 /* selected.caf */,
+			);
+			path = Sounds;
+			sourceTree = "<group>";
+		};
 		F4CACA091B1EBE16003C6301 = {
 			isa = PBXGroup;
 			children = (
@@ -706,6 +765,7 @@
 		F4CACA141B1EBE16003C6301 /* Horoscopes */ = {
 			isa = PBXGroup;
 			children = (
+				F4C44F881B8EC58000910E56 /* OpenSources */,
 				F47BAB291B216050002031AB /* Utilities */,
 				F4CACA961B2010F2003C6301 /* MobilePlatformiOS */,
 				F4CACA821B2003E1003C6301 /* models */,
@@ -968,18 +1028,6 @@
 			path = "OpenUDID-master";
 			sourceTree = "<group>";
 		};
-		F4E723491B728A8E00A6B162 /* BKDeltaCalculator */ = {
-			isa = PBXGroup;
-			children = (
-				F4E7234A1B728A8E00A6B162 /* BKDelta.h */,
-				F4E7234B1B728A8E00A6B162 /* BKDelta.m */,
-				F4E7234C1B728A8E00A6B162 /* BKDelta_Internal.h */,
-				F4E7234D1B728A8E00A6B162 /* BKDeltaCalculator.h */,
-				F4E7234E1B728A8E00A6B162 /* BKDeltaCalculator.m */,
-			);
-			path = BKDeltaCalculator;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1090,6 +1138,7 @@
 				F4CACA681B1EEE72003C6301 /* tabbar_daily@2x.png in Resources */,
 				F46098111B50D1F30026F0C9 /* moon_ani_03@2x.png in Resources */,
 				F460982A1B50D1F30026F0C9 /* moon_ani_12.png in Resources */,
+				F4C44FA31B8EC58000910E56 /* bloom.caf in Resources */,
 				F4CACA661B1EEE72003C6301 /* selected_tabbar_profile@3x.png in Resources */,
 				F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */,
 				F46098261B50D1F30026F0C9 /* moon_ani_10@3x.png in Resources */,
@@ -1124,11 +1173,13 @@
 				F42E28B01B37D14100466CAA /* share_twitter@2x.png in Resources */,
 				F46098201B50D1F30026F0C9 /* moon_ani_08@3x.png in Resources */,
 				F4CACA581B1EEE72003C6301 /* selected_tabbar_daily.png in Resources */,
+				F4C44FA41B8EC58000910E56 /* fold.caf in Resources */,
 				F42E28A71B37D14100466CAA /* share_facebook.png in Resources */,
 				F42E28A81B37D14100466CAA /* share_facebook@2x.png in Resources */,
 				F460981F1B50D1F30026F0C9 /* moon_ani_08@2x.png in Resources */,
 				F42E28B11B37D14100466CAA /* share_viber.png in Resources */,
 				F4CACA621B1EEE72003C6301 /* selected_tabbar_post@2x.png in Resources */,
+				F4C44FA51B8EC58000910E56 /* selected.caf in Resources */,
 				F4CACA5B1B1EEE72003C6301 /* selected_tabbar_newsfeed.png in Resources */,
 				F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */,
 				F42E28AB1B37D14100466CAA /* share_mail.png in Resources */,
@@ -1205,17 +1256,14 @@
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
 				7027F5CC1B86DD4F00988956 /* NewNewsfeedViewController.swift in Sources */,
-				F4DDFC231B634F7C002A7692 /* SwiftyJSON.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
 				F4106B7B1B43913F00D58D92 /* PostCellNode.swift in Sources */,
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
 				F498447B1B663589001B3246 /* AddFriendTableViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
-				702B4D1D1B79B587002BA9DB /* NSDate+NVTimeAgo.m in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
-				F4BF7B411B61F12300E3A491 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
@@ -1227,6 +1275,7 @@
 				70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */,
 				F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */,
 				F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */,
+				F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */,
 				70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */,
 				70BCF7591B8DA59100875A76 /* NewProfileViewController.swift in Sources */,
 				F41E80C71B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift in Sources */,
@@ -1234,6 +1283,9 @@
 				F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */,
 				F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */,
 				F4CACAD91B2010F2003C6301 /* ServerCommunication.m in Sources */,
+				F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */,
+				F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */,
+				F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */,
 				F49EB5661B41C21E00F56092 /* DailyTableViewController.swift in Sources */,
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
@@ -1243,7 +1295,6 @@
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
-				F4EC673A1B73887800F231DC /* UIScrollView+InfiniteScroll.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
 				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
@@ -1252,6 +1303,7 @@
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4EE72251B3D3B0100AFD120 /* DailyHoroscopeCell.swift in Sources */,
+				F4C44FA21B8EC58000910E56 /* DCPathItemButton.m in Sources */,
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
@@ -1265,10 +1317,10 @@
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
 				F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
-				F4E723501B728A8E00A6B162 /* BKDeltaCalculator.m in Sources */,
 				F4AB3A841B672F0D00EFF0A1 /* AddFriendTableCell.swift in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */,
+				F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
 				7027F5CE1B86DED800988956 /* NewsfeedTableViewCell.swift in Sources */,
 				F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */,
@@ -1286,8 +1338,8 @@
 				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,
 				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
+				F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
-				F4E7234F1B728A8E00A6B162 /* BKDelta.m in Sources */,
 				F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

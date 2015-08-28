@@ -8,13 +8,29 @@
 
 import UIKit
 
-class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
+class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate {
 
     @IBOutlet weak var tableView: UITableView!
+    let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
+    let NEWFEEDS_POST_FEEL_TEXT = "How do you feel today?"
+    
+    let NEWFEEDS_POST_STORY_IMG_NAME = "newfeeds_post_story"
+    let NEWFEEDS_POST_STORY_TEXT = "Share your story"
+    
+    let NEWFEEDS_POST_MIND_IMG_NAME = "newfeeds_post_mind"
+    let NEWFEEDS_POST_MIND_TEXT = "What’s on your mind?"
+    
+    let postTypes = [
+        ["How do you feel today?", "post_type_feel", "feeling"],
+        ["Share a story", "post_type_story", "story"],
+        ["What's on your mind?", "post_type_mind", "onyourmind"]
+        
+    ]
+    
     let defaultEstimatedRowHeight: CGFloat = 400
     let spaceBetweenCell: CGFloat = 11
-    let addButtonSize: CGFloat = 44
-    var addButton: UIButton!
+    let addButtonSize: CGFloat = 40
+    var addButton: DCPathButton!
     
     let FB_BUTTON_SIZE = 80 as CGFloat
     
@@ -26,6 +42,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
     var currentPage = 0
+    var overlay : UIView!
     
     @IBOutlet weak var tabView: UIView!
     
@@ -64,17 +81,61 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         tableView.estimatedRowHeight = defaultEstimatedRowHeight
         tableView.rowHeight = UITableViewAutomaticDimension
-        addButton = UIButton(frame: CGRect(x: view.frame.width - addButtonSize, y: view.frame.height - addButtonSize - TABBAR_HEIGHT, width: addButtonSize, height: addButtonSize))
-        addButton.setImage(UIImage(named: "newsfeed_add_btn"), forState: .Normal)
-        view.addSubview(addButton)
-        view.bringSubviewToFront(addButton)
-        
+        self.setupAddPostButton()
         // create tabView shadow
         tabView.layer.shadowOffset = CGSize(width: 0, height: 1)
         tabView.layer.shadowOpacity = 0.2
         tabView.layer.shadowRadius = 1
+        
     }
     
+    func setupAddPostButton() {
+        addButton = DCPathButton(centerImage: UIImage(named: "newsfeed_add_btn"), highlightedImage: UIImage(named: "newsfeed_add_btn"))
+        addButton.delegate = self
+        addButton.dcButtonCenter = CGPointMake(view.frame.width - addButtonSize, view.frame.height - addButtonSize - TABBAR_HEIGHT)
+        addButton.allowCenterButtonRotation = true
+        addButton.bloomRadius = 145
+        addButton.bloomDirection = kDCPathButtonBloomDirection.DCPathButtonBloomDirectionTop
+        addButton.bloomAngel = 0
+        
+        var itemButton_1 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME))
+        var itemButton_2 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME))
+        var itemButton_3 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME))
+        addButton.addPathItems([itemButton_1, itemButton_2, itemButton_3])
+        
+        addButton.addButtonText([NEWFEEDS_POST_FEEL_TEXT, NEWFEEDS_POST_STORY_TEXT, NEWFEEDS_POST_MIND_TEXT])
+        
+        
+        // setup overlay
+        overlay = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
+        overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+        overlay.hidden = true
+        view.addSubview(overlay)
+        view.bringSubviewToFront(overlay)
+        view.addSubview(addButton)
+        view.bringSubviewToFront(addButton)
+    }
+    
+    // MARK: Post buttons clicked
+    // DCPathButton Delegate
+    //
+    func pathButton(dcPathButton: DCPathButton!, clickItemButtonAtIndex itemButtonIndex: UInt) {
+        overlay.hidden = true
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        var controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+        controller.type = postTypes[Int(itemButtonIndex)][2]
+        controller.placeholder = postTypes[Int(itemButtonIndex)][0]
+        controller.parentVC = self
+        self.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func centerButtonTapped(){
+        if(addButton.isBloom()){
+            overlay.hidden = true
+        } else {
+            overlay.hidden = false
+        }
+    }
     // MARK: Notification Handlers
     
     func feedsFinishedLoading(notif : NSNotification){
