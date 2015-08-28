@@ -22,7 +22,7 @@
 		70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */; };
 		70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */; };
 		70BCF7591B8DA59100875A76 /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */; };
-		70BCF75B1B8DAA9000875A76 /* ProfilePostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCF75A1B8DAA9000875A76 /* ProfilePostTableViewCell.swift */; };
+		70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
 		70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */; };
 		70CF2EB31B69C7FA002AE7A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */; };
@@ -216,7 +216,7 @@
 		70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyButtonTableViewCell.swift; sourceTree = "<group>"; };
 		70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopesTableViewCell.swift; sourceTree = "<group>"; };
 		70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfileViewController.swift; sourceTree = "<group>"; };
-		70BCF75A1B8DAA9000875A76 /* ProfilePostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePostTableViewCell.swift; sourceTree = "<group>"; };
+		70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
 		70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDailyTableViewController.swift; sourceTree = "<group>"; };
 		70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
@@ -475,7 +475,7 @@
 				70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */,
 				F498447A1B663589001B3246 /* AddFriendTableViewController.swift */,
 				70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */,
-				70BCF75A1B8DAA9000875A76 /* ProfilePostTableViewCell.swift */,
+				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1224,7 +1224,7 @@
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
 				F47B9D531B57E99000901D8C /* CollectHoroscopeDetailCell.swift in Sources */,
 				F4CACA811B200149003C6301 /* SMCLove.m in Sources */,
-				70BCF75B1B8DAA9000875A76 /* ProfilePostTableViewCell.swift in Sources */,
+				70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */,
 				F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */,
 				F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */,
 				70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */,

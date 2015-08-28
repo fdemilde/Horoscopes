@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, ProfilePostTableViewCellDelegate {
+class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, PostTableViewCellDelegate {
 
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
@@ -120,7 +120,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Pr
         view.addSubview(loginView)
     }
     
-    func configureCell(cell: ProfilePostTableViewCell, post: UserPost) {
+    func configureCell(cell: PostTableViewCell, post: UserPost) {
         switch post.type {
         case .OnYourMind:
             cell.headerView.backgroundColor = UIColor.newsfeedMindColor()
@@ -302,7 +302,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Pr
         switch currentTab {
         case .Post:
             let post = userPosts[indexPath.row]
-            let cell = tableView.dequeueReusableCellWithIdentifier("ProfilePostTableViewCell", forIndexPath: indexPath) as! ProfilePostTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
             configureCell(cell, post: post)
             cell.delegate = self
             return cell
