@@ -14,6 +14,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     @IBOutlet weak var textViewBottomSpaceConstraint: NSLayoutConstraint!
     
     @IBOutlet weak var postTitle: UILabel!
+    @IBOutlet weak var postTitleBackgroundView: UIView!
     
     var type: String?
     var placeholder: String?
@@ -41,6 +42,8 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
+        self.setTitleBackgroundColor()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -62,6 +65,16 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func setTitleBackgroundColor(){
+        if(type == "feeling"){
+            postTitleBackgroundView.backgroundColor = UIColor(red: 243/255.0, green: 156/255.0, blue: 18/255.0, alpha: 1)
+        } else if(type == "story"){
+            postTitleBackgroundView.backgroundColor = UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 1)
+        } else {
+            postTitleBackgroundView.backgroundColor = UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1)
+        }
     }
     
     @IBAction func cancel(sender: UIButton) {

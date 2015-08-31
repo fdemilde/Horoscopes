@@ -370,7 +370,7 @@ class DailyTableViewController : TableViewControllerWithAds, UITextViewDelegate,
     @IBAction func cookieButtonTapped(sender: AnyObject) {
         isCookieTapped = true
         let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
-        cookieViewController.parentVC = self
+//        cookieViewController.parentVC = self
         self.navigationController!.pushViewController(cookieViewController, animated: true)
     }
     

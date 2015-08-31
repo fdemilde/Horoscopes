@@ -941,7 +941,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5fH-aR-kRE" userLabel="Tab View">
                                 <rect key="frame" x="0.0" y="50" width="600" height="50"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEy-K2-xYA">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sEy-K2-xYA">
                                         <rect key="frame" x="0.0" y="0.0" width="300" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="n21-ZI-gm7"/>
@@ -956,17 +956,19 @@
                                                 <exclude reference="n21-ZI-gm7"/>
                                             </mask>
                                         </variation>
+                                        <variation key="heightClass=regular-widthClass=compact"/>
                                         <connections>
                                             <action selector="followingButtonTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="JXg-qn-rde"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" alpha="0.29999999999999999" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMz-mH-Bym">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iMz-mH-Bym">
                                         <rect key="frame" x="300" y="0.0" width="300" height="50"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <state key="normal" title="GLOBAL">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <variation key="heightClass=regular-widthClass=compact"/>
                                         <connections>
                                             <action selector="globalBtnTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="0Nu-3l-9Hz"/>
                                         </connections>
@@ -2085,6 +2087,7 @@
                         <outlet property="contentView" destination="Pru-Qu-tbF" id="Vp3-bK-c3g"/>
                         <outlet property="headerView" destination="1Yi-Fl-oxH" id="O7i-A6-43P"/>
                         <outlet property="postTitle" destination="gRw-dl-9LQ" id="dRj-Nc-0GT"/>
+                        <outlet property="postTitleBackgroundView" destination="wTO-46-yPA" id="wbp-TM-mAX"/>
                         <outlet property="textView" destination="8H8-Rx-eHE" id="4lO-79-SbQ"/>
                         <outlet property="textViewBottomSpaceConstraint" destination="TlU-T4-lD2" id="Wkd-69-9na"/>
                     </connections>
@@ -2330,7 +2333,7 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aug 12, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxt-nK-Zss">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aug 12, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fxt-nK-Zss">
                                                     <rect key="frame" x="490" y="8" width="102" height="22"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2532,6 +2535,9 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="cookieTaooed:" destination="efF-06-zfn" eventType="touchUpInside" id="RRC-9c-Wia"/>
+                                            </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
                                             <rect key="frame" x="0.0" y="52" width="600" height="44"/>
@@ -3322,7 +3328,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2116.5" y="2042.9999999999998"/>
+            <point key="canvasLocation" x="2305.5" y="1991.25"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="F1W-2R-5eY">

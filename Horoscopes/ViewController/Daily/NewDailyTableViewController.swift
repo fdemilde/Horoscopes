@@ -210,6 +210,12 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         presentViewController(controller, animated: true, completion: nil)
     }
     
+    @IBAction func cookieTaooed(sender: AnyObject) {
+//        isCookieTapped = true
+        let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+        cookieViewController.parentVC = self
+        self.navigationController!.pushViewController(cookieViewController, animated: true)
+    }
     // MARK: - Delegate
     
     func didSelectHoroscopeSign(selectedSign: Int) {

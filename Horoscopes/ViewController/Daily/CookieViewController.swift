@@ -41,7 +41,7 @@ class CookieViewController : UIViewController{
     @IBOutlet weak var checkBackTopConstraint: NSLayoutConstraint!
     
     var state = CookieViewState.CookieViewStateUnopened
-    var parentVC : DailyTableViewController?
+    var parentVC : NewDailyTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,7 +95,6 @@ class CookieViewController : UIViewController{
     // MARK: button Actions
     
     @IBAction func backButtonTapped(sender: AnyObject) {
-        parentVC?.isCookieTapped = false
         self.navigationController?.popViewControllerAnimated(true)
     }
     
