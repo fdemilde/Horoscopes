@@ -55,5 +55,9 @@
 	<false/>
 	<key>privacy - location usage description</key>
 	<string></string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Book Antiqua Regular.ttf</string>
+	</array>
 </dict>
 </plist>

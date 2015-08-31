@@ -87,6 +87,25 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         return view
     }
     
+    
+    
+    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if(section == 3){
+            let view = UIView()
+            view.backgroundColor = UIColor.clearColor()
+            return view
+        }
+        return nil
+    }
+    
+    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if(section == 3){
+            return 12
+        }
+        return 0
+    }
+    
+    
     /*
     // MARK: - Navigation
 

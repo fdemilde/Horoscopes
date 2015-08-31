@@ -95,14 +95,14 @@ class DailyContentTableViewCell: UITableViewCell {
             if let dictionary = XAppDelegate.horoscopesManager.data["today"] as? Dictionary<String, AnyObject> {
                 if let string = dictionary["time_tag"] as? String {
                     timeTag = NSTimeInterval((string as NSString).doubleValue)
-                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM, dd YYYY")
+                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, YYYY")
                 }
             }
         } else {
             if let dictionary = XAppDelegate.horoscopesManager.data["tomorrow"] as? [String: AnyObject] {
                 if let string = dictionary["time_tag"] as? String {
                     timeTag = NSTimeInterval((string as NSString).doubleValue)
-                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM, dd YYYY")
+                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, YYYY")
                 }
             }
         }
