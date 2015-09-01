@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -629,7 +629,7 @@
                                                 </constraints>
                                                 <state key="normal">
                                                     <string key="title">Post
-15</string>
+0</string>
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -638,6 +638,9 @@
                                                         <exclude reference="hlH-dR-N3w"/>
                                                     </mask>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="tapPostButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="ixx-Rt-MTW"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.49999999999999961" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="vFd-97-wRk">
                                                 <rect key="frame" x="200" y="0.0" width="200" height="48"/>
@@ -647,7 +650,7 @@
                                                 </constraints>
                                                 <state key="normal">
                                                     <string key="title">Following
-15</string>
+0</string>
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -656,6 +659,9 @@
                                                         <exclude reference="ZL3-Vv-x5w"/>
                                                     </mask>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="tapFollowingButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="z3Y-n5-hk2"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" alpha="0.49999999999999961" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="GyE-E2-C6k">
                                                 <rect key="frame" x="400" y="0.0" width="200" height="48"/>
@@ -665,7 +671,7 @@
                                                 </constraints>
                                                 <state key="normal">
                                                     <string key="title">Followers
-15</string>
+0</string>
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
@@ -674,6 +680,9 @@
                                                         <exclude reference="Iur-Fe-wzG"/>
                                                     </mask>
                                                 </variation>
+                                                <connections>
+                                                    <action selector="tapFollowersButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="ySd-5P-nVs"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -723,12 +732,12 @@
                                 <rect key="frame" x="0.0" y="186" width="600" height="365"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostTableViewCell" rowHeight="353" id="WmM-dz-xZd" customClass="PostTableViewCell" customModule="Horoscopes" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostTableViewCell" rowHeight="250" id="WmM-dz-xZd" customClass="PostTableViewCell" customModule="Horoscopes" customModuleProvider="target">
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="WmM-dz-xZd" id="Fi9-aJ-pyp">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFO-iR-tLz" userLabel="Container View">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uFO-iR-tLz" userLabel="Container View">
                                                     <rect key="frame" x="10" y="0.0" width="580" height="343"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OSY-LD-6DM" userLabel="Header View">
@@ -759,10 +768,10 @@
                                                                 </mask>
                                                             </variation>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cQY-Zz-M38" userLabel="Main View">
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cQY-Zz-M38" userLabel="Main View">
                                                             <rect key="frame" x="0.0" y="30" width="580" height="263"/>
                                                             <subviews>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZE-eQ-Lfd">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wZE-eQ-Lfd">
                                                                     <rect key="frame" x="10" y="16" width="560" height="201"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
@@ -780,7 +789,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRP-2C-pM8" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRP-2C-pM8" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -797,7 +806,7 @@
                                                                 <constraint firstItem="wZE-eQ-Lfd" firstAttribute="leading" secondItem="cQY-Zz-M38" secondAttribute="leading" constant="10" id="rLp-kU-ShP"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rI-qP-CFZ" userLabel="Footer View">
+                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7rI-qP-CFZ" userLabel="Footer View">
                                                             <rect key="frame" x="0.0" y="293" width="580" height="50"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5He-FL-QeY">
@@ -871,6 +880,61 @@
                                             <outlet property="textView" destination="wZE-eQ-Lfd" id="Vt7-fK-kVD"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowTableViewCell" id="JIP-1M-AhS" customClass="FollowTableViewCell" customModule="Horoscopes" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="JIP-1M-AhS" id="doz-Bw-sqr">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="GYY-rt-3v6">
+                                                    <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="Fwr-2K-SU1"/>
+                                                        <constraint firstAttribute="width" constant="50" id="M64-9Q-kRb"/>
+                                                        <constraint firstAttribute="height" constant="50" id="sP2-ym-XZC"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="sP2-ym-XZC"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donald Patterson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MAa-3j-YST">
+                                                    <rect key="frame" x="69" y="15" width="123" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hG6-82-zcx">
+                                                    <rect key="frame" x="69" y="37" width="64" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="hG6-82-zcx" firstAttribute="leading" secondItem="GYY-rt-3v6" secondAttribute="trailing" constant="9" id="6oO-xA-k0Z"/>
+                                                <constraint firstAttribute="bottom" secondItem="GYY-rt-3v6" secondAttribute="bottom" constant="10" id="DJl-wL-L3a"/>
+                                                <constraint firstItem="MAa-3j-YST" firstAttribute="top" secondItem="doz-Bw-sqr" secondAttribute="top" constant="15" id="FUa-ia-VD7"/>
+                                                <constraint firstItem="MAa-3j-YST" firstAttribute="leading" secondItem="GYY-rt-3v6" secondAttribute="trailing" constant="9" id="UDh-ny-bHm"/>
+                                                <constraint firstAttribute="bottom" secondItem="GYY-rt-3v6" secondAttribute="bottom" constant="10" id="ZfF-aS-zB8"/>
+                                                <constraint firstItem="GYY-rt-3v6" firstAttribute="top" secondItem="doz-Bw-sqr" secondAttribute="top" constant="10" id="f6u-AJ-6o4"/>
+                                                <constraint firstItem="hG6-82-zcx" firstAttribute="top" secondItem="MAa-3j-YST" secondAttribute="bottom" constant="4" id="kD3-fu-d6e"/>
+                                                <constraint firstItem="GYY-rt-3v6" firstAttribute="leading" secondItem="doz-Bw-sqr" secondAttribute="leading" constant="10" id="kMe-z2-1YU"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="DJl-wL-L3a"/>
+                                                    <exclude reference="ZfF-aS-zB8"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="horoscopeSignLabel" destination="hG6-82-zcx" id="1Rb-Ty-Iri"/>
+                                            <outlet property="nameLabel" destination="MAa-3j-YST" id="vd4-zw-09E"/>
+                                            <outlet property="profileImageView" destination="GYY-rt-3v6" id="0aj-S3-5Kl"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="lL0-3z-ieO" id="pws-YS-G9t"/>
@@ -913,6 +977,8 @@
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
                         <outlet property="tableHeaderView" destination="gaE-qk-z8p" id="oAv-CE-DXL"/>
                         <outlet property="tableView" destination="2Jk-5w-PJI" id="2mK-Uc-Kbq"/>
+                        <outlet property="tableViewLeadingSpaceLayoutConstraint" destination="0GJ-B9-aww" id="cJ0-Jo-GKd"/>
+                        <outlet property="tableViewTrailingSpaceLayoutConstraint" destination="HaS-BT-cYw" id="4vu-Rb-U1b"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RTT-Xy-Xcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -956,7 +1022,6 @@
                                                 <exclude reference="n21-ZI-gm7"/>
                                             </mask>
                                         </variation>
-                                        <variation key="heightClass=regular-widthClass=compact"/>
                                         <connections>
                                             <action selector="followingButtonTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="JXg-qn-rde"/>
                                         </connections>
@@ -968,7 +1033,6 @@
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <variation key="heightClass=regular-widthClass=compact"/>
                                         <connections>
                                             <action selector="globalBtnTapped:" destination="SfV-d6-o0a" eventType="touchUpInside" id="0Nu-3l-9Hz"/>
                                         </connections>
@@ -3328,7 +3392,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="2305.5" y="1991.25"/>
+            <point key="canvasLocation" x="2639" y="1398"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="F1W-2R-5eY">

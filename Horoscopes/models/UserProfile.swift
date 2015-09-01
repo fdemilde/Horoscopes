@@ -20,6 +20,9 @@ class UserProfile: NSObject, NSCoding {
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
         return url.URLByAppendingPathComponent("userProfile").path!
     }
+    var horoscopeSignString: String {
+        return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
+    }
     struct Keys {
         static let uid = "uid"
         static let name = "name"

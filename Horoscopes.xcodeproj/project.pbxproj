@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
 		7027F5CC1B86DD4F00988956 /* NewNewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewNewsfeedViewController.swift */; };
 		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
@@ -203,6 +204,7 @@
 
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
+		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
 		7027F5CB1B86DD4F00988956 /* NewNewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNewsfeedViewController.swift; sourceTree = "<group>"; };
 		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				F498447A1B663589001B3246 /* AddFriendTableViewController.swift */,
 				70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */,
 				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
+				701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1306,6 +1309,7 @@
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
 				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
+				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
