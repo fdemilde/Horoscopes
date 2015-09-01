@@ -7,8 +7,7 @@
 //
 
 import UIKit
-
-class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, PostTableViewCellDelegate, UIAlertViewDelegate {
+class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate {
 
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
@@ -20,6 +19,10 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     @IBOutlet weak var followingButton: UIButton!
     @IBOutlet weak var followersButton: UIButton!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewLeadingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewTrailingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBottomSpaceLayoutConstraint: NSLayoutConstraint!
+    
     var loginView: UIView!
     
     enum ProfileType {
@@ -38,7 +41,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     var followingUsers = [UserProfile]()
     var currentTab = Tab.Post
     static let postDateFormat = "MMMM dd, yyyy"
-//    var isFirstDataLoad = true
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -85,9 +87,51 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     
     // MARK: - Configure UI
     
+    func configureProfileView() {
+        Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.profileImageView.image = image
+                self.profileImageView.layer.cornerRadius = 60 / 2
+                self.profileImageView.clipsToBounds = true
+            })
+        })
+        profileLabel.text = userProfile.name
+        horoscopeSignLabel.text = userProfile.horoscopeSignString
+        horoscopeSignImageView.image = userProfile.horoscopeSignImage
+    }
+    
+    func updateTableView() {
+        if currentTab != .Post {
+            if tableViewLeadingSpaceLayoutConstraint.constant == 0 {
+                tableViewLeadingSpaceLayoutConstraint.constant = 10
+                tableViewTrailingSpaceLayoutConstraint.constant = 10
+                tableViewBottomSpaceLayoutConstraint.constant = 8
+                tableView.clipsToBounds = true
+                tableView.backgroundColor = UIColor.whiteColor()
+                tableView.separatorStyle = .SingleLine
+            }
+        } else {
+            if tableViewLeadingSpaceLayoutConstraint.constant != 0 {
+                tableViewLeadingSpaceLayoutConstraint.constant = 0
+                tableViewTrailingSpaceLayoutConstraint.constant = 0
+                tableViewBottomSpaceLayoutConstraint.constant = 0
+                tableView.clipsToBounds = false
+                tableView.backgroundColor = UIColor.clearColor()
+                tableView.separatorStyle = .None
+            }
+        }
+    }
+    
+    func configureTabButton() {
+        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
+    }
+    
     func configureTableView() {
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.layer.cornerRadius = 4
         horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         horoscopeSignView.layer.cornerRadius = 4
         horoscopeSignView.clipsToBounds = true
@@ -120,7 +164,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
         view.addSubview(loginView)
     }
     
-    func configureCell(cell: PostTableViewCell, post: UserPost) {
+    func configurePostTableViewCell(cell: PostTableViewCell, post: UserPost) {
         switch post.type {
         case .OnYourMind:
             cell.headerView.backgroundColor = UIColor.newsfeedMindColor()
@@ -136,7 +180,39 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
         cell.textView.text = post.message
     }
     
+    func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
+        cell.nameLabel.text = profile.name
+        cell.horoscopeSignLabel.text = profile.horoscopeSignString
+        Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                cell.profileImageView?.image = image
+            })
+        })
+    }
+    
     // MARK: - Action
+    
+    @IBAction func tapPostButton(sender: UIButton) {
+        currentTab = .Post
+        updateTabButton(sender)
+        updateTableView()
+        tableView.reloadData()
+    }
+    
+    @IBAction func tapFollowingButton(sender: UIButton) {
+        currentTab = .Following
+        updateTabButton(sender)
+        updateTableView()
+        tableView.reloadData()
+    }
+    
+    @IBAction func tapFollowersButton(sender: UIButton) {
+        currentTab = .Followers
+        updateTabButton(sender)
+        updateTableView()
+        tableView.reloadData()
+    }
+    
     func login(sender: UIButton) {
         Utilities.showHUD()
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
@@ -178,6 +254,8 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     func getDataInitially() {
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.configureProfileView()
+            self.configureTabButton()
             self.configureTableView()
             var getDataGroup = dispatch_group_create()
             
@@ -186,6 +264,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
             self.getFollowingUsers(getDataGroup)
             
             dispatch_group_notify(getDataGroup, dispatch_get_main_queue()) { () -> Void in
+                self.setTabButtonTitleLabel(self.postButton)
+                self.setTabButtonTitleLabel(self.followingButton)
+                self.setTabButtonTitleLabel(self.followersButton)
                 self.tableView.reloadData()
                 Utilities.hideHUD()
             }
@@ -268,6 +349,28 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     
     // MARK: - Helper
     
+    func highlightTabButton(sender: UIButton) {
+        for button in [postButton, followersButton, followingButton] {
+            if button == sender {
+                button.alpha = 1
+            } else {
+                button.alpha = 0.5
+            }
+        }
+    }
+    
+    func setTabButtonTitleLabel(sender: UIButton) {
+        if sender == postButton {
+            postButton.setTitle("Post\n\(userPosts.count)", forState: .Normal)
+        } else if sender == followingButton {
+            followingButton.titleLabel?.text = "Following\n\(followingUsers.count)"
+            followingButton.setTitle("Following\n\(followingUsers.count)", forState: .Normal)
+        } else {
+            followersButton.titleLabel?.text = "Followers\n\(followers.count)"
+            followersButton.setTitle("Followers\n\(followers.count)", forState: .Normal)
+        }
+    }
+    
     func getProfileAndData() {
         if let profile = profileOfCurrentUser() {
             userProfile = profile
@@ -285,6 +388,13 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
         }
     }
     
+    // MARK: - Convenience
+    
+    func updateTabButton(button: UIButton) {
+        highlightTabButton(button)
+        setTabButtonTitleLabel(button)
+    }
+    
     // MARK: - Table view data source
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -299,20 +409,31 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        switch currentTab {
-        case .Post:
+        if currentTab == .Post {
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
             cell.type = PostCellType.Profile
-            configureCell(cell, post: post)
+            configurePostTableViewCell(cell, post: post)
             cell.delegate = self
             return cell
-        case .Followers:
-            let follower = followers[indexPath.row]
-        case .Following:
-            let followingUser = followingUsers[indexPath.row]
+        } else {
+            var profile: UserProfile!
+            if currentTab == .Following {
+                profile = followingUsers[indexPath.row]
+            } else {
+                profile = followers[indexPath.row]
+            }
+            let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+            configureFollowTableViewCell(cell, profile: profile)
+            return cell
         }
-        return UITableViewCell()
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if currentTab != .Post {
+            return 70
+        }
+        return UITableViewAutomaticDimension
     }
     
     // MARK: - Delegate

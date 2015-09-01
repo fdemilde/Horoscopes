@@ -129,15 +129,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
         cell.textView.text = post.message
-        let url = NSURL(string: post.user!.imgURL)
-        Utilities.imageFromUrl(url!, completionHandler: { (image, error) -> Void in
-            if let error = error {
-                
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.profileImageView.image = image
-                })
-            }
+        Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                cell.profileImageView.image = image
+            })
         })
         cell.profileNameLabel.text = post.user?.name
         cell.configureNewsfeedUi()
