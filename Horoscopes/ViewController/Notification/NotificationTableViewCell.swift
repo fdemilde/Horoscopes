@@ -17,8 +17,9 @@ class NotificationTableViewCell: UITableViewCell {
     var notification : NotificationObject!
     var alertObject = Alert()
     var type = ServerNotificationType.Follow
-    let SEND_HEART_TEXT = " send you a heart"
+    let SEND_HEART_TEXT = " sends you a heart"
     let FOLLOWING_TEXT = " is following you"
+    let DEFAULT_TEXT = " sends you a notification"
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,6 +33,7 @@ class NotificationTableViewCell: UITableViewCell {
         self.setNotificationType()
         self.setupComponents()
 //        self.getUserProfile()
+        println("NotificationObject id == \(notif.toString())")
     }
     
     // MARK: Populate UI
@@ -41,10 +43,13 @@ class NotificationTableViewCell: UITableViewCell {
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                self.backgroundColor = UIColor.whiteColor()
             case ServerNotificationType.Follow:
                 notifTypeImageView.image = UIImage(named: "follow_icon")
+                self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
             default:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                self.backgroundColor = UIColor.whiteColor()
         }
         self.setupCellImage()
         
@@ -89,17 +94,13 @@ class NotificationTableViewCell: UITableViewCell {
     func createDescAttributedString(nameString : String) -> NSMutableAttributedString {
         var string = nameString
         
-        switch(self.notification.ref){
-        case "send_heart":
-            self.type = ServerNotificationType.SendHeart
-            string += SEND_HEART_TEXT
-        case "follow":
-            self.type = ServerNotificationType.Follow
-            string += FOLLOWING_TEXT
-        default:
-            println("getNotificationType type is not available")
-            self.type = ServerNotificationType.SendHeart
-            string += SEND_HEART_TEXT
+        switch(self.type){
+            case ServerNotificationType.SendHeart:
+                string += SEND_HEART_TEXT
+            case ServerNotificationType.Follow:
+                string += FOLLOWING_TEXT
+            default:
+                string += DEFAULT_TEXT
         }
         var attString = NSMutableAttributedString(string: string)
         
@@ -110,25 +111,6 @@ class NotificationTableViewCell: UITableViewCell {
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(count(nameString), count(string) - count(nameString)))
         return attString
     }
-    
-    // Network
-    func getUserProfile(){
-        XAppDelegate.socialManager.getProfile(notification.sender, completionHandler: { (result, error) -> Void in
-//            println("getProfile getProfile == \(result)")
-            dispatch_async(dispatch_get_main_queue(),{
-                if let result = result {
-                    for user in result {
-                        if let url = NSURL(string: user.imgURL) {
-                            self.downloadImageAndSetToImageHolder(url, imageHolder: self.cellImageView)
-                        }
-                        self.notificationDescLabel.attributedText = self.createDescAttributedString(user.name)
-                    }
-                }
-            })
-            
-        })
-    }
-    
     // MARK: helpers
     
     func downloadImageAndSetToImageHolder(url:NSURL, imageHolder : UIImageView){

@@ -75,6 +75,7 @@
                 no.created = [[notif objectForKey:@"created"] longValue];
                 no.ref = [notif objectForKey:@"ref"];
                 no.sender = [notif objectForKey:@"sender"];
+                no.route = [notif objectForKey:@"route"];
                 no.notification_id = [notif objectForKey:@"notification_id"];
                 [self fireLocalNotiffication:no];
 
@@ -118,7 +119,7 @@
         no.sender = [[notif objectForKey:@"sender"] stringValue];
         no.route = [notif objectForKey:@"route"];
         no.notification_id = [notif objectForKey:@"notification_id"];
-    
+        
         [arrayNotiffs addObject:no];
 //        NSLog(@"data = %@" , [no toString]);
     }

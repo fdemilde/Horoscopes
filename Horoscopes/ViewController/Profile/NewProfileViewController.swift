@@ -459,7 +459,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
-    
+
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
         let uid = followers[index!].uid

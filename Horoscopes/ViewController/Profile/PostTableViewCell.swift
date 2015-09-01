@@ -10,9 +10,10 @@ import UIKit
 
 protocol PostTableViewCellDelegate {
     func didTapShareButton(profileName: String?, postContent: String)
+//    func didTapLikeButton(postId: String?)
 }
 
-class PostTableViewCell: UITableViewCell {
+class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
