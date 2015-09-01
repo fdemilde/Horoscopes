@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate {
+class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate, PostTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
@@ -248,10 +248,28 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         var post = userPostArray[indexPath.row] as UserPost
-//        cell.populateData(post, type: PostCellType.Newsfeed, parentViewController: self)
         cell.type = PostCellType.Newsfeed
+        cell.delegate = self
         configureCell(cell, post: post)
         return cell
+    }
+    
+    // MARK: - Delegate
+    
+    func didTapShareButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let name = userPostArray[index!].user!.name
+        let postContent = userPostArray[index!].message
+        let sharingText = String(format: "%@ \n %@", name, postContent)
+        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+        Utilities.presentShareFormSheetController(self, shareViewController: controller)
+    }
+    
+    func didTapLikeButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let profileId = userPostArray[index!].uid
+        let postId = userPostArray[index!].post_id
+        // TODO: Binh implements the actual like logic.
     }
     
     // Networks 
