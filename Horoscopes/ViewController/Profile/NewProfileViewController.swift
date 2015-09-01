@@ -453,8 +453,10 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Delegate
     
-    func didTapShareButton(profileName: String?, postContent: String) {
+    func didTapShareButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
         let name = userProfile.name
+        let postContent = userPosts[index!].message
         let sharingText = String(format: "%@ \n %@", name, postContent)
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)

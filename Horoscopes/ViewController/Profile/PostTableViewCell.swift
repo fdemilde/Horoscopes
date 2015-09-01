@@ -8,9 +8,9 @@
 
 import UIKit
 
-protocol PostTableViewCellDelegate {
-    func didTapShareButton(profileName: String?, postContent: String)
-//    func didTapLikeButton(postId: String?)
+@objc protocol PostTableViewCellDelegate {
+    func didTapShareButton(cell: PostTableViewCell)
+    optional func didTapLikeButton(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
@@ -58,9 +58,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {
+        delegate.didTapLikeButton?(self)
     }
 
     @IBAction func tapShareButton(sender: UIButton) {
-        delegate.didTapShareButton(nil, postContent: textView.text)
+        delegate.didTapShareButton(self)
     }
 }

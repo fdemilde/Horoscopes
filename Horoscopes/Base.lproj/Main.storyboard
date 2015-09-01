@@ -1209,6 +1209,9 @@
                                                                             <state key="normal" image="newsfeed_heart_icon">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="tapLikeButton:" destination="c6k-iU-de5" eventType="touchUpInside" id="oYi-O2-RVl"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YiW-Qb-toW">
                                                                             <rect key="frame" x="513" y="3" width="57" height="44"/>
@@ -1218,6 +1221,9 @@
                                                                             <state key="normal" image="newsfeed_share_icon">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
+                                                                            <connections>
+                                                                                <action selector="tapShareButton:" destination="c6k-iU-de5" eventType="touchUpInside" id="A6Q-3Z-rec"/>
+                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="0.97254901960784312" green="0.97254901960784312" blue="0.97254901960784312" alpha="1" colorSpace="calibratedRGB"/>
@@ -3861,7 +3867,7 @@
         <image name="daily_sign_bg" width="80" height="80"/>
         <image name="default_avatar" width="75" height="75"/>
         <image name="fb_login_icon" width="75" height="75"/>
-        <image name="follow_btn" width="50" height="30"/>
+        <image name="follow_btn" width="60" height="30"/>
         <image name="login_divider" width="208" height="2"/>
         <image name="moon_ani_01.png" width="30" height="31"/>
         <image name="newsfeed_follow_btn" width="25" height="26"/>
