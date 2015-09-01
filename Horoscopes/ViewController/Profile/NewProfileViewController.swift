@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, PostTableViewCellDelegate {
+class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, PostTableViewCellDelegate, UIAlertViewDelegate {
 
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
@@ -323,5 +323,4 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, Po
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
-
 }

@@ -11,7 +11,7 @@
 @implementation NotificationObject
 
 
-- (id) initWithNotificationID:(NSString*) notifId withSender:(NSString*) sender withTimeCreated:(long) created withAlert:(NSString*) alert withRoute:(NSString*)route withData:(NSString*) data withRef:(NSString*)ref{
+- (id) initWithNotificationID:(NSString*) notifId withSender:(NSString*) sender withTimeCreated:(long) created withAlert:(NSString*) alert withRoute:(NSString*)route withData:(NSString*) data withRef:(NSString*)ref withType:(NSString*)type{
     self = [super init];
     
     _notification_id = notifId;
@@ -21,7 +21,6 @@
     _route = route;
     _data = data;
     _ref = ref;
-    
     return self;
 }
 

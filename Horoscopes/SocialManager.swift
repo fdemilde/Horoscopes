@@ -138,7 +138,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else { // no error
                     var success = result["success"] as! Int
                     if success == 1 {
-                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
                     } else {
 //                        Utilities.showAlertView(self, title: "Error", message: "Please try again later!")\
                         Utilities.hideHUD()
@@ -453,6 +453,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         alert.body = "\(currentUser.name) sent you a heart"
         alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
+        alert.type = "send_heart"
         
         var routeString = "/post/\(postId)/hearts"
         var recieverIdString = "\(receiverId)"
@@ -485,8 +486,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func clearAllNotification(){
         var listIds = [String]()
-        listIds.append("1_11")
-        listIds.append("13_11")
+        listIds.append("22_8")
+        listIds.append("23_8")
         listIds.append("14_11")
         listIds.append("15_11")
         listIds.append("18_11")
