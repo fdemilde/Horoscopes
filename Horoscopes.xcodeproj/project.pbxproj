@@ -103,6 +103,7 @@
 		F49FAE471B42899700F38E0C /* UserPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE461B42899700F38E0C /* UserPost.swift */; };
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
+		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
 		F4AB3A841B672F0D00EFF0A1 /* AddFriendTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB3A831B672F0D00EFF0A1 /* AddFriendTableCell.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
@@ -303,6 +304,7 @@
 		F49FAE461B42899700F38E0C /* UserPost.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserPost.swift; sourceTree = "<group>"; };
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
 		F4AB3A831B672F0D00EFF0A1 /* AddFriendTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendTableCell.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -675,6 +677,14 @@
 			path = Newsfeed;
 			sourceTree = "<group>";
 		};
+		F4A206BD1B9410BA002676DE /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
 		F4B566CC1B5F487D00C91073 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
@@ -818,6 +828,7 @@
 		F4CACA391B1EEE72003C6301 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F4A206BD1B9410BA002676DE /* fonts */,
 				F4CACA3A1B1EEE72003C6301 /* selected_tabbar_daily.png */,
 				F4CACA3B1B1EEE72003C6301 /* selected_tabbar_daily@2x.png */,
 				F4CACA3C1B1EEE72003C6301 /* selected_tabbar_daily@3x.png */,
@@ -1158,6 +1169,7 @@
 				F4CACA601B1EEE72003C6301 /* selected_tabbar_notification@3x.png in Resources */,
 				F42E28A91B37D14100466CAA /* share_fbmessage.png in Resources */,
 				F4CACA731B1EEE72003C6301 /* tabbar_profile.png in Resources */,
+				F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */,
 				F46098281B50D1F30026F0C9 /* moon_ani_11@2x.png in Resources */,
 				F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */,
 				F46098151B50D1F30026F0C9 /* moon_ani_04@3x.png in Resources */,
