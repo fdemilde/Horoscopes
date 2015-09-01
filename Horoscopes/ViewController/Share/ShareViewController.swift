@@ -66,8 +66,8 @@ class ShareViewController : UIViewController {
     }
     
     func createSeparatorLine(){
-        separateLineView = UIView(frame: CGRectMake(20, startPosY + buttonDefaultSize.height + paddingSeparator/2, self.view.frame.width - 40, 1.0))
-        separateLineView.backgroundColor = UIColor(red: 105.0/255.0, green: 67.0/255.0, blue: 106.0/255.0, alpha: 1)
+        separateLineView = UIView(frame: CGRectMake(0, startPosY + buttonDefaultSize.height + paddingSeparator/2, self.view.frame.width, 1.0))
+        separateLineView.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.shareView.addSubview(separateLineView)
     }
     

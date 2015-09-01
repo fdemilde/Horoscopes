@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -130,42 +130,107 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="100" id="yoj-x8-YiC"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LrI-tU-0Bt">
                                                 <rect key="frame" x="515" y="3" width="70" height="35"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="100" id="hfy-bz-lh0">
+                                                        <variation key="heightClass=regular-widthClass=compact" constant="114"/>
+                                                    </constraint>
+                                                </constraints>
                                                 <state key="normal" image="share_copy">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
+                                                <variation key="default">
+                                                    <mask key="constraints">
+                                                        <exclude reference="hfy-bz-lh0"/>
+                                                    </mask>
+                                                </variation>
+                                                <variation key="heightClass=regular-widthClass=compact">
+                                                    <mask key="constraints">
+                                                        <include reference="hfy-bz-lh0"/>
+                                                    </mask>
+                                                </variation>
                                             </button>
                                         </subviews>
-                                        <color key="backgroundColor" red="0.31372549020000001" green="0.1960784314" blue="0.34901960780000002" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="backgroundColor" red="0.52156862745098043" green="0.48627450980392156" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="LrI-tU-0Bt" secondAttribute="trailing" constant="15" id="BBj-7O-evv"/>
+                                            <constraint firstAttribute="trailing" secondItem="LrI-tU-0Bt" secondAttribute="trailing" constant="15" id="BBj-7O-evv">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                                            </constraint>
+                                            <constraint firstItem="LrI-tU-0Bt" firstAttribute="height" secondItem="hdb-em-BKc" secondAttribute="height" id="PVT-Nu-bvf"/>
                                             <constraint firstAttribute="height" constant="40" id="Pct-FO-hd8"/>
                                             <constraint firstAttribute="centerY" secondItem="LrI-tU-0Bt" secondAttribute="centerY" id="fey-hS-GQx"/>
                                             <constraint firstAttribute="centerY" secondItem="hH8-zJ-CD7" secondAttribute="centerY" id="s25-3p-aI4"/>
                                             <constraint firstItem="hH8-zJ-CD7" firstAttribute="leading" secondItem="hdb-em-BKc" secondAttribute="leading" constant="15" id="uPW-xg-6eh"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="PVT-Nu-bvf"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="PVT-Nu-bvf"/>
+                                            </mask>
+                                        </variation>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.85490196080000003" green="0.84313725490000002" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="hdb-em-BKc" secondAttribute="trailing" id="Bey-WK-pBf"/>
                                     <constraint firstAttribute="height" constant="400" id="JDg-96-XnX"/>
                                     <constraint firstItem="hdb-em-BKc" firstAttribute="top" secondItem="U8s-10-MDN" secondAttribute="top" id="cNA-t0-Zkb"/>
                                     <constraint firstItem="hdb-em-BKc" firstAttribute="leading" secondItem="U8s-10-MDN" secondAttribute="leading" id="kjB-e6-Imb"/>
                                 </constraints>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="JDg-96-XnX"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="U8s-10-MDN" secondAttribute="trailing" id="5ex-lC-GAL"/>
+                            <constraint firstItem="U8s-10-MDN" firstAttribute="top" secondItem="vxu-JT-i7r" secondAttribute="bottom" id="2Xd-o0-gT9"/>
+                            <constraint firstAttribute="trailing" secondItem="U8s-10-MDN" secondAttribute="trailing" id="5ex-lC-GAL">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstAttribute="centerY" secondItem="U8s-10-MDN" secondAttribute="centerY" constant="-200" id="FRu-Ek-O4d">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="i2y-gP-SlL" firstAttribute="top" secondItem="U8s-10-MDN" secondAttribute="bottom" id="I2Z-St-utl"/>
+                            <constraint firstItem="U8s-10-MDN" firstAttribute="leading" secondItem="2uZ-Ms-wml" secondAttribute="leading" id="Jfi-Lh-jMJ"/>
                             <constraint firstItem="i2y-gP-SlL" firstAttribute="top" secondItem="U8s-10-MDN" secondAttribute="bottom" id="anv-ba-kvh"/>
-                            <constraint firstItem="U8s-10-MDN" firstAttribute="leading" secondItem="2uZ-Ms-wml" secondAttribute="leading" id="dxG-Gj-Vom"/>
+                            <constraint firstItem="U8s-10-MDN" firstAttribute="leading" secondItem="2uZ-Ms-wml" secondAttribute="leading" id="dxG-Gj-Vom">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="U8s-10-MDN" secondAttribute="trailing" id="eBr-pP-tGB"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="2Xd-o0-gT9"/>
+                                <exclude reference="FRu-Ek-O4d"/>
+                                <exclude reference="Jfi-Lh-jMJ"/>
+                                <exclude reference="eBr-pP-tGB"/>
+                                <exclude reference="I2Z-St-utl"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="2Xd-o0-gT9"/>
+                                <exclude reference="5ex-lC-GAL"/>
+                                <exclude reference="FRu-Ek-O4d"/>
+                                <include reference="Jfi-Lh-jMJ"/>
+                                <exclude reference="dxG-Gj-Vom"/>
+                                <include reference="eBr-pP-tGB"/>
+                                <include reference="I2Z-St-utl"/>
+                                <exclude reference="anv-ba-kvh"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
                         <outlet property="shareTitleLabel" destination="hH8-zJ-CD7" id="4Wf-JY-bqo"/>
@@ -732,7 +797,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRP-2C-pM8" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eRP-2C-pM8" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -1355,7 +1420,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lbt-Ht-df7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1959" y="2696"/>
+            <point key="canvasLocation" x="-570" y="2694.75"/>
         </scene>
         <!--Cookie View Controller-->
         <scene sceneID="DGF-VA-yxA">
@@ -1526,7 +1591,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="T3a-ZS-ONm" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1318.5" y="2682.75"/>
+            <point key="canvasLocation" x="-1228.5" y="2694.75"/>
         </scene>
         <!--Collect Horoscopes TableVC-->
         <scene sceneID="QOH-Gg-3ZR">
@@ -1686,7 +1751,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kHs-bt-qwR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-585" y="2682.75"/>
+            <point key="canvasLocation" x="-1881" y="2694.75"/>
         </scene>
         <!--Collect Horoscope DetailVC-->
         <scene sceneID="aGy-y9-6ER">
@@ -2557,7 +2622,7 @@
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
                                             <connections>
-                                                <action selector="cookieTaooed:" destination="efF-06-zfn" eventType="touchUpInside" id="RRC-9c-Wia"/>
+                                                <action selector="cookieTapped:" destination="efF-06-zfn" eventType="touchUpInside" id="hnn-KC-Xr0"/>
                                             </connections>
                                         </button>
                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
@@ -3871,7 +3936,7 @@
         <image name="post_type_feel" width="20" height="20"/>
         <image name="post_type_mind" width="21" height="19"/>
         <image name="search_icon" width="15" height="15"/>
-        <image name="share_copy" width="70" height="35"/>
+        <image name="share_copy" width="94" height="23"/>
         <image name="tabbar_daily.png" width="22" height="23"/>
         <image name="tabbar_newsfeed.png" width="23" height="18"/>
         <image name="tabbar_notification.png" width="21" height="26"/>
