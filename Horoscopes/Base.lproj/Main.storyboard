@@ -920,6 +920,7 @@
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
                         <outlet property="tableHeaderView" destination="gaE-qk-z8p" id="oAv-CE-DXL"/>
                         <outlet property="tableView" destination="2Jk-5w-PJI" id="2mK-Uc-Kbq"/>
+                        <outlet property="tableViewBottomSpaceLayoutConstraint" destination="cPS-qW-egl" id="gdL-wl-3Yb"/>
                         <outlet property="tableViewLeadingSpaceLayoutConstraint" destination="0GJ-B9-aww" id="cJ0-Jo-GKd"/>
                         <outlet property="tableViewTrailingSpaceLayoutConstraint" destination="HaS-BT-cYw" id="4vu-Rb-U1b"/>
                     </connections>
@@ -2221,13 +2222,13 @@
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dec 1-Jan 23" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbb-1a-0V2">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Dec 1-Jan 23" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qbb-1a-0V2">
                                             <rect key="frame" x="96" y="57" width="69" height="14"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
+                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
                                             <rect key="frame" x="548" y="27" width="44" height="44"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="44" id="TFs-23-rQ3"/>

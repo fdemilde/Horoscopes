@@ -22,6 +22,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTrailingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tableViewBottomSpaceLayoutConstraint: NSLayoutConstraint!
     
     var loginView: UIView!
     
@@ -41,7 +42,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     var followingUsers = [UserProfile]()
     var currentTab = Tab.Post
     static let postDateFormat = "MMMM dd, yyyy"
-    let followTableViewMargin: CGFloat = 10
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,11 +88,25 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Configure UI
     
+    func configureProfileView() {
+        Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.profileImageView.image = image
+                self.profileImageView.layer.cornerRadius = 60 / 2
+                self.profileImageView.clipsToBounds = true
+            })
+        })
+        profileLabel.text = userProfile.name
+        horoscopeSignLabel.text = userProfile.horoscopeSignString
+        horoscopeSignImageView.image = userProfile.horoscopeSignImage
+    }
+    
     func updateTableView() {
         if currentTab != .Post {
             if tableViewLeadingSpaceLayoutConstraint.constant == 0 {
-                tableViewLeadingSpaceLayoutConstraint.constant = followTableViewMargin
-                tableViewTrailingSpaceLayoutConstraint.constant = followTableViewMargin
+                tableViewLeadingSpaceLayoutConstraint.constant = 10
+                tableViewTrailingSpaceLayoutConstraint.constant = 10
+                tableViewBottomSpaceLayoutConstraint.constant = 8
                 tableView.clipsToBounds = true
                 tableView.backgroundColor = UIColor.whiteColor()
                 tableView.separatorStyle = .SingleLine
@@ -101,6 +115,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             if tableViewLeadingSpaceLayoutConstraint.constant != 0 {
                 tableViewLeadingSpaceLayoutConstraint.constant = 0
                 tableViewTrailingSpaceLayoutConstraint.constant = 0
+                tableViewBottomSpaceLayoutConstraint.constant = 0
                 tableView.clipsToBounds = false
                 tableView.backgroundColor = UIColor.clearColor()
                 tableView.separatorStyle = .None
@@ -240,6 +255,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     func getDataInitially() {
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.configureProfileView()
             self.configureTabButton()
             self.configureTableView()
             var getDataGroup = dispatch_group_create()

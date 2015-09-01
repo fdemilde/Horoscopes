@@ -23,6 +23,9 @@ class UserProfile: NSObject, NSCoding {
     var horoscopeSignString: String {
         return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
     }
+    var horoscopeSignImage: UIImage {
+        return UIImage(named: String(format:"%@_selected", horoscopeSignString))!
+    }
     struct Keys {
         static let uid = "uid"
         static let name = "name"
