@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate {
+class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, FollowTableViewCellDelegate {
 
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
@@ -45,7 +45,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
@@ -265,6 +264,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             self.getFollowingUsers(getDataGroup)
             
             dispatch_group_notify(getDataGroup, dispatch_get_main_queue()) { () -> Void in
+                self.checkFollowStatus()
                 self.setTabButtonTitleLabel(self.postButton)
                 self.setTabButtonTitleLabel(self.followingButton)
                 self.setTabButtonTitleLabel(self.followersButton)
@@ -350,6 +350,17 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Helper
     
+    func checkFollowStatus() {
+        for follower in followers {
+            for followingUser in followingUsers {
+                if followingUser.uid == follower.uid {
+                    follower.isFollowed = true
+                    break
+                }
+            }
+        }
+    }
+    
     func highlightTabButton(sender: UIButton) {
         for button in [postButton, followersButton, followingButton] {
             if button == sender {
@@ -418,13 +429,16 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             cell.delegate = self
             return cell
         } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             var profile: UserProfile!
             if currentTab == .Following {
                 profile = followingUsers[indexPath.row]
+                cell.configureFollowButton(profile.isFollowed, isFollowerCell: false)
             } else {
                 profile = followers[indexPath.row]
+                cell.delegate = self
+                cell.configureFollowButton(profile.isFollowed, isFollowerCell: true)
             }
-            let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             configureFollowTableViewCell(cell, profile: profile)
             return cell
         }
@@ -444,6 +458,26 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let sharingText = String(format: "%@ \n %@", name, postContent)
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
+    }
+    
+    func didTapFollowButton(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let uid = followers[index!].uid
+        Utilities.showHUD()
+        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
+            if let error = error {
+                
+            } else {
+                let getDataGroup = dispatch_group_create()
+                self.getFollowingUsers(getDataGroup)
+                dispatch_group_notify(getDataGroup, dispatch_get_main_queue(), { () -> Void in
+                    self.checkFollowStatus()
+                    self.setTabButtonTitleLabel(self.followingButton)
+                    self.tableView.reloadData()
+                    Utilities.hideHUD()
+                })
+            }
+        })
     }
 
 }
