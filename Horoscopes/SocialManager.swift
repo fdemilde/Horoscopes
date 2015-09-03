@@ -120,7 +120,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func sendHeart(postId : String, type : String){
+    func sendHeart(receiverId: Int, postId : String, type : String){
         Utilities.showHUD()
         var postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
@@ -138,6 +138,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else { // no error
                     var success = result["success"] as! Int
                     if success == 1 {
+                        self.sendHeartServerNotification(receiverId, postId: postId)
                         Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
                     } else {
 //                        Utilities.showAlertView(self, title: "Error", message: "Please try again later!")\
@@ -183,7 +184,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getPost(uid: Int, page: Int = 0, completionHandler: (result: [UserPost]?, error: NSError?) -> Void) {
+    func getUserFeed(uid: Int, page: Int = 0, completionHandler: (result: [UserPost]?, error: NSError?) -> Void) {
         getProfile("\(uid)", completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -206,6 +207,30 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         completionHandler(result: posts, error: nil)
                     }
                 })
+            }
+        })
+    }
+    
+    // get post with post ids string
+    func getPost(postIds : String, completionHandler: (result: [UserPost]?, error: NSError?) -> Void){
+        var postData = NSMutableDictionary()
+        postData.setObject("\(postIds)", forKey: "post_id")
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_POST, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                
+                let results = Utilities.parseNSDictionaryToDictionary(response)
+                var userDict = results["users"] as! Dictionary<String, AnyObject>
+                var postsDict = results["posts"] as! Dictionary<String, AnyObject>
+                var postArray = [AnyObject]()
+                for (index,post) in postsDict {
+                    postArray.append(post)
+                }
+                var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postArray)
+                completionHandler(result: feedsArray, error: nil)
+                
+                
             }
         })
     }

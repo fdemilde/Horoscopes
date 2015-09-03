@@ -187,7 +187,7 @@ class ProfileViewController: ViewControllerWithAds, ASTableViewDataSource, ASTab
     
     // MARK: - Helper
     func getUserPosts() {
-        SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
+        SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 
             } else {

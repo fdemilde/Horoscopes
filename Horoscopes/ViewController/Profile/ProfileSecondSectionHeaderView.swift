@@ -160,7 +160,6 @@ class ProfileSecondSectionHeaderView: UIView {
     }
     
     func reloadButtonTitleLabel(highlightedButton: UIButton) {
-        println("reloadButtonTitleLabel reloadButtonTitleLabel")
         let buttons = [postButton, followersButton, followingButton]
         for button in buttons {
             var string = NSMutableAttributedString()

@@ -275,7 +275,7 @@ class PostCellNode : ASCellNode, UIAlertViewDelegate {
         
         Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        XAppDelegate.socialManager.sendHeart(userPost!.post_id, type: SEND_HEART_USER_POST_TYPE)
+//        XAppDelegate.socialManager.sendHeart(userPost!.post_id, type: SEND_HEART_USER_POST_TYPE)
         
     }
     

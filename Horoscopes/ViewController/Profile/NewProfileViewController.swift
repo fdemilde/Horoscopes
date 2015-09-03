@@ -278,7 +278,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if let group = dispatchGroup {
             dispatch_group_enter(group)
         }
-        SocialManager.sharedInstance.getPost(userProfile.uid, completionHandler: { (result, error) -> Void in
+        SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 
             } else {

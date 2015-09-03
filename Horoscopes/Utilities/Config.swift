@@ -31,7 +31,7 @@ let SEND_HEART_USER_POST_TYPE = "userpost"
 
 // MARK: - Post request
 let CREATE_POST = "app.horoscopes.post.create"
-let READ_POST = "app.horoscopes.post.get"
+let GET_POST = "app.horoscopes.post.get"
 let DELETE_POST = "app.horoscopes.post.remove"
 
 // MARK: Follow methods

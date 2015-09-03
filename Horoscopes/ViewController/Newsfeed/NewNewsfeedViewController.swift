@@ -270,6 +270,33 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let profileId = userPostArray[index!].uid
         let postId = userPostArray[index!].post_id
         // TODO: Binh implements the actual like logic.
+        
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            return
+        }
+        
+        Utilities.showHUD()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(profileId, postId: postId, type: SEND_HEART_USER_POST_TYPE)
+    }
+    
+    // Notification handler
+    func sendHeartSuccessful(notif: NSNotification){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        Utilities.hideHUD()
+//        var animation = CATransition()
+//        animation.duration = 0.5
+//        animation.type = kCATransitionFade
+//        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//        heartNumberLabelNode!.layer.addAnimation(animation, forKey: "changeTextTransition")
+//        //            :animation forKey:"changeTextTransition"];
+//        userPost!.hearts++
+//        // Change the text
+//        dispatch_async(dispatch_get_main_queue(),{
+//            let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
+//            self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
+//        })
     }
     
     // Networks 
