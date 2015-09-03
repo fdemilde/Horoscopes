@@ -26,6 +26,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var postTypeImageView: UIImageView!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var likeButton: UIButton!
     
     var delegate: PostTableViewCellDelegate!
     var type: PostCellType!
@@ -55,6 +56,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         profileImageView.layer.cornerRadius = profileImageSize / 2
         profileImageView.clipsToBounds = true
+    }
+    
+    func configureUserPostUi() {
+        likeButton.hidden = true
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {

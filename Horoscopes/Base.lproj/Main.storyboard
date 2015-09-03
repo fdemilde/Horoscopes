@@ -806,6 +806,7 @@
                                         <connections>
                                             <outlet property="containerView" destination="uFO-iR-tLz" id="G9W-LL-Exe"/>
                                             <outlet property="headerView" destination="OSY-LD-6DM" id="RaI-Jk-iLd"/>
+                                            <outlet property="likeButton" destination="5He-FL-QeY" id="uNd-C1-KGo"/>
                                             <outlet property="postDateLabel" destination="qbo-MF-3wc" id="DB5-dD-lc5"/>
                                             <outlet property="postTypeImageView" destination="PcY-VK-nqj" id="7Jf-Ac-6xc"/>
                                             <outlet property="textView" destination="wZE-eQ-Lfd" id="Vt7-fK-kVD"/>

@@ -42,6 +42,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     var followingUsers = [UserProfile]()
     var currentTab = Tab.Post
     static let postDateFormat = "MMMM dd, yyyy"
+    var isFirstDataLoad = true
+    
+    // MARK: Life cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +75,26 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if !isFirstDataLoad {
+            switch currentTab {
+            case .Post:
+                getUserPosts(nil)
+            case .Following:
+                getFollowingUsers(nil)
+            case .Followers:
+                let group = dispatch_group_create()
+                getFollowingUsers(group)
+                getFollowers(group)
+                dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
+                    self.checkFollowStatus()
+                    self.tableView.reloadData()
+                })
+            }
+        }
     }
     
 
@@ -106,7 +129,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 tableViewLeadingSpaceLayoutConstraint.constant = 10
                 tableViewTrailingSpaceLayoutConstraint.constant = 10
                 tableViewBottomSpaceLayoutConstraint.constant = 8
-                tableView.clipsToBounds = true
                 tableView.backgroundColor = UIColor.whiteColor()
                 tableView.separatorStyle = .SingleLine
             }
@@ -115,7 +137,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 tableViewLeadingSpaceLayoutConstraint.constant = 0
                 tableViewTrailingSpaceLayoutConstraint.constant = 0
                 tableViewBottomSpaceLayoutConstraint.constant = 0
-                tableView.clipsToBounds = false
                 tableView.backgroundColor = UIColor.clearColor()
                 tableView.separatorStyle = .None
             }
@@ -194,23 +215,26 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     @IBAction func tapPostButton(sender: UIButton) {
         currentTab = .Post
-        updateTabButton(sender)
+        highlightTabButton(sender)
         updateTableView()
         tableView.reloadData()
+        getUserPosts(nil)
     }
     
     @IBAction func tapFollowingButton(sender: UIButton) {
         currentTab = .Following
-        updateTabButton(sender)
+        highlightTabButton(sender)
         updateTableView()
         tableView.reloadData()
+        getFollowingUsers(nil)
     }
     
     @IBAction func tapFollowersButton(sender: UIButton) {
         currentTab = .Followers
-        updateTabButton(sender)
+        highlightTabButton(sender)
         updateTableView()
         tableView.reloadData()
+        getFollowers(nil)
     }
     
     func login(sender: UIButton) {
@@ -252,46 +276,44 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getDataInitially() {
+        isFirstDataLoad = false
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.configureProfileView()
             self.configureTabButton()
             self.configureTableView()
-            var getDataGroup = dispatch_group_create()
+            let group = dispatch_group_create()
             
-            self.getUserPosts(getDataGroup)
-            self.getFollowers(getDataGroup)
-            self.getFollowingUsers(getDataGroup)
+            self.getUserPosts(group)
+            self.getFollowers(group)
+            self.getFollowingUsers(group)
             
-            dispatch_group_notify(getDataGroup, dispatch_get_main_queue()) { () -> Void in
+            dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
                 self.checkFollowStatus()
-                self.setTabButtonTitleLabel(self.postButton)
-                self.setTabButtonTitleLabel(self.followingButton)
-                self.setTabButtonTitleLabel(self.followersButton)
                 self.tableView.reloadData()
                 Utilities.hideHUD()
             }
         })
     }
     
-    func getUserPosts(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
+    func getUserPosts(group: dispatch_group_t?) {
+        if let group = group {
             dispatch_group_enter(group)
         }
         SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 
             } else {
-                self.userPosts = result!
+                self.handleData(group, oldData: &self.userPosts, newData: result!, button: self.postButton)
             }
-            if let group = dispatchGroup {
+            if let group = group {
                 dispatch_group_leave(group)
             }
         })
     }
     
-    func getFollowers(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
+    func getFollowers(group: dispatch_group_t?) {
+        if let group = group {
             dispatch_group_enter(group)
         }
         if profileType == .CurrentUser {
@@ -299,9 +321,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if let error = error {
                     
                 } else {
-                    self.followers = result!
+                    self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
                 }
-                if let group = dispatchGroup {
+                if let group = group {
                     dispatch_group_leave(group)
                 }
             }
@@ -310,17 +332,17 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if let error = error {
                     
                 } else {
-                    self.followers = result!
+                    self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
                 }
-                if let group = dispatchGroup {
+                if let group = group {
                     dispatch_group_leave(group)
                 }
             })
         }
     }
     
-    func getFollowingUsers(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
+    func getFollowingUsers(group: dispatch_group_t?) {
+        if let group = group {
             dispatch_group_enter(group)
         }
         if profileType == .CurrentUser {
@@ -328,9 +350,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if let error = error {
                     
                 } else {
-                    self.followingUsers = result!
+                    self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
                 }
-                if let group = dispatchGroup {
+                if let group = group {
                     dispatch_group_leave(group)
                 }
             }
@@ -339,9 +361,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if let error = error {
                     
                 } else {
-                    self.followingUsers = result!
+                    self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
                 }
-                if let group = dispatchGroup {
+                if let group = group {
                     dispatch_group_leave(group)
                 }
             })
@@ -349,6 +371,36 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Helper
+    
+    func handleData<T: SequenceType>(group: dispatch_group_t?, inout oldData: T, newData: T, button: UIButton) {
+        if self.isDataUpdated(oldData, newData: newData) {
+            oldData = newData
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.setTabButtonTitleLabel(button)
+                if group == nil {
+                    self.tableView.reloadData()
+                }
+            })
+        }
+    }
+    
+    func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
+        let oldDataIdSet = getDataIds(oldData)
+        let newDataIdSet = getDataIds(newData)
+        return oldDataIdSet != newDataIdSet
+    }
+    
+    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
+        var result = Set<String>()
+        for item in data {
+            if let post = item as? UserPost {
+                result.insert(post.post_id)
+            } else if let profile = item as? UserProfile {
+                result.insert("\(profile.uid)")
+            }
+        }
+        return result
+    }
     
     func checkFollowStatus() {
         for follower in followers {
@@ -427,6 +479,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             cell.type = PostCellType.Profile
             configurePostTableViewCell(cell, post: post)
             cell.delegate = self
+            cell.configureUserPostUi()
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
@@ -470,9 +523,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             if let error = error {
                 
             } else {
-                let getDataGroup = dispatch_group_create()
-                self.getFollowingUsers(getDataGroup)
-                dispatch_group_notify(getDataGroup, dispatch_get_main_queue(), { () -> Void in
+                let group = dispatch_group_create()
+                self.getFollowingUsers(group)
+                dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
                     self.checkFollowStatus()
                     self.setTabButtonTitleLabel(self.followingButton)
                     self.tableView.reloadData()
