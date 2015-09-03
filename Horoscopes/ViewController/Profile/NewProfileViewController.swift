@@ -425,6 +425,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             cell.type = PostCellType.Profile
             configurePostTableViewCell(cell, post: post)
             cell.delegate = self
+            cell.configureUserPostUi()
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
