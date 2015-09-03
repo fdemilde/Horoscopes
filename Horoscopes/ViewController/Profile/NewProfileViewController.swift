@@ -106,7 +106,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 tableViewLeadingSpaceLayoutConstraint.constant = 10
                 tableViewTrailingSpaceLayoutConstraint.constant = 10
                 tableViewBottomSpaceLayoutConstraint.constant = 8
-                tableView.clipsToBounds = true
                 tableView.backgroundColor = UIColor.whiteColor()
                 tableView.separatorStyle = .SingleLine
             }
@@ -115,7 +114,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 tableViewLeadingSpaceLayoutConstraint.constant = 0
                 tableViewTrailingSpaceLayoutConstraint.constant = 0
                 tableViewBottomSpaceLayoutConstraint.constant = 0
-                tableView.clipsToBounds = false
                 tableView.backgroundColor = UIColor.clearColor()
                 tableView.separatorStyle = .None
             }
