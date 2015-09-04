@@ -497,7 +497,7 @@
         <!--New Profile View Controller-->
         <scene sceneID="J3E-Jv-Dcs">
             <objects>
-                <viewController id="lL0-3z-ieO" customClass="NewProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewProfileViewController" id="lL0-3z-ieO" customClass="NewProfileViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="1hW-VC-23I"/>
                         <viewControllerLayoutGuide type="bottom" id="6CE-fP-qAN"/>
@@ -650,6 +650,19 @@
                                             </mask>
                                         </variation>
                                     </view>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LAf-eD-yEu">
+                                        <rect key="frame" x="536" y="20" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="XOg-w1-rHN"/>
+                                            <constraint firstAttribute="width" constant="44" id="aAD-cx-4he"/>
+                                        </constraints>
+                                        <state key="normal" image="search_icon">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <segue destination="igC-EB-4kz" kind="show" id="RCc-os-nLy"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -658,10 +671,12 @@
                                     <constraint firstItem="uLX-7P-QFG" firstAttribute="top" secondItem="fEj-EB-Z1Q" secondAttribute="bottom" constant="5" id="89W-2D-0jE"/>
                                     <constraint firstAttribute="trailing" secondItem="ntJ-65-VgQ" secondAttribute="trailing" id="GqL-O4-sJd"/>
                                     <constraint firstItem="YOS-0S-1he" firstAttribute="leading" secondItem="gaE-qk-z8p" secondAttribute="leading" constant="20" id="I3O-eO-CeD"/>
+                                    <constraint firstAttribute="trailing" secondItem="LAf-eD-yEu" secondAttribute="trailing" constant="20" id="Ir3-dC-X3D"/>
                                     <constraint firstAttribute="height" constant="300" id="Jb7-eh-N0j"/>
                                     <constraint firstItem="fEj-EB-Z1Q" firstAttribute="leading" secondItem="YOS-0S-1he" secondAttribute="trailing" constant="10" id="Jn6-HV-Qho"/>
                                     <constraint firstAttribute="bottom" secondItem="ntJ-65-VgQ" secondAttribute="bottom" id="QtU-yg-p8G"/>
                                     <constraint firstItem="ntJ-65-VgQ" firstAttribute="top" secondItem="uLX-7P-QFG" secondAttribute="bottom" constant="8" id="lHv-2G-VhC"/>
+                                    <constraint firstItem="LAf-eD-yEu" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="20" id="o5Q-sB-jp3"/>
                                     <constraint firstItem="fEj-EB-Z1Q" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="23" id="uTi-ud-7Ro"/>
                                     <constraint firstItem="YOS-0S-1he" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="20" id="xxC-Zh-tcO"/>
                                 </constraints>
@@ -875,8 +890,8 @@
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="horoscopeSignLabel" destination="hG6-82-zcx" id="1Rb-Ty-Iri"/>
-                                            <outlet property="nameLabel" destination="MAa-3j-YST" id="vd4-zw-09E"/>
                                             <outlet property="profileImageView" destination="GYY-rt-3v6" id="0aj-S3-5Kl"/>
+                                            <outlet property="profileNameLabel" destination="MAa-3j-YST" id="zng-he-KRN"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -929,6 +944,130 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RTT-Xy-Xcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2784" y="2032"/>
+        </scene>
+        <!--Search View Controller-->
+        <scene sceneID="qcg-Jz-wFH">
+            <objects>
+                <viewController id="igC-EB-4kz" customClass="SearchViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RRs-0v-QC3"/>
+                        <viewControllerLayoutGuide type="bottom" id="Rv6-yt-ITy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="sv6-FL-ehh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="OmP-vM-C5d" userLabel="Banner View">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="Rxw-mB-O0n"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9jO-xX-gn0">
+                                <rect key="frame" x="10" y="104" width="580" height="437"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowTableViewCell" rowHeight="74" id="Y5k-pG-slz" customClass="FollowTableViewCell" customModule="Horoscopes" customModuleProvider="target">
+                                        <rect key="frame" x="10" y="104" width="600" height="353"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y5k-pG-slz" id="4du-Ej-cAW">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rs0-O0-tl2">
+                                                    <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="GbW-56-ysF"/>
+                                                        <constraint firstAttribute="height" constant="50" id="UYC-dI-1Od"/>
+                                                        <constraint firstAttribute="height" constant="50" id="d5n-Xz-kHz"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="d5n-Xz-kHz"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donald Patterson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gO4-B3-IxT">
+                                                    <rect key="frame" x="69" y="15" width="123" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AE-Uh-zI6">
+                                                    <rect key="frame" x="69" y="37" width="64" height="18"/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="gO4-B3-IxT" firstAttribute="leading" secondItem="Rs0-O0-tl2" secondAttribute="trailing" constant="9" id="6gF-Zx-z97"/>
+                                                <constraint firstAttribute="bottom" secondItem="Rs0-O0-tl2" secondAttribute="bottom" constant="10" id="FZP-Ht-Q8f"/>
+                                                <constraint firstItem="6AE-Uh-zI6" firstAttribute="leading" secondItem="Rs0-O0-tl2" secondAttribute="trailing" constant="9" id="Qwe-GL-grZ"/>
+                                                <constraint firstItem="gO4-B3-IxT" firstAttribute="top" secondItem="4du-Ej-cAW" secondAttribute="top" constant="15" id="b67-aM-c9r"/>
+                                                <constraint firstAttribute="bottom" secondItem="Rs0-O0-tl2" secondAttribute="bottom" constant="10" id="dJg-ni-xfo"/>
+                                                <constraint firstItem="Rs0-O0-tl2" firstAttribute="leading" secondItem="4du-Ej-cAW" secondAttribute="leading" constant="10" id="fy6-WZ-ADP"/>
+                                                <constraint firstItem="Rs0-O0-tl2" firstAttribute="top" secondItem="4du-Ej-cAW" secondAttribute="top" constant="10" id="gs2-fr-lGD"/>
+                                                <constraint firstItem="6AE-Uh-zI6" firstAttribute="top" secondItem="gO4-B3-IxT" secondAttribute="bottom" constant="4" id="oXT-mW-4LA"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="dJg-ni-xfo"/>
+                                                    <exclude reference="FZP-Ht-Q8f"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="horoscopeSignLabel" destination="6AE-Uh-zI6" id="Esh-zH-zCq"/>
+                                            <outlet property="profileImageView" destination="Rs0-O0-tl2" id="pDt-ua-JQp"/>
+                                            <outlet property="profileNameLabel" destination="gO4-B3-IxT" id="u3u-Dz-iYz"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="igC-EB-4kz" id="dzd-fA-aKi"/>
+                                </connections>
+                            </tableView>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for friends" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQ6-KJ-rnx">
+                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="igC-EB-4kz" id="BSp-Xu-Be2"/>
+                                </connections>
+                            </searchBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="OmP-vM-C5d" firstAttribute="leading" secondItem="sv6-FL-ehh" secondAttribute="leading" id="JaX-cW-Vug"/>
+                            <constraint firstItem="9jO-xX-gn0" firstAttribute="top" secondItem="mQ6-KJ-rnx" secondAttribute="bottom" constant="10" id="Lk2-XC-Fmz"/>
+                            <constraint firstItem="mQ6-KJ-rnx" firstAttribute="leading" secondItem="sv6-FL-ehh" secondAttribute="leading" id="Lw5-A8-Fu5"/>
+                            <constraint firstItem="mQ6-KJ-rnx" firstAttribute="leading" secondItem="OmP-vM-C5d" secondAttribute="trailing" constant="-600" id="Rer-2W-iLB"/>
+                            <constraint firstAttribute="trailing" secondItem="9jO-xX-gn0" secondAttribute="trailing" constant="10" id="S91-ns-ele"/>
+                            <constraint firstItem="OmP-vM-C5d" firstAttribute="top" secondItem="sv6-FL-ehh" secondAttribute="top" id="YRJ-yD-E2K"/>
+                            <constraint firstItem="Rv6-yt-ITy" firstAttribute="top" secondItem="9jO-xX-gn0" secondAttribute="bottom" constant="10" id="Yvb-VP-ps5"/>
+                            <constraint firstItem="mQ6-KJ-rnx" firstAttribute="top" secondItem="OmP-vM-C5d" secondAttribute="bottom" id="hjY-St-Q8F"/>
+                            <constraint firstItem="OmP-vM-C5d" firstAttribute="top" secondItem="RRs-0v-QC3" secondAttribute="bottom" id="i5x-sG-Ihe"/>
+                            <constraint firstItem="9jO-xX-gn0" firstAttribute="leading" secondItem="sv6-FL-ehh" secondAttribute="leading" constant="10" id="lip-r8-d6G"/>
+                            <constraint firstAttribute="trailing" secondItem="OmP-vM-C5d" secondAttribute="trailing" id="mGC-pZ-bYn"/>
+                            <constraint firstItem="mQ6-KJ-rnx" firstAttribute="top" secondItem="sv6-FL-ehh" secondAttribute="top" id="tdv-7Y-wq1"/>
+                            <constraint firstAttribute="trailing" secondItem="mQ6-KJ-rnx" secondAttribute="trailing" id="yVa-p7-Jh3"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="i5x-sG-Ihe"/>
+                                <exclude reference="Rer-2W-iLB"/>
+                                <exclude reference="tdv-7Y-wq1"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="searchBar" destination="mQ6-KJ-rnx" id="6cC-st-WK5"/>
+                        <outlet property="tableView" destination="9jO-xX-gn0" id="o0T-kD-KKa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xs0-g5-zp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3454" y="2032"/>
         </scene>
         <!--New Newsfeed View Controller-->
         <scene sceneID="TvE-LN-5yM">
@@ -3877,7 +4016,7 @@
         <image name="next_button" width="30" height="30"/>
         <image name="post_type_feel" width="20" height="20"/>
         <image name="post_type_mind" width="21" height="19"/>
-        <image name="search_icon" width="15" height="15"/>
+        <image name="search_icon" width="30" height="30"/>
         <image name="share_copy" width="70" height="35"/>
         <image name="tabbar_daily.png" width="22" height="23"/>
         <image name="tabbar_newsfeed.png" width="23" height="18"/>

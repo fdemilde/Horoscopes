@@ -140,7 +140,7 @@ class AddFriendTableViewController : TableViewControllerWithAds, UITableViewDele
             } else {
                 dispatch_async(dispatch_get_main_queue(),{
                     Utilities.hideHUD(viewToHide: self.view)
-                    self.friendList = result
+                    self.friendList = result!
                     // after get friend list, should loop through the list and check if user is following or not
                     
                     for user in self.friendList{
