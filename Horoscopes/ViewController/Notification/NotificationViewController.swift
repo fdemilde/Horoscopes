@@ -67,8 +67,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         if let cell = cell {
             var notifCell = cell as! NotificationTableViewCell
             var route = notifCell.notification.route
-            println("cell route == \(notifCell.notification.route)")
-            println("cell notif id == \(notifCell.notification.notification_id)")
             if(route != nil && route != ""){
                 XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
             }
@@ -169,7 +167,25 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         })
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
-            println("Route == post hearts param dict = \(param)")
+            if let postId = param["post_id"] as? String{
+                XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
+                    if let error = error {
+                        
+                    } else {
+                        if let result = result {
+                        for post : UserPost in result {
+                            let controller = self.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                            controller.userPost = post
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.navigationController?.pushViewController(controller, animated: true)
+                                })
+                            }
+                        }
+                    }
+                })
+                
+                
+            }
         })
         
         router.addRoute("/settings", blockCode: { (param) -> Void in

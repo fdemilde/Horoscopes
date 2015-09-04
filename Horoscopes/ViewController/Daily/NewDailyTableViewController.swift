@@ -210,6 +210,7 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         var pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
         var horoscopeSignName = Utilities.getHoroscopeNameWithIndex(selectedSign)
         shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
+        
         return shareVC
     }
     
@@ -229,7 +230,7 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    @IBAction func cookieTaooed(sender: AnyObject) {
+    @IBAction func cookieTapped(sender: AnyObject) {
 //        isCookieTapped = true
         let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
         cookieViewController.parentVC = self
@@ -249,9 +250,8 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         var formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
-        formSheet.cornerRadius = 0.0
-        formSheet.portraitTopInset = view.frame.height - SHARE_HYBRID_HEIGHT
-        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width, SHARE_HYBRID_HEIGHT)
+        formSheet.cornerRadius = 5.0
+        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width - 20, SHARE_HYBRID_HEIGHT)
         mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
 }

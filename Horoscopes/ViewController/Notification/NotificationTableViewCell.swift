@@ -33,7 +33,6 @@ class NotificationTableViewCell: UITableViewCell {
         self.setNotificationType()
         self.setupComponents()
 //        self.getUserProfile()
-        println("NotificationObject id == \(notif.toString())")
     }
     
     // MARK: Populate UI
