@@ -218,6 +218,11 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     
     func finishLoadingAllSigns(notification: NSNotification) {
         isEmptyDataSource = false
+        self.reloadData()
+    }
+    
+    // this method is for outside class to call
+    func reloadData(){
         updateCollectedData()
         tableView.reloadData()
     }

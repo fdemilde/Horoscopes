@@ -36,13 +36,15 @@ static int CLOVER_SYMBOL_TAG = 101;
 @synthesize thread = _thread;
 
 
-- (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber  andArray:(NSMutableArray*)horoscopes{
+- (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber andArray:(NSMutableArray*)horoscopes andCurrentSign: (NSString *)sign{
     
     if ((self = [super initWithFrame:frame])) {
 		self.delegate = del;
-        self.currentValue = 8;
+        
+        NSLog(@"Rotate control init!! CURRENT VALUE === %d", self.currentValue);
         self.numberOfSections = sectionsNumber;
         self.horoscopeSigns = horoscopes;
+        self.currentValue = [self getValueBySignName:(sign)];
         [self drawWheel];
         
 	}
@@ -85,7 +87,9 @@ static int CLOVER_SYMBOL_TAG = 101;
         [im addSubview:symbol];
         // when create wheel, highlight default selected sign
         if (i == currentValue) {
+            NSLog(@"CURRENT SIGN === %@", horoscope.sign);
             cloveImage.image = [horoscope getIconSelected];
+            symbol.image = [horoscope getSymbolSelected];
         }
         
         [container addSubview:im];
@@ -347,8 +351,9 @@ static int CLOVER_SYMBOL_TAG = 101;
 
 }
 
--(void) autoRollToSignIndex:(int)index{
+-(void) autoRollToSign:(NSString*)_sign{
     [self unhighlightSelectedSign];
+    int index = [self getValueBySignName:(_sign)];
     int selectedChange = currentValue - index;
     currentValue = index;
     //do the animation
@@ -520,5 +525,19 @@ static int CLOVER_SYMBOL_TAG = 101;
     // because 4 sign will be displayed at the same time
     float result = [[UIScreen mainScreen] bounds].size.width / 4;
     return result;
+}
+
+- (int)getValueBySignName:(NSString *)sign{
+    int index = 0;
+    NSLog(@"getValueBySignName _horoscopeSigns count == %lu", (unsigned long)_horoscopeSigns.count);
+    for (int i = 0; i < _horoscopeSigns.count; i++){
+        Horoscope* horo = _horoscopeSigns[i];
+        if([horo.sign compare:sign] == 0){
+            NSLog(@"getValueBySignName == %@", sign);
+            index = i;
+        }
+    }
+    return index;
+    
 }
 @end

@@ -29,6 +29,8 @@
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F400BA761B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */; };
 		F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */; };
+		F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD741B99536C0047185F /* CMPopTipView.m */; };
+		F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD761B99575E0047185F /* MyDatePickerView.swift */; };
 		F4106B7B1B43913F00D58D92 /* PostCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4106B7A1B43913F00D58D92 /* PostCellNode.swift */; };
 		F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */; };
 		F41E80C71B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F41E80C51B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift */; };
@@ -229,6 +231,9 @@
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
 		F400BA751B3E5A2800C05CFA /* CollectHoroscopesFirstCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopesFirstCell.swift; sourceTree = "<group>"; };
 		F400BA771B3E5A5C00C05CFA /* CollectHoroscopeCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectHoroscopeCell.swift; sourceTree = "<group>"; };
+		F40ECD731B99536C0047185F /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
+		F40ECD741B99536C0047185F /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
+		F40ECD761B99575E0047185F /* MyDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerView.swift; sourceTree = "<group>"; };
 		F4106B7A1B43913F00D58D92 /* PostCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostCellNode.swift; sourceTree = "<group>"; };
 		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostViewController.swift; sourceTree = "<group>"; };
 		F41E80C51B340D8B00C2DA95 /* DailyHoroscopeHeaderCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopeHeaderCell.swift; sourceTree = "<group>"; };
@@ -514,6 +519,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		F40ECD721B99536C0047185F /* CMPopTipView */ = {
+			isa = PBXGroup;
+			children = (
+				F40ECD731B99536C0047185F /* CMPopTipView.h */,
+				F40ECD741B99536C0047185F /* CMPopTipView.m */,
+			);
+			path = CMPopTipView;
+			sourceTree = "<group>";
+		};
 		F41E80C31B340D8B00C2DA95 /* TableViewCell */ = {
 			isa = PBXGroup;
 			children = (
@@ -535,6 +549,7 @@
 			children = (
 				F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */,
 				F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */,
+				F40ECD761B99575E0047185F /* MyDatePickerView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -701,6 +716,7 @@
 		F4C44F881B8EC58000910E56 /* OpenSources */ = {
 			isa = PBXGroup;
 			children = (
+				F40ECD721B99536C0047185F /* CMPopTipView */,
 				F4C44F891B8EC58000910E56 /* BKDeltaCalculator */,
 				F4C44F8F1B8EC58000910E56 /* DCPathButton */,
 				F4C44F991B8EC58000910E56 /* NSDate+NVTimeAgo.h */,
@@ -1306,10 +1322,12 @@
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F400BA781B3E5A5C00C05CFA /* CollectHoroscopeCell.swift in Sources */,
+				F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */,
 				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
+				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,

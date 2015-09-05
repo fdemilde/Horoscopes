@@ -41,4 +41,6 @@
 
 // DC PathButton
 #import "DCPathButton.h"
+
+#import "CMPopTipView.h"
 #endif
