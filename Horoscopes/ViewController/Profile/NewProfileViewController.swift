@@ -8,6 +8,11 @@
 
 import UIKit
 
+enum ProfileType {
+    case CurrentUser
+    case OtherUser
+}
+
 class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, FollowTableViewCellDelegate {
 
     @IBOutlet weak var tableHeaderView: UIView!
@@ -26,10 +31,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     var loginView: UIView!
     
-    enum ProfileType {
-        case CurrentUser
-        case OtherUser
-    }
     enum Tab {
         case Post
         case Followers
@@ -43,6 +44,8 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     var currentTab = Tab.Post
     static let postDateFormat = "MMMM dd, yyyy"
     var isFirstDataLoad = true
+    var searchController: UISearchController!
+    var filteredResult = [String]()
     
     // MARK: Life cycle
     
@@ -186,6 +189,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func configurePostTableViewCell(cell: PostTableViewCell, post: UserPost) {
+        cell.configureUserPostUi()
         switch post.type {
         case .OnYourMind:
             cell.headerView.backgroundColor = UIColor.newsfeedMindColor()
@@ -201,8 +205,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         cell.textView.text = post.message
     }
     
-    func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
-        cell.nameLabel.text = profile.name
+    func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile, showFollowButton: Bool) {
+        cell.configureFollowButton(profile.isFollowed, showFollowButton: showFollowButton)
+        cell.profileNameLabel.text = profile.name
         cell.horoscopeSignLabel.text = profile.horoscopeSignString
         Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -476,23 +481,24 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if currentTab == .Post {
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-            cell.type = PostCellType.Profile
-            configurePostTableViewCell(cell, post: post)
             cell.delegate = self
-            cell.configureUserPostUi()
+            configurePostTableViewCell(cell, post: post)
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             var profile: UserProfile!
             if currentTab == .Following {
                 profile = followingUsers[indexPath.row]
-                cell.configureFollowButton(profile.isFollowed, isFollowerCell: false)
+                configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
             } else {
                 profile = followers[indexPath.row]
                 cell.delegate = self
-                cell.configureFollowButton(profile.isFollowed, isFollowerCell: true)
+                if profileType == .CurrentUser {
+                    configureFollowTableViewCell(cell, profile: profile, showFollowButton: true)
+                } else {
+                    configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
+                }
             }
-            configureFollowTableViewCell(cell, profile: profile)
             return cell
         }
     }

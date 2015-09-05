@@ -15,7 +15,7 @@ protocol FollowTableViewCellDelegate {
 class FollowTableViewCell: UITableViewCell {
 
     @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var horoscopeSignLabel: UILabel!
     let followButtonWidth: CGFloat = 60
     let followButtonHeight: CGFloat = 44
@@ -27,6 +27,11 @@ class FollowTableViewCell: UITableViewCell {
         // Initialization code
         followButton = UIButton()
         addSubview(followButton)
+        profileNameLabel.userInteractionEnabled = true
+        if delegate != nil {
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfileNameLabel:")
+            profileNameLabel.addGestureRecognizer(gestureRecognizer)
+        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -35,9 +40,9 @@ class FollowTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
-    func configureFollowButton(isFollowed: Bool, isFollowerCell: Bool) {
+    func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
         followButton.frame = CGRect(x: frame.width - followButtonWidth - 10, y: frame.height/2 - followButtonHeight/2 , width: followButtonWidth, height: followButtonHeight)
-        if isFollowerCell {
+        if showFollowButton {
             followButton.hidden = false
             if isFollowed {
                 followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)

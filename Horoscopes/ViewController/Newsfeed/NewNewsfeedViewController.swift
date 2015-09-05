@@ -116,6 +116,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureCell(cell: PostTableViewCell, post: UserPost) {
+        cell.configureNewsfeedUi()
         switch post.type {
         case .OnYourMind:
             cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
@@ -135,7 +136,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         cell.profileNameLabel.text = post.user?.name
-        cell.configureNewsfeedUi()
     }
     
     // MARK: Post buttons clicked
@@ -248,13 +248,21 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         var post = userPostArray[indexPath.row] as UserPost
-        cell.type = PostCellType.Newsfeed
         cell.delegate = self
         configureCell(cell, post: post)
         return cell
     }
     
     // MARK: - Delegate
+    
+    func didTapProfileNameLabel(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let profile = userPostArray[index!].user
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
     func didTapShareButton(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row

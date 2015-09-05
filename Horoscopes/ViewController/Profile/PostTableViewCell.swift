@@ -11,25 +11,30 @@ import UIKit
 @objc protocol PostTableViewCellDelegate {
     func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
+    optional func didTapProfileNameLabel(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var containerView: UIView!
-    @IBOutlet weak var profileImageView: UIImageView!
-    @IBOutlet weak var profileView: UIView!
-    @IBOutlet weak var profileNameLabel: UILabel!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var horoscopeSignView: UIView!
-    @IBOutlet weak var horoscopeSignImageView: UIImageView!
-    @IBOutlet weak var horoscopeSignLabel: UILabel!
     @IBOutlet weak var postTypeImageView: UIImageView!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var likeButton: UIButton!
     
+    // MARK: - Newsfeed outlet
+    
+    @IBOutlet weak var profileView: UIView!
+    @IBOutlet weak var profileImageView: UIImageView!
+    @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var horoscopeSignView: UIView!
+    @IBOutlet weak var horoscopeSignImageView: UIImageView!
+    @IBOutlet weak var horoscopeSignLabel: UILabel!
+    
+    // MARK: - Property
+    
     var delegate: PostTableViewCellDelegate!
-    var type: PostCellType!
     let profileImageSize: CGFloat = 80
     
     override func awakeFromNib() {
@@ -56,10 +61,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         profileImageView.layer.cornerRadius = profileImageSize / 2
         profileImageView.clipsToBounds = true
+        profileNameLabel.userInteractionEnabled = true
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfileNameLabel:")
+        profileNameLabel.addGestureRecognizer(gestureRecognizer)
     }
     
     func configureUserPostUi() {
         likeButton.hidden = true
+    }
+    
+    func tapProfileNameLabel(sender: UITapGestureRecognizer) {
+        delegate.didTapProfileNameLabel!(self)
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {

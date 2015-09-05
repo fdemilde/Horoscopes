@@ -593,7 +593,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func retrieveFriendList(completionHandler: (result: [UserProfile]!, error: NSError?) -> Void) {
+    func retrieveFriendList(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         var postData = NSMutableDictionary()
         postData.setObject(FACEBOOK_APP_ID, forKey: "app_id")
         var systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()

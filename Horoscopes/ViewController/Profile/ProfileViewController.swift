@@ -8,10 +8,10 @@
 
 import UIKit
 
-enum ProfileType {
-    case CurrentUser
-    case OtherUser
-}
+//enum ProfileType {
+//    case CurrentUser
+//    case OtherUser
+//}
 
 class ProfileViewController: ViewControllerWithAds, ASTableViewDataSource, ASTableViewDelegate, ProfileSecondSectionHeaderViewDelegate, ProfileFollowCellNodeDelegate {
     
