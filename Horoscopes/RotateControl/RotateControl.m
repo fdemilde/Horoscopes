@@ -40,8 +40,6 @@ static int CLOVER_SYMBOL_TAG = 101;
     
     if ((self = [super initWithFrame:frame])) {
 		self.delegate = del;
-        
-        NSLog(@"Rotate control init!! CURRENT VALUE === %d", self.currentValue);
         self.numberOfSections = sectionsNumber;
         self.horoscopeSigns = horoscopes;
         self.currentValue = [self getValueBySignName:(sign)];
@@ -87,7 +85,6 @@ static int CLOVER_SYMBOL_TAG = 101;
         [im addSubview:symbol];
         // when create wheel, highlight default selected sign
         if (i == currentValue) {
-            NSLog(@"CURRENT SIGN === %@", horoscope.sign);
             cloveImage.image = [horoscope getIconSelected];
             symbol.image = [horoscope getSymbolSelected];
         }
@@ -529,11 +526,9 @@ static int CLOVER_SYMBOL_TAG = 101;
 
 - (int)getValueBySignName:(NSString *)sign{
     int index = 0;
-    NSLog(@"getValueBySignName _horoscopeSigns count == %lu", (unsigned long)_horoscopeSigns.count);
     for (int i = 0; i < _horoscopeSigns.count; i++){
         Horoscope* horo = _horoscopeSigns[i];
         if([horo.sign compare:sign] == 0){
-            NSLog(@"getValueBySignName == %@", sign);
             index = i;
         }
     }
