@@ -15,6 +15,8 @@ enum ProfileType {
 
 class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, FollowTableViewCellDelegate {
 
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var navigationView: UIView!
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -52,6 +54,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+//        navigationView.frame = CGRectZero
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         if profileType == .CurrentUser {
@@ -217,6 +220,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Action
+    
+    @IBAction func tapBackButton(sender: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     
     @IBAction func tapPostButton(sender: UIButton) {
         currentTab = .Post
