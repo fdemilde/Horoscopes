@@ -11,7 +11,7 @@ import UIKit
 @objc protocol PostTableViewCellDelegate {
     func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
-    optional func didTapProfileNameLabel(cell: PostTableViewCell)
+    optional func didTapPostProfile(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
@@ -61,17 +61,23 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
         profileImageView.layer.cornerRadius = profileImageSize / 2
         profileImageView.clipsToBounds = true
+        
+        let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         profileNameLabel.userInteractionEnabled = true
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfileNameLabel:")
-        profileNameLabel.addGestureRecognizer(gestureRecognizer)
+        profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
+        profileImageView.userInteractionEnabled = true
+        profileImageView.addGestureRecognizer(imageGestureRecognizer)
     }
     
     func configureUserPostUi() {
         likeButton.hidden = true
     }
     
-    func tapProfileNameLabel(sender: UITapGestureRecognizer) {
-        delegate.didTapProfileNameLabel!(self)
+    func tapProfile(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            delegate.didTapPostProfile!(self)
+        }
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {

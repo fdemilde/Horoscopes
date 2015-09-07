@@ -494,6 +494,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+            cell.delegate = self
             var profile: UserProfile!
             if currentTab == .Following {
                 profile = followingUsers[indexPath.row]
@@ -519,6 +520,20 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Delegate
+    
+    func didTapFollowProfile(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        var profile: UserProfile!
+        if currentTab == .Following {
+            profile = followingUsers[index!]
+        } else {
+            profile = followers[index!]
+        }
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
     func didTapShareButton(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row

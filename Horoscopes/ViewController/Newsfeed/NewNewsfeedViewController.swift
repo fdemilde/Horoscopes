@@ -255,7 +255,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // MARK: - Delegate
     
-    func didTapProfileNameLabel(cell: PostTableViewCell) {
+    func didTapPostProfile(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
         let profile = userPostArray[index!].user
         let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController

@@ -10,6 +10,7 @@ import UIKit
 
 protocol FollowTableViewCellDelegate {
     func didTapFollowButton(cell: FollowTableViewCell)
+    func didTapFollowProfile(cell: FollowTableViewCell)
 }
 
 class FollowTableViewCell: UITableViewCell {
@@ -27,11 +28,13 @@ class FollowTableViewCell: UITableViewCell {
         // Initialization code
         followButton = UIButton()
         addSubview(followButton)
+        
+        let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         profileNameLabel.userInteractionEnabled = true
-        if delegate != nil {
-            let gestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfileNameLabel:")
-            profileNameLabel.addGestureRecognizer(gestureRecognizer)
-        }
+        profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
+        profileImageView.userInteractionEnabled = true
+        profileImageView.addGestureRecognizer(imageGestureRecognizer)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -58,6 +61,12 @@ class FollowTableViewCell: UITableViewCell {
     
     func tapFollowButton(sender: UIButton) {
         delegate.didTapFollowButton(self)
+    }
+    
+    func tapProfile(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            delegate.didTapFollowProfile(self)
+        }
     }
 
 }
