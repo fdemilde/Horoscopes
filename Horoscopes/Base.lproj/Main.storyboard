@@ -517,13 +517,33 @@
                                             <action selector="tapBackButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="gwE-BO-x5P"/>
                                         </connections>
                                     </button>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="JfU-2W-uGh">
+                                        <rect key="frame" x="44" y="0.0" width="556" height="44"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="lL0-3z-ieO" id="9GB-oe-rus"/>
+                                        </connections>
+                                    </searchBar>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JfU-2W-uGh" secondAttribute="trailing" id="7Mx-X0-xMP"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="top" id="U1B-Xg-iOO"/>
                                     <constraint firstAttribute="height" constant="44" id="V4Y-cP-B26"/>
+                                    <constraint firstAttribute="bottom" secondItem="JfU-2W-uGh" secondAttribute="bottom" id="YOM-6d-J5i"/>
                                     <constraint firstItem="Zng-2q-FRb" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="top" id="dKC-Qc-JLM"/>
                                     <constraint firstItem="Zng-2q-FRb" firstAttribute="leading" secondItem="ySG-Y5-h73" secondAttribute="leading" id="g44-nX-x5F"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="leading" secondItem="Zng-2q-FRb" secondAttribute="trailing" id="kx9-C1-Ba4"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="leading" secondItem="Zng-2q-FRb" secondAttribute="trailing" id="lT5-Pr-Xfd"/>
+                                    <constraint firstAttribute="height" constant="44" id="xd2-k5-0ft"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="V4Y-cP-B26"/>
+                                        <exclude reference="lT5-Pr-Xfd"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaE-qk-z8p" userLabel="Header View">
                                 <rect key="frame" x="0.0" y="94" width="600" height="136"/>
@@ -672,7 +692,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="igC-EB-4kz" kind="presentation" id="Sa1-dO-cUq"/>
+                                            <segue destination="igC-EB-4kz" kind="presentation" identifier="searchFriend" id="Sa1-dO-cUq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -956,9 +976,12 @@
                         <outlet property="horoscopeSignLabel" destination="SID-QG-e9w" id="Vc1-23-gvF"/>
                         <outlet property="horoscopeSignView" destination="uLX-7P-QFG" id="Srd-d2-ZvN"/>
                         <outlet property="navigationView" destination="ySG-Y5-h73" id="TaQ-Ff-amr"/>
+                        <outlet property="navigationViewHeightLayoutConstraint" destination="xd2-k5-0ft" id="HEu-Rs-hv2"/>
                         <outlet property="postButton" destination="hFG-WA-e7k" id="i65-H1-5sl"/>
                         <outlet property="profileImageView" destination="YOS-0S-1he" id="ggs-7D-mKX"/>
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
+                        <outlet property="searchBar" destination="JfU-2W-uGh" id="0oe-82-bI8"/>
+                        <outlet property="searchButton" destination="LAf-eD-yEu" id="Dyv-7v-d4g"/>
                         <outlet property="tableHeaderView" destination="gaE-qk-z8p" id="oAv-CE-DXL"/>
                         <outlet property="tableView" destination="2Jk-5w-PJI" id="2mK-Uc-Kbq"/>
                         <outlet property="tableViewBottomSpaceLayoutConstraint" destination="cPS-qW-egl" id="gdL-wl-3Yb"/>
@@ -973,7 +996,7 @@
         <!--Search View Controller-->
         <scene sceneID="qcg-Jz-wFH">
             <objects>
-                <viewController id="igC-EB-4kz" customClass="SearchViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchViewController" id="igC-EB-4kz" customClass="SearchViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RRs-0v-QC3"/>
                         <viewControllerLayoutGuide type="bottom" id="Rv6-yt-ITy"/>
@@ -989,7 +1012,7 @@
                                     <constraint firstAttribute="height" constant="50" id="Rxw-mB-O0n"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9jO-xX-gn0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9jO-xX-gn0">
                                 <rect key="frame" x="10" y="104" width="580" height="437"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>

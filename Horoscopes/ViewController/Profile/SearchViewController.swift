@@ -8,13 +8,18 @@
 
 import UIKit
 
-class SearchViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
+protocol SearchViewControllerDelegate {
+    func didChooseUser(profile: UserProfile)
+}
+
+class SearchViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, FollowTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     var filteredResult = [UserProfile]()
     var friends = [UserProfile]()
     var searchText = ""
+    var delegate: SearchViewControllerDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +77,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+        cell.delegate = self
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = friend.horoscopeSignString
@@ -84,6 +90,12 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
     }
     
     // MARK: - Delegate
+    
+    func didTapFollowProfile(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        var profile = filteredResult[index!]
+        delegate.didChooseUser(profile)
+    }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText

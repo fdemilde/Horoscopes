@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol FollowTableViewCellDelegate {
-    func didTapFollowButton(cell: FollowTableViewCell)
+@objc protocol FollowTableViewCellDelegate {
+    optional func didTapFollowButton(cell: FollowTableViewCell)
     func didTapFollowProfile(cell: FollowTableViewCell)
 }
 
@@ -60,7 +60,7 @@ class FollowTableViewCell: UITableViewCell {
     }
     
     func tapFollowButton(sender: UIButton) {
-        delegate.didTapFollowButton(self)
+        delegate.didTapFollowButton!(self)
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {
