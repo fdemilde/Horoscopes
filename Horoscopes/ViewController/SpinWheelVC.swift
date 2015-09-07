@@ -48,8 +48,11 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     func setupWheel(){
         var horoscopesSigns = XAppDelegate.horoscopesManager.getHoroscopesSigns()
+        var currentSign = "";
         var setting = XAppDelegate.userSettings
+        
         if (setting.horoscopeSign != -1){ // not load first time
+            currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
             var index = setting.horoscopeSign
             if(index < 8){
                 for var i = 0; i < 8 - index; ++i {
@@ -64,12 +67,15 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
             }
         } else {
             setting.horoscopeSign = 8
+            currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
         }
+        //      Binh Modified
         
         var allSignsArray = Utilities.parseArrayToNSArray(horoscopesSigns).mutableCopy() as! NSMutableArray
         
         var frame = getProperRotateFrame()
-        wheel = RotateControl(frame: frame , andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray)
+        wheel = RotateControl(frame: frame, andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray, andCurrentSign: currentSign)
+        
         self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
         self.view.addSubview(self.wheel);
     }

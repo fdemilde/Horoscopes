@@ -7,11 +7,10 @@
 //
 
 import Foundation
-class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
+class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTipViewDelegate, MyDatePickerViewDelegate {
     
     @IBOutlet weak var fbLoginBtn: UIButton!
     @IBOutlet weak var loginLabel: UILabel!
-    @IBOutlet weak var separator: UIImageView!
     
     @IBOutlet weak var birthdaySelectButton: UIButton!
     @IBOutlet weak var signNameLabel: UILabel!
@@ -19,18 +18,20 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     @IBOutlet weak var DOBLabel: UILabel!
     
     @IBOutlet weak var starIcon: UIImageView!
+    @IBOutlet var containerView: UIView!
+    
     
     @IBOutlet weak var fbLoginButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var fbLoginLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var fbNameLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var DOBLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var birthdayBgTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
     var startButton : UIButton!
-    
+    var popUp : CMPopTipView!
+    var pickerView : MyDatePickerView!
     
     var userFBID = ""
     var userFBName = ""
@@ -46,13 +47,25 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         fbLoginBtn.imageView!.clipsToBounds = true
         XAppDelegate.socialManager.delegate = self
         self.setupComponents()
+        self.initialBirthday()
+    }
+    
+    func initialBirthday(){
+        birthday = XAppDelegate.userSettings.birthday
+        
+//        var signIndex = XAppDelegate.horoscopesManager.getSignIndexOfDate(birthday)
+        if let birthday = birthday{
+            var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
+            //        self.wheel.autoRollToSign(signName)
+        }
+        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
     }
     
     func setupComponents(){
         var ratio = Utilities.getRatio()
         fbLoginButtonTopConstraint.constant = (fbLoginButtonTopConstraint.constant * ratio)
         fbLoginLabelTopConstraint.constant = (fbLoginLabelTopConstraint.constant * ratio)
-        separatorTopConstraint.constant = (separatorTopConstraint.constant * ratio)
         DOBLabelTopConstraint.constant = (DOBLabelTopConstraint.constant * ratio)
         
         birthdayBgTopConstraint.constant = (birthdayBgTopConstraint.constant * ratio)
@@ -71,9 +84,14 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         
         startButton.addTarget(self, action: "startButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
+        birthdaySelectButton.layer.shadowColor = UIColor.blackColor().CGColor
+        birthdaySelectButton.layer.shadowOffset = CGSizeMake(0, 2)
+        birthdaySelectButton.layer.shadowRadius = 2
+        birthdaySelectButton.layer.shadowOpacity = 0.3
+        birthdaySelectButton.layer.cornerRadius = 4
+        
         self.view .bringSubviewToFront(fbLoginBtn)
         self.view .bringSubviewToFront(loginLabel)
-        self.view .bringSubviewToFront(separator)
         self.view .bringSubviewToFront(birthdaySelectButton)
         self.view .bringSubviewToFront(signNameLabel)
         self.view .bringSubviewToFront(signDateLabel)
@@ -195,27 +213,27 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
     }
     
     @IBAction func birthdayButtonTapped(sender: AnyObject) {
-        let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
-        selectBirthdayVC.setupViewController(self, type: BirthdayParentViewControllerType.LoginViewController, currentSetupBirthday: XAppDelegate.userSettings.birthday)
-        var formSheet = MZFormSheetController(viewController: selectBirthdayVC)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
-        formSheet.cornerRadius = 0.0;
-        formSheet.portraitTopInset = 0.0;
-        formSheet.presentedFormSheetSize = Utilities.getScreenSize()
-        
-        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        if(self.popUp == nil) {
+            self.setupDatePickerPopup()
+        } else {
+            popUp.dismissAnimated(true)
+            popTipViewWasDismissedByUser(popUp)
+            popUp = nil
+        }
     }
     
     func finishedSelectingBirthday(dateString : String){
-        var signIndex = XAppDelegate.horoscopesManager.getSignIndexOfDate(birthday)
-        self.wheel.autoRollToSignIndex(Int32(signIndex))
+        var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
+        self.wheel.autoRollToSign(signName)
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
         XAppDelegate.userSettings.birthday = birthday
+        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
         // TODO: sending updating Birthday is wrong, should do it later
-         XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(dateString, completionHandler: { (responseDict, error) -> Void in
-        })
+//         XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(dateString, completionHandler: { (responseDict, error) -> Void in
+//        })
     }
+    
+    // MARK: helpers
     
     func getBirthdayString() -> String{
         let dateFormatter = NSDateFormatter()
@@ -225,9 +243,13 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         let dayOfMonthFormatter = NSDateFormatter()
         dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dayOfMonthFormatter.dateFormat = "d"
+        var dateString = dateFormatter.stringFromDate(getDefaultBirthday())
+        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(getDefaultBirthday())
+        if let birthday = birthday{
+            dateString = dateFormatter.stringFromDate(birthday)
+            dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(birthday)
+        }
         
-        var dateString = dateFormatter.stringFromDate(birthday)
-        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(birthday)
         
         var date_day = dayOfMonthFormatterString.toInt()
         var suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
@@ -236,6 +258,71 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate {
         dateString = dateString.stringByAppendingString(suffix)
         
         return dateString
+    }
+    
+    // MARK: Gesture Recognize
+    @IBAction func outsideTapped(sender : UITapGestureRecognizer){
+        var touchLocation = sender.locationInView(self.containerView)
+        if(popUp != nil) {
+            popUp.dismissAnimated(true)
+            popTipViewWasDismissedByUser(popUp)
+            popUp = nil
+        }
+    }
+    
+    // MARK: Poptipview setip
+    
+    func setupDatePickerPopup(){
+        pickerView = MyDatePickerView(frame: CGRectMake(0, -50, 240, 60))
+        pickerView.delegate = self
+        if let birthday = XAppDelegate.userSettings.birthday {
+            pickerView.setCurrentBirthday(XAppDelegate.userSettings.birthday)
+        } else {
+            pickerView.setCurrentBirthday(getDefaultBirthday())
+        }
+        
+        popUp = CMPopTipView(customView: pickerView)
+        popUp.backgroundColor = UIColor(red:133.0/255, green:124.0/255, blue:173.0/255, alpha:1)
+        popUp.delegate = self
+        popUp.presentPointingAtView(birthdaySelectButton, inView: self.view, animated: true)
+        popUp.borderColor = UIColor.clearColor()
+        popUp.borderWidth = 0
+        popUp.cornerRadius = 4.0
+        popUp.preferredPointDirection = PointDirection.Down
+        popUp.hasGradientBackground = false
+        popUp.has3DStyle = false
+        popUp.hasShadow = true
+    }
+    
+    // MARK: Poptipview delegate
+    func popTipViewWasDismissedByUser(popTipView: CMPopTipView!) {
+        self.popUp = nil
+    }
+    
+    // DatePickerView Delegate
+    func didFinishPickingDate(dayString: String, monthString: String) {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        var dateString = String(format:"%@/%@",dayString,monthString)
+        var selectedDate = dateFormatter.dateFromString(dateString)
+        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
+        self.birthday = selectedDate
+        self.finishedSelectingBirthday(dateStringInNumberFormat)
+    }
+    
+    func getDateStringInNumberFormat(date : NSDate) -> String{
+        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        var comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        var result = String(format:"%d/%02d", comp.day, comp.month)
+        return result
+    }
+    
+    func getDefaultBirthday() -> NSDate{ // return default birthday for first load
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return dateFormatter.dateFromString("25/11")!
     }
     
 }

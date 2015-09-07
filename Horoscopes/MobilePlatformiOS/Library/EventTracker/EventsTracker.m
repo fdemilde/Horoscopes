@@ -162,7 +162,7 @@
         if(errorObj != nil){
             int errorValue = [errorObj intValue];
             if (errorValue == 0) {
-                DebugLog(@"%d event(s) uploaded.", [responseDict[@"uploaded"] intValue]);
+//                DebugLog(@"%d event(s) uploaded.", [responseDict[@"uploaded"] intValue]);
                 [self deleteUploadedEvents:eventsToUpload];
             } else {
                 DebugLog(@"Event upload error: %@", responseDict[@"error_message"]);

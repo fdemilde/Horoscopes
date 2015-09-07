@@ -19,7 +19,6 @@ class MyTimePickerViewController : ViewControllerWithAds{
         var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         picker.date = Utilities.getDateFromDateString(parentVC.notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
-        println("picker viewDidLoad == \(parentVC.notificationFireTime)")
     }
     
     @IBAction func backButtonTapped(sender: AnyObject) {

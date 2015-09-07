@@ -94,17 +94,6 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
         
     }
     
-    // MARK: helpers
-    func getDayArrayBaseOnMonthIndex(monthIndex : Int) -> [String]{
-        if (monthIndex == 0 || monthIndex == 2 || monthIndex == 4 || monthIndex == 6 || monthIndex == 7 || monthIndex == 9 || monthIndex == 11 ){
-            return dayArray31
-        } else if (monthIndex == 3 || monthIndex == 5 || monthIndex == 8 || monthIndex == 10 ){
-            return dayArray30
-        } else {
-            return dayArray29
-        }
-    }
-    
     func changeSignNameLabel(){
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd-MMMM"
@@ -124,6 +113,18 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
             UILabel.commitAnimations()
         }
     }
+    
+    // MARK: helpers
+    func getDayArrayBaseOnMonthIndex(monthIndex : Int) -> [String]{
+        if (monthIndex == 0 || monthIndex == 2 || monthIndex == 4 || monthIndex == 6 || monthIndex == 7 || monthIndex == 9 || monthIndex == 11 ){
+            return dayArray31
+        } else if (monthIndex == 3 || monthIndex == 5 || monthIndex == 8 || monthIndex == 10 ){
+            return dayArray30
+        } else {
+            return dayArray29
+        }
+    }
+    
     
     func setCurrentBirthdaySign(){
 //        println("setCurrentBirthdaySign setCurrentBirthdaySign ")

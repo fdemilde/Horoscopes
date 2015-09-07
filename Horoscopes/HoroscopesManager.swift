@@ -210,6 +210,11 @@ class HoroscopesManager : NSObject {
             var horoscope = self.horoscopesSigns[index]
             if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
                 && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
+                    var dateformatter = NSDateFormatter()
+                    dateformatter.dateFormat = "MMM - dd"
+                    dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    var startDate = dateformatter.stringFromDate(horoscope.startDate)
+                    var endDate = dateformatter.stringFromDate(horoscope.endDate)
                     return index
             }
         }

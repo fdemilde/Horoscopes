@@ -21,6 +21,6 @@
 @property int currentValue;
 @property (nonatomic, strong) NSMutableArray *horoscopeSigns;
 
-- (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber andArray:(NSMutableArray*)horoscopes;
--(void) autoRollToSignIndex:(int)index;
+- (id) initWithFrame:(CGRect)frame andDelegate:(id)del withSections:(int)sectionsNumber andArray:(NSMutableArray*)horoscopes andCurrentSign: (NSString *)sign;
+-(void) autoRollToSign:(NSString *)sign;
 @end

@@ -45,7 +45,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-//        cell.type = PostCellType.Newsfeed
         cell.delegate = self
         if let post = userPost {
             configureCell(cell, post: userPost)

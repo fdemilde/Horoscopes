@@ -56,8 +56,8 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
             for nav in viewControllers {
                 var nav = nav as! UINavigationController
                 var vc = nav.viewControllers.first as! UIViewController
-                if vc.isKindOfClass( DailyTableViewController.classForCoder() ) {
-                    var dailyVC = vc as! DailyTableViewController
+                if vc.isKindOfClass( NewDailyTableViewController.classForCoder() ) {
+                    var dailyVC = vc as! NewDailyTableViewController
                     dailyVC.selectedSign = self.selectedSign
                     dailyVC.reloadData()
                 }
