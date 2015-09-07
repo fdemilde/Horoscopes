@@ -14,6 +14,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
     @IBOutlet weak var searchBar: UISearchBar!
     var filteredResult = [UserProfile]()
     var friends = [UserProfile]()
+    var searchText = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,24 +28,24 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
         searchBar.tintColor = UIColor.whiteColor()
         let textField = searchBar.valueForKey("searchField") as! UITextField
         textField.textColor = UIColor.whiteColor()
+        searchBar.becomeFirstResponder()
         
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
                 
             } else {
                 self.friends = result!
+                self.filteredResult.removeAll(keepCapacity: false)
+                self.filteredResult = self.friends.filter({ $0.name.lowercaseString.rangeOfString(self.searchText.lowercaseString) != nil })
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                })
             }
         }
     }
     
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(animated)
-//        searchBar.becomeFirstResponder()
-//    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        searchBar.becomeFirstResponder()
+    override func viewWillDisappear(animated: Bool) {
+        searchBar.resignFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {
@@ -71,7 +72,7 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
-        let friend = friends[indexPath.row]
+        let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = friend.horoscopeSignString
         Utilities.getImageFromUrlString(friend.imgURL, completionHandler: { (image) -> Void in
@@ -85,13 +86,14 @@ class SearchViewController: UIViewController, UITableViewDataSource, UISearchBar
     // MARK: - Delegate
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchText = searchText
         filteredResult.removeAll(keepCapacity: false)
-        filteredResult = friends.filter({ $0.name.lowercaseString.rangeOfString(searchText) != nil })
+        filteredResult = friends.filter({ $0.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil })
         tableView.reloadData()
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        navigationController?.popViewControllerAnimated(true)
+        dismissViewControllerAnimated(true, completion: nil)
     }
 
 }
