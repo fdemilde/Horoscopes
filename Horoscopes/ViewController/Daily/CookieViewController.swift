@@ -15,14 +15,21 @@ class CookieViewController : UIViewController{
         case CookieViewStateUnopened
         case CookieViewStateOpened
     }
-    
+    let NAVIGATION_BAR_HEIGHT = 50 as CGFloat
+    let FOOTER_HEIGHT = 60 as CGFloat
+    let PADDING = 10 as CGFloat
     
     @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var containerView: UIView!
+    // batmanView helps prevent scrollview height to be ambiguous
+    @IBOutlet weak var batmanView: UIView!
+    @IBOutlet weak var headerView: UIView!
+    // TITLE LABEL
+    @IBOutlet weak var dailyCookieLabel: UILabel!
     
-    // firstView
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cookieButton: UIButton!
-    @IBOutlet weak var dailyCookieLabel: UILabel!
+    
     @IBOutlet weak var openCookieLabel: UILabel!
     
     // secondView
@@ -32,13 +39,17 @@ class CookieViewController : UIViewController{
     @IBOutlet weak var luckyNumberLabel: UILabel!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var checkBackLabel: UILabel!
+    @IBOutlet weak var separatorView: UIView!
+    @IBOutlet weak var footerView: UIView!
     
-    @IBOutlet weak var cookieOpenedTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var cookieOpenedTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var tapToOpenLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var todayTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var yourLuckyLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var luckyNumberLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var shareButtonTopConstraint: NSLayoutConstraint!
+//    @IBOutlet weak var shareButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var checkBackTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
     
     var state = CookieViewState.CookieViewStateUnopened
     var parentVC : NewDailyTableViewController?
@@ -46,8 +57,6 @@ class CookieViewController : UIViewController{
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
-        self.bringFirstViewComponentsToFront()
-        self.bringSecondViewComponentsToFront()
         self.setupConstraints()
         state = CookieViewState.CookieViewStateUnopened
         self.reloadState()
@@ -57,39 +66,21 @@ class CookieViewController : UIViewController{
     }
     
     func setupBackground(){
+        containerView.layer.cornerRadius = 4
         var screenSize = Utilities.getScreenSize()
         var bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
     }
     
-    func bringFirstViewComponentsToFront(){
-        self.view.bringSubviewToFront(scrollView)
-        
-        scrollView.bringSubviewToFront(backButton)
-        scrollView.bringSubviewToFront(cookieButton)
-        scrollView.bringSubviewToFront(dailyCookieLabel)
-        scrollView.bringSubviewToFront(openCookieLabel)
-    }
-    
-    func bringSecondViewComponentsToFront(){
-        scrollView.bringSubviewToFront(cookieOpenedImageView)
-        scrollView.bringSubviewToFront(fortuneDescriptionLabel)
-        scrollView.bringSubviewToFront(yourLuckyNumberLabel)
-        scrollView.bringSubviewToFront(luckyNumberLabel)
-        scrollView.bringSubviewToFront(shareButton)
-        scrollView.bringSubviewToFront(checkBackLabel)
-    }
-    
     func setupConstraints(){
         var ratio = Utilities.getRatio()
-        cookieOpenedTopConstraint.constant = (cookieOpenedTopConstraint.constant * ratio)
+        tapToOpenLabelTopConstraint.constant = (tapToOpenLabelTopConstraint.constant * ratio)
         todayTopConstraint.constant = (todayTopConstraint.constant * ratio)
         yourLuckyLabelTopConstraint.constant = (yourLuckyLabelTopConstraint.constant * ratio)
         luckyNumberLabelTopConstraint.constant = (luckyNumberLabelTopConstraint.constant * ratio)
-        shareButtonTopConstraint.constant = (shareButtonTopConstraint.constant * ratio)
         checkBackTopConstraint.constant = (checkBackTopConstraint.constant * ratio)
-
+        separatorTopConstraint.constant = (separatorTopConstraint.constant * ratio)
     }
     
     // MARK: button Actions
@@ -101,8 +92,6 @@ class CookieViewController : UIViewController{
     @IBAction func cookieTapped(sender: AnyObject) {
         Utilities.showHUD()
         self.getFortune()
-        
-        
     }
     
     @IBAction func shareFortuneCookieTapped(sender: AnyObject) {
@@ -110,9 +99,8 @@ class CookieViewController : UIViewController{
         var formSheet = MZFormSheetController(viewController: shareVC)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
-        formSheet.cornerRadius = 0.0
-        formSheet.portraitTopInset = self.view.frame.height - SHARE_HYBRID_HEIGHT;
-        formSheet.presentedFormSheetSize = CGSizeMake(self.view.frame.width, SHARE_HYBRID_HEIGHT);
+        formSheet.cornerRadius = 5.0
+        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width - 20, SHARE_HYBRID_HEIGHT)
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     // MARK: Helpers
@@ -138,6 +126,7 @@ class CookieViewController : UIViewController{
     
     // MARK: hide/show components
     func loadStateUnopened(){
+        println("loadStateUnopened loadStateUnopened")
         // show first view / hide second view
         cookieButton.hidden = false
         openCookieLabel.hidden = false
@@ -148,8 +137,8 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = true
         shareButton.hidden = true
         checkBackLabel.hidden = true
-        
-        scrollView.contentSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height - ADMOD_HEIGHT - TABBAR_HEIGHT)
+        separatorView.hidden = true
+        footerView.hidden = true
     }
     
     func loadStateOpened(){
@@ -163,8 +152,11 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = false
         shareButton.hidden = false
         checkBackLabel.hidden = false
+        separatorView.hidden = false
+        footerView.hidden = false
         
-        scrollView.contentSize = CGSizeMake(Utilities.getScreenSize().width, 460)
+        containerView.frame = CGRectMake(containerView.frame.origin.x, containerView.frame.origin.y,containerView.frame.size.width, headerView.frame.height + todayTopConstraint.constant + fortuneDescriptionLabel.frame.height + yourLuckyLabelTopConstraint.constant + yourLuckyNumberLabel.frame.height + luckyNumberLabelTopConstraint.constant + luckyNumberLabel.frame.height + checkBackTopConstraint.constant + checkBackLabel.frame.height + separatorTopConstraint.constant + 1 + FOOTER_HEIGHT)
+        scrollView.contentSize = CGSize(width: containerView.frame.width, height: containerView.frame.height + PADDING * 2)
     }
     
     func hideAll(){
@@ -266,7 +258,5 @@ class CookieViewController : UIViewController{
         self.hideAll() // only show description label to show error
         self.fortuneDescriptionLabel.hidden = false
     }
-    
-    
 }
 

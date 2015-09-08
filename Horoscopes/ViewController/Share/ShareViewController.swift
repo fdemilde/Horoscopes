@@ -197,7 +197,13 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
     }
     
+    
     // MARK: Button Tapp gesture handlers
+    
+    @IBAction func copyURLTapped(sender: AnyObject) {
+        UIPasteboard.generalPasteboard().string = getSharingURL()
+    }
+    
     func handleFBTap(sender: AnyObject){
         
         shareController.shareFacebook(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: getSharingURL())
