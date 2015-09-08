@@ -545,7 +545,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaE-qk-z8p" userLabel="Header View">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaE-qk-z8p" userLabel="Profile View">
                                 <rect key="frame" x="0.0" y="94" width="600" height="136"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="YOS-0S-1he">
@@ -692,7 +692,22 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="igC-EB-4kz" kind="presentation" identifier="searchFriend" id="Sa1-dO-cUq"/>
+                                            <segue destination="igC-EB-4kz" kind="popoverPresentation" identifier="searchFriend" popoverAnchorView="LAf-eD-yEu" id="Sa1-dO-cUq">
+                                                <popoverArrowDirection key="popoverArrowDirection" down="YES"/>
+                                            </segue>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SL-7T-0Wv">
+                                        <rect key="frame" x="536" y="36" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="Nga-IE-jk4"/>
+                                            <constraint firstAttribute="height" constant="44" id="wM1-JY-elV"/>
+                                        </constraints>
+                                        <state key="normal" image="newsfeed_follow_btn">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapNewsfeedFollowButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="pgR-Vy-4o8"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -706,9 +721,11 @@
                                     <constraint firstAttribute="trailing" secondItem="LAf-eD-yEu" secondAttribute="trailing" constant="20" id="Ir3-dC-X3D"/>
                                     <constraint firstAttribute="height" constant="300" id="Jb7-eh-N0j"/>
                                     <constraint firstItem="fEj-EB-Z1Q" firstAttribute="leading" secondItem="YOS-0S-1he" secondAttribute="trailing" constant="10" id="Jn6-HV-Qho"/>
+                                    <constraint firstItem="5SL-7T-0Wv" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="36" id="KwB-98-kZW"/>
                                     <constraint firstAttribute="bottom" secondItem="ntJ-65-VgQ" secondAttribute="bottom" id="QtU-yg-p8G"/>
                                     <constraint firstItem="ntJ-65-VgQ" firstAttribute="top" secondItem="uLX-7P-QFG" secondAttribute="bottom" constant="8" id="lHv-2G-VhC"/>
                                     <constraint firstItem="LAf-eD-yEu" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="20" id="o5Q-sB-jp3"/>
+                                    <constraint firstAttribute="trailing" secondItem="5SL-7T-0Wv" secondAttribute="trailing" constant="20" id="omi-S6-c07"/>
                                     <constraint firstItem="fEj-EB-Z1Q" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="23" id="uTi-ud-7Ro"/>
                                     <constraint firstItem="YOS-0S-1he" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="top" constant="20" id="xxC-Zh-tcO"/>
                                 </constraints>
@@ -718,7 +735,7 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="353" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Jk-5w-PJI">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="353" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Jk-5w-PJI">
                                 <rect key="frame" x="0.0" y="230" width="600" height="321"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -926,6 +943,21 @@
                                             <outlet property="profileNameLabel" destination="MAa-3j-YST" id="zng-he-KRN"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BasicTableViewCell" textLabel="d3Z-eI-D2Q" style="IBUITableViewCellStyleDefault" id="Ytn-Oh-JX6">
+                                        <rect key="frame" x="140" y="278" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ytn-Oh-JX6" id="Yh4-xS-wsq">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d3Z-eI-D2Q">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="lL0-3z-ieO" id="pws-YS-G9t"/>
@@ -977,12 +1009,13 @@
                         <outlet property="horoscopeSignView" destination="uLX-7P-QFG" id="Srd-d2-ZvN"/>
                         <outlet property="navigationView" destination="ySG-Y5-h73" id="TaQ-Ff-amr"/>
                         <outlet property="navigationViewHeightLayoutConstraint" destination="xd2-k5-0ft" id="HEu-Rs-hv2"/>
+                        <outlet property="newsfeedFollowButton" destination="5SL-7T-0Wv" id="pA2-mS-xl4"/>
                         <outlet property="postButton" destination="hFG-WA-e7k" id="i65-H1-5sl"/>
                         <outlet property="profileImageView" destination="YOS-0S-1he" id="ggs-7D-mKX"/>
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
+                        <outlet property="profileView" destination="gaE-qk-z8p" id="Od8-vP-fKO"/>
                         <outlet property="searchBar" destination="JfU-2W-uGh" id="0oe-82-bI8"/>
                         <outlet property="searchButton" destination="LAf-eD-yEu" id="Dyv-7v-d4g"/>
-                        <outlet property="tableHeaderView" destination="gaE-qk-z8p" id="oAv-CE-DXL"/>
                         <outlet property="tableView" destination="2Jk-5w-PJI" id="2mK-Uc-Kbq"/>
                         <outlet property="tableViewBottomSpaceLayoutConstraint" destination="cPS-qW-egl" id="gdL-wl-3Yb"/>
                         <outlet property="tableViewLeadingSpaceLayoutConstraint" destination="0GJ-B9-aww" id="cJ0-Jo-GKd"/>
