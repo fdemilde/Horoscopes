@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -506,8 +506,52 @@
                                     <constraint firstAttribute="height" constant="50" id="VB2-jl-GS9"/>
                                 </constraints>
                             </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ySG-Y5-h73" userLabel="Navigation View">
+                                <rect key="frame" x="0.0" y="50" width="600" height="44"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zng-2q-FRb">
+                                        <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="eh7-O3-MQ4"/>
+                                            <constraint firstAttribute="width" constant="44" id="tB9-8X-u4u"/>
+                                        </constraints>
+                                        <state key="normal" image="back_button">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="tapBackButton:" destination="lL0-3z-ieO" eventType="touchUpInside" id="gwE-BO-x5P"/>
+                                        </connections>
+                                    </button>
+                                    <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="JfU-2W-uGh">
+                                        <rect key="frame" x="44" y="0.0" width="556" height="44"/>
+                                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="lL0-3z-ieO" id="9GB-oe-rus"/>
+                                        </connections>
+                                    </searchBar>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="JfU-2W-uGh" secondAttribute="trailing" id="7Mx-X0-xMP"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="top" id="U1B-Xg-iOO"/>
+                                    <constraint firstAttribute="height" constant="44" id="V4Y-cP-B26"/>
+                                    <constraint firstAttribute="bottom" secondItem="JfU-2W-uGh" secondAttribute="bottom" id="YOM-6d-J5i"/>
+                                    <constraint firstItem="Zng-2q-FRb" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="top" id="dKC-Qc-JLM"/>
+                                    <constraint firstItem="Zng-2q-FRb" firstAttribute="leading" secondItem="ySG-Y5-h73" secondAttribute="leading" id="g44-nX-x5F"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="leading" secondItem="Zng-2q-FRb" secondAttribute="trailing" id="kx9-C1-Ba4"/>
+                                    <constraint firstItem="JfU-2W-uGh" firstAttribute="leading" secondItem="Zng-2q-FRb" secondAttribute="trailing" id="lT5-Pr-Xfd"/>
+                                    <constraint firstAttribute="height" constant="44" id="xd2-k5-0ft"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="V4Y-cP-B26"/>
+                                        <exclude reference="lT5-Pr-Xfd"/>
+                                    </mask>
+                                </variation>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gaE-qk-z8p" userLabel="Header View">
-                                <rect key="frame" x="0.0" y="50" width="600" height="136"/>
+                                <rect key="frame" x="0.0" y="94" width="600" height="136"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="YOS-0S-1he">
                                         <rect key="frame" x="20" y="20" width="60" height="60"/>
@@ -653,7 +697,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="igC-EB-4kz" kind="show" id="RCc-os-nLy"/>
+                                            <segue destination="igC-EB-4kz" kind="presentation" identifier="searchFriend" id="Sa1-dO-cUq"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -680,7 +724,7 @@
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="353" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="2Jk-5w-PJI">
-                                <rect key="frame" x="0.0" y="186" width="600" height="365"/>
+                                <rect key="frame" x="0.0" y="230" width="600" height="321"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="PostTableViewCell" rowHeight="250" id="WmM-dz-xZd" customClass="PostTableViewCell" customModule="Horoscopes" customModuleProvider="target">
@@ -897,36 +941,52 @@
                         <color key="backgroundColor" red="0.3921568627" green="0.3921568627" blue="0.56862745100000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="2Jk-5w-PJI" firstAttribute="leading" secondItem="Zr1-TT-TTS" secondAttribute="leading" id="0GJ-B9-aww"/>
+                            <constraint firstItem="gaE-qk-z8p" firstAttribute="bottom" secondItem="ySG-Y5-h73" secondAttribute="top" constant="36" id="62z-K6-yYO"/>
                             <constraint firstItem="6CE-fP-qAN" firstAttribute="top" secondItem="2Jk-5w-PJI" secondAttribute="bottom" id="C6d-j2-ZaL"/>
                             <constraint firstAttribute="trailing" secondItem="gaE-qk-z8p" secondAttribute="trailing" id="EnQ-h9-l1A"/>
                             <constraint firstAttribute="trailing" secondItem="2Jk-5w-PJI" secondAttribute="trailing" id="HaS-BT-cYw"/>
                             <constraint firstItem="bST-kb-bMI" firstAttribute="top" secondItem="Zr1-TT-TTS" secondAttribute="top" id="P3E-Fr-MbA"/>
+                            <constraint firstItem="ySG-Y5-h73" firstAttribute="top" secondItem="bST-kb-bMI" secondAttribute="bottom" id="PH8-5N-1SE"/>
                             <constraint firstItem="gaE-qk-z8p" firstAttribute="top" secondItem="bST-kb-bMI" secondAttribute="bottom" id="Q2t-xM-gL1"/>
+                            <constraint firstItem="gaE-qk-z8p" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="bottom" id="R4b-qf-bYb"/>
                             <constraint firstItem="2Jk-5w-PJI" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="bottom" id="URt-KI-TgG"/>
                             <constraint firstItem="2Jk-5w-PJI" firstAttribute="top" secondItem="gaE-qk-z8p" secondAttribute="bottom" id="WYK-zN-7NK"/>
                             <constraint firstItem="bST-kb-bMI" firstAttribute="leading" secondItem="Zr1-TT-TTS" secondAttribute="leading" id="XO2-FI-HCJ"/>
+                            <constraint firstAttribute="trailing" secondItem="ySG-Y5-h73" secondAttribute="trailing" id="a7L-pg-gpg"/>
                             <constraint firstItem="6CE-fP-qAN" firstAttribute="top" secondItem="2Jk-5w-PJI" secondAttribute="bottom" id="cPS-qW-egl"/>
                             <constraint firstItem="gaE-qk-z8p" firstAttribute="leading" secondItem="Zr1-TT-TTS" secondAttribute="leading" id="dEL-Yh-3c3"/>
+                            <constraint firstItem="6CE-fP-qAN" firstAttribute="top" secondItem="ySG-Y5-h73" secondAttribute="bottom" id="eBl-zQ-k9n"/>
+                            <constraint firstItem="ySG-Y5-h73" firstAttribute="bottom" secondItem="gaE-qk-z8p" secondAttribute="bottom" id="p6B-3D-nzZ"/>
                             <constraint firstAttribute="trailing" secondItem="bST-kb-bMI" secondAttribute="trailing" id="rAc-pH-OgI"/>
+                            <constraint firstItem="ySG-Y5-h73" firstAttribute="leading" secondItem="Zr1-TT-TTS" secondAttribute="leading" id="v7s-eB-M49"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="p6B-3D-nzZ"/>
+                                <exclude reference="62z-K6-yYO"/>
+                                <exclude reference="Q2t-xM-gL1"/>
                                 <exclude reference="URt-KI-TgG"/>
                                 <exclude reference="C6d-j2-ZaL"/>
+                                <exclude reference="eBl-zQ-k9n"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" id="d1J-F8-6I9"/>
                     <connections>
+                        <outlet property="backButton" destination="Zng-2q-FRb" id="Jqg-HD-oE5"/>
                         <outlet property="followersButton" destination="GyE-E2-C6k" id="15T-Vg-mBw"/>
                         <outlet property="followingButton" destination="vFd-97-wRk" id="5u1-iS-7N5"/>
                         <outlet property="headerView" destination="bST-kb-bMI" id="xeX-lM-Zg7"/>
                         <outlet property="horoscopeSignImageView" destination="m31-Vq-8yn" id="ueq-YA-0ME"/>
                         <outlet property="horoscopeSignLabel" destination="SID-QG-e9w" id="Vc1-23-gvF"/>
                         <outlet property="horoscopeSignView" destination="uLX-7P-QFG" id="Srd-d2-ZvN"/>
+                        <outlet property="navigationView" destination="ySG-Y5-h73" id="TaQ-Ff-amr"/>
+                        <outlet property="navigationViewHeightLayoutConstraint" destination="xd2-k5-0ft" id="HEu-Rs-hv2"/>
                         <outlet property="postButton" destination="hFG-WA-e7k" id="i65-H1-5sl"/>
                         <outlet property="profileImageView" destination="YOS-0S-1he" id="ggs-7D-mKX"/>
                         <outlet property="profileLabel" destination="fEj-EB-Z1Q" id="ePy-wQ-KuN"/>
+                        <outlet property="searchBar" destination="JfU-2W-uGh" id="0oe-82-bI8"/>
+                        <outlet property="searchButton" destination="LAf-eD-yEu" id="Dyv-7v-d4g"/>
                         <outlet property="tableHeaderView" destination="gaE-qk-z8p" id="oAv-CE-DXL"/>
                         <outlet property="tableView" destination="2Jk-5w-PJI" id="2mK-Uc-Kbq"/>
                         <outlet property="tableViewBottomSpaceLayoutConstraint" destination="cPS-qW-egl" id="gdL-wl-3Yb"/>
@@ -941,7 +1001,7 @@
         <!--Search View Controller-->
         <scene sceneID="qcg-Jz-wFH">
             <objects>
-                <viewController id="igC-EB-4kz" customClass="SearchViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SearchViewController" id="igC-EB-4kz" customClass="SearchViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="RRs-0v-QC3"/>
                         <viewControllerLayoutGuide type="bottom" id="Rv6-yt-ITy"/>
@@ -957,7 +1017,7 @@
                                     <constraint firstAttribute="height" constant="50" id="Rxw-mB-O0n"/>
                                 </constraints>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9jO-xX-gn0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="74" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="9jO-xX-gn0">
                                 <rect key="frame" x="10" y="104" width="580" height="437"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -1060,7 +1120,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xs0-g5-zp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3454" y="2032"/>
+            <point key="canvasLocation" x="2178" y="2037"/>
         </scene>
         <!--New Newsfeed View Controller-->
         <scene sceneID="TvE-LN-5yM">

@@ -13,8 +13,10 @@ enum ProfileType {
     case OtherUser
 }
 
-class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, FollowTableViewCellDelegate {
+class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, FollowTableViewCellDelegate, UISearchBarDelegate, SearchViewControllerDelegate {
 
+    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet weak var navigationView: UIView!
     @IBOutlet weak var tableHeaderView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
@@ -28,6 +30,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     @IBOutlet weak var tableViewLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableViewBottomSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var navigationViewHeightLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var searchButton: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     var loginView: UIView!
     
@@ -44,7 +49,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     var currentTab = Tab.Post
     static let postDateFormat = "MMMM dd, yyyy"
     var isFirstDataLoad = true
-    var searchController: UISearchController!
     var filteredResult = [String]()
     
     // MARK: Life cycle
@@ -52,6 +56,14 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        if profileType == .CurrentUser {
+            navigationView.subviews.map({ $0.removeFromSuperview() })
+            navigationViewHeightLayoutConstraint.constant = 0
+        } else {
+            searchButton.removeFromSuperview()
+            let textField = searchBar.valueForKey("searchField") as! UITextField
+            textField.textColor = UIColor.whiteColor()
+        }
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         if profileType == .CurrentUser {
@@ -217,6 +229,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Action
+    
+    @IBAction func tapBackButton(sender: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
     
     @IBAction func tapPostButton(sender: UIButton) {
         currentTab = .Post
@@ -486,6 +503,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+            cell.delegate = self
             var profile: UserProfile!
             if currentTab == .Following {
                 profile = followingUsers[indexPath.row]
@@ -511,6 +529,40 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Delegate
+    
+    func didChooseUser(profile: UserProfile) {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = profile
+        presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+            navigationController?.pushViewController(controller, animated: true)
+        })
+    }
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+        controller.delegate = self
+        navigationController?.presentViewController(controller, animated: true, completion: nil)
+    }
+    
+    func didTapFollowProfile(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        var profile: UserProfile!
+        if currentTab == .Following {
+            profile = followingUsers[index!]
+        } else {
+            profile = followers[index!]
+        }
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
+        controller.profileType = ProfileType.OtherUser
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
+    }
     
     func didTapShareButton(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
@@ -539,6 +591,13 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 })
             }
         })
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "searchFriend" {
+            let controller = segue.destinationViewController as! SearchViewController
+            controller.delegate = self
+        }
     }
 
 }
