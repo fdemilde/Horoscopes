@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "daily_cookie_open.png"
+      "filename" : "cookie_button_opened.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "daily_cookie_open@2x.png"
+      "filename" : "cookie_button_opened@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "daily_cookie_open@3x.png"
+      "filename" : "cookie_button_opened@3x.png"
     }
   ],
   "info" : {
