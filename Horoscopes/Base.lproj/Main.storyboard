@@ -1427,12 +1427,12 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-RX-tuv" userLabel="Footer View">
                                                                     <rect key="frame" x="0.0" y="318" width="580" height="50"/>
                                                                     <subviews>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCM-pj-kfn">
+                                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCM-pj-kfn">
                                                                             <rect key="frame" x="10" y="3" width="47" height="44"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="44" id="tFm-Qz-UoX"/>
                                                                             </constraints>
-                                                                            <state key="normal" image="newsfeed_heart_icon">
+                                                                            <state key="normal">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
                                                                             <connections>
@@ -1533,6 +1533,7 @@
                                             <outlet property="horoscopeSignImageView" destination="Hk2-a5-WFc" id="qAz-94-l1i"/>
                                             <outlet property="horoscopeSignLabel" destination="dB4-Nk-FWl" id="FMr-I6-Z6o"/>
                                             <outlet property="horoscopeSignView" destination="fiI-bz-aJe" id="RzN-iE-ZKr"/>
+                                            <outlet property="likeButton" destination="fCM-pj-kfn" id="caE-rA-QSM"/>
                                             <outlet property="postDateLabel" destination="AUz-OP-Buw" id="cbz-SA-MOf"/>
                                             <outlet property="postTypeImageView" destination="KDj-6R-ejn" id="VR7-Bl-r04"/>
                                             <outlet property="profileImageView" destination="rU9-3P-TxU" id="b1D-xJ-My8"/>

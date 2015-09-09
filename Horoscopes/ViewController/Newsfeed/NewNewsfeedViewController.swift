@@ -136,6 +136,11 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         cell.profileNameLabel.text = post.user?.name
+        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        } else {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+        }
     }
     
     // MARK: Post buttons clicked
@@ -277,14 +282,11 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let index = tableView.indexPathForCell(cell)?.row
         let profileId = userPostArray[index!].uid
         let postId = userPostArray[index!].post_id
-        // TODO: Binh implements the actual like logic.
         
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
             return
         }
-        
-        Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         XAppDelegate.socialManager.sendHeart(profileId, postId: postId, type: SEND_HEART_USER_POST_TYPE)
     }
@@ -292,7 +294,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // Notification handler
     func sendHeartSuccessful(notif: NSNotification){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        Utilities.hideHUD()
 //        var animation = CATransition()
 //        animation.duration = 0.5
 //        animation.type = kCATransitionFade

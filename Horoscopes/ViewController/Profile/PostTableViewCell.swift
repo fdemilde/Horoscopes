@@ -81,6 +81,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {
+        sender.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         delegate.didTapLikeButton?(self)
     }
 
