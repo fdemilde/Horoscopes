@@ -261,6 +261,17 @@ class Utilities {
         return facebookTimeAgoString
     }
     
+    // Corner Radius manipulation 
+    class func makeCornerRadius(view : UIView, maskFrame : CGRect, roundOptions : UIRectCorner, radius : CGFloat) -> UIView {
+        var maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: roundOptions, cornerRadii: CGSizeMake(radius, radius))
+        
+        var maskLayer = CAShapeLayer()
+        maskLayer.frame = maskFrame
+        maskLayer.path = maskPath.CGPath
+        view.layer.mask = maskLayer
+        return view
+    }
+    
     // MARK: Notification support
     class func postNotification(name: String, object:AnyObject?){
         dispatch_async(dispatch_get_main_queue(),{

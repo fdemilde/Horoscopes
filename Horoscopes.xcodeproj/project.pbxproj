@@ -54,6 +54,7 @@
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
+		F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
 		F460980C1B50D1F30026F0C9 /* moon_ani_01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */; };
@@ -108,6 +109,7 @@
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
 		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
+		F4A721721BA066A200A4C691 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */; };
 		F4AB3A841B672F0D00EFF0A1 /* AddFriendTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB3A831B672F0D00EFF0A1 /* AddFriendTableCell.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
@@ -258,6 +260,7 @@
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
 		F46097E81B50D1F30026F0C9 /* moon_ani_01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@3x.png"; sourceTree = "<group>"; };
@@ -314,6 +317,7 @@
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
+		F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveCalendarCell.swift; sourceTree = "<group>"; };
 		F4AB3A831B672F0D00EFF0A1 /* AddFriendTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddFriendTableCell.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
@@ -543,6 +547,7 @@
 				F47B9D541B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift */,
 				F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */,
 				F4AB3A831B672F0D00EFF0A1 /* AddFriendTableCell.swift */,
+				F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */,
 			);
 			path = TableViewCell;
 			sourceTree = "<group>";
@@ -685,6 +690,7 @@
 				70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */,
 				70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */,
 				70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */,
+				F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */,
 			);
 			path = Daily;
 			sourceTree = "<group>";
@@ -1301,6 +1307,7 @@
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
+				F4A721721BA066A200A4C691 /* ArchiveCalendarCell.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
 				F47B9D551B57EDA600901D8C /* CollectHoroscopeDetailHeaderCell.swift in Sources */,
@@ -1378,6 +1385,7 @@
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
 				F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
+				F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */,
 				F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

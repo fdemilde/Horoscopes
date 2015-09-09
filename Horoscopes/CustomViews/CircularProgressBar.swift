@@ -35,7 +35,7 @@ class CircularProgressBar : CAShapeLayer {
     func createCircleProgress() {
         // create big circle
         var bigCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: radius * 2 + strokeWidth)
-        bigCircle.fillColor = UIColor(red:134/255.0, green:120/255.0, blue:170/255.0, alpha: 1.0).CGColor
+        bigCircle.fillColor = UIColor(red:102/255.0, green:92/255.0, blue:92/255.0, alpha: 1.0).CGColor
         self.addSublayer(bigCircle)
         
         // The starting angle is given by the fraction of the circle that the point is at, divided by 2 * Pi and less
@@ -50,7 +50,7 @@ class CircularProgressBar : CAShapeLayer {
         // Configure the circle
         // right color : UIColor(red:59/255.0, green:60/255.0, blue:86/255.0, alpha: 1.0)
         progressCircle.fillColor = UIColor.clearColor().CGColor
-        progressCircle.strokeColor = UIColor(red:295/255.0, green:212/255.0, blue:93/255.0, alpha: 1.0).CGColor
+        progressCircle.strokeColor = UIColor(red:255/255.0, green:102/255.0, blue:102/255.0, alpha: 1.0).CGColor
         progressCircle.lineWidth = strokeWidth
         // When it gets to the end of its animation, leave it at 0% stroke filled
         progressCircle.strokeEnd = 0.0
@@ -59,7 +59,7 @@ class CircularProgressBar : CAShapeLayer {
         
         // create small circle
         var smallCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: (radius - strokeWidth/2) * 2)
-        smallCircle.fillColor = UIColor(red:59/255.0, green:60/255.0, blue:86/255.0, alpha: 1.0).CGColor
+        smallCircle.fillColor = UIColor(red:133/255.0, green:124/255.0, blue:173/255.0, alpha: 1.0).CGColor
         self.addSublayer(smallCircle)
         
         
@@ -68,14 +68,14 @@ class CircularProgressBar : CAShapeLayer {
         var circleX = progressCenter.x
         var circleY = progressCenter.y - radius
         var strokeHead = self.createCircle(CGPointMake(circleX, circleY), diameter: strokeWidth)
-        strokeHead.fillColor = UIColor(red:295/255.0, green:212/255.0, blue:93/255.0, alpha: 1.0).CGColor
+        strokeHead.fillColor = UIColor(red:255/255.0, green:102/255.0, blue:102/255.0, alpha: 1.0).CGColor
         self.addSublayer(strokeHead)
         
         // moving headStroke
         circleX = progressCenter.x - strokeWidth/2
         circleY = progressCenter.y - radius - strokeWidth/2
         movingStrokeHead = self.createCircle(CGPointMake(circleX, circleY), diameter: strokeWidth)
-        movingStrokeHead.fillColor = UIColor(red:295/255.0, green:212/255.0, blue:93/255.0, alpha: 1.0).CGColor
+        movingStrokeHead.fillColor = UIColor(red:255/255.0, green:102/255.0, blue:102/255.0, alpha: 1.0).CGColor
         self.addSublayer(movingStrokeHead)
     }
     

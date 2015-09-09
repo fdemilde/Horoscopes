@@ -126,7 +126,6 @@ class CookieViewController : UIViewController{
     
     // MARK: hide/show components
     func loadStateUnopened(){
-        println("loadStateUnopened loadStateUnopened")
         // show first view / hide second view
         cookieButton.hidden = false
         openCookieLabel.hidden = false
