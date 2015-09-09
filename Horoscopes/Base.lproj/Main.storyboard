@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -1158,7 +1158,7 @@
         <!--New Newsfeed View Controller-->
         <scene sceneID="TvE-LN-5yM">
             <objects>
-                <viewController id="SfV-d6-o0a" customClass="NewNewsfeedViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewNewsfeedViewController" id="SfV-d6-o0a" customClass="NewNewsfeedViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="eDT-pw-Ix6"/>
                         <viewControllerLayoutGuide type="bottom" id="rc1-tu-rll"/>
@@ -3641,6 +3641,9 @@
                                                 <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                             </state>
+                                            <connections>
+                                                <action selector="tapJoinHoroscopesCommunityButton:" destination="Lnf-AN-JeY" eventType="touchUpInside" id="Ihw-Sj-TLC"/>
+                                            </connections>
                                         </button>
                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cookie_btn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="n96-Qi-UNb">
                                             <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
