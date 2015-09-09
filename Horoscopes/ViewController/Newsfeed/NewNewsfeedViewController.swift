@@ -141,6 +141,26 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         } else {
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
         }
+        if XAppDelegate.currentUser.uid != -1 {
+            SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    let isFollowing = result!["isfollowing"] as! Int == 1
+                    if isFollowing {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                            cell.newsfeedFollowButton.enabled = false
+                        })
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
+                            cell.newsfeedFollowButton.enabled = true
+                        })
+                    }
+                }
+            })
+        }
     }
     
     // MARK: Post buttons clicked
@@ -259,6 +279,28 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Delegate
+    
+    func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        SocialManager.sharedInstance.follow(userPostArray[index!].uid, completionHandler: { (error) -> Void in
+            hud.mode = MBProgressHUDMode.Text
+            hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+            if let error = error {
+                hud.detailsLabelText = "Follow unsuccessully due to network error!"
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    hud.hide(true, afterDelay: 2)
+                })
+            } else {
+                let name = self.userPostArray[index!].user!.name
+                hud.detailsLabelText = "\(name) has been added to your Following list."
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                    hud.hide(true, afterDelay: 2)
+                })
+            }
+        })
+    }
     
     func didTapPostProfile(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row

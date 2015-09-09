@@ -957,7 +957,7 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d3Z-eI-D2Q">
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -1291,7 +1291,7 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="fbT-Vh-sWY"/>
                                                                                 <constraint firstAttribute="width" constant="44" id="wgm-iq-4g8"/>
                                                                             </constraints>
-                                                                            <state key="normal" image="newsfeed_follow_btn">
+                                                                            <state key="normal">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
                                                                             <variation key="default">
@@ -1299,6 +1299,9 @@
                                                                                     <exclude reference="fbT-Vh-sWY"/>
                                                                                 </mask>
                                                                             </variation>
+                                                                            <connections>
+                                                                                <action selector="tapNewsfeedFollowButton:" destination="c6k-iU-de5" eventType="touchUpInside" id="JGg-Ou-Fde"/>
+                                                                            </connections>
                                                                         </button>
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4MM-TI-ig3" userLabel="Header View">
                                                                             <rect key="frame" x="0.0" y="120" width="580" height="30"/>
@@ -1534,6 +1537,7 @@
                                             <outlet property="horoscopeSignLabel" destination="dB4-Nk-FWl" id="FMr-I6-Z6o"/>
                                             <outlet property="horoscopeSignView" destination="fiI-bz-aJe" id="RzN-iE-ZKr"/>
                                             <outlet property="likeButton" destination="fCM-pj-kfn" id="caE-rA-QSM"/>
+                                            <outlet property="newsfeedFollowButton" destination="KSC-qN-6gT" id="ldx-Hw-tXU"/>
                                             <outlet property="postDateLabel" destination="AUz-OP-Buw" id="cbz-SA-MOf"/>
                                             <outlet property="postTypeImageView" destination="KDj-6R-ejn" id="VR7-Bl-r04"/>
                                             <outlet property="profileImageView" destination="rU9-3P-TxU" id="b1D-xJ-My8"/>

@@ -12,6 +12,7 @@ import UIKit
     func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
     optional func didTapPostProfile(cell: PostTableViewCell)
+    optional func didTapNewsfeedFollowButton(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
@@ -31,6 +32,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var horoscopeSignImageView: UIImageView!
     @IBOutlet weak var horoscopeSignLabel: UILabel!
+    @IBOutlet weak var newsfeedFollowButton: UIButton!
     
     // MARK: - Property
     
@@ -72,6 +74,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     func configureUserPostUi() {
         likeButton.hidden = true
+    }
+    
+    @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
+        delegate.didTapNewsfeedFollowButton!(self)
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {
