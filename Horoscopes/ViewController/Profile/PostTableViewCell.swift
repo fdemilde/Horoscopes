@@ -12,6 +12,7 @@ import UIKit
     func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
     optional func didTapPostProfile(cell: PostTableViewCell)
+    optional func didTapNewsfeedFollowButton(cell: PostTableViewCell)
 }
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
@@ -31,6 +32,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var horoscopeSignImageView: UIImageView!
     @IBOutlet weak var horoscopeSignLabel: UILabel!
+    @IBOutlet weak var newsfeedFollowButton: UIButton!
     
     // MARK: - Property
     
@@ -74,6 +76,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         likeButton.hidden = true
     }
     
+    @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
+        delegate.didTapNewsfeedFollowButton!(self)
+    }
+    
     func tapProfile(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             delegate.didTapPostProfile!(self)
@@ -81,6 +87,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {
+        sender.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         delegate.didTapLikeButton?(self)
     }
 

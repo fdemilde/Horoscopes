@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate {
+class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate, DailyButtonTableViewCellDelegate {
     
     let defaultEstimatedRowHeight: CGFloat = 96
     let spaceBetweenCell: CGFloat = 16
@@ -59,7 +59,9 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
             cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) as! UITableViewCell
             configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
         case 2:
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! DailyButtonTableViewCell
+            cell.delegate = self
+            return cell
         default:
             var cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
@@ -242,6 +244,10 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         self.navigationController!.pushViewController(cookieViewController, animated: true)
     }
     // MARK: - Delegate
+    
+    func didTapJoinHoroscopesCommunityButton() {
+        tabBarController?.selectedIndex = 1
+    }
     
     func didSelectHoroscopeSign(selectedSign: Int) {
         presentedViewController?.dismissViewControllerAnimated(true, completion: nil)

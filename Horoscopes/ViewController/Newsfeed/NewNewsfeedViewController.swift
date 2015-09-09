@@ -136,6 +136,31 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         cell.profileNameLabel.text = post.user?.name
+        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        } else {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+        }
+        if XAppDelegate.currentUser.uid != -1 {
+            SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    
+                } else {
+                    let isFollowing = result!["isfollowing"] as! Int == 1
+                    if isFollowing {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                            cell.newsfeedFollowButton.enabled = false
+                        })
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
+                            cell.newsfeedFollowButton.enabled = true
+                        })
+                    }
+                }
+            })
+        }
     }
     
     // MARK: Post buttons clicked
@@ -255,6 +280,28 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // MARK: - Delegate
     
+    func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        SocialManager.sharedInstance.follow(userPostArray[index!].uid, completionHandler: { (error) -> Void in
+            hud.mode = MBProgressHUDMode.Text
+            hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+            if let error = error {
+                hud.detailsLabelText = "Follow unsuccessully due to network error!"
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    hud.hide(true, afterDelay: 2)
+                })
+            } else {
+                let name = self.userPostArray[index!].user!.name
+                hud.detailsLabelText = "\(name) has been added to your Following list."
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                    hud.hide(true, afterDelay: 2)
+                })
+            }
+        })
+    }
+    
     func didTapPostProfile(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
         let profile = userPostArray[index!].user
@@ -277,14 +324,11 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let index = tableView.indexPathForCell(cell)?.row
         let profileId = userPostArray[index!].uid
         let postId = userPostArray[index!].post_id
-        // TODO: Binh implements the actual like logic.
         
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
             return
         }
-        
-        Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         XAppDelegate.socialManager.sendHeart(profileId, postId: postId, type: SEND_HEART_USER_POST_TYPE)
     }
@@ -292,7 +336,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // Notification handler
     func sendHeartSuccessful(notif: NSNotification){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        Utilities.hideHUD()
 //        var animation = CATransition()
 //        animation.duration = 0.5
 //        animation.type = kCATransitionFade

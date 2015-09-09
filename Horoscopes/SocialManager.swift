@@ -121,7 +121,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func sendHeart(receiverId: Int, postId : String, type : String){
-        Utilities.showHUD()
         var postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
         postData.setObject(type, forKey: "type")
@@ -133,16 +132,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 var errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     println("Error code = \(errorCode)")
-                    Utilities.hideHUD()
                     Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
                 } else { // no error
                     var success = result["success"] as! Int
                     if success == 1 {
                         self.sendHeartServerNotification(receiverId, postId: postId)
                         Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
+                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: postId)
                     } else {
-//                        Utilities.showAlertView(self, title: "Error", message: "Please try again later!")\
-                        Utilities.hideHUD()
                         println("Post unsuccessful")
                     }
                 }

@@ -8,11 +8,16 @@
 
 import UIKit
 
+protocol DailyButtonTableViewCellDelegate {
+    func didTapJoinHoroscopesCommunityButton()
+}
+
 class DailyButtonTableViewCell: UITableViewCell {
     
     let inset: CGFloat = 8
     @IBOutlet weak var discoverFortuneCookieButton: UIButton!
     @IBOutlet weak var joinHoroscopesCommunityButton: UIButton!
+    var delegate: DailyButtonTableViewCellDelegate!
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -42,6 +47,10 @@ class DailyButtonTableViewCell: UITableViewCell {
     func makeCorneredButton(button: UIButton) {
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
+    }
+    
+    @IBAction func tapJoinHoroscopesCommunityButton(sender: UIButton) {
+        delegate.didTapJoinHoroscopesCommunityButton()
     }
 
 }

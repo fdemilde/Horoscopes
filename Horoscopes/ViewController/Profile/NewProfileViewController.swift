@@ -17,7 +17,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
 
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var navigationView: UIView!
-    @IBOutlet weak var tableHeaderView: UIView!
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var profileImageView: UIImageView!
     @IBOutlet weak var profileLabel: UILabel!
@@ -33,6 +33,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     @IBOutlet weak var navigationViewHeightLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var searchButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var newsfeedFollowButton: UIButton!
     
     var loginView: UIView!
     
@@ -50,6 +51,25 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     static let postDateFormat = "MMMM dd, yyyy"
     var isFirstDataLoad = true
     var filteredResult = [String]()
+    var noPost = true
+    var noFollowingUser = true
+    var noFollower = true
+    let postTypeTexts = [
+        "How do you feel today?",
+        "Share your story",
+        "What's on your mind?"
+    ]
+    let postTypeImages = [
+        "newfeeds_post_feel",
+        "newfeeds_post_story",
+        "newfeeds_post_mind"
+    ]
+    let postTypes = [
+        "feeling",
+        "story",
+        "onyourmind"
+    ]
+    var friends = [UserProfile]()
     
     // MARK: Life cycle
     
@@ -59,10 +79,31 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if profileType == .CurrentUser {
             navigationView.subviews.map({ $0.removeFromSuperview() })
             navigationViewHeightLayoutConstraint.constant = 0
+            newsfeedFollowButton.removeFromSuperview()
         } else {
             searchButton.removeFromSuperview()
             let textField = searchBar.valueForKey("searchField") as! UITextField
             textField.textColor = UIColor.whiteColor()
+            searchBar.placeholder = "\(userProfile.name)"
+            if XAppDelegate.currentUser.uid != -1 {
+                if userProfile.uid != XAppDelegate.currentUser.uid {
+                    SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+                        if let error = error {
+                            
+                        } else {
+                            if result!["isfollowing"] as! Int != 1 {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.newsfeedFollowButton.hidden = false
+                                })
+                            } else {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.newsfeedFollowButton.removeFromSuperview()
+                                })
+                            }
+                        }
+                    })
+                }
+            }
         }
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
@@ -125,6 +166,26 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Configure UI
     
+    func configureTableHeaderView(title: String) {
+        if tableView.tableHeaderView == nil {            let view = UIView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 64))
+            let label = UILabel()
+            label.tag = 1
+            label.text = title
+            label.textColor = UIColor.grayColor()
+            label.font = UIFont.systemFontOfSize(11)
+            label.numberOfLines = 0
+            view.addSubview(label)
+            label.sizeToFit()
+            label.frame.origin = CGPoint(x: view.frame.origin.x + 15, y: view.frame.height/2 - label.frame.height/2)
+            label.frame.size.width = view.frame.width - 15*2
+            tableView.tableHeaderView = view
+        } else {
+            if let label = tableView.tableHeaderView?.viewWithTag(1) as? UILabel {
+                label.text = title
+            }
+        }
+    }
+    
     func configureProfileView() {
         Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -140,21 +201,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func updateTableView() {
         if currentTab != .Post {
-            if tableViewLeadingSpaceLayoutConstraint.constant == 0 {
-                tableViewLeadingSpaceLayoutConstraint.constant = 10
-                tableViewTrailingSpaceLayoutConstraint.constant = 10
-                tableViewBottomSpaceLayoutConstraint.constant = 8
-                tableView.backgroundColor = UIColor.whiteColor()
-                tableView.separatorStyle = .SingleLine
-            }
+            changeToWhiteTableViewLayout()
         } else {
-            if tableViewLeadingSpaceLayoutConstraint.constant != 0 {
-                tableViewLeadingSpaceLayoutConstraint.constant = 0
-                tableViewTrailingSpaceLayoutConstraint.constant = 0
-                tableViewBottomSpaceLayoutConstraint.constant = 0
-                tableView.backgroundColor = UIColor.clearColor()
-                tableView.separatorStyle = .None
-            }
+            changeToClearTableViewLayout()
         }
     }
     
@@ -174,7 +223,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func configureLoginView() {
-        tableHeaderView.hidden = true
+        profileView.hidden = true
         
         let loginFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + ADMOD_HEIGHT, width: view.frame.width, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
         loginView = UIView(frame: loginFrame)
@@ -230,6 +279,21 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Action
     
+    @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
+        Utilities.showHUD()
+        SocialManager.sharedInstance.follow(userProfile.uid, completionHandler: { (error) -> Void in
+            if let error = error {
+                Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                Utilities.hideHUD()
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.newsfeedFollowButton.removeFromSuperview()
+                    Utilities.hideHUD()
+                })
+            }
+        })
+    }
+    
     @IBAction func tapBackButton(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
     }
@@ -269,7 +333,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                     self.getProfileAndData()
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.loginView.removeFromSuperview()
-                        self.tableHeaderView.hidden = false
+                        self.profileView.hidden = false
                         self.tableView.hidden = false
                     })
                 } else {
@@ -309,13 +373,31 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             self.getUserPosts(group)
             self.getFollowers(group)
             self.getFollowingUsers(group)
+            self.getFriends(group)
             
             dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
                 self.checkFollowStatus()
                 self.tableView.reloadData()
+                self.tableView.hidden = false
                 Utilities.hideHUD()
             }
         })
+    }
+    
+    func getFriends(group: dispatch_group_t?) {
+        if let group = group {
+            dispatch_group_enter(group)
+        }
+        SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
+            if let error = error {
+                
+            } else {
+                self.friends = result!
+            }
+            if let group = group {
+                dispatch_group_leave(group)
+            }
+        }
     }
     
     func getUserPosts(group: dispatch_group_t?) {
@@ -393,6 +475,24 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     // MARK: - Helper
+    
+    func changeToClearTableViewLayout() {
+        tableViewLeadingSpaceLayoutConstraint.constant = 0
+        tableViewTrailingSpaceLayoutConstraint.constant = 0
+        tableViewBottomSpaceLayoutConstraint.constant = 0
+        tableView.backgroundColor = UIColor.clearColor()
+        tableView.separatorStyle = .None
+        tableView.allowsSelection = false
+    }
+    
+    func changeToWhiteTableViewLayout() {
+        tableViewLeadingSpaceLayoutConstraint.constant = 10
+        tableViewTrailingSpaceLayoutConstraint.constant = 10
+        tableViewBottomSpaceLayoutConstraint.constant = 8
+        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.separatorStyle = .SingleLine
+        tableView.allowsSelection = false
+    }
     
     func handleData<T: SequenceType>(group: dispatch_group_t?, inout oldData: T, newData: T, button: UIButton) {
         if self.isDataUpdated(oldData, newData: newData) {
@@ -481,49 +581,119 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         setTabButtonTitleLabel(button)
     }
     
-    // MARK: - Table view data source
+    // MARK: - Table view data source and delegate
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch currentTab {
         case .Post:
+            if profileType == .CurrentUser {
+                if userPosts.count == 0 {
+                    noPost = true
+                    changeToWhiteTableViewLayout()
+                    tableView.separatorStyle = .None
+                    tableView.allowsSelection = true
+                    configureTableHeaderView("You have not posted anything. Start posting something!")
+                    return 3
+                } else {
+                    noPost = false
+                    changeToClearTableViewLayout()
+                    tableView.separatorStyle = .SingleLine
+                }
+            }
+            if tableView.tableHeaderView != nil {
+                tableView.tableHeaderView = nil
+            }
             return userPosts.count
-        case .Followers:
-            return followers.count
         case .Following:
+            if profileType == .CurrentUser {
+                if followingUsers.count == 0 {
+                    noFollowingUser = true
+                    configureTableHeaderView("You have not followed anyone. Start follow someone!")
+                    return friends.count
+                } else {
+                    noFollowingUser = false
+                }
+            }
+            if tableView.tableHeaderView != nil {
+                tableView.tableHeaderView = nil
+            }
             return followingUsers.count
+        case .Followers:
+            if profileType == .CurrentUser {
+                if followers.count == 0 {
+                    noFollower = true
+                    configureTableHeaderView("You do not have any follower.")
+                    return 0
+                } else {
+                    noFollower = false
+                }
+            }
+            if tableView.tableHeaderView != nil {
+                tableView.tableHeaderView = nil
+            }
+            return followers.count
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if currentTab == .Post {
+        switch currentTab {
+        case .Post:
+            if profileType == .CurrentUser {
+                if noPost {
+                    let cell = tableView.dequeueReusableCellWithIdentifier("BasicTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+                    cell.textLabel?.text = postTypeTexts[indexPath.row]
+                    cell.textLabel?.textColor = UIColor.grayColor()
+                    cell.imageView?.image = UIImage(named: postTypeImages[indexPath.row])
+                    return cell
+                }
+            }
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
             cell.delegate = self
             configurePostTableViewCell(cell, post: post)
             return cell
-        } else {
+        case .Following:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             cell.delegate = self
-            var profile: UserProfile!
-            if currentTab == .Following {
-                profile = followingUsers[indexPath.row]
-                configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
-            } else {
-                profile = followers[indexPath.row]
-                cell.delegate = self
-                if profileType == .CurrentUser {
+            if profileType == .CurrentUser {
+                if noFollowingUser {
+                    let profile = friends[indexPath.row]
                     configureFollowTableViewCell(cell, profile: profile, showFollowButton: true)
-                } else {
-                    configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
+                    return cell
                 }
             }
+            let profile = followingUsers[indexPath.row]
+            configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
             return cell
+        case .Followers:
+            let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+            cell.delegate = self
+            let profile = followers[indexPath.row]
+            if profileType == .CurrentUser {
+                configureFollowTableViewCell(cell, profile: profile, showFollowButton: true)
+            } else {
+                configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
+            }
+            return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if profileType == .CurrentUser && noPost {
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+            controller.type = postTypes[indexPath.row]
+            controller.placeholder = postTypeTexts[indexPath.row]
+            self.presentViewController(controller, animated: true, completion: nil)
         }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if currentTab != .Post {
             return 70
+        } else if noPost {
+            if profileType == .CurrentUser {
+                return 64
+            }
         }
         return UITableViewAutomaticDimension
     }
@@ -554,7 +724,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let index = tableView.indexPathForCell(cell)?.row
         var profile: UserProfile!
         if currentTab == .Following {
-            profile = followingUsers[index!]
+            if noFollowingUser {
+                profile = friends[index!]
+            } else {
+                profile = followingUsers[index!]
+            }
         } else {
             profile = followers[index!]
         }
@@ -575,7 +749,12 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
 
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        let uid = followers[index!].uid
+        var uid = -1
+        if currentTab == .Followers {
+            uid = followers[index!].uid
+        } else {
+            uid = friends[index!].uid
+        }
         Utilities.showHUD()
         SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
             if let error = error {
