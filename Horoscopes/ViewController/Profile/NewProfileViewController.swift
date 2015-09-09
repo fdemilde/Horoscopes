@@ -54,15 +54,20 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     var noPost = true
     var noFollowingUser = true
     var noFollower = true
-    var postTypeText = [
+    let postTypeTexts = [
         "How do you feel today?",
         "Share your story",
-        "What's on your mind"
+        "What's on your mind?"
     ]
-    var postTypeImage = [
+    let postTypeImages = [
         "newfeeds_post_feel",
         "newfeeds_post_story",
         "newfeeds_post_mind"
+    ]
+    let postTypes = [
+        "feeling",
+        "story",
+        "onyourmind"
     ]
     var friends = [UserProfile]()
     
@@ -472,23 +477,21 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     // MARK: - Helper
     
     func changeToClearTableViewLayout() {
-        if tableViewLeadingSpaceLayoutConstraint.constant != 0 {
-            tableViewLeadingSpaceLayoutConstraint.constant = 0
-            tableViewTrailingSpaceLayoutConstraint.constant = 0
-            tableViewBottomSpaceLayoutConstraint.constant = 0
-            tableView.backgroundColor = UIColor.clearColor()
-            tableView.separatorStyle = .None
-        }
+        tableViewLeadingSpaceLayoutConstraint.constant = 0
+        tableViewTrailingSpaceLayoutConstraint.constant = 0
+        tableViewBottomSpaceLayoutConstraint.constant = 0
+        tableView.backgroundColor = UIColor.clearColor()
+        tableView.separatorStyle = .None
+        tableView.allowsSelection = false
     }
     
     func changeToWhiteTableViewLayout() {
-        if tableViewLeadingSpaceLayoutConstraint.constant == 0 {
-            tableViewLeadingSpaceLayoutConstraint.constant = 10
-            tableViewTrailingSpaceLayoutConstraint.constant = 10
-            tableViewBottomSpaceLayoutConstraint.constant = 8
-            tableView.backgroundColor = UIColor.whiteColor()
-            tableView.separatorStyle = .SingleLine
-        }
+        tableViewLeadingSpaceLayoutConstraint.constant = 10
+        tableViewTrailingSpaceLayoutConstraint.constant = 10
+        tableViewBottomSpaceLayoutConstraint.constant = 8
+        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.separatorStyle = .SingleLine
+        tableView.allowsSelection = false
     }
     
     func handleData<T: SequenceType>(group: dispatch_group_t?, inout oldData: T, newData: T, button: UIButton) {
@@ -588,6 +591,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                     noPost = true
                     changeToWhiteTableViewLayout()
                     tableView.separatorStyle = .None
+                    tableView.allowsSelection = true
                     configureTableHeaderView("You have not posted anything. Start posting something!")
                     return 3
                 } else {
@@ -637,9 +641,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             if profileType == .CurrentUser {
                 if noPost {
                     let cell = tableView.dequeueReusableCellWithIdentifier("BasicTableViewCell", forIndexPath: indexPath) as! UITableViewCell
-                    cell.textLabel?.text = postTypeText[indexPath.row]
+                    cell.textLabel?.text = postTypeTexts[indexPath.row]
                     cell.textLabel?.textColor = UIColor.grayColor()
-                    cell.imageView?.image = UIImage(named: postTypeImage[indexPath.row])
+                    cell.imageView?.image = UIImage(named: postTypeImages[indexPath.row])
                     return cell
                 }
             }
@@ -671,6 +675,15 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 configureFollowTableViewCell(cell, profile: profile, showFollowButton: false)
             }
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if profileType == .CurrentUser && noPost {
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+            controller.type = postTypes[indexPath.row]
+            controller.placeholder = postTypeTexts[indexPath.row]
+            self.presentViewController(controller, animated: true, completion: nil)
         }
     }
     
