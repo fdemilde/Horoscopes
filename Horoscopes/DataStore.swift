@@ -33,6 +33,7 @@ class DataStore : NSObject{
             }
         }
     }
+    var recentSearchedProfile = [UserProfile]()
     var currentUserProfile: UserProfile?
     var isLastPage = false
     
@@ -40,6 +41,12 @@ class DataStore : NSObject{
     
     override init(){
         
+    }
+    
+    func saveSearchedProfile(profile: UserProfile) {
+        if recentSearchedProfile.filter({ $0.uid == profile.uid }).isEmpty {
+            recentSearchedProfile.append(profile)
+        }
     }
     
     func addDataArray(data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){

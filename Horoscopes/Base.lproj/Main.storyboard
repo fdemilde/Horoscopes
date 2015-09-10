@@ -1091,6 +1091,7 @@
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="igC-EB-4kz" id="dzd-fA-aKi"/>
+                                    <outlet property="delegate" destination="igC-EB-4kz" id="Lko-Ms-6Cf"/>
                                 </connections>
                             </tableView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search for friends" showsCancelButton="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mQ6-KJ-rnx">
