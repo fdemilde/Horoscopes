@@ -12,7 +12,7 @@ protocol SearchViewControllerDelegate {
     func didChooseUser(profile: UserProfile)
 }
 
-class SearchViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, FollowTableViewCellDelegate {
+class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UISearchBarDelegate, FollowTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!

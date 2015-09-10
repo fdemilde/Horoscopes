@@ -1147,6 +1147,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="headerView" destination="OmP-vM-C5d" id="Nzv-50-xBo"/>
                         <outlet property="searchBar" destination="mQ6-KJ-rnx" id="6cC-st-WK5"/>
                         <outlet property="tableView" destination="9jO-xX-gn0" id="o0T-kD-KKa"/>
                     </connections>
