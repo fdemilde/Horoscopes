@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -5035,6 +5035,7 @@
                         <viewControllerLayoutGuide type="bottom" id="cOl-AO-kNc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="0Tl-4K-NeB">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Req-GI-WY1">
@@ -5156,7 +5157,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BAj-mD-Smg" id="aSN-hX-6fu">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notify Everyday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-Fr-oUi">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Notify Everyday" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Q5F-Fr-oUi">
                                                     <rect key="frame" x="20" y="21" width="114" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -5169,7 +5170,7 @@
                                                         <constraint firstAttribute="height" constant="1" id="wdT-PU-dOi"/>
                                                     </constraints>
                                                 </view>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5L-pi-3ou">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="08:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5L-pi-3ou">
                                                     <rect key="frame" x="150" y="19" width="70" height="20"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" red="0.29019607843137252" green="0.56470588235294117" blue="0.88627450980392153" alpha="1" colorSpace="calibratedRGB"/>
@@ -5189,7 +5190,7 @@
                                                         <constraint firstAttribute="width" constant="30" id="PIA-G0-v78"/>
                                                     </constraints>
                                                 </imageView>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-Th-cAl">
+                                                <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-Th-cAl">
                                                     <rect key="frame" x="150" y="40" width="70" height="1"/>
                                                     <color key="backgroundColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
@@ -5264,6 +5265,7 @@
                                 <exclude reference="a15-qB-Dx8"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="0a6-N0-aaQ"/>
                                 <exclude reference="AXx-ir-kgq"/>
                                 <exclude reference="C6p-qf-JLC"/>
                                 <exclude reference="azi-Pf-xZC"/>
@@ -5273,7 +5275,6 @@
                                 <exclude reference="30c-be-kTh"/>
                                 <exclude reference="7XE-fg-hIF"/>
                                 <exclude reference="ctB-bA-mcl"/>
-                                <exclude reference="0a6-N0-aaQ"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -5283,6 +5284,7 @@
                                 <include reference="a15-qB-Dx8"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="0a6-N0-aaQ"/>
                                 <include reference="AXx-ir-kgq"/>
                                 <include reference="C6p-qf-JLC"/>
                                 <include reference="azi-Pf-xZC"/>
@@ -5292,7 +5294,6 @@
                                 <include reference="30c-be-kTh"/>
                                 <include reference="7XE-fg-hIF"/>
                                 <include reference="ctB-bA-mcl"/>
-                                <include reference="0a6-N0-aaQ"/>
                             </mask>
                         </variation>
                     </view>

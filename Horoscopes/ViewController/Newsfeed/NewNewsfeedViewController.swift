@@ -339,19 +339,21 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // Notification handler
     func sendHeartSuccessful(notif: NSNotification){
+        let postId = notif.object as! String
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-//        var animation = CATransition()
-//        animation.duration = 0.5
-//        animation.type = kCATransitionFade
-//        animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-//        heartNumberLabelNode!.layer.addAnimation(animation, forKey: "changeTextTransition")
-//        //            :animation forKey:"changeTextTransition"];
-//        userPost!.hearts++
-//        // Change the text
-//        dispatch_async(dispatch_get_main_queue(),{
-//            let dict = [NSForegroundColorAttributeName: UIColor(red: 151.0/255.0, green: 151.0/255.0, blue: 151.0/255.0, alpha: 1), NSFontAttributeName : UIFont.systemFontOfSize(11.0)]
-//            self.heartNumberLabelNode?.attributedString = NSAttributedString(string:String(format:"%d hearts",self.userPost!.hearts), attributes: dict)
-//        })
+        var index = -1
+        for (i, post) in enumerate(userPostArray) {
+            if post.post_id == postId {
+                index = i
+            }
+        }
+        if index != -1 {
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            let indexPaths = [
+                indexPath
+            ]
+            tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
+        }
     }
     
     // Networks 

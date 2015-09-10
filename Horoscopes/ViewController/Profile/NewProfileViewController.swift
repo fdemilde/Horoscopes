@@ -493,7 +493,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         tableViewTrailingSpaceLayoutConstraint.constant = 0
         tableViewBottomSpaceLayoutConstraint.constant = 0
         tableView.backgroundColor = UIColor.clearColor()
-        tableView.separatorStyle = .None
         tableView.allowsSelection = false
     }
     
@@ -502,7 +501,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         tableViewTrailingSpaceLayoutConstraint.constant = 10
         tableViewBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
-        tableView.separatorStyle = .SingleLine
         tableView.allowsSelection = false
     }
     
@@ -605,14 +603,12 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if userPosts.count == 0 {
                     noPost = true
                     changeToWhiteTableViewLayout()
-                    tableView.separatorStyle = .None
                     tableView.allowsSelection = true
                     configureTableHeaderView("You have not posted anything. Start posting something!")
                     return 3
                 } else {
                     noPost = false
                     changeToClearTableViewLayout()
-                    tableView.separatorStyle = .SingleLine
                 }
             }
             if tableView.tableHeaderView != nil {
