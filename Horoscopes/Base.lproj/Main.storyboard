@@ -11,6 +11,8 @@
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
+            <string>BookAntiqua</string>
+            <string>BookAntiqua</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -432,26 +434,6 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3gf-h8-Aym">
-                                <rect key="frame" x="538" y="60" width="52" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Refresh">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="refreshButtonTapped:" destination="V1J-3b-vD5" eventType="touchUpInside" id="zTd-mQ-5lu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PAi-Y3-Bap">
-                                <rect key="frame" x="10" y="60" width="56" height="30"/>
-                                <state key="normal" title="Clear all">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="clearAllTapped:" destination="V1J-3b-vD5" eventType="touchUpInside" id="Quf-bK-Q66"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-IS-VOF">
                                 <rect key="frame" x="0.0" y="63" width="600" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -463,14 +445,10 @@
                         <constraints>
                             <constraint firstItem="X1Z-S4-ebY" firstAttribute="top" secondItem="i1d-IS-VOF" secondAttribute="bottom" constant="13" id="05e-8D-SWp"/>
                             <constraint firstAttribute="trailing" secondItem="X1Z-S4-ebY" secondAttribute="trailing" constant="10" id="2vs-RT-kvn"/>
-                            <constraint firstItem="PAi-Y3-Bap" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" constant="10" id="5An-x4-mg0"/>
                             <constraint firstItem="pzb-NJ-KAL" firstAttribute="top" secondItem="X1Z-S4-ebY" secondAttribute="bottom" id="6hW-1l-lUd"/>
                             <constraint firstAttribute="trailing" secondItem="i1d-IS-VOF" secondAttribute="trailing" id="7nb-AQ-FSN"/>
                             <constraint firstItem="i1d-IS-VOF" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="13" id="CoK-4Z-xlR"/>
                             <constraint firstItem="3SS-VW-yoY" firstAttribute="top" secondItem="MJc-GG-XN9" secondAttribute="bottom" id="V4m-82-htu"/>
-                            <constraint firstItem="PAi-Y3-Bap" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="10" id="aik-O1-grS"/>
-                            <constraint firstAttribute="trailing" secondItem="3gf-h8-Aym" secondAttribute="trailing" constant="10" id="gfL-sz-jS5"/>
-                            <constraint firstItem="3gf-h8-Aym" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="10" id="gzb-ZO-31B"/>
                             <constraint firstItem="X1Z-S4-ebY" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" constant="10" id="hMC-CB-RLP"/>
                             <constraint firstItem="i1d-IS-VOF" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" id="rxR-4O-Fuh"/>
                             <constraint firstAttribute="trailing" secondItem="3SS-VW-yoY" secondAttribute="trailing" id="vqq-KW-5UQ"/>
@@ -1405,7 +1383,7 @@
                                                                             </constraints>
                                                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
@@ -1812,7 +1790,7 @@
                                                                             </constraints>
                                                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                            <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
@@ -5169,6 +5147,9 @@
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="wdT-PU-dOi"/>
                                                     </constraints>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="20" y="55" width="580" height="1"/>
+                                                    </variation>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="08:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5L-pi-3ou">
                                                     <rect key="frame" x="150" y="19" width="70" height="20"/>
@@ -5179,6 +5160,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fL2-x3-CFV">
                                                     <rect key="frame" x="333" y="15" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.72549019609999998" green="0.74901960779999999" blue="0.91764705879999997" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="531" y="17" width="51" height="31"/>
+                                                    </variation>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="BAj-mD-Smg" eventType="valueChanged" id="5vu-1m-MIQ"/>
                                                     </connections>
@@ -5189,6 +5173,9 @@
                                                         <constraint firstAttribute="height" constant="30" id="MM1-50-EKw"/>
                                                         <constraint firstAttribute="width" constant="30" id="PIA-G0-v78"/>
                                                     </constraints>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="550" y="15" width="30" height="30"/>
+                                                    </variation>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-Th-cAl">
                                                     <rect key="frame" x="150" y="40" width="70" height="1"/>

@@ -45,4 +45,6 @@
 #import "CMPopTipView.h"
 #import "JTCalendar.h"
 
+#import "CustomIOSAlertView.h"
+
 #endif

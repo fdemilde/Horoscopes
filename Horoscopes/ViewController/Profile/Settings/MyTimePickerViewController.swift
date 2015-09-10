@@ -9,26 +9,33 @@
 import Foundation
 import UIKit
 
-class MyTimePickerViewController : ViewControllerWithAds{
+class MyTimePickerView : UIView{
     
-    @IBOutlet weak var picker: UIDatePicker!
+    var picker: UIDatePicker!
     var parentVC : SettingsViewController!
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
-        self.view.backgroundColor = UIColor(patternImage: image)
-        picker.date = Utilities.getDateFromDateString(parentVC.notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        picker = UIDatePicker(frame: CGRectMake(0, 0, frame.width - 20, frame.height))
+        picker.datePickerMode = .Time
+        self.addSubview(picker)
+        picker.date = NSDate()
+        picker.backgroundColor = UIColor.clearColor()
+        self.backgroundColor = UIColor.whiteColor()
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
     }
     
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
     }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         parentVC.notificationFireTime = Utilities.getDateStringFromTimestamp(picker.date.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
         parentVC.doneSelectingTime()
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
     }
     
     
