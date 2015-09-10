@@ -142,24 +142,30 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
         }
         if XAppDelegate.currentUser.uid != -1 {
-            SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-                if let error = error {
-                    
-                } else {
-                    let isFollowing = result!["isfollowing"] as! Int == 1
-                    if isFollowing {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-                            cell.newsfeedFollowButton.enabled = false
-                        })
+            if post.uid != XAppDelegate.currentUser.uid {
+                SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+                    if let error = error {
+                        
                     } else {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-                            cell.newsfeedFollowButton.enabled = true
-                        })
+                        let isFollowing = result!["isfollowing"] as! Int == 1
+                        if isFollowing {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                                cell.newsfeedFollowButton.enabled = false
+                            })
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
+                                cell.newsfeedFollowButton.enabled = true
+                            })
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.newsfeedFollowButton.removeFromSuperview()
+                })
+            }
         }
     }
     
