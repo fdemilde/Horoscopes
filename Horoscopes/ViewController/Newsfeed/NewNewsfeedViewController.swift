@@ -303,12 +303,16 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func didTapPostProfile(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let profile = userPostArray[index!].user
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
-        controller.profileType = ProfileType.OtherUser
-        controller.userProfile = profile!
-        navigationController?.pushViewController(controller, animated: true)
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            let index = tableView.indexPathForCell(cell)?.row
+            let profile = userPostArray[index!].user
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
+            controller.profileType = ProfileType.OtherUser
+            controller.userProfile = profile!
+            navigationController?.pushViewController(controller, animated: true)
+        } else {
+            Utilities.showAlert(self, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
+        }
     }
     
     func didTapShareButton(cell: PostTableViewCell) {

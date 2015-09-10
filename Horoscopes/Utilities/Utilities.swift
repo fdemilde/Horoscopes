@@ -157,9 +157,12 @@ class Utilities {
         })
     }
     
-    class func showAlert(viewController: UIViewController, title: String, message: String?, error: NSError?) {
+    class func showAlert(viewController: UIViewController, title: String, message: String = "", error: NSError?) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alert = UIAlertController(title: title, message: "\(message) \(error)", preferredStyle: UIAlertControllerStyle.Alert)
+            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+            if let error = error {
+                alert.message = "\(message) \(error)"
+            }
             let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
             alert.addAction(action)
             viewController.presentViewController(alert, animated: true, completion: nil)
