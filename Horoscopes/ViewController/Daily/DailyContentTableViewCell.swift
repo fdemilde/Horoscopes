@@ -8,13 +8,15 @@
 
 import UIKit
 
-protocol DailyContentTableViewCellDelegate {
+@objc protocol DailyContentTableViewCellDelegate {
     func didShare(horoscopeDescription: String, timeTag: NSTimeInterval)
+    optional func didTapOnCalendar()
 }
 
 class DailyContentTableViewCell: UITableViewCell {
     
     let inset: CGFloat = 8
+    let CALENDAR_BUTTON_SIZE = 18 as CGFloat
     @IBOutlet weak var dayLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
@@ -22,7 +24,10 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var likedLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet var calendarButton : UIButton!
     
+    @IBOutlet weak var header: UIView!
+    @IBOutlet weak var footer: UIView!
     var delegate: DailyContentTableViewCellDelegate!
     var timeTag = NSTimeInterval()
     var selectedSign: Int!
@@ -68,6 +73,11 @@ class DailyContentTableViewCell: UITableViewCell {
         NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(1)), repeats: false)
     }
     
+    @IBAction func calendarTapped(sender:UIButton)
+    {
+        delegate.didTapOnCalendar?()
+    }
+    
     // MARK: - Helper
     
     func setUp(type: DailyHoroscopeType, selectedSign: Int) {
@@ -88,6 +98,18 @@ class DailyContentTableViewCell: UITableViewCell {
             }
             dateLabel.text = dateStringForType(type)
         }
+    }
+    // setup for Archive View
+    func setUpArchive(item : CollectedItem){
+        dayLabel.text = "Archive"
+        textView.text = item.horoscope.horoscopes[0] as! String
+        timeTag = item.collectedDate.timeIntervalSince1970
+        dateLabel.text = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, YYYY")
+        
+        calendarButton.hidden = false
+        dayLabel.hidden = true
+        
+        selectedSign = XAppDelegate.horoscopesManager.getSignIndexOfSignName(item.horoscope.sign)
     }
     
     func dateStringForType(type: DailyHoroscopeType) -> String {

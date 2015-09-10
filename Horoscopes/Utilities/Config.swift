@@ -95,6 +95,7 @@ let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key
 enum DailyHoroscopeType {
     case TodayHoroscope
     case TomorrowHoroscope
+    case CollectedHoroscope
 }
 
 enum ShareViewType {
@@ -148,6 +149,12 @@ enum ServerNotificationType {
     case SendHeart
     case Follow
     case Default
+}
+
+// Archive View
+enum ArchiveViewType {
+    case Calendar
+    case HoroscopeDetail
 }
 
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat
