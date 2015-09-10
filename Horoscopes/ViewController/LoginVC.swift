@@ -42,7 +42,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * fbLoginBtn.bounds.size.width
         fbLoginBtn.backgroundColor = UIColor.clearColor()
         fbLoginBtn.imageView!.clipsToBounds = true
         XAppDelegate.socialManager.delegate = self

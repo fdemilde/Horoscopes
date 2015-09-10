@@ -84,8 +84,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
             case 0:
-                var timePickerViewController = self.setupTimePickerViewController()
-                self.displayViewController(timePickerViewController)
+//                var timePickerViewController = self.setupTimePickerViewController()
+//                self.displayViewController(timePickerViewController)
+//                var pickerView = MyTimePickerView(frame: CGRectMake(0, 10, 280, 210))
+//                var alertView = CustomIOSAlertView()
+//                alertView.containerView = pickerView
+//                alertView.buttonTitles = [String]()
+//                alertView.show()
                 break
             case 1:
                 var birthdayViewController = self.setupBirthdayViewController()
@@ -116,11 +121,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return bugsReportViewController
     }
     
-    func setupTimePickerViewController() -> UIViewController {
-        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyTimePickerViewController") as! MyTimePickerViewController
-        timePickerVC.parentVC = self
-        return timePickerVC
-    }
+//    func setupTimePickerViewController() -> UIViewController {
+//        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyTimePickerViewController") as! MyTimePickerViewController
+//        timePickerVC.parentVC = self
+//        return timePickerVC
+//    }
     
     // MARK: Button action
     
