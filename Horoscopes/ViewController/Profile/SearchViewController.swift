@@ -37,7 +37,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UISear
         
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
-                
+                Utilities.showError(self, error: error)
             } else {
                 self.friends = result!
                 self.filteredResult.removeAll(keepCapacity: false)
@@ -86,10 +86,43 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UISear
                 cell.profileImageView?.image = image
             })
         })
+        SocialManager.sharedInstance.isFollowing(friend.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+            } else {
+                let isFollowing = result!["isfollowing"] as! Int == 1
+                if isFollowing {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell.configureFollowButton(true, showFollowButton: true)
+                    })
+                } else {
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell.configureFollowButton(false, showFollowButton: true)
+                    })
+                }
+            }
+        }
         return cell
     }
     
     // MARK: - Delegate
+    
+    func didTapFollowButton(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let uid = filteredResult[index!].uid
+        Utilities.showHUD()
+        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+                Utilities.hideHUD()
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
+                    Utilities.hideHUD()
+                })
+            }
+        })
+    }
     
     func didTapFollowProfile(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row

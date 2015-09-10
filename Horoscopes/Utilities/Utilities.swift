@@ -169,6 +169,12 @@ class Utilities {
         })
     }
     
+    // MARK: - Convenience
+    
+    class func showError(viewController: UIViewController, error: NSError) {
+        self.showAlert(viewController, title: "Network Error", message: "There is an error. Action cannot be completed. Please try again later!", error: error)
+    }
+    
     // MARK: Helpers
     
     class func getImageFromUrlString(imgUrl: String, completionHandler: (image: UIImage?) -> Void) {
