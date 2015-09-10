@@ -87,6 +87,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         var collectedPercentLabel = UILabel()
         collectedPercentLabel.text = String(format:"%g%%",round(collectedHoro.getScore()*100))
         collectedPercentLabel.font = UIFont.boldSystemFontOfSize(24)
+        collectedPercentLabel.textColor = UIColor.whiteColor()
         collectedPercentLabel.sizeToFit()
         collectedPercentLabel.frame = CGRectMake((progressBarContainer.frame.width - collectedPercentLabel.frame.width)/2, (progressBarContainer.frame.height - collectedPercentLabel.frame.height)/2, collectedPercentLabel.frame.width, collectedPercentLabel.frame.height)
         var centerPoint = CGPoint(x: 60, y: 60)
@@ -124,11 +125,11 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if(type == .Calendar){
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveCalendarCell") as! ArchiveCalendarCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("ArchiveCalendarCell") as! ArchiveCalendarCell
             cell.setupCell(self)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveHoroscopeDetailCell") as! DailyContentTableViewCell
+            var cell = tableView.dequeueReusableCellWithIdentifier("ArchiveHoroscopeDetailCell") as! DailyContentTableViewCell
             if let item = collectedItem{
                 cell.setUpArchive(collectedItem)
                     cell.delegate = self

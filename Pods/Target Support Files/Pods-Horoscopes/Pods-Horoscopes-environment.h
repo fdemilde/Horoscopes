@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_Bolts_Tasks 2
 #define COCOAPODS_VERSION_PATCH_Bolts_Tasks 0
 
+// CustomIOSAlertView
+#define COCOAPODS_POD_AVAILABLE_CustomIOSAlertView
+#define COCOAPODS_VERSION_MAJOR_CustomIOSAlertView 0
+#define COCOAPODS_VERSION_MINOR_CustomIOSAlertView 9
+#define COCOAPODS_VERSION_PATCH_CustomIOSAlertView 3
+
 // DateTools
 #define COCOAPODS_POD_AVAILABLE_DateTools
 #define COCOAPODS_VERSION_MAJOR_DateTools 1
@@ -138,12 +144,6 @@
 #define COCOAPODS_VERSION_MINOR_JTCalendar 1
 #define COCOAPODS_VERSION_PATCH_JTCalendar 4
 
-// KNSemiModalViewController
-#define COCOAPODS_POD_AVAILABLE_KNSemiModalViewController
-#define COCOAPODS_VERSION_MAJOR_KNSemiModalViewController 0
-#define COCOAPODS_VERSION_MINOR_KNSemiModalViewController 3
-#define COCOAPODS_VERSION_PATCH_KNSemiModalViewController 0
-
 // MBProgressHUD
 #define COCOAPODS_POD_AVAILABLE_MBProgressHUD
 #define COCOAPODS_VERSION_MAJOR_MBProgressHUD 0
@@ -179,12 +179,6 @@
 #define COCOAPODS_VERSION_MAJOR_SDWebImage_Core 3
 #define COCOAPODS_VERSION_MINOR_SDWebImage_Core 7
 #define COCOAPODS_VERSION_PATCH_SDWebImage_Core 2
-
-// THCalendarDatePicker
-#define COCOAPODS_POD_AVAILABLE_THCalendarDatePicker
-#define COCOAPODS_VERSION_MAJOR_THCalendarDatePicker 1
-#define COCOAPODS_VERSION_MINOR_THCalendarDatePicker 2
-#define COCOAPODS_VERSION_PATCH_THCalendarDatePicker 1
 
 // UIImage+animatedGif
 #define COCOAPODS_POD_AVAILABLE_UIImage_animatedGif

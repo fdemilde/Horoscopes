@@ -14,6 +14,6 @@ target 'Horoscopes' do
     pod 'Google-Mobile-Ads-SDK', '~> 7.4'
     pod 'AFNetworking', '~> 2.6'
     pod 'DateTools'
-    pod 'THCalendarDatePicker', '~> 1.2.1'
     pod 'JTCalendar', '~> 2.0'
+    pod 'CustomIOSAlertView', '~> 0.9.3'
 end

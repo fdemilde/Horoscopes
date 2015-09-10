@@ -10,9 +10,12 @@ import Foundation
 class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    var tableHeaderView : UIView!
+    var tableFooterView : UIView!
     var birthday : NSDate!
     var birthdayString : String!
     var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
+    @IBOutlet weak var titleBackgroundView: UIView!
     
     // we must save last value of notification setting so when user tap save we can check if it changes or not
     var isLastSaveNotifOn = XAppDelegate.userSettings.notifyOfNewHoroscope
@@ -23,11 +26,24 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         super.viewDidLoad()
         var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
+        
+        titleBackgroundView.layer.shadowOffset = CGSizeMake(0, 1)
+        titleBackgroundView.layer.shadowRadius = 2.0
+        titleBackgroundView.layer.shadowColor = UIColor.blackColor().CGColor
+        titleBackgroundView.layer.shadowOpacity = 0.2
+        tableView.layer.cornerRadius = 4
+        tableView.clipsToBounds = true
         self.birthday = XAppDelegate.userSettings.birthday
         self.getNotificationFireTime()
     }
     
     // MARK: - Table view datasource and delegate
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        tableView.tableHeaderView = getHeaderView()
+        tableView.tableFooterView = getFooterView()
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         return 4
@@ -44,6 +60,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             case 0:
                 cell.parentVC = self
                 cell.setupCell(SettingsType.Notification)
+//                cell = Utilities.makeCornerRadius(cell, maskFrame: self.view.bounds, roundOptions: (UIRectCorner.TopLeft | UIRectCorner.TopRight), radius: 4.0) as! SettingsTableCell
                 break
             case 1:
                 cell.setupCell(SettingsType.ChangeDOB)
@@ -53,6 +70,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                     break
             case 3:
                 cell.setupCell(SettingsType.Logout)
+//                cell = Utilities.makeCornerRadius(cell, maskFrame: self.view.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0) as! SettingsTableCell
                 break
             default:
                 break
@@ -265,5 +283,28 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             println("ERROR")
         }
         
+    }
+    
+    //  MARK: HELPERS
+    func getFooterView() -> UIView {
+        if let tableHeaderView = tableFooterView{
+            
+        } else {
+            tableFooterView = UIView()
+            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableFooterView.backgroundColor = UIColor.clearColor()
+        }
+        return tableFooterView
+    }
+    
+    func getHeaderView() -> UIView {
+        if let tableHeaderView = tableHeaderView{
+            
+        } else {
+            tableHeaderView = UIView()
+            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableHeaderView.backgroundColor = UIColor.clearColor()
+        }
+        return tableHeaderView
     }
 }

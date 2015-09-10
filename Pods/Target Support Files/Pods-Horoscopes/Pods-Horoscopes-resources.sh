@@ -59,15 +59,9 @@ install_resource()
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "DateTools/DateTools/DateTools.bundle"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/THDateDay.xib"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/THDatePickerViewController.xib"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/Images.xcassets"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "DateTools/DateTools/DateTools.bundle"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/THDateDay.xib"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/THDatePickerViewController.xib"
-  install_resource "THCalendarDatePicker/THCalendarDatePicker/Images.xcassets"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

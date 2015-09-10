@@ -33,9 +33,6 @@ class SettingsTableCell : UITableViewCell {
             switchButton.on = parentVC.isNotificationOn
             self.setupNotificationTime()
         }
-        if(self.type == SettingsType.ChangeName || self.type == SettingsType.ChangeDOB || self.type == SettingsType.BugsReport){
-            nextImageView.hidden = false
-        }
         switch(self.type!){
             case SettingsType.Notification:
                 titleLabel.text = "Notify Everyday"
@@ -44,13 +41,14 @@ class SettingsTableCell : UITableViewCell {
                 titleLabel.text = "Change Name"
                 break;
             case SettingsType.ChangeDOB:
-                titleLabel.text = "Change DOB"
+                titleLabel.text = "DOB"
                 break;
             case SettingsType.BugsReport:
                 titleLabel.text = "Bugs Report"
                 break;
             case SettingsType.Logout:
                 titleLabel.text = "Logout"
+                titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
                 break;
             default:
                 break

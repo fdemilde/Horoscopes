@@ -24,8 +24,6 @@ class ChooseSignVC : SpinWheelVC {
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
-    
-    var parentVC = DailyTableViewController()
     var delegate: ChooseSignViewControllerDelegate!
     
     override func viewDidLoad() {
@@ -93,9 +91,5 @@ class ChooseSignVC : SpinWheelVC {
         
         XAppDelegate.sendTrackEventWithActionName(defaultHoroscopeChooser, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         delegate.didSelectHoroscopeSign(selectedIndex)
-//        parentVC.selectedSign = self.selectedIndex
-//        parentVC.saveData()
-//        parentVC.tableView.reloadData()
-//        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

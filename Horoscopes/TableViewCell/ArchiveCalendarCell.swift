@@ -48,7 +48,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         parentViewController = parentVC
         createEvents()
         setupCalendar()
-        footer = Utilities.makeCornerRadius(footer, maskFrame: self.frame, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0)
+        footer = Utilities.makeCornerRadius(footer, maskFrame: parentVC.view.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0)
     }
     
     // MARK: UI
