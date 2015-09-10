@@ -89,7 +89,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                 if userProfile.uid != XAppDelegate.currentUser.uid {
                     SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
                         if let error = error {
-                            
+                            Utilities.showError(self, error: error)
                         } else {
                             if result!["isfollowing"] as! Int != 1 {
                                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -107,25 +107,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         }
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
-        if profileType == .CurrentUser {
-            if SocialManager.sharedInstance.isLoggedInFacebook() {
-                if SocialManager.sharedInstance.isLoggedInZwigglers() {
-                    getProfileAndData()
-                } else {
-                    SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                        if let error = error {
-                            Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
-                        } else {
-                            self.getProfileAndData()
-                        }
-                    })
-                }
-            } else {
-                configureLoginView()
-            }
-        } else {
-            getDataInitially()
-        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -150,6 +131,26 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
                     self.tableView.reloadData()
                 })
             }
+        } else {
+            if profileType == .CurrentUser {
+                if SocialManager.sharedInstance.isLoggedInFacebook() {
+                    if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                        getProfileAndData()
+                    } else {
+                        SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                            if let error = error {
+                                Utilities.showError(self, error: error)
+                            } else {
+                                self.getProfileAndData()
+                            }
+                        })
+                    }
+                } else {
+                    configureLoginView()
+                }
+            } else {
+                getDataInitially()
+            }
         }
     }
     
@@ -165,6 +166,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     */
     
     // MARK: - Configure UI
+    
+    func configureUIAfterLogin() {
+        loginView.removeFromSuperview()
+        profileView.hidden = false
+    }
     
     func configureTableHeaderView(title: String) {
         if tableView.tableHeaderView == nil {            let view = UIView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 64))
@@ -223,30 +229,32 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func configureLoginView() {
-        profileView.hidden = true
-        
-        let loginFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + ADMOD_HEIGHT, width: view.frame.width, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
-        loginView = UIView(frame: loginFrame)
-        let padding: CGFloat = 8
-        
-        let facebookLoginButton = UIButton()
-        let facebookLoginImage = UIImage(named: "fb_login_icon")
-        facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
-        facebookLoginButton.sizeToFit()
-        facebookLoginButton.frame = CGRectMake(loginFrame.width/2 - facebookLoginButton.frame.width/2, loginFrame.height/2 - facebookLoginButton.frame.height/2, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
-        facebookLoginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
-        loginView.addSubview(facebookLoginButton)
-        
-        let facebookLoginLabel = UILabel()
-        facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
-        facebookLoginLabel.textColor = UIColor.lightTextColor()
-        facebookLoginLabel.numberOfLines = 2
-        facebookLoginLabel.sizeToFit()
-        facebookLoginLabel.textAlignment = NSTextAlignment.Center
-        facebookLoginLabel.frame = CGRectMake(loginFrame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.height + padding, facebookLoginLabel.frame.width, facebookLoginLabel.frame.height)
-        loginView.addSubview(facebookLoginLabel)
-        
-        view.addSubview(loginView)
+        if loginView == nil {
+            profileView.hidden = true
+            
+            let loginFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + ADMOD_HEIGHT, width: view.frame.width, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
+            loginView = UIView(frame: loginFrame)
+            let padding: CGFloat = 8
+            
+            let facebookLoginButton = UIButton()
+            let facebookLoginImage = UIImage(named: "fb_login_icon")
+            facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
+            facebookLoginButton.sizeToFit()
+            facebookLoginButton.frame = CGRectMake(loginFrame.width/2 - facebookLoginButton.frame.width/2, loginFrame.height/2 - facebookLoginButton.frame.height/2, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
+            facebookLoginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
+            loginView.addSubview(facebookLoginButton)
+            
+            let facebookLoginLabel = UILabel()
+            facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
+            facebookLoginLabel.textColor = UIColor.lightTextColor()
+            facebookLoginLabel.numberOfLines = 2
+            facebookLoginLabel.sizeToFit()
+            facebookLoginLabel.textAlignment = NSTextAlignment.Center
+            facebookLoginLabel.frame = CGRectMake(loginFrame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.height + padding, facebookLoginLabel.frame.width, facebookLoginLabel.frame.height)
+            loginView.addSubview(facebookLoginLabel)
+            
+            view.addSubview(loginView)
+        }
     }
     
     func configurePostTableViewCell(cell: PostTableViewCell, post: UserPost) {
@@ -283,7 +291,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         Utilities.showHUD()
         SocialManager.sharedInstance.follow(userProfile.uid, completionHandler: { (error) -> Void in
             if let error = error {
-                Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                Utilities.showError(self, error: error)
                 Utilities.hideHUD()
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -320,21 +328,25 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         highlightTabButton(sender)
         updateTableView()
         tableView.reloadData()
-        getFollowers(nil)
+        let group = dispatch_group_create()
+        getFollowingUsers(group)
+        getFollowers(group)
+        dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
+            self.checkFollowStatus()
+            self.tableView.reloadData()
+        })
     }
     
     func login(sender: UIButton) {
         Utilities.showHUD()
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
             if let error = error {
-                Utilities.showAlert(self, title: "Log In Error", message: "Could not log in to Facebook. Please try again later.", error: error)
+                Utilities.showError(self, error: error)
             } else {
                 if permissionGranted {
                     self.getProfileAndData()
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.loginView.removeFromSuperview()
-                        self.profileView.hidden = false
-                        self.tableView.hidden = false
+                        self.configureUIAfterLogin()
                     })
                 } else {
                     Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
@@ -350,7 +362,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if XAppDelegate.currentUser.uid == -1 {
             SocialManager.sharedInstance.persistUserProfile({ (error) -> Void in
                 if let error = error {
-                    Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                    Utilities.showError(self, error: error)
                 } else {
                     result = XAppDelegate.currentUser
                 }
@@ -362,7 +374,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getDataInitially() {
-        isFirstDataLoad = false
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.configureProfileView()
@@ -376,6 +387,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             self.getFriends(group)
             
             dispatch_group_notify(group, dispatch_get_main_queue()) { () -> Void in
+                self.isFirstDataLoad = false
                 self.checkFollowStatus()
                 self.tableView.reloadData()
                 self.tableView.hidden = false
@@ -390,7 +402,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         }
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
-                
+                Utilities.showError(self, error: error)
             } else {
                 self.friends = result!
             }
@@ -406,7 +418,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         }
         SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
-                
+                Utilities.showError(self, error: error)
             } else {
                 self.handleData(group, oldData: &self.userPosts, newData: result!, button: self.postButton)
             }
@@ -423,7 +435,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if profileType == .CurrentUser {
             SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
                 if let error = error {
-                    
+                    Utilities.showError(self, error: error)
                 } else {
                     self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
                 }
@@ -434,7 +446,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         } else {
             SocialManager.sharedInstance.getOtherUserFollowersProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
                 if let error = error {
-                    
+                    Utilities.showError(self, error: error)
                 } else {
                     self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
                 }
@@ -452,7 +464,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if profileType == .CurrentUser {
             SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
                 if let error = error {
-                    
+                    Utilities.showError(self, error: error)
                 } else {
                     self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
                 }
@@ -463,7 +475,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         } else {
             SocialManager.sharedInstance.getOtherUserFollowingProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
                 if let error = error {
-                    
+                    Utilities.showError(self, error: error)
                 } else {
                     self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
                 }
@@ -499,7 +511,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             oldData = newData
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.setTabButtonTitleLabel(button)
-                if group == nil {
+                if group == nil && !self.isFirstDataLoad {
                     self.tableView.reloadData()
                 }
             })
@@ -558,6 +570,9 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getProfileAndData() {
+        if loginView != nil {
+            configureUIAfterLogin()
+        }
         if let profile = profileOfCurrentUser() {
             userProfile = profile
             getDataInitially()
@@ -565,7 +580,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
             let uid = XAppDelegate.mobilePlatform.userCred.getUid()
             SocialManager.sharedInstance.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
                 if let error = error {
-                    // TODO: Try getting user profile again
+                    Utilities.showError(self, error: error)
                 } else {
                     self.userProfile = result![0]
                     self.getDataInitially()
@@ -758,7 +773,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         Utilities.showHUD()
         SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
             if let error = error {
-                
+                Utilities.showError(self, error: error)
             } else {
                 let group = dispatch_group_create()
                 self.getFollowingUsers(group)
