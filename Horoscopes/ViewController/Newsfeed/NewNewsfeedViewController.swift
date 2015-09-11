@@ -130,6 +130,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
         cell.textView.text = post.message
+        cell.likeNumberLabel.text = "\(post.hearts) Likes"
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView.image = image
@@ -138,8 +139,11 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         cell.profileNameLabel.text = post.user?.name
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
             cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+            cell.likeButton.userInteractionEnabled = false
+            
         } else {
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+            cell.likeButton.userInteractionEnabled = true
         }
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
@@ -151,12 +155,12 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
                         if isFollowing {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-                                cell.newsfeedFollowButton.enabled = false
+                                cell.newsfeedFollowButton.userInteractionEnabled = false
                             })
                         } else {
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                                 cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-                                cell.newsfeedFollowButton.enabled = true
+                                cell.newsfeedFollowButton.userInteractionEnabled = true
                             })
                         }
                     }
@@ -164,7 +168,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     cell.newsfeedFollowButton.setImage(nil, forState: .Normal)
-                    cell.newsfeedFollowButton.enabled = false
+                    cell.newsfeedFollowButton.userInteractionEnabled = false
                 })
             }
         }
@@ -335,7 +339,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let index = tableView.indexPathForCell(cell)?.row
         let profileId = userPostArray[index!].uid
         let postId = userPostArray[index!].post_id
-        
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
             return
@@ -355,6 +358,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
         }
         if index != -1 {
+            userPostArray[index].hearts += 1
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             let indexPaths = [
                 indexPath

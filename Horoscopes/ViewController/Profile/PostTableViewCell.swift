@@ -23,6 +23,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeNumberLabel: UILabel!
     
     // MARK: - Newsfeed outlet
     

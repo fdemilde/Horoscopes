@@ -1369,13 +1369,13 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rh-xl-Ici" userLabel="Main View">
                                                                     <rect key="frame" x="0.0" y="150" width="580" height="168"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6u-6b-vEC" userLabel="Heart Label">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6u-6b-vEC" userLabel="Heart Label">
                                                                             <rect key="frame" x="10" y="146" width="98" height="14"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wk-sX-mES">
+                                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="751" misplaced="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1wk-sX-mES">
                                                                             <rect key="frame" x="10" y="17" width="560" height="112"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <constraints>
@@ -1518,6 +1518,7 @@
                                             <outlet property="horoscopeSignLabel" destination="dB4-Nk-FWl" id="FMr-I6-Z6o"/>
                                             <outlet property="horoscopeSignView" destination="fiI-bz-aJe" id="RzN-iE-ZKr"/>
                                             <outlet property="likeButton" destination="fCM-pj-kfn" id="caE-rA-QSM"/>
+                                            <outlet property="likeNumberLabel" destination="K6u-6b-vEC" id="khe-kh-mte"/>
                                             <outlet property="newsfeedFollowButton" destination="KSC-qN-6gT" id="ldx-Hw-tXU"/>
                                             <outlet property="postDateLabel" destination="AUz-OP-Buw" id="cbz-SA-MOf"/>
                                             <outlet property="postTypeImageView" destination="KDj-6R-ejn" id="VR7-Bl-r04"/>
