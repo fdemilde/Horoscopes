@@ -373,7 +373,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getDataInitially() {
-        println("getDataInitially")
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.configureProfileView()
@@ -568,7 +567,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getProfileAndData() {
-        println("getProfileAndData")
         if loginView != nil {
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.configureUIAfterLogin()
