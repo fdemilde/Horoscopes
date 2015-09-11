@@ -163,7 +163,8 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
                 })
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.newsfeedFollowButton.removeFromSuperview()
+                    cell.newsfeedFollowButton.setImage(nil, forState: .Normal)
+                    cell.newsfeedFollowButton.enabled = false
                 })
             }
         }
