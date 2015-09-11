@@ -168,6 +168,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     // MARK: - Configure UI
     
     func configureUIAfterLogin() {
+        println("configureUIAfterLogin")
         loginView.removeFromSuperview()
         profileView.hidden = false
     }
@@ -333,7 +334,6 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         getFollowers(group)
         dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
             self.checkFollowStatus()
-            self.tableView.reloadData()
         })
     }
     
@@ -341,14 +341,13 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         Utilities.showHUD()
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
             if let error = error {
+                Utilities.hideHUD()
                 Utilities.showError(self, error: error)
             } else {
                 if permissionGranted {
                     self.getProfileAndData()
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.configureUIAfterLogin()
-                    })
                 } else {
+                    Utilities.hideHUD()
                     Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
                 }
             }
@@ -374,6 +373,7 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getDataInitially() {
+        println("getDataInitially")
         Utilities.showHUD()
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             self.configureProfileView()
@@ -568,8 +568,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func getProfileAndData() {
+        println("getProfileAndData")
         if loginView != nil {
-            configureUIAfterLogin()
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.configureUIAfterLogin()
+            })
         }
         if let profile = profileOfCurrentUser() {
             userProfile = profile
