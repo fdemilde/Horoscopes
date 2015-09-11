@@ -32,6 +32,9 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     var addButton: DCPathButton!
     
     let FB_BUTTON_SIZE = 80 as CGFloat
+    let upperButtonHeight: CGFloat = 50
+    lazy var screenHeight: CGFloat = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - self.upperButtonHeight
+    lazy var minimumTextViewHeight: CGFloat = self.screenHeight - 350
     
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
@@ -85,7 +88,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         tabView.layer.shadowOffset = CGSize(width: 0, height: 1)
         tabView.layer.shadowOpacity = 0.2
         tabView.layer.shadowRadius = 1
-        
     }
     
     func setupAddPostButton() {
@@ -116,7 +118,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureCell(cell: PostTableViewCell, post: UserPost) {
-        cell.configureNewsfeedUi()
+        cell.configureNewsfeedUi(minimumTextViewHeight)
         switch post.type {
         case .OnYourMind:
             cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
