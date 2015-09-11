@@ -35,6 +35,11 @@ class NotificationTableViewCell: UITableViewCell {
 //        self.getUserProfile()
     }
     
+    // resetUI
+    func resetUI(){
+        
+    }
+    
     // MARK: Populate UI
     func setupComponents(){
         timeLabel.text = Utilities.getTimeAgoString(notification.created)

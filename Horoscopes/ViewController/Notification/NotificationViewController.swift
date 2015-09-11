@@ -58,6 +58,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         var cell : NotificationTableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
+        cell.resetUI()
         cell.populateData(notifArray[indexPath.row])
         return cell
     }
@@ -92,6 +93,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 self.notifArray = result!
+                self.notifArray.sort({ $0.created > $1.created })
                 self.tableView.reloadData()
             })
         })

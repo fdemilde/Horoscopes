@@ -434,26 +434,30 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i1d-IS-VOF">
-                                <rect key="frame" x="0.0" y="63" width="600" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="0.0" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="X1Z-S4-ebY" firstAttribute="top" secondItem="i1d-IS-VOF" secondAttribute="bottom" constant="13" id="05e-8D-SWp"/>
                             <constraint firstAttribute="trailing" secondItem="X1Z-S4-ebY" secondAttribute="trailing" constant="10" id="2vs-RT-kvn"/>
-                            <constraint firstItem="pzb-NJ-KAL" firstAttribute="top" secondItem="X1Z-S4-ebY" secondAttribute="bottom" id="6hW-1l-lUd"/>
-                            <constraint firstAttribute="trailing" secondItem="i1d-IS-VOF" secondAttribute="trailing" id="7nb-AQ-FSN"/>
-                            <constraint firstItem="i1d-IS-VOF" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="13" id="CoK-4Z-xlR"/>
+                            <constraint firstItem="pzb-NJ-KAL" firstAttribute="top" secondItem="X1Z-S4-ebY" secondAttribute="bottom" id="6hW-1l-lUd">
+                                <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                            </constraint>
+                            <constraint firstItem="X1Z-S4-ebY" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="10" id="HdS-YO-kVH"/>
                             <constraint firstItem="3SS-VW-yoY" firstAttribute="top" secondItem="MJc-GG-XN9" secondAttribute="bottom" id="V4m-82-htu"/>
                             <constraint firstItem="X1Z-S4-ebY" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" constant="10" id="hMC-CB-RLP"/>
-                            <constraint firstItem="i1d-IS-VOF" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" id="rxR-4O-Fuh"/>
                             <constraint firstAttribute="trailing" secondItem="3SS-VW-yoY" secondAttribute="trailing" id="vqq-KW-5UQ"/>
                             <constraint firstItem="3SS-VW-yoY" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" id="xVg-A2-vPb"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="HdS-YO-kVH"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="constraints">
+                                <include reference="HdS-YO-kVH"/>
+                            </mask>
+                        </variation>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="tabbar_notification.png" id="ahU-EA-cup"/>
                     <navigationItem key="navigationItem" id="o8X-42-gxb"/>

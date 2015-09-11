@@ -97,6 +97,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 println("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
+//                println("getFollowingNewsfeed == \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response)
 //                println("result when get getFollowingNewsfeed = \(result)")
                 var errorCode = result["error"] as! Int
@@ -245,6 +246,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(error: error)
             } else {
+                SocialManager.sharedInstance.sendFollowNotification(uid)
                 completionHandler(error: nil)
             }
         }
@@ -530,6 +532,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+//                println("getCurrentUserFollowProfile == \(response)")
                 let json = Utilities.parseNSDictionaryToDictionary(response)
                 var key = ""
                 if method == GET_CURRENT_USER_FOLLOWERS {

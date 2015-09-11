@@ -451,7 +451,6 @@ class ProfileViewController: ViewControllerWithAds, ASTableViewDataSource, ASTab
             if let error = error {
                 
             } else {
-                SocialManager.sharedInstance.sendFollowNotification(uid)
                 if self.profileType == .CurrentUser {
                     self.successfulFollowed = true
                     self.getFollowingUsers()
