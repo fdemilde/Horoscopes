@@ -23,6 +23,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var likeNumberLabel: UILabel!
     
     // MARK: - Newsfeed outlet
     
@@ -52,7 +53,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         // Configure the view for the selected state
     }
     
-    func configureNewsfeedUi() {
+    func configureNewsfeedUi(minimumTextViewHeight: CGFloat?) {
         horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         horoscopeSignView.layer.cornerRadius = 4
         horoscopeSignView.clipsToBounds = true
@@ -70,6 +71,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(imageGestureRecognizer)
+        
+        if let height = minimumTextViewHeight {
+            let heightConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: height)
+            textView.addConstraint(heightConstraint)
+        }
     }
     
     func configureUserPostUi() {

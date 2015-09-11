@@ -75,7 +75,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
             })
         })
         cell.profileNameLabel.text = post.user?.name
-        cell.configureNewsfeedUi()
+        cell.configureNewsfeedUi(nil)
     }
     
     // MARK: - Post Cell Delegate

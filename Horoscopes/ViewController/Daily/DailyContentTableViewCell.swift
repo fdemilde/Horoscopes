@@ -81,8 +81,6 @@ class DailyContentTableViewCell: UITableViewCell {
     // MARK: - Helper
     
     func setUp(type: DailyHoroscopeType, selectedSign: Int) {
-        likedImageView.alpha = 0.0
-        likedLabel.alpha = 0.0
         if selectedSign != -1 {
             self.selectedSign = selectedSign
             if type == DailyHoroscopeType.TodayHoroscope {
@@ -143,10 +141,10 @@ class DailyContentTableViewCell: UITableViewCell {
         
         var voteStringLength = count(voteString)
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, likedStringLength))
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.darkGrayColor(), range: NSMakeRange(0, likedStringLength))
-        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(13.0), range: NSMakeRange(likedStringLength, (voteStringLength + 1))) // +1 for the space between
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGrayColor(), range: NSMakeRange(likedStringLength, voteStringLength + 1))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(11.0), range: NSMakeRange(0, likedStringLength))
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1), range: NSMakeRange(0, likedStringLength))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11.0), range: NSMakeRange(likedStringLength, (voteStringLength + 1))) // +1 for the space between
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), range: NSMakeRange(likedStringLength, voteStringLength + 1))
         likedLabel.attributedText = attString
     }
     
@@ -184,8 +182,6 @@ class DailyContentTableViewCell: UITableViewCell {
     
     func animateLike() {
         UIView.animateWithDuration(0.5, animations: { () -> Void in
-//            self.likeButton.alpha = 0.0
-//            self.dislikeButton.alpha = 0.0
             self.likedLabel.alpha = 1.0
             self.likedImageView.alpha = 1.0
         })
