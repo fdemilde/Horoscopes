@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "selected_sign_pisces.png"
+      "filename" : "sign_pisces_selected.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "selected_sign_pisces@2x.png"
+      "filename" : "sign_pisces_selected@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "selected_sign_pisces@3x.png"
+      "filename" : "sign_pisces_selected@3x.png"
     }
   ],
   "info" : {

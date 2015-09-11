@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "sign_icon_sagittarius.png"
+      "filename" : "icon_sigittarius.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "sign_icon_sagittarius@2x.png"
+      "filename" : "icon_sigittarius@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "sign_icon_sagittarius@3x.png"
+      "filename" : "icon_sigittarius@3x.png"
     }
   ],
   "info" : {

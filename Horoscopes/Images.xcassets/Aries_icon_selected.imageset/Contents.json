@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "selected_sign_icon_aries.png"
+      "filename" : "icon-aries_selected.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "selected_sign_icon_aries@2x.png"
+      "filename" : "icon-aries_selected@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "selected_sign_icon_aries@3x.png"
+      "filename" : "icon-aries_selected@3x.png"
     }
   ],
   "info" : {

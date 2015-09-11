@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "selected_sign_icon_cancer.png"
+      "filename" : "icon_cancer_selected.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "selected_sign_icon_cancer@2x.png"
+      "filename" : "icon_cancer_selected@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "selected_sign_icon_cancer@3x.png"
+      "filename" : "icon_cancer_selected@3x.png"
     }
   ],
   "info" : {

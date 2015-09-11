@@ -3,17 +3,17 @@
     {
       "idiom" : "universal",
       "scale" : "1x",
-      "filename" : "selected_sign_aquarius.png"
+      "filename" : "sign_aquarius_selected.png"
     },
     {
       "idiom" : "universal",
       "scale" : "2x",
-      "filename" : "selected_sign_aquarius@2x.png"
+      "filename" : "sign_aquarius_selected@2x.png"
     },
     {
       "idiom" : "universal",
       "scale" : "3x",
-      "filename" : "selected_sign_aquarius@3x.png"
+      "filename" : "sign_aquarius_selected@3x.png"
     }
   ],
   "info" : {
