@@ -50,15 +50,16 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         setupView()
         self.resetTapButtonColor()
         self.setupInfiniteScroll()
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
             dispatch_async(dispatch_get_main_queue(),{
                 self.checkAndLoginZwigglers()
             })
         }
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
     }

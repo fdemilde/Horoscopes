@@ -10,6 +10,15 @@
 #import "SMCLove.h"
 #import <QuartzCore/QuartzCore.h>
 #define DEGREES_TO_RADIANS(x) (x*3.141593)/180
+#define SCREEN_WIDTH ([[UIScreen mainScreen] bounds].size.width)
+#define SCREEN_HEIGHT ([[UIScreen mainScreen] bounds].size.height)
+#define SCREEN_MAX_LENGTH (MAX(SCREEN_WIDTH, SCREEN_HEIGHT))
+#define SCREEN_MIN_LENGTH (MIN(SCREEN_WIDTH, SCREEN_HEIGHT))
+
+#define IS_IPHONE_4_OR_LESS (SCREEN_MAX_LENGTH < 568.0)
+#define IS_IPHONE_5 (SCREEN_MAX_LENGTH == 568.0)
+#define IS_IPHONE_6 (SCREEN_MAX_LENGTH == 667.0)
+#define IS_IPHONE_6P (SCREEN_MAX_LENGTH == 736.0)
 
 static float deltaAngle;
 static int CLOVER_IMAGE_TAG = 100;
@@ -56,7 +65,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         //get the sign
         Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
         UIImageView *im = [[UIImageView alloc] init];
-        
+        im.backgroundColor = [UIColor blueColor];
         im.layer.anchorPoint = CGPointMake(1.0f, 0.5f);
         im.layer.position = CGPointMake(container.bounds.size.width/2.0, container.bounds.size.height/2.0); 
 
@@ -68,20 +77,26 @@ static int CLOVER_SYMBOL_TAG = 101;
         
         // Frame is hardcode for 568h screen, now calculate for each screen size
         // (130, 60, 60, 60)
-        int clovePosX = [self getPositionXBaseOnScreen:130];
+        int clovePosX = [self getPositionXBaseOnScreen:133];
         int clovePosY = [self getPositionYBaseOnScreen:60];
         UIImageView *cloveImage = [[UIImageView alloc] initWithFrame:CGRectMake(clovePosX, clovePosY, 60, 60)];
         cloveImage.image = [horoscope getIcon];
+        cloveImage.contentMode = UIViewContentModeCenter;
         cloveImage.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         cloveImage.tag = CLOVER_IMAGE_TAG;
         [im addSubview:cloveImage];
         // (66, 33, 30, 30)
-        int symbolPosX = [self getPositionXBaseOnScreen:66];
+        int symbolPosX = [self getPositionXBaseOnScreen:80];
         int symbolPosY = [self getPositionYBaseOnScreen:33];
+        if(IS_IPHONE_6){
+            symbolPosX = [self getPositionXBaseOnScreen:66];
+            symbolPosY = [self getPositionYBaseOnScreen:30];
+        }
         UIImageView *symbol = [[UIImageView alloc] initWithFrame:CGRectMake(symbolPosX, symbolPosY, 30, 30)];
         symbol.image = [horoscope getSymbol];
         symbol.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         symbol.tag = CLOVER_SYMBOL_TAG;
+        symbol.contentMode = UIViewContentModeCenter;
         [im addSubview:symbol];
         // when create wheel, highlight default selected sign
         if (i == currentValue) {

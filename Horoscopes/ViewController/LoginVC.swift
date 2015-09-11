@@ -51,12 +51,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func initialBirthday(){
         birthday = XAppDelegate.userSettings.birthday
-        
-//        var signIndex = XAppDelegate.horoscopesManager.getSignIndexOfDate(birthday)
-        if let birthday = birthday{
-            var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
-            //        self.wheel.autoRollToSign(signName)
-        }
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
         birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
     }
@@ -128,7 +122,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.fbLoginBtn.setImage(image, forState: UIControlState.Normal)
         loginLabel.text = self.userFBName
         loginLabel.textColor = UIColor.whiteColor()
-        loginLabel.font = UIFont.systemFontOfSize(14)
+        loginLabel.font = UIFont.boldSystemFontOfSize(18)
         
         if let url = NSURL(string: userFBImageURL) {
             self.downloadImage(url)
@@ -137,9 +131,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func fetchUserInfo(){
         var params = Dictionary<String,String>()
-        // params["fields"] = "name,id,gender,birthday"
+         params["fields"] = "name,id,gender,birthday"
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
+                    println("result result === \(result)")
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String
                     self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
