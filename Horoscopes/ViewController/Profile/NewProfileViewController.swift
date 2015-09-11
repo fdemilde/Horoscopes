@@ -736,10 +736,11 @@ class NewProfileViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let index = tableView.indexPathForCell(cell)?.row
         var profile: UserProfile!
         if currentTab == .Following {
-            if noFollowingUser {
-                profile = friends[index!]
-            } else {
-                profile = followingUsers[index!]
+            profile = followingUsers[index!]
+            if profileType == .CurrentUser {
+                if noFollowingUser {
+                    profile = friends[index!]
+                }
             }
         } else {
             profile = followers[index!]
