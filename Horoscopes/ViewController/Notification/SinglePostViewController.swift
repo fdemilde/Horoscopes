@@ -88,6 +88,25 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
     
+    func didTapLikeButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let profileId = userPost.user!.uid
+        let postId = userPost.post_id
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            return
+        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(profileId, postId: postId, type: SEND_HEART_USER_POST_TYPE)
+    }
+    
+    // Notification handler
+    func sendHeartSuccessful(notif: NSNotification){
+        let postId = notif.object as! String
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        tableView.reloadData()
+    }
+    
     // MARK: Button Actions
     
     @IBAction func backButtonTapped(sender: AnyObject) {

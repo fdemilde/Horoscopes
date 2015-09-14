@@ -39,7 +39,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
     var userPostArray = [UserPost]()
-    var oldUserPostArray = [UserPost]()
     var feedsDisplayNode = ASDisplayNode()
     var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
@@ -58,11 +57,14 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
-            dispatch_async(dispatch_get_main_queue(),{
-                self.checkAndLoginZwigglers()
-            })
+        if(tabType == NewsfeedTabType.Following && userPostArray.count == 0){ // only check if no data for following yet
+            if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
+                dispatch_async(dispatch_get_main_queue(),{
+                    self.checkAndLoginZwigglers()
+                })
+            }
         }
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
     }
@@ -148,6 +150,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
             cell.likeButton.userInteractionEnabled = true
         }
+        // BINH BINH set like button back here
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
                 SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
@@ -285,9 +288,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
+        var cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         var post = userPostArray[indexPath.row] as UserPost
         cell.delegate = self
+        cell.resetUI()
         configureCell(cell, post: post)
         return cell
     }

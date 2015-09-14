@@ -497,6 +497,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         alert.body = "\(currentUser.name) followed you"
         alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
+        alert.type = "follow"
         
         var receiverIdString = "\(receiverId)"
         let route = "/profile/\(currentUser.uid)/feed"
@@ -514,13 +515,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func clearAllNotification(){
         var listIds = [String]()
-        listIds.append("22_8")
-        listIds.append("23_8")
-        listIds.append("14_11")
-        listIds.append("15_11")
-        listIds.append("18_11")
-        listIds.append("19_11")
-        listIds.append("20_11")
+        listIds.append("67_8")
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
             println("clearAllNotification result = \(result)")
         })

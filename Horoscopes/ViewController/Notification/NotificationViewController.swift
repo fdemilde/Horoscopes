@@ -15,6 +15,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     var startPositionY = 0 as CGFloat
     var notifArray = [NotificationObject]()
     var router : Router!
+    var tableHeaderView : UIView!
+    var tableFooterView : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,10 +29,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.backgroundColor = UIColor.whiteColor()
-        tableView.layer.cornerRadius = 5
-        tableView.layer.masksToBounds = true
-        
+//        XAppDelegate.socialManager.clearAllNotification()
 //        self.unfollowTest()
     }
     
@@ -50,6 +49,12 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        tableView.tableHeaderView = getHeaderView()
+        tableView.tableFooterView = getFooterView()
+        return 1
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return notifArray.count
     }
@@ -58,8 +63,18 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         var cell : NotificationTableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
-        cell.resetUI()
+        if let cell = cell {
+            cell.resetUI()
+            self.resetCornerRadius(cell)
+        }
         cell.populateData(notifArray[indexPath.row])
+        if(indexPath.row == 0){ // first cell
+            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: (UIRectCorner.TopLeft | UIRectCorner.TopRight), radius: 4.0) as! NotificationTableViewCell
+        }
+        if(indexPath.row == (notifArray.count - 1)){ // last array
+            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0) as! NotificationTableViewCell
+        }
+        
         return cell
     }
     
@@ -69,7 +84,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             var notifCell = cell as! NotificationTableViewCell
             var route = notifCell.notification.route
             if(route != nil && route != ""){
-                XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
+                dispatch_async(dispatch_get_main_queue()) {
+                    XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
+                }
+                
             }
         }
     }
@@ -90,8 +108,15 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     // MARK: Helpers
     func getNotificationAndReloadData(){
+        if(notifArray.count == 0){ // first load
+            Utilities.showHUD()
+            tableView.backgroundColor = UIColor.whiteColor()
+        }
+        
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
+                Utilities.hideHUD()
+                self.tableView.backgroundColor = UIColor.clearColor()
                 self.notifArray = result!
                 self.notifArray.sort({ $0.created > $1.created })
                 self.tableView.reloadData()
@@ -129,12 +154,14 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
             println("Route == feed param dict = \(param)")
             let uid = param["uid"] as! String
+            Utilities.showHUD()
             SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
+                Utilities.hideHUD()
                 if let error = error {
                     
                 } else {
                     let userProfile = result![0]
-                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("ProfileViewController") as! ProfileViewController
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
                     controller.profileType = ProfileType.OtherUser
                     controller.userProfile = userProfile
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -170,7 +197,9 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             if let postId = param["post_id"] as? String{
+                Utilities.showHUD()
                 XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
+                    Utilities.hideHUD()
                     if let error = error {
                         
                     } else {
@@ -193,5 +222,34 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         router.addRoute("/settings", blockCode: { (param) -> Void in
             println("Route == settings with param dict = \(param)")
         })
+    }
+    
+    // MARK: UI Helper
+    func getHeaderView() -> UIView {
+        if let tableHeaderView = tableHeaderView{
+            
+        } else {
+            tableHeaderView = UIView()
+            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableHeaderView.backgroundColor = UIColor.clearColor()
+        }
+        return tableHeaderView
+    }
+    
+    func getFooterView() -> UIView {
+        if let tableFooterView = tableFooterView{
+            
+        } else {
+            tableFooterView = UIView()
+            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableFooterView.backgroundColor = UIColor.clearColor()
+        }
+        return tableFooterView
+    }
+    
+    // prevent corner radius from applying to middle rows
+    func resetCornerRadius(cell : NotificationTableViewCell) -> NotificationTableViewCell{
+        
+        return Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner.allZeros, radius: 4.0) as! NotificationTableViewCell
     }
 }

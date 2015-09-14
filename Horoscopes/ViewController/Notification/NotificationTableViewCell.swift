@@ -14,6 +14,8 @@ class NotificationTableViewCell: UITableViewCell {
     @IBOutlet weak var notificationDescLabel: UILabel!
     @IBOutlet weak var notifTypeImageView: UIImageView!
     @IBOutlet weak var timeLabel: UILabel!
+    @IBOutlet weak var cellOverlay:  UIView!
+    
     var notification : NotificationObject!
     var alertObject = Alert()
     var type = ServerNotificationType.Follow
@@ -37,7 +39,10 @@ class NotificationTableViewCell: UITableViewCell {
     
     // resetUI
     func resetUI(){
-        
+        timeLabel.text = ""
+        notificationDescLabel.text = ""
+        cellImageView.image = nil
+        cellOverlay.hidden = true
     }
     
     // MARK: Populate UI
@@ -47,14 +52,18 @@ class NotificationTableViewCell: UITableViewCell {
         switch(type){
             case ServerNotificationType.SendHeart:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                self.backgroundColor = UIColor.whiteColor()
+                cellOverlay.hidden = true
             case ServerNotificationType.Follow:
                 notifTypeImageView.image = UIImage(named: "follow_icon")
-                self.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+                cellOverlay.hidden = false
             default:
                 notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                self.backgroundColor = UIColor.whiteColor()
+                cellOverlay.hidden = true
+            
+            
         }
+        self.bringSubviewToFront(cellOverlay)
+        self.backgroundColor = UIColor.whiteColor()
         self.setupCellImage()
         
     }

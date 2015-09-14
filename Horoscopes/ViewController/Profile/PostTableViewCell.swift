@@ -53,6 +53,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         // Configure the view for the selected state
     }
     
+    // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell
+    func resetUI(){
+        profileImageView.image = nil
+        profileNameLabel.text = ""
+        postDateLabel.text = ""
+        textView.text = ""
+        likeNumberLabel.text = ""
+    }
+    
     func configureNewsfeedUi(minimumTextViewHeight: CGFloat?) {
         horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         horoscopeSignView.layer.cornerRadius = 4

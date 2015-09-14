@@ -117,7 +117,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if(type == .Calendar){
-            return 240
+            return 235
         }
          return getAboutCellHeight()
     }

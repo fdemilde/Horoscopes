@@ -60,7 +60,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             case 0:
                 cell.parentVC = self
                 cell.setupCell(SettingsType.Notification)
-//                cell = Utilities.makeCornerRadius(cell, maskFrame: self.view.bounds, roundOptions: (UIRectCorner.TopLeft | UIRectCorner.TopRight), radius: 4.0) as! SettingsTableCell
                 break
             case 1:
                 cell.setupCell(SettingsType.ChangeDOB)
@@ -70,7 +69,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                     break
             case 3:
                 cell.setupCell(SettingsType.Logout)
-//                cell = Utilities.makeCornerRadius(cell, maskFrame: self.view.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0) as! SettingsTableCell
                 break
             default:
                 break
@@ -86,11 +84,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             case 0:
 //                var timePickerViewController = self.setupTimePickerViewController()
 //                self.displayViewController(timePickerViewController)
-//                var pickerView = MyTimePickerView(frame: CGRectMake(0, 10, 280, 210))
-//                var alertView = CustomIOSAlertView()
-//                alertView.containerView = pickerView
-//                alertView.buttonTitles = [String]()
-//                alertView.show()
                 break
             case 1:
                 var birthdayViewController = self.setupBirthdayViewController()

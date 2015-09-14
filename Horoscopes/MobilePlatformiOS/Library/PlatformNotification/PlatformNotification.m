@@ -125,10 +125,10 @@
     }
     
     
-    
-    for (NotificationObject* no in arrayNotiffs) {
-        [self fireLocalNotiffication:no];
-    }
+//    BINH BINH
+//    for (NotificationObject* no in arrayNotiffs) {
+//        [self fireLocalNotiffication:no];
+//    }
 
     return arrayNotiffs;
     
