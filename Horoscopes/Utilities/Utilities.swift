@@ -288,26 +288,14 @@ class Utilities {
         })
     }
     
-    // MARK: Show MZ Formsheet
-    
-    class func showFormSheet(viewController : UIViewController, fromVC : UIViewController){
-        var formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
-        formSheet.cornerRadius = 0.0;
-        formSheet.portraitTopInset = 0.0;
-        formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
-        fromVC.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
-    }
-    
     // MARK: - Share helper
     
     class func presentShareFormSheetController(hostViewController: UIViewController, shareViewController: ShareViewController) {
         let formSheet = MZFormSheetController(viewController: shareViewController)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
-        formSheet.cornerRadius = 0.0
-        formSheet.portraitTopInset = hostViewController.view.frame.height - SHARE_HYBRID_HEIGHT;
-        formSheet.presentedFormSheetSize = CGSizeMake(hostViewController.view.frame.width, SHARE_HYBRID_HEIGHT);
+        formSheet.cornerRadius = 5.0
+        formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, SHARE_HYBRID_HEIGHT)
         hostViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     

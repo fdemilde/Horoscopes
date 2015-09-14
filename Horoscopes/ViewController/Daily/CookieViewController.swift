@@ -15,7 +15,6 @@ class CookieViewController : UIViewController{
         case CookieViewStateUnopened
         case CookieViewStateOpened
     }
-    let NAVIGATION_BAR_HEIGHT = 50 as CGFloat
     let FOOTER_HEIGHT = 60 as CGFloat
     let PADDING = 10 as CGFloat
     

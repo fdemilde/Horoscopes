@@ -267,7 +267,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     // MARK: Poptipview setip
     
     func setupDatePickerPopup(){
-        pickerView = MyDatePickerView(frame: CGRectMake(0, -50, 240, 60))
+        pickerView = MyDatePickerView(frame: CGRectMake(0, -60, 240, 80))
         pickerView.delegate = self
         if let birthday = XAppDelegate.userSettings.birthday {
             pickerView.setCurrentBirthday(XAppDelegate.userSettings.birthday)

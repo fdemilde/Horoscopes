@@ -37,9 +37,6 @@ class SettingsTableCell : UITableViewCell {
             case SettingsType.Notification:
                 titleLabel.text = "Notify Everyday"
                 break;
-            case SettingsType.ChangeName:
-                titleLabel.text = "Change Name"
-                break;
             case SettingsType.ChangeDOB:
                 titleLabel.text = "DOB"
                 break;

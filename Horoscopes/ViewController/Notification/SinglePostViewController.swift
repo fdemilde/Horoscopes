@@ -69,12 +69,21 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
         cell.textView.text = post.message
+        cell.likeNumberLabel.text = "\(post.hearts) Likes"
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView.image = image
             })
         })
         cell.profileNameLabel.text = post.user?.name
+        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+            cell.likeButton.userInteractionEnabled = false
+            
+        } else {
+            cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+            cell.likeButton.userInteractionEnabled = true
+        }
         cell.configureNewsfeedUi(nil)
     }
     
@@ -104,6 +113,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     func sendHeartSuccessful(notif: NSNotification){
         let postId = notif.object as! String
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        userPost.hearts++
         tableView.reloadData()
     }
     
