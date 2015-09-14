@@ -324,8 +324,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             let index = tableView.indexPathForCell(cell)?.row
             let profile = userPostArray[index!].user
-            let controller = storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
-            controller.profileType = ProfileType.OtherUser
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
         } else {

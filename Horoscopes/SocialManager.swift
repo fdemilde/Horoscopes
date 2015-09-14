@@ -398,9 +398,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 XAppDelegate.locationManager.setupLocationService()
                 self.persistUserProfile({ (error) -> Void in
-                    
+                    if let error = error {
+                        completionHandler(responseDict: nil, error: error)
+                    } else {
+                        completionHandler(responseDict: responseDict, error: nil)
+                    }
                 })
-                completionHandler(responseDict: responseDict, error: nil)
+                
             }
         })
     }
