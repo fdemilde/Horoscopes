@@ -8,16 +8,14 @@
 
 import Foundation
 
-class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource, UIPickerViewDelegate {
+class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIPickerViewDelegate {
     @IBOutlet var picker : UIPickerView!
-    var parentVC : UIViewController!
-    var type : BirthdayParentViewControllerType!
+    var parentVC : SettingsViewController!
+//    var type : BirthdayParentViewControllerType!
     var birthday : NSDate!
     var selectedMonthIndex = 0
     var selectedDayIndex = 0
     var currentSignIndex = 0
-    
-    @IBOutlet weak var signName: UILabel!
     
     let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     
@@ -31,17 +29,17 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
-        self.view.backgroundColor = UIColor(patternImage: image)
         dateArray = dayArray31
-        
     }
     
-    func setupViewController(parent : UIViewController, type : BirthdayParentViewControllerType, currentSetupBirthday : NSDate?){
-        self.parentVC = parent
-        self.type = type
-        self.birthday = currentSetupBirthday
+    override func viewWillAppear(animated: Bool) {
         self.setCurrentBirthdaySign()
+    }
+    
+    func setupViewController(parent : SettingsViewController, currentSetupBirthday : NSDate?){
+        self.parentVC = parent
+        self.birthday = currentSetupBirthday
+        
     }
     
     // MARK: Picker view datasource & Delegate
@@ -68,13 +66,14 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
         } else {
             string = dateArray[row]
         }
-        var attString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let attDict = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
+        var attString = NSAttributedString(string: string, attributes: attDict)
         
         // change separator color to white
         var separator1 = pickerView.subviews[1] as! UIView
-        separator1.backgroundColor = UIColor.whiteColor()
+        separator1.backgroundColor = UIColor.blackColor()
         var separator2 = pickerView.subviews[2] as! UIView
-        separator2.backgroundColor = UIColor.whiteColor()
+        separator2.backgroundColor = UIColor.blackColor()
         return attString
     }
     
@@ -90,31 +89,20 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
         } else {
             selectedDayIndex = row
         }
-        self.changeSignNameLabel()
-        
-    }
-    
-    func changeSignNameLabel(){
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd-MMMM"
+        dateFormatter.dateFormat = "dd/MM"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        var dateString = String(format:"%@-%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
-        var todayString = dateFormatter.stringFromDate(NSDate())
+        var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
         var selectedDate = dateFormatter.dateFromString(dateString)
-        
-        var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(selectedDate!)
-        if(self.signName.text != signName){
-            self.signName.text = signName
-            
-            self.signName.alpha = 0
-            UILabel.beginAnimations("Fade-in", context: nil)
-            UILabel.setAnimationDuration(0.6)
-            self.signName.alpha = 1
-            UILabel.commitAnimations()
-        }
+        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
+        parentVC.birthday = selectedDate
     }
     
-    // MARK: helpers
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 35
+    }
+    
+    // MARK: Helpers
     func getDayArrayBaseOnMonthIndex(monthIndex : Int) -> [String]{
         if (monthIndex == 0 || monthIndex == 2 || monthIndex == 4 || monthIndex == 6 || monthIndex == 7 || monthIndex == 9 || monthIndex == 11 ){
             return dayArray31
@@ -127,7 +115,6 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
     
     
     func setCurrentBirthdaySign(){
-//        println("setCurrentBirthdaySign setCurrentBirthdaySign ")
         if(birthday == nil){ // haven't selected burthday, show first row
             picker.selectRow(0, inComponent: 0, animated: false)
         } else {
@@ -136,9 +123,7 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
             picker.selectRow(dateArray[1], inComponent: 1, animated: false)
             selectedDayIndex = dateArray[1]
             selectedMonthIndex = dateArray[0]
-            signName.text = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
         }
-        
     }
     
     // parse current birthday into array of Int as array[0] = month, array[1] = day
@@ -159,31 +144,28 @@ class MyDatePickerViewController : ViewControllerWithAds, UIPickerViewDataSource
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
-    @IBAction func saveTapped(sender: AnyObject) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
-        var selectedDate = dateFormatter.dateFromString(dateString)
-        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
-        if(self.type == BirthdayParentViewControllerType.LoginViewController){
-            var castedParentVC = parentVC as! LoginVC
-            castedParentVC.birthday = selectedDate
-            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
-                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-            })
-        } else {
-            var castedParentVC = parentVC as! SettingsViewController
-            castedParentVC.birthday = selectedDate
-            castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
-                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-            })
-        }
-        
-        
-        
-    }
+//    @IBAction func saveTapped(sender: AnyObject) {
+//        let dateFormatter = NSDateFormatter()
+//        dateFormatter.dateFormat = "dd/MM"
+//        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+//        var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
+//        var selectedDate = dateFormatter.dateFromString(dateString)
+//        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
+//        if(self.type == BirthdayParentViewControllerType.LoginViewController){
+//            var castedParentVC = parentVC as! LoginVC
+//            castedParentVC.birthday = selectedDate
+//            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
+//                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
+//            })
+//        } else {
+//            var castedParentVC = parentVC as! SettingsViewController
+//            castedParentVC.birthday = selectedDate
+//            castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
+//            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
+//                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
+//            })
+//        }
+//    }
     
     // because server requires date should be in DAY/MONTH format
     func getDateStringInNumberFormat(date : NSDate) -> String{

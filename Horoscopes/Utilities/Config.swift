@@ -133,7 +133,6 @@ enum PostCellType {
 
 enum SettingsType {
     case Notification
-    case ChangeName
     case ChangeDOB
     case BugsReport
     case Logout
@@ -163,6 +162,9 @@ let SHARE_HYBRID_HEIGHT                     = 400 as CGFloat
 let ADMOD_HEIGHT                     = 50 as CGFloat
 
 let TABBAR_HEIGHT                     = 49 as CGFloat
+
+
+let NAVIGATION_BAR_HEIGHT = 50 as CGFloat
 
 struct ScreenSize
 {

@@ -33,7 +33,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        picker = UIPickerView(frame: CGRectMake(5, -45, self.frame.width, self.frame.height))
+        picker = UIPickerView(frame: CGRectMake(5, -35, self.frame.width, self.frame.height))
         picker.dataSource = self
         picker.delegate = self
         self.addSubview(picker)
@@ -60,6 +60,10 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         
         return 2
+    }
+    
+    func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 35
     }
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {

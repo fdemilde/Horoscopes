@@ -152,7 +152,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
             cell.likeButton.userInteractionEnabled = true
         }
-        // BINH BINH set like button back here
+        
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
                 SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in

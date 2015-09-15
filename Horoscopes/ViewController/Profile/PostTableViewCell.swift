@@ -60,6 +60,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         postDateLabel.text = ""
         textView.text = ""
         likeNumberLabel.text = ""
+        newsfeedFollowButton.setImage(nil, forState: .Normal)
     }
     
     func configureNewsfeedUi(minimumTextViewHeight: CGFloat?) {

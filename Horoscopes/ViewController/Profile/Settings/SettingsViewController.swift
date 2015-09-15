@@ -17,6 +17,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     @IBOutlet weak var titleBackgroundView: UIView!
     
+    let POPUP_NOTIFICATION_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
+    let POPUP_DOB_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
+    let POPUP_BUG_REPORT_SIZE = Utilities.getScreenSize()
+    let TABLE_ROW_HEIGHT = 56 as CGFloat
+    
     // we must save last value of notification setting so when user tap save we can check if it changes or not
     var isLastSaveNotifOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     var notificationFireTime : String!
@@ -50,7 +55,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 56
+        return TABLE_ROW_HEIGHT
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -82,16 +87,16 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
             case 0:
-//                var timePickerViewController = self.setupTimePickerViewController()
-//                self.displayViewController(timePickerViewController)
+                var timePickerViewController = self.setupTimePickerViewController()
+                self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
                 var birthdayViewController = self.setupBirthdayViewController()
-                self.displayViewController(birthdayViewController)
+                self.displayViewController(birthdayViewController, type: SettingsType.ChangeDOB)
                 break
             case 2:
                 var bugsReportViewController = self.setupBugsReportViewController()
-                self.displayViewController(bugsReportViewController)
+                self.displayViewController(bugsReportViewController, type: SettingsType.BugsReport)
                 break
             case 3:
 //                showLogoutAlertView()
@@ -105,7 +110,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func setupBirthdayViewController() -> UIViewController {
         let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
-        selectBirthdayVC.setupViewController(self, type: BirthdayParentViewControllerType.SettingsViewController, currentSetupBirthday: birthday)
+        selectBirthdayVC.setupViewController(self, currentSetupBirthday: birthday)
         return selectBirthdayVC
     }
     
@@ -114,28 +119,21 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return bugsReportViewController
     }
     
-//    func setupTimePickerViewController() -> UIViewController {
-//        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyTimePickerViewController") as! MyTimePickerViewController
-//        timePickerVC.parentVC = self
-//        return timePickerVC
-//    }
+    func setupTimePickerViewController() -> UIViewController {
+        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
+        return timePickerVC
+    }
     
     // MARK: Button action
-    
-    @IBAction func backButtonTapped(sender: AnyObject) {
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
-//        self.navigationController?.popViewControllerAnimated(true)
-    }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()
         self.saveBirthdaySetting()
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
-//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: save changes
     func saveBirthdaySetting(){
+//        println("saveBirthdaySetting saveBirthdaySetting")
         if(XAppDelegate.userSettings.birthday != self.birthday){
             XAppDelegate.userSettings.birthday = self.birthday
             if(self.birthdayString != nil){
@@ -195,13 +193,25 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         self.birthdayString = dateString
     }
     
-    func displayViewController(viewController : UIViewController){
+    func displayViewController(viewController : UIViewController, type : SettingsType){
         var formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom;
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
         formSheet.cornerRadius = 0.0;
-        formSheet.portraitTopInset = 0.0;
-        formSheet.presentedFormSheetSize = Utilities.getScreenSize()
-        
+        if (type == SettingsType.Notification) {
+            formSheet.presentedFormSheetSize = POPUP_NOTIFICATION_SIZE
+            formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + TABLE_ROW_HEIGHT
+        } else if(type == SettingsType.ChangeDOB){
+            formSheet.presentedFormSheetSize = POPUP_DOB_SIZE
+            formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + 2 * TABLE_ROW_HEIGHT
+        } else {
+            formSheet.presentedFormSheetSize = POPUP_BUG_REPORT_SIZE
+        }
+        formSheet.view.layer.shadowColor = UIColor.blackColor().CGColor
+        formSheet.view.layer.shadowOffset = CGSizeMake(0, 19)
+        formSheet.view.layer.shadowRadius = 10
+        formSheet.view.layer.shadowOpacity = 0.4
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        MZFormSheetController.sharedBackgroundWindow().backgroundColor = UIColor.clearColor()
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
