@@ -8,11 +8,12 @@
 
 import UIKit
 
-class OtherProfileViewController: ProfileBaseViewController {
+class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate {
     
     // MARK: - Outlet
     
     @IBOutlet weak var newsfeedFollowButton: UIButton!
+    @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: - Life cycle
 
@@ -20,6 +21,9 @@ class OtherProfileViewController: ProfileBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+        let textField = searchBar.valueForKey("searchField") as! UITextField
+        textField.textColor = UIColor.whiteColor()
+        searchBar.placeholder = "\(userProfile.name)"
         if userProfile.uid != XAppDelegate.currentUser.uid {
             SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
                 if let error = error {
@@ -99,6 +103,19 @@ class OtherProfileViewController: ProfileBaseViewController {
                 dispatch_group_leave(group)
             }
         })
+    }
+    
+    // MARK: - Delegate
+    
+    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(false, animated: true)
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.setShowsCancelButton(true, animated: true)
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+        controller.delegate = self
+        navigationController?.presentViewController(controller, animated: true, completion: nil)
     }
     
 

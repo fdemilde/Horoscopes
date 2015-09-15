@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate {
     
     // MARK: - Outlet
     
@@ -344,6 +344,14 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         let sharingText = String(format: "%@ \n %@", name, postContent)
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
+    }
+    
+    func didChooseUser(profile: UserProfile) {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        controller.userProfile = profile
+        presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+            navigationController?.pushViewController(controller, animated: true)
+        })
     }
 
     /*

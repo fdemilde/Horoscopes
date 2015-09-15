@@ -220,37 +220,6 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
             return friends.count
         }
         return super.tableView(tableView, numberOfRowsInSection: section)
-//        var numberOfRows = super.tableView(tableView, numberOfRowsInSection: section)
-//        if numberOfRows == 0 {
-//            switch currentScope {
-//            case .Post:
-//                noPost = true
-//                numberOfRows = 3
-//            case .Following:
-//                noFollowingUser = true
-//                numberOfRows = friends.count
-//            case .Followers:
-//                noFollower = true
-//            }
-//        } else {
-//            switch currentScope {
-//            case .Post:
-//                noPost = false
-//            case .Following:
-//                noFollowingUser = false
-//            case .Followers:
-//                noFollower = false
-//            }
-//        }
-//        if currentScope == .Post {
-//            if noPost {
-//                changeToWhiteTableViewLayout()
-//                tableView.allowsSelection = true
-//            } else {
-//                changeToClearTableViewLayout()
-//            }
-//        }
-//        return numberOfRows
     }
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -356,14 +325,16 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
         })
     }
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "searchFriend" {
+            let controller = segue.destinationViewController as! SearchViewController
+            controller.delegate = self
+        }
     }
-    */
 
 }
