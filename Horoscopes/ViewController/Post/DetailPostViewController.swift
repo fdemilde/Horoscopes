@@ -49,10 +49,6 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
         bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
     }
@@ -60,6 +56,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
+        textView.resignFirstResponder()
     }
 
     override func didReceiveMemoryWarning() {

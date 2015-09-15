@@ -138,8 +138,8 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         Utilities.showHUD()
         SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
                 Utilities.hideHUD()
+                Utilities.showError(self, error: error)
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.reloadData()

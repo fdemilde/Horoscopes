@@ -23,6 +23,9 @@
 		70BCF7591B8DA59100875A76 /* NewProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */; };
 		70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */; };
 		70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */; };
+		70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973101BA672E50059D77A /* ProfileBaseViewController.swift */; };
+		70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */; };
+		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
 		70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */; };
 		70CF2EB31B69C7FA002AE7A2 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
@@ -219,6 +222,9 @@
 		70BCF7581B8DA59100875A76 /* NewProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewProfileViewController.swift; sourceTree = "<group>"; };
 		70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		70C4D8861B5DEA560080CF8C /* ProfileFollowCellNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileFollowCellNode.swift; sourceTree = "<group>"; };
+		70C973101BA672E50059D77A /* ProfileBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBaseViewController.swift; sourceTree = "<group>"; };
+		70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentProfileViewController.swift; sourceTree = "<group>"; };
+		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDailyTableViewController.swift; sourceTree = "<group>"; };
 		70CF2EB21B69C7FA002AE7A2 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		70DB1DD01B998E8300218063 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
@@ -488,6 +494,9 @@
 				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
 				701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */,
 				70DB1DD01B998E8300218063 /* SearchViewController.swift */,
+				70C973101BA672E50059D77A /* ProfileBaseViewController.swift */,
+				70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */,
+				70C973141BA6893E0059D77A /* OtherProfileViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1277,6 +1286,8 @@
 				F4106B7B1B43913F00D58D92 /* PostCellNode.swift in Sources */,
 				70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */,
 				70C4D8871B5DEA560080CF8C /* ProfileFollowCellNode.swift in Sources */,
+				70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */,
+				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F498447B1B663589001B3246 /* AddFriendTableViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
@@ -1321,6 +1332,7 @@
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
+				70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */,
 				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
