@@ -15,6 +15,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.tabBar.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
         self.setupTabBarItems()
         self.delegate = self
         selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
@@ -50,6 +51,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         settingItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
+//        616090
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {

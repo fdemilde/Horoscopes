@@ -215,6 +215,10 @@ class DataStore : NSObject{
         return result
     }
     
+    func clearData(){
+        newsfeedFollowing = [UserPost]()
+    }
+    
 }
 
 extension Array {

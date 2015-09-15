@@ -230,26 +230,12 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     // MARK: helpers
     
     func getBirthdayString() -> String{
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        
-        let dayOfMonthFormatter = NSDateFormatter()
-        dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dayOfMonthFormatter.dateFormat = "d"
-        var dateString = dateFormatter.stringFromDate(getDefaultBirthday())
-        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(getDefaultBirthday())
+        var dateString = ""
         if let birthday = birthday{
-            dateString = dateFormatter.stringFromDate(birthday)
-            dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(birthday)
+            dateString = Utilities.getBirthdayString(birthday)
+        } else {
+            dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
         }
-        
-        
-        var date_day = dayOfMonthFormatterString.toInt()
-        var suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
-        var suffixes = suffix_string.componentsSeparatedByString("|")
-        var suffix = suffixes[date_day!]
-        dateString = dateString.stringByAppendingString(suffix)
         
         return dateString
     }
@@ -271,8 +257,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         pickerView.delegate = self
         if let birthday = XAppDelegate.userSettings.birthday {
             pickerView.setCurrentBirthday(XAppDelegate.userSettings.birthday)
-        } else {
-            pickerView.setCurrentBirthday(getDefaultBirthday())
+        } else {pickerView.setCurrentBirthday(Utilities.getDefaultBirthday())
         }
         
         popUp = CMPopTipView(customView: pickerView)
@@ -312,11 +297,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         return result
     }
     
-    func getDefaultBirthday() -> NSDate{ // return default birthday for first load
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        return dateFormatter.dateFromString("25/11")!
-    }
+    
     
 }

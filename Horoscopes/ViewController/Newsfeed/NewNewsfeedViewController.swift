@@ -57,8 +57,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        if(tabType == NewsfeedTabType.Following && userPostArray.count == 0){ // only check if no data for following yet
-            if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already loggin facebook
+        if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
+            userPostArray = XAppDelegate.dataStore.newsfeedFollowing
+            tableView.reloadData()
+            if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already logged in facebook
                 dispatch_async(dispatch_get_main_queue(),{
                     self.checkAndLoginZwigglers()
                 })

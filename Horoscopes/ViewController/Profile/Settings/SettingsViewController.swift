@@ -20,6 +20,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     let POPUP_NOTIFICATION_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
     let POPUP_DOB_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
     let POPUP_BUG_REPORT_SIZE = Utilities.getScreenSize()
+    let POPUP_LOG_OUT_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 190)
     let TABLE_ROW_HEIGHT = 56 as CGFloat
     
     // we must save last value of notification setting so when user tap save we can check if it changes or not
@@ -42,6 +43,10 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         self.getNotificationFireTime()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        self.tableView.reloadData()
+    }
+    
     // MARK: - Table view datasource and delegate
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         tableView.tableHeaderView = getHeaderView()
@@ -50,8 +55,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        return 4
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){
+            return 4
+        }
+        // if not login, do not show log out
+        return 3
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -67,6 +75,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 cell.setupCell(SettingsType.Notification)
                 break
             case 1:
+                cell.parentVC = self
                 cell.setupCell(SettingsType.ChangeDOB)
                 break
             case 2:
@@ -78,16 +87,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             default:
                 break
         }
-        if(indexPath.row == 3){ // last row doesn't need separator
-            cell.separator.hidden == true
-        }
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
             case 0:
-                var timePickerViewController = self.setupTimePickerViewController()
+                var timePickerViewController = self.setupNotificationTimePickerViewController()
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
@@ -99,7 +105,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.displayViewController(bugsReportViewController, type: SettingsType.BugsReport)
                 break
             case 3:
-//                showLogoutAlertView()
+                var logOutViewController = self.setupLogoutViewController()
+                self.displayViewController(logOutViewController, type: SettingsType.Logout)
                 break
             default:
                 break
@@ -107,6 +114,12 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: Setup and display View Controller
+    
+    func setupNotificationTimePickerViewController() -> UIViewController {
+        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyTimePickerViewController") as! MyTimePickerViewController
+        timePickerVC.parentVC = self
+        return timePickerVC
+    }
     
     func setupBirthdayViewController() -> UIViewController {
         let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
@@ -119,9 +132,10 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return bugsReportViewController
     }
     
-    func setupTimePickerViewController() -> UIViewController {
-        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
-        return timePickerVC
+    func setupLogoutViewController() -> UIViewController {
+        let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("LogOutViewController") as! LogOutViewController
+        viewController.parentVC = self
+        return viewController
     }
     
     // MARK: Button action
@@ -129,6 +143,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()
         self.saveBirthdaySetting()
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+        hud.detailsLabelText = "Saved!"
+        hud.hide(true, afterDelay: 2)
     }
     
     // MARK: save changes
@@ -189,13 +208,16 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: Helpers
     
-    func finishedSelectingBirthday(dateString : String){
-        self.birthdayString = dateString
+    func finishedSelectingBirthday(date : NSDate){
+        var dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
+        self.birthday = date
+        self.birthdayString = dateStringInNumberFormat
+        tableView.reloadData()
     }
     
     func displayViewController(viewController : UIViewController, type : SettingsType){
         var formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
         formSheet.cornerRadius = 0.0;
         if (type == SettingsType.Notification) {
             formSheet.presentedFormSheetSize = POPUP_NOTIFICATION_SIZE
@@ -203,8 +225,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         } else if(type == SettingsType.ChangeDOB){
             formSheet.presentedFormSheetSize = POPUP_DOB_SIZE
             formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + 2 * TABLE_ROW_HEIGHT
-        } else {
+        } else if(type == SettingsType.BugsReport){
+            formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
             formSheet.presentedFormSheetSize = POPUP_BUG_REPORT_SIZE
+            formSheet.portraitTopInset = 0.0;
+        } else {
+            formSheet.presentedFormSheetSize = POPUP_LOG_OUT_SIZE
+            formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + TABLE_ROW_HEIGHT
         }
         formSheet.view.layer.shadowColor = UIColor.blackColor().CGColor
         formSheet.view.layer.shadowOffset = CGSizeMake(0, 19)
@@ -227,11 +254,15 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         }
     }
     
-    func doneSelectingTime(){
+    func doneSelectingTime(time : NSDate){
         
         if(!isNotificationOn){
             isNotificationOn = true
         }
+        
+        notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
+        
+        lastSaveNotificationFireTime = notificationFireTime
         tableView.reloadData()
     }
     
@@ -247,6 +278,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         dateComps.second = 0
         
         var alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
+        println("set local push == \(alertTime)")
         localNotification.fireDate = alertTime
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         localNotification.repeatInterval = NSCalendarUnit.CalendarUnitDay
@@ -265,32 +297,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func sendSetNotificationTracker(label: String){
         XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
-    }
-    
-    func showLogoutAlertView(){
-        dispatch_async(dispatch_get_main_queue(),{
-            var alertView: UIAlertView = UIAlertView()
-            alertView.delegate = self
-            alertView.title = "Log Out"
-            alertView.message = "Are you sure you want to log out?"
-            alertView.addButtonWithTitle("Yes")
-            alertView.addButtonWithTitle("Cancel")
-            alertView.show()
-        })
-    }
-    
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
-        switch buttonIndex{
-        case 0:
-            println("YES")
-            let loginManager = FBSDKLoginManager()
-            loginManager.logOut()
-        case 1:
-            println("NO")
-        default:
-            println("ERROR")
-        }
-        
     }
     
     //  MARK: HELPERS
@@ -314,5 +320,12 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             tableHeaderView.backgroundColor = UIColor.clearColor()
         }
         return tableHeaderView
+    }
+    
+    func getDateStringInNumberFormat(date : NSDate) -> String{
+        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        var comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        var result = String(format:"%d/%02d", comp.day, comp.month)
+        return result
     }
 }

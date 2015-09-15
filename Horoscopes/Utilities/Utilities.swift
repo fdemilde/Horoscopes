@@ -143,6 +143,34 @@ class Utilities {
         return NewsfeedType.OnYourMind
     }
     
+    // MARK: Birthday Format helpers
+    class func getBirthdayString(date : NSDate) -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMMM d"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        
+        let dayOfMonthFormatter = NSDateFormatter()
+        dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dayOfMonthFormatter.dateFormat = "d"
+        var dateString = dateFormatter.stringFromDate(date)
+        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(date)
+        
+        var date_day = dayOfMonthFormatterString.toInt()
+        var suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
+        var suffixes = suffix_string.componentsSeparatedByString("|")
+        var suffix = suffixes[date_day!]
+        dateString = dateString.stringByAppendingString(suffix)
+        
+        return dateString
+    }
+    
+    class func getDefaultBirthday() -> NSDate{ // return default birthday for first load
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return dateFormatter.dateFromString("25/11")!
+    }
+    
     // MARK: Alert
     class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String, tag : Int? = -1){
         dispatch_async(dispatch_get_main_queue(),{

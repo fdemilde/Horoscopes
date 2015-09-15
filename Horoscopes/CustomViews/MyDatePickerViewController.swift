@@ -33,7 +33,7 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.setCurrentBirthdaySign()
+        self.setCurrentBirthday()
     }
     
     func setupViewController(parent : SettingsViewController, currentSetupBirthday : NSDate?){
@@ -94,8 +94,11 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
         var selectedDate = dateFormatter.dateFromString(dateString)
-        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
-        parentVC.birthday = selectedDate
+        if let selectedDate = selectedDate {
+            
+            parentVC.finishedSelectingBirthday(selectedDate)
+        }
+        
     }
     
     func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -114,7 +117,7 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     }
     
     
-    func setCurrentBirthdaySign(){
+    func setCurrentBirthday(){
         if(birthday == nil){ // haven't selected burthday, show first row
             picker.selectRow(0, inComponent: 0, animated: false)
         } else {
@@ -136,12 +139,6 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         dateFormatter.dateFormat = "d"
         dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
         return dateArray
-    }
-    
-    // MARK: Button actions
-    
-    @IBAction func cancelTapped(sender: AnyObject) {
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
 //    @IBAction func saveTapped(sender: AnyObject) {

@@ -15,6 +15,8 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     @IBOutlet weak var textViewBottomSpaceConstraint: NSLayoutConstraint!
     var placeholderLabel : UILabel!
     
+    @IBOutlet weak var container: UIView!
+    
     let bottomSpacePadding: CGFloat = 10 as CGFloat
     var textPaddingTop: CGFloat = 7
     var textPaddingLeft: CGFloat = 4
@@ -24,8 +26,8 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
         super.viewDidLoad()
         self.setupPlaceHolder()
         
-        textView.layer.cornerRadius = 5
-        textView.layer.masksToBounds = true
+        container.layer.cornerRadius = 4
+        container.layer.masksToBounds = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -106,9 +108,9 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     func setupPlaceHolder(){
         var width = Utilities.getScreenSize().width - (textViewPadding * 2) - (textPaddingLeft * 2)
         placeholderLabel = UILabel(frame: CGRectMake(textPaddingLeft, textPaddingTop, width, 100))
-        placeholderLabel.text = "Please describe your issue in as much detail as possible"
+        placeholderLabel.text = "Please describe in as much detail as possible"
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.lineBreakMode = NSLineBreakMode.ByCharWrapping
+        placeholderLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
         placeholderLabel.font = textView.font
         placeholderLabel.sizeToFit()
         placeholderLabel.textColor = UIColor.grayColor()

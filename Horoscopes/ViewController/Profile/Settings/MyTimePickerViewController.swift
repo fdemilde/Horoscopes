@@ -9,34 +9,29 @@
 import Foundation
 import UIKit
 
-class MyTimePickerView : UIView{
+class MyTimePickerViewController : UIViewController{
     
-    var picker: UIDatePicker!
+    @IBOutlet var picker: UIDatePicker!
     var parentVC : SettingsViewController!
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        picker = UIDatePicker(frame: CGRectMake(0, 0, frame.width - 20, frame.height))
+    override func viewDidLoad() {
+        super.viewDidLoad()
         picker.datePickerMode = .Time
-        self.addSubview(picker)
-        picker.date = NSDate()
         picker.backgroundColor = UIColor.clearColor()
-        self.backgroundColor = UIColor.whiteColor()
+        if let parentVC = parentVC{
+            var date = Utilities.getDateFromDateString(parentVC.lastSaveNotificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
+            picker.date = date
+        }
+        
+        
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
-    @IBAction func backButtonTapped(sender: AnyObject) {
-//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+   
+    @IBAction func timeChange(sender: AnyObject) {
+        parentVC.doneSelectingTime(picker.date)
     }
-    
-    @IBAction func saveButtonTapped(sender: AnyObject) {
-        parentVC.notificationFireTime = Utilities.getDateStringFromTimestamp(picker.date.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
-        parentVC.doneSelectingTime()
-//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
-    }
-    
     
 }

@@ -108,6 +108,7 @@
 		F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */; };
 		F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
+		F4C262F31BA8298700CFDFEB /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */; };
 		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
 		F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */; };
 		F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F921B8EC58000910E56 /* DCPathButton.m */; };
@@ -307,6 +308,7 @@
 		F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutViewController.swift; sourceTree = "<group>"; };
 		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
 		F4C44F8B1B8EC58000910E56 /* BKDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDelta.m; sourceTree = "<group>"; };
 		F4C44F8C1B8EC58000910E56 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
@@ -691,6 +693,7 @@
 				F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */,
 				F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */,
 				F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */,
+				F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1334,6 +1337,7 @@
 				7047A5AD1B5D070F00024D5A /* ProfileSecondSectionHeaderView.swift in Sources */,
 				F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
+				F4C262F31BA8298700CFDFEB /* LogOutViewController.swift in Sources */,
 				F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */,
 				F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */,
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,

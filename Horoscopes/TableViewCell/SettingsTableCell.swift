@@ -13,9 +13,12 @@ class SettingsTableCell : UITableViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var timeUnderline: UIView!
     @IBOutlet weak var switchButton: UISwitch!
+    
+    @IBOutlet weak var birthdayLabel: UILabel!
+    @IBOutlet weak var birthdayUnderline: UIView!
+    
     var type : SettingsType!
     var parentVC : SettingsViewController!
-    var isNotificationOn : Bool!
     
     @IBOutlet weak var separator: UIView!
     @IBOutlet weak var nextImageView: UIImageView!
@@ -25,13 +28,28 @@ class SettingsTableCell : UITableViewCell {
     
     func setupCell(type: SettingsType){
         self.type = type
-        if(self.type != SettingsType.Notification){
+        
+        if(self.type == SettingsType.Notification){
+            timeLabel.hidden = false
+            switchButton.hidden = false
+            timeUnderline.hidden = false
+            birthdayLabel.hidden = true
+            birthdayUnderline.hidden = true
+            switchButton.setOn(parentVC.isNotificationOn, animated: true)
+            self.setupNotificationTime()
+        } else if self.type == SettingsType.ChangeDOB {
+            birthdayLabel.hidden = false
+            birthdayUnderline.hidden = false
             timeLabel.hidden = true
             switchButton.hidden = true
             timeUnderline.hidden = true
+            self.setupBirthday()
         } else {
-            switchButton.on = parentVC.isNotificationOn
-            self.setupNotificationTime()
+            timeLabel.hidden = true
+            switchButton.hidden = true
+            timeUnderline.hidden = true
+            birthdayLabel.hidden = true
+            birthdayUnderline.hidden = true
         }
         switch(self.type!){
             case SettingsType.Notification:
@@ -59,5 +77,15 @@ class SettingsTableCell : UITableViewCell {
     
     func setupNotificationTime(){
         timeLabel.text = parentVC.notificationFireTime
+    }
+    
+    func setupBirthday(){
+        var dateString = ""
+        if let birthday = parentVC.birthday{
+            dateString = Utilities.getBirthdayString(birthday)
+        } else {
+            dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
+        }
+        birthdayLabel.text = dateString
     }
 }
