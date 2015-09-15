@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -38,7 +38,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var userPosts = [UserPost]()
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
-    let dispatchGroup = dispatch_group_create()
+    var baseDispatchGroup: dispatch_group_t!
+    var isFirstDataLoad = true
+    var noPost = false
     
     // MARK: - Life cycle
 
@@ -47,10 +49,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
     }
 
     override func didReceiveMemoryWarning() {
@@ -156,27 +154,33 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: - Action
     
     @IBAction func tapPostButton(sender: UIButton) {
-        currentScope = .Post
-        highlightScopeButton(sender)
-        updateTableViewLayout()
-        tableView.reloadData()
-        getUserPosts(nil)
+        if currentScope != .Post {
+            currentScope = .Post
+            highlightScopeButton(sender)
+            updateTableViewLayout()
+            tableView.reloadData()
+            getUserPosts(nil)
+        }
     }
     
     @IBAction func tapFollowingButton(sender: UIButton) {
-        currentScope = .Following
-        highlightScopeButton(sender)
-        updateTableViewLayout()
-        tableView.reloadData()
-        getFollowingUsers(nil)
+        if currentScope != .Following {
+            currentScope = .Following
+            highlightScopeButton(sender)
+            updateTableViewLayout()
+            tableView.reloadData()
+            getFollowingUsers(nil)
+        }
     }
     
     @IBAction func tapFollowersButton(sender: UIButton) {
-        currentScope = .Followers
-        highlightScopeButton(sender)
-        updateTableViewLayout()
-        tableView.reloadData()
-        getFollowers(nil)
+        if currentScope != .Followers {
+            currentScope = .Followers
+            highlightScopeButton(sender)
+            updateTableViewLayout()
+            tableView.reloadData()
+            getFollowers(nil)
+        }
     }
     
     // MARK: - Convenience
@@ -203,14 +207,21 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: - Helper
     
     func getData() {
-        Utilities.showHUD()
-        getUserPosts(dispatchGroup)
-        getFollowingUsers(dispatchGroup)
-        getFollowers(dispatchGroup)
-//        getFriends(group)
-        dispatch_group_notify(dispatchGroup, dispatch_get_main_queue()) { () -> Void in
-            self.tableView.hidden = false
-            Utilities.hideHUD()
+        if baseDispatchGroup == nil {
+            baseDispatchGroup = dispatch_group_create()
+        }
+        if isFirstDataLoad {
+            Utilities.showHUD()
+        }
+        getUserPosts(baseDispatchGroup)
+        getFollowingUsers(baseDispatchGroup)
+        getFollowers(baseDispatchGroup)
+        dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
+            if self.isFirstDataLoad {
+                self.tableView.hidden = false
+                Utilities.hideHUD()
+            }
+            self.isFirstDataLoad = false
         }
     }
     
@@ -222,6 +233,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
+                self.noPost = result!.count == 0
                 self.handleData(dispatchGroup, oldData: &self.userPosts, newData: result!, button: self.postButton)
             }
             if let group = dispatchGroup {
@@ -267,13 +279,18 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func checkFollowStatus() {
+        var shouldReload = false
         for follower in followers {
             for followingUser in followingUsers {
                 if followingUser.uid == follower.uid {
                     follower.isFollowed = true
+                    shouldReload = true
                     break
                 }
             }
+        }
+        if shouldReload {
+            tableView.reloadData()
         }
     }
 
@@ -295,12 +312,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         case .Post:
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-//            cell.delegate = self
+            cell.delegate = self
             configurePostTableViewCell(cell, post: post)
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
-            //            cell.delegate = self
             var profile: UserProfile
             if currentScope == .Following {
                 profile = followingUsers[indexPath.row]
@@ -317,6 +333,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             return 70
         }
         return UITableViewAutomaticDimension
+    }
+    
+    // MARK: - Delegate
+    
+    func didTapShareButton(cell: PostTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let name = userProfile.name
+        let postContent = userPosts[index!].message
+        let sharingText = String(format: "%@ \n %@", name, postContent)
+        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+        Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
 
     /*

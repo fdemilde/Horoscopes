@@ -67,6 +67,8 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+        
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(animated: Bool) {

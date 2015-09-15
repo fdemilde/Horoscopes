@@ -10,7 +10,7 @@ import UIKit
 
 @objc protocol FollowTableViewCellDelegate {
     optional func didTapFollowButton(cell: FollowTableViewCell)
-    func didTapFollowProfile(cell: FollowTableViewCell)
+    optional func didTapFollowProfile(cell: FollowTableViewCell)
 }
 
 class FollowTableViewCell: UITableViewCell {
@@ -20,15 +20,12 @@ class FollowTableViewCell: UITableViewCell {
     @IBOutlet weak var horoscopeSignLabel: UILabel!
     let followButtonWidth: CGFloat = 60
     let followButtonHeight: CGFloat = 44
-    var delegate: FollowTableViewCellDelegate!
+    var delegate: FollowTableViewCellDelegate?
     var followButton: UIButton!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        followButton = UIButton()
-        addSubview(followButton)
-        
         let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         profileNameLabel.userInteractionEnabled = true
@@ -48,6 +45,10 @@ class FollowTableViewCell: UITableViewCell {
     }
     
     func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
+        if followButton == nil {
+            followButton = UIButton()
+            addSubview(followButton)
+        }
         followButton.frame = CGRect(x: frame.width - followButtonWidth - 10, y: frame.height/2 - followButtonHeight/2 , width: followButtonWidth, height: followButtonHeight)
         if showFollowButton {
             followButton.hidden = false
@@ -64,12 +65,12 @@ class FollowTableViewCell: UITableViewCell {
     }
     
     func tapFollowButton(sender: UIButton) {
-        delegate.didTapFollowButton!(self)
+        delegate?.didTapFollowButton?(self)
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            delegate.didTapFollowProfile(self)
+            delegate?.didTapFollowProfile?(self)
         }
     }
 

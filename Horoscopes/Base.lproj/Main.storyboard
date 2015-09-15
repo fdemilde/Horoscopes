@@ -710,11 +710,6 @@
                                         <state key="normal" image="search_icon">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <connections>
-                                            <segue destination="igC-EB-4kz" kind="popoverPresentation" identifier="searchFriend" popoverAnchorView="LAf-eD-yEu" id="Sa1-dO-cUq">
-                                                <popoverArrowDirection key="popoverArrowDirection" down="YES"/>
-                                            </segue>
-                                        </connections>
                                     </button>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5SL-7T-0Wv">
                                         <rect key="frame" x="536" y="36" width="44" height="44"/>
@@ -1043,7 +1038,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RTT-Xy-Xcy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3364" y="2151"/>
+            <point key="canvasLocation" x="2104" y="2711"/>
         </scene>
         <!--Search View Controller-->
         <scene sceneID="qcg-Jz-wFH">
@@ -1169,7 +1164,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xs0-g5-zp9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4147" y="2076"/>
+            <point key="canvasLocation" x="2209" y="1953"/>
         </scene>
         <!--New Newsfeed View Controller-->
         <scene sceneID="TvE-LN-5yM">
@@ -5556,7 +5551,7 @@
                                             </mask>
                                         </variation>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRe-RY-ePd">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DRe-RY-ePd">
                                         <rect key="frame" x="550" y="36" width="44" height="44"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="44" id="DKs-qX-gzM"/>
@@ -5565,6 +5560,9 @@
                                         <state key="normal" image="newsfeed_follow_btn">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="tapFollowButton:" destination="oVI-71-uL6" eventType="touchUpInside" id="Si4-rr-r0L"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -5645,8 +5643,8 @@
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
-                                                                            <exclude reference="vJw-B6-aei"/>
                                                                             <exclude reference="gvl-7T-41M"/>
+                                                                            <exclude reference="vJw-B6-aei"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
@@ -5786,8 +5784,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="b41-9O-b7c"/>
                                                     <exclude reference="Pv3-fU-ygT"/>
+                                                    <exclude reference="b41-9O-b7c"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -5796,21 +5794,6 @@
                                             <outlet property="profileImageView" destination="DBQ-pb-evd" id="CsT-Oo-gbt"/>
                                             <outlet property="profileNameLabel" destination="dtW-7H-icd" id="Ib7-gH-7QD"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BasicTableViewCell" textLabel="26o-0h-A0D" style="IBUITableViewCellStyleDefault" id="BFz-rV-zbL">
-                                        <rect key="frame" x="140" y="278" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="BFz-rV-zbL" id="ae7-UH-cIq">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="26o-0h-A0D">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -5885,6 +5868,7 @@
                         <outlet property="horoscopeSignLabel" destination="TBx-1P-5Yt" id="Qhc-qJ-pmB"/>
                         <outlet property="horoscopeSignView" destination="dUR-ki-d4k" id="dnN-t9-PNF"/>
                         <outlet property="nameLabel" destination="TxZ-9k-axw" id="ze5-mQ-VJb"/>
+                        <outlet property="newsfeedFollowButton" destination="DRe-RY-ePd" id="Ioo-xK-Gjw"/>
                         <outlet property="postButton" destination="vS3-qe-jL1" id="Ot0-hj-JW4"/>
                         <outlet property="profileView" destination="Csd-gk-WbA" id="HFp-97-5Xr"/>
                         <outlet property="tableBottomSpaceLayoutConstraint" destination="1oK-87-Bvo" id="rmo-LY-Xce"/>
@@ -5895,7 +5879,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V34-Jh-Fqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2185" y="1961"/>
+            <point key="canvasLocation" x="2897" y="1953"/>
         </scene>
         <!--Current Profile View Controller-->
         <scene sceneID="2ex-eD-GWq">
@@ -6048,8 +6032,8 @@
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
-                                                <exclude reference="P2a-MS-w79"/>
                                                 <exclude reference="ErL-sU-kUb"/>
+                                                <exclude reference="P2a-MS-w79"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -6142,8 +6126,8 @@
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
-                                                                            <exclude reference="xt0-p6-nkx"/>
                                                                             <exclude reference="r2s-R5-akE"/>
+                                                                            <exclude reference="xt0-p6-nkx"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
@@ -6283,8 +6267,8 @@
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
-                                                    <exclude reference="hbg-Nd-8fR"/>
                                                     <exclude reference="cVR-JI-cSi"/>
+                                                    <exclude reference="hbg-Nd-8fR"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -6293,21 +6277,6 @@
                                             <outlet property="profileImageView" destination="WPZ-e9-Wfa" id="oCi-pa-M4v"/>
                                             <outlet property="profileNameLabel" destination="yqu-Pm-Ql6" id="9Sb-8G-9cB"/>
                                         </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="BasicTableViewCell" textLabel="dk9-lS-tFu" style="IBUITableViewCellStyleDefault" id="0JM-Gf-N6n">
-                                        <rect key="frame" x="140" y="278" width="320" height="44"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="0JM-Gf-N6n" id="xs9-bg-hkj">
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dk9-lS-tFu">
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>

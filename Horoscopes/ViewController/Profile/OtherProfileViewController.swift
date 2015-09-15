@@ -10,16 +10,29 @@ import UIKit
 
 class OtherProfileViewController: ProfileBaseViewController {
     
+    // MARK: - Outlet
+    
+    @IBOutlet weak var newsfeedFollowButton: UIButton!
+    
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-//        navigationController?.view.backgroundColor = UIColor.redColor()
-//        navigationController?.navigationBar.backgroundColor = UIColor.redColor()
-//        navigationItem.backBarButtonItem = UIBarButtonItem(title: "Back", style: UIBarButtonItemStyle.Bordered, target: self, action: "back")
+        if userProfile.uid != XAppDelegate.currentUser.uid {
+            SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    // Do not show newsfeed follow button
+                } else {
+                    if result!["isfollowing"] as! Int != 1 {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.newsfeedFollowButton.hidden = false
+                        })
+                    }
+                }
+            })
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,6 +50,21 @@ class OtherProfileViewController: ProfileBaseViewController {
     
     @IBAction func tapBackButton(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func tapFollowButton(sender: UIButton) {
+        Utilities.showHUD()
+        SocialManager.sharedInstance.follow(userProfile.uid, completionHandler: { (error) -> Void in
+            if let error = error {
+                Utilities.hideHUD()
+                Utilities.showError(self, error: error)
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.newsfeedFollowButton.removeFromSuperview()
+                })
+                Utilities.hideHUD()
+            }
+        })
     }
     
     // MARK: - Helper

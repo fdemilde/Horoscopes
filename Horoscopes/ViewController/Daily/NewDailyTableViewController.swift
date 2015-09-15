@@ -20,9 +20,7 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        SocialManager.sharedInstance.unfollow(11, completionHandler: { (error) -> Void in
-//            
-//        })
+        
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = defaultEstimatedRowHeight
         if let parentViewController = self.tabBarController as? CustomTabBarController{

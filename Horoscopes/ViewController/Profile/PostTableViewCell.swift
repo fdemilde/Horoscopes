@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol PostTableViewCellDelegate {
-    func didTapShareButton(cell: PostTableViewCell)
+    optional func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
     optional func didTapPostProfile(cell: PostTableViewCell)
     optional func didTapNewsfeedFollowButton(cell: PostTableViewCell)
@@ -37,7 +37,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     // MARK: - Property
     
-    var delegate: PostTableViewCellDelegate!
+    var delegate: PostTableViewCellDelegate?
     let profileImageSize: CGFloat = 80
     
     override func awakeFromNib() {
@@ -92,20 +92,20 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
-        delegate.didTapNewsfeedFollowButton!(self)
+        delegate?.didTapNewsfeedFollowButton?(self)
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            delegate.didTapPostProfile!(self)
+            delegate?.didTapPostProfile?(self)
         }
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {
-        delegate.didTapLikeButton?(self)
+        delegate?.didTapLikeButton?(self)
     }
 
     @IBAction func tapShareButton(sender: UIButton) {
-        delegate.didTapShareButton(self)
+        delegate?.didTapShareButton?(self)
     }
 }
