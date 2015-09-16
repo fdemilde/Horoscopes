@@ -32,10 +32,6 @@ class FollowTableViewCell: UITableViewCell {
         profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(imageGestureRecognizer)
-        
-//        let separatorImageView = UIImageView(image: UIImage(named: "separator"))
-//        separatorImageView.frame = CGRect(x: 10, y: 70, width: frame.width - 10*2, height: 1)
-//        addSubview(separatorImageView)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

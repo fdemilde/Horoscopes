@@ -143,7 +143,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 0
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false
-        tableView.separatorStyle = .None
     }
     
     func changeToWhiteTableViewLayout() {
@@ -152,7 +151,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.allowsSelection = false
-        tableView.separatorStyle = .SingleLine
     }
     
     // MARK: - Action

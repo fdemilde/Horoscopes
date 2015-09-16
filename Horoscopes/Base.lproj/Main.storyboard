@@ -1025,6 +1025,12 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Y5k-pG-slz" id="4du-Ej-cAW">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator" translatesAutoresizingMaskIntoConstraints="NO" id="FV1-NL-Qtr">
+                                                    <rect key="frame" x="10" y="73" width="560" height="1"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="xrB-c7-EmX"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rs0-O0-tl2">
                                                     <rect key="frame" x="10" y="10" width="50" height="50"/>
                                                     <constraints>
@@ -1044,27 +1050,40 @@
                                                     <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AE-Uh-zI6">
-                                                    <rect key="frame" x="69" y="37" width="64" height="18"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Capricorn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6AE-Uh-zI6">
+                                                    <rect key="frame" x="69" y="37" width="211" height="18"/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="FV1-NL-Qtr" firstAttribute="leading" secondItem="6AE-Uh-zI6" secondAttribute="trailing" constant="10" id="51h-MI-nmy"/>
+                                                <constraint firstItem="FV1-NL-Qtr" firstAttribute="leading" secondItem="4du-Ej-cAW" secondAttribute="leadingMargin" constant="10" id="5NZ-b8-1h0"/>
                                                 <constraint firstItem="gO4-B3-IxT" firstAttribute="leading" secondItem="Rs0-O0-tl2" secondAttribute="trailing" constant="9" id="6gF-Zx-z97"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="FV1-NL-Qtr" secondAttribute="trailing" constant="10" id="7tp-6o-mFM"/>
                                                 <constraint firstAttribute="bottom" secondItem="Rs0-O0-tl2" secondAttribute="bottom" constant="10" id="FZP-Ht-Q8f"/>
+                                                <constraint firstAttribute="bottom" secondItem="FV1-NL-Qtr" secondAttribute="bottom" id="HEc-iO-IzQ"/>
+                                                <constraint firstAttribute="trailing" secondItem="FV1-NL-Qtr" secondAttribute="trailing" constant="10" id="PEp-Gm-qiu"/>
+                                                <constraint firstAttribute="bottom" secondItem="FV1-NL-Qtr" secondAttribute="bottom" id="QEy-Ak-vcl"/>
+                                                <constraint firstAttribute="trailing" secondItem="FV1-NL-Qtr" secondAttribute="trailing" constant="10" id="QcJ-7c-iVY"/>
                                                 <constraint firstItem="6AE-Uh-zI6" firstAttribute="leading" secondItem="Rs0-O0-tl2" secondAttribute="trailing" constant="9" id="Qwe-GL-grZ"/>
                                                 <constraint firstItem="gO4-B3-IxT" firstAttribute="top" secondItem="4du-Ej-cAW" secondAttribute="top" constant="15" id="b67-aM-c9r"/>
                                                 <constraint firstAttribute="bottom" secondItem="Rs0-O0-tl2" secondAttribute="bottom" constant="10" id="dJg-ni-xfo"/>
                                                 <constraint firstItem="Rs0-O0-tl2" firstAttribute="leading" secondItem="4du-Ej-cAW" secondAttribute="leading" constant="10" id="fy6-WZ-ADP"/>
                                                 <constraint firstItem="Rs0-O0-tl2" firstAttribute="top" secondItem="4du-Ej-cAW" secondAttribute="top" constant="10" id="gs2-fr-lGD"/>
                                                 <constraint firstItem="6AE-Uh-zI6" firstAttribute="top" secondItem="gO4-B3-IxT" secondAttribute="bottom" constant="4" id="oXT-mW-4LA"/>
+                                                <constraint firstItem="FV1-NL-Qtr" firstAttribute="leading" secondItem="4du-Ej-cAW" secondAttribute="leading" constant="10" id="wu9-WR-ulv"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="FZP-Ht-Q8f"/>
                                                     <exclude reference="dJg-ni-xfo"/>
+                                                    <exclude reference="51h-MI-nmy"/>
+                                                    <exclude reference="5NZ-b8-1h0"/>
+                                                    <exclude reference="7tp-6o-mFM"/>
+                                                    <exclude reference="HEc-iO-IzQ"/>
+                                                    <exclude reference="PEp-Gm-qiu"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -5901,6 +5920,12 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="n4x-0o-b3A" id="ShT-7D-Vcv">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator" translatesAutoresizingMaskIntoConstraints="NO" id="U1s-f8-ZGi">
+                                                    <rect key="frame" x="10" y="352" width="580" height="1"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="Ric-J0-Pqz"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="DBQ-pb-evd">
                                                     <rect key="frame" x="10" y="10" width="50" height="50"/>
                                                     <constraints>
@@ -5928,19 +5953,28 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="U1s-f8-ZGi" secondAttribute="trailing" constant="10" id="3qy-37-8hV"/>
+                                                <constraint firstAttribute="trailing" secondItem="U1s-f8-ZGi" secondAttribute="trailing" constant="10" id="8iO-2C-mHl"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="U1s-f8-ZGi" secondAttribute="bottom" id="Bsq-kd-5Cr"/>
                                                 <constraint firstItem="x8j-Bx-R3j" firstAttribute="leading" secondItem="DBQ-pb-evd" secondAttribute="trailing" constant="9" id="J2r-NF-5kv"/>
                                                 <constraint firstAttribute="bottom" secondItem="DBQ-pb-evd" secondAttribute="bottom" constant="10" id="Pv3-fU-ygT"/>
+                                                <constraint firstItem="U1s-f8-ZGi" firstAttribute="leading" secondItem="ShT-7D-Vcv" secondAttribute="leadingMargin" constant="10" id="RbI-dA-2qr"/>
                                                 <constraint firstItem="x8j-Bx-R3j" firstAttribute="top" secondItem="dtW-7H-icd" secondAttribute="bottom" constant="4" id="Vtr-ay-ELH"/>
                                                 <constraint firstAttribute="bottom" secondItem="DBQ-pb-evd" secondAttribute="bottom" constant="10" id="b41-9O-b7c"/>
                                                 <constraint firstItem="DBQ-pb-evd" firstAttribute="top" secondItem="ShT-7D-Vcv" secondAttribute="top" constant="10" id="gkC-IC-Lva"/>
+                                                <constraint firstAttribute="bottom" secondItem="U1s-f8-ZGi" secondAttribute="bottom" id="j06-Sc-RUs"/>
                                                 <constraint firstItem="dtW-7H-icd" firstAttribute="leading" secondItem="DBQ-pb-evd" secondAttribute="trailing" constant="9" id="jA8-kw-DMk"/>
                                                 <constraint firstItem="DBQ-pb-evd" firstAttribute="leading" secondItem="ShT-7D-Vcv" secondAttribute="leading" constant="10" id="kKL-28-yb6"/>
+                                                <constraint firstItem="U1s-f8-ZGi" firstAttribute="leading" secondItem="ShT-7D-Vcv" secondAttribute="leading" constant="10" id="uF7-Wg-Y6f"/>
                                                 <constraint firstItem="dtW-7H-icd" firstAttribute="top" secondItem="ShT-7D-Vcv" secondAttribute="top" constant="15" id="xH2-EH-gJR"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
                                                     <exclude reference="Pv3-fU-ygT"/>
                                                     <exclude reference="b41-9O-b7c"/>
+                                                    <exclude reference="3qy-37-8hV"/>
+                                                    <exclude reference="Bsq-kd-5Cr"/>
+                                                    <exclude reference="RbI-dA-2qr"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -6406,6 +6440,12 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="t5f-gA-V3F" id="nc6-23-PTi">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="separator" translatesAutoresizingMaskIntoConstraints="NO" id="JFC-vk-EQo">
+                                                    <rect key="frame" x="10" y="352" width="580" height="1"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="GVb-q8-M15"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WPZ-e9-Wfa">
                                                     <rect key="frame" x="10" y="10" width="50" height="50"/>
                                                     <constraints>
@@ -6433,13 +6473,16 @@
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="JFC-vk-EQo" secondAttribute="bottom" id="0Oa-N3-diw"/>
                                                 <constraint firstItem="yqu-Pm-Ql6" firstAttribute="top" secondItem="nc6-23-PTi" secondAttribute="top" constant="15" id="1a1-O2-Mmf"/>
                                                 <constraint firstItem="Raw-9a-moV" firstAttribute="leading" secondItem="WPZ-e9-Wfa" secondAttribute="trailing" constant="9" id="4iP-lH-kI0"/>
                                                 <constraint firstItem="WPZ-e9-Wfa" firstAttribute="top" secondItem="nc6-23-PTi" secondAttribute="top" constant="10" id="DtT-Si-HH2"/>
                                                 <constraint firstItem="yqu-Pm-Ql6" firstAttribute="leading" secondItem="WPZ-e9-Wfa" secondAttribute="trailing" constant="9" id="SNt-JF-WjB"/>
                                                 <constraint firstItem="WPZ-e9-Wfa" firstAttribute="leading" secondItem="nc6-23-PTi" secondAttribute="leading" constant="10" id="VK1-xF-iAH"/>
                                                 <constraint firstAttribute="bottom" secondItem="WPZ-e9-Wfa" secondAttribute="bottom" constant="10" id="cVR-JI-cSi"/>
+                                                <constraint firstItem="JFC-vk-EQo" firstAttribute="leading" secondItem="nc6-23-PTi" secondAttribute="leading" constant="10" id="gj8-Ys-IEe"/>
                                                 <constraint firstAttribute="bottom" secondItem="WPZ-e9-Wfa" secondAttribute="bottom" constant="10" id="hbg-Nd-8fR"/>
+                                                <constraint firstAttribute="trailing" secondItem="JFC-vk-EQo" secondAttribute="trailing" constant="10" id="kak-Wt-QvK"/>
                                                 <constraint firstItem="Raw-9a-moV" firstAttribute="top" secondItem="yqu-Pm-Ql6" secondAttribute="bottom" constant="4" id="sii-RZ-oFa"/>
                                             </constraints>
                                             <variation key="default">
@@ -6535,6 +6578,7 @@
         <image name="post_type_feel" width="20" height="20"/>
         <image name="post_type_mind" width="21" height="19"/>
         <image name="search_icon" width="30" height="30"/>
+        <image name="separator" width="280" height="1"/>
         <image name="settings_btn" width="22" height="22"/>
         <image name="share_copy" width="94" height="23"/>
         <image name="tabbar_daily.png" width="22" height="23"/>
