@@ -19,6 +19,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerView: UIView!
+    
+    @IBOutlet weak var postTypeShadowUpper: UIView!
+    @IBOutlet weak var postTypeShadowLower: UIView!
+    
     @IBOutlet weak var postTypeImageView: UIImageView!
     @IBOutlet weak var postDateLabel: UILabel!
     @IBOutlet weak var textView: UITextView!

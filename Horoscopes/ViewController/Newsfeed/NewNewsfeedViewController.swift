@@ -417,14 +417,15 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: Helpers
     
     func resetTapButtonColor(){ // change button color based on state
+        var blackColorWithOpacity = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         switch self.tabType {
             // Use Internationalization, as appropriate.
         case NewsfeedTabType.Global:
             globalButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            followingButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            followingButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
             break
         case NewsfeedTabType.Following:
-            globalButton.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+            globalButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
             followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             break
         }

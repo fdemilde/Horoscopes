@@ -112,13 +112,16 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         cell.configureUserPostUi()
         switch post.type {
         case .OnYourMind:
-            cell.headerView.backgroundColor = UIColor.newsfeedMindColor()
+            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
+            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_mind")
         case .Feeling:
-            cell.headerView.backgroundColor = UIColor.newsfeedFeelColor()
+            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
+            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_feel")
         case .Story:
-            cell.headerView.backgroundColor = UIColor.newsfeedStoryColor()
+            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
+            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)

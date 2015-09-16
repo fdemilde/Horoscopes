@@ -202,6 +202,11 @@ class ShareViewController : UIViewController {
     
     @IBAction func copyURLTapped(sender: AnyObject) {
         UIPasteboard.generalPasteboard().string = getSharingURL()
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        hud.mode = MBProgressHUDMode.Text
+        hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+        hud.detailsLabelText = "Copied!"
+        hud.hide(true, afterDelay: 2)
     }
     
     func handleFBTap(sender: AnyObject){

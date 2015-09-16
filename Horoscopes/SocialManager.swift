@@ -105,15 +105,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     println("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    var userDict = result["users"] as! Dictionary<String, AnyObject>
-                    var postsArray = result["posts"] as! [AnyObject]
-                    var isLastAsNumber = result["last"] as! Int
-                    var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
-                    if(isAddingData){
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following, isLastPage: Bool(isLastAsNumber))
-                    } else {
-                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Following)
-                    }
+//                    var userDict = result["users"] as! Dictionary<String, AnyObject>
+//                    var postsArray = result["posts"] as! [AnyObject]
+//                    var isLastAsNumber = result["last"] as! Int
+//                    var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
+//                    if(isAddingData){
+//                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following, isLastPage: Bool(isLastAsNumber))
+//                    } else {
+//                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Following)
+//                    }
                     
                 }
             }

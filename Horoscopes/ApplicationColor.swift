@@ -25,11 +25,23 @@ extension UIColor {
         return UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1)
     }
     
+    class func newsfeedMindColorWithOpacity() -> UIColor {
+        return UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 0.5)
+    }
+    
     class func newsfeedFeelColor() -> UIColor {
         return UIColor(red: 243/255.0, green: 156/255.0, blue: 18/255.0, alpha: 1)
     }
     
+    class func newsfeedFeelColorWithOpacity() -> UIColor {
+        return UIColor(red: 243/255.0, green: 156/255.0, blue: 18/255.0, alpha: 0.5)
+    }
+    
     class func newsfeedStoryColor() -> UIColor {
         return UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 1)
+    }
+    
+    class func newsfeedStoryColorWithOpacity() -> UIColor {
+        return UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 0.5)
     }
 }

@@ -543,9 +543,9 @@
         // 2.Excute expand animation
         //
         // BINH BINH: change endpoint distance for each item
-        CGPoint endPoint = [self createEndPointWithRadius:self.bloomRadius - (48 * i) andAngel:currentAngel/180.0f];
+        CGPoint endPoint = [self createEndPointWithRadius:self.bloomRadius - ((60 * i) - 30) andAngel:currentAngel/180.0f];
         CGPoint farPoint = [self createEndPointWithRadius:self.bloomRadius + 10.0f andAngel:currentAngel/180.0f];
-        CGPoint nearPoint = [self createEndPointWithRadius:self.bloomRadius - 5.0f andAngel:currentAngel/180.0f];
+        CGPoint nearPoint = [self createEndPointWithRadius:self.bloomRadius - 25.0f andAngel:currentAngel/180.0f];
         
         CAAnimationGroup *bloomAnimation = [self bloomAnimationWithEndPoint:endPoint
                                                                   andFarPoint:farPoint
