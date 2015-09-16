@@ -12,11 +12,13 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     @IBOutlet weak var tableView: UITableView!
     
     let MIN_SCROLL_DISTANCE_TO_HIDE_TABBAR = 30 as CGFloat
+    let PADDING = 8 as CGFloat
     var startPositionY = 0 as CGFloat
     var notifArray = [NotificationObject]()
     var router : Router!
     var tableHeaderView : UIView!
     var tableFooterView : UIView!
+    var noNotificationView : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -229,7 +231,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             
         } else {
             tableHeaderView = UIView()
-            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width,PADDING)
             tableHeaderView.backgroundColor = UIColor.clearColor()
         }
         return tableHeaderView
@@ -240,8 +242,9 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             
         } else {
             tableFooterView = UIView()
-            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, PADDING)
             tableFooterView.backgroundColor = UIColor.clearColor()
+            
         }
         return tableFooterView
     }
