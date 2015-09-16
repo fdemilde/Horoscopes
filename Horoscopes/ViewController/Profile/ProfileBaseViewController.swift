@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -322,6 +322,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             var profile: UserProfile
+            cell.delegate = self
             if currentScope == .Following {
                 profile = followingUsers[indexPath.row]
             } else {
@@ -356,6 +357,19 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
             navigationController?.pushViewController(controller, animated: true)
         })
+    }
+    
+    func didTapFollowProfile(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        var profile: UserProfile!
+        if currentScope == .Following {
+            profile = followingUsers[index!]
+        } else if currentScope == .Followers {
+            profile = followers[index!]
+        }
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     /*
