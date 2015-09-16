@@ -5888,7 +5888,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6te-8k-dC9" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6te-8k-dC9" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -5975,6 +5975,7 @@
                                             <outlet property="containerView" destination="BVr-4R-XGa" id="aSQ-Wc-4ij"/>
                                             <outlet property="headerView" destination="V5A-yM-SO5" id="FyT-lc-jAh"/>
                                             <outlet property="likeButton" destination="Y8i-GA-xrk" id="H4K-nK-STf"/>
+                                            <outlet property="likeNumberLabel" destination="6te-8k-dC9" id="gEs-H3-sJo"/>
                                             <outlet property="postDateLabel" destination="Brf-fz-GSY" id="uqX-6P-zS7"/>
                                             <outlet property="postTypeImageView" destination="7io-at-dSC" id="sa1-uz-ySV"/>
                                             <outlet property="postTypeShadowLower" destination="5Vv-hw-h12" id="VB9-jm-EzH"/>
@@ -6522,7 +6523,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP4-7t-AuD" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP4-7t-AuD" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -6609,6 +6610,7 @@
                                             <outlet property="containerView" destination="VYn-7v-WLw" id="y4E-BJ-7cJ"/>
                                             <outlet property="headerView" destination="kOF-J2-qob" id="gZE-i9-Qye"/>
                                             <outlet property="likeButton" destination="Cti-Sb-Xk9" id="dbK-Vn-eni"/>
+                                            <outlet property="likeNumberLabel" destination="ZP4-7t-AuD" id="J4p-ja-2rJ"/>
                                             <outlet property="postDateLabel" destination="o76-ev-0EV" id="al7-BA-VeQ"/>
                                             <outlet property="postTypeImageView" destination="AHo-9Q-l5z" id="HqZ-ia-fsy"/>
                                             <outlet property="postTypeShadowLower" destination="1Aj-pO-Hnt" id="ssi-KK-t0G"/>

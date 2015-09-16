@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -25,6 +25,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBOutlet weak var tableLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var numberOfLikesLabel: UILabel!
     
     // MARK: - Property
     
@@ -126,6 +127,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
         cell.textView.text = post.message
+        cell.likeNumberLabel.text = "\(post.hearts) Likes"
     }
     
     func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
@@ -144,6 +146,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 0
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false
+        tableView.separatorStyle = .None
     }
     
     func changeToWhiteTableViewLayout() {
@@ -152,6 +155,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.allowsSelection = false
+        tableView.separatorStyle = .SingleLine
     }
     
     // MARK: - Action
@@ -321,6 +325,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
             var profile: UserProfile
+            cell.delegate = self
             if currentScope == .Following {
                 profile = followingUsers[indexPath.row]
             } else {
@@ -355,6 +360,19 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
             navigationController?.pushViewController(controller, animated: true)
         })
+    }
+    
+    func didTapFollowProfile(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        var profile: UserProfile!
+        if currentScope == .Following {
+            profile = followingUsers[index!]
+        } else if currentScope == .Followers {
+            profile = followers[index!]
+        }
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
     }
 
     /*
