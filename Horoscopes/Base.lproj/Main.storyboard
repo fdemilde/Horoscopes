@@ -4838,17 +4838,17 @@
                                         <exclude reference="YAa-Le-W6L"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <exclude reference="Acw-Tt-mWJ"/>
-                                        <exclude reference="er6-wh-4wm"/>
                                         <exclude reference="H01-QG-N10"/>
                                         <exclude reference="ddw-hy-gIR"/>
                                         <exclude reference="wev-0u-pYb"/>
+                                        <exclude reference="Acw-Tt-mWJ"/>
+                                        <exclude reference="er6-wh-4wm"/>
+                                        <exclude reference="476-RL-K40"/>
+                                        <exclude reference="qXs-gA-ye9"/>
                                         <exclude reference="6GV-y8-QDz"/>
                                         <exclude reference="SmD-ry-cJc"/>
                                         <exclude reference="Tfx-qN-Fvn"/>
                                         <exclude reference="ieo-7h-eYp"/>
-                                        <exclude reference="476-RL-K40"/>
-                                        <exclude reference="qXs-gA-ye9"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -4859,17 +4859,17 @@
                                         <include reference="YAa-Le-W6L"/>
                                     </mask>
                                     <mask key="constraints">
-                                        <include reference="Acw-Tt-mWJ"/>
-                                        <include reference="er6-wh-4wm"/>
                                         <include reference="H01-QG-N10"/>
                                         <include reference="ddw-hy-gIR"/>
                                         <include reference="wev-0u-pYb"/>
+                                        <include reference="Acw-Tt-mWJ"/>
+                                        <include reference="er6-wh-4wm"/>
+                                        <include reference="476-RL-K40"/>
+                                        <include reference="qXs-gA-ye9"/>
                                         <include reference="6GV-y8-QDz"/>
                                         <include reference="SmD-ry-cJc"/>
                                         <include reference="Tfx-qN-Fvn"/>
                                         <include reference="ieo-7h-eYp"/>
-                                        <include reference="476-RL-K40"/>
-                                        <include reference="qXs-gA-ye9"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -4889,10 +4889,10 @@
                                 <exclude reference="kuk-Il-fgw"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="6L3-4P-O5Y"/>
                                 <exclude reference="84W-TF-486"/>
                                 <exclude reference="BI5-De-UYh"/>
                                 <exclude reference="cqf-4Z-vl3"/>
-                                <exclude reference="6L3-4P-O5Y"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -4900,10 +4900,10 @@
                                 <include reference="kuk-Il-fgw"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="6L3-4P-O5Y"/>
                                 <include reference="84W-TF-486"/>
                                 <include reference="BI5-De-UYh"/>
                                 <include reference="cqf-4Z-vl3"/>
-                                <include reference="6L3-4P-O5Y"/>
                             </mask>
                         </variation>
                     </view>
@@ -4928,6 +4928,7 @@
                         <viewControllerLayoutGuide type="bottom" id="AcM-gC-Fvo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="XSq-bz-qF8">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you sure want to log out ?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zAQ-uf-iNI">
@@ -4993,7 +4994,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Log out" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2AR-hD-3Gc">
                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -5339,13 +5340,13 @@
                                                     <exclude reference="NhT-xF-3wa"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <exclude reference="UCB-32-pfg"/>
-                                                    <exclude reference="76a-cV-gVE"/>
                                                     <exclude reference="1GS-T6-5Az"/>
                                                     <exclude reference="S00-gU-rBg"/>
                                                     <exclude reference="bdc-rx-YAp"/>
                                                     <exclude reference="vfR-Df-20v"/>
                                                     <exclude reference="vl4-er-Baj"/>
+                                                    <exclude reference="UCB-32-pfg"/>
+                                                    <exclude reference="76a-cV-gVE"/>
                                                     <exclude reference="yjh-PB-IMy"/>
                                                 </mask>
                                             </variation>
@@ -5355,13 +5356,13 @@
                                                     <include reference="NhT-xF-3wa"/>
                                                 </mask>
                                                 <mask key="constraints">
-                                                    <include reference="UCB-32-pfg"/>
-                                                    <exclude reference="76a-cV-gVE"/>
                                                     <exclude reference="1GS-T6-5Az"/>
                                                     <include reference="S00-gU-rBg"/>
                                                     <exclude reference="bdc-rx-YAp"/>
                                                     <include reference="vfR-Df-20v"/>
                                                     <include reference="vl4-er-Baj"/>
+                                                    <include reference="UCB-32-pfg"/>
+                                                    <exclude reference="76a-cV-gVE"/>
                                                     <include reference="yjh-PB-IMy"/>
                                                 </mask>
                                             </variation>
@@ -5476,7 +5477,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="2rj-Kh-7oK">
+                            <datePicker contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="2rj-Kh-7oK">
                                 <rect key="frame" x="0.0" y="175" width="600" height="162"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.059999999999999998" colorSpace="calibratedRGB"/>
                                 <date key="date" timeIntervalSinceReferenceDate="459315707.60153699">
@@ -5801,7 +5802,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6te-8k-dC9" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6te-8k-dC9" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -5888,6 +5889,7 @@
                                             <outlet property="containerView" destination="BVr-4R-XGa" id="aSQ-Wc-4ij"/>
                                             <outlet property="headerView" destination="V5A-yM-SO5" id="FyT-lc-jAh"/>
                                             <outlet property="likeButton" destination="Y8i-GA-xrk" id="H4K-nK-STf"/>
+                                            <outlet property="likeNumberLabel" destination="6te-8k-dC9" id="gEs-H3-sJo"/>
                                             <outlet property="postDateLabel" destination="Brf-fz-GSY" id="uqX-6P-zS7"/>
                                             <outlet property="postTypeImageView" destination="7io-at-dSC" id="sa1-uz-ySV"/>
                                             <outlet property="textView" destination="xtn-vz-YER" id="QNZ-hW-9k6"/>
@@ -6305,7 +6307,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </textView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP4-7t-AuD" userLabel="Heart Label">
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZP4-7t-AuD" userLabel="Heart Label">
                                                                     <rect key="frame" x="10" y="233" width="98" height="14"/>
                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                     <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -6392,6 +6394,7 @@
                                             <outlet property="containerView" destination="VYn-7v-WLw" id="y4E-BJ-7cJ"/>
                                             <outlet property="headerView" destination="kOF-J2-qob" id="gZE-i9-Qye"/>
                                             <outlet property="likeButton" destination="Cti-Sb-Xk9" id="dbK-Vn-eni"/>
+                                            <outlet property="likeNumberLabel" destination="ZP4-7t-AuD" id="J4p-ja-2rJ"/>
                                             <outlet property="postDateLabel" destination="o76-ev-0EV" id="al7-BA-VeQ"/>
                                             <outlet property="postTypeImageView" destination="AHo-9Q-l5z" id="HqZ-ia-fsy"/>
                                             <outlet property="textView" destination="kD2-U5-0Wu" id="TFd-P1-2UE"/>
