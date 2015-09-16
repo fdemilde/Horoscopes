@@ -214,8 +214,13 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if currentScope == .Post && noPost {
-            return 3
+        if currentScope == .Post {
+            if noPost {
+                changeToWhiteTableViewLayout()
+                return 3
+            } else {
+                changeToClearTableViewLayout()
+            }
         } else if currentScope == .Following && noFollowingUser {
             return friends.count
         }
