@@ -67,7 +67,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
             cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
+        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
         cell.likeNumberLabel.text = "\(post.hearts) Likes"
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in

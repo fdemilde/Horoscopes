@@ -161,8 +161,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                     
                 } else {
                     let userProfile = result![0]
-                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("NewProfileViewController") as! NewProfileViewController
-                    controller.profileType = ProfileType.OtherUser
+                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
                     controller.userProfile = userProfile
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.navigationController?.pushViewController(controller, animated: true)

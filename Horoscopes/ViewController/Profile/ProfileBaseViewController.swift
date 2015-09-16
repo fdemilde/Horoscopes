@@ -42,6 +42,27 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var baseDispatchGroup: dispatch_group_t!
     var isFirstDataLoad = true
     var noPost = false
+    var currentPostPage: Int = 0 {
+        didSet {
+            if currentPostPage != 0 {
+                SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage) { (result, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(self, error: error)
+                    } else {
+                        let posts = result!.0
+                        let isLastPage = result!.isLastPage
+                        self.isLastPostPage = isLastPage
+                        self.userPosts += posts
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.finishInfiniteScroll()
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            }
+        }
+    }
+    var isLastPostPage = false
     
     // MARK: - Life cycle
 
@@ -50,6 +71,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
+        setupInfiniteScroll()
     }
 
     override func didReceiveMemoryWarning() {
@@ -122,7 +144,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.headerView.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
+        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
         cell.likeNumberLabel.text = "\(post.hearts) Likes"
     }
@@ -193,11 +215,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         configureTableView()
     }
     
-    func configureUiAndGetData() {
-        configureUi()
-        getData()
-    }
-    
     func updateTableViewLayout() {
         if currentScope != .Post {
             changeToWhiteTableViewLayout()
@@ -207,6 +224,18 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Helper
+    
+    func setupInfiniteScroll(){
+        tableView.infiniteScrollIndicatorStyle = .White
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            let tableView = scrollView as! UITableView
+            if self.isLastPostPage || self.currentScope != .Post {
+                self.tableView.finishInfiniteScroll()
+                return
+            }
+            self.currentPostPage++
+        }
+    }
     
     func getData() {
         if baseDispatchGroup == nil {
@@ -235,8 +264,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
-                self.noPost = result!.count == 0
-                self.handleData(dispatchGroup, oldData: &self.userPosts, newData: result!, button: self.postButton)
+                self.currentPostPage = 0
+                let posts = result!.0
+                self.noPost = posts.count == 0
+                self.handleData(dispatchGroup, oldData: &self.userPosts, newData: posts, button: self.postButton)
             }
             if let group = dispatchGroup {
                 dispatch_group_leave(group)
@@ -263,12 +294,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
-        let oldDataIdSet = getDataIds(oldData)
-        let newDataIdSet = getDataIds(newData)
+        let oldDataIdSet = setOfDataId(oldData)
+        let newDataIdSet = setOfDataId(newData)
         return oldDataIdSet != newDataIdSet
     }
     
-    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
+    func setOfDataId<T: SequenceType>(data: T) -> Set<String> {
         var result = Set<String>()
         for item in data {
             if let post = item as? UserPost {
