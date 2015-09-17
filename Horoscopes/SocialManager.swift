@@ -40,7 +40,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if(error != nil){
                 println("Error when get getUserNewsfeed = \(error)")
             } else {
-                println("getUserNewsfeed response = \(response)")
+//                println("getUserNewsfeed response = \(response)")
             }
             
         })
@@ -437,6 +437,22 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         var postData = NSMutableDictionary()
         postData.setObject(location!, forKey: "location_result")
         
+        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(result)
+                completionHandler(result: result, error: nil)
+            }
+        })
+        
+    }
+    
+    func sendUserUpdateSign(sign : Int?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
+        
+        var postData = NSMutableDictionary()
+        postData.setObject("\(sign)", forKey: "sign")
+//        println("sendUserUpdateSign postData == \(postData)")
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)

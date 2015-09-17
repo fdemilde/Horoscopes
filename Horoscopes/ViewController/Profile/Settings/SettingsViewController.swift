@@ -155,10 +155,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
 //        println("saveBirthdaySetting saveBirthdaySetting")
         if(XAppDelegate.userSettings.birthday != self.birthday){
             XAppDelegate.userSettings.birthday = self.birthday
+            var newSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
             if(self.birthdayString != nil){
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
                     if(error == nil){
-                        XAppDelegate.userSettings.horoscopeSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
+                        XAppDelegate.userSettings.horoscopeSign = newSign
                         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
                         customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
                         customTabBarController.reload()
@@ -166,7 +167,15 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 })
             }
             
+            // update server sign
+            if((FBSDKAccessToken .currentAccessToken()) != nil){
+                XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
+//                    println("sendUserUpdateSign === \(result)")
+                })
+            }
         }
+        
+        
     }
     
     func saveNotificationSetting(){
@@ -278,7 +287,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         dateComps.second = 0
         
         var alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
-        println("set local push == \(alertTime)")
+//        println("set local push == \(alertTime)")
         localNotification.fireDate = alertTime
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
         localNotification.repeatInterval = NSCalendarUnit.CalendarUnitDay
