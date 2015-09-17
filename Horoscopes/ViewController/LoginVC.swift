@@ -56,7 +56,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func setupComponents(){
-        var ratio = Utilities.getRatio()
+        var ratio = Utilities.getRatioForViewWithWheel()
         fbLoginButtonTopConstraint.constant = (fbLoginButtonTopConstraint.constant * ratio)
         fbLoginLabelTopConstraint.constant = (fbLoginLabelTopConstraint.constant * ratio)
         DOBLabelTopConstraint.constant = (DOBLabelTopConstraint.constant * ratio)

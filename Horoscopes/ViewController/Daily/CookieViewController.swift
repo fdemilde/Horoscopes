@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CookieViewController : UIViewController{
+class CookieViewController : ViewControllerWithAds{
     
     enum CookieViewState {
         case CookieViewStateUnopened
@@ -17,15 +17,17 @@ class CookieViewController : UIViewController{
     }
     let FOOTER_HEIGHT = 60 as CGFloat
     let PADDING = 10 as CGFloat
+    let NAVIGATION_HEIGHT = 50 as CGFloat
     
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var containerView: UIView!
     // batmanView helps prevent scrollview height to be ambiguous
     @IBOutlet weak var batmanView: UIView!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var myHeaderView: UIView!
     // TITLE LABEL
     @IBOutlet weak var dailyCookieLabel: UILabel!
     
+    @IBOutlet weak var navigationView: UIView!
     @IBOutlet weak var backButton: UIButton!
     @IBOutlet weak var cookieButton: UIButton!
     
@@ -41,15 +43,13 @@ class CookieViewController : UIViewController{
     @IBOutlet weak var separatorView: UIView!
     @IBOutlet weak var footerView: UIView!
     
-//    @IBOutlet weak var cookieOpenedTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var tapToOpenLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var todayTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var yourLuckyLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var luckyNumberLabelTopConstraint: NSLayoutConstraint!
-//    @IBOutlet weak var shareButtonTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var checkBackTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var separatorTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var checkBackBottomConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var containerHeightConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var containerWidthConstraint: NSLayoutConstraint!
     var state = CookieViewState.CookieViewStateUnopened
     var parentVC : NewDailyTableViewController?
     
@@ -59,9 +59,11 @@ class CookieViewController : UIViewController{
         self.setupConstraints()
         state = CookieViewState.CookieViewStateUnopened
         self.reloadState()
+        self.setupText()
     }
     
-    override func viewDidLayoutSubviews() {
+    override func viewDidLayoutSubviews()
+    {
     }
     
     func setupBackground(){
@@ -74,12 +76,27 @@ class CookieViewController : UIViewController{
     
     func setupConstraints(){
         var ratio = Utilities.getRatio()
-        tapToOpenLabelTopConstraint.constant = (tapToOpenLabelTopConstraint.constant * ratio)
         todayTopConstraint.constant = (todayTopConstraint.constant * ratio)
-        yourLuckyLabelTopConstraint.constant = (yourLuckyLabelTopConstraint.constant * ratio)
         luckyNumberLabelTopConstraint.constant = (luckyNumberLabelTopConstraint.constant * ratio)
-        checkBackTopConstraint.constant = (checkBackTopConstraint.constant * ratio)
-        separatorTopConstraint.constant = (separatorTopConstraint.constant * ratio)
+        checkBackBottomConstraint.constant = (checkBackBottomConstraint.constant * ratio)
+    }
+    
+    func setupText(){
+        if(DeviceType.IS_IPHONE_6){
+            openCookieLabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+            fortuneDescriptionLabel.font = UIFont(name: "Book Antiqua", size: 16)
+            yourLuckyNumberLabel.font = UIFont(name: "HelveticaNeue-Light", size: 13)
+            luckyNumberLabel.font = UIFont.boldSystemFontOfSize(40)
+            checkBackLabel.font = UIFont(name: "HelveticaNeue-Light", size: 13)
+        }
+        
+        if(DeviceType.IS_IPHONE_6P){
+            openCookieLabel.font = UIFont(name: "HelveticaNeue-Light", size: 18)
+            fortuneDescriptionLabel.font = UIFont(name: "Book Antiqua", size: 18)
+            yourLuckyNumberLabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+            luckyNumberLabel.font = UIFont.boldSystemFontOfSize(43)
+            checkBackLabel.font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        }
     }
     
     // MARK: button Actions
@@ -95,12 +112,7 @@ class CookieViewController : UIViewController{
     
     @IBAction func shareFortuneCookieTapped(sender: AnyObject) {
         var shareVC = self.prepareShareVC()
-        var formSheet = MZFormSheetController(viewController: shareVC)
-        formSheet.shouldDismissOnBackgroundViewTap = true
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
-        formSheet.cornerRadius = 5.0
-        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width - 20, SHARE_HYBRID_HEIGHT)
-        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        Utilities.presentShareFormSheetController(self, shareViewController: shareVC)
     }
     // MARK: Helpers
     
@@ -135,8 +147,8 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = true
         shareButton.hidden = true
         checkBackLabel.hidden = true
-        separatorView.hidden = true
-        footerView.hidden = true
+        containerWidthConstraint.constant = Utilities.getScreenSize().width - (PADDING * 2)
+        containerHeightConstraint.constant = max(Utilities.getScreenSize().height - ADMOD_HEIGHT - TABBAR_HEIGHT - 50 - (PADDING * 2), 400)
     }
     
     func loadStateOpened(){
@@ -150,11 +162,8 @@ class CookieViewController : UIViewController{
         luckyNumberLabel.hidden = false
         shareButton.hidden = false
         checkBackLabel.hidden = false
-        separatorView.hidden = false
-        footerView.hidden = false
-        
-        containerView.frame = CGRectMake(containerView.frame.origin.x, containerView.frame.origin.y,containerView.frame.size.width, headerView.frame.height + todayTopConstraint.constant + fortuneDescriptionLabel.frame.height + yourLuckyLabelTopConstraint.constant + yourLuckyNumberLabel.frame.height + luckyNumberLabelTopConstraint.constant + luckyNumberLabel.frame.height + checkBackTopConstraint.constant + checkBackLabel.frame.height + separatorTopConstraint.constant + 1 + FOOTER_HEIGHT)
-        scrollView.contentSize = CGSize(width: containerView.frame.width, height: containerView.frame.height + PADDING * 2)
+        containerWidthConstraint.constant = Utilities.getScreenSize().width - (PADDING * 2)
+        containerHeightConstraint.constant = max(Utilities.getScreenSize().height - ADMOD_HEIGHT - TABBAR_HEIGHT - 50 - (PADDING * 2), 400)
     }
     
     func hideAll(){

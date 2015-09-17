@@ -262,11 +262,6 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     
     func didShare(horoscopeDescription: String, timeTag: NSTimeInterval) {
         let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag)
-        var formSheet = MZFormSheetController(viewController: controller)
-        formSheet.shouldDismissOnBackgroundViewTap = true
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
-        formSheet.cornerRadius = 5.0
-        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width - 20, SHARE_HYBRID_HEIGHT)
-        mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
 }

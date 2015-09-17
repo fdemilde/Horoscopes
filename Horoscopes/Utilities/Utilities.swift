@@ -60,11 +60,20 @@ class Utilities {
         return result
     }
     
-    class func getRatio() -> CGFloat {
+    class func getRatioForViewWithWheel() -> CGFloat {
         var screenSize = Utilities.getScreenSize()
+        // 211 is wheel height
         var customScreenSize = screenSize.height - 211
         
         var ratio = Float(customScreenSize/(800-211))
+        return CGFloat(ratio)
+    }
+    
+    class func getRatio() -> CGFloat {
+        var screenSize = Utilities.getScreenSize()
+        var customScreenSize = screenSize.height
+        
+        var ratio = Float(customScreenSize/568)
         return CGFloat(ratio)
     }
     
@@ -323,6 +332,7 @@ class Utilities {
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
         formSheet.cornerRadius = 5.0
+        formSheet.portraitTopInset = (Utilities.getScreenSize().height - SHARE_HYBRID_HEIGHT) / 2
         formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, SHARE_HYBRID_HEIGHT)
         hostViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
