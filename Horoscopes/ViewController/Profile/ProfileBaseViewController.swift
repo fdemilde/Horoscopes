@@ -184,7 +184,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableTrailingSpaceLayoutConstraint.constant = 10
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
-        tableView.allowsSelection = false
+        tableView.allowsSelection = true
     }
     
     // MARK: - Action
@@ -392,6 +392,18 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         return UITableViewAutomaticDimension
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        var profile: UserProfile!
+        if currentScope == .Following {
+            profile = followingUsers[indexPath.row]
+        } else if currentScope == .Followers {
+            profile = followers[indexPath.row]
+        }
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        controller.userProfile = profile!
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     // MARK: - Delegate
     
     func didTapShareButton(cell: PostTableViewCell) {
@@ -411,18 +423,18 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         })
     }
     
-    func didTapFollowProfile(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        var profile: UserProfile!
-        if currentScope == .Following {
-            profile = followingUsers[index!]
-        } else if currentScope == .Followers {
-            profile = followers[index!]
-        }
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-        controller.userProfile = profile!
-        navigationController?.pushViewController(controller, animated: true)
-    }
+//    func didTapFollowProfile(cell: FollowTableViewCell) {
+//        let index = tableView.indexPathForCell(cell)?.row
+//        var profile: UserProfile!
+//        if currentScope == .Following {
+//            profile = followingUsers[index!]
+//        } else if currentScope == .Followers {
+//            profile = followers[index!]
+//        }
+//        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+//        controller.userProfile = profile!
+//        navigationController?.pushViewController(controller, animated: true)
+//    }
 
     /*
     // MARK: - Navigation

@@ -264,12 +264,29 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
         return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if noPost {
-            let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
-            controller.type = postTypes[indexPath.row]
-            controller.placeholder = postTypeTexts[indexPath.row]
-            self.presentViewController(controller, animated: true, completion: nil)
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        switch currentScope {
+        case .Post:
+            if noPost {
+                let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+                controller.type = postTypes[indexPath.row]
+                controller.placeholder = postTypeTexts[indexPath.row]
+                self.presentViewController(controller, animated: true, completion: nil)
+            }
+        default:
+            var profile: UserProfile!
+            if currentScope == .Following {
+                if noFollowingUser {
+                    profile = friends[indexPath.row]
+                } else {
+                    profile = followingUsers[indexPath.row]
+                }
+            } else if currentScope == .Followers {
+                profile = followers[indexPath.row]
+            }
+            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+            controller.userProfile = profile!
+            navigationController?.pushViewController(controller, animated: true)
         }
     }
     
@@ -327,22 +344,22 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
         })
     }
     
-    override func didTapFollowProfile(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        var profile: UserProfile!
-        if currentScope == .Following {
-            if noFollowingUser {
-                profile = friends[index!]
-            } else {
-                profile = followingUsers[index!]
-            }
-        } else if currentScope == .Followers {
-            profile = followers[index!]
-        }
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-        controller.userProfile = profile!
-        navigationController?.pushViewController(controller, animated: true)
-    }
+//    override func didTapFollowProfile(cell: FollowTableViewCell) {
+//        let index = tableView.indexPathForCell(cell)?.row
+//        var profile: UserProfile!
+//        if currentScope == .Following {
+//            if noFollowingUser {
+//                profile = friends[index!]
+//            } else {
+//                profile = followingUsers[index!]
+//            }
+//        } else if currentScope == .Followers {
+//            profile = followers[index!]
+//        }
+//        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+//        controller.userProfile = profile!
+//        navigationController?.pushViewController(controller, animated: true)
+//    }
 
     // MARK: - Navigation
 
