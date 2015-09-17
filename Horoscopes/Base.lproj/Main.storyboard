@@ -5760,8 +5760,12 @@
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post_type_mind" translatesAutoresizingMaskIntoConstraints="NO" id="7io-at-dSC">
-                                                                    <rect key="frame" x="10" y="5" width="21" height="19"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="7io-at-dSC">
+                                                                    <rect key="frame" x="10" y="5" width="20" height="20"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="20" id="bEf-EG-Drr"/>
+                                                                        <constraint firstAttribute="width" constant="20" id="gLp-pK-wq5"/>
+                                                                    </constraints>
                                                                 </imageView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SLi-G3-89i">
                                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -6391,8 +6395,12 @@
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="post_type_mind" translatesAutoresizingMaskIntoConstraints="NO" id="AHo-9Q-l5z">
-                                                                    <rect key="frame" x="10" y="5" width="21" height="19"/>
+                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AHo-9Q-l5z">
+                                                                    <rect key="frame" x="10" y="5" width="20" height="20"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="20" id="KWY-i4-5Q1"/>
+                                                                        <constraint firstAttribute="width" constant="20" id="Pex-Fq-qMh"/>
+                                                                    </constraints>
                                                                 </imageView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wDk-Dx-JV5">
                                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>

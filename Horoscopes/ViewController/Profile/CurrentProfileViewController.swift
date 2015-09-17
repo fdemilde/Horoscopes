@@ -16,11 +16,6 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
     var friends = [UserProfile]()
     var noFollowingUser = false
     var noFollower = false
-    let postTypeTexts = [
-        "How do you feel today?",
-        "Share your story",
-        "What's on your mind?"
-    ]
     let postTypeImages = [
         "newfeeds_post_feel",
         "newfeeds_post_story",

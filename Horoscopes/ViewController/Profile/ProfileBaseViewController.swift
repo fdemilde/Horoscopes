@@ -63,6 +63,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     var isLastPostPage = false
+    let postTypeTexts = [
+        "How do you feel today?",
+        "Share your story",
+        "What's on your mind?"
+    ]
     
     // MARK: - Life cycle
 
@@ -138,14 +143,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_mind")
+            cell.postTypeLabel.text = postTypeTexts[2]
         case .Feeling:
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_feel")
+            cell.postTypeLabel.text = postTypeTexts[0]
         case .Story:
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
+            cell.postTypeLabel.text = postTypeTexts[1]
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
