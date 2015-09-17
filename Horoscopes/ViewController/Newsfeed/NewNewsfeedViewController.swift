@@ -139,7 +139,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes"
+        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView.image = image

@@ -25,7 +25,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBOutlet weak var tableLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var numberOfLikesLabel: UILabel!
     
     // MARK: - Property
     
@@ -157,7 +156,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes"
+        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
     }
     
     func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
