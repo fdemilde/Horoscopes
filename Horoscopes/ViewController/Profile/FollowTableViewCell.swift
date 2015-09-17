@@ -32,6 +32,7 @@ class FollowTableViewCell: UITableViewCell {
         profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(imageGestureRecognizer)
+        selectionStyle = .None
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

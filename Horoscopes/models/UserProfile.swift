@@ -45,7 +45,11 @@ class UserProfile: NSObject, NSCoding {
         self.uid = data.objectForKey("uid") as! Int
         self.name = data.objectForKey("name") as! String
         self.imgURL = data.objectForKey("img") as! String
-        self.sign = data.objectForKey("sign") as! Int - 1
+        var sign = data.objectForKey("sign") as! Int
+        if(sign > 0){ // sign is not set
+            self.sign = sign - 1
+        }
+        
         self.location = data.objectForKey("location") as! String
         numberOfPosts = data.objectForKey("no_post") as! Int
         numberOfUsersFollowing = data.objectForKey("no_following") as! Int
