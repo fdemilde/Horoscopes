@@ -453,8 +453,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func sendUserUpdateSign(sign : Int?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         
         var postData = NSMutableDictionary()
-        postData.setObject("\(sign)", forKey: "sign")
-//        println("sendUserUpdateSign postData == \(postData)")
+        postData.setObject("\(sign!)", forKey: "sign")
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)

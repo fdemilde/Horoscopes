@@ -170,7 +170,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             // update server sign
             if((FBSDKAccessToken .currentAccessToken()) != nil){
                 XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
-//                    println("sendUserUpdateSign === \(result)")
                 })
             }
         }

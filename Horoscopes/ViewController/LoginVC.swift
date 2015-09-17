@@ -219,7 +219,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         if((FBSDKAccessToken .currentAccessToken()) != nil){
             // server sign is 1 - 12
             XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
-//                println("sendUserUpdateSign === \(result)")
             })
         }
         
