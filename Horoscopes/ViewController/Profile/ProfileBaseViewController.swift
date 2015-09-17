@@ -83,6 +83,13 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if userProfile.uid != -1 {
+            getProfile()
+        }
+    }
+    
     // MARK: - Configure UI
     
     func configureProfileView() {
@@ -101,10 +108,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         horoscopeSignImageView.image = userProfile.horoscopeSignImage
     }
     
-    func configureTabButton() {
+    func configureScopeButton() {
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        updateScopeButtonTitle()
+    }
+    
+    func updateScopeButtonTitle() {
+        postButton.setTitle("Post\n\(userProfile.numberOfPosts)", forState: .Normal)
+        followingButton.setTitle("Following\n\(userProfile.numberOfUsersFollowing)", forState: .Normal)
+        followersButton.setTitle("Followers\n\(userProfile.numberOfFollowers)", forState: .Normal)
     }
     
     func configureTableView() {
@@ -120,18 +134,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             } else {
                 button.alpha = 0.5
             }
-        }
-    }
-    
-    func setScopeButtonTitleLabel(sender: UIButton) {
-        if sender == postButton {
-            postButton.setTitle("Post\n\(userPosts.count)", forState: .Normal)
-        } else if sender == followingButton {
-            followingButton.titleLabel?.text = "Following\n\(followingUsers.count)"
-            followingButton.setTitle("Following\n\(followingUsers.count)", forState: .Normal)
-        } else {
-            followersButton.titleLabel?.text = "Followers\n\(followers.count)"
-            followersButton.setTitle("Followers\n\(followers.count)", forState: .Normal)
         }
     }
     
@@ -190,9 +192,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {
             currentScope = .Post
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getUserPosts(nil)
         }
     }
@@ -200,9 +200,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapFollowingButton(sender: UIButton) {
         if currentScope != .Following {
             currentScope = .Following
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getFollowingUsers(nil)
         }
     }
@@ -210,18 +208,23 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapFollowersButton(sender: UIButton) {
         if currentScope != .Followers {
             currentScope = .Followers
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getFollowers(nil)
         }
     }
     
     // MARK: - Convenience
     
+    func tapScopeButton(sender: UIButton) {
+        highlightScopeButton(sender)
+        updateTableViewLayout()
+        tableView.reloadData()
+        getProfile()
+    }
+    
     func configureUi() {
         configureProfileView()
-        configureTabButton()
+        configureScopeButton()
         configureTableView()
     }
     
@@ -234,6 +237,21 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Helper
+    
+    func getProfile() {
+        SocialManager.sharedInstance.getProfile(String(userProfile.uid), completionHandler: { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+            } else {
+                if !result!.isEmpty {
+                    self.userProfile = result![0]
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.updateScopeButtonTitle()
+                    })
+                }
+            }
+        })
+    }
     
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White
@@ -297,7 +315,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if isDataUpdated(oldData, newData: newData) {
             oldData = newData
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.setScopeButtonTitleLabel(button)
                 self.tableView.reloadData()
             })
         }
@@ -327,13 +344,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             for followingUser in followingUsers {
                 if followingUser.uid == follower.uid {
                     follower.isFollowed = true
-                    shouldReload = true
                     break
                 }
             }
-        }
-        if shouldReload {
-            tableView.reloadData()
         }
     }
 

@@ -127,13 +127,9 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
     
     override func tapFollowersButton(sender: UIButton) {
         if currentScope != .Followers {
-            currentScope = .Followers
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            super.tapFollowersButton(sender)
             let group = dispatch_group_create()
             getFollowingUsers(group)
-            getFollowers(group)
             dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
                 self.checkFollowStatus()
             })
@@ -148,6 +144,11 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
             self.checkFollowStatus()
         }
+    }
+    
+    override func getUserPosts(dispatchGroup: dispatch_group_t?) {
+        super.getUserPosts(dispatchGroup)
+        getProfile()
     }
     
     override func getFollowingUsers(dispatchGroup: dispatch_group_t?) {
@@ -316,6 +317,7 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
                 Utilities.showError(self, error: error)
             } else {
                 let group = dispatch_group_create()
+                self.getProfile()
                 self.getFollowingUsers(group)
                 dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
                     self.checkFollowStatus()
