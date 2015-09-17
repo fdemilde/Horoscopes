@@ -19,6 +19,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     @IBOutlet weak var starIcon: UIImageView!
     @IBOutlet var containerView: UIView!
+    var birthdayStringInServerFormat : String!
     
     
     @IBOutlet weak var fbLoginButtonTopConstraint: NSLayoutConstraint!
@@ -56,7 +57,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func setupComponents(){
-        var ratio = Utilities.getRatio()
+        var ratio = Utilities.getRatioForViewWithWheel()
         fbLoginButtonTopConstraint.constant = (fbLoginButtonTopConstraint.constant * ratio)
         fbLoginLabelTopConstraint.constant = (fbLoginLabelTopConstraint.constant * ratio)
         DOBLabelTopConstraint.constant = (DOBLabelTopConstraint.constant * ratio)
@@ -101,6 +102,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
                 Utilities.hideHUD(viewToHide: self.view)
                 if(error != nil){
+                    println("loginTapped error == \(error)")
                     Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                     return
                 } else {
@@ -203,6 +205,23 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
         customTabBarController.reload()
+        
+        // update user birthday and sign
+        if(self.birthdayStringInServerFormat != nil){
+            birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+            XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(self.birthdayStringInServerFormat, completionHandler: { (responseDict, error) -> Void in
+                if(error == nil){
+//                    println("set birthday success! responseDict = \(responseDict)")
+                }
+            })
+        }
+        
+        if((FBSDKAccessToken .currentAccessToken()) != nil){
+            // server sign is 1 - 12
+            XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
+            })
+        }
+        
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
@@ -221,10 +240,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.wheel.autoRollToSign(signName)
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
         XAppDelegate.userSettings.birthday = birthday
-        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
-        // TODO: sending updating Birthday is wrong, should do it later
-//         XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(dateString, completionHandler: { (responseDict, error) -> Void in
-//        })
+        self.birthdayStringInServerFormat = dateString
     }
     
     // MARK: helpers

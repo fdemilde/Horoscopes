@@ -33,7 +33,7 @@ class ChooseSignVC : SpinWheelVC {
     }
     
     func setupComponents(){
-        var ratio = Utilities.getRatio()
+        var ratio = Utilities.getRatioForViewWithWheel()
         chooseSignButtonTopConstraint.constant = (chooseSignButtonTopConstraint.constant * ratio)
         signNameLabelTopConstraint.constant = (signNameLabelTopConstraint.constant * ratio)
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
