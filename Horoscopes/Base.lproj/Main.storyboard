@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -8,6 +8,8 @@
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Book Antiqua Regular.ttf">
+            <string>BookAntiqua</string>
+            <string>BookAntiqua</string>
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
@@ -5825,12 +5827,12 @@
                                                                         </mask>
                                                                         <mask key="constraints">
                                                                             <exclude reference="Bu1-Tb-bo9"/>
+                                                                            <exclude reference="J0R-49-mJh"/>
+                                                                            <exclude reference="xT3-y0-Td0"/>
                                                                             <exclude reference="9HD-pR-bD5"/>
                                                                             <exclude reference="bHd-vo-AtU"/>
                                                                             <exclude reference="de2-sS-ogG"/>
                                                                             <exclude reference="mVz-ac-eF9"/>
-                                                                            <exclude reference="J0R-49-mJh"/>
-                                                                            <exclude reference="xT3-y0-Td0"/>
                                                                         </mask>
                                                                     </variation>
                                                                     <variation key="heightClass=regular-widthClass=compact">
@@ -5840,12 +5842,12 @@
                                                                         </mask>
                                                                         <mask key="constraints">
                                                                             <include reference="Bu1-Tb-bo9"/>
+                                                                            <include reference="J0R-49-mJh"/>
+                                                                            <include reference="xT3-y0-Td0"/>
                                                                             <include reference="9HD-pR-bD5"/>
                                                                             <include reference="bHd-vo-AtU"/>
                                                                             <include reference="de2-sS-ogG"/>
                                                                             <include reference="mVz-ac-eF9"/>
-                                                                            <include reference="J0R-49-mJh"/>
-                                                                            <include reference="xT3-y0-Td0"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
@@ -5869,10 +5871,10 @@
                                                                     <exclude reference="SLi-G3-89i"/>
                                                                 </mask>
                                                                 <mask key="constraints">
+                                                                    <exclude reference="fCj-0L-7HI"/>
                                                                     <exclude reference="2qV-rp-xgq"/>
                                                                     <exclude reference="Ahz-Fb-q7b"/>
                                                                     <exclude reference="oqf-hi-r78"/>
-                                                                    <exclude reference="fCj-0L-7HI"/>
                                                                 </mask>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=compact">
@@ -5889,7 +5891,7 @@
                                                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cyc-hv-7go" userLabel="Main View">
                                                             <rect key="frame" x="0.0" y="30" width="580" height="263"/>
                                                             <subviews>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtn-vz-YER">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xtn-vz-YER">
                                                                     <rect key="frame" x="10" y="16" width="560" height="201"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
@@ -5898,7 +5900,7 @@
                                                                     </constraints>
                                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                    <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
@@ -6469,8 +6471,6 @@
                                                                         </mask>
                                                                         <mask key="constraints">
                                                                             <exclude reference="OmV-uK-tlA"/>
-                                                                            <exclude reference="Dr3-Yb-DKh"/>
-                                                                            <exclude reference="vci-Kk-FOe"/>
                                                                             <exclude reference="3Ux-bV-ebM"/>
                                                                             <exclude reference="9DV-77-Q46"/>
                                                                             <exclude reference="Hao-Vo-CAM"/>
@@ -6479,6 +6479,8 @@
                                                                             <exclude reference="oWe-P6-si8"/>
                                                                             <exclude reference="pqp-0Q-lfl"/>
                                                                             <exclude reference="z5q-6c-Bo3"/>
+                                                                            <exclude reference="Dr3-Yb-DKh"/>
+                                                                            <exclude reference="vci-Kk-FOe"/>
                                                                         </mask>
                                                                     </variation>
                                                                     <variation key="heightClass=regular-widthClass=compact">
@@ -6488,8 +6490,6 @@
                                                                         </mask>
                                                                         <mask key="constraints">
                                                                             <include reference="OmV-uK-tlA"/>
-                                                                            <include reference="Dr3-Yb-DKh"/>
-                                                                            <include reference="vci-Kk-FOe"/>
                                                                             <include reference="3Ux-bV-ebM"/>
                                                                             <exclude reference="9DV-77-Q46"/>
                                                                             <exclude reference="Hao-Vo-CAM"/>
@@ -6498,6 +6498,8 @@
                                                                             <include reference="oWe-P6-si8"/>
                                                                             <exclude reference="pqp-0Q-lfl"/>
                                                                             <include reference="z5q-6c-Bo3"/>
+                                                                            <include reference="Dr3-Yb-DKh"/>
+                                                                            <include reference="vci-Kk-FOe"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
@@ -6519,10 +6521,10 @@
                                                                     <exclude reference="wDk-Dx-JV5"/>
                                                                 </mask>
                                                                 <mask key="constraints">
+                                                                    <exclude reference="WGg-7b-rUB"/>
                                                                     <exclude reference="KEL-zq-em3"/>
                                                                     <exclude reference="bfz-62-SBa"/>
                                                                     <exclude reference="uHv-Sl-mlu"/>
-                                                                    <exclude reference="WGg-7b-rUB"/>
                                                                 </mask>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=compact">
@@ -6539,7 +6541,7 @@
                                                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4dz-FX-Wea" userLabel="Main View">
                                                             <rect key="frame" x="0.0" y="30" width="580" height="263"/>
                                                             <subviews>
-                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kD2-U5-0Wu">
+                                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kD2-U5-0Wu">
                                                                     <rect key="frame" x="10" y="16" width="560" height="201"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
@@ -6548,7 +6550,7 @@
                                                                     </constraints>
                                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                                     <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                                    <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
