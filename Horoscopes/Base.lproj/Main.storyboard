@@ -905,7 +905,7 @@
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
-                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-RX-tuv" userLabel="Footer View">
+                                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VUR-RX-tuv" userLabel="Action View">
                                                                     <rect key="frame" x="0.0" y="318" width="580" height="50"/>
                                                                     <subviews>
                                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fCM-pj-kfn">
@@ -1009,6 +1009,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="actionView" destination="VUR-RX-tuv" id="adL-tV-Bje"/>
                                             <outlet property="containerView" destination="9Y8-nM-GZK" id="oql-yy-Dj8"/>
                                             <outlet property="headerView" destination="4MM-TI-ig3" id="m1B-wo-2nm"/>
                                             <outlet property="horoscopeSignImageView" destination="Hk2-a5-WFc" id="qAz-94-l1i"/>
@@ -5391,7 +5392,7 @@
                                                                 <constraint firstItem="6te-8k-dC9" firstAttribute="top" secondItem="xtn-vz-YER" secondAttribute="bottom" constant="16" id="yvk-KH-zbY"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2s-KY-XWF" userLabel="Footer View">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2s-KY-XWF" userLabel="Action View">
                                                             <rect key="frame" x="0.0" y="190" width="580" height="50"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y8i-GA-xrk">
@@ -5458,6 +5459,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="actionView" destination="e2s-KY-XWF" id="zpm-NR-XT6"/>
                                             <outlet property="containerView" destination="BVr-4R-XGa" id="aSQ-Wc-4ij"/>
                                             <outlet property="headerView" destination="V5A-yM-SO5" id="FyT-lc-jAh"/>
                                             <outlet property="likeButton" destination="Y8i-GA-xrk" id="H4K-nK-STf"/>
@@ -6045,7 +6047,7 @@
                                                                 <constraint firstAttribute="trailing" secondItem="kD2-U5-0Wu" secondAttribute="trailing" constant="10" id="pfz-qx-uRr"/>
                                                             </constraints>
                                                         </view>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihH-Jb-ffi" userLabel="Footer View">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ihH-Jb-ffi" userLabel="Action View">
                                                             <rect key="frame" x="0.0" y="190" width="580" height="50"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cti-Sb-Xk9">
@@ -6112,6 +6114,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="actionView" destination="ihH-Jb-ffi" id="IWS-es-RLM"/>
                                             <outlet property="containerView" destination="VYn-7v-WLw" id="y4E-BJ-7cJ"/>
                                             <outlet property="headerView" destination="kOF-J2-qob" id="gZE-i9-Qye"/>
                                             <outlet property="likeButton" destination="Cti-Sb-Xk9" id="dbK-Vn-eni"/>

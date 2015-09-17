@@ -28,6 +28,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeNumberLabel: UILabel!
+    @IBOutlet weak var actionView: UIView!
     
     // MARK: - Newsfeed outlet
     
@@ -44,6 +45,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     var delegate: PostTableViewCellDelegate?
     let profileImageSize: CGFloat = 80
     var postTypeLabel: UILabel!
+    var topBorder: CALayer!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,6 +56,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
         postTypeLabel.textColor = UIColor.whiteColor()
         addSubview(postTypeLabel)
+        topBorder = CALayer()
+        topBorder.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
+        actionView.layer.addSublayer(topBorder)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -65,6 +70,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     override func layoutSubviews() {
         postTypeLabel.sizeToFit()
         postTypeLabel.frame.origin = CGPoint(x: postTypeImageView.frame.origin.x + postTypeImageView.frame.width + 20, y: headerView.frame.height/2 - postTypeLabel.frame.height/2)
+        topBorder.frame = CGRect(x: 0, y: 0, width: actionView.frame.width, height: 1)
     }
     
     // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell
