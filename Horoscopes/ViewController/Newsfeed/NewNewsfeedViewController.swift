@@ -137,9 +137,9 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
+        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes"
+        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView.image = image
@@ -149,7 +149,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
             cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
             cell.likeButton.userInteractionEnabled = false
-            
         } else {
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
             cell.likeButton.userInteractionEnabled = true
@@ -318,6 +317,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
                 hud.detailsLabelText = "\(name) has been added to your Following list."
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                    cell.newsfeedFollowButton.userInteractionEnabled = false
                     hud.hide(true, afterDelay: 2)
                 })
             }

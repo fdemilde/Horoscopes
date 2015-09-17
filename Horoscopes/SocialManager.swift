@@ -186,7 +186,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getUserFeed(uid: Int, page: Int = 0, completionHandler: (result: [UserPost]?, error: NSError?) -> Void) {
+    func getUserFeed(uid: Int, page: Int = 0, completionHandler: (result: ([UserPost], isLastPage: Bool)?, error: NSError?) -> Void) {
         getProfile("\(uid)", completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -201,12 +201,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         completionHandler(result: nil, error: error)
                     } else {
                         let json = Utilities.parseNSDictionaryToDictionary(response)
+                        let last = json["last"] as! Int
                         let results = json["posts"] as! [NSDictionary]
                         let posts = UserPost.postsFromResults(results)
                         for post in posts {
                             post.user = userProfile
                         }
-                        completionHandler(result: posts, error: nil)
+                        let result = (posts, isLastPage: last == 1)
+                        completionHandler(result: result, error: nil)
                     }
                 })
             }

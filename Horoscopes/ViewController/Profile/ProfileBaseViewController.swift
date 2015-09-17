@@ -25,7 +25,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBOutlet weak var tableLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceLayoutConstraint: NSLayoutConstraint!
-    @IBOutlet weak var numberOfLikesLabel: UILabel!
     
     // MARK: - Property
     
@@ -42,6 +41,32 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var baseDispatchGroup: dispatch_group_t!
     var isFirstDataLoad = true
     var noPost = false
+    var currentPostPage: Int = 0 {
+        didSet {
+            if currentPostPage != 0 {
+                SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage) { (result, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(self, error: error)
+                    } else {
+                        let posts = result!.0
+                        let isLastPage = result!.isLastPage
+                        self.isLastPostPage = isLastPage
+                        self.userPosts += posts
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.finishInfiniteScroll()
+                            self.tableView.reloadData()
+                        })
+                    }
+                }
+            }
+        }
+    }
+    var isLastPostPage = false
+    let postTypeTexts = [
+        "How do you feel today?",
+        "Share your story",
+        "What's on your mind?"
+    ]
     
     // MARK: - Life cycle
 
@@ -50,11 +75,19 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
+        setupInfiniteScroll()
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if userProfile.uid != -1 {
+            getProfile()
+        }
     }
     
     // MARK: - Configure UI
@@ -75,10 +108,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         horoscopeSignImageView.image = userProfile.horoscopeSignImage
     }
     
-    func configureTabButton() {
+    func configureScopeButton() {
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        updateScopeButtonTitle()
+    }
+    
+    func updateScopeButtonTitle() {
+        postButton.setTitle("Post\n\(userProfile.numberOfPosts)", forState: .Normal)
+        followingButton.setTitle("Following\n\(userProfile.numberOfUsersFollowing)", forState: .Normal)
+        followersButton.setTitle("Followers\n\(userProfile.numberOfFollowers)", forState: .Normal)
     }
     
     func configureTableView() {
@@ -97,18 +137,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func setScopeButtonTitleLabel(sender: UIButton) {
-        if sender == postButton {
-            postButton.setTitle("Post\n\(userPosts.count)", forState: .Normal)
-        } else if sender == followingButton {
-            followingButton.titleLabel?.text = "Following\n\(followingUsers.count)"
-            followingButton.setTitle("Following\n\(followingUsers.count)", forState: .Normal)
-        } else {
-            followersButton.titleLabel?.text = "Followers\n\(followers.count)"
-            followersButton.setTitle("Followers\n\(followers.count)", forState: .Normal)
-        }
-    }
-    
     func configurePostTableViewCell(cell: PostTableViewCell, post: UserPost) {
         cell.configureUserPostUi()
         switch post.type {
@@ -116,18 +144,21 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_mind")
+            cell.postTypeLabel.text = postTypeTexts[2]
         case .Feeling:
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_feel")
+            cell.postTypeLabel.text = postTypeTexts[0]
         case .Story:
             cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
+            cell.postTypeLabel.text = postTypeTexts[1]
         }
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: NewProfileViewController.postDateFormat)
+        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes"
+        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
     }
     
     func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
@@ -146,7 +177,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 0
         tableView.backgroundColor = UIColor.clearColor()
         tableView.allowsSelection = false
-        tableView.separatorStyle = .None
     }
     
     func changeToWhiteTableViewLayout() {
@@ -155,7 +185,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
         tableView.allowsSelection = false
-        tableView.separatorStyle = .SingleLine
     }
     
     // MARK: - Action
@@ -163,9 +192,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {
             currentScope = .Post
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getUserPosts(nil)
         }
     }
@@ -173,9 +200,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapFollowingButton(sender: UIButton) {
         if currentScope != .Following {
             currentScope = .Following
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getFollowingUsers(nil)
         }
     }
@@ -183,24 +208,24 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBAction func tapFollowersButton(sender: UIButton) {
         if currentScope != .Followers {
             currentScope = .Followers
-            highlightScopeButton(sender)
-            updateTableViewLayout()
-            tableView.reloadData()
+            tapScopeButton(sender)
             getFollowers(nil)
         }
     }
     
     // MARK: - Convenience
     
-    func configureUi() {
-        configureProfileView()
-        configureTabButton()
-        configureTableView()
+    func tapScopeButton(sender: UIButton) {
+        highlightScopeButton(sender)
+        updateTableViewLayout()
+        tableView.reloadData()
+        getProfile()
     }
     
-    func configureUiAndGetData() {
-        configureUi()
-        getData()
+    func configureUi() {
+        configureProfileView()
+        configureScopeButton()
+        configureTableView()
     }
     
     func updateTableViewLayout() {
@@ -212,6 +237,33 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Helper
+    
+    func getProfile() {
+        SocialManager.sharedInstance.getProfile(String(userProfile.uid), completionHandler: { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+            } else {
+                if !result!.isEmpty {
+                    self.userProfile = result![0]
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.updateScopeButtonTitle()
+                    })
+                }
+            }
+        })
+    }
+    
+    func setupInfiniteScroll(){
+        tableView.infiniteScrollIndicatorStyle = .White
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            let tableView = scrollView as! UITableView
+            if self.isLastPostPage || self.currentScope != .Post {
+                self.tableView.finishInfiniteScroll()
+                return
+            }
+            self.currentPostPage++
+        }
+    }
     
     func getData() {
         if baseDispatchGroup == nil {
@@ -240,8 +292,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
-                self.noPost = result!.count == 0
-                self.handleData(dispatchGroup, oldData: &self.userPosts, newData: result!, button: self.postButton)
+                self.currentPostPage = 0
+                let posts = result!.0
+                self.noPost = posts.count == 0
+                self.handleData(dispatchGroup, oldData: &self.userPosts, newData: posts, button: self.postButton)
             }
             if let group = dispatchGroup {
                 dispatch_group_leave(group)
@@ -261,19 +315,18 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if isDataUpdated(oldData, newData: newData) {
             oldData = newData
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.setScopeButtonTitleLabel(button)
                 self.tableView.reloadData()
             })
         }
     }
     
     func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
-        let oldDataIdSet = getDataIds(oldData)
-        let newDataIdSet = getDataIds(newData)
+        let oldDataIdSet = setOfDataId(oldData)
+        let newDataIdSet = setOfDataId(newData)
         return oldDataIdSet != newDataIdSet
     }
     
-    func getDataIds<T: SequenceType>(data: T) -> Set<String> {
+    func setOfDataId<T: SequenceType>(data: T) -> Set<String> {
         var result = Set<String>()
         for item in data {
             if let post = item as? UserPost {
@@ -291,13 +344,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             for followingUser in followingUsers {
                 if followingUser.uid == follower.uid {
                     follower.isFollowed = true
-                    shouldReload = true
                     break
                 }
             }
-        }
-        if shouldReload {
-            tableView.reloadData()
         }
     }
 

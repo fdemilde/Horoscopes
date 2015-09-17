@@ -43,18 +43,28 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     var delegate: PostTableViewCellDelegate?
     let profileImageSize: CGFloat = 80
+    var postTypeLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
+        postTypeLabel = UILabel()
+        postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+        postTypeLabel.textColor = UIColor.whiteColor()
+        addSubview(postTypeLabel)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
+    }
+    
+    override func layoutSubviews() {
+        postTypeLabel.sizeToFit()
+        postTypeLabel.frame.origin = CGPoint(x: postTypeImageView.frame.origin.x + postTypeImageView.frame.width + 20, y: headerView.frame.height/2 - postTypeLabel.frame.height/2)
     }
     
     // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell

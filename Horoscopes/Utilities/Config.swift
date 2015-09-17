@@ -10,6 +10,10 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
+// MARK: - Post Date Format
+
+let postDateFormat = "MMMM dd, yyyy"
+
 // MARK: Network request
 let GET_DATA_METHOD  = "app.horoscopes.checkin" //debug.logrequest for testing event.upload for actual
 let REFRESH_DATA_METHOD  = "app.horoscopes.refresh"

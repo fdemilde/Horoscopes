@@ -15,7 +15,9 @@ public class UserPost : NSObject, Equatable{
     var message : String = ""
     var truncated : Int = 0
     var hearts : Int = 0
+    var shares: Int = 0
     var ts : Int = 0
+    
     var user : UserProfile?
     
     init(data: NSDictionary){
@@ -25,6 +27,7 @@ public class UserPost : NSObject, Equatable{
         self.message = data.objectForKey("message") as! String
         self.truncated = data.objectForKey("truncated") as! Int
         self.hearts = data.objectForKey("hearts") as! Int
+        shares = data.objectForKey("shares") as! Int
         self.ts = data.objectForKey("ts") as! Int
     }
     
