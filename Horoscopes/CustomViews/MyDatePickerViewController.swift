@@ -118,15 +118,17 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     
     
     func setCurrentBirthday(){
+        var dateArray = [0, 0]
         if(birthday == nil){ // haven't selected burthday, show first row
-            picker.selectRow(0, inComponent: 0, animated: false)
+            dateArray = self.getMonthAndDayIndexByDate(Utilities.getDefaultBirthday())
+            
         } else {
-            var dateArray = self.getMonthAndDayIndexByDate(birthday)
-            picker.selectRow(dateArray[0], inComponent: 0, animated: false)
-            picker.selectRow(dateArray[1], inComponent: 1, animated: false)
-            selectedDayIndex = dateArray[1]
-            selectedMonthIndex = dateArray[0]
+            dateArray = self.getMonthAndDayIndexByDate(birthday)
         }
+        picker.selectRow(dateArray[0], inComponent: 0, animated: false)
+        picker.selectRow(dateArray[1], inComponent: 1, animated: false)
+        selectedDayIndex = dateArray[1]
+        selectedMonthIndex = dateArray[0]
     }
     
     // parse current birthday into array of Int as array[0] = month, array[1] = day
@@ -141,33 +143,9 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         return dateArray
     }
     
-//    @IBAction func saveTapped(sender: AnyObject) {
-//        let dateFormatter = NSDateFormatter()
-//        dateFormatter.dateFormat = "dd/MM"
-//        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-//        var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
-//        var selectedDate = dateFormatter.dateFromString(dateString)
-//        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
-//        if(self.type == BirthdayParentViewControllerType.LoginViewController){
-//            var castedParentVC = parentVC as! LoginVC
-//            castedParentVC.birthday = selectedDate
-//            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
-//                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-//            })
-//        } else {
-//            var castedParentVC = parentVC as! SettingsViewController
-//            castedParentVC.birthday = selectedDate
-//            castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-//            self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formsheetController) -> Void in
-//                castedParentVC.finishedSelectingBirthday(dateStringInNumberFormat)
-//            })
-//        }
-//    }
-    
     // because server requires date should be in DAY/MONTH format
     func getDateStringInNumberFormat(date : NSDate) -> String{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-//        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
         let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
         let result = String(format:"%d/%02d", comp.day, comp.month)
         return result
