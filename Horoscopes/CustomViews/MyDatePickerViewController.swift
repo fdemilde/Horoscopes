@@ -67,12 +67,12 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
             string = dateArray[row]
         }
         let attDict = [NSForegroundColorAttributeName: UIColor.blackColor(), NSFontAttributeName : UIFont.systemFontOfSize(18.0)]
-        var attString = NSAttributedString(string: string, attributes: attDict)
+        let attString = NSAttributedString(string: string, attributes: attDict)
         
         // change separator color to white
-        var separator1 = pickerView.subviews[1] as! UIView
+        let separator1 = pickerView.subviews[1] 
         separator1.backgroundColor = UIColor.blackColor()
-        var separator2 = pickerView.subviews[2] as! UIView
+        let separator2 = pickerView.subviews[2] 
         separator2.backgroundColor = UIColor.blackColor()
         return attString
     }
@@ -92,8 +92,8 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        var dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
-        var selectedDate = dateFormatter.dateFromString(dateString)
+        let dateString = String(format:"%@/%@",dateArray[selectedDayIndex],monthArray[selectedMonthIndex])
+        let selectedDate = dateFormatter.dateFromString(dateString)
         if let selectedDate = selectedDate {
             
             parentVC.finishedSelectingBirthday(selectedDate)
@@ -135,9 +135,9 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.dateFormat = "M"
-        dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
+        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         dateFormatter.dateFormat = "d"
-        dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
+        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         return dateArray
     }
     
@@ -166,9 +166,10 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     
     // because server requires date should be in DAY/MONTH format
     func getDateStringInNumberFormat(date : NSDate) -> String{
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-        var comp = NSCalendar.currentCalendar().components(components, fromDate: date)
-        var result = String(format:"%d/%02d", comp.day, comp.month)
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+//        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        let result = String(format:"%d/%02d", comp.day, comp.month)
         return result
     }
 }

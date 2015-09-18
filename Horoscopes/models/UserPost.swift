@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class UserPost : NSObject, Equatable{
+public class UserPost : NSObject{
     var post_id : String = ""
     var uid : Int = -1
     var type : NewsfeedType

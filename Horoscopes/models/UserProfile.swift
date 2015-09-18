@@ -21,7 +21,7 @@ class UserProfile: NSObject, NSCoding {
     var isFollowed = false
     static var filePath: String {
         let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first as! NSURL
+        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
         return url.URLByAppendingPathComponent("userProfile").path!
     }
     var horoscopeSignString: String {
@@ -45,7 +45,7 @@ class UserProfile: NSObject, NSCoding {
         self.uid = data.objectForKey("uid") as! Int
         self.name = data.objectForKey("name") as! String
         self.imgURL = data.objectForKey("img") as! String
-        var sign = data.objectForKey("sign") as! Int
+        let sign = data.objectForKey("sign") as! Int
         if(sign > 0){ // sign is not set
             self.sign = sign - 1
         }

@@ -71,7 +71,7 @@ class SettingsTableCell : UITableViewCell {
     }
     
     @IBAction func toogleNotification(sender: AnyObject) {
-        var switchControl = sender as! UISwitch
+        let switchControl = sender as! UISwitch
         parentVC.isNotificationOn = switchControl.on
     }
     

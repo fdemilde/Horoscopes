@@ -15,12 +15,12 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     // MARK: Facebook
     
     func shareFacebook(parentVC : UIViewController, text : String, pictureURL : String ,  url : String ){
-        var composerVC = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        let composerVC = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
             if (result == SLComposeViewControllerResult.Cancelled) {
-                println("Share FB Cancel!!")
+                print("Share FB Cancel!!")
             } else {
-                println("Share FB OK!!")
+                print("Share FB OK!!")
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -36,12 +36,12 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     // MARK: Twitter
     
     func shareTwitter(parentVC : UIViewController, text : String,pictureURL : String ,  url : String ){
-        var composerVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
+        let composerVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
             if (result == SLComposeViewControllerResult.Cancelled) {
-                println("Share TW Cancel!!")
+                print("Share TW Cancel!!")
             } else {
-                println("Share TW OK!!")
+                print("Share TW OK!!")
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
@@ -94,12 +94,12 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MARK: Whatsapp
     func shareWhatapps(text : String, url: String){
-        var sharingText = String(format:"whatsapp://send?text=%@", text)
-        var whatsappURL = NSURL(string: sharingText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let sharingText = String(format:"whatsapp://send?text=%@", text)
+        let whatsappURL = NSURL(string: sharingText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
         if(UIApplication.sharedApplication().canOpenURL(whatsappURL!)){
             UIApplication.sharedApplication().openURL(whatsappURL!)
         } else {
-            println("Cannot open URL")
+            print("Cannot open URL")
         }
 
     }

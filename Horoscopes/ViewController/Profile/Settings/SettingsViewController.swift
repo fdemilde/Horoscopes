@@ -30,7 +30,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
         titleBackgroundView.layer.shadowOffset = CGSizeMake(0, 1)
@@ -93,19 +93,19 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
             case 0:
-                var timePickerViewController = self.setupNotificationTimePickerViewController()
+                let timePickerViewController = self.setupNotificationTimePickerViewController()
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
-                var birthdayViewController = self.setupBirthdayViewController()
+                let birthdayViewController = self.setupBirthdayViewController()
                 self.displayViewController(birthdayViewController, type: SettingsType.ChangeDOB)
                 break
             case 2:
-                var bugsReportViewController = self.setupBugsReportViewController()
+                let bugsReportViewController = self.setupBugsReportViewController()
                 self.displayViewController(bugsReportViewController, type: SettingsType.BugsReport)
                 break
             case 3:
-                var logOutViewController = self.setupLogoutViewController()
+                let logOutViewController = self.setupLogoutViewController()
                 self.displayViewController(logOutViewController, type: SettingsType.Logout)
                 break
             default:
@@ -155,7 +155,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
 //        println("saveBirthdaySetting saveBirthdaySetting")
         if(XAppDelegate.userSettings.birthday != self.birthday){
             XAppDelegate.userSettings.birthday = self.birthday
-            var newSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
+            let newSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
             if(self.birthdayString != nil){
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
                     if(error == nil){
@@ -217,14 +217,14 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Helpers
     
     func finishedSelectingBirthday(date : NSDate){
-        var dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
+        let dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
         self.birthday = date
         self.birthdayString = dateStringInNumberFormat
         tableView.reloadData()
     }
     
     func displayViewController(viewController : UIViewController, type : SettingsType){
-        var formSheet = MZFormSheetController(viewController: viewController)
+        let formSheet = MZFormSheetController(viewController: viewController)
         formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
         formSheet.cornerRadius = 0.0;
         if (type == SettingsType.Notification) {
@@ -252,14 +252,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func getNotificationFireTime(){
         
-        var array = UIApplication.sharedApplication().scheduledLocalNotifications
-        if(array.count > 0){ // have notification setup already
-            notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
-            lastSaveNotificationFireTime = notificationFireTime
-        } else {
-            notificationFireTime = NOTIFICATION_SETTING_DEFAULT_TIME
-            lastSaveNotificationFireTime = notificationFireTime
+        let array = UIApplication.sharedApplication().scheduledLocalNotifications
+        if let array = array {
+            if(array.count > 0){ // have notification setup already
+                notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
+                lastSaveNotificationFireTime = notificationFireTime
+            } else {
+                notificationFireTime = NOTIFICATION_SETTING_DEFAULT_TIME
+                lastSaveNotificationFireTime = notificationFireTime
+            }
         }
+        
     }
     
     func doneSelectingTime(time : NSDate){
@@ -277,19 +280,19 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: helpers
     func setLocalPush(){
         UIApplication.sharedApplication().cancelAllLocalNotifications()
-        var localNotification = UILocalNotification()
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-        var dateComps = NSCalendar.currentCalendar().components(components, fromDate: NSDate().dateByAddingTimeInterval(24*3600)) // tomorrow date components
-        var selectedTime = self.getSelectedTime()
+        let localNotification = UILocalNotification()
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let dateComps = NSCalendar.currentCalendar().components(components, fromDate: NSDate().dateByAddingTimeInterval(24*3600)) // tomorrow date components
+        let selectedTime = self.getSelectedTime()
         dateComps.hour = selectedTime.hour
         dateComps.minute = selectedTime.minute
         dateComps.second = 0
         
-        var alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
+        let alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
 //        println("set local push == \(alertTime)")
         localNotification.fireDate = alertTime
         localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        localNotification.repeatInterval = NSCalendarUnit.CalendarUnitDay
+        localNotification.repeatInterval = [.Day]
         localNotification.alertBody = "Your Horoscope has arrived"
         localNotification.soundName = "Glass.aiff"
         localNotification.applicationIconBadgeNumber = 1
@@ -297,8 +300,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func getSelectedTime() -> NSDateComponents{
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-        var date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
         
         return NSCalendar.currentCalendar().components(components, fromDate: date)
     }
@@ -331,9 +334,9 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func getDateStringInNumberFormat(date : NSDate) -> String{
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-        var comp = NSCalendar.currentCalendar().components(components, fromDate: date)
-        var result = String(format:"%d/%02d", comp.day, comp.month)
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        let result = String(format:"%d/%02d", comp.day, comp.month)
         return result
     }
 }

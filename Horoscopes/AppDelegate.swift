@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if(socialManager.isLoggedInZwigglers()){
+            sendLocation() // for testing
             locationManager.setupLocationService()
         }
         
@@ -45,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let viewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
         
-        var formSheet = MZFormSheetController(viewController: viewController)
+        let formSheet = MZFormSheetController(viewController: viewController)
         formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
@@ -100,8 +101,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             _value = Int(XAppDelegate.mobilePlatform.tracker.appOpenCounter);
         }
         
-        var udid = XAppDelegate.mobilePlatform.userCred.getUDID()
-        var dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: value)).build() as NSDictionary
+        let udid = XAppDelegate.mobilePlatform.userCred.getUDID()
+        let dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: value)).build() as NSDictionary
         
         GAI.sharedInstance().defaultTracker.send(dict as [NSObject : AnyObject])
         
@@ -133,95 +134,124 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func registerForRemoteNotification(){
         var systemVersion = (UIDevice.currentDevice().systemVersion as NSString).floatValue
-        if(systemVersion >= 8.0){
-            
-            var types = UIUserNotificationType.Sound | UIUserNotificationType.Badge | UIUserNotificationType.Alert
-            var notifSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+        if #available(iOS 8.0, *) {
+            let types : UIUserNotificationType = [.Sound, .Badge, .Alert]
+            let notifSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(notifSettings)
         } else {
-            var types = UIRemoteNotificationType.Sound | UIRemoteNotificationType.Badge | UIRemoteNotificationType.Alert
+            // Fallback on earlier versions
+            let types : UIRemoteNotificationType = [.Sound, .Badge, .Alert]
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
         }
     }
     
     // Test function with hardcoded location
     func sendLocation(){
-        var googleLink = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng=10.714407,106.735349"
-        
-        var operationManager = AFHTTPRequestOperationManager()
-        operationManager.GET(googleLink, parameters: nil,
-            success: { (operation, responseObject) -> Void in
-                
-                var responseDict = responseObject as! Dictionary<String, AnyObject>
-                var array = responseDict["results"] as! [AnyObject]
-                let data = NSJSONSerialization.dataWithJSONObject(array, options: nil, error: nil)
-                let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+        print("sendLocation sendLocation sendLocation")
+        let googleLink = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng=10.714407,106.735349"
+        let url = NSURL(string: googleLink)
+//        var operationManager = AFHTTPRequestOperationManager()
+//        operationManager.GET(googleLink, parameters: nil,
+//            success: { (operation, responseObject) -> Void in
+//                
+//                var responseDict = responseObject as! Dictionary<String, AnyObject>
+//                var array = responseDict["results"] as! [AnyObject]
+//                do {
+//                    let data = try NSJSONSerialization.dataWithJSONObject(array, options: 0)
+//                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+//                        if(error == nil){
+//                            var errorCode = result?["error"] as! Int
+//                            if(errorCode == 0){
+//                                var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+//                                for (uid, profileDetail) in profileDict {
+//                                    var profile = UserProfile(data: profileDetail as! NSDictionary)
+//                                    XAppDelegate.currentUser = profile
+//                                }
+//                            } else {
+//                               println("Error code === \(errorCode)")
+//                            }
+//                        } else {
+//                            println("Error === \(error)")
+//                        }
+//                    })
+//                }
+//            },
+//            failure: { (operation, error) -> Void in
+//                println("sendRequestUpdateUser Error \(error)")
+//                
+//        })
+        let session = NSURLSession.sharedSession()
+        let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
+            error: NSError?) -> Void in
+            
+            if let data = data {
+                let string = NSString(data: data, encoding: NSUTF8StringEncoding)
                 XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+                    print("sendLocation result == \(result)")
                     if(error == nil){
-                        var errorCode = result?["error"] as! Int
+                        let errorCode = result?["error"] as! Int
                         if(errorCode == 0){
-                            var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+                            let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
                             for (uid, profileDetail) in profileDict {
-                                var profile = UserProfile(data: profileDetail as! NSDictionary)
+                                let profile = UserProfile(data: profileDetail as! NSDictionary)
                                 XAppDelegate.currentUser = profile
                             }
                         } else {
-                           println("Error code === \(errorCode)")
+                            print("Error code === \(errorCode)")
                         }
                     } else {
-                        println("Error === \(error)")
+                        print("Error === \(error)")
                     }
                 })
-            },
-            failure: { (operation, error) -> Void in
-                println("sendRequestUpdateUser Error \(error)")
-                
+
+            }
         })
     }
     
     func finishedGettingLocation(location : CLLocation){
         // only update once
-        if(userLocation == nil){
-            userLocation = location
-            var googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
-//            println("finishedGettingLocation  === \(googleLink)")
-            
-            var operationManager = AFHTTPRequestOperationManager()
-            operationManager.GET(googleLink, parameters: nil,
-                success: { (operation, responseObject) -> Void in
-                    
-                    var responseDict = responseObject as! Dictionary<String, AnyObject>
-//                    var array = responseDict["results"] as! [AnyObject]
-                    let data = NSJSONSerialization.dataWithJSONObject(responseDict, options: nil, error: nil)
-                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
-                        if(error == nil){
-                            var errorCode = result?["error"] as! Int
-                            if(errorCode == 0){
-                                var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-                                for (uid, profileDetail) in profileDict {
-                                    var profile = UserProfile(data: profileDetail as! NSDictionary)
-                                    XAppDelegate.currentUser = profile
-                                }
-                            } else {
-                                println("Error code === \(errorCode)")
-                            }
-                        } else {
-                            println("Error === \(error)")
-                        }
-                    })
-                },
-                failure: { (operation, error) -> Void in
-                    println("sendRequestUpdateUser Error \(error)")
-                    
-            })
-        }
+//        if(userLocation == nil){
+//            userLocation = location
+//            var googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
+////            println("finishedGettingLocation  === \(googleLink)")
+//            
+//            var operationManager = AFHTTPRequestOperationManager()
+//            operationManager.GET(googleLink, parameters: nil,
+//                success: { (operation, responseObject) -> Void in
+//                    
+//                    var responseDict = responseObject as! Dictionary<String, AnyObject>
+////                    var array = responseDict["results"] as! [AnyObject]
+//                    let data = NSJSONSerialization.dataWithJSONObject(responseDict, options: nil, error: nil)
+//                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
+//                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+//                        if(error == nil){
+//                            var errorCode = result?["error"] as! Int
+//                            if(errorCode == 0){
+//                                var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+//                                for (uid, profileDetail) in profileDict {
+//                                    var profile = UserProfile(data: profileDetail as! NSDictionary)
+//                                    XAppDelegate.currentUser = profile
+//                                }
+//                            } else {
+//                                println("Error code === \(errorCode)")
+//                            }
+//                        } else {
+//                            println("Error === \(error)")
+//                        }
+//                    })
+//                },
+//                failure: { (operation, error) -> Void in
+//                    print("sendRequestUpdateUser Error \(error)")
+//                    
+//            })
+//        }
     }
     
     // MARK: Notification handler
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
-        var deviceTokenString = String(format:"%@",deviceToken)
+        let deviceTokenString = String(format:"%@",deviceToken)
         XAppDelegate.socialManager.registerAPNSNotificationToken(deviceTokenString, completionHandler: { (response, error) -> Void in
             
         })
@@ -234,6 +264,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // ios 8
     
+    @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
         
     }

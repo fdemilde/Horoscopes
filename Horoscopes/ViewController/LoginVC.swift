@@ -57,7 +57,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func setupComponents(){
-        var ratio = Utilities.getRatioForViewWithWheel()
+        let ratio = Utilities.getRatioForViewWithWheel()
         fbLoginButtonTopConstraint.constant = (fbLoginButtonTopConstraint.constant * ratio)
         fbLoginLabelTopConstraint.constant = (fbLoginLabelTopConstraint.constant * ratio)
         DOBLabelTopConstraint.constant = (DOBLabelTopConstraint.constant * ratio)
@@ -67,9 +67,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
         starIconTopConstraint.constant = (starIconTopConstraint.constant * ratio)
         
-        var startButtonImage = UIImage(named: "start_button")
-        var startButtonFrame = CGRectMake((Utilities.getScreenSize().width - startButtonImage!.size.width)/2, Utilities.getScreenSize().height - startButtonImage!.size.height, startButtonImage!.size.width, startButtonImage!.size.height)
-        startButton = UIButton.buttonWithType(UIButtonType.Custom) as! UIButton
+        let startButtonImage = UIImage(named: "start_button")
+        let startButtonFrame = CGRectMake((Utilities.getScreenSize().width - startButtonImage!.size.width)/2, Utilities.getScreenSize().height - startButtonImage!.size.height, startButtonImage!.size.width, startButtonImage!.size.height)
+        startButton = UIButton(type: UIButtonType.Custom)
         startButton.frame = startButtonFrame
         startButton.setImage(startButtonImage, forState: UIControlState.Normal)
         startButton.setTitle("", forState: UIControlState.Normal)
@@ -95,14 +95,14 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     @IBAction func loginTapped(sender: AnyObject) {
-        Utilities.showHUD(viewToShow: self.view)
+        Utilities.showHUD(self.view)
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             self.fetchUserInfo()
         } else {
             XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
-                Utilities.hideHUD(viewToHide: self.view)
+                Utilities.hideHUD(self.view)
                 if(error != nil){
-                    println("loginTapped error == \(error)")
+                    print("loginTapped error == \(error)")
                     Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                     return
                 } else {
@@ -120,7 +120,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func reloadView(){
-        var image = UIImage(named: "default_avatar")
+        let image = UIImage(named: "default_avatar")
         self.fbLoginBtn.setImage(image, forState: UIControlState.Normal)
         loginLabel.text = self.userFBName
         loginLabel.textColor = UIColor.whiteColor()
@@ -136,15 +136,15 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
          params["fields"] = "name,id,gender,birthday"
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
-                    println("result result === \(result)")
+                    print("result result === \(result)")
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String
                     self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
                     self.reloadView()
-                    Utilities.hideHUD(viewToHide: self.view)
+                    Utilities.hideHUD(self.view)
                 } else {
-                    Utilities.hideHUD(viewToHide: self.view)
-                    println("fetch Info Error = \(error)")
+                    Utilities.hideHUD(self.view)
+                    print("fetch Info Error = \(error)")
                 }
             })
         
@@ -155,7 +155,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func downloadImage(url:NSURL){
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                var downloadedImage = UIImage(data: data!)
+                let downloadedImage = UIImage(data: data!)
                 self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
                 self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
             }
@@ -169,7 +169,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
-            var index = find(XAppDelegate.horoscopesManager.horoscopesSigns, newValue)
+            let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
                 self.selectedIndex = index!
             }
@@ -236,7 +236,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func finishedSelectingBirthday(dateString : String){
-        var signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
+        let signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
         self.wheel.autoRollToSign(signName)
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
         XAppDelegate.userSettings.birthday = birthday
@@ -299,17 +299,17 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        var dateString = String(format:"%@/%@",dayString,monthString)
-        var selectedDate = dateFormatter.dateFromString(dateString)
-        var dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
+        let dateString = String(format:"%@/%@",dayString,monthString)
+        let selectedDate = dateFormatter.dateFromString(dateString)
+        let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
         self.birthday = selectedDate
         self.finishedSelectingBirthday(dateStringInNumberFormat)
     }
     
     func getDateStringInNumberFormat(date : NSDate) -> String{
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-        var comp = NSCalendar.currentCalendar().components(components, fromDate: date)
-        var result = String(format:"%d/%02d", comp.day, comp.month)
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        let result = String(format:"%d/%02d", comp.day, comp.month)
         return result
     }
     

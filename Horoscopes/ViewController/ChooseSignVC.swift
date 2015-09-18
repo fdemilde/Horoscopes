@@ -33,7 +33,7 @@ class ChooseSignVC : SpinWheelVC {
     }
     
     func setupComponents(){
-        var ratio = Utilities.getRatioForViewWithWheel()
+        let ratio = Utilities.getRatioForViewWithWheel()
         chooseSignButtonTopConstraint.constant = (chooseSignButtonTopConstraint.constant * ratio)
         signNameLabelTopConstraint.constant = (signNameLabelTopConstraint.constant * ratio)
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
@@ -52,14 +52,14 @@ class ChooseSignVC : SpinWheelVC {
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
-            var index = find(XAppDelegate.horoscopesManager.horoscopesSigns, newValue)
+            let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
                 self.selectedIndex = index!;
             }
             
-            var horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedIndex] as Horoscope
+            let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedIndex] as Horoscope
             
-            var image = UIImage(named: String(format:"%@_selected",horoscope.sign))
+            let image = UIImage(named: String(format:"%@_selected",horoscope.sign))
             chooseSignButton.setImage(image, forState: UIControlState.Normal)
             
             self.starImage.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
@@ -87,7 +87,7 @@ class ChooseSignVC : SpinWheelVC {
     }
     
     func dismissChooseSignViewController(){
-        var label = String(format:"type=view,sign=%d", self.selectedIndex)
+        let label = String(format:"type=view,sign=%d", self.selectedIndex)
         
         XAppDelegate.sendTrackEventWithActionName(defaultHoroscopeChooser, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         delegate.didSelectHoroscopeSign(selectedIndex)

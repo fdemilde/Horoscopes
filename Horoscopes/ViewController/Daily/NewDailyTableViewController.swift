@@ -56,14 +56,14 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         var cell: UITableViewCell!
         switch indexPath.section {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) as! UITableViewCell
+            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) 
             configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! DailyButtonTableViewCell
             cell.delegate = self
             return cell
         default:
-            var cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
             cell.layer.cornerRadius = 5
             cell.clipsToBounds = true
@@ -136,9 +136,10 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     func updateCollectedData() {
         if shouldCollectData {
             shouldCollectData = false
-            var currentCal = NSCalendar.currentCalendar()
-            let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
-            var todayComp = currentCal.components(components, fromDate: NSDate())
+            let currentCal = NSCalendar.currentCalendar()
+            let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+//            let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+            let todayComp = currentCal.components(components, fromDate: NSDate())
             todayComp.hour = 1
             todayComp.minute = 1
             todayComp.second = 1
@@ -146,8 +147,8 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
             collectedHoroscope.mySetLastDateOpenApp(todayComp.date)
             saveCollectedHoroscopeData()
         } else {
-            var settings = XAppDelegate.userSettings
-            var item = CollectedItem()
+            let settings = XAppDelegate.userSettings
+            let item = CollectedItem()
             let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
             item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
             item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
@@ -187,13 +188,14 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         let today = NSDate()
         collectedHoroscope = CollectedHoroscope()
         var today1 = NSDate()
-        var currentCal = NSCalendar.currentCalendar()
-        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
+        let currentCal = NSCalendar.currentCalendar()
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+//        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
         
-        var todayComp = currentCal.components(components, fromDate: NSDate())
+        let todayComp = currentCal.components(components, fromDate: NSDate())
         todayComp.calendar = currentCal
         
-        var lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: collectedHoroscope.lastDateOpenApp)
+        let lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: collectedHoroscope.lastDateOpenApp)
         lastOpenComp.calendar = currentCal
         
         todayComp.hour = 1
@@ -206,11 +208,11 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     }
     
     func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval) -> ShareViewController{
-        var storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        var sharingText = String(format: "%@", horoscopeDescription)
-        var pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        var horoscopeSignName = Utilities.getHoroscopeNameWithIndex(selectedSign)
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        let sharingText = String(format: "%@", horoscopeDescription)
+        let pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
+        let horoscopeSignName = Utilities.getHoroscopeNameWithIndex(selectedSign)
         shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
         
         return shareVC

@@ -34,18 +34,17 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = kCLDistanceFilterNone
-        locationManager.requestWhenInUseAuthorization()
         if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.NotDetermined {
             // TODO: handle if location service disable or denied
             if CLLocationManager.locationServicesEnabled() {
                 locationManager.startUpdatingLocation()
             }
         } else {
-            if locationManager.respondsToSelector(Selector("requestWhenInUseAuthorization")){
-                // for iOS 8
+            // for iOS 8
+            if #available(iOS 8.0, *) {
                 locationManager.requestWhenInUseAuthorization()
             } else {
-                // for iOS 7 <
+                // Fallback on earlier versions
                 locationManager.startUpdatingLocation()
             }
         }
@@ -59,14 +58,15 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //stop updating location to save battery life
         locationManager.stopUpdatingLocation()
-        XAppDelegate.finishedGettingLocation(manager.location)
+        XAppDelegate.finishedGettingLocation(manager.location!)
+        
     }
     
-    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
-        println("Error while updating location " + error.localizedDescription)
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Error while updating location " + error.localizedDescription)
         // get this error in simulator, on device what should we do?
 //        self.dismissViews()
         

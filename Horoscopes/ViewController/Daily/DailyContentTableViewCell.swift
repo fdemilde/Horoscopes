@@ -131,15 +131,15 @@ class DailyContentTableViewCell: UITableViewCell {
     
     func updateLikedLabel(votes : Int, likedPercentage: Int){
         
-        var likedString = String(format :"%d%% liked it \u{00B7}", likedPercentage)
-        var voteString = String(format :"%d votes", votes)
+        let likedString = String(format :"%d%% liked it \u{00B7}", likedPercentage)
+        let voteString = String(format :"%d votes", votes)
         
-        var resultString = String(format : "%@ %@",likedString, voteString)
+        let resultString = String(format : "%@ %@",likedString, voteString)
         
-        var attString = NSMutableAttributedString(string: resultString)
-        var likedStringLength = count(likedString)
+        let attString = NSMutableAttributedString(string: resultString)
+        let likedStringLength = likedString.characters.count
         
-        var voteStringLength = count(voteString)
+        let voteStringLength = voteString.characters.count
         
         attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(11.0), range: NSMakeRange(0, likedStringLength))
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1), range: NSMakeRange(0, likedStringLength))
@@ -198,8 +198,8 @@ class DailyContentTableViewCell: UITableViewCell {
     // MARK: - Selector and handler
     
     func doRatingRequestWithRateValue(timer: NSTimer){
-        var value = timer.userInfo as! NSNumber
-        var time = timeTag as NSNumber
+        let value = timer.userInfo as! NSNumber
+        let time = timeTag as NSNumber
         XAppDelegate.horoscopesManager.sendRateRequestWithTimeTag(time.integerValue, signIndex: selectedSign, rating: value.integerValue)
     }
     

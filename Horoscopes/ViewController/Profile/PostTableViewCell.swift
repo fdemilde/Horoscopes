@@ -53,7 +53,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
         postTypeLabel = UILabel()
-        postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+        if #available(iOS 8.2, *) {
+            postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+        } else {
+            // Fallback on earlier versions
+        }
         postTypeLabel.textColor = UIColor.whiteColor()
         addSubview(postTypeLabel)
         topBorder = CALayer()

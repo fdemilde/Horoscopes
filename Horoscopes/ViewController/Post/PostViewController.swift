@@ -19,7 +19,7 @@ class PostViewController: ViewControllerWithAds, UITableViewDataSource, UITableV
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
     }
 
@@ -46,7 +46,7 @@ class PostViewController: ViewControllerWithAds, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cellIdentifier = "PostTableViewCell"
-        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(cellIdentifier, forIndexPath: indexPath) 
         cell.textLabel?.text = postTypes[indexPath.row][0]
         cell.textLabel?.textColor = UIColor.whiteColor()
         cell.imageView?.image = UIImage(named: postTypes[indexPath.row][1])
@@ -55,7 +55,7 @@ class PostViewController: ViewControllerWithAds, UITableViewDataSource, UITableV
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+        let controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
         controller.type = postTypes[indexPath.row][2]
         controller.placeholder = postTypes[indexPath.row][0]
         self.presentViewController(controller, animated: true, completion: nil)

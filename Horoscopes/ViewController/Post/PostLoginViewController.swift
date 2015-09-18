@@ -25,21 +25,21 @@ class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertV
     }
     
     @IBAction func loginFacebook(sender: UIButton) {
-        Utilities.showHUD(viewToShow: view)
+        Utilities.showHUD(view)
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let error = error {
-                    Utilities.hideHUD(viewToHide: self.view)
+                    Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Log In Error", message: "Could not log in to Facebook. Please try again later.", error: error)
                     self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
                 } else {
                     if permissionGranted {
-                        Utilities.hideHUD(viewToHide: self.view)
+                        Utilities.hideHUD(self.view)
                         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
                             self.detailPostViewController.post()
                         })
                     } else {
-                        Utilities.hideHUD(viewToHide: self.view)
+                        Utilities.hideHUD(self.view)
                         Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
                         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
                     }

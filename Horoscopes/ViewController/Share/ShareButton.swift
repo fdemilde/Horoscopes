@@ -38,25 +38,25 @@ class ShareButton : UIView {
     }
 
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     func createButtonImage(){
-        var imageName = self.getImageName()
-        var image = UIImage(named: imageName)
+        let imageName = self.getImageName()
+        let image = UIImage(named: imageName)
         buttonImage.image = image
-        var imagePosX = (self.frame.width - image!.size.width)/2
+        let imagePosX = (self.frame.width - image!.size.width)/2
         buttonImage.frame = CGRectMake(imagePosX, 0, image!.size.width, image!.size.height)
         self.addSubview(buttonImage)
     }
     
     func createTitleLabel(){
-        var titleString = self.getTitle()
-        var font = UIFont(name: "HelveticaNeue-Light", size: 16)
+        let titleString = self.getTitle()
+        let font = UIFont(name: "HelveticaNeue-Light", size: 16)
         titleLabel.font = font
-        var labelSize = Utilities.getLabelSizeWithString(titleString, font: font!)
-        var titlePosX = (self.frame.width - labelSize.width) / 2;
-        var titlePosY = buttonImage.frame.size.height + paddingHeight;
+        let labelSize = Utilities.getLabelSizeWithString(titleString, font: font!)
+        let titlePosX = (self.frame.width - labelSize.width) / 2;
+        let titlePosY = buttonImage.frame.size.height + paddingHeight;
         titleLabel.frame = CGRectMake(titlePosX, titlePosY, labelSize.width, labelSize.height)
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.blackColor()
@@ -74,7 +74,7 @@ class ShareButton : UIView {
         if(type == ShareButtonType.ShareButtonTypeFBMessenger){ return "FBMessenger" }
         if(type == ShareButtonType.ShareButtonTypeWhatsapp){ return "Whatsapp" }
         if(type == ShareButtonType.ShareButtonTypeViber){ return "Viber" }
-        println("ERROR getTitle: input type does not exist")
+        print("ERROR getTitle: input type does not exist")
         return "Email"
     }
     

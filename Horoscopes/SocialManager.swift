@@ -30,15 +30,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     // MARK: Network - Newsfeed
     
     func getUserNewsfeed(pageNo : Int, uid : Int){
-        var postData = NSMutableDictionary()
-        var uidString = String(format:"%d",uid)
-        var pageString = String(format:"%d",pageNo)
+        let postData = NSMutableDictionary()
+        let pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         postData.setObject(uid, forKey: "uid")
 
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             if(error != nil){
-                println("Error when get getUserNewsfeed = \(error)")
+                print("Error when get getUserNewsfeed = \(error)")
             } else {
 //                println("getUserNewsfeed response = \(response)")
             }
@@ -50,27 +49,27 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
             Utilities.showHUD()
         }
-        var postData = NSMutableDictionary()
-        var pageString = String(format:"%d",pageNo)
+        let postData = NSMutableDictionary()
+        let pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_GLOBAL_FEED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             Utilities.hideHUD()
             if(error != nil){
-                println("Error when get getGlobalNewsfeed = \(error)")
+                print("Error when get getGlobalNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
 //                println("getGlobalNewsfeed result = \(result)")
-                var errorCode = result["error"] as! Int
+                let errorCode = result["error"] as! Int
                 if(errorCode != 0){
-                    println("Error code = \(errorCode)")
+                    print("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
 //                    println("result == \(result)")
-                    var userDict = result["users"] as! Dictionary<String, AnyObject>
-                    var postsArray = result["posts"] as! [AnyObject]
-                    var isLastAsNumber = result["last"] as! Int
-                    var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
+                    let userDict = result["users"] as! Dictionary<String, AnyObject>
+                    let postsArray = result["posts"] as! [AnyObject]
+                    let isLastAsNumber = result["last"] as! Int
+                    let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     if(isAddingData){
                         XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global, isLastPage: Bool(isLastAsNumber))
                     } else {
@@ -87,28 +86,28 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             Utilities.showHUD()
         }
         
-        var postData = NSMutableDictionary()
-        var pageString = String(format:"%d",pageNo)
+        let postData = NSMutableDictionary()
+        let pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
         // change to test  GET_FOLLOWING_FEED
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_FOLLOWING_FEED,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             Utilities.hideHUD()
             if(error != nil){
-                println("Error when get getFollowingNewsfeed = \(error)")
+                print("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
 //                println("getFollowingNewsfeed == \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response)
 //                println("result when get getFollowingNewsfeed = \(result)")
-                var errorCode = result["error"] as! Int
+                let errorCode = result["error"] as! Int
                 if(errorCode != 0){
-                    println("Error code = \(errorCode)")
+                    print("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    var userDict = result["users"] as! Dictionary<String, AnyObject>
-                    var postsArray = result["posts"] as! [AnyObject]
-                    var isLastAsNumber = result["last"] as! Int
-                    var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
+                    let userDict = result["users"] as! Dictionary<String, AnyObject>
+                    let postsArray = result["posts"] as! [AnyObject]
+                    let isLastAsNumber = result["last"] as! Int
+                    let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     if(isAddingData){
                         XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Following, isLastPage: Bool(isLastAsNumber))
                     } else {
@@ -122,29 +121,29 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func sendHeart(receiverId: Int, postId : String, type : String){
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
         postData.setObject(type, forKey: "type")
         Utilities.showHUD()
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_HEART,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             if(error != nil){
-                println("Error when get sendHeart = \(error)")
+                print("Error when get sendHeart = \(error)")
                 Utilities.hideHUD()
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
-                var errorCode = result["error"] as! Int
+                let errorCode = result["error"] as! Int
                 if(errorCode != 0){
-                    println("Error code = \(errorCode)")
+                    print("Error code = \(errorCode)")
                     Utilities.hideHUD()
                     Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
                 } else { // no error
-                    var success = result["success"] as! Int
+                    let success = result["success"] as! Int
                     if success == 1 {
                         self.sendHeartServerNotification(receiverId, postId: postId)
                         Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
                         NSUserDefaults.standardUserDefaults().setBool(true, forKey: postId)
                     } else {
-                        println("Post unsuccessful")
+                        print("Post unsuccessful")
                     }
                     Utilities.hideHUD()
                 }
@@ -155,7 +154,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     // MARK: Post
 
     func createPost(type: String, message: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
         
@@ -191,8 +190,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                var userProfile = result![0]
-                var postData = NSMutableDictionary()
+                let userProfile = result![0]
+                let postData = NSMutableDictionary()
                 postData.setObject("\(page)", forKey: "page")
                 postData.setObject("\(uid)", forKey: "uid")
                 
@@ -217,7 +216,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // get post with post ids string
     func getPost(postIds : String, completionHandler: (result: [UserPost]?, error: NSError?) -> Void){
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(postIds)", forKey: "post_id")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_POST, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
             if let error = error {
@@ -225,13 +224,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 
                 let results = Utilities.parseNSDictionaryToDictionary(response)
-                var userDict = results["users"] as! Dictionary<String, AnyObject>
-                var postsDict = results["posts"] as! Dictionary<String, AnyObject>
+                let userDict = results["users"] as! Dictionary<String, AnyObject>
+                let postsDict = results["posts"] as! Dictionary<String, AnyObject>
                 var postArray = [AnyObject]()
-                for (index,post) in postsDict {
+                for (_,post) in postsDict {
                     postArray.append(post)
                 }
-                var feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postArray)
+                let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postArray)
                 completionHandler(result: feedsArray, error: nil)
                 
                 
@@ -242,7 +241,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     // MARK: Profile
     
     func follow(uid: Int, completionHandler: (error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
@@ -255,7 +254,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func unfollow(uid: Int, completionHandler: (error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
@@ -267,7 +266,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func isFollowing(uid: Int, followerId: Int, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         postData.setObject("\(followerId)", forKey: "follower")
         XAppDelegate.mobilePlatform.sc.sendRequest(IS_FOLLOWING, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
@@ -281,7 +280,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getProfile(usersIdString: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(usersIdString, forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(GET_PROFILE, andPostData: postData) { (response, error) -> Void in
             if let error = error {
@@ -347,9 +346,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func reportIssue(message : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(message, forKey: "user_message")
-        var systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
+        let systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
         postData.setObject(systemMessage, forKey: "system_message")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(REPORT_ISSUE_METHOD, andPostData: postData) { (result, error) -> Void in
@@ -369,8 +368,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func loginFacebook(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
-        var loginManager = FBSDKLoginManager()
-        var permissions = ["public_profile", "email", "user_birthday","user_friends"]
+        let loginManager = FBSDKLoginManager()
+        let permissions = ["public_profile", "email", "user_birthday","user_friends"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
@@ -393,7 +392,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func loginZwigglers(token: String, completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
-        var params = NSMutableDictionary(objectsAndKeys: "facebook","login_method",FACEBOOK_APP_ID,"app_id",token, "access_token")
+        let objects = ["facebook", FACEBOOK_APP_ID, token]
+        let keys = ["login_method", "app_id", "access_token"]
+        let params = NSMutableDictionary(objects: objects, forKeys: keys)
         XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
             if let error = error {
                 completionHandler(responseDict: nil, error: error)
@@ -436,7 +437,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func sendUserUpdateLocation(location : String?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(location!, forKey: "location_result")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
@@ -452,7 +453,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func sendUserUpdateSign(sign : Int?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(sign!)", forKey: "sign")
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {
@@ -470,10 +471,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     
     func registerAPNSNotificationToken(token : String, completionHandler:(response : Dictionary<String,AnyObject>?, error : NSError?) -> Void ){
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(token, forKey: "device_token")
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_APNS_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-            var result = Utilities.parseNSDictionaryToDictionary(response)
+            let result = Utilities.parseNSDictionaryToDictionary(response)
             completionHandler(response: result, error: error)
         })
     }
@@ -481,55 +482,55 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     
     func registerServerNotificationToken(token : String){
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(token, forKey: "device_token")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SERVER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-            println("registerServerNotificationToken == \(response)")
-            var success = response["success"] as! Int
+            print("registerServerNotificationToken == \(response)")
+            let success = response["success"] as! Int
             if(success == 1){
-                println("registerServerNotificationToken successful")
+                print("registerServerNotificationToken successful")
             } else {
-                println("registerServerNotificationToken failed")
+                print("registerServerNotificationToken failed")
             }
         })
     }
     
     func sendHeartServerNotification(receiverId : Int, postId : String){
-        var alert = Alert()
-        var currentUser = XAppDelegate.currentUser
+        let alert = Alert()
+        let currentUser = XAppDelegate.currentUser
         alert.title = "Send heart"
         alert.body = "\(currentUser.name) sent you a heart"
         alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
         alert.type = "send_heart"
         
-        var routeString = "/post/\(postId)/hearts"
-        var recieverIdString = "\(receiverId)"
+        let routeString = "/post/\(postId)/hearts"
+        let recieverIdString = "\(receiverId)"
         XAppDelegate.mobilePlatform.platformNotiff.sendTo(recieverIdString, withRoute: routeString, withAlert: alert, withRef: "send_heart", withPush: 0, withData: "data") { (result) -> Void in
-            println("sendHeartServerNotification result = \(result)")
+            print("sendHeartServerNotification result = \(result)")
         }
     }
     
     func sendFollowNotification(receiverId : Int) {
-        var alert = Alert()
+        let alert = Alert()
         alert.title = "Follow"
-        var currentUser = XAppDelegate.currentUser
+        let currentUser = XAppDelegate.currentUser
         alert.body = "\(currentUser.name) followed you"
         alert.imageURL = "\(currentUser.imgURL)"
         alert.priority = 5
         alert.type = "follow"
         
-        var receiverIdString = "\(receiverId)"
+        let receiverIdString = "\(receiverId)"
         let route = "/profile/\(currentUser.uid)/feed"
         XAppDelegate.mobilePlatform.platformNotiff.sendTo(receiverIdString, withRoute: route, withAlert: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
-            println("sendFollowNotification result \(result)")
+            print("sendFollowNotification result \(result)")
         }
     }
     
     func getAllNotification(since : Int, completionHandler:(result : [NotificationObject]?) -> Void ){
         XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(since), andCompleteBlock: { (result) -> Void in
-            var resultArray = result as AnyObject as! [NotificationObject]
+            let resultArray = result as AnyObject as! [NotificationObject]
             completionHandler(result: resultArray)
         })
     }
@@ -538,7 +539,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         var listIds = [String]()
         listIds.append("67_8")
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
-            println("clearAllNotification result = \(result)")
+            print("clearAllNotification result = \(result)")
         })
     }
     
@@ -574,7 +575,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getOtherUserFollowProfile(uid: Int, page: Int = 0, method: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         postData.setObject("\(page)", forKey: "page")
         XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
@@ -582,7 +583,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response)
-                let profiles = Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values.array
+                let profiles: [UserProfile] = Array(Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values)
                 completionHandler(result: profiles, error: nil)
             }
         }
@@ -590,7 +591,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     private func getProfile(usersId: [Int], completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         let usersIdString = usersId.map({"\($0)"})
-        self.getProfile(",".join(usersIdString), completionHandler: { (result, error) -> Void in
+        let separator = ","
+        self.getProfile(usersIdString.joinWithSeparator(separator), completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -614,9 +616,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func retrieveFriendList(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
-        var postData = NSMutableDictionary()
+        let postData = NSMutableDictionary()
         postData.setObject(FACEBOOK_APP_ID, forKey: "app_id")
-        var systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
+        _ = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
         if(isLoggedInFacebook()){
             postData.setObject(FBSDKAccessToken.currentAccessToken().tokenString, forKey: "access_token")
         }
@@ -628,8 +630,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 let result = Utilities.parseNSDictionaryToDictionary(result)
                 var userArray = [UserProfile]()
                 if let profiles = result["profiles"] as? Dictionary<String, AnyObject>{
-                    var userDict = Utilities.parseUsersArray(profiles)
-                    for (uid, user) in userDict {
+                    let userDict = Utilities.parseUsersArray(profiles)
+                    for (_, user) in userDict {
                         userArray.append(user)
                     }
                 }

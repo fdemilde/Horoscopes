@@ -48,7 +48,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         parentViewController = parentVC
         createEvents()
         setupCalendar()
-        footer = Utilities.makeCornerRadius(footer, maskFrame: parentVC.view.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0)
+        footer = Utilities.makeCornerRadius(footer, maskFrame: parentVC.view.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
     }
     
     // MARK: UI
@@ -88,7 +88,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     }
     
     func haveEventForDay(date : NSDate) -> Bool{
-        var key = self.dateFormatter().stringFromDate(date)
+        let key = self.dateFormatter().stringFromDate(date)
         for dateString in eventsByDate {
             if key == dateString { return true }
         }
@@ -99,25 +99,27 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     func createEvents(){
         // Generate 30 random dates between now and 60 days later
         for (var i = 0; i < self.collectedHoroscopes.collectedData.count; ++i){
-            var item = collectedHoroscopes.collectedData[i] as! CollectedItem
-            var dateformatter = NSDateFormatter()
+            let item = collectedHoroscopes.collectedData[i] as! CollectedItem
+            let dateformatter = NSDateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"
             dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            var date = item.collectedDate
-            var dateString = self.dateFormatter().stringFromDate(date);
-            if(!contains(eventsByDate, dateString)){eventsByDate.append(dateString)}
+            let date = item.collectedDate
+            let dateString = self.dateFormatter().stringFromDate(date);
+            if !eventsByDate.contains(dateString) {
+                eventsByDate.append(dateString)
+            }
         }
     }
     
     func getHoroscopesItemWithDate(date : NSDate) -> CollectedItem {
         for (var i = 0; i < self.collectedHoroscopes.collectedData.count; ++i){
-            var item = collectedHoroscopes.collectedData[i] as! CollectedItem
-            var dateformatter = NSDateFormatter()
+            let item = collectedHoroscopes.collectedData[i] as! CollectedItem
+            let dateformatter = NSDateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"
             dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-            var collectDate = item.collectedDate
-            var collectDateString = self.dateFormatter().stringFromDate(collectDate)
-            var dateString = self.dateFormatter().stringFromDate(date)
+            let collectDate = item.collectedDate
+            let collectDateString = self.dateFormatter().stringFromDate(collectDate)
+            let dateString = self.dateFormatter().stringFromDate(date)
             if(dateString == collectDateString){ return item }
         }
         return CollectedItem()
@@ -165,7 +167,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
             
             if(self.haveEventForDay(dayView.date)){
                 //                containerTopConstraint.constant += CALENDAR_ICON_SPACE_HEIGHT
-                var collectedItem = getHoroscopesItemWithDate(dayView.date)
+                let collectedItem = getHoroscopesItemWithDate(dayView.date)
                 parentViewController.didTapOnArchiveDate(collectedItem)
 //                setupViewWithCollectedItem(collectedItem)
 //                parentViewController

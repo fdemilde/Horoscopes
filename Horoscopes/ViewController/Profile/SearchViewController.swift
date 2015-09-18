@@ -116,16 +116,16 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("UITableViewHeaderFooterView") as! UITableViewHeaderFooterView
-        view.textLabel.text = "Recent Searches"
+        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("UITableViewHeaderFooterView")!
+        view.textLabel!.text = "Recent Searches"
         return view
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if section == 0 {
             let headerView = view as! UITableViewHeaderFooterView
-            headerView.textLabel.font = UIFont.systemFontOfSize(11)
-            headerView.textLabel.textColor = UIColor.grayColor()
+            headerView.textLabel!.font = UIFont.systemFontOfSize(11)
+            headerView.textLabel!.textColor = UIColor.grayColor()
             headerView.contentView.backgroundColor = UIColor.whiteColor()
         }
     }
@@ -151,7 +151,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     
     func didTapFollowProfile(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        var profile = filteredResult[index!]
+        let profile = filteredResult[index!]
         DataStore.sharedInstance.saveSearchedProfile(profile)
         delegate.didChooseUser(profile)
     }

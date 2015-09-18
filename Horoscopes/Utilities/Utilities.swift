@@ -12,27 +12,27 @@ class Utilities {
     // MARK: Parsing helpers
     class func parseNSDictionaryToDictionary(dict : NSDictionary) -> Dictionary<String, AnyObject>{
         var result = Dictionary<String, AnyObject>()
-        var keys = dict.allKeys
+        let keys = dict.allKeys
         for key in keys{
-            var keyString = key as! String
+            let keyString = key as! String
             result[keyString] = dict.objectForKey(keyString)
         }
         return result
     }
     
     class func parseDictionaryToNSDictionary(dict : Dictionary<String, AnyObject>) -> NSDictionary{
-        var result = NSMutableDictionary()
-        var keys = dict.keys
+        let result = NSMutableDictionary()
+        let keys = dict.keys
         
         for key in keys{
-            var keyString = key as String
+            let keyString = key as String
             result.setObject(dict[keyString]!, forKey: keyString)
         }
         return result
     }
     
     class func parseArrayToNSArray(array : [AnyObject]) -> NSArray{
-        var result = NSMutableArray()
+        let result = NSMutableArray()
         
         for var i = 0; i < array.count; i++ {
             result.addObject(array[i])
@@ -43,37 +43,37 @@ class Utilities {
     // MARK: Screen size
     
     class func getScreenSize() -> CGSize{
-        var screenRect = UIScreen.mainScreen().bounds
-        var height = screenRect.height
-        var width = screenRect.width
+        let screenRect = UIScreen.mainScreen().bounds
+        let height = screenRect.height
+        let width = screenRect.width
         return CGSizeMake(width, height)
     }
     
     class func getPositionBaseOn568hScreenSize(positionX : Float, positionY: Float) -> CGPoint{
-        var screenSize = Utilities.getScreenSize()
+        let screenSize = Utilities.getScreenSize()
         
-        var percentageX = positionX / 320
-        var percentageY = positionY / 568
+        let percentageX = positionX / 320
+        let percentageY = positionY / 568
         
-        var result =  CGPointMake(screenSize.width * CGFloat(percentageX), screenSize.height * CGFloat(percentageY))
+        let result =  CGPointMake(screenSize.width * CGFloat(percentageX), screenSize.height * CGFloat(percentageY))
         
         return result
     }
     
     class func getRatioForViewWithWheel() -> CGFloat {
-        var screenSize = Utilities.getScreenSize()
+        let screenSize = Utilities.getScreenSize()
         // 211 is wheel height
-        var customScreenSize = screenSize.height - 211
+        let customScreenSize = screenSize.height - 211
         
-        var ratio = Float(customScreenSize/(800-211))
+        let ratio = Float(customScreenSize/(800-211))
         return CGFloat(ratio)
     }
     
     class func getRatio() -> CGFloat {
-        var screenSize = Utilities.getScreenSize()
-        var customScreenSize = screenSize.height
+        let screenSize = Utilities.getScreenSize()
+        let customScreenSize = screenSize.height
         
-        var ratio = Float(customScreenSize/568)
+        let ratio = Float(customScreenSize/568)
         return CGFloat(ratio)
     }
     
@@ -81,7 +81,7 @@ class Utilities {
     class func getImageToSupportSize(name : String,size : CGSize, frame : CGRect) -> UIImage{
         UIGraphicsBeginImageContext(size)
         UIImage(named: name)!.drawInRect(frame)
-        var image = UIGraphicsGetImageFromCurrentImageContext()
+        let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         return image
     }
@@ -123,9 +123,9 @@ class Utilities {
         var userDict = Utilities.parseUsersArray(userDataDict)
         
         for postData in postsDataArray{
-            var postObject = UserPost(data: postData as! NSDictionary)
-            var uid = postObject.uid
-            var uidString = String(format: "%d", uid)
+            let postObject = UserPost(data: postData as! NSDictionary)
+            let uid = postObject.uid
+            let uidString = String(format: "%d", uid)
             if let userObj = userDict[uidString] {
                 postObject.user = userObj
             }
@@ -139,7 +139,7 @@ class Utilities {
         var userDict = Dictionary<String, UserProfile>()
         var user = UserProfile()
         for (uid, userData) in userDataDict {
-            var userObject = UserProfile(data: userData as! NSDictionary)
+            let userObject = UserProfile(data: userData as! NSDictionary)
             userDict[uid] = userObject
         }
         return userDict
@@ -162,12 +162,12 @@ class Utilities {
         dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dayOfMonthFormatter.dateFormat = "d"
         var dateString = dateFormatter.stringFromDate(date)
-        var dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(date)
+        let dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(date)
         
-        var date_day = dayOfMonthFormatterString.toInt()
-        var suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
+        let date_day = Int(dayOfMonthFormatterString)
+        let suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
         var suffixes = suffix_string.componentsSeparatedByString("|")
-        var suffix = suffixes[date_day!]
+        let suffix = suffixes[date_day!]
         dateString = dateString.stringByAppendingString(suffix)
         
         return dateString
@@ -181,9 +181,9 @@ class Utilities {
     }
     
     // MARK: Alert
-    class func showAlertView(delegate: UIAlertViewDelegate, title:String, message:String, tag : Int? = -1){
+    class func showAlertView(delegate: UIAlertViewDelegate?, title:String, message:String, tag : Int? = -1){
         dispatch_async(dispatch_get_main_queue(),{
-            var alertView: UIAlertView = UIAlertView()
+            let alertView: UIAlertView = UIAlertView()
             
             alertView.delegate = delegate
             alertView.title = title
@@ -196,13 +196,21 @@ class Utilities {
     
     class func showAlert(viewController: UIViewController, title: String, message: String = "", error: NSError?) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-            if let error = error {
-                alert.message = "\(message) \(error)"
+            if #available(iOS 8.0, *) {
+                
+                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                if let error = error {
+                    alert.message = "\(message) \(error)"
+                }
+                let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                alert.addAction(action)
+                viewController.presentViewController(alert, animated: true, completion: nil)
+            } else {
+                Utilities.showAlertView(nil, title: title, message: message)
             }
-            let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-            alert.addAction(action)
-            viewController.presentViewController(alert, animated: true, completion: nil)
+            
+            
+            
         })
     }
     
@@ -217,7 +225,13 @@ class Utilities {
     class func getImageFromUrlString(imgUrl: String, completionHandler: (image: UIImage?) -> Void) {
         if let url = NSURL(string: imgUrl) {
             NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
-                completionHandler(image: UIImage(data: data))
+                if let data = data {
+                    completionHandler(image: UIImage(data: data))
+                } else {
+                    completionHandler(image: UIImage())
+                }
+                
+                
             }).resume()
         }
     }
@@ -231,28 +245,28 @@ class Utilities {
     class func loadNIB(file:String) -> AnyObject{
         var arr = NSBundle.mainBundle().loadNibNamed(file, owner: nil, options: nil)
         
-        var ret: AnyObject = arr[0];
+        let ret: AnyObject = arr[0];
         return ret;
     }
     
     class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
     
     class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        var date = NSDate(timeIntervalSince1970:ts)
-        var dateString = String(format: "%@", dateFormatter.stringFromDate(date))
+        let date = NSDate(timeIntervalSince1970:ts)
+        let dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
     }
     
     class func getDateFromDateString(dateString : String, format : String) -> NSDate {
-        var dateFormatter = NSDateFormatter()
+        let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return dateFormatter.dateFromString(dateString)!
@@ -282,7 +296,7 @@ class Utilities {
     }
     
     class func getHoroscopeNameWithIndex(index: Int) -> String{
-        var horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
+        let horo = XAppDelegate.horoscopesManager.horoscopesSigns[index] as Horoscope
         return horo.sign
     }
     
@@ -309,9 +323,9 @@ class Utilities {
     
     // Corner Radius manipulation 
     class func makeCornerRadius(view : UIView, maskFrame : CGRect, roundOptions : UIRectCorner, radius : CGFloat) -> UIView {
-        var maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: roundOptions, cornerRadii: CGSizeMake(radius, radius))
+        let maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: roundOptions, cornerRadii: CGSizeMake(radius, radius))
         
-        var maskLayer = CAShapeLayer()
+        let maskLayer = CAShapeLayer()
         maskLayer.frame = maskFrame
         maskLayer.path = maskPath.CGPath
         view.layer.mask = maskLayer

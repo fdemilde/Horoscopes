@@ -80,40 +80,40 @@ class HoroscopesManager : NSObject {
     func getAllHoroscopes(refreshOnly : Bool) {
         Utilities.showHUD()
         
-        var offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
-        var offsetString = String(format: "%d",offset)
-        var postData = NSMutableDictionary()
+        let offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
+        let offsetString = String(format: "%d",offset)
+        let postData = NSMutableDictionary()
         if(refreshOnly == false){
             
             var mccString = "123"
             var mncString = "12"
-            var netInfo = CTTelephonyNetworkInfo()
+            let netInfo = CTTelephonyNetworkInfo()
             if let carrier = netInfo.subscriberCellularProvider {
                 if(carrier.mobileCountryCode != nil){
-                    mccString = carrier.mobileCountryCode
+                    mccString = carrier.mobileCountryCode!
                 }
                 
                 if(carrier.mobileNetworkCode != nil){
-                    mncString = carrier.mobileNetworkCode
+                    mncString = carrier.mobileNetworkCode!
                 }
 
             }
             
-            var iOSVersion = UIDevice.currentDevice().systemVersion;
-            var devideType = UIDevice.currentDevice().model;
+            let iOSVersion = UIDevice.currentDevice().systemVersion;
+            let devideType = UIDevice.currentDevice().model;
             
             //get collected data
-            var col = CollectedHoroscope();
-            var score = col.getScore()*100
-            var strScore = String(format: "%f",score)
+            let col = CollectedHoroscope();
+            let score = col.getScore()*100
+            let strScore = String(format: "%f",score)
             
-            var loadCount = XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue()
-            var loadCountString = String(format: "%d",loadCount)
+            let loadCount = XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue()
+            let loadCountString = String(format: "%d",loadCount)
             
-            var version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
+            let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
             
-            var sign = XAppDelegate.userSettings.horoscopeSign
-            var signString = String(format: "%d",sign)
+            let sign = XAppDelegate.userSettings.horoscopeSign
+            let signString = String(format: "%d",sign)
             
             // sc.sendRequest need an NSMutableDictionary to process
             
@@ -158,31 +158,31 @@ class HoroscopesManager : NSObject {
     
     func sendRateRequestWithTimeTag(timeTag: Int, signIndex: Int, rating: Int){
         // our sign index is base 0-11 --> we should convert it to base 1-12
-        var base1SignIndex = signIndex + 1
+        let base1SignIndex = signIndex + 1
         //prepare post data
-        var postData = NSMutableDictionary()
-        var timeTagString = String(format:"%d",timeTag)
-        var base1SignIndexString = String(format:"%d",base1SignIndex)
-        var ratingString = String(format: "%d",rating)
+        let postData = NSMutableDictionary()
+        let timeTagString = String(format:"%d",timeTag)
+        let base1SignIndexString = String(format:"%d",base1SignIndex)
+        let ratingString = String(format: "%d",rating)
         postData.setObject(timeTagString, forKey: "time_tag")
         postData.setObject(base1SignIndexString, forKey: "sign")
         postData.setObject(ratingString, forKey: "rating")
         XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
 //            print(response)
             
-            var result = Utilities.parseNSDictionaryToDictionary(response)
+            let result = Utilities.parseNSDictionaryToDictionary(response)
             Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
         })
     }
     
     func sendUpdateBirthdayRequest(birthdayString : String,completionHandler: ( responseDict : Dictionary<String, AnyObject>?, error : NSError?) -> Void){
         
-        var postData = NSMutableDictionary()
-        var birthday = String(format:"%@",birthdayString)
+        let postData = NSMutableDictionary()
+        let birthday = String(format:"%@",birthdayString)
         postData.setObject(birthday, forKey: "birthday")
         XAppDelegate.mobilePlatform.sc.sendRequest(UPDATE_BIRTHDAY, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
 //            println(response)
-            var result = Utilities.parseNSDictionaryToDictionary(response)
+            let result = Utilities.parseNSDictionaryToDictionary(response)
             completionHandler(responseDict: result,error: error)
         })
     }
@@ -207,14 +207,14 @@ class HoroscopesManager : NSObject {
     func getSignIndexOfDate(date : NSDate) -> Int{
         for index in 0...11 {
             if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
-            var horoscope = self.horoscopesSigns[index]
+            let horoscope = self.horoscopesSigns[index]
             if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
                 && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
-                    var dateformatter = NSDateFormatter()
+                    let dateformatter = NSDateFormatter()
                     dateformatter.dateFormat = "MMM - dd"
                     dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    var startDate = dateformatter.stringFromDate(horoscope.startDate)
-                    var endDate = dateformatter.stringFromDate(horoscope.endDate)
+                    _ = dateformatter.stringFromDate(horoscope.startDate)
+                    _ = dateformatter.stringFromDate(horoscope.endDate)
                     return index
             }
         }
@@ -233,13 +233,13 @@ class HoroscopesManager : NSObject {
     func getSignNameOfDate(date : NSDate) -> String{
         for index in 0...11 {
             if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
-            var horoscope = self.horoscopesSigns[index]
+            let horoscope = self.horoscopesSigns[index]
             if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
                 && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
                     return horoscope.sign
             }
         }
-        var horoscope = horoscopesSigns[9]
+        let horoscope = horoscopesSigns[9]
         return horoscope.sign
     }
     

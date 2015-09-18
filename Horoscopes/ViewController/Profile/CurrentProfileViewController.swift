@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCellDelegate {
+class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Property
     
@@ -244,7 +244,7 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
             }
         } else {
             if noPost {
-                if let cell = tableView.dequeueReusableCellWithIdentifier("NoPostTableViewCell") as? UITableViewCell {
+                if let cell = tableView.dequeueReusableCellWithIdentifier("NoPostTableViewCell") {
                     configureNoPostTableViewCell(cell, index: indexPath.row)
                     return cell
                 } else {
@@ -298,22 +298,22 @@ class CurrentProfileViewController: ProfileBaseViewController, FollowTableViewCe
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CurrentProfileHeaderFooterView") as! UITableViewHeaderFooterView
+        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CurrentProfileHeaderFooterView")!
         switch currentScope {
         case .Post:
-            view.textLabel.text = "You have not posted anything. Start posting something!"
+            view.textLabel!.text = "You have not posted anything. Start posting something!"
         case .Following:
-            view.textLabel.text = "You have not followed anyone. Start follow someone!"
+            view.textLabel!.text = "You have not followed anyone. Start follow someone!"
         case .Followers:
-            view.textLabel.text = "You do not have any follower."
+            view.textLabel!.text = "You do not have any follower."
         }
         return view
     }
     
     func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.textLabel.font = UIFont.systemFontOfSize(11)
-        headerView.textLabel.textColor = UIColor.grayColor()
+        headerView.textLabel!.font = UIFont.systemFontOfSize(11)
+        headerView.textLabel!.textColor = UIColor.grayColor()
         headerView.contentView.backgroundColor = UIColor.whiteColor()
     }
     

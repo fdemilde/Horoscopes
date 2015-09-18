@@ -32,7 +32,7 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
         
@@ -56,14 +56,14 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     func keyboardWillShow(notification: NSNotification) {
         var info = notification.userInfo
         let keyboardSize = info![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        var frame = keyboardSize.CGRectValue()
+        let frame = keyboardSize.CGRectValue()
         textViewBottomSpaceConstraint.constant = frame.height + bottomSpacePadding
     }
     
     // MARK: Textview delegate
     
     func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = count(textView.text) != 0
+        placeholderLabel.hidden = textView.text.characters.count != 0
     }
     
     @IBAction func closeButtonTapped(sender: AnyObject) {
@@ -106,7 +106,7 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     
     // MARK: Helpers
     func setupPlaceHolder(){
-        var width = Utilities.getScreenSize().width - (textViewPadding * 2) - (textPaddingLeft * 2)
+        let width = Utilities.getScreenSize().width - (textViewPadding * 2) - (textPaddingLeft * 2)
         placeholderLabel = UILabel(frame: CGRectMake(textPaddingLeft, textPaddingTop, width, 100))
         placeholderLabel.text = "Please describe in as much detail as possible"
         placeholderLabel.numberOfLines = 0

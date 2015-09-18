@@ -34,7 +34,7 @@ class CircularProgressBar : CAShapeLayer {
     
     func createCircleProgress() {
         // create big circle
-        var bigCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: radius * 2 + strokeWidth)
+        let bigCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: radius * 2 + strokeWidth)
         bigCircle.fillColor = UIColor(red:102/255.0, green:92/255.0, blue:92/255.0, alpha: 1.0).CGColor
         self.addSublayer(bigCircle)
         
@@ -58,7 +58,7 @@ class CircularProgressBar : CAShapeLayer {
         
         
         // create small circle
-        var smallCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: (radius - strokeWidth/2) * 2)
+        let smallCircle = self.createCircle(CGPointMake(progressCenter.x, progressCenter.y), diameter: (radius - strokeWidth/2) * 2)
         smallCircle.fillColor = UIColor(red:133/255.0, green:124/255.0, blue:173/255.0, alpha: 1.0).CGColor
         self.addSublayer(smallCircle)
         
@@ -67,7 +67,7 @@ class CircularProgressBar : CAShapeLayer {
         // create a circle as the head of stroke
         var circleX = progressCenter.x
         var circleY = progressCenter.y - radius
-        var strokeHead = self.createCircle(CGPointMake(circleX, circleY), diameter: strokeWidth)
+        let strokeHead = self.createCircle(CGPointMake(circleX, circleY), diameter: strokeWidth)
         strokeHead.fillColor = UIColor(red:255/255.0, green:102/255.0, blue:102/255.0, alpha: 1.0).CGColor
         self.addSublayer(strokeHead)
         
@@ -81,7 +81,7 @@ class CircularProgressBar : CAShapeLayer {
     
     func animateCircleWithProgress(progress: CGFloat, duration: CFTimeInterval) {
         // Configure the animation
-        var drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        let drawAnimation = CABasicAnimation(keyPath: "strokeEnd")
         drawAnimation.repeatCount = 1.0
         // Animate from the full stroke being drawn to none of the stroke being drawn
         drawAnimation.fromValue = NSNumber(double: 0.0)
@@ -98,7 +98,7 @@ class CircularProgressBar : CAShapeLayer {
     
     func createCircle(center: CGPoint, diameter: CGFloat) -> CAShapeLayer {
         // create a circle as the head of stroke
-        var circle = CAShapeLayer()
+        let circle = CAShapeLayer()
         circle.path = UIBezierPath(ovalInRect: CGRectMake(0, 0, diameter, diameter)).CGPath
         circle.position = center
         circle.bounds = CGPathGetBoundingBox(circle.path);
@@ -116,7 +116,7 @@ class CircularProgressBar : CAShapeLayer {
         shapeLayer.anchorPoint = anchorPoint;
         shapeLayer.position = rotationPoint;
         
-        var rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
+        let rotateAnimation = CABasicAnimation(keyPath: "transform.rotation.z")
         rotateAnimation.toValue = Double(rotationValue) * (M_PI*2)
         rotateAnimation.removedOnCompletion = false;
         rotateAnimation.fillMode = kCAFillModeForwards;

@@ -124,13 +124,13 @@ class DataStore : NSObject{
     func addData(oldDataArray : [UserPost], newDataArray : [UserPost])  -> [UserPost]{
         
         var mutableOldArray = oldDataArray
-        var oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
-        var newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
+        let oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
+        let newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
 //        println("oldPostIDArray == \(oldPostIDArray)")
 //        println("newDataArray == \(newDataArray)")
         // check if any new post, update old array with new items
-        for (index,newPostId) in enumerate(newPostIDArray) {
-            if(!contains(oldPostIDArray, newPostId)){
+        for (index,newPostId) in newPostIDArray.enumerate() {
+            if !oldPostIDArray.contains(newPostId) {
                 if(!newsfeedIsUpdated) { newsfeedIsUpdated = true }
                 mutableOldArray.insert(newDataArray[index], atIndex: 0)
             }
@@ -150,12 +150,12 @@ class DataStore : NSObject{
     func compareAndUpdateArrayData(oldDataArray : [UserPost], newDataArray : [UserPost]) -> [UserPost]{
         var removedArray = [UserPost]()
         var mutableOldArray = oldDataArray
-        var oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
-        var newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
+        let oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
+        let newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
         
         // loop through new Data array first and check with old data, if old data not exist in new data, remove it
-        for (index,oldPostId) in enumerate(oldPostIDArray) {
-            if(!contains(newPostIDArray, oldPostId)){
+        for (index,oldPostId) in oldPostIDArray.enumerate() {
+            if !newPostIDArray.contains(oldPostId) {
                 removedArray.append(oldDataArray[index])
             }
         }
@@ -186,7 +186,7 @@ class DataStore : NSObject{
 
 extension Array {
     mutating func remove <U: Equatable> (object: U) {
-        for i in stride(from: self.count-1, through: 0, by: -1) {
+        for i in (self.count - 1).stride(to: 0, by: -1) {
             if let element = self[i] as? U {
                 if element == object {
                     self.removeAtIndex(i)

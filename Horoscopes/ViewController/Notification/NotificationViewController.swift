@@ -26,7 +26,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         router = XAppDelegate.mobilePlatform.router
         setupRouter()
         
-        var image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
         tableView.dataSource = self
@@ -71,20 +71,20 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         }
         cell.populateData(notifArray[indexPath.row])
         if(indexPath.row == 0){ // first cell
-            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: (UIRectCorner.TopLeft | UIRectCorner.TopRight), radius: 4.0) as! NotificationTableViewCell
+            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: [.TopLeft, .TopRight], radius: 4.0) as! NotificationTableViewCell
         }
         if(indexPath.row == (notifArray.count - 1)){ // last array
-            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: (UIRectCorner.BottomLeft | UIRectCorner.BottomRight), radius: 4.0) as! NotificationTableViewCell
+            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0) as! NotificationTableViewCell
         }
         
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        var cell = tableView.cellForRowAtIndexPath(indexPath)
+        let cell = tableView.cellForRowAtIndexPath(indexPath)
         if let cell = cell {
-            var notifCell = cell as! NotificationTableViewCell
-            var route = notifCell.notification.route
+            let notifCell = cell as! NotificationTableViewCell
+            let route = notifCell.notification.route
             if(route != nil && route != ""){
                 dispatch_async(dispatch_get_main_queue()) {
                     XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
@@ -120,7 +120,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 Utilities.hideHUD()
                 self.tableView.backgroundColor = UIColor.clearColor()
                 self.notifArray = result!
-                self.notifArray.sort({ $0.created > $1.created })
+                self.notifArray.sortInPlace({ $0.created > $1.created })
                 self.tableView.reloadData()
             })
         })
@@ -130,36 +130,36 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     func setupRouter(){
         router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
-            println("Route == today param dict = \(param)")
+            print("Route == today param dict = \(param)")
         })
         
         router.addRoute("/today/fortunecookie", blockCode: { (param) -> Void in
-            println("Route == fortunecookie param dict = \(param)")
+            print("Route == fortunecookie param dict = \(param)")
         })
         
         router.addRoute("/archive", blockCode: { (param) -> Void in
-            println("Route == archive param dict = \(param)")
+            print("Route == archive param dict = \(param)")
         })
         
         router.addRoute("/archive/:date/:sign", blockCode: { (param) -> Void in
-            println("Route == archive param dict = \(param)")
+            print("Route == archive param dict = \(param)")
         })
         
         router.addRoute("/feed/global", blockCode: { (param) -> Void in
-            println("Route == global param dict = \(param)")
+            print("Route == global param dict = \(param)")
         })
         
         router.addRoute("/feed/following", blockCode: { (param) -> Void in
-            println("Route == feed following param dict = \(param)")
+            print("Route == feed following param dict = \(param)")
         })
         
         router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
-            println("Route == feed param dict = \(param)")
+            print("Route == feed param dict = \(param)")
             let uid = param["uid"] as! String
             Utilities.showHUD()
             SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
-                if let error = error {
+                if let _ = error {
                     
                 } else {
                     let userProfile = result![0]
@@ -173,27 +173,27 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         })
         
         router.addRoute("/profile/:uid/followers", blockCode: { (param) -> Void in
-            println("Route == followers param dict = \(param)")
+            print("Route == followers param dict = \(param)")
         })
         
         router.addRoute("/profile/:uid/following", blockCode: { (param) -> Void in
-            println("Route == following param dict = \(param)")
+            print("Route == following param dict = \(param)")
         })
         
         router.addRoute("/profile/me", blockCode: { (param) -> Void in
-            println("Route == profile me param dict = \(param)")
+            print("Route == profile me param dict = \(param)")
         })
         
         router.addRoute("/profile/me/setsign", blockCode: { (param) -> Void in
-            println("Route == profile me setsign param dict = \(param)")
+            print("Route == profile me setsign param dict = \(param)")
         })
         
         router.addRoute("/profile/me/findfriends", blockCode: { (param) -> Void in
-            println("Route == profile findfriends param dict = \(param)")
+            print("Route == profile findfriends param dict = \(param)")
         })
         
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
-            println("Route == post with param dict = \(param)")
+            print("Route == post with param dict = \(param)")
         })
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
@@ -201,7 +201,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 Utilities.showHUD()
                 XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
                     Utilities.hideHUD()
-                    if let error = error {
+                    if let _ = error {
                         
                     } else {
                         if let result = result {
@@ -221,13 +221,13 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         })
         
         router.addRoute("/settings", blockCode: { (param) -> Void in
-            println("Route == settings with param dict = \(param)")
+            print("Route == settings with param dict = \(param)")
         })
     }
     
     // MARK: UI Helper
     func getHeaderView() -> UIView {
-        if let tableHeaderView = tableHeaderView{
+        if let _ = tableHeaderView{
             
         } else {
             tableHeaderView = UIView()
@@ -238,7 +238,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func getFooterView() -> UIView {
-        if let tableFooterView = tableFooterView{
+        if let _ = tableFooterView{
             
         } else {
             tableFooterView = UIView()
@@ -252,6 +252,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     // prevent corner radius from applying to middle rows
     func resetCornerRadius(cell : NotificationTableViewCell) -> NotificationTableViewCell{
         
-        return Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner.allZeros, radius: 4.0) as! NotificationTableViewCell
+        return Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner(), radius: 4.0) as! NotificationTableViewCell
     }
 }

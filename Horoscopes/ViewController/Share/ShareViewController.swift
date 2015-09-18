@@ -74,48 +74,48 @@ class ShareViewController : UIViewController {
      // MARK: create buttons
     
     func createTwitterButton(){
-        var twitterBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeTwitter)
+        let twitterBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeTwitter)
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleTwTap:"))
         twitterBtn.addGestureRecognizer(tap)
     }
     
     func createFacebookButton(){
-        var facebookBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFacebook)
+        let facebookBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFacebook)
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleFBTap:"))
         facebookBtn.addGestureRecognizer(tap)
     }
     
     func createMessageButton(){
-        var btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeMessages)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeMessages)
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleMessageTap:"))
         btn.addGestureRecognizer(tap)
     }
     
     func createEmailButton(){
-        var btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeEmail)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeEmail)
         
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleEmailTap:"))
         btn.addGestureRecognizer(tap)
     }
     
     func createFBMessageButton(){
-        var btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFBMessenger)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFBMessenger)
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleFBMessageTap:"))
         btn.addGestureRecognizer(tap)
     }
     
     func createWhatappsButton(){
-        var btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeWhatsapp)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeWhatsapp)
         let tap = UITapGestureRecognizer(target: self, action: Selector("handleWhatsappTap:"))
         btn.addGestureRecognizer(tap)
     }
     
     func createShareButton(type : ShareButton.ShareButtonType) -> ShareButton{
-        var buttonFrame = self.getPosition(currentButtonIndex)
-        var button = ShareButton(type: type, frame: buttonFrame)
+        let buttonFrame = self.getPosition(currentButtonIndex)
+        let button = ShareButton(type: type, frame: buttonFrame)
         button.parentVC = self
         self.shareView.addSubview(button)
         currentButtonIndex++
@@ -230,7 +230,7 @@ class ShareViewController : UIViewController {
     
     func handleFBMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        var title = self.getTitle()
+        let title = self.getTitle()
         shareController.shareFbMessage(title, text: sharingText, url: self.getSharingURL(), pictureURL: pictureURL)
     }
     
@@ -250,8 +250,8 @@ class ShareViewController : UIViewController {
     }
     
     func isWhatsappAvailable() -> Bool {
-        var url = "whatsapp://send?text=a"
-        var whatsappURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let url = "whatsapp://send?text=a"
+        let whatsappURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
         
         return UIApplication.sharedApplication().canOpenURL(whatsappURL!)
     }
@@ -261,8 +261,8 @@ class ShareViewController : UIViewController {
     */
     
     func isFBMessageAvailable() -> Bool {
-        var url = "fb-messenger://compose"
-        var fbURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let url = "fb-messenger://compose"
+        let fbURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
         
         return UIApplication.sharedApplication().canOpenURL(fbURL!)
     }

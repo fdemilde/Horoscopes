@@ -128,7 +128,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     }
     
     func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = count(textView.text) != 0
+        placeholderLabel.hidden = textView.text.characters.count != 0
     }
     
     func keyboardWillChangeFrame(notification: NSNotification) {

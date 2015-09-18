@@ -28,11 +28,11 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     func setupTabBarItems(){
         var tabBarItems = self.tabBar.items!
         
-        let dailyItem = self.tabBar.items![0] as! UITabBarItem
-        let newsFeedItem = self.tabBar.items![1] as! UITabBarItem
-        let notifItem = self.tabBar.items![2] as! UITabBarItem
-        let profileItem = self.tabBar.items![3] as! UITabBarItem
-        let settingItem = self.tabBar.items![4] as! UITabBarItem
+        let dailyItem = self.tabBar.items![0] 
+        let newsFeedItem = self.tabBar.items![1] 
+        let notifItem = self.tabBar.items![2] 
+        let profileItem = self.tabBar.items![3] 
+        let settingItem = self.tabBar.items![4] 
         
         dailyItem.image = UIImage(named: "tabbar_daily" )!.imageWithRenderingMode(.AlwaysOriginal)
         newsFeedItem.image = UIImage(named: "tabbar_newsfeed")!.imageWithRenderingMode(.AlwaysOriginal)
@@ -60,10 +60,10 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     func reload(){
         if let viewControllers = self.viewControllers {
             for nav in viewControllers {
-                var nav = nav as! UINavigationController
-                var vc = nav.viewControllers.first as! UIViewController
+                let nav = nav as! UINavigationController
+                let vc = nav.viewControllers.first!
                 if vc.isKindOfClass( NewDailyTableViewController.classForCoder() ) {
-                    var dailyVC = vc as! NewDailyTableViewController
+                    let dailyVC = vc as! NewDailyTableViewController
                     dailyVC.selectedSign = self.selectedSign
                     dailyVC.reloadData()
                 }

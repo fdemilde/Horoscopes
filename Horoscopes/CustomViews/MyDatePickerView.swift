@@ -43,7 +43,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
+        super.init(coder: aDecoder)!
     }
     
     func setupYearArray() -> [String]!{
@@ -82,13 +82,13 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         } else {
             string = yearArray[row]
         }
-        var attString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let attString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         pickerLabel!.attributedText = attString
         
         // change separator color to white
-        var separator1 = pickerView.subviews[1] as! UIView
+        let separator1 = pickerView.subviews[1] 
         separator1.backgroundColor = UIColor.whiteColor()
-        var separator2 = pickerView.subviews[2] as! UIView
+        let separator2 = pickerView.subviews[2] 
         separator2.backgroundColor = UIColor.whiteColor()
         return pickerLabel
     }
@@ -139,9 +139,9 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         dateFormatter.dateFormat = "M"
-        dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
+        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         dateFormatter.dateFormat = "d"
-        dateArray.append(dateFormatter.stringFromDate(date).toInt()! - 1)
+        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         return dateArray
     }
     

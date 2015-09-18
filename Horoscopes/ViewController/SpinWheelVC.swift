@@ -33,9 +33,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     }
     
     func setupBackground(){
-        var screenSize = Utilities.getScreenSize()
-        var rect = CGRectMake(0,0,screenSize.width,screenSize.height)
-        var bgImageView = UIImageView(frame: rect)
+        let screenSize = Utilities.getScreenSize()
+        let rect = CGRectMake(0,0,screenSize.width,screenSize.height)
+        let bgImageView = UIImageView(frame: rect)
         if(screenSize.width == 375){ // iP6
             bgImageView.image = UIImage(named: "choose_sign_bg-667h.png")
         } else {
@@ -49,11 +49,11 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     func setupWheel(){
         var horoscopesSigns = XAppDelegate.horoscopesManager.getHoroscopesSigns()
         var currentSign = "";
-        var setting = XAppDelegate.userSettings
+        let setting = XAppDelegate.userSettings
         
         if (setting.horoscopeSign != -1){ // not load first time
             currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
-            var index = setting.horoscopeSign
+            let index = setting.horoscopeSign
             if(index < 8){
                 for var i = 0; i < 8 - index; ++i {
                     horoscopesSigns.insert(horoscopesSigns.last!, atIndex: 0)
@@ -71,9 +71,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         }
         //      Binh Modified
         
-        var allSignsArray = Utilities.parseArrayToNSArray(horoscopesSigns).mutableCopy() as! NSMutableArray
+        let allSignsArray = Utilities.parseArrayToNSArray(horoscopesSigns).mutableCopy() as! NSMutableArray
         
-        var frame = getProperRotateFrame()
+        let frame = getProperRotateFrame()
         wheel = RotateControl(frame: frame, andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray, andCurrentSign: currentSign)
         
         self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
@@ -90,8 +90,8 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     func getProperRotateFrame() -> CGRect{
         // calculate rotate frame width base on screen size width
         // for 320px screen -> rotate width will be 450
-        var screenWidth = self.view.bounds.size.width
-        var result = 450 * screenWidth / 320
+        let screenWidth = self.view.bounds.size.width
+        let result = 450 * screenWidth / 320
         return CGRectMake(0, 0, result, result)
     }
     

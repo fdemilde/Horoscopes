@@ -68,14 +68,14 @@ class CookieViewController : ViewControllerWithAds{
     
     func setupBackground(){
         containerView.layer.cornerRadius = 4
-        var screenSize = Utilities.getScreenSize()
-        var bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        let screenSize = Utilities.getScreenSize()
+        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
     }
     
     func setupConstraints(){
-        var ratio = Utilities.getRatio()
+        let ratio = Utilities.getRatio()
         todayTopConstraint.constant = (todayTopConstraint.constant * ratio)
         luckyNumberLabelTopConstraint.constant = (luckyNumberLabelTopConstraint.constant * ratio)
         checkBackBottomConstraint.constant = (checkBackBottomConstraint.constant * ratio)
@@ -111,7 +111,7 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     @IBAction func shareFortuneCookieTapped(sender: AnyObject) {
-        var shareVC = self.prepareShareVC()
+        let shareVC = self.prepareShareVC()
         Utilities.presentShareFormSheetController(self, shareViewController: shareVC)
     }
     // MARK: Helpers
@@ -128,8 +128,8 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     func prepareShareVC() -> ShareViewController{
-        var storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        var shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
         shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"))
         
         return shareVC
@@ -181,8 +181,8 @@ class CookieViewController : ViewControllerWithAds{
     // MARK: Network data
     
     func checkPermissionAndGetFortune(){
-        var loginManager = FBSDKLoginManager()
-        var permissions = ["public_profile", "email", "user_birthday"]
+        let loginManager = FBSDKLoginManager()
+        let permissions = ["public_profile", "email", "user_birthday"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if((error) != nil){
                 self.showOnlyDescription("Error when login Facebook!")
@@ -210,18 +210,18 @@ class CookieViewController : ViewControllerWithAds{
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
                     // println("User information = \(result)")
-                    var userFBID = result["id"] as! String
-                    var postData = NSMutableDictionary()
+                    let userFBID = result["id"] as! String
+                    let postData = NSMutableDictionary()
                     postData.setObject(userFBID, forKey: "fb_uid")
                     
                     XAppDelegate.mobilePlatform.sc.sendRequest(GET_FORTUNE_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                        var result = Utilities.parseNSDictionaryToDictionary(response)
+                        let result = Utilities.parseNSDictionaryToDictionary(response)
                         // println("fortune result = \(result)")
                         self.reloadFortuneData(result)
                     })
                 } else {
                     Utilities.hideHUD()
-                    println("fetch Info Error = \(error)")
+                    print("fetch Info Error = \(error)")
                 }
             })
         } else {
@@ -232,7 +232,7 @@ class CookieViewController : ViewControllerWithAds{
     func reloadFortuneData(data : Dictionary<String, AnyObject>){
         
         dispatch_async(dispatch_get_main_queue(),{
-            var error = data["error"] as! Int
+            let error = data["error"] as! Int
             if(error != 0){
                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
                 Utilities.hideHUD()
@@ -241,7 +241,7 @@ class CookieViewController : ViewControllerWithAds{
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             self.fortuneDescriptionLabel.text = fortuneData["fortune"] as? String
             self.luckyNumberLabel.text = "";
-            var luckyNumbers = fortuneData["lucky_numbers"] as! [AnyObject]
+            let luckyNumbers = fortuneData["lucky_numbers"] as! [AnyObject]
             
             for number in luckyNumbers {
                 if(self.luckyNumberLabel.text != ""){

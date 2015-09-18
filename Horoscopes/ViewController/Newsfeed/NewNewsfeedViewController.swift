@@ -106,9 +106,9 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         addButton.bloomDirection = kDCPathButtonBloomDirection.DCPathButtonBloomDirectionTop
         addButton.bloomAngel = 0
         
-        var itemButton_1 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME))
-        var itemButton_2 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME))
-        var itemButton_3 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME))
+        let itemButton_1 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME))
+        let itemButton_2 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME))
+        let itemButton_3 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME))
         addButton.addPathItems([itemButton_1, itemButton_2, itemButton_3])
         
         addButton.addButtonText([NEWFEEDS_POST_FEEL_TEXT, NEWFEEDS_POST_STORY_TEXT, NEWFEEDS_POST_MIND_TEXT])
@@ -189,7 +189,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     func pathButton(dcPathButton: DCPathButton!, clickItemButtonAtIndex itemButtonIndex: UInt) {
         overlay.hidden = true
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        var controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+        let controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
         controller.type = postTypes[Int(itemButtonIndex)][2]
         controller.placeholder = postTypes[Int(itemButtonIndex)][0]
         controller.parentVC = self
@@ -211,7 +211,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             tableView.finishInfiniteScroll()
         } else {
             self.resetTapButtonColor()
-            var newDataArray = notif.object as! [UserPost]
+            let newDataArray = notif.object as! [UserPost]
             self.insertRowsAtBottom(newDataArray)
         }
     }
@@ -274,13 +274,13 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         if(XAppDelegate.socialManager.isLoggedInFacebook() || self.tabType == NewsfeedTabType.Global){ // user already loggin facebook
             tableView.tableHeaderView = nil
         } else {
-            var bg = self.createEmptyTableHeaderBackground()
-            var facebookButton = UIButton()
+            let bg = self.createEmptyTableHeaderBackground()
+            let facebookButton = UIButton()
             facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
             facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
             facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
             bg.addSubview(facebookButton)
-            var label = UILabel()
+            let label = UILabel()
             label.text = "Login Facebook to follow your friends"
             label.sizeToFit()
             label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
@@ -291,8 +291,8 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-        var post = userPostArray[indexPath.row] as UserPost
+        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
+        let post = userPostArray[indexPath.row] as UserPost
         cell.delegate = self
         cell.resetUI()
         configureCell(cell, post: post)
@@ -362,7 +362,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let postId = notif.object as! String
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         var index = -1
-        for (i, post) in enumerate(userPostArray) {
+        for (i, post) in userPostArray.enumerate() {
             if post.post_id == postId {
                 index = i
             }
@@ -417,7 +417,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: Helpers
     
     func resetTapButtonColor(){ // change button color based on state
-        var blackColorWithOpacity = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        let blackColorWithOpacity = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
         switch self.tabType {
             // Use Internationalization, as appropriate.
         case NewsfeedTabType.Global:
@@ -457,7 +457,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // if no feed to show or user doesn't log in, show white background
     func createEmptyTableHeaderBackground() -> UIView{
-        var bg = UIView(frame: self.tableView.bounds)
+        let bg = UIView(frame: self.tableView.bounds)
         bg.layer.cornerRadius = 5
         bg.backgroundColor = UIColor.whiteColor()
         bg.userInteractionEnabled = true
@@ -465,15 +465,15 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func createEmptyTableHeaderBackgroundWithMessage() -> UIView{
-        var bg = self.createEmptyTableHeaderBackground()
+        let bg = self.createEmptyTableHeaderBackground()
         if(tabType == NewsfeedTabType.Following){
             if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-                var facebookButton = UIButton()
+                let facebookButton = UIButton()
                 facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
                 facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
                 facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
                 bg.addSubview(facebookButton)
-                var label = UILabel()
+                let label = UILabel()
                 label.text = "Login Facebook to follow your friends"
                 label.sizeToFit()
                 label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
@@ -482,7 +482,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
         }
         
-        var label = UILabel()
+        let label = UILabel()
         label.text = "No feeds available"
         label.sizeToFit()
         label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, (tableView.bounds.height - label.frame.size.height)/2, label.frame.size.width, label.frame.size.height)
@@ -493,12 +493,12 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: infinite scrolling support 
     func insertRowsAtBottom(newData : [UserPost]){
         self.tableView.beginUpdates()
-        var deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
-            var p1 = post1 as! UserPost
-            var p2 = post2 as! UserPost
+        let deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
+            let p1 = post1 as! UserPost
+            let p2 = post2 as! UserPost
             return (p1.post_id == p2.post_id);
         }
-        var delta = deltaCalculator.deltaFromOldArray(self.userPostArray, toNewArray:newData)
+        let delta = deltaCalculator.deltaFromOldArray(self.userPostArray, toNewArray:newData)
         self.userPostArray = newData
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
         

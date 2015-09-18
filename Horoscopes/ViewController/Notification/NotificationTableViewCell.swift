@@ -88,15 +88,15 @@ class NotificationTableViewCell: UITableViewCell {
     }
     
     func defaultCell(){
-        var imageURL = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/p160x160/11210415_976351309044730_8258958221771799158_n.jpg?oh=8e218674b285255d08cc6506ba1d27a1&oe=561997A7&__gda__=1448374830_c84a435124e10413bed7cd7774800790")
+        let imageURL = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/p160x160/11210415_976351309044730_8258958221771799158_n.jpg?oh=8e218674b285255d08cc6506ba1d27a1&oe=561997A7&__gda__=1448374830_c84a435124e10413bed7cd7774800790")
         Utilities.getDataFromUrl(imageURL!) { data -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                var downloadedImage = UIImage(data: data!)
+                let downloadedImage = UIImage(data: data!)
                 self.cellImageView.image = downloadedImage
             }
         }
         
-        var desc = "Cedric Chin, Binh Dang and 2 other people send you hearts"
+        let desc = "Cedric Chin, Binh Dang and 2 other people send you hearts"
         
         
         notificationDescLabel.attributedText = self.createDescAttributedString(desc)
@@ -115,13 +115,13 @@ class NotificationTableViewCell: UITableViewCell {
             default:
                 string += DEFAULT_TEXT
         }
-        var attString = NSMutableAttributedString(string: string)
+        let attString = NSMutableAttributedString(string: string)
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, count(nameString)))
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, count(nameString)))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(13.0), range: NSMakeRange(0, nameString.characters.count))
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(0, nameString.characters.count))
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(count(nameString), count(string) - count(nameString))) // +1 for the space between
-        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(count(nameString), count(string) - count(nameString)))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(12.0), range: NSMakeRange(nameString.characters.count, nameString.characters.count - nameString.characters.count)) // +1 for the space between
+        attString.addAttribute(NSForegroundColorAttributeName, value: UIColor.blackColor(), range: NSMakeRange(nameString.characters.count, nameString.characters.count - nameString.characters.count))
         return attString
     }
     // MARK: helpers
@@ -129,7 +129,7 @@ class NotificationTableViewCell: UITableViewCell {
     func downloadImageAndSetToImageHolder(url:NSURL, imageHolder : UIImageView){
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                var downloadedImage = UIImage(data: data!)
+                let downloadedImage = UIImage(data: data!)
                 imageHolder.image = downloadedImage
                 imageHolder.backgroundColor = UIColor.clearColor()
             }
