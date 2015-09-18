@@ -84,7 +84,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
             cell.likeButton.userInteractionEnabled = true
         }
-        cell.configureNewsfeedUi(nil)
+        cell.configureNewsfeedUi()
     }
     
     // MARK: - Post Cell Delegate

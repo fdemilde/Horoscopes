@@ -3791,11 +3791,11 @@ on news things</string>
                                             <exclude reference="nht-dy-kKK"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <exclude reference="CK2-z8-mRj"/>
-                                            <exclude reference="mHv-I8-bx3"/>
                                             <exclude reference="VyR-Ra-2yg"/>
                                             <exclude reference="Hgv-9A-9EX"/>
                                             <exclude reference="fxK-Qn-lWK"/>
+                                            <exclude reference="CK2-z8-mRj"/>
+                                            <exclude reference="mHv-I8-bx3"/>
                                         </mask>
                                     </variation>
                                     <variation key="heightClass=regular-widthClass=compact">
@@ -3804,10 +3804,10 @@ on news things</string>
                                             <include reference="nht-dy-kKK"/>
                                         </mask>
                                         <mask key="constraints">
-                                            <include reference="CK2-z8-mRj"/>
                                             <include reference="VyR-Ra-2yg"/>
                                             <include reference="Hgv-9A-9EX"/>
                                             <include reference="fxK-Qn-lWK"/>
+                                            <include reference="CK2-z8-mRj"/>
                                         </mask>
                                     </variation>
                                 </tableViewCellContentView>
@@ -5475,10 +5475,10 @@ on news things</string>
                                                                     <exclude reference="SLi-G3-89i"/>
                                                                 </mask>
                                                                 <mask key="constraints">
-                                                                    <exclude reference="fCj-0L-7HI"/>
                                                                     <exclude reference="2qV-rp-xgq"/>
                                                                     <exclude reference="Ahz-Fb-q7b"/>
                                                                     <exclude reference="oqf-hi-r78"/>
+                                                                    <exclude reference="fCj-0L-7HI"/>
                                                                 </mask>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=compact">
@@ -6135,10 +6135,10 @@ on news things</string>
                                                                     <exclude reference="wDk-Dx-JV5"/>
                                                                 </mask>
                                                                 <mask key="constraints">
-                                                                    <exclude reference="WGg-7b-rUB"/>
                                                                     <exclude reference="KEL-zq-em3"/>
                                                                     <exclude reference="bfz-62-SBa"/>
                                                                     <exclude reference="uHv-Sl-mlu"/>
+                                                                    <exclude reference="WGg-7b-rUB"/>
                                                                 </mask>
                                                             </variation>
                                                             <variation key="heightClass=regular-widthClass=compact">

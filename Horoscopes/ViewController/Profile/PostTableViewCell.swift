@@ -46,6 +46,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     let profileImageSize: CGFloat = 80
     var postTypeLabel: UILabel!
     var topBorder: CALayer!
+    let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
+//    var heightConstraint: NSLayoutConstraint!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -53,16 +55,18 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
         postTypeLabel = UILabel()
-        if #available(iOS 8.2, *) {
-            postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
-        } else {
-            // Fallback on earlier versions
-        }
         postTypeLabel.textColor = UIColor.whiteColor()
         addSubview(postTypeLabel)
         topBorder = CALayer()
         topBorder.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
         actionView.layer.addSublayer(topBorder)
+//        heightConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: minimumTextViewHeight)
+//        if #available(iOS 8.0, *) {
+//            heightConstraint.active = true
+//        } else {
+//            // Fallback on earlier versions
+//            textView.addConstraint(heightConstraint)
+//        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -87,7 +91,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         newsfeedFollowButton.setImage(nil, forState: .Normal)
     }
     
-    func configureNewsfeedUi(minimumTextViewHeight: CGFloat?) {
+    func configureNewsfeedUi() {
         horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         horoscopeSignView.layer.cornerRadius = 4
         horoscopeSignView.clipsToBounds = true
@@ -105,11 +109,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
         profileImageView.userInteractionEnabled = true
         profileImageView.addGestureRecognizer(imageGestureRecognizer)
-        
-        if let height = minimumTextViewHeight {
-            let heightConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: height)
-            textView.addConstraint(heightConstraint)
-        }
     }
     
     func configureUserPostUi() {
