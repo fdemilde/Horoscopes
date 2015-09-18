@@ -247,6 +247,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                     self.userProfile = result![0]
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.updateScopeButtonTitle()
+                        self.horoscopeSignLabel.text = self.userProfile.horoscopeSignString
+                        self.horoscopeSignImageView.image = self.userProfile.horoscopeSignImage
                     })
                 }
             }
