@@ -50,8 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
-        formSheet.presentedFormSheetSize = CGSizeMake(self.window!.frame.size.width, self.window!.frame.size.height);
-        let tabBarVC = self.window?.rootViewController as! UITabBarController
+        formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
         self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
     }
 
