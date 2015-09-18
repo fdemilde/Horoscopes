@@ -343,23 +343,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             }
         })
     }
-    
-//    override func didTapFollowProfile(cell: FollowTableViewCell) {
-//        let index = tableView.indexPathForCell(cell)?.row
-//        var profile: UserProfile!
-//        if currentScope == .Following {
-//            if noFollowingUser {
-//                profile = friends[index!]
-//            } else {
-//                profile = followingUsers[index!]
-//            }
-//        } else if currentScope == .Followers {
-//            profile = followers[index!]
-//        }
-//        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-//        controller.userProfile = profile!
-//        navigationController?.pushViewController(controller, animated: true)
-//    }
 
     // MARK: - Navigation
 

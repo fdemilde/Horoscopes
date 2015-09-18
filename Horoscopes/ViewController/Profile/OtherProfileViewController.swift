@@ -26,7 +26,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         searchBar.placeholder = "\(userProfile.name)"
         if userProfile.uid != XAppDelegate.currentUser.uid {
             SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-                if let error = error {
+                if let _ = error {
                     // Do not show newsfeed follow button
                 } else {
                     if result!["isfollowing"] as! Int != 1 {

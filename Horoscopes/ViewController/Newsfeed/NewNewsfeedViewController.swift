@@ -157,7 +157,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
                 SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-                    if let error = error {
+                    if let _ = error {
                         
                     } else {
                         let isFollowing = result!["isfollowing"] as! Int == 1
@@ -307,7 +307,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         SocialManager.sharedInstance.follow(userPostArray[index!].uid, completionHandler: { (error) -> Void in
             hud.mode = MBProgressHUDMode.Text
             hud.detailsLabelFont = UIFont.systemFontOfSize(11)
-            if let error = error {
+            if let _ = error {
                 hud.detailsLabelText = "Follow unsuccessully due to network error!"
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     hud.hide(true, afterDelay: 2)
@@ -434,7 +434,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            let tableView = scrollView as! UITableView
+            _ = scrollView as! UITableView
             
             if(!XAppDelegate.socialManager.isLoggedInFacebook() && self.tabType == NewsfeedTabType.Following){
                 self.tableView.finishInfiniteScroll()

@@ -256,7 +256,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            let tableView = scrollView as! UITableView
+            _ = scrollView as! UITableView
             if self.isLastPostPage || self.currentScope != .Post {
                 self.tableView.finishInfiniteScroll()
                 return
@@ -339,7 +339,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func checkFollowStatus() {
-        var shouldReload = false
         for follower in followers {
             for followingUser in followingUsers {
                 if followingUser.uid == follower.uid {
@@ -422,19 +421,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             navigationController?.pushViewController(controller, animated: true)
         })
     }
-    
-//    func didTapFollowProfile(cell: FollowTableViewCell) {
-//        let index = tableView.indexPathForCell(cell)?.row
-//        var profile: UserProfile!
-//        if currentScope == .Following {
-//            profile = followingUsers[index!]
-//        } else if currentScope == .Followers {
-//            profile = followers[index!]
-//        }
-//        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-//        controller.userProfile = profile!
-//        navigationController?.pushViewController(controller, animated: true)
-//    }
 
     /*
     // MARK: - Navigation
