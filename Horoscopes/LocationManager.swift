@@ -52,7 +52,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     
     // MARK: CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager!, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         if status != CLAuthorizationStatus.NotDetermined {
             manager.startUpdatingLocation()
         }

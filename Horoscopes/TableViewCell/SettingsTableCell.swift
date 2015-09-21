@@ -65,8 +65,6 @@ class SettingsTableCell : UITableViewCell {
                 titleLabel.text = "Logout"
                 titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
                 break;
-            default:
-                break
         }
     }
     

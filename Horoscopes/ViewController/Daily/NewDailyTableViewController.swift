@@ -185,12 +185,9 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
     }
     
     func daysPassed() -> Double {
-        let today = NSDate()
         collectedHoroscope = CollectedHoroscope()
-        var today1 = NSDate()
         let currentCal = NSCalendar.currentCalendar()
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-//        let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
         
         let todayComp = currentCal.components(components, fromDate: NSDate())
         todayComp.calendar = currentCal
@@ -201,8 +198,6 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         todayComp.hour = 1
         todayComp.minute = 1
         todayComp.second = 1
-        
-        let newDate = lastOpenComp.date
         
         return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
     }

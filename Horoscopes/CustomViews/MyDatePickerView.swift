@@ -66,7 +66,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         return 35
     }
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         
         var pickerLabel = view as! UILabel!
         if view == nil {  //if no label there yet

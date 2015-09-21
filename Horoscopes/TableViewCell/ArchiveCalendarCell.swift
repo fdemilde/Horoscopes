@@ -78,12 +78,9 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     func dateFormatter() -> NSDateFormatter
     {
         var dateFormatter : NSDateFormatter!
-        if let dateFormatter = dateFormatter {
-        } else {
-            dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "dd-MM-yyyy"
-            dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        }
+        dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         return dateFormatter;
     }
     

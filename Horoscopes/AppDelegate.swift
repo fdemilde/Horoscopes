@@ -85,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
     
-    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
@@ -140,7 +140,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func registerForRemoteNotification(){
-        var systemVersion = (UIDevice.currentDevice().systemVersion as NSString).floatValue
         if #available(iOS 8.0, *) {
             let types : UIUserNotificationType = [.Sound, .Badge, .Alert]
             let notifSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
@@ -169,7 +168,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         let errorCode = result?["error"] as! Int
                         if(errorCode == 0){
                             let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-                            for (uid, profileDetail) in profileDict {
+                            for (_, profileDetail) in profileDict {
                                 let profile = UserProfile(data: profileDetail as! NSDictionary)
                                 XAppDelegate.currentUser = profile
                             }
@@ -190,7 +189,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // only update once
         if(userLocation == nil){
             userLocation = location
-            var googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
+            let googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
 //            println("finishedGettingLocation  === \(googleLink)")
             
             let url = NSURL(string: googleLink)
@@ -206,7 +205,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             let errorCode = result?["error"] as! Int
                             if(errorCode == 0){
                                 let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-                                for (uid, profileDetail) in profileDict {
+                                for (_, profileDetail) in profileDict {
                                     let profile = UserProfile(data: profileDetail as! NSDictionary)
                                     XAppDelegate.currentUser = profile
                                 }

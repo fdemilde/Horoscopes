@@ -200,7 +200,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func pushToDailyViewController(){
         XAppDelegate.userSettings.horoscopeSign = Int32(self.selectedIndex)
-        var label = String(format: "type=primary,sign=%d", self.selectedIndex)
         XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
@@ -258,7 +257,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     // MARK: Gesture Recognize
     @IBAction func outsideTapped(sender : UITapGestureRecognizer){
-        var touchLocation = sender.locationInView(self.containerView)
         if(popUp != nil) {
             popUp.dismissAnimated(true)
             popTipViewWasDismissedByUser(popUp)
@@ -272,8 +270,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         pickerView = MyDatePickerView(frame: CGRectMake(0, -60, 240, 80))
         pickerView.delegate = self
         if let birthday = XAppDelegate.userSettings.birthday {
-            pickerView.setCurrentBirthday(XAppDelegate.userSettings.birthday)
-        } else {pickerView.setCurrentBirthday(Utilities.getDefaultBirthday())
+            pickerView.setCurrentBirthday(birthday)
+        } else {
+            pickerView.setCurrentBirthday(Utilities.getDefaultBirthday())
         }
         
         popUp = CMPopTipView(customView: pickerView)

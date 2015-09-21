@@ -251,7 +251,7 @@ class ShareViewController : UIViewController {
     
     func isWhatsappAvailable() -> Bool {
         let url = "whatsapp://send?text=a"
-        let whatsappURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let whatsappURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         
         return UIApplication.sharedApplication().canOpenURL(whatsappURL!)
     }
@@ -262,7 +262,7 @@ class ShareViewController : UIViewController {
     
     func isFBMessageAvailable() -> Bool {
         let url = "fb-messenger://compose"
-        let fbURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let fbURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         
         return UIApplication.sharedApplication().canOpenURL(fbURL!)
     }
