@@ -65,8 +65,7 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
-            cell.layer.cornerRadius = 5
-            cell.clipsToBounds = true
+            
             if indexPath.section == 1 {
                 cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign)
             } else {
@@ -79,6 +78,16 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         return cell
     }
     
+    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.section == 1 || indexPath.section == 3 {
+            let dailyContentCell = cell as! DailyContentTableViewCell
+            let textView = dailyContentCell.textView
+            while textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.max)).height >= textView.frame.height {
+                textView.font = textView.font?.fontWithSize((textView.font?.pointSize)! - 1)
+            }
+        }
+    }
+    
     override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return spaceBetweenCell
     }
@@ -88,8 +97,6 @@ class NewDailyTableViewController: TableViewControllerWithAds, ChooseSignViewCon
         view.backgroundColor = UIColor.clearColor()
         return view
     }
-    
-    
     
     override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         if(section == 3){
