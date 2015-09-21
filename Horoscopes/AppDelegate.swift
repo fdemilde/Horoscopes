@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var dataStore = DataStore.sharedInstance
     var currentUser : UserProfile!
     var userLocation : CLLocation!
-
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // hide status bar
@@ -35,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if(socialManager.isLoggedInZwigglers()){
-            sendLocation() // for testing
+            // sendLocation() // for testing
             locationManager.setupLocationService()
         }
         
@@ -51,7 +51,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
-        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
+        
+        let windows = UIApplication.sharedApplication().windows
+        for window in windows {
+            if window.isKindOfClass(CustomTabBarController){
+                window.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
+                break;
+            }
+            //print("window %@ root: %@", window.description, window.rootViewController)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -149,37 +157,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("sendLocation sendLocation sendLocation")
         let googleLink = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng=10.714407,106.735349"
         let url = NSURL(string: googleLink)
-//        var operationManager = AFHTTPRequestOperationManager()
-//        operationManager.GET(googleLink, parameters: nil,
-//            success: { (operation, responseObject) -> Void in
-//                
-//                var responseDict = responseObject as! Dictionary<String, AnyObject>
-//                var array = responseDict["results"] as! [AnyObject]
-//                do {
-//                    let data = try NSJSONSerialization.dataWithJSONObject(array, options: 0)
-//                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-//                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
-//                        if(error == nil){
-//                            var errorCode = result?["error"] as! Int
-//                            if(errorCode == 0){
-//                                var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-//                                for (uid, profileDetail) in profileDict {
-//                                    var profile = UserProfile(data: profileDetail as! NSDictionary)
-//                                    XAppDelegate.currentUser = profile
-//                                }
-//                            } else {
-//                               println("Error code === \(errorCode)")
-//                            }
-//                        } else {
-//                            println("Error === \(error)")
-//                        }
-//                    })
-//                }
-//            },
-//            failure: { (operation, error) -> Void in
-//                println("sendRequestUpdateUser Error \(error)")
-//                
-//        })
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
             error: NSError?) -> Void in
@@ -206,45 +183,45 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
             }
         })
+        dataTask.resume()
     }
     
     func finishedGettingLocation(location : CLLocation){
         // only update once
-//        if(userLocation == nil){
-//            userLocation = location
-//            var googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
-////            println("finishedGettingLocation  === \(googleLink)")
-//            
-//            var operationManager = AFHTTPRequestOperationManager()
-//            operationManager.GET(googleLink, parameters: nil,
-//                success: { (operation, responseObject) -> Void in
-//                    
-//                    var responseDict = responseObject as! Dictionary<String, AnyObject>
-////                    var array = responseDict["results"] as! [AnyObject]
-//                    let data = NSJSONSerialization.dataWithJSONObject(responseDict, options: nil, error: nil)
-//                    let string = NSString(data: data!, encoding: NSUTF8StringEncoding)
-//                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
-//                        if(error == nil){
-//                            var errorCode = result?["error"] as! Int
-//                            if(errorCode == 0){
-//                                var profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-//                                for (uid, profileDetail) in profileDict {
-//                                    var profile = UserProfile(data: profileDetail as! NSDictionary)
-//                                    XAppDelegate.currentUser = profile
-//                                }
-//                            } else {
-//                                println("Error code === \(errorCode)")
-//                            }
-//                        } else {
-//                            println("Error === \(error)")
-//                        }
-//                    })
-//                },
-//                failure: { (operation, error) -> Void in
-//                    print("sendRequestUpdateUser Error \(error)")
-//                    
-//            })
-//        }
+        if(userLocation == nil){
+            userLocation = location
+            var googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
+//            println("finishedGettingLocation  === \(googleLink)")
+            
+            let url = NSURL(string: googleLink)
+            let session = NSURLSession.sharedSession()
+            let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
+                error: NSError?) -> Void in
+                
+                if let data = data {
+                    let string = NSString(data: data, encoding: NSUTF8StringEncoding)
+                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+                        print("sendLocation result == \(result)")
+                        if(error == nil){
+                            let errorCode = result?["error"] as! Int
+                            if(errorCode == 0){
+                                let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+                                for (uid, profileDetail) in profileDict {
+                                    let profile = UserProfile(data: profileDetail as! NSDictionary)
+                                    XAppDelegate.currentUser = profile
+                                }
+                            } else {
+                                print("Error code === \(errorCode)")
+                            }
+                        } else {
+                            print("Error === \(error)")
+                        }
+                    })
+                    
+                }
+            })
+            dataTask.resume()
+        }
     }
     
     // MARK: Notification handler
