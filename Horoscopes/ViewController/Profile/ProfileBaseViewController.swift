@@ -75,6 +75,13 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
+        
+        horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        horoscopeSignView.layer.cornerRadius = 4
+        horoscopeSignView.clipsToBounds = true
+        avatarImageView.layer.cornerRadius = 60 / 2
+        avatarImageView.clipsToBounds = true
+        
         setupInfiniteScroll()
     }
 
@@ -96,14 +103,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.avatarImageView.image = image
-                self.avatarImageView.layer.cornerRadius = 60 / 2
-                self.avatarImageView.clipsToBounds = true
             })
         })
         nameLabel.text = userProfile.name
-        horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-        horoscopeSignView.layer.cornerRadius = 4
-        horoscopeSignView.clipsToBounds = true
         horoscopeSignLabel.text = userProfile.horoscopeSignString
         horoscopeSignImageView.image = userProfile.horoscopeSignImage
     }
@@ -247,8 +249,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                     self.userProfile = result![0]
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.updateScopeButtonTitle()
-                        self.horoscopeSignLabel.text = self.userProfile.horoscopeSignString
-                        self.horoscopeSignImageView.image = self.userProfile.horoscopeSignImage
+                        self.configureProfileView()
                     })
                 }
             }
