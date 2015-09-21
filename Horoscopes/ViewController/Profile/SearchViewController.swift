@@ -99,6 +99,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
         cell.delegate = self
+        cell.resetUi()
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = friend.horoscopeSignString

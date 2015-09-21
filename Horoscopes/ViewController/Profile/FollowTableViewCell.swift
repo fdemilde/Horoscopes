@@ -34,6 +34,13 @@ class FollowTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    func resetUi() {
+        if followButton != nil {
+            followButton.setImage(nil, forState: .Normal)
+            followButton.enabled = false
+        }
+    }
+    
     func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
         if followButton == nil {
             followButton = UIButton()
