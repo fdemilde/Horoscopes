@@ -39,7 +39,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
     var baseDispatchGroup: dispatch_group_t!
-    var isFirstDataLoad = true
     var noPost = false
     var currentPostPage: Int = 0 {
         didSet {
@@ -272,18 +271,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if baseDispatchGroup == nil {
             baseDispatchGroup = dispatch_group_create()
         }
-        if isFirstDataLoad {
-            Utilities.showHUD()
-        }
         getUserPosts(baseDispatchGroup)
         getFollowingUsers(baseDispatchGroup)
         getFollowers(baseDispatchGroup)
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
-            if self.isFirstDataLoad {
-                self.tableView.hidden = false
-                Utilities.hideHUD()
-            }
-            self.isFirstDataLoad = false
+            self.tableView.hidden = false
         }
     }
     

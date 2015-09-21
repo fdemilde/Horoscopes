@@ -143,6 +143,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         getFriends(baseDispatchGroup)
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
             self.checkFollowStatus()
+            Utilities.hideHUD()
         }
     }
     
