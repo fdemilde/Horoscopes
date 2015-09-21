@@ -47,7 +47,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
         cell.delegate = self
         if let post = userPost {
-            configureCell(cell, post: userPost)
+            configureCell(cell, post: post)
         }
         
         return cell
@@ -98,7 +98,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func didTapLikeButton(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
         let profileId = userPost.user!.uid
         let postId = userPost.post_id
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
@@ -111,7 +110,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // Notification handler
     func sendHeartSuccessful(notif: NSNotification){
-        let postId = notif.object as! String
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         userPost.hearts++
         tableView.reloadData()

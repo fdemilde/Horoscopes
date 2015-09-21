@@ -69,7 +69,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     }
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
-    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -88,14 +88,13 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     }
     
     // MFMailComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
-    func mailComposeController(controller: MFMailComposeViewController!, didFinishWithResult result: MFMailComposeResult, error: NSError!) {
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: Whatsapp
     func shareWhatapps(text : String, url: String){
-        let sharingText = String(format:"whatsapp://send?text=%@", text)
-        let whatsappURL = NSURL(string: sharingText.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let whatsappURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         if(UIApplication.sharedApplication().canOpenURL(whatsappURL!)){
             UIApplication.sharedApplication().openURL(whatsappURL!)
         } else {

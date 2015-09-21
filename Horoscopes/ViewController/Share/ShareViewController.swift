@@ -15,14 +15,16 @@ class ShareViewController : UIViewController {
     
     
     let startPosY = 55.0 as CGFloat
-    let padding = 15.0 as CGFloat
+    
     let paddingSeparator = 30.0 as CGFloat
-    var buttonDefaultSize = CGSizeMake(90, 100)
+    var buttonDefaultSize = CGSizeMake(100, 100)
     var timeTag = NSTimeInterval()
     var sharingText = ""
     var pictureURL = ""
     var horoscopeSignName = ""
     var shareController = ShareController()
+    var numberOfButtons = 3
+    var paddingY = 15.0 as CGFloat
     
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var shareView: UIView!
@@ -40,6 +42,7 @@ class ShareViewController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.clearColor()
+        self.setupNumberOfButtonsAndPadding()
         self.setupShareButtons()
     }
     
@@ -50,6 +53,17 @@ class ShareViewController : UIViewController {
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func setupNumberOfButtonsAndPadding(){
+        if (DeviceType.IS_IPHONE_6){
+            numberOfButtons = 3
+            let paddingX = 18.0 as CGFloat
+            buttonDefaultSize = CGSizeMake(buttonDefaultSize.width + paddingX , buttonDefaultSize.height)
+        }  else if (DeviceType.IS_IPHONE_6P){
+            numberOfButtons = 4
+            buttonDefaultSize = CGSizeMake(buttonDefaultSize.width - 2, buttonDefaultSize.height)
+        }
     }
     
     func setupShareButtons(){
@@ -63,6 +77,9 @@ class ShareViewController : UIViewController {
         if(self.isMailAvailable()){self.createEmailButton()}
         if(self.isFBMessageAvailable()){self.createFBMessageButton()}
         if(self.isWhatsappAvailable()){self.createWhatappsButton()}
+        self.createMessageButton()
+        self.createMessageButton()
+        self.createMessageButton()
     }
     
     func createSeparatorLine(){
@@ -119,11 +136,13 @@ class ShareViewController : UIViewController {
         button.parentVC = self
         self.shareView.addSubview(button)
         currentButtonIndex++
+        
         return button
     }
     
     func getPosition(index : Int) -> CGRect {
-        var posX = (self.view.frame.width - buttonDefaultSize.width*3 - padding*2)/2
+        
+        var posX = 0 as CGFloat
         var posY = startPosY
         var row = 0 as Int
         var col = 0 as Int
@@ -132,17 +151,17 @@ class ShareViewController : UIViewController {
             /*
             it should have FB and twitter button
             row 1: 1,2
-            row 2: 3,4,5
+            row 2: 3,4,5 // number of button is based on screen width
             row 3: 6,7
             */
             if (currentButtonIndex <= 1){
                 row = 0
                 col = currentButtonIndex%2
             } else {
-                if (currentButtonIndex <= 4) {row = 1}
+                if (currentButtonIndex <= (numberOfButtons + 1)) {row = 1}
                 else {row = 2}
-                col = (currentButtonIndex-2)%3
-                posY += paddingSeparator + padding // if more than 2 buttons, the other buttons should be after the separate line
+                col = (currentButtonIndex-2)%numberOfButtons
+                posY += paddingSeparator + paddingY // if more than 2 buttons, the other buttons should be after the separate line
             }
             
             
@@ -153,7 +172,7 @@ class ShareViewController : UIViewController {
             */
             if (currentButtonIndex <= 2) {row = 0}
             else { row = 1 }
-            col = currentButtonIndex%3
+            col = currentButtonIndex%numberOfButtons
         }
         
         
@@ -251,7 +270,7 @@ class ShareViewController : UIViewController {
     
     func isWhatsappAvailable() -> Bool {
         let url = "whatsapp://send?text=a"
-        let whatsappURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let whatsappURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         
         return UIApplication.sharedApplication().canOpenURL(whatsappURL!)
     }
@@ -262,7 +281,7 @@ class ShareViewController : UIViewController {
     
     func isFBMessageAvailable() -> Bool {
         let url = "fb-messenger://compose"
-        let fbURL = NSURL(string: url.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)!)
+        let fbURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
         
         return UIApplication.sharedApplication().canOpenURL(fbURL!)
     }

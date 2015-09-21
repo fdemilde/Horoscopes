@@ -26,8 +26,6 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     }
     
     func setupTabBarItems(){
-        var tabBarItems = self.tabBar.items!
-        
         let dailyItem = self.tabBar.items![0] 
         let newsFeedItem = self.tabBar.items![1] 
         let notifItem = self.tabBar.items![2] 
@@ -51,7 +49,6 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         settingItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-//        616090
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {

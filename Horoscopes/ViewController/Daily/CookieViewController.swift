@@ -206,7 +206,6 @@ class CookieViewController : ViewControllerWithAds{
     
     func getFortune() {
         if((FBSDKAccessToken .currentAccessToken()) != nil){
-            var params = Dictionary<String,String>()
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
                     // println("User information = \(result)")

@@ -64,5 +64,10 @@
 	<false/>
 	<key>privacy - location usage description</key>
 	<string></string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kindle</string>
+		<string>itms-books</string>
+	</array>
 </dict>
 </plist>

@@ -312,7 +312,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     //  MARK: HELPERS
     func getFooterView() -> UIView {
-        if let tableHeaderView = tableFooterView{
+        if let _ = tableFooterView{
             
         } else {
             tableFooterView = UIView()
@@ -323,7 +323,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func getHeaderView() -> UIView {
-        if let tableHeaderView = tableHeaderView{
+        if let _ = tableHeaderView{
             
         } else {
             tableHeaderView = UIView()

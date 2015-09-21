@@ -137,7 +137,6 @@ class Utilities {
     
     class func parseUsersArray(userDataDict : Dictionary<String, AnyObject>) -> Dictionary<String, UserProfile>{ // return Dict<uid,UserProfile>
         var userDict = Dictionary<String, UserProfile>()
-        var user = UserProfile()
         for (uid, userData) in userDataDict {
             let userObject = UserProfile(data: userData as! NSDictionary)
             userDict[uid] = userObject

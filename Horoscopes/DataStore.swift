@@ -137,7 +137,7 @@ class DataStore : NSObject{
         }
         
         // sort new data with post ts
-        mutableOldArray.sort { $0.ts > $1.ts }
+        mutableOldArray.sortInPlace { $0.ts > $1.ts }
         return mutableOldArray
     }
     

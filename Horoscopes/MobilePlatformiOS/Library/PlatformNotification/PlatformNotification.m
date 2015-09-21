@@ -179,12 +179,7 @@
     [notification setAlertBody:notiff.data];
 //    DebugLog(@"data notiff = %@" , notiff.data);
     NSDate* date = [[NSDate date] dateByAddingTimeInterval:1];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:(NSCalendarUnitHour | NSCalendarUnitMinute) fromDate:date];
-    
     [notification setFireDate:date];
-//    DebugLog(@"hour = %ld , minute = %ld" ,(long)hour , (long)minute );
-    
     [notification setTimeZone:[NSTimeZone  defaultTimeZone]];
     [[UIApplication sharedApplication] scheduleLocalNotification:notification];
 }
