@@ -20,7 +20,6 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     var friends = [UserProfile]()
     var searchText = ""
     var delegate: SearchViewControllerDelegate!
-    var headerHeight: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,11 +42,19 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 self.friends = result!
             }
         }
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        gestureRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         searchBar.becomeFirstResponder()
+        if searchText == "" {
+            filteredResult = DataStore.sharedInstance.recentSearchedProfile
+            tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -70,6 +77,14 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         // Pass the selected object to the new view controller.
     }
     */
+    
+    // MARK: - Action
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            searchBar.resignFirstResponder()
+        }
+    }
     
     // MARK: - Table view data source and delegate
     
@@ -111,8 +126,17 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let profile = filteredResult[indexPath.row]
+        DataStore.sharedInstance.saveSearchedProfile(profile)
+        delegate.didChooseUser(profile)
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return headerHeight
+        if searchText == "" && filteredResult.count != 0 {
+            return 26
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -149,35 +173,12 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         })
     }
     
-    func didTapFollowProfile(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let profile = filteredResult[index!]
-        DataStore.sharedInstance.saveSearchedProfile(profile)
-        delegate.didChooseUser(profile)
-    }
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        filteredResult = DataStore.sharedInstance.recentSearchedProfile
-        if filteredResult.count == 0 {
-            headerHeight = 0
-        } else {
-            headerHeight = 26
-        }
-        tableView.reloadData()
-    }
-    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
         filteredResult.removeAll(keepCapacity: false)
         if searchText == "" {
             filteredResult = DataStore.sharedInstance.recentSearchedProfile
-            if filteredResult.count == 0 {
-                headerHeight = 0
-            } else {
-                headerHeight = 26
-            }
         } else {
-            headerHeight = 0
             filteredResult = friends.filter({ $0.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil })
         }
         tableView.reloadData()
