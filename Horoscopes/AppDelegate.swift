@@ -51,7 +51,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         formSheet.cornerRadius = 0.0;
         formSheet.portraitTopInset = 0.0;
         formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
-        self.window?.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
+        
+        let windows = UIApplication.sharedApplication().windows
+        for window in windows {
+            if window.isKindOfClass(CustomTabBarController){
+                window.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
+                break;
+            }
+            //print("window %@ root: %@", window.description, window.rootViewController)
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
