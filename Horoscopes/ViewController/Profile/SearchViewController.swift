@@ -34,6 +34,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         searchBar.tintColor = UIColor.whiteColor()
         let textField = searchBar.valueForKey("searchField") as! UITextField
         textField.textColor = UIColor.whiteColor()
+        textField.layer.cornerRadius = 14
         
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
