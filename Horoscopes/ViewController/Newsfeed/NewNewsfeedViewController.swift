@@ -151,6 +151,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.likeButton.userInteractionEnabled = true
         }
         
+        
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
                 SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
@@ -269,7 +270,12 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(XAppDelegate.socialManager.isLoggedInFacebook() || self.tabType == NewsfeedTabType.Global){ // user already loggin facebook
-            tableView.tableHeaderView = nil
+            if(userPostArray.count == 0){
+                tableView.tableHeaderView = createEmptyTableHeaderBackgroundWithMessage()
+            } else {
+                tableView.tableHeaderView = nil
+            }
+            
         } else {
             let bg = self.createEmptyTableHeaderBackground()
             let facebookButton = UIButton()
@@ -463,22 +469,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     func createEmptyTableHeaderBackgroundWithMessage() -> UIView{
         let bg = self.createEmptyTableHeaderBackground()
-        if(tabType == NewsfeedTabType.Following){
-            if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-                let facebookButton = UIButton()
-                facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
-                facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
-                facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
-                bg.addSubview(facebookButton)
-                let label = UILabel()
-                label.text = "Login Facebook to follow your friends"
-                label.sizeToFit()
-                label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
-                bg.addSubview(label)
-                return bg
-            }
-        }
-        
         let label = UILabel()
         label.text = "No feeds available"
         label.sizeToFit()
@@ -498,14 +488,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let delta = deltaCalculator.deltaFromOldArray(self.userPostArray, toNewArray:newData)
         self.userPostArray = newData
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
-        
-        
-        if(self.userPostArray.count != 0){
-            self.tableView.tableHeaderView = nil
-            self.tableView.backgroundColor = UIColor.clearColor()
-        } else {
-            self.tableView.tableHeaderView = self.createEmptyTableHeaderBackgroundWithMessage()
-        }
         self.tableView.endUpdates()
         tableView.finishInfiniteScroll()
         

@@ -20,6 +20,9 @@ class LogOutViewController : UIViewController {
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         XAppDelegate.dataStore.clearData()
+        XAppDelegate.socialManager.logoutZwigglers { (responseDict, error) -> Void in
+            print("logoutZwigglers responseDict == \(responseDict)")
+        }
         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
             self.parentVC.tableView.reloadData()
         })

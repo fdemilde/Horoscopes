@@ -48,7 +48,8 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         parentViewController = parentVC
         createEvents()
         setupCalendar()
-        footer = Utilities.makeCornerRadius(footer, maskFrame: parentVC.view.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        
     }
     
     // MARK: UI
@@ -163,11 +164,8 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         if let dayView = dayView as? JTCalendarDayView { // casting
             
             if(self.haveEventForDay(dayView.date)){
-                //                containerTopConstraint.constant += CALENDAR_ICON_SPACE_HEIGHT
                 let collectedItem = getHoroscopesItemWithDate(dayView.date)
                 parentViewController.didTapOnArchiveDate(collectedItem)
-//                setupViewWithCollectedItem(collectedItem)
-//                parentViewController
             }
             
             // Load the previous or next page if touch a day from another month

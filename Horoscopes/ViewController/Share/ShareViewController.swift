@@ -56,6 +56,7 @@ class ShareViewController : UIViewController {
     }
     
     func setupNumberOfButtonsAndPadding(){
+        // This is a very poor way to implement since I hardcoded the thing
         if (DeviceType.IS_IPHONE_6){
             numberOfButtons = 3
             let paddingX = 18.0 as CGFloat
@@ -77,9 +78,6 @@ class ShareViewController : UIViewController {
         if(self.isMailAvailable()){self.createEmailButton()}
         if(self.isFBMessageAvailable()){self.createFBMessageButton()}
         if(self.isWhatsappAvailable()){self.createWhatappsButton()}
-        self.createMessageButton()
-        self.createMessageButton()
-        self.createMessageButton()
     }
     
     func createSeparatorLine(){

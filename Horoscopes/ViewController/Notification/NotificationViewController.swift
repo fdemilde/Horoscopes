@@ -32,7 +32,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.dataSource = self
         tableView.delegate = self
 //        XAppDelegate.socialManager.clearAllNotification()
-//        self.unfollowTest()
+        self.unfollowTest()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -41,7 +41,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func unfollowTest(){
-        XAppDelegate.socialManager.unfollow(11, completionHandler: { (error) -> Void in
+        XAppDelegate.socialManager.unfollow(8, completionHandler: { (error) -> Void in
             
         })
     }
@@ -54,7 +54,30 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         tableView.tableHeaderView = getHeaderView()
         tableView.tableFooterView = getFooterView()
-        return 1
+        if(notifArray.count != 0 ){
+            self.tableView.backgroundView = nil
+            return 1
+        } else {
+            self.tableView.backgroundView = nil
+            // Display a message when the table is empty
+            let messageLabel = UILabel(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            // This is created to calculate label position
+            messageLabel.text = "There is no notification"
+            messageLabel.font = UIFont(name: "HelveticaNeue-Light", size:15)
+            messageLabel.sizeToFit()
+            let view = UIView(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            view.backgroundColor = UIColor.whiteColor()
+            // real label
+            let fixedLabel = UILabel(frame:CGRectMake((self.view.bounds.size.width - messageLabel.frame.width) / 2, (self.view.bounds.size.height - ADMOD_HEIGHT - messageLabel.frame.height) / 2, messageLabel.frame.width, messageLabel.frame.height))
+            fixedLabel.textColor = UIColor.blackColor()
+            fixedLabel.numberOfLines = 0
+            fixedLabel.textAlignment = NSTextAlignment.Center
+            fixedLabel.font = messageLabel.font
+            fixedLabel.text = messageLabel.text
+            view.addSubview(fixedLabel)
+            self.tableView.backgroundView = view
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

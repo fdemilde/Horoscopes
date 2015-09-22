@@ -257,6 +257,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
+            print("unfollow unfollow == \(response)")
             if let error = error {
                 completionHandler(error: error)
             } else {
@@ -410,6 +411,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 
             }
         })
+    }
+    
+    func logoutZwigglers(completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
+        XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock { (result, error) -> Void in
+            print("logoutZwigglers result == \(result)")
+        }
     }
     
     // Convenience method that log in Facebook then log in Zwigglers

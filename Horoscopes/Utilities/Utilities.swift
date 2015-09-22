@@ -308,15 +308,12 @@ class Utilities {
             return "post_type_feel"
         case NewsfeedType.Story:
             return "post_type_story"
-        default:
-            return ""
         }
     }
     
     class func getTimeAgoString(ts : Int) -> String {
         let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
         let facebookTimeAgoString = timeAgoDate.formattedAsTimeAgo()
-        let twitterTimeAgoString = timeAgoDate.shortTimeAgoSinceNow()
         return facebookTimeAgoString
     }
     

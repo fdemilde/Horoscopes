@@ -238,8 +238,14 @@ class CookieViewController : ViewControllerWithAds{
             }
             //set data
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
-            self.fortuneDescriptionLabel.text = fortuneData["fortune"] as? String
-            self.luckyNumberLabel.text = "";
+            let fortuneDescription = fortuneData["fortune"] as? String
+            if let fortuneDescription = fortuneDescription {
+                self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
+            } else {
+                self.fortuneDescriptionLabel.text = ""
+            }
+            
+            self.luckyNumberLabel.text = ""
             let luckyNumbers = fortuneData["lucky_numbers"] as! [AnyObject]
             
             for number in luckyNumbers {

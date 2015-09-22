@@ -21,14 +21,14 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     var todayDate = NSDate()
     var dateSelected : NSDate!
     var eventsByDate = [String]()
-    
     var type = ArchiveViewType.Calendar
     
     let CALENDAR_ICON_SPACE_HEIGHT = 50 as CGFloat
     let PROGRESS_BAR_CONTAINER_SIZE = 120 as CGFloat
     let PADDING: CGFloat = 8 as CGFloat
     let HEADER_HEIGHT: CGFloat = 37 as CGFloat
-    let FOOTER_HEIGHT: CGFloat = 50 as CGFloat
+    let FOOTER_HEIGHT: CGFloat = 95 as CGFloat
+    let CIRCULAR_PROGRESS_HOLDER_HEIGHT: CGFloat = 150 as CGFloat
     
     let textviewForCalculating = UITextView()
     override func viewDidLoad() {
@@ -38,6 +38,9 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
     }
     
     // MARK: UI
@@ -58,10 +61,9 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             tableHeaderView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width, 150)
             tableHeaderView.backgroundColor = UIColor.clearColor()
             var pupleView = UIView()
-            pupleView.frame = CGRectMake(PADDING, 10, Utilities.getScreenSize().width - PADDING * 2, 140)
+            pupleView.frame = CGRectMake(PADDING, 8, Utilities.getScreenSize().width - PADDING * 2, 142)
             pupleView.backgroundColor = UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1.0)
             pupleView = Utilities.makeCornerRadius(pupleView, maskFrame: self.view.bounds, roundOptions: [.TopLeft, .TopRight], radius: 4.0)
-            
             pupleView.addSubview(getProgressBar())
             tableHeaderView.addSubview(pupleView)
         }
@@ -116,26 +118,37 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        let headerHeight = getTableHeaderHeight()
+        let expectedHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - headerHeight - PADDING  - TABBAR_HEIGHT
         if(type == .Calendar){
-            return 235
+            return expectedHeight
         }
-         return getAboutCellHeight()
+        return max(getAboutCellHeight(), expectedHeight)
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         if(type == .Calendar){
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveCalendarCell") as! ArchiveCalendarCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveCalendarCell", forIndexPath: indexPath) as! ArchiveCalendarCell
             cell.setupCell(self)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveHoroscopeDetailCell") as! DailyContentTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveHoroscopeDetailCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             if let _ = collectedItem{
                 cell.setUpArchive(collectedItem)
                     cell.delegate = self
             }
             return cell
         }
+    }
+    
+    func getTableHeaderHeight() -> CGFloat{
+        var headerHeight = CIRCULAR_PROGRESS_HOLDER_HEIGHT
+        if let tableHeaderView = tableView.tableHeaderView {
+            headerHeight = tableHeaderView.frame.height
+        }
+        
+        return headerHeight
     }
     
     // MARK: Helpers
@@ -146,18 +159,21 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             text = item.horoscope.horoscopes[0] as! String
         }
         
-        let font = UIFont(name: "HelveticaNeue", size: 16)
+        let font = UIFont(name: "Book Antiqua", size: 15)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - PADDING * 2
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
-        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + PADDING + 20
+        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT
     }
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
         textviewForCalculating.attributedText = string
         let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
-        let height = ceil(size.height)
+        
+        let tableHeaderHeight = getTableHeaderHeight()
+        let minTextViewHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - PADDING * 2 - HEADER_HEIGHT - tableHeaderHeight - FOOTER_HEIGHT - TABBAR_HEIGHT
+        let height = max(ceil(size.height), minTextViewHeight)
         return height
     }
     
