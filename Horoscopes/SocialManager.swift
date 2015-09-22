@@ -240,6 +240,20 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // MARK: Profile
     
+    func getProfileCounts(usersId: [Int], completionHandler: (result: [UserProfileCounts]?, error: NSError?) -> Void) {
+        let usersIdString = usersId.map({ String($0) }).joinWithSeparator(",")
+        let postData = NSMutableDictionary()
+        postData.setObject(usersIdString, forKey: "uid")
+        XAppDelegate.mobilePlatform.sc.sendRequest(GET_PROFILE_COUNTS, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let json = Utilities.parseNSDictionaryToDictionary(response)
+                print(json)
+            }
+        }
+    }
+    
     func follow(uid: Int, completionHandler: (error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")

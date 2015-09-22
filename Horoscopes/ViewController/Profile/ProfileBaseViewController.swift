@@ -81,6 +81,14 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         avatarImageView.layer.cornerRadius = 60 / 2
         avatarImageView.clipsToBounds = true
         
+        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        
+        tableView.estimatedRowHeight = 300
+        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView.layer.cornerRadius = 4
+        
         setupInfiniteScroll()
     }
 
@@ -110,22 +118,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureScopeButton() {
-        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        updateScopeButtonTitle()
-    }
-    
-    func updateScopeButtonTitle() {
         postButton.setTitle("Post\n\(userProfile.numberOfPosts)", forState: .Normal)
         followingButton.setTitle("Following\n\(userProfile.numberOfUsersFollowing)", forState: .Normal)
         followersButton.setTitle("Followers\n\(userProfile.numberOfFollowers)", forState: .Normal)
-    }
-    
-    func configureTableView() {
-        tableView.estimatedRowHeight = 300
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.layer.cornerRadius = 4
     }
     
     func highlightScopeButton(sender: UIButton) {
@@ -142,18 +137,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         cell.configureUserPostUi()
         switch post.type {
         case .OnYourMind:
-            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
-            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_mind")
             cell.postTypeLabel.text = postTypeTexts[2]
         case .Feeling:
-            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
-            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_feel")
             cell.postTypeLabel.text = postTypeTexts[0]
         case .Story:
-            cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
-            cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
             cell.postTypeLabel.text = postTypeTexts[1]
         }
@@ -216,25 +205,19 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // MARK: - Convenience
     
-    func tapScopeButton(sender: UIButton) {
-        highlightScopeButton(sender)
-        updateTableViewLayout()
-        tableView.reloadData()
-        getProfile()
-    }
-    
     func configureUi() {
         configureProfileView()
         configureScopeButton()
-        configureTableView()
     }
     
-    func updateTableViewLayout() {
+    func tapScopeButton(sender: UIButton) {
+        highlightScopeButton(sender)
         if currentScope != .Post {
             changeToWhiteTableViewLayout()
         } else {
             changeToClearTableViewLayout()
         }
+        tableView.reloadData()
     }
     
     // MARK: - Helper
@@ -247,7 +230,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                 if !result!.isEmpty {
                     self.userProfile = result![0]
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.updateScopeButtonTitle()
                         self.configureProfileView()
                     })
                 }
@@ -276,6 +258,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         getFollowers(baseDispatchGroup)
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
             self.tableView.hidden = false
+            Utilities.hideHUD()
         }
     }
     
@@ -376,6 +359,24 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
             configureFollowTableViewCell(cell, profile: profile)
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if currentScope == .Post {
+            let cell = cell as! PostTableViewCell
+            let post = userPosts[indexPath.row]
+            switch post.type {
+            case .OnYourMind:
+                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
+                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
+            case .Feeling:
+                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
+                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
+            case .Story:
+                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
+                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
+            }
         }
     }
     
