@@ -20,7 +20,6 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     var friends = [UserProfile]()
     var searchText = ""
     var delegate: SearchViewControllerDelegate!
-    var headerHeight: CGFloat = 0
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +34,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         searchBar.tintColor = UIColor.whiteColor()
         let textField = searchBar.valueForKey("searchField") as! UITextField
         textField.textColor = UIColor.whiteColor()
+        textField.layer.cornerRadius = 14
         
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
@@ -43,11 +43,19 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 self.friends = result!
             }
         }
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        gestureRecognizer.cancelsTouchesInView = false
+        view.addGestureRecognizer(gestureRecognizer)
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         searchBar.becomeFirstResponder()
+        if searchText == "" {
+            filteredResult = DataStore.sharedInstance.recentSearchedProfile
+            tableView.reloadData()
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -71,6 +79,14 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     }
     */
     
+    // MARK: - Action
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            searchBar.resignFirstResponder()
+        }
+    }
+    
     // MARK: - Table view data source and delegate
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -84,6 +100,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
         cell.delegate = self
+        cell.resetUi()
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = friend.horoscopeSignString
@@ -111,8 +128,17 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let profile = filteredResult[indexPath.row]
+        DataStore.sharedInstance.saveSearchedProfile(profile)
+        delegate.didChooseUser(profile)
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return headerHeight
+        if searchText == "" && filteredResult.count != 0 {
+            return 26
+        }
+        return 0
     }
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -149,35 +175,12 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         })
     }
     
-    func didTapFollowProfile(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let profile = filteredResult[index!]
-        DataStore.sharedInstance.saveSearchedProfile(profile)
-        delegate.didChooseUser(profile)
-    }
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        filteredResult = DataStore.sharedInstance.recentSearchedProfile
-        if filteredResult.count == 0 {
-            headerHeight = 0
-        } else {
-            headerHeight = 26
-        }
-        tableView.reloadData()
-    }
-    
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
         filteredResult.removeAll(keepCapacity: false)
         if searchText == "" {
             filteredResult = DataStore.sharedInstance.recentSearchedProfile
-            if filteredResult.count == 0 {
-                headerHeight = 0
-            } else {
-                headerHeight = 26
-            }
         } else {
-            headerHeight = 0
             filteredResult = friends.filter({ $0.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil })
         }
         tableView.reloadData()

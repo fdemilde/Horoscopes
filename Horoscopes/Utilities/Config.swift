@@ -52,6 +52,7 @@ let UPDATE_BIRTHDAY = "app.horoscopes.setbirthday"
 let GET_FRIEND_LIST = "app.horoscopes.profile.facebookfriends"
 let GET_OTHER_USER_FOLLOWING = "app.horoscopes.profile.following"
 let GET_OTHER_USER_FOLLOWERS = "app.horoscopes.profile.followers"
+let GET_PROFILE_COUNTS = "app.horoscopes.profile.counts"
 
 // MARK: Notification method
 

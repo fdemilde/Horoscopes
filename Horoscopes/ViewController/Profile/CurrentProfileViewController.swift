@@ -35,6 +35,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
 
         // Do any additional setup after loading the view.
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "CurrentProfileHeaderFooterView")
+        Utilities.showHUD()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -49,6 +50,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     if let error = error {
                         Utilities.showError(self, error: error)
                     } else {
+                        self.userProfile = XAppDelegate.currentUser
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.configureUi()
                         })
@@ -57,6 +59,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 })
             }
         } else {
+            Utilities.hideHUD()
             configureLoginView()
         }
     }
@@ -112,6 +115,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         if self.loginView != nil {
                             self.loginView.removeFromSuperview()
+                            self.loginView = nil
                             self.profileView.hidden = false
                         }
                         self.configureUi()
@@ -143,12 +147,12 @@ class CurrentProfileViewController: ProfileBaseViewController {
         getFriends(baseDispatchGroup)
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
             self.checkFollowStatus()
+            Utilities.hideHUD()
         }
     }
     
     override func getUserPosts(dispatchGroup: dispatch_group_t?) {
         super.getUserPosts(dispatchGroup)
-        getProfile()
     }
     
     override func getFollowingUsers(dispatchGroup: dispatch_group_t?) {
@@ -334,7 +338,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 Utilities.showError(self, error: error)
             } else {
                 let group = dispatch_group_create()
-                self.getProfile()
                 self.getFollowingUsers(group)
                 dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
                     self.checkFollowStatus()

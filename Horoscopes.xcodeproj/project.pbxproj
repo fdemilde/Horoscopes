@@ -23,6 +23,7 @@
 		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
 		70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
+		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; settings = {ASSET_TAGS = (); }; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD741B99536C0047185F /* CMPopTipView.m */; };
@@ -212,6 +213,7 @@
 		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDailyTableViewController.swift; sourceTree = "<group>"; };
 		70DB1DD01B998E8300218063 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileCounts.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.release.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.release.xcconfig"; sourceTree = "<group>"; };
@@ -873,6 +875,7 @@
 				F4CACA8E1B2003E1003C6301 /* UserSettings.m */,
 				F49FAE461B42899700F38E0C /* UserPost.swift */,
 				F49FAE4A1B42E41000F38E0C /* UserProfile.swift */,
+				70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1284,6 +1287,7 @@
 				F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */,
 				F4CACAD61B2010F2003C6301 /* ExternalRequest.m in Sources */,
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
+				70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */,
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,

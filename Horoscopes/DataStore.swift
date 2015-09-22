@@ -14,7 +14,6 @@ class DataStore : NSObject{
     var newsfeedIsUpdated : Bool = false
     
     var recentSearchedProfile = [UserProfile]()
-    var currentUserProfile: UserProfile?
     var isLastPage = false
     
     static let sharedInstance = DataStore()
@@ -180,6 +179,14 @@ class DataStore : NSObject{
     
     func clearData(){
         newsfeedFollowing = [UserPost]()
+        recentSearchedProfile = [UserProfile]()
+        XAppDelegate.currentUser = UserProfile()
+        let defaultManager = NSFileManager.defaultManager()
+        do {
+            try defaultManager.removeItemAtPath(UserProfile.filePath)
+        } catch {
+            
+        }
     }
     
 }
