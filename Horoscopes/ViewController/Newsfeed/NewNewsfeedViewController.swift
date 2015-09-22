@@ -62,6 +62,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
                     self.checkAndLoginZwigglers()
                 })
             }
+            
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
@@ -204,14 +205,17 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: Notification Handlers
     
     func feedsFinishedLoading(notif : NSNotification){
-        Utilities.hideHUD()
-        if(notif.object == nil){
-            tableView.finishInfiniteScroll()
-        } else {
-            self.resetTapButtonColor()
-            let newDataArray = notif.object as! [UserPost]
-            self.insertRowsAtBottom(newDataArray)
-        }
+        dispatch_async(dispatch_get_main_queue(),{
+            Utilities.hideHUD()
+            if(notif.object == nil){
+                self.tableView.finishInfiniteScroll()
+            } else {
+                self.resetTapButtonColor()
+                let newDataArray = notif.object as! [UserPost]
+                self.insertRowsAtBottom(newDataArray)
+            }
+        })
+        
     }
     
     // MARK: Button Actions
@@ -382,16 +386,21 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // Networks 
     func checkAndLoginZwigglers(){
-        Utilities.showHUD()
-        XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
-            if(error != nil){
-                Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                Utilities.hideHUD()
-            } else {
-                XAppDelegate.locationManager.setupLocationService()
-                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
-            }
-        })
+        
+        if !SocialManager.sharedInstance.isLoggedInZwigglers(){
+            Utilities.showHUD()
+            XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
+                if(error != nil){
+                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                    Utilities.hideHUD()
+                } else {
+                    XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+                }
+            })
+        } else {
+            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+        }
+        
     }
     
     // MARK: facebook
@@ -471,6 +480,7 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         let bg = self.createEmptyTableHeaderBackground()
         let label = UILabel()
         label.text = "No feeds available"
+        label.font = UIFont(name: "HelveticaNeue-Light", size:15)
         label.sizeToFit()
         label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, (tableView.bounds.height - label.frame.size.height)/2, label.frame.size.width, label.frame.size.height)
         bg.addSubview(label)

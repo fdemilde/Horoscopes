@@ -32,7 +32,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.dataSource = self
         tableView.delegate = self
 //        XAppDelegate.socialManager.clearAllNotification()
-        self.unfollowTest()
+//        self.unfollowTest()
     }
     
     override func viewWillAppear(animated: Bool) {

@@ -30,8 +30,10 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         contentView.layer.cornerRadius = 4
         contentView.clipsToBounds = true
         // Do any additional setup after loading the view.
-        let backgroundImage = UIImage(named: "background")
-        self.view.backgroundColor = UIColor(patternImage: backgroundImage!)
+        let screenSize = Utilities.getScreenSize()
+        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView.image = UIImage(named: "background")
+        self.view.addSubview(bgImageView)
         postTitle.text = placeholder
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font

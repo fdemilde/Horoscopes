@@ -364,18 +364,21 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if currentScope == .Post {
-            let cell = cell as! PostTableViewCell
-            let post = userPosts[indexPath.row]
-            switch post.type {
-            case .OnYourMind:
-                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
-                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
-            case .Feeling:
-                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
-                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
-            case .Story:
-                cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
-                cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
+            // BINH BINH: check this again, it crashes, this is temporary fix
+            if let cell = cell as? PostTableViewCell {
+                // -----------------
+                let post = userPosts[indexPath.row]
+                switch post.type {
+                case .OnYourMind:
+                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
+                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
+                case .Feeling:
+                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
+                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
+                case .Story:
+                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
+                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
+                }
             }
         }
     }

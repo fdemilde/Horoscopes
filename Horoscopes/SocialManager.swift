@@ -96,7 +96,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 print("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
-//                println("getFollowingNewsfeed == \(response)")
+//                print("getFollowingNewsfeed == \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response)
 //                println("result when get getFollowingNewsfeed = \(result)")
                 let errorCode = result["error"] as! Int
@@ -271,7 +271,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
-            print("unfollow unfollow == \(response)")
             if let error = error {
                 completionHandler(error: error)
             } else {
