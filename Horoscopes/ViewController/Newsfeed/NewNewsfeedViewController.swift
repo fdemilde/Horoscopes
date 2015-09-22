@@ -54,6 +54,12 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // remove all observer first
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+        
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
             userPostArray = XAppDelegate.dataStore.newsfeedFollowing
             tableView.reloadData()
@@ -64,9 +70,6 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
             
         }
-        
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         
         tableView.reloadData()
     }
@@ -388,11 +391,10 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
     func checkAndLoginZwigglers(){
         
         if !SocialManager.sharedInstance.isLoggedInZwigglers(){
-            Utilities.showHUD()
+            
             XAppDelegate.socialManager.loginZwigglers(FBSDKAccessToken .currentAccessToken().tokenString, completionHandler: { (result, error) -> Void in
                 if(error != nil){
                     Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
-                    Utilities.hideHUD()
                 } else {
                     XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                 }

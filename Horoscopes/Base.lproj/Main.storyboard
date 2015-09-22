@@ -332,8 +332,8 @@
                             </view>
                             <tableView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="90" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X1Z-S4-ebY">
                                 <rect key="frame" x="10" y="97" width="580" height="454"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="sectionIndexBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexBackgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" restorationIdentifier="NotificationTableViewCell" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NotificationTableViewCell" rowHeight="70" id="0OC-7e-agD" customClass="NotificationTableViewCell" customModule="Horoscopes" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="580" height="70"/>
@@ -451,6 +451,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="10" y="50" width="380" height="701"/>
+                                </variation>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" red="0.94509803920000002" green="0.94509803920000002" blue="0.94509803920000002" alpha="0.0" colorSpace="calibratedRGB"/>
@@ -463,19 +466,26 @@
                             <constraint firstItem="X1Z-S4-ebY" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="10" id="HdS-YO-kVH">
                                 <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                             </constraint>
+                            <constraint firstItem="X1Z-S4-ebY" firstAttribute="top" secondItem="3SS-VW-yoY" secondAttribute="bottom" constant="10" id="KhO-GR-xpN"/>
                             <constraint firstItem="3SS-VW-yoY" firstAttribute="top" secondItem="MJc-GG-XN9" secondAttribute="bottom" id="V4m-82-htu"/>
                             <constraint firstItem="X1Z-S4-ebY" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" constant="10" id="hMC-CB-RLP"/>
                             <constraint firstAttribute="trailing" secondItem="3SS-VW-yoY" secondAttribute="trailing" id="vqq-KW-5UQ"/>
                             <constraint firstItem="3SS-VW-yoY" firstAttribute="leading" secondItem="Kgb-Yc-P91" secondAttribute="leading" id="xVg-A2-vPb"/>
+                            <constraint firstItem="pzb-NJ-KAL" firstAttribute="top" secondItem="X1Z-S4-ebY" secondAttribute="bottom" constant="10" id="zMl-BO-rsj"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="HdS-YO-kVH"/>
+                                <exclude reference="KhO-GR-xpN"/>
+                                <exclude reference="zMl-BO-rsj"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="HdS-YO-kVH"/>
+                                <exclude reference="HdS-YO-kVH"/>
+                                <include reference="KhO-GR-xpN"/>
+                                <exclude reference="6hW-1l-lUd"/>
+                                <include reference="zMl-BO-rsj"/>
                             </mask>
                         </variation>
                     </view>
@@ -1446,6 +1456,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
+                                            <outlet property="actionView" destination="lnV-LY-bFG" id="csK-oW-dCp"/>
                                             <outlet property="containerView" destination="sav-qP-TGS" id="6CP-hM-nIM"/>
                                             <outlet property="headerView" destination="EIn-Jx-qe9" id="IZJ-HQ-gPz"/>
                                             <outlet property="horoscopeSignImageView" destination="SaZ-Ci-OAt" id="oma-w9-wWY"/>

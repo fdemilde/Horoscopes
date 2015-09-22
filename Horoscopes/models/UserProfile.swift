@@ -12,7 +12,7 @@ class UserProfile: NSObject, NSCoding {
     var uid : Int = -1
     var name : String = ""
     var imgURL : String = ""
-    var sign : Int = 0
+    var sign : Int = -1
     var location : String = ""
     var numberOfPosts: Int = 0
     var numberOfUsersFollowing: Int = 0
@@ -25,10 +25,20 @@ class UserProfile: NSObject, NSCoding {
         return url.URLByAppendingPathComponent("userProfile").path!
     }
     var horoscopeSignString: String {
-        return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
+        if(sign >= 0){
+            return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
+        } else {
+            return ""
+        }
+        
     }
     var horoscopeSignImage: UIImage {
-        return UIImage(named: String(format:"%@_selected", horoscopeSignString))!
+        if(sign >= 0){
+            return UIImage(named: String(format:"%@_selected", horoscopeSignString))!
+        } else {
+            return UIImage()
+        }
+        
     }
     struct Keys {
         static let uid = "uid"
@@ -46,9 +56,7 @@ class UserProfile: NSObject, NSCoding {
         self.name = data.objectForKey("name") as! String
         self.imgURL = data.objectForKey("img") as! String
         let sign = data.objectForKey("sign") as! Int
-        if(sign > 0){ // sign is not set
-            self.sign = sign - 1
-        }
+        self.sign = sign - 1
         
         self.location = data.objectForKey("location") as! String
         numberOfPosts = data.objectForKey("no_post") as! Int

@@ -113,8 +113,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         nameLabel.text = userProfile.name
-        horoscopeSignLabel.text = userProfile.horoscopeSignString
-        horoscopeSignImageView.image = userProfile.horoscopeSignImage
+        // BINH BINH : WRONG!
+        if(userProfile.sign >= 0){
+            horoscopeSignLabel.hidden = false
+            horoscopeSignImageView.hidden = false
+            horoscopeSignLabel.text = userProfile.horoscopeSignString
+            horoscopeSignImageView.image = userProfile.horoscopeSignImage
+        } else {
+            horoscopeSignLabel.hidden = true
+            horoscopeSignImageView.hidden = true
+        }
+        
     }
     
     func configureScopeButton() {

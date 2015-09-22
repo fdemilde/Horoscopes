@@ -31,6 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         if isFirstTimeUsing() {
+            print("Show login VC")
             self.showLoginVC()
         }
         
@@ -54,11 +55,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let windows = UIApplication.sharedApplication().windows
         for window in windows {
-            if window.isKindOfClass(CustomTabBarController){
-                window.rootViewController?.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
-                break;
+//            print("windows windows == \(window.classForCoder)")
+            if window.isKindOfClass(UIWindow){
+//                print("windows windows == CustomTabBarController YES")
+                window.rootViewController!.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
+                break
             }
-            //print("window %@ root: %@", window.description, window.rootViewController)
+//            print("window %@ root: %@", window.description, window.rootViewController)
         }
     }
 
@@ -133,6 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Helpers
     func isFirstTimeUsing() -> Bool{
+        print("userSettings.horoscopeSign == \(userSettings.horoscopeSign)")
         if(userSettings.horoscopeSign == -1){
             return true
         } else { return false }

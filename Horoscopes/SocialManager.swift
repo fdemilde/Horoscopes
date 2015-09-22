@@ -406,10 +406,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func loginZwigglers(token: String, completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
+        Utilities.showHUD()
         let objects = ["facebook", FACEBOOK_APP_ID, token]
         let keys = ["login_method", "app_id", "access_token"]
         let params = NSMutableDictionary(objects: objects, forKeys: keys)
         XAppDelegate.mobilePlatform.userModule.loginWithParams(params, andCompleteBlock: { (responseDict, error) -> Void in
+            Utilities.hideHUD()
             if let error = error {
                 completionHandler(responseDict: nil, error: error)
             } else {

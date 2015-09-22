@@ -118,17 +118,18 @@ class MyDatePickerViewController : UIViewController, UIPickerViewDataSource, UIP
     
     
     func setCurrentBirthday(){
-        var dateArray = [0, 0]
+        var currentDateArray = [0, 0]
         if(birthday == nil){ // haven't selected burthday, show first row
-            dateArray = self.getMonthAndDayIndexByDate(Utilities.getDefaultBirthday())
+            currentDateArray = self.getMonthAndDayIndexByDate(Utilities.getDefaultBirthday())
             
         } else {
-            dateArray = self.getMonthAndDayIndexByDate(birthday)
+            currentDateArray = self.getMonthAndDayIndexByDate(birthday)
         }
-        picker.selectRow(dateArray[0], inComponent: 0, animated: false)
-        picker.selectRow(dateArray[1], inComponent: 1, animated: false)
-        selectedDayIndex = dateArray[1]
-        selectedMonthIndex = dateArray[0]
+        picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
+        picker.selectRow(currentDateArray[1], inComponent: 1, animated: false)
+        selectedDayIndex = currentDateArray[1]
+        selectedMonthIndex = currentDateArray[0]
+        dateArray = getDayArrayBaseOnMonthIndex(selectedMonthIndex)
     }
     
     // parse current birthday into array of Int as array[0] = month, array[1] = day
