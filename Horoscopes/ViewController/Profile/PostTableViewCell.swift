@@ -66,12 +66,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         topBorder = CALayer()
         topBorder.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
         actionView.layer.addSublayer(topBorder)
-        heightConstraint = NSLayoutConstraint(item: textView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: minimumTextViewHeight)
-        if #available(iOS 8.0, *) {
-            heightConstraint.active = true
-        } else {
-            // Fallback on earlier versions
-            textView.addConstraint(heightConstraint)
+        for subview in subviews {
+            for constraint in subview.constraints {
+                if constraint.identifier == "textViewHeight" {
+                    constraint.constant = minimumTextViewHeight
+                }
+            }
         }
     }
 

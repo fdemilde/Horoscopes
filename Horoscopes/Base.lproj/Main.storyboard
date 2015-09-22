@@ -872,7 +872,7 @@
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7rh-xl-Ici" userLabel="Main View">
                                                                     <rect key="frame" x="0.0" y="150" width="580" height="168"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6u-6b-vEC" userLabel="Heart Label">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6u-6b-vEC" userLabel="Heart Label">
                                                                             <rect key="frame" x="10" y="160" width="0.0" height="0.0"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -883,6 +883,7 @@
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="133" id="AY5-Rr-Bpo"/>
+                                                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="126" identifier="textViewHeight" id="wlh-5t-Q2y"/>
                                                                             </constraints>
                                                                             <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</string>
                                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -903,11 +904,13 @@
                                                                         <constraint firstItem="K6u-6b-vEC" firstAttribute="leading" secondItem="7rh-xl-Ici" secondAttribute="leading" constant="10" id="IQ4-hV-zgp"/>
                                                                         <constraint firstItem="1wk-sX-mES" firstAttribute="leading" secondItem="7rh-xl-Ici" secondAttribute="leading" constant="10" id="MDR-j3-WUP"/>
                                                                         <constraint firstItem="1wk-sX-mES" firstAttribute="top" secondItem="K6u-6b-vEC" secondAttribute="bottom" constant="-43" id="RIW-pq-nf8"/>
+                                                                        <constraint firstItem="K6u-6b-vEC" firstAttribute="top" secondItem="1wk-sX-mES" secondAttribute="bottom" constant="17" id="eVT-0Z-bjJ"/>
                                                                         <constraint firstAttribute="bottom" secondItem="K6u-6b-vEC" secondAttribute="bottom" constant="8" id="tqv-Cg-Ujf"/>
                                                                     </constraints>
                                                                     <variation key="default">
                                                                         <mask key="constraints">
                                                                             <exclude reference="RIW-pq-nf8"/>
+                                                                            <exclude reference="CG1-ac-7LE"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
@@ -5478,6 +5481,7 @@ on news things</string>
                                                                     <rect key="frame" x="10" y="16" width="560" height="112"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="112" identifier="textViewHeight" id="Z91-Fn-2xL"/>
                                                                         <constraint firstAttribute="height" constant="128" id="gvl-7T-41M"/>
                                                                         <constraint firstAttribute="height" constant="188" id="vJw-B6-aei"/>
                                                                     </constraints>
@@ -6138,6 +6142,7 @@ on news things</string>
                                                                     <rect key="frame" x="10" y="16" width="560" height="112"/>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
+                                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="112" identifier="textViewHeight" id="9ov-5d-dtN"/>
                                                                         <constraint firstAttribute="height" constant="128" id="r2s-R5-akE"/>
                                                                         <constraint firstAttribute="height" constant="188" id="xt0-p6-nkx"/>
                                                                     </constraints>
