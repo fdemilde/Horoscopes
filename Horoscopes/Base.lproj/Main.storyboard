@@ -2308,7 +2308,7 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstItem="qGn-US-lb3" firstAttribute="top" secondItem="yTl-hb-xAq" secondAttribute="top" id="DxW-z5-u5x"/>
                                                         <constraint firstAttribute="height" constant="50" id="FnJ-4U-apZ">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="44"/>
                                                         </constraint>
                                                         <constraint firstItem="qGn-US-lb3" firstAttribute="leading" secondItem="yTl-hb-xAq" secondAttribute="leading" id="rQh-V7-hJU"/>
                                                         <constraint firstAttribute="trailing" secondItem="qGn-US-lb3" secondAttribute="trailing" id="rbX-5c-FLw"/>

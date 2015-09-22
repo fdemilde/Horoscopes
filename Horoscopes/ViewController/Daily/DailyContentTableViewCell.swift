@@ -111,7 +111,11 @@ class DailyContentTableViewCell: UITableViewCell {
         dayLabel.hidden = true
         
         selectedSign = XAppDelegate.horoscopesManager.getSignIndexOfSignName(item.horoscope.sign)
-        self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        // BINH BINH: temporary fix 
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        }
     }
     
     func dateStringForType(type: DailyHoroscopeType) -> String {

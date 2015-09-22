@@ -28,7 +28,8 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     let PADDING: CGFloat = 8 as CGFloat
     let HEADER_HEIGHT: CGFloat = 37 as CGFloat
     let FOOTER_HEIGHT: CGFloat = 95 as CGFloat
-    let CIRCULAR_PROGRESS_HOLDER_HEIGHT: CGFloat = 150 as CGFloat
+    let CIRCULAR_PROGRESS_HOLDER_HEIGHT_WITH_PADDING: CGFloat = 160 as CGFloat
+    let MIN_CALENDAR_CELL_HEIGHT: CGFloat = 250 as CGFloat
     
     let textviewForCalculating = UITextView()
     override func viewDidLoad() {
@@ -119,9 +120,9 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         let headerHeight = getTableHeaderHeight()
-        let expectedHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - headerHeight - PADDING  - TABBAR_HEIGHT
+        let expectedHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - headerHeight - PADDING - TABBAR_HEIGHT
         if(type == .Calendar){
-            return expectedHeight
+            return max(expectedHeight, MIN_CALENDAR_CELL_HEIGHT)
         }
         return max(getAboutCellHeight(), expectedHeight)
     }
@@ -143,7 +144,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     }
     
     func getTableHeaderHeight() -> CGFloat{
-        var headerHeight = CIRCULAR_PROGRESS_HOLDER_HEIGHT
+        var headerHeight = CIRCULAR_PROGRESS_HOLDER_HEIGHT_WITH_PADDING
         if let tableHeaderView = tableView.tableHeaderView {
             headerHeight = tableHeaderView.frame.height
         }

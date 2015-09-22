@@ -163,7 +163,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             if let data = data {
                 let string = NSString(data: data, encoding: NSUTF8StringEncoding)
                 XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
-                    print("sendLocation result == \(result)")
                     if(error == nil){
                         let errorCode = result?["error"] as! Int
                         if(errorCode == 0){
@@ -200,7 +199,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if let data = data {
                     let string = NSString(data: data, encoding: NSUTF8StringEncoding)
                     XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
-                        print("sendLocation result == \(result)")
                         if(error == nil){
                             let errorCode = result?["error"] as! Int
                             if(errorCode == 0){

@@ -25,7 +25,8 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     
     let CALENDAR_ICON_SPACE_HEIGHT = 50 as CGFloat
     let CALENDAR_MENU_HEIGHT = 40 as CGFloat
-    let CALENDAR_CONTENT_HEIGHT = 160 as CGFloat
+    let MIN_CALENDAR_HEIGHT = 160 as CGFloat
+    let FOOTER_HEIGHT = 44 as CGFloat
     let PADDING = 10 as CGFloat
     
     override func awakeFromNib() {
@@ -48,7 +49,12 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         parentViewController = parentVC
         createEvents()
         setupCalendar()
-        self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        // BINH BINH: temporary fix 
+        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+        dispatch_after(delayTime, dispatch_get_main_queue()) {
+            self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        }
+        
         
     }
     
@@ -70,14 +76,14 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         
         calendarManager.setDate(NSDate())
         calendarMenuView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width - PADDING * 2, CALENDAR_MENU_HEIGHT)
-        
-        calendarContentView.frame = CGRectMake(0, calendarMenuView.frame.height, Utilities.getScreenSize().width - PADDING * 2, self.getCalendarHeight())
+        let calendarHeight = max(self.getCalendarHeight(), MIN_CALENDAR_HEIGHT)
+        calendarContentView.frame = CGRectMake(0, calendarMenuView.frame.height, Utilities.getScreenSize().width - PADDING * 2, calendarHeight)
     }
     
     // MARK: Helpers
     
     func getCalendarHeight() -> CGFloat{
-        return Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - inset * 2 - 150 - CALENDAR_MENU_HEIGHT - TABBAR_HEIGHT
+        return Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - (inset * 2) - 150 - CALENDAR_MENU_HEIGHT - FOOTER_HEIGHT -  TABBAR_HEIGHT
     }
     
     // Used only to have a key for _eventsByDate
