@@ -101,6 +101,7 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     // setup for Archive View
     func setUpArchive(item : CollectedItem){
+        layer.cornerRadius = 0
         dayLabel.text = "Archive"
         textView.text = item.horoscope.horoscopes[0] as! String
         timeTag = item.collectedDate.timeIntervalSince1970

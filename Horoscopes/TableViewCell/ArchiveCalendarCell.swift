@@ -70,10 +70,15 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         
         calendarManager.setDate(NSDate())
         calendarMenuView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width - PADDING * 2, CALENDAR_MENU_HEIGHT)
-        calendarContentView.frame = CGRectMake(0, calendarMenuView.frame.height, Utilities.getScreenSize().width - PADDING * 2, CALENDAR_CONTENT_HEIGHT)
+        
+        calendarContentView.frame = CGRectMake(0, calendarMenuView.frame.height, Utilities.getScreenSize().width - PADDING * 2, self.getCalendarHeight())
     }
     
     // MARK: Helpers
+    
+    func getCalendarHeight() -> CGFloat{
+        return Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - inset * 2 - 150 - CALENDAR_MENU_HEIGHT - TABBAR_HEIGHT
+    }
     
     // Used only to have a key for _eventsByDate
     func dateFormatter() -> NSDateFormatter

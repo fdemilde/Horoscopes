@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="8Gz-Uc-WzB">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
@@ -78,7 +78,8 @@
                                                         <exclude reference="hfy-bz-lh0"/>
                                                     </mask>
                                                 </variation>
-                                                <variation key="heightClass=regular-widthClass=compact">
+                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                    <rect key="frame" x="286" y="1" width="114" height="40"/>
                                                     <mask key="constraints">
                                                         <include reference="hfy-bz-lh0"/>
                                                     </mask>
@@ -1223,6 +1224,9 @@
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <nil key="highlightedColor"/>
+                                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                                        <rect key="frame" x="151" y="8" width="121" height="14"/>
+                                                                                    </variation>
                                                                                 </label>
                                                                             </subviews>
                                                                             <constraints>
@@ -1230,6 +1234,9 @@
                                                                                 <constraint firstAttribute="height" constant="30" id="lJD-ED-wVy"/>
                                                                                 <constraint firstAttribute="centerY" secondItem="Fq8-cL-Q0y" secondAttribute="centerY" id="uTD-UB-6Bq"/>
                                                                             </constraints>
+                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                                <rect key="frame" x="0.0" y="120" width="300" height="30"/>
+                                                                            </variation>
                                                                         </view>
                                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="post_type_feel" translatesAutoresizingMaskIntoConstraints="NO" id="1Me-AC-GaD">
                                                                             <rect key="frame" x="552" y="92" width="20" height="20"/>
@@ -1237,6 +1244,9 @@
                                                                                 <constraint firstAttribute="width" constant="20" id="gNK-j2-bMb"/>
                                                                                 <constraint firstAttribute="height" constant="20" id="ja2-1J-Tz8"/>
                                                                             </constraints>
+                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                                <rect key="frame" x="272" y="92" width="20" height="20"/>
+                                                                            </variation>
                                                                         </imageView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1268,6 +1278,9 @@
                                                                             <exclude reference="vaP-kp-PbH"/>
                                                                         </mask>
                                                                     </variation>
+                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                        <rect key="frame" x="0.0" y="0.0" width="300" height="150"/>
+                                                                    </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d9V-1m-YXh" userLabel="Main View">
                                                                     <rect key="frame" x="0.0" y="150" width="580" height="168"/>
@@ -1293,6 +1306,9 @@
                                                                                     <exclude reference="cuH-gD-TAA"/>
                                                                                 </mask>
                                                                             </variation>
+                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                                <rect key="frame" x="10" y="17" width="280" height="150"/>
+                                                                            </variation>
                                                                         </textView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1310,6 +1326,9 @@
                                                                             <exclude reference="vaW-z9-xQy"/>
                                                                         </mask>
                                                                     </variation>
+                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                        <rect key="frame" x="0.0" y="150" width="300" height="206"/>
+                                                                    </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lnV-LY-bFG" userLabel="Footer View">
                                                                     <rect key="frame" x="0.0" y="318" width="580" height="50"/>
@@ -1322,6 +1341,9 @@
                                                                             <state key="normal" image="newsfeed_share_icon">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
+                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                                <rect key="frame" x="233" y="3" width="57" height="44"/>
+                                                                            </variation>
                                                                             <connections>
                                                                                 <action selector="tapShareButton:" destination="puR-oO-9as" eventType="touchUpInside" id="Pqq-UH-vsH"/>
                                                                             </connections>
@@ -1347,6 +1369,9 @@
                                                                         <constraint firstAttribute="trailing" secondItem="HBX-7M-0qw" secondAttribute="trailing" constant="10" id="jaf-z8-DhY"/>
                                                                         <constraint firstAttribute="centerY" secondItem="HBX-7M-0qw" secondAttribute="centerY" id="oyX-v3-jys"/>
                                                                     </constraints>
+                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                        <rect key="frame" x="0.0" y="356" width="300" height="50"/>
+                                                                    </variation>
                                                                 </view>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1374,6 +1399,9 @@
                                                                     <exclude reference="qup-gd-haf"/>
                                                                 </mask>
                                                             </variation>
+                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                <rect key="frame" x="0.0" y="40" width="300" height="406"/>
+                                                            </variation>
                                                         </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="cRo-63-wrt">
                                                             <rect key="frame" x="20" y="0.0" width="80" height="80"/>
@@ -1392,6 +1420,9 @@
                                                         <constraint firstItem="sav-qP-TGS" firstAttribute="top" secondItem="hec-bw-ej7" secondAttribute="top" constant="40" id="tBA-4R-eOK"/>
                                                         <constraint firstAttribute="bottom" secondItem="sav-qP-TGS" secondAttribute="bottom" id="zhz-aR-A1Z"/>
                                                     </constraints>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="10" y="10" width="300" height="446"/>
+                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -2725,7 +2756,7 @@ on news things</string>
                                                 </view>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-yV-DQi">
                                                     <rect key="frame" x="0.0" y="38" width="600" height="97"/>
-                                                    <color key="backgroundColor" red="0.5450980392" green="0.76470588240000004" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="207" id="5r0-4s-ZcJ"/>
                                                         <constraint firstAttribute="height" constant="200" id="T5R-D7-TeX"/>
@@ -5646,6 +5677,9 @@ on news things</string>
                                                 <constraint firstAttribute="bottom" secondItem="BVr-4R-XGa" secondAttribute="bottom" constant="10" id="leV-Ol-K6T"/>
                                                 <constraint firstAttribute="trailing" secondItem="BVr-4R-XGa" secondAttribute="trailing" constant="10" id="nTU-K1-f61"/>
                                             </constraints>
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
@@ -6307,6 +6341,9 @@ on news things</string>
                                                 <constraint firstItem="VYn-7v-WLw" firstAttribute="leading" secondItem="Itt-65-XnN" secondAttribute="leading" constant="10" id="NsU-Ba-Pe1"/>
                                                 <constraint firstAttribute="bottom" secondItem="VYn-7v-WLw" secondAttribute="bottom" constant="10" id="bCg-UW-Xdh"/>
                                             </constraints>
+                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
