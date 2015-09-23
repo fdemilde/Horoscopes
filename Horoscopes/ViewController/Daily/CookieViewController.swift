@@ -51,7 +51,7 @@ class CookieViewController : ViewControllerWithAds{
     
     @IBOutlet weak var containerWidthConstraint: NSLayoutConstraint!
     var state = CookieViewState.CookieViewStateUnopened
-    var parentVC : NewDailyTableViewController?
+    var parentVC : DailyTableViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()

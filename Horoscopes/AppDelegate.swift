@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let udid = XAppDelegate.mobilePlatform.userCred.getUDID()
-        let dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: value)).build() as NSDictionary
+        let dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: Int32(_value))).build() as NSDictionary
         
         GAI.sharedInstance().defaultTracker.send(dict as [NSObject : AnyObject])
         

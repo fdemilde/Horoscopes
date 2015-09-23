@@ -52,16 +52,6 @@ class DataStore : NSObject{
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
             }
-            default:
-                if(data.count == 0){
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-                    return // no new data
-                }
-
-                newsfeedFollowing = addData(newsfeedFollowing, newDataArray: data)
-                if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
-            }
         }
         
     }
@@ -92,17 +82,6 @@ class DataStore : NSObject{
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
                 }
-            default:
-                if(newsfeedFollowing.count == 0){
-                    newsfeedIsUpdated = true
-                    newsfeedFollowing = data
-                } else {
-                    // do compare to update current newsfeed
-                    self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
-                }
-                if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
-                }
         }
         
     }
@@ -113,8 +92,6 @@ class DataStore : NSObject{
                 newsfeedFollowing = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
             case NewsfeedTabType.Global:
                 newsfeedGlobal = compareAndUpdateArrayData(newsfeedGlobal, newDataArray: newData)
-            default:
-                newsfeedFollowing = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
         }
         return false
     }

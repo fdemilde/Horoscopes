@@ -1,5 +1,5 @@
 //
-//  NewNewsfeedViewController.swift
+//  NewsfeedViewController.swift
 //  Horoscopes
 //
 //  Created by Dang Doan on 8/21/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate, PostTableViewCellDelegate {
+class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate, PostTableViewCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"

@@ -8,9 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
-		7027F5CC1B86DD4F00988956 /* NewNewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewNewsfeedViewController.swift */; };
-		702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F41B4B71DD001B8A1F /* PostViewController.swift */; };
+		7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
+		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
 		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
@@ -21,7 +24,7 @@
 		70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973101BA672E50059D77A /* ProfileBaseViewController.swift */; };
 		70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */; };
 		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
-		70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */; };
+		70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
 		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; settings = {ASSET_TAGS = (); }; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
@@ -99,11 +102,7 @@
 		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
 		F4A721721BA066A200A4C691 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
-		F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */; };
-		F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */; };
-		F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
-		F4C262F31BA8298700CFDFEB /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */; };
 		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
 		F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */; };
 		F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F921B8EC58000910E56 /* DCPathButton.m */; };
@@ -198,9 +197,12 @@
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
-		7027F5CB1B86DD4F00988956 /* NewNewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewNewsfeedViewController.swift; sourceTree = "<group>"; };
-		702804F41B4B71DD001B8A1F /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
+		704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
+		704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutViewController.swift; sourceTree = "<group>"; };
+		704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
+		704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
 		70A4E2771B623F5100711B4F /* ApplicationColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationColor.swift; sourceTree = "<group>"; };
@@ -211,7 +213,7 @@
 		70C973101BA672E50059D77A /* ProfileBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBaseViewController.swift; sourceTree = "<group>"; };
 		70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentProfileViewController.swift; sourceTree = "<group>"; };
 		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
-		70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewDailyTableViewController.swift; sourceTree = "<group>"; };
+		70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTableViewController.swift; sourceTree = "<group>"; };
 		70DB1DD01B998E8300218063 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileCounts.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
@@ -293,11 +295,7 @@
 		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
 		F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveCalendarCell.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
-		F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
-		F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyTimePickerViewController.swift; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
-		F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutViewController.swift; sourceTree = "<group>"; };
 		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
 		F4C44F8B1B8EC58000910E56 /* BKDelta.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDelta.m; sourceTree = "<group>"; };
 		F4C44F8C1B8EC58000910E56 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
@@ -445,11 +443,21 @@
 		702804F31B4B7193001B8A1F /* Post */ = {
 			isa = PBXGroup;
 			children = (
-				702804F41B4B71DD001B8A1F /* PostViewController.swift */,
 				702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */,
 				70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */,
 			);
 			path = Post;
+			sourceTree = "<group>";
+		};
+		704FF7431BB2BB92006A5A98 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */,
+				704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */,
+				704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */,
+				704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		705E59D61B4CE64200D1E613 /* Notification */ = {
@@ -465,7 +473,6 @@
 		70F31C121B4E15F300A8B3A2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				F4B566CC1B5F487D00C91073 /* Settings */,
 				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
 				701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */,
 				70DB1DD01B998E8300218063 /* SearchViewController.swift */,
@@ -623,6 +630,7 @@
 		F47C029E1B2691A700C0BA83 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				704FF7431BB2BB92006A5A98 /* Settings */,
 				70F31C121B4E15F300A8B3A2 /* Profile */,
 				705E59D61B4CE64200D1E613 /* Notification */,
 				702804F31B4B7193001B8A1F /* Post */,
@@ -643,7 +651,7 @@
 			isa = PBXGroup;
 			children = (
 				F49EB5611B41C21E00F56092 /* CookieViewController.swift */,
-				70CB8FD41B8481E300A70C41 /* NewDailyTableViewController.swift */,
+				70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */,
 				70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */,
 				70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */,
 				70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */,
@@ -655,7 +663,7 @@
 		F49FAE411B42499500F38E0C /* Newsfeed */ = {
 			isa = PBXGroup;
 			children = (
-				7027F5CB1B86DD4F00988956 /* NewNewsfeedViewController.swift */,
+				7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -666,17 +674,6 @@
 				F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */,
 			);
 			path = fonts;
-			sourceTree = "<group>";
-		};
-		F4B566CC1B5F487D00C91073 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				F4BE722E1B609FC6009CFB57 /* MyTimePickerViewController.swift */,
-				F4B566CD1B5F487D00C91073 /* SettingsViewController.swift */,
-				F4B566CF1B5F488D00C91073 /* BugReportViewController.swift */,
-				F4C262F21BA8298700CFDFEB /* LogOutViewController.swift */,
-			);
-			path = Settings;
 			sourceTree = "<group>";
 		};
 		F4C44F881B8EC58000910E56 /* OpenSources */ = {
@@ -1254,14 +1251,14 @@
 				705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
-				7027F5CC1B86DD4F00988956 /* NewNewsfeedViewController.swift in Sources */,
+				7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
 				70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */,
 				70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */,
 				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
-				702804F51B4B71DD001B8A1F /* PostViewController.swift in Sources */,
+				704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
@@ -1274,10 +1271,10 @@
 				70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */,
 				F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */,
 				F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */,
-				70CB8FD51B8481E300A70C41 /* NewDailyTableViewController.swift in Sources */,
+				70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */,
 				F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */,
 				F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */,
-				F4B566D01B5F488D00C91073 /* BugReportViewController.swift in Sources */,
+				704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */,
 				F4CACAD91B2010F2003C6301 /* ServerCommunication.m in Sources */,
 				F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */,
 				F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */,
@@ -1295,7 +1292,6 @@
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
 				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
-				F4B566CE1B5F487D00C91073 /* SettingsViewController.swift in Sources */,
 				F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */,
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
@@ -1317,14 +1313,14 @@
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,
 				F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */,
-				F4C262F31BA8298700CFDFEB /* LogOutViewController.swift in Sources */,
+				704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */,
 				F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */,
 				F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */,
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
 				705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */,
-				F4BE722F1B609FC6009CFB57 /* MyTimePickerViewController.swift in Sources */,
+				704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
 				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,
 				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
@@ -1420,7 +1416,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 			};
 			name = Debug;
 		};
@@ -1462,6 +1458,7 @@
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;

@@ -21,7 +21,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat = 0
-    var parentVC : NewNewsfeedViewController!
+    var parentVC : NewsfeedViewController!
     
     @IBOutlet weak var contentView: UIView!
     
