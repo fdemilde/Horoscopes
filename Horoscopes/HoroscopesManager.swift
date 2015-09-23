@@ -167,11 +167,13 @@ class HoroscopesManager : NSObject {
         postData.setObject(timeTagString, forKey: "time_tag")
         postData.setObject(base1SignIndexString, forKey: "sign")
         postData.setObject(ratingString, forKey: "rating")
-        XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-//            print(response)
-            
-            let result = Utilities.parseNSDictionaryToDictionary(response)
-            Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+        dispatch_async(dispatch_get_main_queue(),{
+            XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+    //            print(response)
+                
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+            })
         })
     }
     

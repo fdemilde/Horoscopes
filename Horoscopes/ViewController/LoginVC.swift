@@ -136,7 +136,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
          params["fields"] = "name,id,gender,birthday"
             FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
-                    print("result result === \(result)")
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String
                     self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
@@ -221,7 +220,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             })
         }
         
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
     
     @IBAction func birthdayButtonTapped(sender: AnyObject) {
@@ -269,7 +269,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     // MARK: Poptipview setip
     
     func setupDatePickerPopup(){
-        pickerView = MyDatePickerView(frame: CGRectMake(0, -60, 240, 80))
+        pickerView = MyDatePickerView(frame: CGRectMake(0, 00, 240, 80))
         pickerView.delegate = self
         if let birthday = XAppDelegate.userSettings.birthday {
             pickerView.setCurrentBirthday(birthday)
