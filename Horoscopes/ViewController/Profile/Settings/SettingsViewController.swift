@@ -160,6 +160,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
                     if(error == nil){
                         XAppDelegate.userSettings.horoscopeSign = newSign
+                        XAppDelegate.currentUser.sign = Int(newSign)
                         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
                         customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
                         customTabBarController.reload()

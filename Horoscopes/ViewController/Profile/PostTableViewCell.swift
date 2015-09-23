@@ -40,6 +40,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var horoscopeSignLabel: UILabel!
     @IBOutlet weak var newsfeedFollowButton: UIButton!
     
+    // MARK: - Newsfeed constraint
+    
+    @IBOutlet weak var horoscopeSignImageViewLeadingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var horoscopeSignImageViewWidthLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var horoscopeSignImageViewTrailingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var horoscopeSignLabelTrailingSpaceLayoutConstraint: NSLayoutConstraint!
+    
+    
     // MARK: - Property
     
     var delegate: PostTableViewCellDelegate?
@@ -48,6 +56,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     var topBorder: CALayer!
     let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
+    var horoscopeSignImageViewLeadingSpaceConstant: CGFloat = 10
+    var horoscopeSignImageViewWidthConstant: CGFloat = 18
+    var horoscopeSignImageViewTrailingSpaceConstant: CGFloat = 5
+    var horoscopeSignLabelTrailingSpaceConstant: CGFloat = 10
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -119,6 +131,20 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     func configureUserPostUi() {
         likeButton.hidden = true
+    }
+    
+    func changeHoroscopeSignViewWidthToZero() {
+        horoscopeSignImageViewLeadingSpaceLayoutConstraint.constant = 0
+        horoscopeSignImageViewWidthLayoutConstraint.constant = 0
+        horoscopeSignImageViewTrailingSpaceLayoutConstraint.constant = 0
+        horoscopeSignLabelTrailingSpaceLayoutConstraint.constant = 0
+    }
+    
+    func changeHoroscopeSignViewWidthToDefault() {
+        horoscopeSignImageViewLeadingSpaceLayoutConstraint.constant = horoscopeSignImageViewLeadingSpaceConstant
+        horoscopeSignImageViewWidthLayoutConstraint.constant = horoscopeSignImageViewWidthConstant
+        horoscopeSignImageViewTrailingSpaceLayoutConstraint.constant = horoscopeSignImageViewTrailingSpaceConstant
+        horoscopeSignLabelTrailingSpaceLayoutConstraint.constant = horoscopeSignLabelTrailingSpaceConstant
     }
     
     @IBAction func tapNewsfeedFollowButton(sender: UIButton) {

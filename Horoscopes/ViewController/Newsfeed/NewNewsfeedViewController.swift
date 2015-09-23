@@ -138,6 +138,9 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
             cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
+        cell.horoscopeSignLabel.text = post.user?.horoscopeSignString
+        cell.horoscopeSignImageView.image = post.user?.horoscopeSignImage
+        
         cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         cell.textView.text = post.message
         cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
@@ -307,6 +310,16 @@ class NewNewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, U
         cell.resetUI()
         configureCell(cell, post: post)
         return cell
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if let cell = cell as? PostTableViewCell {
+            if userPostArray[indexPath.row].user?.sign >= 0 {
+                cell.changeHoroscopeSignViewWidthToDefault()
+            } else {
+                cell.changeHoroscopeSignViewWidthToZero()
+            }
+        }
     }
     
     // MARK: - Delegate

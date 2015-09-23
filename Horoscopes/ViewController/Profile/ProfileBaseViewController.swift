@@ -117,13 +117,14 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if(userProfile.sign >= 0){
             horoscopeSignLabel.hidden = false
             horoscopeSignImageView.hidden = false
+            horoscopeSignView.hidden = false
             horoscopeSignLabel.text = userProfile.horoscopeSignString
             horoscopeSignImageView.image = userProfile.horoscopeSignImage
         } else {
             horoscopeSignLabel.hidden = true
             horoscopeSignImageView.hidden = true
+            horoscopeSignView.hidden = true
         }
-        
     }
     
     func configureScopeButton() {
