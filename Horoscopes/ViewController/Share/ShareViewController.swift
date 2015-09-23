@@ -280,7 +280,6 @@ class ShareViewController : UIViewController {
     func isFBMessageAvailable() -> Bool {
         let url = "fb-messenger://compose"
         let fbURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
-        
         return UIApplication.sharedApplication().canOpenURL(fbURL!)
     }
     

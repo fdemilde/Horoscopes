@@ -33,7 +33,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        picker = UIPickerView(frame: CGRectMake(5, -35, self.frame.width, self.frame.height))
+        picker = UIPickerView(frame: CGRectMake(5, -15, self.frame.width, 120))
         picker.dataSource = self
         picker.delegate = self
         self.addSubview(picker)
@@ -123,12 +123,12 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     func setCurrentBirthday(birthday : NSDate){
         //        println("setCurrentBirthdaySign setCurrentBirthdaySign ")
-        var dateArray = self.getMonthAndDayIndexByDate(birthday)
-        picker.selectRow(dateArray[0], inComponent: 0, animated: false)
-        picker.selectRow(dateArray[1], inComponent: 1, animated: false)
-        selectedDayIndex = dateArray[1]
-        selectedMonthIndex = dateArray[0]
-        
+        var currentDateArray = self.getMonthAndDayIndexByDate(birthday)
+        picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
+        picker.selectRow(currentDateArray[1], inComponent: 1, animated: false)
+        selectedDayIndex = currentDateArray[1]
+        selectedMonthIndex = currentDateArray[0]
+        dateArray = getDayArrayBaseOnMonthIndex(selectedMonthIndex)
     }
     
     // MARK: helpers

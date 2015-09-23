@@ -30,10 +30,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
-        if isFirstTimeUsing() {
-            print("Show login VC")
-            self.showLoginVC()
-        }
         
         if(socialManager.isLoggedInZwigglers()){
             // sendLocation() // for testing
@@ -41,28 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
-    }
-    
-    func showLoginVC() {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-        
-        let formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade;
-        formSheet.cornerRadius = 0.0;
-        formSheet.portraitTopInset = 0.0;
-        formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width, Utilities.getScreenSize().height);
-        
-        let windows = UIApplication.sharedApplication().windows
-        for window in windows {
-//            print("windows windows == \(window.classForCoder)")
-            if window.isKindOfClass(UIWindow){
-//                print("windows windows == CustomTabBarController YES")
-                window.rootViewController!.mz_presentFormSheetController(formSheet, animated: false, completionHandler: nil)
-                break
-            }
-//            print("window %@ root: %@", window.description, window.rootViewController)
-        }
     }
 
     func applicationWillResignActive(application: UIApplication) {

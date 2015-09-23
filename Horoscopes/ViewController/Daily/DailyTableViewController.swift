@@ -32,6 +32,16 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         refreshView()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if XAppDelegate.isFirstTimeUsing() {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+            parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
+        }
+    }
+    
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
@@ -145,7 +155,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             shouldCollectData = false
             let currentCal = NSCalendar.currentCalendar()
             let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-//            let components = NSCalendarUnit.CalendarUnitYear | NSCalendarUnit.CalendarUnitMonth | NSCalendarUnit.CalendarUnitDay | NSCalendarUnit.CalendarUnitHour | NSCalendarUnit.CalendarUnitMinute | NSCalendarUnit.CalendarUnitSecond
             let todayComp = currentCal.components(components, fromDate: NSDate())
             todayComp.hour = 1
             todayComp.minute = 1
@@ -158,9 +167,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let item = CollectedItem()
             let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
             item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
-            item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
-            collectedHoroscope.collectedData.replaceObjectAtIndex(0, withObject: item)
-            collectedHoroscope.saveCollectedData()
+            if(settings.horoscopeSign >= 0 && Int(settings.horoscopeSign) < XAppDelegate.horoscopesManager.horoscopesSigns.count){
+                item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
+                collectedHoroscope.collectedData.replaceObjectAtIndex(0, withObject: item)
+                collectedHoroscope.saveCollectedData()
+            }
+            
         }
     }
     
