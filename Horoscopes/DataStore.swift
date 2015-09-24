@@ -15,6 +15,9 @@ class DataStore : NSObject{
     
     var recentSearchedProfile = [UserProfile]()
     var isLastPage = false
+    var lastCookieOpenDate : NSDate!
+    var currentFortuneDescription = ""
+    var currentLuckyNumber = ""
     
     static let sharedInstance = DataStore()
     
