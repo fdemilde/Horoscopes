@@ -57,9 +57,15 @@ class CookieViewController : ViewControllerWithAds{
         super.viewDidLoad()
         self.setupBackground()
         self.setupConstraints()
-        state = CookieViewState.CookieViewStateUnopened
-        self.reloadState()
         self.setupText()
+        if(isNewDay()){
+            state = CookieViewState.CookieViewStateUnopened
+            self.reloadState()
+        } else {
+            self.populateCurrentFortune()
+        }
+        
+        
     }
     
     override func viewDidLayoutSubviews()
@@ -106,8 +112,10 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     @IBAction func cookieTapped(sender: AnyObject) {
+        
         Utilities.showHUD()
         self.getFortune()
+        
     }
     
     @IBAction func shareFortuneCookieTapped(sender: AnyObject) {
@@ -133,6 +141,30 @@ class CookieViewController : ViewControllerWithAds{
         shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"))
         
         return shareVC
+    }
+    
+    func isNewDay() -> Bool {
+        if let lastDateOpen = XAppDelegate.dataStore.lastCookieOpenDate {
+            let currentCal = NSCalendar.currentCalendar()
+            let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+            
+            let todayComp = currentCal.components(components, fromDate: NSDate())
+            todayComp.calendar = currentCal
+            todayComp.hour = 0
+            todayComp.minute = 0
+            todayComp.second = 1
+            
+            let lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: lastDateOpen)
+            lastOpenComp.calendar = currentCal
+            lastOpenComp.hour = 0
+            lastOpenComp.minute = 0
+            lastOpenComp.second = 1
+            if(fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24))) >= 1) {
+                return true
+            }
+            return false
+        }
+        return true
     }
     
     // MARK: hide/show components
@@ -205,27 +237,34 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     func getFortune() {
-        if((FBSDKAccessToken .currentAccessToken()) != nil){
-            FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-                if(error == nil){
-                    // println("User information = \(result)")
-                    let userFBID = result["id"] as! String
-                    let postData = NSMutableDictionary()
-                    postData.setObject(userFBID, forKey: "fb_uid")
-                    
-                    XAppDelegate.mobilePlatform.sc.sendRequest(GET_FORTUNE_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                        let result = Utilities.parseNSDictionaryToDictionary(response)
-                        // println("fortune result = \(result)")
-                        self.reloadFortuneData(result)
-                    })
-                } else {
-                    Utilities.hideHUD()
-                    print("fetch Info Error = \(error)")
-                }
-            })
-        } else {
-            self.checkPermissionAndGetFortune()
-        }
+            if((FBSDKAccessToken .currentAccessToken()) != nil){
+                FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+                    if(error == nil){
+                        // println("User information = \(result)")
+                        let userFBID = result["id"] as! String
+                        let postData = NSMutableDictionary()
+                        postData.setObject(userFBID, forKey: "fb_uid")
+                        
+                        XAppDelegate.mobilePlatform.sc.sendRequest(GET_FORTUNE_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+                            let result = Utilities.parseNSDictionaryToDictionary(response)
+                            // println("fortune result = \(result)")
+                            self.reloadFortuneData(result)
+                        })
+                    } else {
+                        Utilities.hideHUD()
+                        print("fetch Info Error = \(error)")
+                    }
+                })
+            } else {
+                self.checkPermissionAndGetFortune()
+            }
+    }
+    
+    func populateCurrentFortune(){
+        self.fortuneDescriptionLabel.text = XAppDelegate.dataStore.currentFortuneDescription
+        self.luckyNumberLabel.text = XAppDelegate.dataStore.currentLuckyNumber
+        self.state = CookieViewState.CookieViewStateOpened
+        self.reloadState()
     }
     
     func reloadFortuneData(data : Dictionary<String, AnyObject>){
@@ -240,21 +279,24 @@ class CookieViewController : ViewControllerWithAds{
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             let fortuneDescription = fortuneData["fortune"] as? String
             if let fortuneDescription = fortuneDescription {
+                XAppDelegate.dataStore.currentFortuneDescription = fortuneDescription
                 self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
             } else {
                 self.fortuneDescriptionLabel.text = ""
             }
             
             self.luckyNumberLabel.text = ""
-            let luckyNumbers = fortuneData["lucky_numbers"] as! [AnyObject]
-            
-            for number in luckyNumbers {
-                if(self.luckyNumberLabel.text != ""){
-                    self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(" ")
+            let luckyNumbers = fortuneData["lucky_numbers"] as? [AnyObject]
+            if let luckyNumbers = luckyNumbers {
+                for number in luckyNumbers {
+                    if(self.luckyNumberLabel.text != ""){
+                        self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(" ")
+                    }
+                    self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(String(format:"%d", number as! Int))
                 }
-                self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(String(format:"%d", number as! Int))
+                XAppDelegate.dataStore.currentLuckyNumber = self.luckyNumberLabel.text!
             }
-            
+            XAppDelegate.dataStore.lastCookieOpenDate = NSDate()
             self.state = CookieViewState.CookieViewStateOpened
             self.reloadState()
             

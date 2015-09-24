@@ -109,8 +109,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: Helpers
-    func isFirstTimeUsing() -> Bool{
-        print("userSettings.horoscopeSign == \(userSettings.horoscopeSign)")
+    func isFirstTimeUsing() -> Bool {
         if(userSettings.horoscopeSign == -1){
             return true
         } else { return false }

@@ -109,7 +109,8 @@ class DailyContentTableViewCell: UITableViewCell {
         
         calendarButton.hidden = false
         dayLabel.hidden = true
-        
+        self.likedLabel.alpha = 0
+        self.likedImageView.alpha = 0
         selectedSign = XAppDelegate.horoscopesManager.getSignIndexOfSignName(item.horoscope.sign)
         // BINH BINH: temporary fix 
         let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
