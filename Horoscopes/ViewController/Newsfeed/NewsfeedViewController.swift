@@ -44,6 +44,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     @IBOutlet weak var tabView: UIView!
     
+    struct TableViewConstants {
+        static let defaultTableViewCellIdentifier = "defaultCell"
+        static let postTableViewCellIdentifier = "postCell"
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
@@ -101,7 +106,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func setupAddPostButton() {
         addButton = DCPathButton(centerImage: UIImage(named: "newsfeed_add_btn"), highlightedImage: UIImage(named: "newsfeed_add_btn"))
         addButton.delegate = self
-        addButton.dcButtonCenter = CGPointMake(view.frame.width - addButtonSize, view.frame.height - addButtonSize - TABBAR_HEIGHT)
+        addButton.dcButtonCenter = CGPointMake(view.frame.width - addButtonSize/2 - 10, view.frame.height - addButtonSize - TABBAR_HEIGHT)
         addButton.allowCenterButtonRotation = true
         addButton.bloomRadius = 145
         addButton.bloomDirection = kDCPathButtonBloomDirection.DCPathButtonBloomDirectionTop
@@ -126,16 +131,12 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func configureCell(cell: PostTableViewCell, post: UserPost) {
-        cell.configureNewsfeedUi()
         switch post.type {
         case .OnYourMind:
-            cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_mind")
         case .Feeling:
-            cell.profileView.backgroundColor = UIColor.newsfeedFeelColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_feel")
         case .Story:
-            cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
             cell.postTypeImageView.image = UIImage(named: "post_type_story")
         }
         cell.horoscopeSignLabel.text = post.user?.horoscopeSignString
@@ -152,13 +153,9 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         cell.profileNameLabel.text = post.user?.name
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
             cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-            cell.likeButton.userInteractionEnabled = false
         } else {
             cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
-            cell.likeButton.userInteractionEnabled = true
         }
-        
-        
         if XAppDelegate.currentUser.uid != -1 {
             if post.uid != XAppDelegate.currentUser.uid {
                 SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
@@ -304,30 +301,73 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-        let post = userPostArray[indexPath.row] as UserPost
+        if indexPath.row == 0 {
+            var cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.defaultTableViewCellIdentifier) as? NewsfeedDefaultTableViewCell
+            if cell == nil {
+                cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
+            }
+            if XAppDelegate.currentUser.uid != -1 {
+                Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell?.profileImageView.image = image
+                    })
+                })
+            }
+            return cell!
+        }
+        let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.postTableViewCellIdentifier, forIndexPath: indexPath) as! PostTableViewCell
+        let post = userPostArray[indexPath.row - 1] as UserPost
         cell.delegate = self
         cell.resetUI()
         configureCell(cell, post: post)
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if indexPath.row  == 0 {
+            print("Simulate tapping post button...")
+            // TODO: Binh adds target for the post button
+        }
+    }
+    
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = cell as? PostTableViewCell {
-            if userPostArray[indexPath.row].user?.sign >= 0 {
+            let post = userPostArray[indexPath.row - 1]
+            cell.configureNewsfeedUi()
+            if post.user?.sign >= 0 {
                 cell.changeHoroscopeSignViewWidthToDefault()
             } else {
                 cell.changeHoroscopeSignViewWidthToZero()
             }
+            switch post.type {
+            case .OnYourMind:
+                cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
+            case .Feeling:
+                cell.profileView.backgroundColor = UIColor.newsfeedFeelColor()
+            case .Story:
+                cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
+            }
+            if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+                cell.likeButton.userInteractionEnabled = false
+            } else {
+                cell.likeButton.userInteractionEnabled = true
+            }
         }
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if indexPath.row == 0 {
+            return 50
+        }
+        return UITableViewAutomaticDimension
     }
     
     // MARK: - Delegate
     
     func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
+        let index = (tableView.indexPathForCell(cell)?.row)! - 1
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        SocialManager.sharedInstance.follow(userPostArray[index!].uid, completionHandler: { (error) -> Void in
+        SocialManager.sharedInstance.follow(userPostArray[index].uid, completionHandler: { (error) -> Void in
             hud.mode = MBProgressHUDMode.Text
             hud.detailsLabelFont = UIFont.systemFontOfSize(11)
             if let _ = error {
@@ -336,7 +376,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                     hud.hide(true, afterDelay: 2)
                 })
             } else {
-                let name = self.userPostArray[index!].user!.name
+                let name = self.userPostArray[index].user!.name
                 hud.detailsLabelText = "\(name) has been added to your Following list."
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
@@ -349,8 +389,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func didTapPostProfile(cell: PostTableViewCell) {
         if SocialManager.sharedInstance.isLoggedInFacebook() {
-            let index = tableView.indexPathForCell(cell)?.row
-            let profile = userPostArray[index!].user
+            let index = (tableView.indexPathForCell(cell)?.row)! - 1
+            let profile = userPostArray[index].user
             let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
@@ -360,17 +400,17 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func didTapShareButton(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let name = userPostArray[index!].user!.name
-        let postContent = userPostArray[index!].message
+        let index = (tableView.indexPathForCell(cell)?.row)! - 1
+        let name = userPostArray[index].user!.name
+        let postContent = userPostArray[index].message
         let sharingText = String(format: "%@ \n %@", name, postContent)
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
     
     func didTapLikeButton(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let post = userPostArray[index!]
+        let index = (tableView.indexPathForCell(cell)?.row)! - 1
+        let post = userPostArray[index]
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
             return
