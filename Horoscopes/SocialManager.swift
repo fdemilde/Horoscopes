@@ -124,17 +124,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
         postData.setObject(type, forKey: "type")
-        Utilities.showHUD()
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_HEART,withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
             if(error != nil){
                 print("Error when get sendHeart = \(error)")
-                Utilities.hideHUD()
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
                 let errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     print("Error code = \(errorCode)")
-                    Utilities.hideHUD()
                     Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
                 } else { // no error
                     let success = result["success"] as! Int
@@ -145,7 +142,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     } else {
                         print("Post unsuccessful")
                     }
-                    Utilities.hideHUD()
                 }
             }
         })

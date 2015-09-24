@@ -370,14 +370,16 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func didTapLikeButton(cell: PostTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        let profileId = userPostArray[index!].uid
-        let postId = userPostArray[index!].post_id
+        let post = userPostArray[index!]
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
             return
         }
+        cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        cell.likeButton.userInteractionEnabled = false
+        cell.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        XAppDelegate.socialManager.sendHeart(profileId, postId: postId, type: SEND_HEART_USER_POST_TYPE)
+        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
     
     // Notification handler
@@ -392,11 +394,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         }
         if index != -1 {
             userPostArray[index].hearts += 1
-            let indexPath = NSIndexPath(forRow: index, inSection: 0)
-            let indexPaths = [
-                indexPath
-            ]
-            tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: UITableViewRowAnimation.Automatic)
         }
     }
     
