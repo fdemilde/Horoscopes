@@ -312,6 +312,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                         cell?.profileImageView.image = image
                     })
                 })
+            } else {
+                cell?.profileImageView.image = UIImage(named: "default_avatar")
             }
             return cell!
         }
@@ -325,8 +327,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row  == 0 {
-            print("Simulate tapping post button...")
-            // TODO: Binh adds target for the post button
+            addButton.centerButtonTapped()
         }
     }
     
