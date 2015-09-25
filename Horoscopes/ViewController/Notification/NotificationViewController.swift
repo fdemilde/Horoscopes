@@ -67,10 +67,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             messageLabel.text = "There is no notification"
             messageLabel.font = UIFont(name: "HelveticaNeue-Light", size:15)
             messageLabel.sizeToFit()
-            let view = UIView(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            let view = UIView(frame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height))
             view.backgroundColor = UIColor.whiteColor()
             // real label
-            let fixedLabel = UILabel(frame:CGRectMake((self.view.bounds.size.width - messageLabel.frame.width) / 2, (self.view.bounds.size.height - ADMOD_HEIGHT - messageLabel.frame.height) / 2, messageLabel.frame.width, messageLabel.frame.height))
+            let fixedLabel = UILabel(frame:CGRectMake((tableView.bounds.size.width - messageLabel.frame.width) / 2, (tableView.bounds.size.height - ADMOD_HEIGHT - messageLabel.frame.height) / 2, messageLabel.frame.width, messageLabel.frame.height))
             fixedLabel.textColor = UIColor.blackColor()
             fixedLabel.numberOfLines = 0
             fixedLabel.textAlignment = NSTextAlignment.Center
