@@ -161,9 +161,10 @@ class DataStore : NSObject{
         newsfeedFollowing = [UserPost]()
         recentSearchedProfile = [UserProfile]()
         XAppDelegate.currentUser = UserProfile()
-        let defaultManager = NSFileManager.defaultManager()
+        let fileManager = NSFileManager.defaultManager()
+        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
         do {
-            try defaultManager.removeItemAtPath(UserProfile.filePath)
+            try fileManager.removeItemAtPath(UserProfile.filePath)
         } catch {
             
         }
