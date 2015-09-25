@@ -25,6 +25,7 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet var calendarButton : UIButton!
+    @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var footer: UIView!
@@ -35,8 +36,8 @@ class DailyContentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        layer.cornerRadius = 5
-        clipsToBounds = true
+        containerView.layer.cornerRadius = 5
+        containerView.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -96,6 +97,7 @@ class DailyContentTableViewCell: UITableViewCell {
                     textView.text = horoscopeDescription
                 }
             }
+            textView.sizeToFit()
             dateLabel.text = dateStringForType(type)
         }
     }

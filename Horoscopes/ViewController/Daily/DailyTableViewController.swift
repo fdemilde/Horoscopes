@@ -11,7 +11,6 @@ import UIKit
 class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate, DailyButtonTableViewCellDelegate {
     
     let defaultEstimatedRowHeight: CGFloat = 96
-    let spaceBetweenCell: CGFloat = 16
     var selectedSign = -1
     var collectedHoroscope = CollectedHoroscope()
     var shouldCollectData = false
@@ -53,18 +52,14 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
 
     // MARK: - Table view data source and delegate
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        let section = isEmptyDataSource ? 0 : 4
-        return section
-    }
-
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        let rows = isEmptyDataSource ? 0 : 4
+        return rows
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
-        switch indexPath.section {
+        switch indexPath.row {
         case 0:
             cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) 
             configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
@@ -76,7 +71,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
             
-            if indexPath.section == 1 {
+            if indexPath.row == 1 {
                 cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign)
             } else {
                 cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign)
@@ -86,42 +81,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         }
 
         return cell
-    }
-    
-    override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.section == 1 || indexPath.section == 3 {
-            let dailyContentCell = cell as! DailyContentTableViewCell
-            let textView = dailyContentCell.textView
-            while textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.max)).height >= textView.frame.height {
-                textView.font = textView.font?.fontWithSize((textView.font?.pointSize)! - 1)
-            }
-        }
-    }
-    
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return spaceBetweenCell
-    }
-    
-    override func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = UIView()
-        view.backgroundColor = UIColor.clearColor()
-        return view
-    }
-    
-    override func tableView(tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if(section == 3){
-            let view = UIView()
-            view.backgroundColor = UIColor.clearColor()
-            return view
-        }
-        return nil
-    }
-    
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if(section == 3){
-            return 12
-        }
-        return 0
     }
     
     
