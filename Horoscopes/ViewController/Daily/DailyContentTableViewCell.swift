@@ -25,6 +25,7 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet var calendarButton : UIButton!
+    @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var footer: UIView!
@@ -35,8 +36,8 @@ class DailyContentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        layer.cornerRadius = 5
-        clipsToBounds = true
+        containerView.layer.cornerRadius = 5
+        containerView.clipsToBounds = true
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -96,12 +97,14 @@ class DailyContentTableViewCell: UITableViewCell {
                     textView.text = horoscopeDescription
                 }
             }
+            textView.sizeToFit()
             dateLabel.text = dateStringForType(type)
         }
     }
     // setup for Archive View
     func setUpArchive(item : CollectedItem){
-        layer.cornerRadius = 0
+        containerView.layer.cornerRadius = 0
+        containerView.clipsToBounds = true
         dayLabel.text = "Archive"
         textView.text = item.horoscope.horoscopes[0] as! String
         timeTag = item.collectedDate.timeIntervalSince1970
