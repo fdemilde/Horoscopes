@@ -103,7 +103,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         cell.resetUi()
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
-        cell.horoscopeSignLabel.text = friend.horoscopeSignString
+        cell.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: friend.sign)
         Utilities.getImageFromUrlString(friend.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView?.image = image

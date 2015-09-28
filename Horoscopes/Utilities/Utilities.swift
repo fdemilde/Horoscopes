@@ -221,6 +221,22 @@ class Utilities {
     
     // MARK: Helpers
     
+    class func horoscopeSignString(fromSignNumber sign: Int) -> String {
+        if sign >= 0 {
+            return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
+        } else {
+            return ""
+        }
+    }
+    
+    class func horoscopeSignImage(fromSignNumber sign: Int) -> UIImage {
+        if sign >= 0 {
+            return UIImage(named: String(format:"%@_selected", horoscopeSignString(fromSignNumber: sign)))!
+        } else {
+            return UIImage()
+        }
+    }
+    
     class func getImageFromUrlString(imgUrl: String, completionHandler: (image: UIImage?) -> Void) {
         if let url = NSURL(string: imgUrl) {
             NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in

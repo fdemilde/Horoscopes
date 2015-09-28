@@ -24,22 +24,6 @@ class UserProfile: NSObject, NSCoding {
         let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
         return url.URLByAppendingPathComponent("userProfile").path!
     }
-    var horoscopeSignString: String {
-        if(sign >= 0){
-            return HoroscopesManager.sharedInstance.getHoroscopesSigns()[sign].sign
-        } else {
-            return ""
-        }
-        
-    }
-    var horoscopeSignImage: UIImage {
-        if(sign >= 0){
-            return UIImage(named: String(format:"%@_selected", horoscopeSignString))!
-        } else {
-            return UIImage()
-        }
-        
-    }
     struct Keys {
         static let uid = "uid"
         static let name = "name"

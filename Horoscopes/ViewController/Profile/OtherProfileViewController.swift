@@ -73,6 +73,24 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         })
     }
     
+    // MARK: - Configure UI
+    
+    override func configureProfileView() {
+        super.configureProfileView()
+        let sign = userProfile.sign
+        if sign >= 0 {
+            horoscopeSignLabel.hidden = false
+            horoscopeSignImageView.hidden = false
+            horoscopeSignView.hidden = false
+            horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
+            horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
+        } else {
+            horoscopeSignLabel.hidden = true
+            horoscopeSignImageView.hidden = true
+            horoscopeSignView.hidden = true
+        }
+    }
+    
     // MARK: - Helper
     
     override func getFollowingUsers(group: dispatch_group_t?) {

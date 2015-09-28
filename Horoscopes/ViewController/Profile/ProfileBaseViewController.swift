@@ -97,13 +97,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        if userProfile.uid != -1 {
-            getProfile()
-        }
-    }
-    
     // MARK: - Configure UI
     
     func configureProfileView() {
@@ -113,18 +106,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         nameLabel.text = userProfile.name
-        // BINH BINH : WRONG!
-        if(userProfile.sign >= 0){
-            horoscopeSignLabel.hidden = false
-            horoscopeSignImageView.hidden = false
-            horoscopeSignView.hidden = false
-            horoscopeSignLabel.text = userProfile.horoscopeSignString
-            horoscopeSignImageView.image = userProfile.horoscopeSignImage
-        } else {
-            horoscopeSignLabel.hidden = true
-            horoscopeSignImageView.hidden = true
-            horoscopeSignView.hidden = true
-        }
     }
     
     func configureScopeButton() {
@@ -163,7 +144,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
         cell.profileNameLabel.text = profile.name
-        cell.horoscopeSignLabel.text = profile.horoscopeSignString
+        cell.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: profile.sign)
         Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 cell.profileImageView?.image = image
@@ -231,21 +212,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Helper
-    
-    func getProfile() {
-        SocialManager.sharedInstance.getProfile(String(userProfile.uid), completionHandler: { (result, error) -> Void in
-            if let error = error {
-                Utilities.showError(self, error: error)
-            } else {
-                if !result!.isEmpty {
-                    self.userProfile = result![0]
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.configureProfileView()
-                    })
-                }
-            }
-        })
-    }
     
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White

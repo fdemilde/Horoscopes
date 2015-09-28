@@ -152,7 +152,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: save changes
     func saveBirthdaySetting(){
-//        println("saveBirthdaySetting saveBirthdaySetting")
         if(XAppDelegate.userSettings.birthday != self.birthday){
             XAppDelegate.userSettings.birthday = self.birthday
             let newSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
@@ -160,10 +159,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
                     if(error == nil){
                         XAppDelegate.userSettings.horoscopeSign = newSign
-                        XAppDelegate.currentUser.sign = Int(newSign)
                         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
                         customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
-                        customTabBarController.reload()
                     }
                 })
             }

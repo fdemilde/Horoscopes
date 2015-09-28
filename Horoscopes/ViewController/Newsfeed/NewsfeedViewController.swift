@@ -130,58 +130,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         view.bringSubviewToFront(addButton)
     }
     
-    func configureCell(cell: PostTableViewCell, post: UserPost) {
-        switch post.type {
-        case .OnYourMind:
-            cell.postTypeImageView.image = UIImage(named: "post_type_mind")
-        case .Feeling:
-            cell.postTypeImageView.image = UIImage(named: "post_type_feel")
-        case .Story:
-            cell.postTypeImageView.image = UIImage(named: "post_type_story")
-        }
-        cell.horoscopeSignLabel.text = post.user?.horoscopeSignString
-        cell.horoscopeSignImageView.image = post.user?.horoscopeSignImage
-        
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
-        cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
-        Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                cell.profileImageView.image = image
-            })
-        })
-        cell.profileNameLabel.text = post.user?.name
-        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-            cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        } else {
-            cell.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
-        }
-        if XAppDelegate.currentUser.uid != -1 {
-            if post.uid != XAppDelegate.currentUser.uid {
-                SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-                    if let _ = error {
-                        
-                    } else {
-                        let isFollowing = result!["isfollowing"] as! Int == 1
-                        if isFollowing {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-                            })
-                        } else {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-                            })
-                        }
-                    }
-                })
-            } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.newsfeedFollowButton.setImage(nil, forState: .Normal)
-                })
-            }
-        }
-    }
-    
     // MARK: Post buttons clicked
     // DCPathButton Delegate
     //
@@ -318,7 +266,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         let post = userPostArray[indexPath.row - 1] as UserPost
         cell.delegate = self
         cell.resetUI()
-        configureCell(cell, post: post)
+        cell.configureCellForNewsfeed(post)
         return cell
     }
     

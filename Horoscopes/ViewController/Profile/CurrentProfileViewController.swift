@@ -71,6 +71,22 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Configure UI
     
+    override func configureProfileView() {
+        super.configureProfileView()
+        let sign = Int(XAppDelegate.userSettings.horoscopeSign)
+        if sign >= 0 {
+            horoscopeSignLabel.hidden = false
+            horoscopeSignImageView.hidden = false
+            horoscopeSignView.hidden = false
+            horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
+            horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
+        } else {
+            horoscopeSignLabel.hidden = true
+            horoscopeSignImageView.hidden = true
+            horoscopeSignView.hidden = true
+        }
+    }
+    
     func configureLoginView() {
         if loginView == nil {
             profileView.hidden = true
