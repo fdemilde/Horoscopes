@@ -10,18 +10,19 @@ import UIKit
 
 class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate, DailyButtonTableViewCellDelegate {
     
-    let defaultEstimatedRowHeight: CGFloat = 320
     var selectedSign = -1
     var collectedHoroscope = CollectedHoroscope()
     var shouldCollectData = false
     var shouldReloadData = true
     var isEmptyDataSource = true
+    let PADDING = 8 as CGFloat
+    let CELL_HEADER_HEIGHT = 40 as CGFloat
+    let CELL_FOOTER_HEIGHT = 50 as CGFloat
+    
+    var textViewForCalculating = UITextView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.estimatedRowHeight = defaultEstimatedRowHeight
         if let parentViewController = self.tabBarController as? CustomTabBarController{
             selectedSign = parentViewController.selectedSign
         }
@@ -51,6 +52,29 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
 
     // MARK: - Table view data source and delegate
+    
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        switch indexPath.row {
+        case 0:
+            return 110
+        case 2:
+            return 110
+        default:
+            var description = ""
+            if indexPath.row == 1 {
+                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
+                    description = horoscopeDescription
+                }
+            } else {
+                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
+                    description = horoscopeDescription
+                }
+                
+            }
+            let cellBodyHeight = self.calculateBodyHeight(nil, text: description)
+            return CELL_HEADER_HEIGHT + cellBodyHeight + CELL_FOOTER_HEIGHT
+        }
+    }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = isEmptyDataSource ? 0 : 4
@@ -61,7 +85,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         var cell: UITableViewCell!
         switch indexPath.row {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath) 
+            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath)
             configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
         case 2:
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! DailyButtonTableViewCell
@@ -70,13 +94,21 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
-            
+            var description = ""
             if indexPath.row == 1 {
+                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
+                    description = horoscopeDescription
+                }
                 cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign)
+                
             } else {
                 cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign)
+                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
+                    description = horoscopeDescription
+                }
+                
             }
-            
+            cell.textView.text = description
             return cell
         }
 
@@ -189,6 +221,28 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
         
         return shareVC
+    }
+    
+    
+    
+    func calculateBodyHeight(cell : DailyContentTableViewCell? ,text : String) -> CGFloat{
+        
+        let font = UIFont(name: "Book Antiqua", size: 15)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
+        let textViewWidth = self.view.frame.width - PADDING * 4
+        let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
+        if let cell = cell {
+            cell.textView.frame = CGRectMake(cell.textView.frame.origin.x, cell.textView.frame.origin.y, cell.textView.frame.size.width, textViewHeight)
+        }
+        return PADDING + textViewHeight
+    }
+    
+    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+        textViewForCalculating.attributedText = string
+        let size = textViewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let height = ceil(size.height) + 60 // 40 is for preventing textview from clipping its text
+        return height
     }
     
     // MARK: - Notification Handler

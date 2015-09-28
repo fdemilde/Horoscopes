@@ -25,10 +25,12 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
     @IBOutlet var calendarButton : UIButton!
-    @IBOutlet weak var containerView: UIView!
     
     @IBOutlet weak var header: UIView!
     @IBOutlet weak var footer: UIView!
+    
+    @IBOutlet weak var bodyViewHeightConstraint: NSLayoutConstraint!
+    
     var delegate: DailyContentTableViewCellDelegate!
     var timeTag = NSTimeInterval()
     var selectedSign: Int!
@@ -36,8 +38,9 @@ class DailyContentTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        containerView.layer.cornerRadius = 5
-        containerView.clipsToBounds = true
+        layer.cornerRadius = 5
+        clipsToBounds = true
+        textView.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -88,23 +91,16 @@ class DailyContentTableViewCell: UITableViewCell {
             self.selectedSign = selectedSign
             if type == DailyHoroscopeType.TodayHoroscope {
                 dayLabel.text = "Today"
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
-                    textView.text = horoscopeDescription
-                }
             } else {
                 dayLabel.text = "Tomorrow"
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
-                    textView.text = horoscopeDescription
-                }
             }
-            textView.sizeToFit()
             dateLabel.text = dateStringForType(type)
         }
     }
     // setup for Archive View
     func setUpArchive(item : CollectedItem){
-        containerView.layer.cornerRadius = 0
-        containerView.clipsToBounds = true
+        layer.cornerRadius = 0
+        clipsToBounds = true
         dayLabel.text = "Archive"
         textView.text = item.horoscope.horoscopes[0] as! String
         timeTag = item.collectedDate.timeIntervalSince1970
