@@ -38,6 +38,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var userPosts = [UserPost]()
     var followingUsers = [UserProfile]()
     var followers = [UserProfile]()
+    var numberOfPosts = 0
+    var numberOfUsersFollowing = 0
+    var numberOfFollowers = 0
     var baseDispatchGroup: dispatch_group_t!
     var noPost = false
     var currentPostPage: Int = 0 {
@@ -75,11 +78,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
-        horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-        horoscopeSignView.layer.cornerRadius = 4
-        horoscopeSignView.clipsToBounds = true
-        avatarImageView.layer.cornerRadius = 60 / 2
-        avatarImageView.clipsToBounds = true
+        horoscopeSignView!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+        horoscopeSignView!.layer.cornerRadius = 4
+        horoscopeSignView!.clipsToBounds = true
+        avatarImageView!.layer.cornerRadius = 60 / 2
+        avatarImageView!.clipsToBounds = true
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -109,9 +112,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureScopeButton() {
-        postButton.setTitle("Post\n\(userProfile.numberOfPosts)", forState: .Normal)
-        followingButton.setTitle("Following\n\(userProfile.numberOfUsersFollowing)", forState: .Normal)
-        followersButton.setTitle("Followers\n\(userProfile.numberOfFollowers)", forState: .Normal)
+        postButton.setTitle("Post\n\(numberOfPosts)", forState: .Normal)
+        followingButton.setTitle("Following\n\(numberOfUsersFollowing)", forState: .Normal)
+        followersButton.setTitle("Followers\n\(numberOfFollowers)", forState: .Normal)
     }
     
     func highlightScopeButton(sender: UIButton) {
@@ -168,11 +171,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // MARK: - Convenience
     
-    func configureUi() {
-        configureProfileView()
-        configureScopeButton()
-    }
-    
     func tapScopeButton(sender: UIButton) {
         highlightScopeButton(sender)
         if currentScope != .Post {
@@ -201,12 +199,31 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if baseDispatchGroup == nil {
             baseDispatchGroup = dispatch_group_create()
         }
+        getUserProfileCounts()
         getUserPosts(baseDispatchGroup)
         getFollowingUsers(baseDispatchGroup)
         getFollowers(baseDispatchGroup)
         dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
             self.tableView.hidden = false
             Utilities.hideHUD()
+        }
+    }
+    
+    func getUserProfileCounts() {
+        SocialManager.sharedInstance.getProfileCounts([userProfile.uid]) { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+            } else {
+                if !result!.isEmpty {
+                    let count = result![0]
+                    self.numberOfPosts = count.numberOfPosts
+                    self.numberOfUsersFollowing = count.numberOfUsersFollowing
+                    self.numberOfFollowers = count.numberOfFollowers
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.configureScopeButton()
+                    })
+                }
+            }
         }
     }
     

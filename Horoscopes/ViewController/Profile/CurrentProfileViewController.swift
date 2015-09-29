@@ -43,7 +43,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
                 userProfile = XAppDelegate.currentUser
-                configureUi()
+                configureProfileView()
                 getData()
             } else {
                 SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
@@ -52,7 +52,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     } else {
                         self.userProfile = XAppDelegate.currentUser
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.configureUi()
+                            self.configureProfileView()
                         })
                         self.getData()
                     }
@@ -134,7 +134,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                             self.loginView = nil
                             self.profileView.hidden = false
                         }
-                        self.configureUi()
+                        self.configureProfileView()
                     })
                     self.getData()
                 } else {
@@ -354,6 +354,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)
             } else {
+                self.getUserProfileCounts()
                 let group = dispatch_group_create()
                 self.getFollowingUsers(group)
                 dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in

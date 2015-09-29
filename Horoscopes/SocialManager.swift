@@ -245,7 +245,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response)
-                print(json)
+                var result = [UserProfileCounts]()
+                if let dictionary = json["result"] as? [String: AnyObject] {
+                    for count in dictionary.values {
+                        result.append(UserProfileCounts(dictionary: count as! [String : AnyObject]))
+                    }
+                    completionHandler(result: result, error: nil)
+                }
             }
         }
     }
