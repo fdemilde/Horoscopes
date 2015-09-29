@@ -16,10 +16,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     var shouldReloadData = true
     var isEmptyDataSource = true
     let PADDING = 8 as CGFloat
+    let TEXTVIEW_PADDING = 10 as CGFloat // to prevent textview clipping its text
     let CELL_HEADER_HEIGHT = 40 as CGFloat
-    let CELL_FOOTER_HEIGHT = 50 as CGFloat
+    let CELL_FOOTER_HEIGHT = 101 as CGFloat
     
     var textViewForCalculating = UITextView()
+    var tableFooterView : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,6 +117,10 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         return cell
     }
     
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        tableView.tableFooterView = getFooterView()
+        return 1
+    }
     
     /*
     // MARK: - Navigation
@@ -232,17 +238,25 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = self.view.frame.width - PADDING * 4
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
-        if let cell = cell {
-            cell.textView.frame = CGRectMake(cell.textView.frame.origin.x, cell.textView.frame.origin.y, cell.textView.frame.size.width, textViewHeight)
-        }
-        return PADDING + textViewHeight
+        return TEXTVIEW_PADDING + textViewHeight
     }
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
         textViewForCalculating.attributedText = string
         let size = textViewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
-        let height = ceil(size.height) + 60 // 40 is for preventing textview from clipping its text
+        let height = ceil(size.height)
         return height
+    }
+    
+    func getFooterView() -> UIView {
+        if let _ = tableFooterView{
+            
+        } else {
+            tableFooterView = UIView()
+            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
+            tableFooterView.backgroundColor = UIColor.clearColor()
+        }
+        return tableFooterView
     }
     
     // MARK: - Notification Handler
