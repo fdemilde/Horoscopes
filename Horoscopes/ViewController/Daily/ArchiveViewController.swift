@@ -45,6 +45,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     override func viewDidAppear(animated: Bool) {
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: UI
     
     func setupBackground(){
