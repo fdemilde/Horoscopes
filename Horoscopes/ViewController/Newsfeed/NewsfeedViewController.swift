@@ -35,12 +35,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
-    var userPostArray = [UserPost]()
+//    var userPostArray = [UserPost]()
     var feedsDisplayNode = ASDisplayNode()
     var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
     var currentPage = 0
     var overlay : UIView!
+    var oldNewsfeedArray = [UserPost]()
     
     @IBOutlet weak var tabView: UIView!
     
@@ -66,7 +67,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
-            userPostArray = XAppDelegate.dataStore.newsfeedFollowing
             tableView.reloadData()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already logged in facebook
                 dispatch_async(dispatch_get_main_queue(),{
@@ -169,6 +169,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Button Actions
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
+        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
+//        self.scrollToTop()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         currentPage = 0
@@ -177,7 +179,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         if(self.tabType != NewsfeedTabType.Global){
             self.tabType = NewsfeedTabType.Global
             self.resetTapButtonColor()
-            userPostArray = XAppDelegate.dataStore.newsfeedGlobal
             tableView.reloadData()
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
@@ -185,6 +186,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
+        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
+//        self.scrollToTop()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED,object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         // when button is tapped, we load data again
@@ -195,13 +198,12 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             self.tabType = NewsfeedTabType.Following
             self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
-                userPostArray = XAppDelegate.dataStore.newsfeedFollowing
                 tableView.reloadData()
                 
                 NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
             } else {
-                userPostArray.removeAll(keepCapacity: false)
+//                userPostArray.removeAll(keepCapacity: false)
                 self.tableView.reloadData()
             }
         } else {
@@ -217,53 +219,56 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: - Table view data source and delegate
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return userPostArray.count
+        return getTotalRowsInTable()
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        if(XAppDelegate.socialManager.isLoggedInFacebook() || self.tabType == NewsfeedTabType.Global){ // user already loggin facebook
-            if(userPostArray.count == 0){
-                tableView.tableHeaderView = createEmptyTableHeaderBackgroundWithMessage()
-            } else {
-                tableView.tableHeaderView = nil
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            // if Following tab and not logged in, show log in view
+            if(self.tabType == NewsfeedTabType.Following){
+                let bg = self.createEmptyTableHeaderBackground()
+                let facebookButton = UIButton()
+                facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
+                facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
+                facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
+                bg.addSubview(facebookButton)
+                let label = UILabel()
+                label.text = "Login Facebook to follow your friends"
+                label.sizeToFit()
+                label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
+                bg.addSubview(label)
+                tableView.tableHeaderView = bg
+                return 1
             }
-            
+        }
+//        print("userPostArray.count === \(userPostArray.count)")
+        if(getFeedArray().count == 0){
+            tableView.tableHeaderView = createEmptyTableHeaderBackgroundWithMessage()
         } else {
-            let bg = self.createEmptyTableHeaderBackground()
-            let facebookButton = UIButton()
-            facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
-            facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
-            facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
-            bg.addSubview(facebookButton)
-            let label = UILabel()
-            label.text = "Login Facebook to follow your friends"
-            label.sizeToFit()
-            label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
-            bg.addSubview(label)
-            tableView.tableHeaderView = bg
+            tableView.tableHeaderView = nil
         }
         return 1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if indexPath.row == 0 {
-            var cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.defaultTableViewCellIdentifier) as? NewsfeedDefaultTableViewCell
-            if cell == nil {
-                cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
-            }
-            if XAppDelegate.currentUser.uid != -1 {
-                Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell?.profileImageView.image = image
-                    })
-                })
-            } else {
-                cell?.profileImageView.image = UIImage(named: "default_avatar")
-            }
-            return cell!
-        }
+//        if indexPath.row == 0 {
+//            var cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.defaultTableViewCellIdentifier) as? NewsfeedDefaultTableViewCell
+//            if cell == nil {
+//                cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
+//            }
+//            if XAppDelegate.currentUser.uid != -1 {
+//                Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
+//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                        cell?.profileImageView.image = image
+//                    })
+//                })
+//            } else {
+//                cell?.profileImageView.image = UIImage(named: "default_avatar")
+//            }
+//            return cell!
+//        }
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.postTableViewCellIdentifier, forIndexPath: indexPath) as! PostTableViewCell
-        let post = userPostArray[indexPath.row - 1] as UserPost
+        let post = getFeedDataForRow(indexPath.row)
         cell.delegate = self
         cell.resetUI()
         cell.configureCellForNewsfeed(post)
@@ -271,14 +276,14 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row  == 0 {
-            addButton.centerButtonTapped()
-        }
+//        if indexPath.row  == 0 {
+//            addButton.centerButtonTapped()
+//        }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         if let cell = cell as? PostTableViewCell {
-            let post = userPostArray[indexPath.row - 1]
+            let post = getFeedDataForRow(indexPath.row)
             cell.configureNewsfeedUi()
             if post.user?.sign >= 0 {
                 cell.changeHoroscopeSignViewWidthToDefault()
@@ -302,111 +307,111 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if indexPath.row == 0 {
-            return 50
-        }
+//        if indexPath.row == 0 {
+//            return 50
+//        }
         return UITableViewAutomaticDimension
     }
     
     // MARK: - Delegate
     
-    func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
-        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-        let post = userPostArray[index]
-        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
-            if let error = error {
-                Utilities.showError(self, error: error)
-            } else {
-                let isFollowing = result!["isfollowing"] as! Int == 1
-                hud.detailsLabelFont = UIFont.systemFontOfSize(11)
-                let name = self.userPostArray[index].user!.name
-                if isFollowing {
-                    SocialManager.sharedInstance.unfollow(post.uid, completionHandler: { (error) -> Void in
-                        hud.mode = MBProgressHUDMode.Text
-                        if let _ = error {
-                            hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        } else {
-                            hud.detailsLabelText = "\(name) has been removed from your Following list."
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.tableView.reloadData()
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        }
-                    })
-                } else {
-                    SocialManager.sharedInstance.follow(self.userPostArray[index].uid, completionHandler: { (error) -> Void in
-                        hud.mode = MBProgressHUDMode.Text
-                        if let _ = error {
-                            hud.detailsLabelText = "Follow unsuccessully due to network error!"
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        } else {
-                            hud.detailsLabelText = "\(name) has been added to your Following list."
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.tableView.reloadData()
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        }
-                    })
-                }
-            }
-        }
-    }
-    
-    func didTapPostProfile(cell: PostTableViewCell) {
-        if SocialManager.sharedInstance.isLoggedInFacebook() {
-            let index = (tableView.indexPathForCell(cell)?.row)! - 1
-            let profile = userPostArray[index].user
-            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-            controller.userProfile = profile!
-            navigationController?.pushViewController(controller, animated: true)
-        } else {
-            Utilities.showAlert(self, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
-        }
-    }
-    
-    func didTapShareButton(cell: PostTableViewCell) {
-        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-        let name = userPostArray[index].user!.name
-        let postContent = userPostArray[index].message
-        let sharingText = String(format: "%@ \n %@", name, postContent)
-        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
-        Utilities.presentShareFormSheetController(self, shareViewController: controller)
-    }
-    
-    func didTapLikeButton(cell: PostTableViewCell) {
-        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-        let post = userPostArray[index]
-        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
-            return
-        }
-        cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        cell.likeButton.userInteractionEnabled = false
-        cell.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
-    }
+//    func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
+//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
+//        let post = userPostArray[index]
+//        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+//        SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
+//            if let error = error {
+//                Utilities.showError(self, error: error)
+//            } else {
+//                let isFollowing = result!["isfollowing"] as! Int == 1
+//                hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+//                let name = self.userPostArray[index].user!.name
+//                if isFollowing {
+//                    SocialManager.sharedInstance.unfollow(post.uid, completionHandler: { (error) -> Void in
+//                        hud.mode = MBProgressHUDMode.Text
+//                        if let _ = error {
+//                            hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                hud.hide(true, afterDelay: 2)
+//                            })
+//                        } else {
+//                            hud.detailsLabelText = "\(name) has been removed from your Following list."
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                self.tableView.reloadData()
+//                                hud.hide(true, afterDelay: 2)
+//                            })
+//                        }
+//                    })
+//                } else {
+//                    SocialManager.sharedInstance.follow(self.userPostArray[index].uid, completionHandler: { (error) -> Void in
+//                        hud.mode = MBProgressHUDMode.Text
+//                        if let _ = error {
+//                            hud.detailsLabelText = "Follow unsuccessully due to network error!"
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                hud.hide(true, afterDelay: 2)
+//                            })
+//                        } else {
+//                            hud.detailsLabelText = "\(name) has been added to your Following list."
+//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                                self.tableView.reloadData()
+//                                hud.hide(true, afterDelay: 2)
+//                            })
+//                        }
+//                    })
+//                }
+//            }
+//        }
+//    }
+//    
+//    func didTapPostProfile(cell: PostTableViewCell) {
+//        if SocialManager.sharedInstance.isLoggedInFacebook() {
+//            let index = (tableView.indexPathForCell(cell)?.row)! - 1
+//            let profile = userPostArray[index].user
+//            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+//            controller.userProfile = profile!
+//            navigationController?.pushViewController(controller, animated: true)
+//        } else {
+//            Utilities.showAlert(self, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
+//        }
+//    }
+//    
+//    func didTapShareButton(cell: PostTableViewCell) {
+//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
+//        let name = userPostArray[index].user!.name
+//        let postContent = userPostArray[index].message
+//        let sharingText = String(format: "%@ \n %@", name, postContent)
+//        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+//        Utilities.presentShareFormSheetController(self, shareViewController: controller)
+//    }
+//    
+//    func didTapLikeButton(cell: PostTableViewCell) {
+//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
+//        let post = userPostArray[index]
+//        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+//            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+//            return
+//        }
+//        cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+//        cell.likeButton.userInteractionEnabled = false
+//        cell.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+//        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
+//    }
     
     // Notification handler
-    func sendHeartSuccessful(notif: NSNotification){
-        let postId = notif.object as! String
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        var index = -1
-        for (i, post) in userPostArray.enumerate() {
-            if post.post_id == postId {
-                index = i
-            }
-        }
-        if index != -1 {
-            userPostArray[index].hearts += 1
-        }
-    }
+//    func sendHeartSuccessful(notif: NSNotification){
+//        let postId = notif.object as! String
+//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+//        var index = -1
+//        for (i, post) in userPostArray.enumerate() {
+//            if post.post_id == postId {
+//                index = i
+//            }
+//        }
+//        if index != -1 {
+//            userPostArray[index].hearts += 1
+//        }
+//    }
     
     // Networks 
     func checkAndLoginZwigglers(){
@@ -469,8 +474,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            _ = scrollView as! UITableView
-            
             if(!XAppDelegate.socialManager.isLoggedInFacebook() && self.tabType == NewsfeedTabType.Following){
                 self.tableView.finishInfiniteScroll()
                 return
@@ -483,8 +486,10 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             self.currentPage++
             
             if(self.tabType == NewsfeedTabType.Following){
+                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
                 XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
             } else {
+                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
                 XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
             }
         }
@@ -510,6 +515,46 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return bg
     }
     
+    func scrollToTop(){
+        tableView.setContentOffset(CGPointZero, animated:true)
+    }
+    
+    // MARK: Table Data helpers
+    
+    func getTotalRowsInTable() -> Int{
+        var result = 0 // default 1 row for "What's on your mind" cell
+        if(tabType == NewsfeedTabType.Global){
+             result += XAppDelegate.dataStore.newsfeedGlobal.count
+        } else {
+             result += XAppDelegate.dataStore.newsfeedFollowing.count
+        }
+        return result
+    }
+    
+    func getFeedDataForRow(row : Int) -> UserPost {
+        if(tabType == NewsfeedTabType.Global){
+            return XAppDelegate.dataStore.newsfeedGlobal[row]
+        } else {
+            return XAppDelegate.dataStore.newsfeedFollowing[row]
+        }
+    }
+    
+//    func getOldFeedArray() -> [UserPost] {
+//        if(tabType == NewsfeedTabType.Global){
+//            return XAppDelegate.dataStore.oldNewsfeedGlobal
+//        } else {
+//            return XAppDelegate.dataStore.oldNewsfeedFollowing
+//        }
+//    }
+    
+    func getFeedArray() -> [UserPost]{
+        if(tabType == NewsfeedTabType.Global){
+            return XAppDelegate.dataStore.newsfeedGlobal
+        } else {
+            return XAppDelegate.dataStore.newsfeedFollowing
+        }
+    }
+    
     // MARK: infinite scrolling support 
     func insertRowsAtBottom(newData : [UserPost]){
         self.tableView.beginUpdates()
@@ -518,8 +563,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             let p2 = post2 as! UserPost
             return (p1.post_id == p2.post_id);
         }
-        let delta = deltaCalculator.deltaFromOldArray(self.userPostArray, toNewArray:newData)
-        self.userPostArray = newData
+        let delta = deltaCalculator.deltaFromOldArray(self.oldNewsfeedArray, toNewArray:self.getFeedArray())
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
         self.tableView.endUpdates()
         tableView.finishInfiniteScroll()

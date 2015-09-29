@@ -80,7 +80,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 break
             case 2:
                 cell.setupCell(SettingsType.BugsReport)
-                    break
+                break
             case 3:
                 cell.setupCell(SettingsType.Logout)
                 break

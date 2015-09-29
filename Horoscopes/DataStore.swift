@@ -40,7 +40,6 @@ class DataStore : NSObject{
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                     return // no new data
                 }
-
                 newsfeedFollowing = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
@@ -50,7 +49,6 @@ class DataStore : NSObject{
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                     return // no new data
                 }
-
                 newsfeedGlobal = addData(newsfeedGlobal, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
@@ -105,8 +103,6 @@ class DataStore : NSObject{
         var mutableOldArray = oldDataArray
         let oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
         let newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
-//        println("oldPostIDArray == \(oldPostIDArray)")
-//        println("newDataArray == \(newDataArray)")
         // check if any new post, update old array with new items
         for (index,newPostId) in newPostIDArray.enumerate() {
             if !oldPostIDArray.contains(newPostId) {
