@@ -146,12 +146,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         }
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if post.uid != XAppDelegate.currentUser.uid {
+                newsfeedFollowButton.userInteractionEnabled = true
                 if post.user!.isFollowed {
                     newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
                 } else {
                     newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
                 }
+            } else {
+                newsfeedFollowButton.userInteractionEnabled = false
             }
+        } else {
+            newsfeedFollowButton.userInteractionEnabled = false
         }
     }
     
