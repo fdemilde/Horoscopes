@@ -14,9 +14,6 @@ class UserProfile: NSObject, NSCoding {
     var imgURL : String = ""
     var sign : Int = -1
     var location : String = ""
-    var numberOfPosts: Int = 0
-    var numberOfUsersFollowing: Int = 0
-    var numberOfFollowers: Int = 0
     
     var isFollowed = false
     static var filePath: String {
@@ -30,9 +27,6 @@ class UserProfile: NSObject, NSCoding {
         static let imgUrl = "imgUrl"
         static let sign = "sign"
         static let location = "location"
-        static let numberOfPosts = "numberOfPosts"
-        static let numberOfUsersFollowing = "numberOfUsersFollowing"
-        static let numberOfFollowers = "numberOfFollowers"
     }
     
     init(data: NSDictionary){
@@ -43,9 +37,6 @@ class UserProfile: NSObject, NSCoding {
         self.sign = sign - 1
         
         self.location = data.objectForKey("location") as! String
-        numberOfPosts = data.objectForKey("no_post") as! Int
-        numberOfUsersFollowing = data.objectForKey("no_following") as! Int
-        numberOfFollowers = data.objectForKey("no_follower") as! Int
     }
 
     override init(){
@@ -58,9 +49,6 @@ class UserProfile: NSObject, NSCoding {
         imgURL = aDecoder.decodeObjectForKey(Keys.imgUrl) as! String
         sign = aDecoder.decodeIntegerForKey(Keys.sign)
         location = aDecoder.decodeObjectForKey(Keys.location) as! String
-        numberOfPosts = aDecoder.decodeIntegerForKey(Keys.numberOfPosts)
-        numberOfUsersFollowing = aDecoder.decodeIntegerForKey(Keys.numberOfUsersFollowing)
-        numberOfFollowers = aDecoder.decodeIntegerForKey(Keys.numberOfFollowers)
     }
     
     func encodeWithCoder(aCoder: NSCoder) {
@@ -69,8 +57,5 @@ class UserProfile: NSObject, NSCoding {
         aCoder.encodeObject(imgURL, forKey: Keys.imgUrl)
         aCoder.encodeInteger(sign, forKey: Keys.sign)
         aCoder.encodeObject(location, forKey: Keys.location)
-        aCoder.encodeInteger(numberOfPosts, forKey: Keys.numberOfPosts)
-        aCoder.encodeInteger(numberOfUsersFollowing, forKey: Keys.numberOfUsersFollowing)
-        aCoder.encodeInteger(numberOfFollowers, forKey: Keys.numberOfFollowers)
     }
 }

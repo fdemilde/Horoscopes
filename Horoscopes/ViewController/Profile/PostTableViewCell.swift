@@ -60,6 +60,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     var horoscopeSignImageViewWidthConstant: CGFloat = 18
     var horoscopeSignImageViewTrailingSpaceConstant: CGFloat = 5
     var horoscopeSignLabelTrailingSpaceConstant: CGFloat = 10
+    let postTypeTexts = [
+        "How do you feel today?",
+        "Share your story",
+        "What's on your mind?"
+    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -109,7 +114,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         newsfeedFollowButton.setImage(nil, forState: .Normal)
     }
     
-    func configureCellForNewsfeed(post: UserPost) {
+    func configureCell(post: UserPost) {
         switch post.type {
         case .OnYourMind:
             postTypeImageView.image = UIImage(named: "post_type_mind")
@@ -118,12 +123,16 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         case .Story:
             postTypeImageView.image = UIImage(named: "post_type_story")
         }
-        horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
-        horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: (post.user?.sign)!)
-        
         postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         textView.text = post.message
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+    }
+    
+    func configureCellForNewsfeed(post: UserPost) {
+        configureNewsfeedUi()
+        configureCell(post)
+        horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
+        horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: (post.user?.sign)!)
         Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.profileImageView.image = image
@@ -135,30 +144,25 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         } else {
             likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
         }
-//        if XAppDelegate.currentUser.uid != -1 {
-//            if post.uid != XAppDelegate.currentUser.uid {
-//                SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-//                    if let _ = error {
-//                        
-//                    } else {
-//                        let isFollowing = result!["isfollowing"] as! Int == 1
-//                        if isFollowing {
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-//                            })
-//                        } else {
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-//                            })
-//                        }
-//                    }
-//                })
-//            } else {
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    cell.newsfeedFollowButton.setImage(nil, forState: .Normal)
-//                })
-//            }
-//        }
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            if post.uid != XAppDelegate.currentUser.uid {
+                newsfeedFollowButton.userInteractionEnabled = true
+                if post.user!.isFollowed {
+                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                } else {
+                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
+                }
+            } else {
+                newsfeedFollowButton.userInteractionEnabled = false
+            }
+        } else {
+            newsfeedFollowButton.userInteractionEnabled = false
+        }
+    }
+    
+    func configureCellForProfile(post: UserPost) {
+        configureUserPostUi()
+        configureCell(post)
     }
     
     func configureNewsfeedUi() {

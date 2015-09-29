@@ -43,7 +43,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
                 userProfile = XAppDelegate.currentUser
-                configureUi()
+                configureProfileView()
                 getData()
             } else {
                 SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
@@ -52,7 +52,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     } else {
                         self.userProfile = XAppDelegate.currentUser
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.configureUi()
+                            self.configureProfileView()
                         })
                         self.getData()
                     }
@@ -134,7 +134,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                             self.loginView = nil
                             self.profileView.hidden = false
                         }
-                        self.configureUi()
+                        self.configureProfileView()
                     })
                     self.getData()
                 } else {
@@ -196,6 +196,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
+                DataStore.sharedInstance.followers = result!
                 self.noFollower = result!.count == 0
                 self.handleData(dispatchGroup, oldData: &self.followers, newData: result!, button: self.followersButton)
             }
@@ -249,7 +250,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
                 cell.delegate = self
                 let friend = friends[indexPath.row]
-                configureFollowTableViewCell(cell, profile: friend)
+                cell.configureCell(friend)
                 cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
                 return cell
             } else {
@@ -353,6 +354,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)
             } else {
+                self.getUserProfileCounts()
                 let group = dispatch_group_create()
                 self.getFollowingUsers(group)
                 dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in

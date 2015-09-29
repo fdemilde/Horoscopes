@@ -12,6 +12,7 @@ class DataStore : NSObject{
     var newsfeedGlobal = [UserPost]()
     var newsfeedFollowing = [UserPost]()
     var newsfeedIsUpdated : Bool = false
+    var followers: [UserProfile]?
     
     var recentSearchedProfile = [UserProfile]()
     var isLastPage = false
@@ -22,7 +23,22 @@ class DataStore : NSObject{
     static let sharedInstance = DataStore()
     
     override init(){
-        
+        super.init()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowers:", name: NOTIFICATION_FOLLOW, object: nil)
+    }
+    
+    deinit {
+        NSNotificationCenter.defaultCenter().removeObserver(self)
+    }
+    
+    func updateFollowers(_: NSNotification) {
+        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+            if let _ = error {
+                
+            } else {
+                self.followers = result!
+            }
+        }
     }
     
     func saveSearchedProfile(profile: UserProfile) {

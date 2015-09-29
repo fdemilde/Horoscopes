@@ -47,7 +47,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        configureUi()
+        configureProfileView()
         getData()
     }
     
@@ -64,6 +64,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)
             } else {
+                self.getUserProfileCounts()
                 self.getFollowers(nil)
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.newsfeedFollowButton.removeFromSuperview()
