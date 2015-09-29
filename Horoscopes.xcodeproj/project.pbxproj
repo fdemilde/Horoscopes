@@ -50,6 +50,9 @@
 		F42E28B21B37D14100466CAA /* share_viber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A21B37D14100466CAA /* share_viber@2x.png */; };
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
+		F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4241BBA38F0002DCAD5 /* SettingsTableCell.swift */; settings = {ASSET_TAGS = (); }; };
+		F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4261BBA38FE002DCAD5 /* ArchiveCalendarCell.swift */; settings = {ASSET_TAGS = (); }; };
+		F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */; settings = {ASSET_TAGS = (); }; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
 		F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */; };
@@ -89,7 +92,6 @@
 		F460982B1B50D1F30026F0C9 /* moon_ani_12@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */; };
 		F460982C1B50D1F30026F0C9 /* moon_ani_12@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */; };
 		F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */; };
-		F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */; };
 		F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB271B205617002031AB /* HoroscopesManager.swift */; };
 		F47BAB2B1B21605C002031AB /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47BAB2A1B21605C002031AB /* Config.swift */; };
 		F47C029D1B258B9B00C0BA83 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = F47C029C1B258B9B00C0BA83 /* Utilities.swift */; };
@@ -101,7 +103,6 @@
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
 		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
-		F4A721721BA066A200A4C691 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
 		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
@@ -242,6 +243,9 @@
 		F42E28A21B37D14100466CAA /* share_viber@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_viber@2x.png"; sourceTree = "<group>"; };
 		F42E28A31B37D14100466CAA /* share_whatsapp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_whatsapp.png; sourceTree = "<group>"; };
 		F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "share_whatsapp@2x.png"; sourceTree = "<group>"; };
+		F430F4241BBA38F0002DCAD5 /* SettingsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
+		F430F4261BBA38FE002DCAD5 /* ArchiveCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveCalendarCell.swift; sourceTree = "<group>"; };
+		F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveDetailTableCell.swift; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
@@ -281,7 +285,6 @@
 		F46098071B50D1F30026F0C9 /* moon_ani_12@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@2x.png"; sourceTree = "<group>"; };
 		F46098081B50D1F30026F0C9 /* moon_ani_12@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_12@3x.png"; sourceTree = "<group>"; };
 		F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerViewController.swift; sourceTree = "<group>"; };
-		F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableCell.swift; sourceTree = "<group>"; };
 		F47BAB261B204969002031AB /* ServerConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ServerConfig.h; sourceTree = "<group>"; };
 		F47BAB271B205617002031AB /* HoroscopesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HoroscopesManager.swift; sourceTree = "<group>"; };
 		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
@@ -295,7 +298,6 @@
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
-		F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveCalendarCell.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 		704FF7431BB2BB92006A5A98 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F430F4241BBA38F0002DCAD5 /* SettingsTableCell.swift */,
 				704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */,
 				704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */,
 				704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */,
@@ -510,15 +513,6 @@
 				F40ECD741B99536C0047185F /* CMPopTipView.m */,
 			);
 			path = CMPopTipView;
-			sourceTree = "<group>";
-		};
-		F41E80C31B340D8B00C2DA95 /* TableViewCell */ = {
-			isa = PBXGroup;
-			children = (
-				F475DAE81B5CB3AA00DF47EA /* SettingsTableCell.swift */,
-				F4A721711BA066A200A4C691 /* ArchiveCalendarCell.swift */,
-			);
-			path = TableViewCell;
 			sourceTree = "<group>";
 		};
 		F41E80C81B340DAE00C2DA95 /* CustomViews */ = {
@@ -652,12 +646,14 @@
 		F49EB55E1B41C21E00F56092 /* Daily */ = {
 			isa = PBXGroup;
 			children = (
+				F430F4261BBA38FE002DCAD5 /* ArchiveCalendarCell.swift */,
 				F49EB5611B41C21E00F56092 /* CookieViewController.swift */,
 				70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */,
 				70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */,
 				70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */,
 				70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */,
 				F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */,
+				F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */,
 			);
 			path = Daily;
 			sourceTree = "<group>";
@@ -766,7 +762,6 @@
 				F4CACA821B2003E1003C6301 /* models */,
 				F4CACA391B1EEE72003C6301 /* Resources */,
 				F4CACA7A1B200149003C6301 /* RotateControl */,
-				F41E80C31B340D8B00C2DA95 /* TableViewCell */,
 				F41E80C81B340DAE00C2DA95 /* CustomViews */,
 				F47C029E1B2691A700C0BA83 /* ViewController */,
 				F4BF7B421B623D0400E3A491 /* LocationManager.swift */,
@@ -1265,7 +1260,6 @@
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
 				F49EB5651B41C21E00F56092 /* CookieViewController.swift in Sources */,
-				F4A721721BA066A200A4C691 /* ArchiveCalendarCell.swift in Sources */,
 				F47BAB2B1B21605C002031AB /* Config.swift in Sources */,
 				F47C02A11B2691A700C0BA83 /* CustomTabBarController.swift in Sources */,
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
@@ -1291,11 +1285,14 @@
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,
+				F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */,
+				F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
 				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
 				F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */,
+				F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */,
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
 				F4C44FA21B8EC58000910E56 /* DCPathItemButton.m in Sources */,
@@ -1311,7 +1308,6 @@
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */,
 				F4CACAD01B2010F2003C6301 /* CrossSellMainView.m in Sources */,
-				F475DAE91B5CB3AA00DF47EA /* SettingsTableCell.swift in Sources */,
 				F4CACACF1B2010F2003C6301 /* CrossSellButtonInfo.m in Sources */,
 				702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */,
 				F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */,

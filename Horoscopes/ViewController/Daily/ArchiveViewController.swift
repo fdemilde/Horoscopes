@@ -26,8 +26,9 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     let CALENDAR_ICON_SPACE_HEIGHT = 50 as CGFloat
     let PROGRESS_BAR_CONTAINER_SIZE = 120 as CGFloat
     let PADDING: CGFloat = 8 as CGFloat
-    let HEADER_HEIGHT: CGFloat = 37 as CGFloat
-    let FOOTER_HEIGHT: CGFloat = 95 as CGFloat
+    let TEXTVIEW_PADDING = 10 as CGFloat // to prevent textview clipping its text
+    let HEADER_HEIGHT: CGFloat = 40 as CGFloat
+    let FOOTER_HEIGHT: CGFloat = 101 as CGFloat
     let CIRCULAR_PROGRESS_HOLDER_HEIGHT_WITH_PADDING: CGFloat = 160 as CGFloat
     let MIN_CALENDAR_CELL_HEIGHT: CGFloat = 250 as CGFloat
     
@@ -42,6 +43,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     }
     
     override func viewDidAppear(animated: Bool) {
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // MARK: UI
@@ -134,9 +139,9 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             cell.setupCell(self)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveHoroscopeDetailCell", forIndexPath: indexPath) as! DailyContentTableViewCell
+            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveDetailTableCell", forIndexPath: indexPath) as! ArchiveDetailTableCell
             if let _ = collectedItem{
-                cell.setUpArchive(collectedItem)
+                cell.setUp(collectedItem)
                     cell.delegate = self
             }
             return cell
@@ -163,7 +168,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         let font = UIFont(name: "Book Antiqua", size: 15)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
-        let textViewWidth = Utilities.getScreenSize().width - PADDING * 2
+        let textViewWidth = Utilities.getScreenSize().width - PADDING * 4
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
         return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT
     }
@@ -175,7 +180,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         let tableHeaderHeight = getTableHeaderHeight()
         let minTextViewHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - PADDING * 2 - HEADER_HEIGHT - tableHeaderHeight - FOOTER_HEIGHT - TABBAR_HEIGHT
         let height = max(ceil(size.height), minTextViewHeight)
-        return height
+        return height + TEXTVIEW_PADDING
     }
     
     // Calendar delegate

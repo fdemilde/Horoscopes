@@ -20,6 +20,10 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         setupView()
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        self.navigationController?.popViewControllerAnimated(true)
+    }
+    
     // MARK: Setup View
     func setupView(){
         // Do any additional setup after loading the view.
