@@ -251,7 +251,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             if cell == nil {
                 cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
             }
-            if XAppDelegate.currentUser.uid != -1 {
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
                 Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         cell?.profileImageView.image = image

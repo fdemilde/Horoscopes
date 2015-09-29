@@ -257,6 +257,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(error: error)
             } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_FOLLOW, object: nil)
+                })
                 SocialManager.sharedInstance.sendFollowNotification(uid)
                 completionHandler(error: nil)
             }

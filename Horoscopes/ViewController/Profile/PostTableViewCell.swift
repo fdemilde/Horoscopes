@@ -135,30 +135,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         } else {
             likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
         }
-//        if XAppDelegate.currentUser.uid != -1 {
-//            if post.uid != XAppDelegate.currentUser.uid {
-//                SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-//                    if let _ = error {
-//                        
-//                    } else {
-//                        let isFollowing = result!["isfollowing"] as! Int == 1
-//                        if isFollowing {
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-//                            })
-//                        } else {
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                cell.newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-//                            })
-//                        }
-//                    }
-//                })
-//            } else {
-//                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    cell.newsfeedFollowButton.setImage(nil, forState: .Normal)
-//                })
-//            }
-//        }
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            if post.uid != XAppDelegate.currentUser.uid {
+                if post.user!.isFollowed {
+                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
+                } else {
+                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
+                }
+            }
+        }
     }
     
     func configureNewsfeedUi() {
