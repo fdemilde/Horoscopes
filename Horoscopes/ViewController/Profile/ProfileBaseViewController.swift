@@ -60,12 +60,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
         }
     }
-    var isLastPostPage = false
     let postTypeTexts = [
         "How do you feel today?",
         "Share your story",
         "What's on your mind?"
     ]
+    var isLastPostPage = false
     
     // MARK: - Life cycle
 
@@ -122,34 +122,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                 button.alpha = 0.5
             }
         }
-    }
-    
-    func configurePostTableViewCell(cell: PostTableViewCell, post: UserPost) {
-        cell.configureUserPostUi()
-        switch post.type {
-        case .OnYourMind:
-            cell.postTypeImageView.image = UIImage(named: "post_type_mind")
-            cell.postTypeLabel.text = postTypeTexts[2]
-        case .Feeling:
-            cell.postTypeImageView.image = UIImage(named: "post_type_feel")
-            cell.postTypeLabel.text = postTypeTexts[0]
-        case .Story:
-            cell.postTypeImageView.image = UIImage(named: "post_type_story")
-            cell.postTypeLabel.text = postTypeTexts[1]
-        }
-        cell.postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
-        cell.textView.text = post.message
-        cell.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
-    }
-    
-    func configureFollowTableViewCell(cell: FollowTableViewCell, profile: UserProfile) {
-        cell.profileNameLabel.text = profile.name
-        cell.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: profile.sign)
-        Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                cell.profileImageView?.image = image
-            })
-        })
     }
     
     func changeToClearTableViewLayout() {
@@ -322,7 +294,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
             cell.delegate = self
-            configurePostTableViewCell(cell, post: post)
+            cell.configureCellForProfile(post)
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
@@ -333,7 +305,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             } else {
                 profile = followers[indexPath.row]
             }
-            configureFollowTableViewCell(cell, profile: profile)
+            cell.configureCell(profile)
             return cell
         }
     }

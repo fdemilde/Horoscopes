@@ -41,6 +41,16 @@ class FollowTableViewCell: UITableViewCell {
         }
     }
     
+    func configureCell(profile: UserProfile) {
+        profileNameLabel.text = profile.name
+        horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: profile.sign)
+        Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                profileImageView?.image = image
+            })
+        })
+    }
+    
     func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
         if followButton == nil {
             followButton = UIButton()

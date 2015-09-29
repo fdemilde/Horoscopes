@@ -250,7 +250,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
                 cell.delegate = self
                 let friend = friends[indexPath.row]
-                configureFollowTableViewCell(cell, profile: friend)
+                cell.configureCell(friend)
                 cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
                 return cell
             } else {
