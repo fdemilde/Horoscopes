@@ -1,14 +1,14 @@
 //
-//  NewsfeedDefaultTableViewCell.swift
+//  NewsfeedTableHeaderView.swift
 //  Horoscopes
 //
-//  Created by Dang Doan on 9/24/15.
+//  Created by Dang Doan on 9/30/15.
 //  Copyright © 2015 Binh Dang. All rights reserved.
 //
 
 import UIKit
 
-class NewsfeedDefaultTableViewCell: UITableViewCell {
+class NewsfeedTableHeaderView: UIView {
     
     let imageViewMargin: CGFloat = 3
     let textLabelLeadingSpace: CGFloat = 13
@@ -17,9 +17,8 @@ class NewsfeedDefaultTableViewCell: UITableViewCell {
     var postTextLabel: UILabel!
     var profileImageView: UIImageView!
     
-    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        selectionStyle = .None
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         backgroundColor = UIColor.clearColor()
         
         containerView = UIView()
@@ -54,5 +53,13 @@ class NewsfeedDefaultTableViewCell: UITableViewCell {
         profileImageView.layer.cornerRadius = profileImageView.frame.height / 2
         postTextLabel.frame.origin = CGPoint(x: profileImageView.frame.origin.x + profileImageView.frame.width + textLabelLeadingSpace, y: (containerView.frame.height - postTextLabel.frame.height) / 2)
     }
+
+    /*
+    // Only override drawRect: if you perform custom drawing.
+    // An empty implementation adversely affects performance during animation.
+    override func drawRect(rect: CGRect) {
+        // Drawing code
+    }
+    */
 
 }

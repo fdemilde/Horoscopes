@@ -44,6 +44,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var oldNewsfeedArray = [UserPost]()
     
     @IBOutlet weak var tabView: UIView!
+    var tableHeaderView: NewsfeedTableHeaderView!
     
     struct TableViewConstants {
         static let defaultTableViewCellIdentifier = "defaultCell"
@@ -55,7 +56,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         setupView()
         self.resetTapButtonColor()
         self.setupInfiniteScroll()
-        
+        tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -245,7 +246,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         if(getFeedArray().count == 0){
             tableView.tableHeaderView = createEmptyTableHeaderBackgroundWithMessage()
         } else {
-            tableView.tableHeaderView = nil
+            tableView.tableHeaderView = tableHeaderView
         }
         return 1
     }
