@@ -35,6 +35,9 @@ class CurrentProfileViewController: ProfileBaseViewController {
 
         // Do any additional setup after loading the view.
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "CurrentProfileHeaderFooterView")
+        horoscopeSignView.userInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
+        horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
         Utilities.showHUD()
     }
     
@@ -118,6 +121,14 @@ class CurrentProfileViewController: ProfileBaseViewController {
     }
     
     // MARK: - Action
+    
+    func chooseHoroscopeSign(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+            parentViewController!.presentViewController(loginVC, animated: true, completion: nil)
+        }
+    }
     
     func login(sender: UIButton) {
         Utilities.showHUD()
