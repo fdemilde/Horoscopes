@@ -9,7 +9,6 @@
 import UIKit
 
 @objc protocol PostTableViewCellDelegate {
-    optional func didTapShareButton(cell: PostTableViewCell)
     optional func didTapLikeButton(cell: PostTableViewCell)
     optional func didTapPostProfile(cell: PostTableViewCell)
     optional func didTapNewsfeedFollowButton(cell: PostTableViewCell)
@@ -29,6 +28,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeNumberLabel: UILabel!
     @IBOutlet weak var actionView: UIView!
+    var viewController: UIViewController!
+    var post: UserPost!
     
     // MARK: - Newsfeed outlet
     
@@ -115,6 +116,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     func configureCell(post: UserPost) {
+        self.post = post
         switch post.type {
         case .OnYourMind:
             postTypeImageView.image = UIImage(named: "post_type_mind")
@@ -218,6 +220,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
 
     @IBAction func tapShareButton(sender: UIButton) {
-        delegate?.didTapShareButton?(self)
+        let name = post.user?.name
+        let postContent = post.message
+        let sharingText = String(format: "%@ \n %@", name!, postContent)
+        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+        Utilities.presentShareFormSheetController(viewController, shareViewController: controller)
     }
 }

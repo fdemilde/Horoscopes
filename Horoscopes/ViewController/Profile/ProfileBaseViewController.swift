@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, PostTableViewCellDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -310,7 +310,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         case .Post:
             let post = userPosts[indexPath.row]
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-            cell.delegate = self
+            cell.viewController = self
             cell.configureCellForProfile(post)
             return cell
         default:
@@ -368,15 +368,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Delegate
-    
-    func didTapShareButton(cell: PostTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
-        let name = userProfile.name
-        let postContent = userPosts[index!].message
-        let sharingText = String(format: "%@ \n %@", name, postContent)
-        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
-        Utilities.presentShareFormSheetController(self, shareViewController: controller)
-    }
     
     func didChooseUser(profile: UserProfile) {
         let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
