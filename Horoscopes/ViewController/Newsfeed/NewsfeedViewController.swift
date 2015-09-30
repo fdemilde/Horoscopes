@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate, PostTableViewCellDelegate {
+class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
@@ -241,7 +241,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 return 1
             }
         }
-//        print("userPostArray.count === \(userPostArray.count)")
+        
         if(getFeedArray().count == 0){
             tableView.tableHeaderView = createEmptyTableHeaderBackgroundWithMessage()
         } else {
@@ -269,9 +269,9 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
 //        }
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.postTableViewCellIdentifier, forIndexPath: indexPath) as! PostTableViewCell
         let post = getFeedDataForRow(indexPath.row)
-        cell.delegate = self
         cell.resetUI()
         cell.configureCellForNewsfeed(post)
+        cell.viewController = self
         return cell
     }
     
@@ -307,113 +307,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-//        if indexPath.row == 0 {
-//            return 50
-//        }
         return UITableViewAutomaticDimension
     }
     
     // MARK: - Delegate
-    
-//    func didTapNewsfeedFollowButton(cell: PostTableViewCell) {
-//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-//        let post = userPostArray[index]
-//        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-//        SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
-//            if let error = error {
-//                Utilities.showError(self, error: error)
-//            } else {
-//                let isFollowing = result!["isfollowing"] as! Int == 1
-//                hud.detailsLabelFont = UIFont.systemFontOfSize(11)
-//                let name = self.userPostArray[index].user!.name
-//                if isFollowing {
-//                    SocialManager.sharedInstance.unfollow(post.uid, completionHandler: { (error) -> Void in
-//                        hud.mode = MBProgressHUDMode.Text
-//                        if let _ = error {
-//                            hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                hud.hide(true, afterDelay: 2)
-//                            })
-//                        } else {
-//                            hud.detailsLabelText = "\(name) has been removed from your Following list."
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                self.tableView.reloadData()
-//                                hud.hide(true, afterDelay: 2)
-//                            })
-//                        }
-//                    })
-//                } else {
-//                    SocialManager.sharedInstance.follow(self.userPostArray[index].uid, completionHandler: { (error) -> Void in
-//                        hud.mode = MBProgressHUDMode.Text
-//                        if let _ = error {
-//                            hud.detailsLabelText = "Follow unsuccessully due to network error!"
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                hud.hide(true, afterDelay: 2)
-//                            })
-//                        } else {
-//                            hud.detailsLabelText = "\(name) has been added to your Following list."
-//                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                self.tableView.reloadData()
-//                                hud.hide(true, afterDelay: 2)
-//                            })
-//                        }
-//                    })
-//                }
-//            }
-//        }
-//    }
-//    
-//    func didTapPostProfile(cell: PostTableViewCell) {
-//        if SocialManager.sharedInstance.isLoggedInFacebook() {
-//            let index = (tableView.indexPathForCell(cell)?.row)! - 1
-//            let profile = userPostArray[index].user
-//            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-//            controller.userProfile = profile!
-//            navigationController?.pushViewController(controller, animated: true)
-//        } else {
-//            Utilities.showAlert(self, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
-//        }
-//    }
-//    
-//    func didTapShareButton(cell: PostTableViewCell) {
-//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-//        let name = userPostArray[index].user!.name
-//        let postContent = userPostArray[index].message
-//        let sharingText = String(format: "%@ \n %@", name, postContent)
-//        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
-//        Utilities.presentShareFormSheetController(self, shareViewController: controller)
-//    }
-//    
-//    func didTapLikeButton(cell: PostTableViewCell) {
-//        let index = (tableView.indexPathForCell(cell)?.row)! - 1
-//        let post = userPostArray[index]
-//        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-//            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
-//            return
-//        }
-//        cell.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-//        cell.likeButton.userInteractionEnabled = false
-//        cell.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-//        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
-//    }
-    
-    // Notification handler
-//    func sendHeartSuccessful(notif: NSNotification){
-//        let postId = notif.object as! String
-//        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-//        var index = -1
-//        for (i, post) in userPostArray.enumerate() {
-//            if post.post_id == postId {
-//                index = i
-//            }
-//        }
-//        if index != -1 {
-//            userPostArray[index].hearts += 1
-//        }
-//    }
-    
-    // Networks 
+    // Networks
     func checkAndLoginZwigglers(){
         
         if !SocialManager.sharedInstance.isLoggedInZwigglers(){

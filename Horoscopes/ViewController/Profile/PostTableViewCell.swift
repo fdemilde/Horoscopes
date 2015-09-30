@@ -8,12 +8,6 @@
 
 import UIKit
 
-@objc protocol PostTableViewCellDelegate {
-    optional func didTapLikeButton(cell: PostTableViewCell)
-    optional func didTapPostProfile(cell: PostTableViewCell)
-    optional func didTapNewsfeedFollowButton(cell: PostTableViewCell)
-}
-
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
 
     @IBOutlet weak var containerView: UIView!
@@ -50,8 +44,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     
     // MARK: - Property
-    
-    var delegate: PostTableViewCellDelegate?
     let profileImageSize: CGFloat = 80
     var postTypeLabel: UILabel!
     var topBorder: CALayer!
@@ -206,17 +198,77 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
-        delegate?.didTapNewsfeedFollowButton?(self)
+        viewController = viewController as! NewsfeedViewController
+        let hud = MBProgressHUD.showHUDAddedTo(viewController.view, animated: true)
+        SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self.viewController, error: error)
+            } else {
+                let isFollowing = result!["isfollowing"] as! Int == 1
+                hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+                let name = self.post.user!.name
+                if isFollowing {
+                    SocialManager.sharedInstance.unfollow(self.post.uid, completionHandler: { (error) -> Void in
+                        hud.mode = MBProgressHUDMode.Text
+                        if let _ = error {
+                            hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                hud.hide(true, afterDelay: 2)
+                            })
+                        } else {
+                            hud.detailsLabelText = "\(name) has been removed from your Following list."
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                let parentVC = self.viewController as! NewsfeedViewController
+                                parentVC.tableView.reloadData()
+                                hud.hide(true, afterDelay: 2)
+                            })
+                        }
+                    })
+                } else {
+                    SocialManager.sharedInstance.follow(self.post.uid, completionHandler: { (error) -> Void in
+                        hud.mode = MBProgressHUDMode.Text
+                        if let _ = error {
+                            hud.detailsLabelText = "Follow unsuccessully due to network error!"
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                hud.hide(true, afterDelay: 2)
+                            })
+                        } else {
+                            hud.detailsLabelText = "\(name) has been added to your Following list."
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                let parentVC = self.viewController as! NewsfeedViewController
+                                parentVC.tableView.reloadData()
+                                hud.hide(true, afterDelay: 2)
+                            })
+                        }
+                    })
+                }
+            }
+        }
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
-            delegate?.didTapPostProfile?(self)
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
+                let profile = post.user
+                let controller = viewController.storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                controller.userProfile = profile!
+                viewController.navigationController?.pushViewController(controller, animated: true)
+            } else {
+                Utilities.showAlert(viewController, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
+            }
         }
     }
     
     @IBAction func tapLikeButton(sender: UIButton) {
-        delegate?.didTapLikeButton?(self)
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            return
+        }
+        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        self.likeButton.userInteractionEnabled = false
+        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
 
     @IBAction func tapShareButton(sender: UIButton) {
@@ -226,4 +278,21 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         Utilities.presentShareFormSheetController(viewController, shareViewController: controller)
     }
+    
+    //     Notification handler
+    func sendHeartSuccessful(notif: NSNotification){
+        let postId = notif.object as! String
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        post.hearts++
+//        var index = -1
+//        for (i, post) in userPostArray.enumerate() {
+//            if post.post_id == postId {
+//                index = i
+//            }
+//        }
+//        if index != -1 {
+//            userPostArray[index].hearts += 1
+//        }
+    }
 }
+
