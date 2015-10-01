@@ -26,19 +26,20 @@ class FollowTableViewCell: UITableViewCell {
         super.awakeFromNib()
         // Initialization code
         selectionStyle = .None
+        followButton = UIButton()
+        followButton.hidden = true
+        followButton.addTarget(self, action: "tapFollowButton:", forControlEvents: .TouchUpInside)
+        addSubview(followButton)
+    }
+    
+    override func layoutSubviews() {
+        followButton.frame = CGRect(x: frame.width - followButtonWidth - 10, y: frame.height/2 - followButtonHeight/2 , width: followButtonWidth, height: followButtonHeight)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    func resetUi() {
-        if followButton != nil {
-            followButton.setImage(nil, forState: .Normal)
-            followButton.enabled = false
-        }
     }
     
     func configureCell(profile: UserProfile) {
@@ -52,19 +53,14 @@ class FollowTableViewCell: UITableViewCell {
     }
     
     func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
-        if followButton == nil {
-            followButton = UIButton()
-            addSubview(followButton)
-        }
-        followButton.frame = CGRect(x: frame.width - followButtonWidth - 10, y: frame.height/2 - followButtonHeight/2 , width: followButtonWidth, height: followButtonHeight)
         if showFollowButton {
             followButton.hidden = false
             if isFollowed {
                 followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
-                followButton.enabled = false
+                followButton.userInteractionEnabled = false
             } else {
                 followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
-                followButton.addTarget(self, action: "tapFollowButton:", forControlEvents: .TouchUpInside)
+                followButton.userInteractionEnabled = true
             }
         } else {
             followButton.hidden = true
