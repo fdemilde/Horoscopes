@@ -39,11 +39,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         titleBackgroundView.layer.shadowOpacity = 0.2
         tableView.layer.cornerRadius = 4
         tableView.clipsToBounds = true
-        self.birthday = XAppDelegate.userSettings.birthday
         self.getNotificationFireTime()
     }
     
     override func viewWillAppear(animated: Bool) {
+        self.birthday = XAppDelegate.userSettings.birthday
         self.tableView.reloadData()
     }
     
@@ -97,8 +97,9 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
-                let birthdayViewController = self.setupBirthdayViewController()
-                self.displayViewController(birthdayViewController, type: SettingsType.ChangeDOB)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+                presentViewController(loginVC, animated: true, completion: nil)
                 break
             case 2:
                 let bugsReportViewController = self.setupBugsReportViewController()
