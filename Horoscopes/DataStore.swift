@@ -12,7 +12,7 @@ class DataStore : NSObject{
     var newsfeedGlobal = [UserPost]()
     var newsfeedFollowing = [UserPost]()
     var newsfeedIsUpdated : Bool = false
-    var followers: [UserProfile]?
+    var usersFollowing: [UserProfile]?
     
     var recentSearchedProfile = [UserProfile]()
     var isLastPage = false
@@ -24,19 +24,19 @@ class DataStore : NSObject{
     
     override init(){
         super.init()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowers:", name: NOTIFICATION_FOLLOW, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUsersFollowing:", name: NOTIFICATION_FOLLOW, object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateFollowers(_: NSNotification) {
-        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+    func updateUsersFollowing(_: NSNotification) {
+        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
             if let _ = error {
                 
             } else {
-                self.followers = result!
+                self.usersFollowing = result!
             }
         }
     }

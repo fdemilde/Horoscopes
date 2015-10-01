@@ -190,6 +190,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
+                DataStore.sharedInstance.usersFollowing = result!
                 self.noFollowingUser = result!.count == 0
                 self.handleData(dispatchGroup, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
             }
@@ -207,7 +208,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             if let error = error {
                 Utilities.showError(self, error: error)
             } else {
-                DataStore.sharedInstance.followers = result!
                 self.noFollower = result!.count == 0
                 self.handleData(dispatchGroup, oldData: &self.followers, newData: result!, button: self.followersButton)
             }
