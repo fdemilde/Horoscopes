@@ -57,6 +57,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         self.resetTapButtonColor()
         self.setupInfiniteScroll()
         tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:");
+        tableHeaderView.addGestureRecognizer(tapGestureRecognizer);
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,6 +68,15 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+        if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
+            Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableHeaderView.profileImageView.image = image
+                })
+            })
+        } else {
+            self.tableHeaderView.profileImageView.image = UIImage(named: "default_avatar")
+        }
         
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
             tableView.reloadData()
@@ -167,7 +178,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         
     }
     
-    // MARK: Button Actions
+    // MARK: Actions
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            addButton.centerButtonTapped()
+        }
+    }
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
         oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
@@ -252,34 +269,12 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        if indexPath.row == 0 {
-//            var cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.defaultTableViewCellIdentifier) as? NewsfeedDefaultTableViewCell
-//            if cell == nil {
-//                cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
-//            }
-//            if XAppDelegate.currentUser.uid != -1 {
-//                Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        cell?.profileImageView.image = image
-//                    })
-//                })
-//            } else {
-//                cell?.profileImageView.image = UIImage(named: "default_avatar")
-//            }
-//            return cell!
-//        }
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.postTableViewCellIdentifier, forIndexPath: indexPath) as! PostTableViewCell
         let post = getFeedDataForRow(indexPath.row)
         cell.resetUI()
         cell.configureCellForNewsfeed(post)
         cell.viewController = self
         return cell
-    }
-    
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if indexPath.row  == 0 {
-//            addButton.centerButtonTapped()
-//        }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
