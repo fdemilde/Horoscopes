@@ -48,8 +48,14 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        configureProfileView()
-        getData()
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                configureProfileView()
+                getData()
+                return
+            }
+        }
+        navigationController?.popViewControllerAnimated(false)
     }
     
     // MARK: - Action
