@@ -196,20 +196,18 @@ class Utilities {
     class func showAlert(viewController: UIViewController, title: String, message: String = "", error: NSError?) {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             if #available(iOS 8.0, *) {
-                
-                let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-                if let error = error {
-                    alert.message = "\(message) \(error)"
+                if viewController.presentedViewController == nil {
+                    let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+                    if let error = error {
+                        alert.message = "\(message) \(error)"
+                    }
+                    let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                    alert.addAction(action)
+                    viewController.presentViewController(alert, animated: true, completion: nil)
                 }
-                let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
-                alert.addAction(action)
-                viewController.presentViewController(alert, animated: true, completion: nil)
             } else {
                 Utilities.showAlertView(nil, title: title, message: message)
             }
-            
-            
-            
         })
     }
     
