@@ -206,6 +206,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
         let hud = MBProgressHUD.showHUDAddedTo(viewController.view, animated: true)
         SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
             if let error = error {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    hud.hide(true)
+                })
                 Utilities.showError(self.viewController, error: error)
             } else {
                 let isFollowing = result!["isfollowing"] as! Int == 1

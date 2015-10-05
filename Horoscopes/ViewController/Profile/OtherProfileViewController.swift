@@ -24,6 +24,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         let textField = searchBar.valueForKey("searchField") as! UITextField
         textField.textColor = UIColor.whiteColor()
         searchBar.placeholder = "\(userProfile.name)"
+        searchBar.setShowsCancelButton(false, animated: true)
         if userProfile.uid != XAppDelegate.currentUser.uid {
             SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
                 if let _ = error {
@@ -47,8 +48,14 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        configureProfileView()
-        getData()
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                configureProfileView()
+                getData()
+                return
+            }
+        }
+        navigationController?.popViewControllerAnimated(false)
     }
     
     // MARK: - Action
@@ -128,15 +135,10 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     // MARK: - Delegate
     
-    func searchBarTextDidEndEditing(searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(false, animated: true)
-    }
-    
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        searchBar.setShowsCancelButton(true, animated: true)
         let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
         controller.delegate = self
-        navigationController?.presentViewController(controller, animated: true, completion: nil)
+        navigationController?.presentViewController(controller, animated: false, completion: nil)
     }
     
 

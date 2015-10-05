@@ -36,14 +36,6 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         textField.textColor = UIColor.whiteColor()
         textField.layer.cornerRadius = 14
         
-        SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
-            if let error = error {
-                Utilities.showError(self, error: error)
-            } else {
-                self.friends = result!
-            }
-        }
-        
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
         gestureRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(gestureRecognizer)
@@ -51,6 +43,30 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
+            if let error = error {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    hud.hide(true)
+                })
+                Utilities.showError(self, error: error)
+            } else {
+                self.friends = result!
+                if let users = DataStore.sharedInstance.usersFollowing {
+                    for friend in self.friends {
+                        for user in users {
+                            if friend.uid == user.uid {
+                                friend.isFollowed = true
+                                break
+                            }
+                        }
+                    }
+                }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    hud.hide(true)
+                })
+            }
+        }
         searchBar.becomeFirstResponder()
         if searchText == "" {
             filteredResult = DataStore.sharedInstance.recentSearchedProfile
@@ -100,7 +116,6 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
         cell.delegate = self
-        cell.resetUi()
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: friend.sign)
@@ -109,22 +124,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 cell.profileImageView?.image = image
             })
         })
-        SocialManager.sharedInstance.isFollowing(friend.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
-            if let error = error {
-                Utilities.showError(self, error: error)
-            } else {
-                let isFollowing = result!["isfollowing"] as! Int == 1
-                if isFollowing {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.configureFollowButton(true, showFollowButton: true)
-                    })
-                } else {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.configureFollowButton(false, showFollowButton: true)
-                    })
-                }
-            }
-        }
+        cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
         return cell
     }
     

@@ -14,6 +14,7 @@
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
             <string>BookAntiqua</string>
+            <string>BookAntiqua</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -77,8 +78,7 @@
                                                         <exclude reference="hfy-bz-lh0"/>
                                                     </mask>
                                                 </variation>
-                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                    <rect key="frame" x="286" y="1" width="114" height="40"/>
+                                                <variation key="heightClass=regular-widthClass=compact">
                                                     <mask key="constraints">
                                                         <include reference="hfy-bz-lh0"/>
                                                     </mask>
@@ -190,6 +190,9 @@
                             <pickerView contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="65z-Wu-1X5">
                                 <rect key="frame" x="0.0" y="190" width="600" height="162"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="190" width="800" height="162"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="aY9-UP-IvP" id="Z7c-NJ-p2l"/>
                                     <outlet property="delegate" destination="aY9-UP-IvP" id="B4t-8o-Msv"/>
@@ -450,8 +453,8 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
-                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                    <rect key="frame" x="10" y="50" width="380" height="701"/>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="10" y="97" width="780" height="454"/>
                                 </variation>
                             </tableView>
                         </subviews>
@@ -1257,9 +1260,6 @@
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <nil key="highlightedColor"/>
-                                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="196" y="5" width="176" height="21"/>
-                                                                                    </variation>
                                                                                 </label>
                                                                             </subviews>
                                                                             <constraints>
@@ -1285,9 +1285,6 @@
                                                                                     <exclude reference="st4-Kh-h1b"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="0.0" y="120" width="400" height="30"/>
-                                                                            </variation>
                                                                         </view>
                                                                         <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="post_type_feel" translatesAutoresizingMaskIntoConstraints="NO" id="Dtp-bu-pEh">
                                                                             <rect key="frame" x="552" y="92" width="20" height="20"/>
@@ -1295,9 +1292,6 @@
                                                                                 <constraint firstAttribute="height" constant="20" id="2cX-m8-rav"/>
                                                                                 <constraint firstAttribute="width" constant="20" id="XWb-sz-sSi"/>
                                                                             </constraints>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="372" y="92" width="20" height="20"/>
-                                                                            </variation>
                                                                         </imageView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -1339,9 +1333,6 @@
                                                                             <exclude reference="nXy-Gs-twP"/>
                                                                         </mask>
                                                                     </variation>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="400" height="150"/>
-                                                                    </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tLB-sY-qm9" userLabel="Main View">
                                                                     <rect key="frame" x="0.0" y="150" width="580" height="168"/>
@@ -1368,9 +1359,6 @@
                                                                                     <exclude reference="k2B-9Z-w7Y"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="10" y="17" width="380" height="126"/>
-                                                                            </variation>
                                                                         </textView>
                                                                     </subviews>
                                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1389,9 +1377,6 @@
                                                                             <exclude reference="3I2-me-SCr"/>
                                                                             <exclude reference="Vm3-R3-Vcc"/>
                                                                         </mask>
-                                                                    </variation>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="150" width="400" height="168"/>
                                                                     </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="66K-ts-EgN" userLabel="Action View">
@@ -1417,9 +1402,6 @@
                                                                             <state key="normal" image="newsfeed_share_icon">
                                                                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                             </state>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="333" y="3" width="57" height="44"/>
-                                                                            </variation>
                                                                             <connections>
                                                                                 <action selector="tapShareButton:" destination="3zx-7q-shp" eventType="touchUpInside" id="u7i-FE-xaV"/>
                                                                             </connections>
@@ -1433,9 +1415,6 @@
                                                                         <constraint firstAttribute="height" constant="50" id="dXe-Un-bzj"/>
                                                                         <constraint firstAttribute="trailing" secondItem="Rgx-5E-9hw" secondAttribute="trailing" constant="10" id="xB4-ZV-YR8"/>
                                                                     </constraints>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="318" width="400" height="50"/>
-                                                                    </variation>
                                                                 </view>
                                                             </subviews>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1463,9 +1442,6 @@
                                                                     <exclude reference="zqc-8n-9gs"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="40" width="400" height="368"/>
-                                                            </variation>
                                                         </view>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="nfV-RC-qWf">
                                                             <rect key="frame" x="20" y="0.0" width="80" height="80"/>
@@ -1484,9 +1460,6 @@
                                                         <constraint firstItem="jJ5-5u-oc5" firstAttribute="top" secondItem="a56-DV-k5j" secondAttribute="top" constant="40" id="rXj-z2-fx5"/>
                                                         <constraint firstAttribute="bottom" secondItem="jJ5-5u-oc5" secondAttribute="bottom" id="wDl-uB-ugF"/>
                                                     </constraints>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="10" width="400" height="408"/>
-                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -1875,9 +1848,6 @@ on news things</string>
                                                                 <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="14"/>
                                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
-                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="40" y="20" width="300" height="33"/>
-                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check back tomorrow for a new fortune." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSi-ft-WGg">
                                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -2372,8 +2342,7 @@ on news things</string>
                                                                     <exclude reference="X8h-XA-1r1"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="0.0" width="320" height="1"/>
+                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                 <mask key="constraints">
                                                                     <include reference="X8h-XA-1r1"/>
                                                                 </mask>
@@ -2400,8 +2369,7 @@ on news things</string>
                                                             <exclude reference="rbX-5c-FLw"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="216" width="320" height="44"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="subviews">
                                                             <include reference="qGn-US-lb3"/>
                                                         </mask>
@@ -2424,8 +2392,7 @@ on news things</string>
                                                             <exclude reference="bf0-VW-0II"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="216"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <exclude reference="bf0-VW-0II"/>
                                                         </mask>
@@ -2494,18 +2461,12 @@ on news things</string>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="8" y="0.0" width="320" height="40"/>
-                                                            </variation>
                                                         </label>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Aug 12, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qzL-vT-yKW">
                                                             <rect key="frame" x="510" y="0.0" width="82" height="40"/>
                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="230" y="0.0" width="82" height="40"/>
-                                                            </variation>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GhJ-uh-ETy">
                                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
@@ -2554,8 +2515,7 @@ on news things</string>
                                                             <exclude reference="lCQ-Xa-8zC"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="subviews">
                                                             <include reference="GhJ-uh-ETy"/>
                                                         </mask>
@@ -2575,9 +2535,6 @@ on news things</string>
                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="8" y="8" width="304" height="151"/>
-                                                            </variation>
                                                         </textView>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2587,9 +2544,6 @@ on news things</string>
                                                         <constraint firstItem="035-q8-18C" firstAttribute="top" secondItem="C2H-hP-NSG" secondAttribute="top" constant="8" id="eAx-XF-2mt"/>
                                                         <constraint firstAttribute="bottom" secondItem="035-q8-18C" secondAttribute="bottom" id="v9T-20-WYj"/>
                                                     </constraints>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="40" width="320" height="159"/>
-                                                    </variation>
                                                 </view>
                                                 <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="RxJ-31-jqq">
                                                     <rect key="frame" x="0.0" y="199" width="600" height="101"/>
@@ -2607,9 +2561,6 @@ on news things</string>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="1" id="KPz-1m-O5q"/>
                                                             </constraints>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="50" width="320" height="1"/>
-                                                            </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oTE-zy-YsL">
                                                             <rect key="frame" x="0.0" y="51" width="600" height="50"/>
@@ -2637,9 +2588,6 @@ on news things</string>
                                                                     <state key="normal" image="newsfeed_share_icon">
                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="235" y="0.0" width="85" height="50"/>
-                                                                    </variation>
                                                                     <connections>
                                                                         <action selector="share:" destination="t9e-sd-ymH" eventType="touchUpInside" id="71Y-al-I0M"/>
                                                                     </connections>
@@ -2654,9 +2602,6 @@ on news things</string>
                                                                     <state key="normal" image="daily_dislike_btn">
                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                     </state>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="118" y="0.0" width="85" height="50"/>
-                                                                    </variation>
                                                                     <connections>
                                                                         <action selector="dislike:" destination="t9e-sd-ymH" eventType="touchUpInside" id="4wu-Zh-gSk"/>
                                                                     </connections>
@@ -2682,8 +2627,7 @@ on news things</string>
                                                                     <exclude reference="yey-Ud-q0e"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="0.0" y="51" width="320" height="50"/>
+                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                 <mask key="constraints">
                                                                     <exclude reference="yey-Ud-q0e"/>
                                                                 </mask>
@@ -2710,9 +2654,6 @@ on news things</string>
                                                         <constraint firstAttribute="trailing" secondItem="oTE-zy-YsL" secondAttribute="trailing" id="tsJ-j7-loE"/>
                                                         <constraint firstItem="Xtx-G9-aM4" firstAttribute="centerY" secondItem="dKy-FU-PMC" secondAttribute="centerY" id="zOj-eK-vre"/>
                                                     </constraints>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="199" width="320" height="101"/>
-                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <constraints>
@@ -3483,7 +3424,7 @@ on news things</string>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YXR-Up-cuM">
                                                     <rect key="frame" x="8" y="8" width="584" height="151"/>
                                                     <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</string>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
                                             </subviews>
@@ -3646,7 +3587,7 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="Zag-FD-gEj"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="Discover Your Fortune Cookie">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3655,13 +3596,32 @@ on news things</string>
                                                         <action selector="cookieTapped:" destination="efF-06-zfn" eventType="touchUpInside" id="hnn-KC-Xr0"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cookie_btn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="gXw-UY-cG1">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="25" id="MRc-Ih-zt0"/>
+                                                        <constraint firstAttribute="width" constant="26" id="ZP3-KA-9t7"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="MRc-Ih-zt0"/>
+                                                            <exclude reference="ZP3-KA-9t7"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="MRc-Ih-zt0"/>
+                                                            <include reference="ZP3-KA-9t7"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
                                                     <rect key="frame" x="0.0" y="60" width="600" height="40"/>
                                                     <color key="backgroundColor" red="0.54509803921568623" green="0.76470588235294112" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="BfT-b9-fJQ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <state key="normal" title="Join Horoscopes Community">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3670,28 +3630,76 @@ on news things</string>
                                                         <action selector="tapJoinHoroscopesCommunityButton:" destination="Lnf-AN-JeY" eventType="touchUpInside" id="Ihw-Sj-TLC"/>
                                                     </connections>
                                                 </button>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="community_btn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="AsA-Rt-gea">
+                                                    <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="26" id="NBm-aL-W8P"/>
+                                                        <constraint firstAttribute="height" constant="25" id="okh-So-EaJ"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="NBm-aL-W8P"/>
+                                                            <exclude reference="okh-So-EaJ"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                        <mask key="constraints">
+                                                            <include reference="NBm-aL-W8P"/>
+                                                            <include reference="okh-So-EaJ"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="AsA-Rt-gea" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="17" id="4gX-7K-9VZ"/>
                                                 <constraint firstAttribute="trailing" secondItem="use-dM-Hgq" secondAttribute="trailing" id="6kP-C2-Qhx"/>
+                                                <constraint firstItem="gXw-UY-cG1" firstAttribute="top" secondItem="pD9-gY-YVP" secondAttribute="top" constant="32" id="PPU-W3-l4G">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="17"/>
+                                                </constraint>
                                                 <constraint firstItem="OyI-lw-qa5" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="11" id="Pjn-l3-oXd"/>
                                                 <constraint firstItem="OyI-lw-qa5" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="10" id="RPo-Rq-9wO"/>
                                                 <constraint firstItem="OyI-lw-qa5" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="10" id="RhG-57-aGr"/>
                                                 <constraint firstItem="use-dM-Hgq" firstAttribute="leading" secondItem="pD9-gY-YVP" secondAttribute="leading" id="ZFl-zf-ADP"/>
                                                 <constraint firstAttribute="height" constant="110" id="ZQK-7S-ZET"/>
                                                 <constraint firstAttribute="trailing" secondItem="OyI-lw-qa5" secondAttribute="trailing" id="dyx-83-8lQ"/>
+                                                <constraint firstItem="gXw-UY-cG1" firstAttribute="leading" secondItem="pD9-gY-YVP" secondAttribute="leading" constant="10" id="flS-IS-ync"/>
                                                 <constraint firstItem="OyI-lw-qa5" firstAttribute="leading" secondItem="pD9-gY-YVP" secondAttribute="leading" id="iYl-PM-IhV"/>
                                                 <constraint firstAttribute="height" constant="90" id="l4G-gY-ucO"/>
                                                 <constraint firstItem="use-dM-Hgq" firstAttribute="top" secondItem="pD9-gY-YVP" secondAttribute="top" constant="10" id="mW6-s3-Mep"/>
+                                                <constraint firstItem="AsA-Rt-gea" firstAttribute="leading" secondItem="pD9-gY-YVP" secondAttribute="leading" constant="10" id="oda-cU-C4l"/>
                                                 <constraint firstItem="OyI-lw-qa5" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="10" id="phC-xB-qUL"/>
                                                 <constraint firstAttribute="bottom" secondItem="OyI-lw-qa5" secondAttribute="bottom" id="ucu-Yv-Xe5"/>
+                                                <constraint firstItem="AsA-Rt-gea" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="16" id="uv8-fO-YTC"/>
                                             </constraints>
                                             <variation key="default">
+                                                <mask key="subviews">
+                                                    <exclude reference="gXw-UY-cG1"/>
+                                                    <exclude reference="AsA-Rt-gea"/>
+                                                </mask>
                                                 <mask key="constraints">
                                                     <exclude reference="l4G-gY-ucO"/>
+                                                    <exclude reference="4gX-7K-9VZ"/>
+                                                    <exclude reference="oda-cU-C4l"/>
+                                                    <exclude reference="uv8-fO-YTC"/>
+                                                    <exclude reference="PPU-W3-l4G"/>
+                                                    <exclude reference="flS-IS-ync"/>
                                                     <exclude reference="Pjn-l3-oXd"/>
                                                     <exclude reference="RhG-57-aGr"/>
                                                     <exclude reference="phC-xB-qUL"/>
                                                     <exclude reference="ucu-Yv-Xe5"/>
+                                                </mask>
+                                            </variation>
+                                            <variation key="heightClass=regular-widthClass=compact">
+                                                <mask key="subviews">
+                                                    <include reference="gXw-UY-cG1"/>
+                                                    <include reference="AsA-Rt-gea"/>
+                                                </mask>
+                                                <mask key="constraints">
+                                                    <include reference="4gX-7K-9VZ"/>
+                                                    <include reference="oda-cU-C4l"/>
+                                                    <exclude reference="uv8-fO-YTC"/>
+                                                    <include reference="PPU-W3-l4G"/>
+                                                    <include reference="flS-IS-ync"/>
                                                 </mask>
                                             </variation>
                                         </view>
@@ -3725,7 +3733,7 @@ on news things</string>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Po8-ah-RLk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2201" y="2040"/>
+            <point key="canvasLocation" x="-2202" y="2040"/>
         </scene>
         <!--Custom Tab Bar Controller-->
         <scene sceneID="ukf-Fc-1nl">
@@ -3797,12 +3805,18 @@ on news things</string>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="264" width="800" height="22"/>
+                                </variation>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Dec 1st - Jan 23rd" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7ef-Xd-X6C">
                                 <rect key="frame" x="0.0" y="291" width="600" height="14"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="291" width="800" height="14"/>
+                                </variation>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="choose_sign_star" translatesAutoresizingMaskIntoConstraints="NO" id="eti-Tl-IuB">
                                 <rect key="frame" x="291" y="310" width="18" height="18"/>
@@ -3810,6 +3824,9 @@ on news things</string>
                                     <constraint firstAttribute="width" constant="18" id="Nyc-75-E5R"/>
                                     <constraint firstAttribute="height" constant="18" id="caA-eC-UBg"/>
                                 </constraints>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="391" y="310" width="18" height="18"/>
+                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e7T-VY-bUI">
                                 <rect key="frame" x="195" y="194" width="210" height="30"/>
@@ -3824,6 +3841,9 @@ on news things</string>
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="295" y="194" width="210" height="30"/>
+                                </variation>
                                 <connections>
                                     <action selector="birthdayButtonTapped:" destination="rOq-XD-0HE" eventType="touchUpInside" id="Byc-Ag-ppP"/>
                                 </connections>
@@ -4625,81 +4645,36 @@ on news things</string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pzc-l8-vHU">
-                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="50" id="dp8-Vo-W77">
-                                                <variation key="heightClass=regular-widthClass=compact" constant="70"/>
-                                            </constraint>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
-                                        <state key="normal" title="Save">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="dp8-Vo-W77"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="dp8-Vo-W77"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="saveButtonTapped:" destination="VAX-Q9-xBb" eventType="touchUpInside" id="Lo4-c2-Kyw"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4hl-Vy-SPz"/>
                                     <constraint firstItem="qFh-1P-YHC" firstAttribute="leading" secondItem="yQz-8m-BTT" secondAttribute="leading" id="7Wc-2m-D1K"/>
-                                    <constraint firstItem="pzc-l8-vHU" firstAttribute="leading" secondItem="yQz-8m-BTT" secondAttribute="leading" id="CJZ-ri-Zf8"/>
-                                    <constraint firstAttribute="height" secondItem="pzc-l8-vHU" secondAttribute="height" id="Eed-Wu-DL8"/>
-                                    <constraint firstItem="pzc-l8-vHU" firstAttribute="top" secondItem="yQz-8m-BTT" secondAttribute="top" id="aiS-R1-8os"/>
-                                    <constraint firstItem="qFh-1P-YHC" firstAttribute="leading" secondItem="pzc-l8-vHU" secondAttribute="trailing" id="bSg-5F-cZa"/>
                                     <constraint firstAttribute="centerY" secondItem="qFh-1P-YHC" secondAttribute="centerY" constant="0.5" id="dO7-Yh-XgS">
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
-                                    <constraint firstAttribute="trailing" secondItem="pzc-l8-vHU" secondAttribute="trailing" id="e3X-vf-a7f"/>
                                     <constraint firstAttribute="trailing" secondItem="qFh-1P-YHC" secondAttribute="trailing" id="pgV-kO-1Td"/>
-                                    <constraint firstItem="pzc-l8-vHU" firstAttribute="top" secondItem="yQz-8m-BTT" secondAttribute="top" id="vgL-gc-pzB"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="qFh-1P-YHC"/>
-                                        <exclude reference="pzc-l8-vHU"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="4hl-Vy-SPz"/>
                                         <exclude reference="7Wc-2m-D1K"/>
-                                        <exclude reference="bSg-5F-cZa"/>
                                         <exclude reference="dO7-Yh-XgS"/>
                                         <exclude reference="pgV-kO-1Td"/>
-                                        <exclude reference="CJZ-ri-Zf8"/>
-                                        <exclude reference="Eed-Wu-DL8"/>
-                                        <exclude reference="aiS-R1-8os"/>
-                                        <exclude reference="e3X-vf-a7f"/>
-                                        <exclude reference="vgL-gc-pzB"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="qFh-1P-YHC"/>
-                                        <include reference="pzc-l8-vHU"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="4hl-Vy-SPz"/>
                                         <include reference="7Wc-2m-D1K"/>
-                                        <exclude reference="bSg-5F-cZa"/>
                                         <include reference="dO7-Yh-XgS"/>
                                         <include reference="pgV-kO-1Td"/>
-                                        <exclude reference="CJZ-ri-Zf8"/>
-                                        <include reference="Eed-Wu-DL8"/>
-                                        <include reference="aiS-R1-8os"/>
-                                        <include reference="e3X-vf-a7f"/>
-                                        <exclude reference="vgL-gc-pzB"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -4731,9 +4706,6 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="wdT-PU-dOi"/>
                                                     </constraints>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="20" y="55" width="580" height="1"/>
-                                                    </variation>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="08:00 AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="g5L-pi-3ou">
                                                     <rect key="frame" x="150" y="19" width="64" height="17"/>
@@ -4745,9 +4717,6 @@ on news things</string>
                                                     <rect key="frame" x="531" y="17" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <color key="thumbTintColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="531" y="17" width="51" height="31"/>
-                                                    </variation>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="BAj-mD-Smg" eventType="valueChanged" id="5vu-1m-MIQ"/>
                                                     </connections>
@@ -4758,9 +4727,6 @@ on news things</string>
                                                         <constraint firstAttribute="height" constant="30" id="MM1-50-EKw"/>
                                                         <constraint firstAttribute="width" constant="30" id="PIA-G0-v78"/>
                                                     </constraints>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="550" y="15" width="30" height="30"/>
-                                                    </variation>
                                                 </imageView>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w0d-Th-cAl">
                                                     <rect key="frame" x="150" y="37" width="64" height="1"/>
@@ -4774,9 +4740,6 @@ on news things</string>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="517" y="19" width="73" height="17"/>
-                                                    </variation>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhT-xF-3wa">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -4789,8 +4752,7 @@ on news things</string>
                                                             <exclude reference="sgF-V5-4mP"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="517" y="37" width="73" height="1"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="sgF-V5-4mP"/>
                                                         </mask>
@@ -4974,6 +4936,9 @@ on news things</string>
                                 <date key="date" timeIntervalSinceReferenceDate="459315707.60153699">
                                     <!--2015-07-23 03:41:47 +0000-->
                                 </date>
+                                <variation key="widthClass=regular" ambiguous="YES" misplaced="YES">
+                                    <rect key="frame" x="0.0" y="175" width="800" height="162"/>
+                                </variation>
                                 <connections>
                                     <action selector="timeChange:" destination="GfX-ku-Knm" eventType="valueChanged" id="Qsl-Kp-q1r"/>
                                 </connections>
@@ -5376,7 +5341,8 @@ on news things</string>
                                                                     <exclude reference="fCj-0L-7HI"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact">
+                                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                                                <rect key="frame" x="0.0" y="-16" width="580" height="30"/>
                                                                 <mask key="subviews">
                                                                     <include reference="SLi-G3-89i"/>
                                                                 </mask>
@@ -5425,6 +5391,9 @@ on news things</string>
                                                                 <constraint firstItem="xtn-vz-YER" firstAttribute="leading" secondItem="Cyc-hv-7go" secondAttribute="leading" constant="10" id="yS8-fS-vIg"/>
                                                                 <constraint firstItem="6te-8k-dC9" firstAttribute="top" secondItem="xtn-vz-YER" secondAttribute="bottom" constant="16" id="yvk-KH-zbY"/>
                                                             </constraints>
+                                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                                                <rect key="frame" x="0.0" y="14" width="580" height="160"/>
+                                                            </variation>
                                                         </view>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e2s-KY-XWF" userLabel="Action View">
                                                             <rect key="frame" x="0.0" y="190" width="580" height="50"/>
@@ -5462,6 +5431,9 @@ on news things</string>
                                                                 <constraint firstAttribute="trailing" secondItem="iIx-zF-PI7" secondAttribute="trailing" constant="10" id="dnG-vJ-7uC"/>
                                                                 <constraint firstAttribute="centerY" secondItem="iIx-zF-PI7" secondAttribute="centerY" id="hF2-ns-jbn"/>
                                                             </constraints>
+                                                            <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                                                <rect key="frame" x="0.0" y="174" width="580" height="50"/>
+                                                            </variation>
                                                         </view>
                                                     </subviews>
                                                     <constraints>
@@ -5482,16 +5454,41 @@ on news things</string>
                                                             <exclude reference="Y7G-Vm-BD5"/>
                                                         </mask>
                                                     </variation>
+                                                    <variation key="heightClass=regular-widthClass=compact" ambiguous="YES" misplaced="YES">
+                                                        <rect key="frame" x="10" y="16" width="382" height="224"/>
+                                                    </variation>
                                                 </view>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="BVr-4R-XGa" secondAttribute="trailing" constant="10" id="1Bt-1S-eOy"/>
                                                 <constraint firstItem="BVr-4R-XGa" firstAttribute="top" secondItem="zDy-rH-epP" secondAttribute="top" id="6ul-bI-9Ef"/>
+                                                <constraint firstItem="BVr-4R-XGa" firstAttribute="leading" secondItem="zDy-rH-epP" secondAttribute="leading" constant="10" id="89m-Hy-Tsx"/>
                                                 <constraint firstItem="BVr-4R-XGa" firstAttribute="leading" secondItem="zDy-rH-epP" secondAttribute="leading" constant="10" id="FhT-y1-jYG"/>
+                                                <constraint firstAttribute="bottom" secondItem="BVr-4R-XGa" secondAttribute="bottom" constant="10" id="bpn-gO-N0U"/>
                                                 <constraint firstAttribute="bottom" secondItem="BVr-4R-XGa" secondAttribute="bottom" constant="10" id="leV-Ol-K6T"/>
                                                 <constraint firstAttribute="trailing" secondItem="BVr-4R-XGa" secondAttribute="trailing" constant="10" id="nTU-K1-f61"/>
+                                                <constraint firstItem="BVr-4R-XGa" firstAttribute="top" secondItem="zDy-rH-epP" secondAttribute="top" id="zVH-Bc-ejq"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="1Bt-1S-eOy"/>
+                                                    <exclude reference="89m-Hy-Tsx"/>
+                                                    <exclude reference="bpn-gO-N0U"/>
+                                                    <exclude reference="zVH-Bc-ejq"/>
+                                                </mask>
+                                            </variation>
                                             <variation key="heightClass=regular-widthClass=compact" ambiguous="YES">
                                                 <rect key="frame" x="0.0" y="0.0" width="400" height="250"/>
+                                                <mask key="constraints">
+                                                    <include reference="1Bt-1S-eOy"/>
+                                                    <exclude reference="6ul-bI-9Ef"/>
+                                                    <include reference="89m-Hy-Tsx"/>
+                                                    <exclude reference="FhT-y1-jYG"/>
+                                                    <include reference="bpn-gO-N0U"/>
+                                                    <exclude reference="leV-Ol-K6T"/>
+                                                    <exclude reference="nTU-K1-f61"/>
+                                                    <include reference="zVH-Bc-ejq"/>
+                                                </mask>
                                             </variation>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -5681,7 +5678,7 @@ on news things</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V34-Jh-Fqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2897" y="1953"/>
+            <point key="canvasLocation" x="2896.5" y="1953"/>
         </scene>
         <!--Current Profile View Controller-->
         <scene sceneID="2ex-eD-GWq">
@@ -6296,6 +6293,8 @@ on news things</string>
         <image name="calendar_icon" width="18" height="18"/>
         <image name="choose_sign_circle_bg" width="121" height="121"/>
         <image name="choose_sign_star" width="18" height="18"/>
+        <image name="community_btn_icon" width="26" height="26"/>
+        <image name="cookie_btn_icon" width="26" height="25"/>
         <image name="daily_archive_icon" width="25" height="24"/>
         <image name="daily_cookie" width="120" height="120"/>
         <image name="daily_cookie_open" width="201" height="90"/>

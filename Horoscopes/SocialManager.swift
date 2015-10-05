@@ -66,7 +66,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
 //                    println("result == \(result)")
-                    let userDict = result["users"] as! Dictionary<String, AnyObject>
+                    let userDict = result["profiles"] as! Dictionary<String, AnyObject>
                     let postsArray = result["posts"] as! [AnyObject]
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
@@ -104,7 +104,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     print("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    let userDict = result["users"] as! Dictionary<String, AnyObject>
+                    let userDict = result["profiles"] as! Dictionary<String, AnyObject>
                     let postsArray = result["posts"] as! [AnyObject]
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
@@ -185,26 +185,30 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                let userProfile = result![0]
-                let postData = NSMutableDictionary()
-                postData.setObject("\(page)", forKey: "page")
-                postData.setObject("\(uid)", forKey: "uid")
-                
-                XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
-                    if let error = error {
-                        completionHandler(result: nil, error: error)
-                    } else {
-                        let json = Utilities.parseNSDictionaryToDictionary(response)
-                        let last = json["last"] as! Int
-                        let results = json["posts"] as! [NSDictionary]
-                        let posts = UserPost.postsFromResults(results)
-                        for post in posts {
-                            post.user = userProfile
+                if let userProfile = result?[0]{
+                    let postData = NSMutableDictionary()
+                    postData.setObject("\(page)", forKey: "page")
+                    postData.setObject("\(uid)", forKey: "uid")
+                    
+                    XAppDelegate.mobilePlatform.sc.sendRequest(GET_USER_FEED, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
+                        if let error = error {
+                            completionHandler(result: nil, error: error)
+                        } else {
+                            let json = Utilities.parseNSDictionaryToDictionary(response)
+                            let last = json["last"] as! Int
+                            let results = json["posts"] as! [NSDictionary]
+                            let posts = UserPost.postsFromResults(results)
+                            for post in posts {
+                                post.user = userProfile
+                            }
+                            let result = (posts, isLastPage: last == 1)
+                            completionHandler(result: result, error: nil)
                         }
-                        let result = (posts, isLastPage: last == 1)
-                        completionHandler(result: result, error: nil)
-                    }
-                })
+                    })
+                } else {
+                    print("Cannot save getUserFeed!!")
+                    completionHandler(result: nil, error: error)
+                }
             }
         })
     }
@@ -219,7 +223,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 
                 let results = Utilities.parseNSDictionaryToDictionary(response)
-                let userDict = results["users"] as! Dictionary<String, AnyObject>
+                let userDict = results["profiles"] as! Dictionary<String, AnyObject>
                 let postsDict = results["posts"] as! Dictionary<String, AnyObject>
                 var postArray = [AnyObject]()
                 for (_,post) in postsDict {
@@ -245,7 +249,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response)
                 var result = [UserProfileCounts]()
-                if let dictionary = json["result"] as? [String: AnyObject] {
+                if let dictionary = json["counts"] as? [String: AnyObject] {
                     for count in dictionary.values {
                         result.append(UserProfileCounts(dictionary: count as! [String : AnyObject]))
                     }
@@ -311,7 +315,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let json = Utilities.parseNSDictionaryToDictionary(response)
                     var result = [UserProfile]()
                     for userId in usersIdString.componentsSeparatedByString(",") {
-                        if let users = json["result"] as? Dictionary<String, AnyObject> {
+                        if let users = json["profiles"] as? Dictionary<String, AnyObject> {
                             let userProfile = UserProfile(data: users[userId] as! NSDictionary)
                             result.append(userProfile)
                         }
@@ -636,10 +640,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(error: error)
             } else {
-                let userProfile = result![0]
-                XAppDelegate.currentUser = userProfile
-                NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
-                completionHandler(error: nil)
+                if let userProfile = result?[0]{
+                    XAppDelegate.currentUser = userProfile
+                    NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
+                    completionHandler(error: nil)
+                } else {
+                    print("Cannot save userProfile!!")
+                    completionHandler(error: nil)
+                }
+                
             }
         })
     }

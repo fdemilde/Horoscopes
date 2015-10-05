@@ -57,6 +57,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         self.resetTapButtonColor()
         self.setupInfiniteScroll()
         tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:");
+        tableHeaderView.addGestureRecognizer(tapGestureRecognizer);
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -66,6 +68,16 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowingStatusFinished:", name: NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED, object: nil)
+        if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
+            Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableHeaderView.profileImageView.image = image
+                })
+            })
+        } else {
+            self.tableHeaderView.profileImageView.image = UIImage(named: "default_avatar")
+        }
+
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
             tableView.reloadData()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already logged in facebook
@@ -175,7 +187,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         })
     }
     
-    // MARK: Button Actions
+    // MARK: Actions
+    
+    func handleTap(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            addButton.centerButtonTapped()
+        }
+    }
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
 //        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal

@@ -1412,8 +1412,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PROVISIONING_PROFILE = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
+				PROVISIONING_PROFILE = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1454,8 +1454,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PROVISIONING_PROFILE = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
+				PROVISIONING_PROFILE = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SDKROOT = iphoneos;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -1475,8 +1475,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zwigglers.horoscopes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
+				PROVISIONING_PROFILE = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 			};
@@ -1495,8 +1495,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zwigglers.horoscopes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "3cef01e7-9edc-45b5-8a05-ae17b745e5f1";
+				PROVISIONING_PROFILE = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "Horoscopes/Horoscopes-Bridging-Header.h";
 			};

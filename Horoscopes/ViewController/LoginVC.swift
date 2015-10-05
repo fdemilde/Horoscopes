@@ -88,6 +88,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             if let url = NSURL(string: XAppDelegate.currentUser.imgURL) {
                 self.downloadImage(url)
             }
+            loginLabel.text = XAppDelegate.currentUser.name
+            loginLabel.textColor = UIColor.whiteColor()
+            loginLabel.font = UIFont.boldSystemFontOfSize(18)
             fbLoginBtn.userInteractionEnabled = false
         } else {
             fbLoginBtn.userInteractionEnabled = true

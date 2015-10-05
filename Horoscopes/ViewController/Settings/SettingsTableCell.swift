@@ -35,7 +35,8 @@ class SettingsTableCell : UITableViewCell {
             timeUnderline.hidden = false
             birthdayLabel.hidden = true
             birthdayUnderline.hidden = true
-            switchButton.setOn(parentVC.isNotificationOn, animated: true)
+            print("XAppDelegate.userSettings.notifyOfNewHoroscope XAppDelegate.userSettings.notifyOfNewHoroscope == \(XAppDelegate.userSettings.notifyOfNewHoroscope)")
+            switchButton.setOn(XAppDelegate.userSettings.notifyOfNewHoroscope, animated: true)
             self.setupNotificationTime()
         } else if self.type == SettingsType.ChangeDOB {
             birthdayLabel.hidden = false
@@ -70,7 +71,8 @@ class SettingsTableCell : UITableViewCell {
     
     @IBAction func toogleNotification(sender: AnyObject) {
         let switchControl = sender as! UISwitch
-        parentVC.isNotificationOn = switchControl.on
+        XAppDelegate.userSettings.notifyOfNewHoroscope = switchControl.on
+        parentVC.saveNotificationSetting()
     }
     
     func setupNotificationTime(){

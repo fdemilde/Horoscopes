@@ -30,7 +30,8 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         }
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
-        
+        let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
+        view.backgroundColor = UIColor(patternImage: backgroundImage)
         refreshView()
     }
     

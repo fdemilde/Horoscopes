@@ -14,7 +14,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var tableFooterView : UIView!
     var birthday : NSDate!
     var birthdayString : String!
-    var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
+//    var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     @IBOutlet weak var titleBackgroundView: UIView!
     
     let POPUP_NOTIFICATION_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
@@ -24,7 +24,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     let TABLE_ROW_HEIGHT = 56 as CGFloat
     
     // we must save last value of notification setting so when user tap save we can check if it changes or not
-    var isLastSaveNotifOn = XAppDelegate.userSettings.notifyOfNewHoroscope
+//    var isLastSaveNotifOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     var notificationFireTime : String!
     var lastSaveNotificationFireTime : String!
     
@@ -121,7 +121,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         timePickerVC.parentVC = self
         return timePickerVC
     }
-    
+    // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
     func setupBirthdayViewController() -> UIViewController {
         let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
         selectBirthdayVC.setupViewController(self, currentSetupBirthday: birthday)
@@ -152,6 +152,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: save changes
+    // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
     func saveBirthdaySetting(){
         if(XAppDelegate.userSettings.birthday != self.birthday){
             XAppDelegate.userSettings.birthday = self.birthday
@@ -178,43 +179,21 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func saveNotificationSetting(){
         var label = ""
-        // if user didn't change anything
-        if((self.isNotificationOn == self.isLastSaveNotifOn) && (self.isNotificationOn == false)){
+        var isOnString = ""
+        if (XAppDelegate.userSettings.notifyOfNewHoroscope == true) {
+            self.setLocalPush()
+            isOnString = "Yes"
             return
+        } else {
+            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            isOnString = "No"
         }
-        
-        if((self.isNotificationOn == self.isLastSaveNotifOn) && (self.isNotificationOn == true)){
-            // check if user change time or not
-            if(self.notificationFireTime == self.lastSaveNotificationFireTime){ // user doesn't change
-                return
-            } else {
-                // change time
-                XAppDelegate.userSettings.notifyOfNewHoroscope = isNotificationOn
-                self.setLocalPush()
-                label = String(format:"alarm_type=%@", "Yes")
-                self.sendSetNotificationTracker(label)
-                return
-            }
-        }
-        
-        if (self.isNotificationOn != self.isLastSaveNotifOn){ // change setting
-            var isOnString = ""
-            if(self.isNotificationOn){
-                self.setLocalPush()
-                isOnString = "Yes"
-            } else {
-                UIApplication.sharedApplication().cancelAllLocalNotifications()
-                isOnString = "No"
-            }
-            XAppDelegate.userSettings.notifyOfNewHoroscope = isNotificationOn
-            label = String(format:"alarm_type=%@", isOnString)
-            self.sendSetNotificationTracker(label)
-            return
-        }
+        label = String(format:"alarm_type=%@", isOnString)
+        self.sendSetNotificationTracker(label)
     }
     
     // MARK: Helpers
-    
+    // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
     func finishedSelectingBirthday(date : NSDate){
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
         self.birthday = date
@@ -266,13 +245,12 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func doneSelectingTime(time : NSDate){
         
-        if(!isNotificationOn){
-            isNotificationOn = true
+        if(!XAppDelegate.userSettings.notifyOfNewHoroscope){
+            XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }
-        
         notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
-        
         lastSaveNotificationFireTime = notificationFireTime
+        self.saveNotificationSetting()
         tableView.reloadData()
     }
     

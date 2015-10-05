@@ -45,6 +45,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         super.viewWillAppear(animated)
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                removeLoginView()
                 userProfile = XAppDelegate.currentUser
                 configureProfileView()
                 getData()
@@ -55,6 +56,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     } else {
                         self.userProfile = XAppDelegate.currentUser
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.removeLoginView()
                             self.configureProfileView()
                         })
                         self.getData()
@@ -76,6 +78,9 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func configureProfileView() {
         super.configureProfileView()
+        if profileView.hidden {
+            profileView.hidden = false
+        }
         let sign = Int(XAppDelegate.userSettings.horoscopeSign)
         if sign >= 0 {
             horoscopeSignLabel.hidden = false
@@ -140,11 +145,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 if permissionGranted {
                     self.userProfile = XAppDelegate.currentUser
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        if self.loginView != nil {
-                            self.loginView.removeFromSuperview()
-                            self.loginView = nil
-                            self.profileView.hidden = false
-                        }
+                        self.removeLoginView()
                         self.configureProfileView()
                     })
                     self.getData()
@@ -168,6 +169,13 @@ class CurrentProfileViewController: ProfileBaseViewController {
     }
     
     // MARK: - Helper
+    
+    func removeLoginView() {
+        if loginView != nil {
+            loginView.removeFromSuperview()
+            loginView = nil
+        }
+    }
     
     override func getData() {
         super.getData()
