@@ -41,7 +41,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var currentSelectedSign = 0 // 0 is all
     var currentPage = 0
     var overlay : UIView!
-    var oldNewsfeedArray = [UserPost]()
+//    var oldNewsfeedArray = [UserPost]()
     
     @IBOutlet weak var tabView: UIView!
     var tableHeaderView: NewsfeedTableHeaderView!
@@ -61,12 +61,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         // remove all observer first
         NSNotificationCenter.defaultCenter().removeObserver(self)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowingStatusFinished:", name: NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED, object: nil)
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
             tableView.reloadData()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already logged in facebook
@@ -78,6 +77,10 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         }
         
         tableView.reloadData()
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -164,13 +167,18 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.insertRowsAtBottom(newDataArray)
             }
         })
-        
+    }
+    
+    func updateFollowingStatusFinished(notif : NSNotification) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tableView.reloadData()
+        })
     }
     
     // MARK: Button Actions
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
-        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
+//        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
 //        self.scrollToTop()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
@@ -187,7 +195,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     @IBAction func followingButtonTapped(sender: AnyObject) {
-        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
+//        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
 //        self.scrollToTop()
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED,object: nil)
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
@@ -252,34 +260,14 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        if indexPath.row == 0 {
-//            var cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.defaultTableViewCellIdentifier) as? NewsfeedDefaultTableViewCell
-//            if cell == nil {
-//                cell = NewsfeedDefaultTableViewCell(style: .Default, reuseIdentifier: TableViewConstants.defaultTableViewCellIdentifier)
-//            }
-//            if XAppDelegate.currentUser.uid != -1 {
-//                Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
-//                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                        cell?.profileImageView.image = image
-//                    })
-//                })
-//            } else {
-//                cell?.profileImageView.image = UIImage(named: "default_avatar")
-//            }
-//            return cell!
-//        }
         let cell = tableView.dequeueReusableCellWithIdentifier(TableViewConstants.postTableViewCellIdentifier, forIndexPath: indexPath) as! PostTableViewCell
         let post = getFeedDataForRow(indexPath.row)
-        cell.resetUI()
         cell.configureCellForNewsfeed(post)
         cell.viewController = self
         return cell
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        if indexPath.row  == 0 {
-//            addButton.centerButtonTapped()
-//        }
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
@@ -321,10 +309,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 if(error != nil){
                     Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
                 } else {
+                    self.getFollowingUser()
                     XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+                    
                 }
             })
         } else {
+            self.getFollowingUser()
             XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
         }
         
@@ -346,6 +337,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                     
                     NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                     dispatch_async(dispatch_get_main_queue(),{
+                        self.getFollowingUser()
                         XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
                     })
                 }
@@ -367,6 +359,10 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             globalButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
             followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
             break
+        default:
+            globalButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
+            followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            break
         }
     }
     
@@ -385,10 +381,10 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             self.currentPage++
             
             if(self.tabType == NewsfeedTabType.Following){
-                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
+//                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
                 XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
             } else {
-                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
+//                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
                 XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
             }
         }
@@ -418,6 +414,21 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         tableView.setContentOffset(CGPointZero, animated:true)
     }
     
+    func getFollowingUser(){
+        if(DataStore.sharedInstance.usersFollowing != nil){
+            return
+        }
+        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
+            if let error = error {
+                Utilities.showError(self, error: error)
+            } else {
+                DataStore.sharedInstance.usersFollowing = result!
+                DataStore.sharedInstance.updateFollowingStatus(.Both)
+            }
+            
+        }
+    }
+    
     // MARK: Table Data helpers
     
     func getTotalRowsInTable() -> Int{
@@ -438,14 +449,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         }
     }
     
-//    func getOldFeedArray() -> [UserPost] {
-//        if(tabType == NewsfeedTabType.Global){
-//            return XAppDelegate.dataStore.oldNewsfeedGlobal
-//        } else {
-//            return XAppDelegate.dataStore.oldNewsfeedFollowing
-//        }
-//    }
-    
     func getFeedArray() -> [UserPost]{
         if(tabType == NewsfeedTabType.Global){
             return XAppDelegate.dataStore.newsfeedGlobal
@@ -462,9 +465,18 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             let p2 = post2 as! UserPost
             return (p1.post_id == p2.post_id);
         }
-        let delta = deltaCalculator.deltaFromOldArray(self.oldNewsfeedArray, toNewArray:self.getFeedArray())
+//        print("self.oldNewsfeedArray == \(self.getFeedArray())")
+//        print("getFeedArray() == \(newData)")
+        let delta = deltaCalculator.deltaFromOldArray(self.getFeedArray(), toNewArray:newData)
+//        oldNewsfeedArray = newData
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
+        if(tabType == NewsfeedTabType.Following){
+            XAppDelegate.dataStore.newsfeedFollowing = newData
+        } else {
+            XAppDelegate.dataStore.newsfeedGlobal = newData
+        }
         self.tableView.endUpdates()
+        
         tableView.finishInfiniteScroll()
         
     }

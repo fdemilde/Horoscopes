@@ -25,20 +25,35 @@ class DataStore : NSObject{
     override init(){
         super.init()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUsersFollowing:", name: NOTIFICATION_FOLLOW, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUsersUnfollowing:", name: NOTIFICATION_UNFOLLOW, object: nil)
     }
     
     deinit {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func updateUsersFollowing(_: NSNotification) {
-        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
-            if let _ = error {
-                
-            } else {
-                self.usersFollowing = result!
+    func updateUsersFollowing(notification: NSNotification) {
+        let user = notification.object as! UserProfile
+        if var _ = usersFollowing {
+            usersFollowing!.append(user)
+        } else {
+            usersFollowing = [UserProfile]()
+            usersFollowing!.append(user)
+        }
+        updateFollowingStatus(.Both)
+    }
+    
+    func updateUsersUnfollowing(notification: NSNotification) {
+        let user = notification.object as! UserProfile
+        if var _ = usersFollowing {
+            for var index = 0; index < usersFollowing!.count; ++index {
+                if (usersFollowing![index].uid == user.uid){
+                    usersFollowing!.removeAtIndex(index)
+                    break
+                }
             }
         }
+        updateFollowingStatus(.Both)
     }
     
     func saveSearchedProfile(profile: UserProfile) {
@@ -47,28 +62,44 @@ class DataStore : NSObject{
         }
     }
     
-    func addDataArray(data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){
+    func addDataArray(var data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){
         newsfeedIsUpdated = false
         self.isLastPage = isLastPage
+        var updatedArray = [UserPost]()
         switch type {
             case NewsfeedTabType.Following:
                 if(data.count == 0){
                     Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
                     return // no new data
                 }
-                newsfeedFollowing = addData(newsfeedFollowing, newDataArray: data)
+                data = updateFollowingStatusForNewAddingData(data) // check with following users and update new adding post
+                updatedArray = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
-            }
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
+                }
             case NewsfeedTabType.Global:
                 if(data.count == 0){
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                     return // no new data
                 }
-                newsfeedGlobal = addData(newsfeedGlobal, newDataArray: data)
+                data = updateFollowingStatusForNewAddingData(data)
+                updatedArray = addData(newsfeedGlobal, newDataArray: data)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
+                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray)
+            
+                }
+            default:
+                if(data.count == 0){
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                    return // no new data
+                }
+                data = updateFollowingStatusForNewAddingData(data)
+                updatedArray = addData(newsfeedFollowing, newDataArray: data)
+                if (newsfeedIsUpdated) {
+                    
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
             }
+            
         }
         
     }
@@ -76,41 +107,61 @@ class DataStore : NSObject{
     func updateData(data : [UserPost], type: NewsfeedTabType){
         newsfeedIsUpdated = false // reset updated flag to false
         self.isLastPage = false // reset
+        var updatedArray = [UserPost]()
         switch type {
             case NewsfeedTabType.Following:
                 if(newsfeedFollowing.count == 0){
                     newsfeedIsUpdated = true
-                    newsfeedFollowing = data
+                    updatedArray = data
                 } else {
                     // do compare to update current newsfeed
-                    self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
+                    updatedArray = self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
                 }
+//                updateFollowingStatus(type)
+                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: newsfeedFollowing)
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
                 }
             case NewsfeedTabType.Global:
                 if(newsfeedGlobal.count == 0){
                     newsfeedIsUpdated = true
-                    newsfeedGlobal = data
+                    updatedArray = data
                 } else {
                     // do compare to update current newsfeed
-                    self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Global)
+                    updatedArray = self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Global)
                 }
+                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: newsfeedGlobal)
+                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray)
+                }
+            default:
+                if(newsfeedFollowing.count == 0){
+                    newsfeedIsUpdated = true
+                    updatedArray = data
+                } else {
+                    // do compare to update current newsfeed
+                    updateFollowingStatus(NewsfeedTabType.Following)
+                    updatedArray = self.checkAndUpdateFeedData(data, type: NewsfeedTabType.Following)
+                }
+                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
+                if (newsfeedIsUpdated) {
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
                 }
         }
         
     }
     
-    func checkAndUpdateFeedData(newData : [UserPost], type : NewsfeedTabType) -> Bool{
+    func checkAndUpdateFeedData(newData : [UserPost], type : NewsfeedTabType) -> [UserPost]{
+        var updatedArray = [UserPost]()
         switch type {
             case NewsfeedTabType.Following:
-                newsfeedFollowing = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
+                updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
             case NewsfeedTabType.Global:
-                newsfeedGlobal = compareAndUpdateArrayData(newsfeedGlobal, newDataArray: newData)
+                updatedArray = compareAndUpdateArrayData(newsfeedGlobal, newDataArray: newData)
+            default:
+                updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
         }
-        return false
+        return updatedArray
     }
     
     // this function is for supporting paging, when table reaches the end we will add more contents to it
@@ -155,9 +206,7 @@ class DataStore : NSObject{
             if(!newsfeedIsUpdated) { newsfeedIsUpdated = true }
             mutableOldArray.remove(post)
         }
-        
         mutableOldArray = self.addData(mutableOldArray, newDataArray: newDataArray)
-        
         return mutableOldArray
     }
     
@@ -167,6 +216,61 @@ class DataStore : NSObject{
             result.append(post.post_id)
         }
         return result
+    }
+    
+    func updateFollowingStatus(type : NewsfeedTabType){
+        if let _ = usersFollowing {
+                if (type == .Following) {
+                    updateFollowingForFollowingFeeds()
+                } else if (type == .Global) {
+                    updateFollowingForGlobalFeeds()
+                } else {
+                    updateFollowingForFollowingFeeds()
+                    updateFollowingForGlobalFeeds()
+                }
+        }
+        NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED, object: nil)
+        
+    }
+    
+    func updateFollowingForFollowingFeeds() {
+        
+        for feed in newsfeedFollowing{
+            feed.user!.isFollowed = false
+            for user in usersFollowing! {
+                if(user == feed.user!) {
+                    feed.user!.isFollowed = true
+                    break
+                }
+            }
+            
+        }
+        
+    }
+    
+    func updateFollowingForGlobalFeeds() {
+        for feed in newsfeedGlobal{
+            feed.user!.isFollowed = false
+            for user in usersFollowing! {
+                if(user == feed.user!) {
+                    feed.user!.isFollowed = true
+                    break
+                }
+            }
+        }
+    }
+    
+    func updateFollowingStatusForNewAddingData(data : [UserPost]) -> [UserPost]{
+        if let usersFollowing = usersFollowing {
+            for user in usersFollowing{
+                for feed in data{
+                    if(user == feed.user!) {
+                        feed.user!.isFollowed = true
+                    }
+                }
+            }
+        }
+        return data
     }
     
     func clearData(){
@@ -185,14 +289,16 @@ class DataStore : NSObject{
 }
 
 extension Array {
-    mutating func remove <U: Equatable> (object: U) {
-        for i in (self.count - 1).stride(to: 0, by: -1) {
-            if let element = self[i] as? U {
-                if element == object {
-                    self.removeAtIndex(i)
+    mutating func remove<U: Equatable>(object: U) -> Bool {
+        for (idx, objectToCompare) in self.enumerate() {
+            if let to = objectToCompare as? U {
+                if object == to {
+                    self.removeAtIndex(idx)
+                    return true
                 }
             }
         }
+        return false
     }
 }
 

@@ -353,14 +353,14 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        var uid = -1
+        var user: UserProfile!
         if currentScope == .Followers {
-            uid = followers[index!].uid
+            user = followers[index!]
         } else {
-            uid = friends[index!].uid
+            user = friends[index!]
         }
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
+        SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)

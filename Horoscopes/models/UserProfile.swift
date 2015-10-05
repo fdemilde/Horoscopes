@@ -8,7 +8,7 @@
 
 import Foundation
 
-class UserProfile: NSObject, NSCoding {
+public class UserProfile: NSObject, NSCoding {
     var uid : Int = -1
     var name : String = ""
     var imgURL : String = ""
@@ -43,7 +43,7 @@ class UserProfile: NSObject, NSCoding {
         
     }
     
-    required init(coder aDecoder: NSCoder) {
+    required public init(coder aDecoder: NSCoder) {
         uid = aDecoder.decodeIntegerForKey(Keys.uid)
         name = aDecoder.decodeObjectForKey(Keys.name) as! String
         imgURL = aDecoder.decodeObjectForKey(Keys.imgUrl) as! String
@@ -51,11 +51,21 @@ class UserProfile: NSObject, NSCoding {
         location = aDecoder.decodeObjectForKey(Keys.location) as! String
     }
     
-    func encodeWithCoder(aCoder: NSCoder) {
+    public func encodeWithCoder(aCoder: NSCoder) {
         aCoder.encodeInteger(uid, forKey: Keys.uid)
         aCoder.encodeObject(name, forKey: Keys.name)
         aCoder.encodeObject(imgURL, forKey: Keys.imgUrl)
         aCoder.encodeInteger(sign, forKey: Keys.sign)
         aCoder.encodeObject(location, forKey: Keys.location)
     }
+    
+    override public var description: String {
+        let string = ("name = \(name)")
+        return string
+    }
+}
+
+// note that this is OUTSIDE of your class impl to make it global
+public func ==(lhs: UserProfile, rhs: UserProfile) -> Bool {
+    return lhs.uid == rhs.uid
 }

@@ -59,7 +59,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     @IBAction func tapFollowButton(sender: UIButton) {
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(userProfile.uid, completionHandler: { (error) -> Void in
+        SocialManager.sharedInstance.follow(userProfile, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)

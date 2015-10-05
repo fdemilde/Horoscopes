@@ -33,19 +33,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.delegate = self
         tableView.layer.cornerRadius = 4
         tableView.clipsToBounds = true
-//        XAppDelegate.socialManager.clearAllNotification()
-//        self.unfollowTest()
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         self.getNotificationAndReloadData()
-    }
-    
-    func unfollowTest(){
-        XAppDelegate.socialManager.unfollow(8, completionHandler: { (error) -> Void in
-            
-        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -54,8 +46,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-//        tableView.tableHeaderView = getHeaderView()
-//        tableView.tableFooterView = getFooterView()
         if(notifArray.count != 0 ){
             self.tableView.backgroundView = nil
             return 1
@@ -95,13 +85,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             self.resetCornerRadius(cell)
         }
         cell.populateData(notifArray[indexPath.row])
-//        if(indexPath.row == 0){ // first cell
-//            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: [.TopLeft, .TopRight], radius: 4.0) as! NotificationTableViewCell
-//        }
-//        if(indexPath.row == (notifArray.count - 1)){ // last array
-//            cell = Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0) as! NotificationTableViewCell
-//        }
-        
         return cell
     }
     
@@ -143,7 +126,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
-//                self.tableView.backgroundColor = UIColor.clearColor()
                 self.notifArray = result!
                 self.notifArray.sortInPlace({ $0.created > $1.created })
                 self.tableView.reloadData()
@@ -240,8 +222,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                         }
                     }
                 })
-                
-                
             }
         })
         

@@ -84,6 +84,15 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         birthdaySelectButton.layer.shadowOpacity = 0.3
         birthdaySelectButton.layer.cornerRadius = 4
         
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){
+            if let url = NSURL(string: XAppDelegate.currentUser.imgURL) {
+                self.downloadImage(url)
+            }
+            fbLoginBtn.userInteractionEnabled = false
+        } else {
+            fbLoginBtn.userInteractionEnabled = true
+        }
+        
         self.view .bringSubviewToFront(fbLoginBtn)
         self.view .bringSubviewToFront(loginLabel)
         self.view .bringSubviewToFront(birthdaySelectButton)

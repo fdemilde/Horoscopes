@@ -160,9 +160,9 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        let uid = filteredResult[index!].uid
+        let user = filteredResult[index!]
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(uid, completionHandler: { (error) -> Void in
+        SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(self, error: error)

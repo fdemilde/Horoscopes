@@ -99,12 +99,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell
     func resetUI(){
-        profileImageView.image = nil
-        profileNameLabel.text = ""
-        postDateLabel.text = ""
-        textView.text = ""
-        likeNumberLabel.text = ""
-        newsfeedFollowButton.setImage(nil, forState: .Normal)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.profileImageView.image = nil
+            self.profileNameLabel.text = ""
+            self.textView.text = ""
+            self.postDateLabel.text = ""
+            self.likeNumberLabel.text = ""
+            self.newsfeedFollowButton.setImage(nil, forState: .Normal)
+        })
     }
     
     func configureCell(post: UserPost) {
@@ -160,23 +162,25 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     func configureNewsfeedUi() {
-        horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
-        horoscopeSignView.layer.cornerRadius = 4
-        horoscopeSignView.clipsToBounds = true
-        profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        profileImageView.layer.shadowOpacity = 0.6
-        profileImageView.layer.shadowRadius = 2
-        profileImageView.clipsToBounds = false
-        headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
-        profileImageView.layer.cornerRadius = profileImageSize / 2
-        profileImageView.clipsToBounds = true
-        
-        let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
-        let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
-        profileNameLabel.userInteractionEnabled = true
-        profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
-        profileImageView.userInteractionEnabled = true
-        profileImageView.addGestureRecognizer(imageGestureRecognizer)
+        dispatch_async(dispatch_get_main_queue(), {
+            self.horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
+            self.horoscopeSignView.layer.cornerRadius = 4
+            self.horoscopeSignView.clipsToBounds = true
+            self.profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
+            self.profileImageView.layer.shadowOpacity = 0.6
+            self.profileImageView.layer.shadowRadius = 2
+            self.profileImageView.clipsToBounds = false
+            self.headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
+            self.profileImageView.layer.cornerRadius = self.profileImageSize / 2
+            self.profileImageView.clipsToBounds = true
+            
+            let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            self.profileNameLabel.userInteractionEnabled = true
+            self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
+            self.profileImageView.userInteractionEnabled = true
+            self.profileImageView.addGestureRecognizer(imageGestureRecognizer)
+            })
     }
     
     func configureUserPostUi() {
@@ -198,7 +202,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     }
     
     @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
-        viewController = viewController as! NewsfeedViewController
+//        viewController = viewController as! NewsfeedViewController
         let hud = MBProgressHUD.showHUDAddedTo(viewController.view, animated: true)
         SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
             if let error = error {
@@ -208,7 +212,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
                 hud.detailsLabelFont = UIFont.systemFontOfSize(11)
                 let name = self.post.user!.name
                 if isFollowing {
-                    SocialManager.sharedInstance.unfollow(self.post.uid, completionHandler: { (error) -> Void in
+                    SocialManager.sharedInstance.unfollow(self.post.user!, completionHandler: { (error) -> Void in
                         hud.mode = MBProgressHUDMode.Text
                         if let _ = error {
                             hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
@@ -225,7 +229,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
                         }
                     })
                 } else {
-                    SocialManager.sharedInstance.follow(self.post.uid, completionHandler: { (error) -> Void in
+                    SocialManager.sharedInstance.follow(self.post.user!, completionHandler: { (error) -> Void in
                         hud.mode = MBProgressHUDMode.Text
                         if let _ = error {
                             hud.detailsLabelText = "Follow unsuccessully due to network error!"
@@ -235,8 +239,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
                         } else {
                             hud.detailsLabelText = "\(name) has been added to your Following list."
                             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                let parentVC = self.viewController as! NewsfeedViewController
-                                parentVC.tableView.reloadData()
+//                                let parentVC = self.viewController as! NewsfeedViewController
+//                                parentVC.tableView.reloadData()
                                 hud.hide(true, afterDelay: 2)
                             })
                         }
@@ -281,18 +285,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     //     Notification handler
     func sendHeartSuccessful(notif: NSNotification){
-        let postId = notif.object as! String
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         post.hearts++
-//        var index = -1
-//        for (i, post) in userPostArray.enumerate() {
-//            if post.post_id == postId {
-//                index = i
-//            }
-//        }
-//        if index != -1 {
-//            userPostArray[index].hearts += 1
-//        }
     }
 }
 

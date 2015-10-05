@@ -113,7 +113,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     } else {
                         XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Following)
                     }
-                    
                 }
             }
             
@@ -256,29 +255,32 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func follow(uid: Int, completionHandler: (error: NSError?) -> Void) {
+    func follow(user: UserProfile, completionHandler: (error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
-        postData.setObject("\(uid)", forKey: "uid")
+        postData.setObject("\(user.uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(error: error)
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_FOLLOW, object: nil)
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_FOLLOW, object: user)
                 })
-                SocialManager.sharedInstance.sendFollowNotification(uid)
+                SocialManager.sharedInstance.sendFollowNotification(user.uid)
                 completionHandler(error: nil)
             }
         }
     }
     
-    func unfollow(uid: Int, completionHandler: (error: NSError?) -> Void) {
+    func unfollow(user: UserProfile, completionHandler: (error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
-        postData.setObject("\(uid)", forKey: "uid")
+        postData.setObject("\(user.uid)", forKey: "uid")
         XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(error: error)
             } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UNFOLLOW, object: user)
+                })
                 completionHandler(error: nil)
             }
         }
