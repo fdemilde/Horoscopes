@@ -282,7 +282,7 @@ class CookieViewController : ViewControllerWithAds{
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             let fortuneDescription = fortuneData["fortune"] as? String
             if let fortuneDescription = fortuneDescription {
-                XAppDelegate.dataStore.currentFortuneDescription = fortuneDescription
+                XAppDelegate.dataStore.currentFortuneDescription = "\"\(fortuneDescription)\""
                 self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
             } else {
                 self.fortuneDescriptionLabel.text = ""
