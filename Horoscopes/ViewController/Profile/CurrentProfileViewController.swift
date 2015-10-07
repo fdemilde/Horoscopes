@@ -52,7 +52,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             } else {
                 SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
                     if let error = error {
-                        Utilities.showError(self, error: error)
+                        Utilities.showError(error, viewController: self)
                     } else {
                         self.userProfile = XAppDelegate.currentUser
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -140,7 +140,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
             if let error = error {
                 Utilities.hideHUD()
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 if permissionGranted {
                     self.userProfile = XAppDelegate.currentUser
@@ -196,7 +196,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
         SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 DataStore.sharedInstance.usersFollowing = result!
                 self.noFollowingUser = result!.count == 0
@@ -214,7 +214,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
         SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.noFollower = result!.count == 0
                 self.handleData(dispatchGroup, oldData: &self.followers, newData: result!, button: self.followersButton)
@@ -231,7 +231,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.friends = result!
             }
@@ -371,7 +371,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.getUserProfileCounts()
                 let group = dispatch_group_create()

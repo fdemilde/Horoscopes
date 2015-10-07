@@ -94,8 +94,7 @@ class Utilities {
             if let viewToShow = viewToShow {
                 loadingNotification = MBProgressHUD.showHUDAddedTo(viewToShow, animated: true)
             } else {
-                let appDelegate  = UIApplication.sharedApplication().delegate as! AppDelegate
-                let viewController = appDelegate.window!.rootViewController
+                let viewController = XAppDelegate.window!.rootViewController
                 
                 loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
             }
@@ -198,9 +197,9 @@ class Utilities {
             if #available(iOS 8.0, *) {
                 if viewController.presentedViewController == nil {
                     let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
-                    if let error = error {
-                        alert.message = "\(message) \(error)"
-                    }
+//                    if let error = error {
+//                        alert.message = "\(message) \(error)"
+//                    }
                     let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
                     alert.addAction(action)
                     viewController.presentViewController(alert, animated: true, completion: nil)
@@ -213,8 +212,13 @@ class Utilities {
     
     // MARK: - Convenience
     
-    class func showError(viewController: UIViewController, error: NSError) {
-        self.showAlert(viewController, title: "Network Error", message: "There is an error. Action cannot be completed. Please try again later!", error: error)
+    class func showError(error: NSError, viewController : UIViewController? = nil) {
+        if let viewController = viewController{
+            self.showAlert(viewController, title: "Network Error", message: "There is an error. Action cannot be completed. Please try again later!", error: error)
+        } else {
+            self.showAlert(XAppDelegate.window!.rootViewController!, title: "Network Error", message: "There is an error. Action cannot be completed. Please try again later!", error: error)
+        }
+        
     }
     
     // MARK: Helpers

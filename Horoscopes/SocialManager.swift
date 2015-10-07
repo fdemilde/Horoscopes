@@ -56,6 +56,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             Utilities.hideHUD()
             if(error != nil){
                 print("Error when get getGlobalNewsfeed = \(error)")
+                Utilities.showError(error)
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
@@ -94,6 +95,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             Utilities.hideHUD()
             if(error != nil){
                 print("Error when get getFollowingNewsfeed = \(error)")
+                Utilities.showError(error)
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
 //                print("getFollowingNewsfeed == \(response)")
@@ -131,7 +133,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 let errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     print("Error code = \(errorCode)")
-                    Utilities.showAlertView(self, title: "Error", message: "Please try again later!")
+                    Utilities.showError(error)
                 } else { // no error
                     let success = result["success"] as! Int
                     if success == 1 {

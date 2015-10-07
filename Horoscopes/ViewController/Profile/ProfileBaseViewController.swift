@@ -48,7 +48,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             if currentPostPage != 0 {
                 SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage) { (result, error) -> Void in
                     if let error = error {
-                        Utilities.showError(self, error: error)
+                        Utilities.showError(error, viewController: self)
                     } else {
                         let posts = result!.0
                         let isLastPage = result!.isLastPage
@@ -212,7 +212,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func getUserProfileCounts() {
         SocialManager.sharedInstance.getProfileCounts([userProfile.uid]) { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 if !result!.isEmpty {
                     let count = result![0]
@@ -233,7 +233,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
         SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.currentPostPage = 0
                 let posts = result!.0

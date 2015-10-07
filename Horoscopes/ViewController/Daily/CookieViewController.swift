@@ -249,13 +249,20 @@ class CookieViewController : ViewControllerWithAds{
                         postData.setObject(userFBID, forKey: "fb_uid")
                         
                         XAppDelegate.mobilePlatform.sc.sendRequest(GET_FORTUNE_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-                            let result = Utilities.parseNSDictionaryToDictionary(response)
-                            // println("fortune result = \(result)")
-                            self.reloadFortuneData(result)
+                            if(error != nil){
+                                Utilities.hideHUD()
+                                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+                            } else {
+                                let result = Utilities.parseNSDictionaryToDictionary(response)
+                                // println("fortune result = \(result)")
+                                self.reloadFortuneData(result)
+                            }
+                            
                         })
                     } else {
                         Utilities.hideHUD()
                         print("fetch Info Error = \(error)")
+                        self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
                     }
                 })
             } else {

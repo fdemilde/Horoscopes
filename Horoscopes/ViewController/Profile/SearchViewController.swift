@@ -49,7 +49,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     hud.hide(true)
                 })
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.friends = result!
                 if let users = DataStore.sharedInstance.usersFollowing {
@@ -165,7 +165,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.reloadData()

@@ -69,7 +69,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         SocialManager.sharedInstance.follow(userProfile, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.getUserProfileCounts()
                 self.getFollowers(nil)
@@ -107,7 +107,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         }
         SocialManager.sharedInstance.getOtherUserFollowingProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
             }
@@ -123,7 +123,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         }
         SocialManager.sharedInstance.getOtherUserFollowersProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
             }

@@ -66,13 +66,11 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     
     @IBAction func like(sender: UIButton) {
-        Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(5)), repeats: false)
     }
     
     @IBAction func dislike(sender: UIButton) {
-        Utilities.showHUD()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(1)), repeats: false)
     }
@@ -186,14 +184,21 @@ class DailyContentTableViewCell: UITableViewCell {
     func doRatingRequestWithRateValue(timer: NSTimer){
         let value = timer.userInfo as! NSNumber
         let time = timeTag as NSNumber
-        XAppDelegate.horoscopesManager.sendRateRequestWithTimeTag(time.integerValue, signIndex: selectedSign, rating: value.integerValue)
+        XAppDelegate.horoscopesManager.sendRateRequestWithTimeTag(time.integerValue, signIndex: selectedSign, rating: value.integerValue, viewcontroller: XAppDelegate.window!.rootViewController!)
     }
     
     func rateResultNotificationHandler(notif : NSNotification){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
         let rateResultDictionary = notif.object as! [String: AnyObject]
-        let vote = rateResultDictionary["total_rates"] as! Int
-        let likedPercentage = rateResultDictionary["percent_liked"] as! Int
+        var vote = 0
+        var likedPercentage = 0
+        if let serverVote = rateResultDictionary["total_rates"] as? Int {
+            vote = serverVote
+        }
+        
+        if let serverLike = rateResultDictionary["percent_liked"] as? Int {
+            likedPercentage = serverLike
+        }
         Utilities.hideHUD()
         updateLikedPercentage(vote, likedPercentage: likedPercentage)
     }

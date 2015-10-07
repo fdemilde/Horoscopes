@@ -118,10 +118,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func registerForRemoteNotification(){
         if #available(iOS 8.0, *) {
+            print("registerForRemoteNotification registerForRemoteNotification 8.0")
             let types : UIUserNotificationType = [.Sound, .Badge, .Alert]
             let notifSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
             UIApplication.sharedApplication().registerUserNotificationSettings(notifSettings)
         } else {
+            print("registerForRemoteNotification registerForRemoteNotification < 8.0")
             // Fallback on earlier versions
             let types : UIRemoteNotificationType = [.Sound, .Badge, .Alert]
             UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
@@ -202,9 +204,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let deviceTokenString = String(format:"%@",deviceToken)
-        XAppDelegate.socialManager.registerAPNSNotificationToken(deviceTokenString, completionHandler: { (response, error) -> Void in
-            
-        })
         XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
     
@@ -216,7 +215,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        
+        application.registerForRemoteNotifications()
     }
 }
 

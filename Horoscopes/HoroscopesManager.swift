@@ -156,7 +156,8 @@ class HoroscopesManager : NSObject {
         
     }
     
-    func sendRateRequestWithTimeTag(timeTag: Int, signIndex: Int, rating: Int){
+    func sendRateRequestWithTimeTag(timeTag: Int, signIndex: Int, rating: Int, viewcontroller : UIViewController){
+        Utilities.showHUD()
         // our sign index is base 0-11 --> we should convert it to base 1-12
         let base1SignIndex = signIndex + 1
         //prepare post data
@@ -170,9 +171,13 @@ class HoroscopesManager : NSObject {
         dispatch_async(dispatch_get_main_queue(),{
             XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
     //            print(response)
-                
-                let result = Utilities.parseNSDictionaryToDictionary(response)
-                Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+                Utilities.hideHUD()
+                if error != nil {
+                    Utilities.showError(error)
+                } else {
+                    let result = Utilities.parseNSDictionaryToDictionary(response)
+                    Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+                }
             })
         })
     }
@@ -244,7 +249,6 @@ class HoroscopesManager : NSObject {
         let horoscope = horoscopesSigns[9]
         return horoscope.sign
     }
-    
 }
 
 

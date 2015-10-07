@@ -438,7 +438,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         }
         SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
             if let error = error {
-                Utilities.showError(self, error: error)
+                Utilities.showError(error, viewController: self)
             } else {
                 DataStore.sharedInstance.usersFollowing = result!
                 DataStore.sharedInstance.updateFollowingStatus(.Both)

@@ -120,6 +120,9 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     class func getImageFromURL(urlString: String) -> UIImage{
         let url = NSURL(string: urlString)
         let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
-        return UIImage(data: data!)!
+        if let checkData = data {
+            return UIImage(data: checkData)!
+        }
+        return UIImage()
     }
 }

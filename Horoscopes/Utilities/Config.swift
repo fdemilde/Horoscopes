@@ -162,15 +162,15 @@ enum ArchiveViewType {
     case HoroscopeDetail
 }
 
+// MARK: height
 let SHARE_DIRECT_HEIGHT                     = 235.0 as CGFloat
 let SHARE_HYBRID_HEIGHT                     = 400 as CGFloat
-
 let ADMOD_HEIGHT                     = 50 as CGFloat
-
 let TABBAR_HEIGHT                     = 49 as CGFloat
-
-
 let NAVIGATION_BAR_HEIGHT = 50 as CGFloat
+
+// MARK: Error code
+let ERROR_CODE_NO_INTERNET = 8008135
 
 struct ScreenSize
 {
@@ -187,3 +187,4 @@ struct DeviceType
     static let IS_IPHONE_6 = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
     static let IS_IPHONE_6P = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
+

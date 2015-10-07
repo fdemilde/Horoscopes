@@ -93,7 +93,7 @@
         [returnDict setValue:@"default" forKey:@"type"];
     }
     if(self.imageURL != nil && ![self.imageURL  isEqual: @""]){
-        [returnDict setValue:self.imageURL forKey:@"img_url"];
+        [returnDict setValue:self.imageURL forKey:@"img-url"];
     }
     [returnDict setValue:[NSString stringWithFormat:@"%d", self.priority] forKey:@"priority"];
     
@@ -156,7 +156,7 @@
         alert.type = @"default";
     }
     
-    NSString* imageURLValue = [alertDict objectForKey:@"img_url"];
+    NSString* imageURLValue = [alertDict objectForKey:@"img-url"];
     if(imageURLValue != nil){
         alert.imageURL = imageURLValue;
     } else {

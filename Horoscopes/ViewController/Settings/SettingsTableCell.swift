@@ -35,7 +35,6 @@ class SettingsTableCell : UITableViewCell {
             timeUnderline.hidden = false
             birthdayLabel.hidden = true
             birthdayUnderline.hidden = true
-            print("XAppDelegate.userSettings.notifyOfNewHoroscope XAppDelegate.userSettings.notifyOfNewHoroscope == \(XAppDelegate.userSettings.notifyOfNewHoroscope)")
             switchButton.setOn(XAppDelegate.userSettings.notifyOfNewHoroscope, animated: true)
             self.setupNotificationTime()
         } else if self.type == SettingsType.ChangeDOB {

@@ -166,9 +166,12 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func downloadImage(url:NSURL){
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                let downloadedImage = UIImage(data: data!)
-                self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
-                self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
+                if let checkData = data {
+                    let downloadedImage = UIImage(data: checkData)
+                    self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
+                    self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
+                }
+                
             }
         }
     }

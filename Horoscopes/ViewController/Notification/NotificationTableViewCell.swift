@@ -91,8 +91,13 @@ class NotificationTableViewCell: UITableViewCell {
         let imageURL = NSURL(string: "https://fbcdn-profile-a.akamaihd.net/hprofile-ak-xfa1/v/t1.0-1/p160x160/11210415_976351309044730_8258958221771799158_n.jpg?oh=8e218674b285255d08cc6506ba1d27a1&oe=561997A7&__gda__=1448374830_c84a435124e10413bed7cd7774800790")
         Utilities.getDataFromUrl(imageURL!) { data -> Void in
             dispatch_async(dispatch_get_main_queue()) {
-                let downloadedImage = UIImage(data: data!)
-                self.cellImageView.image = downloadedImage
+                if let checkData = data {
+                    let downloadedImage = UIImage(data: checkData)
+                    self.cellImageView.image = downloadedImage
+                } else {
+                    let image = UIImage(named: "default_avatar")
+                    self.cellImageView.image = image
+                }
             }
         }
         
@@ -129,9 +134,16 @@ class NotificationTableViewCell: UITableViewCell {
     func downloadImageAndSetToImageHolder(url:NSURL, imageHolder : UIImageView){
         Utilities.getDataFromUrl(url) { data in
             dispatch_async(dispatch_get_main_queue()) {
-                let downloadedImage = UIImage(data: data!)
-                imageHolder.image = downloadedImage
-                imageHolder.backgroundColor = UIColor.clearColor()
+                
+                if let checkData = data {
+                    let downloadedImage = UIImage(data: checkData)
+                    imageHolder.image = downloadedImage
+                    imageHolder.backgroundColor = UIColor.clearColor()
+                } else {
+                    let image = UIImage(named: "default_avatar")
+                    imageHolder.image = image
+                    imageHolder.backgroundColor = UIColor.clearColor()
+                }
             }
         }
     }

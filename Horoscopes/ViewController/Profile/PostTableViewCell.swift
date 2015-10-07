@@ -209,7 +209,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     hud.hide(true)
                 })
-                Utilities.showError(self.viewController, error: error)
+                Utilities.showError(error, viewController: self.viewController)
             } else {
                 let isFollowing = result!["isfollowing"] as! Int == 1
                 hud.detailsLabelFont = UIFont.systemFontOfSize(11)

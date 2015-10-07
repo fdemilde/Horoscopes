@@ -9,14 +9,20 @@
 #import "ServerCommunication.h"
 #import <CommonCrypto/CommonDigest.h>
 #import "ServerCommunicationConfig.h"
+#import "Reachability.h"
 
 @implementation ServerCommunication
+
+Reachability* hostReach;
+BOOL hasInternet;
 
 - (id)initWithBaseURL:(NSString*)_baseUrl
           andClientId:(int)_clientId
          andUserCreds:(UserCreds*)_creds{
     self = [self initWithBaseURL:_baseUrl andUploadBaseUrl:_baseUrl
                      andClientId:_clientId andUserCreds:_creds];
+    hasInternet = YES;
+    [self initHostReach];
     return self;
 }
 
@@ -33,8 +39,31 @@
         udid = [creds getUDID];
         tsoffset = 0;
     }
-    
+    hasInternet = YES;
+    [self initHostReach];
     return self;
+}
+
+- (void) initHostReach {
+    
+    // register for checking internet connection
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self
+     selector:@selector(checkInternetConnection:)
+     name:kReachabilityChangedNotification
+     object:nil];
+    hostReach = [Reachability reachabilityWithHostname:@"www.google.com"];
+    [hostReach startNotifier];
+}
+
+
+- (void)checkInternetConnection:(NSNotification *)notif {
+    Reachability* curReach = [notif object];
+    NSParameterAssert([curReach isKindOfClass: [Reachability class]]);
+    if (curReach == hostReach) {
+        NetworkStatus netStatus = [curReach currentReachabilityStatus];
+        hasInternet = !(netStatus == NotReachable);
+    }
 }
 
 - (BOOL)hasError:(NSDictionary *)responseDict {
@@ -338,7 +367,15 @@
                     andPostData:(NSMutableDictionary*)postData
                     andFilePath:(NSString*)filePath
                andCompleteBlock:(void (^)(NSDictionary* responseDict, NSError *error))completeBlock{
-//    DebugLog(@"sendRequestWithFilePath sendRequestWithFilePath ");
+    //    DebugLog(@"sendRequestWithFilePath sendRequestWithFilePath ");
+    if (!hasInternet) {
+        NSMutableDictionary* details = [NSMutableDictionary dictionary];
+        [details setValue:@"No internet connection" forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"world" code:8008135 userInfo:details];
+        completeBlock(nil, error);
+        return;
+    }
+    NSLog(@"NO sendRequestWithFilePath sendRequestWithFilePath");
     long currtime = (long)([[NSDate date] timeIntervalSince1970]);
     postData = [self fillParams:rpcName andUserCredsLoginRequired:loginRequired andPostData:postData andCurrentTime:currtime];
     [self doPost:postData withFilePath:filePath andCompleteBlock:^(NSData* data, NSError *error) {
