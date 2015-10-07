@@ -375,7 +375,6 @@ BOOL hasInternet;
         completeBlock(nil, error);
         return;
     }
-    NSLog(@"NO sendRequestWithFilePath sendRequestWithFilePath");
     long currtime = (long)([[NSDate date] timeIntervalSince1970]);
     postData = [self fillParams:rpcName andUserCredsLoginRequired:loginRequired andPostData:postData andCurrentTime:currtime];
     [self doPost:postData withFilePath:filePath andCompleteBlock:^(NSData* data, NSError *error) {
