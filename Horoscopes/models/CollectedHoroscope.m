@@ -44,7 +44,7 @@
 - (double)getScore{
     int totalDays = round([self.lastDateOpenApp timeIntervalSinceDate:self.dateInstalledApp] / (3600*24))+1;
     double result = [self.collectedData count] / (double)totalDays;
-    if(result >= 2) return 1;
+    if(result >= 1) return 1;
     return result;
 }
 

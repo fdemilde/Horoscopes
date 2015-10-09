@@ -20,6 +20,8 @@
 #define IS_IPHONE_6 (SCREEN_MAX_LENGTH == 667.0)
 #define IS_IPHONE_6P (SCREEN_MAX_LENGTH == 736.0)
 
+#define UNHIGHLIGHT_IMAGE_COLOR [UIColor colorWithRed:133.0/255.0 green:124.0/255.0 blue:173.0/255.0 alpha:1]
+
 static float deltaAngle;
 static int CLOVER_IMAGE_TAG = 100;
 static int CLOVER_SYMBOL_TAG = 101;
@@ -54,6 +56,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         self.currentValue = [self getValueBySignName:(sign)];
         [self drawWheel];
         
+        
 	}
     return self;
 }
@@ -80,7 +83,8 @@ static int CLOVER_SYMBOL_TAG = 101;
         int clovePosX = [self getPositionXBaseOnScreen:133];
         int clovePosY = [self getPositionYBaseOnScreen:60];
         UIImageView *cloveImage = [[UIImageView alloc] initWithFrame:CGRectMake(clovePosX, clovePosY, 60, 60)];
-        cloveImage.image = [horoscope getIcon];
+        cloveImage.image = [[horoscope getIcon] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        cloveImage.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
         cloveImage.contentMode = UIViewContentModeCenter;
         cloveImage.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         cloveImage.tag = CLOVER_IMAGE_TAG;
@@ -93,15 +97,19 @@ static int CLOVER_SYMBOL_TAG = 101;
             symbolPosY = [self getPositionYBaseOnScreen:30];
         }
         UIImageView *symbol = [[UIImageView alloc] initWithFrame:CGRectMake(symbolPosX, symbolPosY, 30, 30)];
-        symbol.image = [horoscope getSymbol];
+        symbol.image = [[horoscope getSymbol] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
+        symbol.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
         symbol.transform = CGAffineTransformMakeRotation(120*M_PI/180);
         symbol.tag = CLOVER_SYMBOL_TAG;
         symbol.contentMode = UIViewContentModeCenter;
+        
         [im addSubview:symbol];
         // when create wheel, highlight default selected sign
         if (i == currentValue) {
-            cloveImage.image = [horoscope getIconSelected];
-            symbol.image = [horoscope getSymbolSelected];
+//            cloveImage.image = [horoscope getIconSelected];
+//            symbol.image = [horoscope getSymbolSelected];
+            cloveImage.tintColor = [UIColor whiteColor];
+            symbol.tintColor = [UIColor whiteColor];
         }
         
         [container addSubview:im];
@@ -200,7 +208,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         CGFloat newVal = 0.0;
         
         int oldValue = currentValue;
-        
+//
         for (SMClove *c in cloves) {
             if (c.minValue > 0 && c.maxValue < 0) { // anomalous case
                 if (c.maxValue > radians || c.minValue < radians) {
@@ -287,8 +295,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         }
         currentValue = (currentValue + 8) % 12;
         [self highlightSelectedSign];
-        if(currentValue!=oldValue)
-            [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+        if(currentValue!=oldValue) [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
     }
     else if (recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -309,13 +316,12 @@ static int CLOVER_SYMBOL_TAG = 101;
 - (void)playRotationAnimation:(NSNumber*) _initialVelocity{
     
 
-    double currentVelocity = fabs([_initialVelocity doubleValue])/10/3;
+//    double currentVelocity = fabs([_initialVelocity doubleValue])/10/3;
+    double currentVelocity = 0.5;
     // we random decelerationFactor so everytime we spin the wheel will give different result
-    float decelerationFactor= [self randFloatBetween:0.025 and:0.008] ; //change this to determine how fast the wheel will slow down , default 0.015,
-    while (currentVelocity > 0.1 && self.isRotatingWheel) {
-        float decelerationAmount= currentVelocity * decelerationFactor;
-//        DebugLog(@"the decelreation amount is  %f, currentVelocity is %f",decelerationAmount, currentVelocity);
-        currentVelocity -= decelerationAmount;
+//    float decelerationFactor= [self randFloatBetween:0.025 and:0.008] ; //change this to determine how fast the wheel will slow down , default 0.015,
+    while (currentVelocity > 0.002 && self.isRotatingWheel) {
+        currentVelocity *= 0.9985;
         
         double netRotation = currentVelocity;
         if([_initialVelocity doubleValue] < 0) netRotation *= -1;
@@ -386,39 +392,41 @@ static int CLOVER_SYMBOL_TAG = 101;
 - (void)unhighlightAllSigns
 {
     for (int i=0; i<12; i++) {
-        Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
+//        Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:i];
         UIImageView *im = [self getCloveByValue:i];
         UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
-        signImage.image = [horoscope getIcon];
+//        signImage.image = [horoscope getIcon];
+        signImage.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
         
         UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
-        iconImage.image = [horoscope getSymbol];
+//        iconImage.image = [horoscope getSymbol];
+        iconImage.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
         
     }
 }
 
 - (void)unhighlightSelectedSign
 {
-    Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:currentValue];
+//    Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:currentValue];
     UIImageView *im = [self getCloveByValue:currentValue];
     
     UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
-    signImage.image = [horoscope getIcon];
+    signImage.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
     
     UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
-    iconImage.image = [horoscope getSymbol];
+    iconImage.tintColor = UNHIGHLIGHT_IMAGE_COLOR;
 }
 
 - (void)highlightSelectedSign
 {
-    Horoscope *horoscope = [self.horoscopeSigns objectAtIndex:currentValue];
+    NSLog(@"highlightSelectedSign highlightSelectedSign");
     UIImageView *im = [self getCloveByValue:currentValue];
     
     UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
-    signImage.image = [horoscope getIconSelected];
+    signImage.tintColor = [UIColor whiteColor];
     
     UIImageView *iconImage = (UIImageView*)[im viewWithTag:CLOVER_SYMBOL_TAG];
-    iconImage.image = [horoscope getSymbolSelected];
+    iconImage.tintColor = [UIColor whiteColor];
 }
 
 - (UIImageView *) getCloveByValue:(int)value {
