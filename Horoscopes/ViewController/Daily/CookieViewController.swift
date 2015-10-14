@@ -247,6 +247,7 @@ class CookieViewController : ViewControllerWithAds{
                         let userFBID = result["id"] as! String
                         let postData = NSMutableDictionary()
                         postData.setObject(userFBID, forKey: "fb_uid")
+                        let expiredTime = NSDate().timeIntervalSince1970 + 600
                         CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, completionHandler: { (response, error) -> Void in
                             if(error != nil){
                                 Utilities.hideHUD()
