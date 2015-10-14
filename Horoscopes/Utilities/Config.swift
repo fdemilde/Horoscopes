@@ -10,6 +10,10 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
+// MARK: - Expired Time
+let expiredTime = NSDate().timeIntervalSince1970 + 600
+let longExpiredTime = NSDate().timeIntervalSince1970 + 86400
+
 // MARK: - Post Date Format
 
 let postDateFormat = "MMMM dd, yyyy"

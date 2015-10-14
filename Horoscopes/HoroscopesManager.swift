@@ -127,7 +127,6 @@ class HoroscopesManager : NSObject {
             postData.setObject(iOSVersion, forKey: "device_systemVersion")
             postData.setObject(devideType, forKey: "device_model")
             
-            let expiredTime = NSDate().timeIntervalSince1970 + 600
             CacheManager.cacheGet(GET_DATA_METHOD, postData: nil, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){

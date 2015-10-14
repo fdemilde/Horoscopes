@@ -30,18 +30,15 @@ class CacheManager {
 //            print("GOT CACHE BUT EXPIRED")
             completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
         }
-        
-        XAppDelegate.mobilePlatform.sc.sendRequest(url, andPostData: postData) { (response, error) -> Void in
-//            print("GET DATA FROM SERVER")
+        XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-//                print("SERVER DATA == \(response)")
+                //                print("SERVER DATA == \(response)")
                 CacheManager.cachePut(url, postData: postData, value:response, expiredTime: expiredTime)
                 completionHandler(result: response, error: error)
             }
         }
-        
     }
     
     class func cachePut(url : String, postData : NSMutableDictionary?, value: NSObject, expiredTime : NSTimeInterval){
