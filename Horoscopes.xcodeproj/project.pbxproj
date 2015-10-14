@@ -34,6 +34,8 @@
 		F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD761B99575E0047185F /* MyDatePickerView.swift */; };
 		F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */; };
 		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
+		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; settings = {ASSET_TAGS = (); }; };
+		F42099281BCE030300BF1736 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099271BCE030300BF1736 /* CacheManager.swift */; settings = {ASSET_TAGS = (); }; };
 		F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E288F1B37C8ED00466CAA /* ShareViewController.swift */; };
 		F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E28911B37CA8F00466CAA /* ShareButton.swift */; };
 		F42E28A71B37D14100466CAA /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28971B37D14100466CAA /* share_facebook.png */; };
@@ -227,6 +229,8 @@
 		F40ECD761B99575E0047185F /* MyDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerView.swift; sourceTree = "<group>"; };
 		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostViewController.swift; sourceTree = "<group>"; };
 		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
+		F42099251BCDFE1C00BF1736 /* CacheEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheEntry.swift; sourceTree = "<group>"; };
+		F42099271BCE030300BF1736 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		F42E288F1B37C8ED00466CAA /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F42E28911B37CA8F00466CAA /* ShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		F42E28971B37D14100466CAA /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
@@ -525,6 +529,15 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		F42099241BCDFCE500BF1736 /* CacheWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				F42099251BCDFE1C00BF1736 /* CacheEntry.swift */,
+				F42099271BCE030300BF1736 /* CacheManager.swift */,
+			);
+			path = CacheWrapper;
+			sourceTree = "<group>";
+		};
 		F42E288E1B37C8ED00466CAA /* Share */ = {
 			isa = PBXGroup;
 			children = (
@@ -756,6 +769,7 @@
 		F4CACA141B1EBE16003C6301 /* Horoscopes */ = {
 			isa = PBXGroup;
 			children = (
+				F42099241BCDFCE500BF1736 /* CacheWrapper */,
 				F4C44F881B8EC58000910E56 /* OpenSources */,
 				F47BAB291B216050002031AB /* Utilities */,
 				F4CACA961B2010F2003C6301 /* MobilePlatformiOS */,
@@ -1256,6 +1270,7 @@
 				70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */,
 				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
+				F42099281BCE030300BF1736 /* CacheManager.swift in Sources */,
 				704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
@@ -1276,6 +1291,7 @@
 				F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */,
 				F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */,
 				F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */,
+				F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */,
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */,

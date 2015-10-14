@@ -127,17 +127,19 @@ class HoroscopesManager : NSObject {
             postData.setObject(iOSVersion, forKey: "device_systemVersion")
             postData.setObject(devideType, forKey: "device_model")
             
-            XAppDelegate.mobilePlatform.sc.sendRequest(GET_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            let expiredTime = NSDate().timeIntervalSince1970 + 600
+            CacheManager.cacheGet(GET_DATA_METHOD, postData: nil, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, completionHandler: { (result, error) -> Void in
+                Utilities.hideHUD()
                 if(error != nil){
-                    Utilities.hideHUD()
                 } else {
-                    self.data = Utilities.parseNSDictionaryToDictionary(response)
-//                    print(self.data)
-                    self.saveData()
-                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
-                    Utilities.hideHUD()
+                    if let result = result {
+                        self.data = Utilities.parseNSDictionaryToDictionary(result)
+                        self.saveData()
+                        Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                        Utilities.hideHUD()
+                    }
+                    
                 }
-                
             })
         } else {
             postData.setObject(offsetString, forKey: "tz")
