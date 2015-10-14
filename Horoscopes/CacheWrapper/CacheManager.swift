@@ -35,14 +35,13 @@ class CacheManager {
                 completionHandler(result: nil, error: error)
             } else {
                 //                print("SERVER DATA == \(response)")
-                CacheManager.cachePut(url, postData: postData, value:response, expiredTime: expiredTime)
+                CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
                 completionHandler(result: response, error: error)
             }
         }
     }
     
-    class func cachePut(url : String, postData : NSMutableDictionary?, value: NSObject, expiredTime : NSTimeInterval){
-        let key = CacheManager.getKeyFromUrlAndPostData(url, postData: postData)
+    class func cachePut(key:String, value: NSObject, expiredTime : NSTimeInterval){
 //        print("cachePut key == \(key)")
         var cacheDict = Dictionary<String, NSObject>()
         cacheDict["CACHE_VALUE_KEY"] = value
@@ -56,7 +55,7 @@ class CacheManager {
         if var cacheDict = cacheDict{
             cacheDict = cacheDict as! Dictionary<String, String>
             let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! String
-            CacheManager.cachePut(url, postData : postData, value: cacheValue, expiredTime: 0)
+            CacheManager.cachePut(key , value: cacheValue, expiredTime: 0)
         }
     }
     
