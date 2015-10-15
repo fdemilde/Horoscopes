@@ -13,8 +13,8 @@ class CacheManager {
 //    let CACHE_RESPONSE_KEY = "CACHE_VALUE_KEY" as String
 //    let EXPIRED_TIMESTAMP_KEY = "CACHE_EXPIRED_TIMESTAMP_KEY"
     
-    class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
-        let key = CacheManager.getKeyFromUrlAndPostData(url, postData: postData)
+    class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, forceExpiredKey: String?, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
+        let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
 //        print("cacheGet key == \(key)")
         let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
 //        print("cacheGet cacheDict == \(cacheDict)")
@@ -35,7 +35,16 @@ class CacheManager {
                 completionHandler(result: nil, error: error)
             } else {
                 //                print("SERVER DATA == \(response)")
-                CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                if let forceExpiredKey = forceExpiredKey {
+                    // use for supporting page, need to force next page expired if current page is expired
+                    CacheManager.cacheExpire(forceExpiredKey)
+                }
+                
+                if let errorRes = response["error"]{
+                    if(errorRes as! Int == 0){
+                        CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                    }
+                }
                 completionHandler(result: response, error: error)
             }
         }
@@ -50,7 +59,7 @@ class CacheManager {
     }
     
     class func cacheExpire(url : String, postData : NSMutableDictionary?){
-        let key = CacheManager.getKeyFromUrlAndPostData(url, postData: postData)
+        let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
         let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
         if var cacheDict = cacheDict{
             cacheDict = cacheDict as! Dictionary<String, String>
@@ -59,13 +68,14 @@ class CacheManager {
         }
     }
     
-    class func getKeyFromUrlAndPostData(url : String, postData : NSMutableDictionary?) -> String {
-        var key = url
-        if let postData = postData{
-            for (postKey, value) in postData {
-                key += "|\(postKey)|\(value)"
-            }
+    class func cacheExpire(key : String){
+//        print("cacheExpire key == \(key)")
+        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+        if var cacheDict = cacheDict{
+//            print("cacheExpire cacheDict == \(cacheDict)")
+            cacheDict = cacheDict as! Dictionary<String, NSObject>
+            let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
+            CacheManager.cachePut(key , value: cacheValue, expiredTime: 0)
         }
-        return key
     }
 }

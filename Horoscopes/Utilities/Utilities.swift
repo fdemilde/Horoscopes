@@ -372,6 +372,16 @@ class Utilities {
         return shareViewController
     }
     
+    // MARK: Cache helpers
+    class func getKeyFromUrlAndPostData(url : String, postData : NSMutableDictionary?) -> String {
+        var key = url
+        if let postData = postData{
+            for (postKey, value) in postData {
+                key += "|\(postKey)|\(value)"
+            }
+        }
+        return key
+    }
 }
 
 
