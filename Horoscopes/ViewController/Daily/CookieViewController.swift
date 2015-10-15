@@ -248,7 +248,7 @@ class CookieViewController : ViewControllerWithAds{
                         let postData = NSMutableDictionary()
                         postData.setObject(userFBID, forKey: "fb_uid")
                         let expiredTime = NSDate().timeIntervalSince1970 + 600
-                        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, completionHandler: { (response, error) -> Void in
+                        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
                             if(error != nil){
                                 Utilities.hideHUD()
                                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")

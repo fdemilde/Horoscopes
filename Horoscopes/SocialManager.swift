@@ -35,7 +35,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject(pageString, forKey: "page")
         postData.setObject(uid, forKey: "uid")
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime) { (response, error) -> Void in
+        
+        // need to expire next page if current page is expired
+        let expiredPostData = NSMutableDictionary()
+        let expiredPageString = String(format:"%d",(pageNo + 1))
+        expiredPostData.setObject(expiredPageString, forKey: "page")
+        expiredPostData.setObject(uid, forKey: "uid")
+        let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_USER_FEED, postData: expiredPostData)
+        
+        CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if(error != nil){
                 print("Error when get getUserNewsfeed = \(error)")
             } else {
@@ -51,8 +59,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         let pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
-        let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_GLOBAL_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime) { (response, error) -> Void in
+        let expiredTime = NSDate().timeIntervalSince1970 + 30
+        
+        // need to expire next page if current page is expired
+        let expiredPostData = NSMutableDictionary()
+        let expiredPageString = String(format:"%d",(pageNo + 1))
+        expiredPostData.setObject(expiredPageString, forKey: "page")
+        let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_GLOBAL_FEED, postData: expiredPostData)
+        
+        CacheManager.cacheGet(GET_GLOBAL_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if(error != nil){
                 print("Error when get getGlobalNewsfeed = \(error)")
                 Utilities.showError(error!)
@@ -90,7 +105,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject(pageString, forKey: "page")
         // change to test  GET_FOLLOWING_FEED
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_FOLLOWING_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime) { (response, error) -> Void in
+        
+        // need to expire next page if current page is expired
+        let expiredPostData = NSMutableDictionary()
+        let expiredPageString = String(format:"%d",(pageNo + 1))
+        expiredPostData.setObject(expiredPageString, forKey: "page")
+        let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_FOLLOWING_FEED, postData: expiredPostData)
+        
+        CacheManager.cacheGet(GET_FOLLOWING_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if(error != nil){
                 print("Error when get getFollowingNewsfeed = \(error)")
                 Utilities.showError(error!)
@@ -189,7 +211,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     postData.setObject("\(page)", forKey: "page")
                     postData.setObject("\(uid)", forKey: "uid")
                     let expiredTime = NSDate().timeIntervalSince1970 + 600
-                    CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, completionHandler: { (response, error) -> Void in
+                    
+                    // need to expire next page if current page is expired
+                    let expiredPostData = NSMutableDictionary()
+                    let expiredPageString = String(format:"%d",(page + 1))
+                    expiredPostData.setObject(expiredPageString, forKey: "page")
+                    expiredPostData.setObject("\(uid)", forKey: "uid")
+                    let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_USER_FEED, postData: expiredPostData)
+                    
+                    CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey, completionHandler: { (response, error) -> Void in
                         if let error = error {
                             completionHandler(result: nil, error: error)
                         } else {
@@ -217,7 +247,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject("\(postIds)", forKey: "post_id")
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime) { (response, error) -> Void in
+        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -241,7 +271,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(usersIdString, forKey: "uid")
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_PROFILE_COUNTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime) { (response, error) -> Void in
+        CacheManager.cacheGet(GET_PROFILE_COUNTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -306,7 +336,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(usersIdString, forKey: "uid")
         let longExpiredTime = NSDate().timeIntervalSince1970 + 86400
-        CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime) { (response, error) -> Void in
+        CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime, forceExpiredKey: nil) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -611,7 +641,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(uid)", forKey: "uid")
         postData.setObject("\(page)", forKey: "page")
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(method, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime) { (response, error) -> Void in
+        
+        // need to expire next page if current page is expired
+        let expiredPostData = NSMutableDictionary()
+        let expiredPageString = String(format:"%d",(page + 1))
+        expiredPostData.setObject(expiredPageString, forKey: "page")
+        expiredPostData.setObject("\(uid)", forKey: "uid")
+        let expiredKey = Utilities.getKeyFromUrlAndPostData(method, postData: expiredPostData)
+        
+        CacheManager.cacheGet(method, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -661,7 +699,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             postData.setObject(FBSDKAccessToken.currentAccessToken().tokenString, forKey: "access_token")
         }
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_FRIEND_LIST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime) { (result, error) -> Void in
+        CacheManager.cacheGet(GET_FRIEND_LIST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
