@@ -274,6 +274,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
     
     // MARK: - Action
+    
+    @IBAction func handleRefresh(sender: UIRefreshControl) {
+        // TODO: update the data source
+        print("Updating its data source...")
+        tableView.reloadData()
+        sender.endRefreshing()
+    }
 
     @IBAction func chooseHoroscopeSign(sender: UIButton) {
         let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC

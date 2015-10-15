@@ -69,6 +69,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         "What's on your mind?"
     ]
     var isLastPostPage = false
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        return refreshControl
+        }()
     
     // MARK: - Life cycle
 
@@ -93,6 +98,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableView.layer.cornerRadius = 4
         
         setupInfiniteScroll()
+        tableView.addSubview(refreshControl)
     }
 
     override func didReceiveMemoryWarning() {
@@ -144,6 +150,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Action
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        // TODO: update the data source
+        tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
     
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {

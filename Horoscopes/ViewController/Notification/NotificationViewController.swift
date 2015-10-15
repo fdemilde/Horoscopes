@@ -19,6 +19,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     var tableHeaderView : UIView!
     var tableFooterView : UIView!
     var noNotificationView : UIView!
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        return refreshControl
+        }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,6 +38,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.delegate = self
         tableView.layer.cornerRadius = 4
         tableView.clipsToBounds = true
+        
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -107,6 +114,13 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     // MARK: Button actions
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        // TODO: update the data source
+        print("Updating its data source...")
+        tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
     
     @IBAction func refreshButtonTapped(sender: AnyObject) {
         self.getNotificationAndReloadData()
