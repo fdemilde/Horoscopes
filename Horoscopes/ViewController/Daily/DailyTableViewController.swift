@@ -278,6 +278,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     @IBAction func handleRefresh(sender: UIRefreshControl) {
         // TODO: update the data source
         print("Updating its data source...")
+        XAppDelegate.horoscopesManager.getAllHoroscopes(true)
         tableView.reloadData()
         sender.endRefreshing()
     }

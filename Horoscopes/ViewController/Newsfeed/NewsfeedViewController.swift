@@ -198,6 +198,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func handleRefresh(refreshControl: UIRefreshControl) {
         // TODO: update the data source
         print("Updating its data source...")
+        if(self.tabType == NewsfeedTabType.Global){
+            XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false, isRefreshing : true)
+        } else {
+            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
+        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        
         tableView.reloadData()
         refreshControl.endRefreshing()
     }

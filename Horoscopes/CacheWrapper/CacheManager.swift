@@ -37,7 +37,8 @@ class CacheManager {
                 //                print("SERVER DATA == \(response)")
                 if let forceExpiredKey = forceExpiredKey {
                     // use for supporting page, need to force next page expired if current page is expired
-                    CacheManager.cacheExpire(forceExpiredKey)
+                    if(forceExpiredKey != "") { CacheManager.cacheExpire(forceExpiredKey) }
+                    
                 }
                 
                 if let errorRes = response["error"]{
@@ -69,7 +70,7 @@ class CacheManager {
     }
     
     class func cacheExpire(key : String){
-//        print("cacheExpire key == \(key)")
+        print("cacheExpire key == \(key)")
         let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
         if var cacheDict = cacheDict{
 //            print("cacheExpire cacheDict == \(cacheDict)")
