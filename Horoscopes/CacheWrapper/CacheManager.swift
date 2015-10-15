@@ -14,29 +14,33 @@ class CacheManager {
 //    let EXPIRED_TIMESTAMP_KEY = "CACHE_EXPIRED_TIMESTAMP_KEY"
     
     class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
-        let key = CacheManager.getKeyFromUrlAndPostData(url, postData: postData)
-//        print("cacheGet key == \(key)")
-        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
-//        print("cacheGet cacheDict == \(cacheDict)")
-        if var cacheDict = cacheDict{
-            cacheDict = cacheDict as! Dictionary<String, NSObject>
-            let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
-            let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
-            if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
-//                print("GOT CACHE !! RETURN")
-                completionHandler(result: cacheValue, error: nil) // return cache
-                return
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            let key = CacheManager.getKeyFromUrlAndPostData(url, postData: postData)
+            //        print("cacheGet key == \(key)")
+            let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+            //        print("cacheGet cacheDict == \(cacheDict)")
+            if var cacheDict = cacheDict{
+                cacheDict = cacheDict as! Dictionary<String, NSObject>
+                let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
+                let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
+                if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+                    //                print("GOT CACHE !! RETURN")
+                    completionHandler(result: cacheValue, error: nil) // return cache
+                    return
+                }
+                //            print("GOT CACHE BUT EXPIRED")
+                completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
             }
-//            print("GOT CACHE BUT EXPIRED")
-            completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
-        }
-        XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
-            if let error = error {
-                completionHandler(result: nil, error: error)
-            } else {
-                //                print("SERVER DATA == \(response)")
-                CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
-                completionHandler(result: response, error: error)
+            Utilities.showHUD()
+            XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
+                if let error = error {
+                    completionHandler(result: nil, error: error)
+                } else {
+                    //                print("SERVER DATA == \(response)")
+                    CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                    completionHandler(result: response, error: error)
+                }
+                Utilities.hideHUD()
             }
         }
     }

@@ -326,7 +326,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getCurrentUserFollowingProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfUsersFollowing(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         getCurrentUserFollowProfile(GET_CURRENT_USER_FOLLOWING, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -336,7 +336,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func getCurrentUserFollowersProfile(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfFollowers(completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         getCurrentUserFollowProfile(GET_CURRENT_USER_FOLLOWERS, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -346,7 +346,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func getOtherUserFollowersProfile(uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfUsersFollowing(forUser uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWERS) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -356,7 +356,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getOtherUserFollowingProfile(uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfFollowers(forUser uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWING) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)

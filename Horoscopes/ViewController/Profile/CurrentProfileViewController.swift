@@ -38,7 +38,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
         horoscopeSignView.userInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
-        Utilities.showHUD()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -58,13 +57,12 @@ class CurrentProfileViewController: ProfileBaseViewController {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.removeLoginView()
                             self.configureProfileView()
+                            self.getData()
                         })
-                        self.getData()
                     }
                 })
             }
         } else {
-            Utilities.hideHUD()
             configureLoginView()
         }
     }
@@ -157,17 +155,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
     }
     
-    override func tapFollowersButton(sender: UIButton) {
-        if currentScope != .Followers {
-            super.tapFollowersButton(sender)
-            let group = dispatch_group_create()
-            getFollowingUsers(group)
-            dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
-                self.checkFollowStatus()
-            })
-        }
-    }
-    
     // MARK: - Helper
     
     func removeLoginView() {
@@ -179,64 +166,60 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func getData() {
         super.getData()
-        getFriends(baseDispatchGroup)
-        dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
-            self.checkFollowStatus()
-            Utilities.hideHUD()
-        }
+        getFriends()
     }
     
-    override func getUserPosts(dispatchGroup: dispatch_group_t?) {
-        super.getUserPosts(dispatchGroup)
-    }
-    
-    override func getFollowingUsers(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
-            dispatch_group_enter(group)
-        }
-        SocialManager.sharedInstance.getCurrentUserFollowingProfile { (result, error) -> Void in
+    override func getUsersFollowing(completionHandler: () -> Void) {
+        SocialManager.sharedInstance.getProfilesOfUsersFollowing { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
                 DataStore.sharedInstance.usersFollowing = result!
                 self.noFollowingUser = result!.count == 0
-                self.handleData(dispatchGroup, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
+                if self.isDataUpdated(self.followingUsers, newData: result!) {
+                    self.followingUsers = result!
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
+                    })
+                }
             }
-            if let group = dispatchGroup {
-                dispatch_group_leave(group)
-            }
+            completionHandler()
         }
     }
     
-    override func getFollowers(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
-            dispatch_group_enter(group)
-        }
-        SocialManager.sharedInstance.getCurrentUserFollowersProfile { (result, error) -> Void in
+    override func getFollowers(completionHandler: () -> Void) {
+        SocialManager.sharedInstance.getProfilesOfFollowers { (result, error) -> Void in
             if let error = error {
+                completionHandler()
                 Utilities.showError(error, viewController: self)
             } else {
-                self.noFollower = result!.count == 0
-                self.handleData(dispatchGroup, oldData: &self.followers, newData: result!, button: self.followersButton)
-            }
-            if let group = dispatchGroup {
-                dispatch_group_leave(group)
+                let followers = result!
+                self.noFollower = followers.count == 0
+                if self.isDataUpdated(self.followers, newData: result!) {
+                    self.followers = followers
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                        if let error = error {
+                            Utilities.showError(error, viewController: self)
+                        } else {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.tableView.reloadData()
+                            })
+                        }
+                        completionHandler()
+                    })
+                } else {
+                    completionHandler()
+                }
             }
         }
     }
     
-    func getFriends(group: dispatch_group_t?) {
-        if let group = group {
-            dispatch_group_enter(group)
-        }
+    func getFriends() {
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
                 self.friends = result!
-            }
-            if let group = group {
-                dispatch_group_leave(group)
             }
         }
     }
@@ -361,24 +344,29 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
-        var user: UserProfile!
+        var users: [UserProfile]!
         if currentScope == .Followers {
-            user = followers[index!]
+            users = followers
         } else {
-            user = friends[index!]
+            users = friends
         }
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
+        SocialManager.sharedInstance.follow(users[index!], completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(error, viewController: self)
             } else {
                 self.getUserProfileCounts()
-                let group = dispatch_group_create()
-                self.getFollowingUsers(group)
-                dispatch_group_notify(group, dispatch_get_main_queue(), { () -> Void in
-                    self.checkFollowStatus()
-                    Utilities.hideHUD()
+                DataStore.sharedInstance.checkFollowStatus(users, completionHandler: { (error) -> Void in
+                    if let error = error {
+                        Utilities.hideHUD()
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.reloadData()
+                        })
+                        Utilities.hideHUD()
+                    }
                 })
             }
         })
