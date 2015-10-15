@@ -50,6 +50,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         static let defaultTableViewCellIdentifier = "defaultCell"
         static let postTableViewCellIdentifier = "postCell"
     }
+    lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        return refreshControl
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,7 +63,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         self.setupInfiniteScroll()
         tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:");
-        tableHeaderView.addGestureRecognizer(tapGestureRecognizer);
+        tableHeaderView.addGestureRecognizer(tapGestureRecognizer)
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -188,6 +194,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: Actions
+    
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        // TODO: update the data source
+        print("Updating its data source...")
+        tableView.reloadData()
+        refreshControl.endRefreshing()
+    }
     
     func handleTap(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
