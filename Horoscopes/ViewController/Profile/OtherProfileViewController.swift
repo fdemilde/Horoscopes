@@ -38,7 +38,6 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 }
             })
         }
-        Utilities.showHUD()
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,11 +71,17 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 Utilities.showError(error, viewController: self)
             } else {
                 self.getUserProfileCounts()
-                self.getFollowers(nil)
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.newsfeedFollowButton.removeFromSuperview()
+                DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                    if let error = error {
+                        Utilities.hideHUD()
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.newsfeedFollowButton.removeFromSuperview()
+                        })
+                        Utilities.hideHUD()
+                    }
                 })
-                Utilities.hideHUD()
             }
         })
     }
@@ -101,36 +106,36 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     // MARK: - Helper
     
-    override func getFollowingUsers(group: dispatch_group_t?) {
-        if let group = group {
-            dispatch_group_enter(group)
-        }
-        SocialManager.sharedInstance.getOtherUserFollowingProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+    override func getUsersFollowing(completionHandler: () -> Void) {
+        SocialManager.sharedInstance.getProfilesOfUsersFollowing(forUser: userProfile.uid) { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
-                self.handleData(group, oldData: &self.followingUsers, newData: result!, button: self.followingButton)
+                if self.isDataUpdated(self.followingUsers, newData: result!) {
+                    self.followingUsers = result!
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
+                    })
+                }
             }
-            if let group = group {
-                dispatch_group_leave(group)
-            }
-        })
+            completionHandler()
+        }
     }
     
-    override func getFollowers(group: dispatch_group_t?) {
-        if let group = group {
-            dispatch_group_enter(group)
-        }
-        SocialManager.sharedInstance.getOtherUserFollowersProfile(userProfile.uid, completionHandler: { (result, error) -> Void in
+    override func getFollowers(completionHandler: () -> Void) {
+        SocialManager.sharedInstance.getProfilesOfFollowers(forUser: userProfile.uid) { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
-                self.handleData(group, oldData: &self.followers, newData: result!, button: self.followersButton)
+                if self.isDataUpdated(self.followers, newData: result!) {
+                    self.followers = result!
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
+                    })
+                }
             }
-            if let group = group {
-                dispatch_group_leave(group)
-            }
-        })
+            completionHandler()
+        }
     }
     
     // MARK: - Delegate

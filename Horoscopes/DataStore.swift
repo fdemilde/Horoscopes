@@ -233,30 +233,44 @@ class DataStore : NSObject{
         
     }
     
-    func updateFollowingForFollowingFeeds() {
-        
-        for feed in newsfeedFollowing{
-            feed.user!.isFollowed = false
-            for user in usersFollowing! {
-                if(user == feed.user!) {
-                    feed.user!.isFollowed = true
-                    break
+    func checkFollowStatus(users: [UserProfile], completionHandler: (error: NSError?) -> Void) {
+        let check = {
+            for user in users {
+                for userFollowing in self.usersFollowing! {
+                    if user.uid == userFollowing.uid {
+                        user.isFollowed = true
+                        break
+                    }
                 }
             }
+        }
+        if usersFollowing != nil {
+            check()
+            completionHandler(error: nil)
+        } else {
+            SocialManager.sharedInstance.getProfilesOfUsersFollowing({ (result, error) -> Void in
+                if let error = error {
+                    completionHandler(error: error)
+                } else {
+                    self.usersFollowing = result!
+                    check()
+                    completionHandler(error: nil)
+                }
+            })
+        }
+    }
+    
+    func updateFollowingForFollowingFeeds() {
+        let users = newsfeedFollowing.map({$0.user!})
+        checkFollowStatus(users) { (error) -> Void in
             
         }
-        
     }
     
     func updateFollowingForGlobalFeeds() {
-        for feed in newsfeedGlobal{
-            feed.user!.isFollowed = false
-            for user in usersFollowing! {
-                if(user == feed.user!) {
-                    feed.user!.isFollowed = true
-                    break
-                }
-            }
+        let users = newsfeedGlobal.map({$0.user!})
+        checkFollowStatus(users) { (error) -> Void in
+            
         }
     }
     

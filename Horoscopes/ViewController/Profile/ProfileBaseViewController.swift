@@ -152,16 +152,35 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: - Action
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        // TODO: update the data source
-        tableView.reloadData()
-        refreshControl.endRefreshing()
+        switch currentScope {
+        case .Post:
+            getFeed({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    refreshControl.endRefreshing()
+                })
+            })
+        case .Following:
+            getUsersFollowing({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    refreshControl.endRefreshing()
+                })
+            })
+        case .Followers:
+            getFollowers({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    refreshControl.endRefreshing()
+                })
+            })
+        }
     }
     
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {
             currentScope = .Post
             tapScopeButton(sender)
-            getUserPosts(nil)
+            getFeed({ () -> Void in
+                
+            })
         }
     }
     
@@ -169,7 +188,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if currentScope != .Following {
             currentScope = .Following
             tapScopeButton(sender)
-            getFollowingUsers(nil)
+            getUsersFollowing({ () -> Void in
+                
+            })
         }
     }
     
@@ -177,7 +198,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if currentScope != .Followers {
             currentScope = .Followers
             tapScopeButton(sender)
-            getFollowers(nil)
+            getFollowers({ () -> Void in
+                
+            })
         }
     }
     
@@ -208,16 +231,26 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func getData() {
-        if baseDispatchGroup == nil {
-            baseDispatchGroup = dispatch_group_create()
-        }
         getUserProfileCounts()
-        getUserPosts(baseDispatchGroup)
-        getFollowingUsers(baseDispatchGroup)
-        getFollowers(baseDispatchGroup)
-        dispatch_group_notify(baseDispatchGroup, dispatch_get_main_queue()) { () -> Void in
-            self.tableView.hidden = false
-            Utilities.hideHUD()
+        switch currentScope {
+        case .Post:
+            getFeed({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.hidden = false
+                })
+            })
+        case .Following:
+            getUsersFollowing({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.hidden = false
+                })
+            })
+        case .Followers:
+            getFollowers({ () -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.hidden = false
+                })
+            })
         }
     }
     
@@ -239,10 +272,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func getUserPosts(dispatchGroup: dispatch_group_t?) {
-        if let group = dispatchGroup {
-            dispatch_group_enter(group)
-        }
+    func getFeed(completionHandler: () -> Void) {
         SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
@@ -250,29 +280,23 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                 self.currentPostPage = 0
                 let posts = result!.0
                 self.noPost = posts.count == 0
-                self.handleData(dispatchGroup, oldData: &self.userPosts, newData: posts, button: self.postButton)
+                if self.isDataUpdated(self.userPosts, newData: posts) {
+                    self.userPosts = posts
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
+                    })
+                }
             }
-            if let group = dispatchGroup {
-                dispatch_group_leave(group)
-            }
+            completionHandler()
         })
     }
     
-    func getFollowingUsers(dispatchGroup: dispatch_group_t?) {
+    func getUsersFollowing(completionHandler: () -> Void) {
         preconditionFailure("This method must be overridden")
     }
     
-    func getFollowers(dispatchGroup: dispatch_group_t?) {
+    func getFollowers(completionHandler: () -> Void) {
         preconditionFailure("This method must be overridden")
-    }
-    
-    func handleData<T: SequenceType>(group: dispatch_group_t?, inout oldData: T, newData: T, button: UIButton) {
-        if isDataUpdated(oldData, newData: newData) {
-            oldData = newData
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.tableView.reloadData()
-            })
-        }
     }
     
     func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
@@ -281,7 +305,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         return oldDataIdSet != newDataIdSet
     }
     
-    func setOfDataId<T: SequenceType>(data: T) -> Set<String> {
+    private func setOfDataId<T: SequenceType>(data: T) -> Set<String> {
         var result = Set<String>()
         for item in data {
             if let post = item as? UserPost {
@@ -291,17 +315,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
         }
         return result
-    }
-    
-    func checkFollowStatus() {
-        for follower in followers {
-            for followingUser in followingUsers {
-                if followingUser.uid == follower.uid {
-                    follower.isFollowed = true
-                    break
-                }
-            }
-        }
     }
 
     // MARK: - Table view data source
