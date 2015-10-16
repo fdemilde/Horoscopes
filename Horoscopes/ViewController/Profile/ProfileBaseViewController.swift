@@ -179,6 +179,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if currentScope != .Post {
             currentScope = .Post
             tapScopeButton(sender)
+            currentPostPage = 0
             getFeed(completionHandler: { () -> Void in
                 
             })
