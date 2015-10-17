@@ -29,6 +29,7 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
+  - CCHLinkTextView (1.2.0)
   - CustomIOSAlertView (0.9.3)
   - DateTools (1.6.1)
   - FBSDKCoreKit (4.2.0):
@@ -65,6 +66,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.6)
   - AsyncDisplayKit
+  - CCHLinkTextView
   - CustomIOSAlertView (~> 0.9.3)
   - DateTools
   - FBSDKCoreKit
@@ -84,6 +86,7 @@ SPEC CHECKSUMS:
   AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
   AsyncDisplayKit: b2f777da3a246b4aad660b2a55d60bb4328049b9
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  CCHLinkTextView: bfe688e0b7d34088375a466524158765832f7657
   CustomIOSAlertView: 94d2401e34fcfb0ac0134679d6947f5e251b0446
   DateTools: 9bcc89e4f2f9004d8a7a2bd1b49269cf78968e65
   FBSDKCoreKit: 84b3616a361801f190e43a9909caead7bb6087c7

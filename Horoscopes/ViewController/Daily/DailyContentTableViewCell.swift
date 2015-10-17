@@ -80,6 +80,12 @@ class DailyContentTableViewCell: UITableViewCell {
         delegate.didTapOnCalendar?()
     }
     
+    // MARK: Link delegate, support Hyper link in textview
+    
+    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
+        print("Tapped to link = \(value)")
+    }
+    
     // MARK: - Helper
     
     func setUp(type: DailyHoroscopeType, selectedSign: Int) {

@@ -47,4 +47,8 @@
 
 #import "CustomIOSAlertView.h"
 
+// Link textview, support hyperlink
+#import "CCHLinkTextView.h"
+#import "CCHLinkTextViewDelegate.h"
+
 #endif

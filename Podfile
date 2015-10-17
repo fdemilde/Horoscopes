@@ -16,4 +16,5 @@ target 'Horoscopes' do
     pod 'DateTools'
     pod 'JTCalendar', '~> 2.0'
     pod 'CustomIOSAlertView', '~> 0.9.3'
+    pod 'CCHLinkTextView'
 end
