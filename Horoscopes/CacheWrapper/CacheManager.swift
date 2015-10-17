@@ -24,11 +24,11 @@ class CacheManager {
                 let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
                 let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
                 if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
-                                    print("GOT CACHE !! RETURN")
+//                                    print("GOT CACHE !! RETURN")
                     completionHandler(result: cacheValue, error: nil) // return cache
                     return
                 }
-                            print("GOT CACHE BUT EXPIRED")
+//                            print("GOT CACHE BUT EXPIRED")
                 completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
             }
             Utilities.showHUD()
@@ -56,7 +56,7 @@ class CacheManager {
     }
     
     class func cachePut(key:String, value: NSObject, expiredTime : NSTimeInterval){
-        print("cachePut key == \(key)")
+//        print("cachePut key == \(key)")
         var cacheDict = Dictionary<String, NSObject>()
         cacheDict["CACHE_VALUE_KEY"] = value
         cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] = String(expiredTime)
@@ -74,7 +74,7 @@ class CacheManager {
     }
     
     class func cacheExpire(key : String){
-        print("cacheExpire key == \(key)")
+//        print("cacheExpire key == \(key)")
         let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
         if var cacheDict = cacheDict{
 //            print("cacheExpire cacheDict == \(cacheDict)")
