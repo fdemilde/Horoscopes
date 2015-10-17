@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
+class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerView: UIView!
@@ -18,7 +18,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     
     @IBOutlet weak var postTypeImageView: UIImageView!
     @IBOutlet weak var postDateLabel: UILabel!
-    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textView: CCHLinkTextView!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeNumberLabel: UILabel!
     @IBOutlet weak var actionView: UIView!
@@ -62,6 +62,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        textView.linkDelegate = self
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
         postTypeLabel = UILabel()
@@ -120,7 +121,18 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
             postTypeImageView.image = UIImage(named: "post_type_story")
         }
         postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
-        textView.text = post.message
+        var string = "\(post.message)"
+        if(post.truncated == 1){
+            string = "\(post.message) Read more..."
+        }
+        let text = NSMutableAttributedString(string: "\(string)")
+        let att = text.mutableCopy()
+        if(post.truncated == 1){
+            att.addAttribute(CCHLinkAttributeName, value: "readmore", range: NSMakeRange(string.characters.count - 13, 13))
+        }
+        let font = UIFont(name: "Book Antiqua", size: 15)
+        att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, string.characters.count))
+        textView.attributedText = att as! NSAttributedString
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
     }
     
@@ -290,6 +302,28 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate {
     func sendHeartSuccessful(notif: NSNotification){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         post.hearts++
+    }
+    
+    // MARK: link textview Delegate
+    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
+        print("Tapped to link = \(value)")
+        Utilities.showHUD()
+        XAppDelegate.socialManager.getPost(post.post_id, completionHandler: { (result, error) -> Void in
+            Utilities.hideHUD()
+            if let _ = error {
+                
+            } else {
+                if let result = result {
+                    for post : UserPost in result {
+                        let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                        controller.userPost = post
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            viewController.navigationController?.pushViewController(controller, animated: true)
+                        })
+                    }
+                }
+            }
+        })
     }
 }
 
