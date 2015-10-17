@@ -62,11 +62,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             expiredKey = Utilities.getKeyFromUrlAndPostData(requestMethod, postData: expiredPostData)
             CacheManager.cacheExpire(expiredKey)
             expiredKey = ""
-        } else {
-            expiredPageString = String(format:"%d",(pageNumber + 1))
-            expiredPostData.setObject(expiredPageString, forKey: pageKey)
-            expiredKey = Utilities.getKeyFromUrlAndPostData(requestMethod, postData: expiredPostData)
         }
+        expiredPageString = String(format:"%d",(pageNumber + 1))
+        expiredPostData.setObject(expiredPageString, forKey: pageKey)
+        expiredKey = Utilities.getKeyFromUrlAndPostData(requestMethod, postData: expiredPostData)
         return expiredKey
     }
     

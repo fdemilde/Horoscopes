@@ -155,6 +155,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         switch currentScope {
         case .Post:
             currentPostPage = 0
+            isLastPostPage = false
             getFeed(true, completionHandler: { () -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     refreshControl.endRefreshing()
@@ -180,6 +181,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             currentScope = .Post
             tapScopeButton(sender)
             currentPostPage = 0
+            isLastPostPage = false
             getFeed(completionHandler: { () -> Void in
                 
             })
