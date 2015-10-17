@@ -154,7 +154,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func handleRefresh(refreshControl: UIRefreshControl) {
         switch currentScope {
         case .Post:
-            getFeed({ () -> Void in
+            currentPostPage = 0
+            getFeed(true, completionHandler: { () -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     refreshControl.endRefreshing()
                 })
@@ -178,7 +179,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         if currentScope != .Post {
             currentScope = .Post
             tapScopeButton(sender)
-            getFeed({ () -> Void in
+            currentPostPage = 0
+            getFeed(completionHandler: { () -> Void in
                 
             })
         }
@@ -234,7 +236,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         getUserProfileCounts()
         switch currentScope {
         case .Post:
-            getFeed({ () -> Void in
+            getFeed(completionHandler: { () -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.hidden = false
                 })
@@ -272,8 +274,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func getFeed(completionHandler: () -> Void) {
-        SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
+    func getFeed(isRefreshed: Bool = false, completionHandler: () -> Void) {
+        SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage, isRefreshed: isRefreshed) { (result, error) -> Void in
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
@@ -288,7 +290,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                 }
             }
             completionHandler()
-        })
+        }
     }
     
     func getUsersFollowing(completionHandler: () -> Void) {

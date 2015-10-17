@@ -52,7 +52,25 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool? = false){
+    private func expiredKeyForPaging (isRefreshed: Bool, pageKey: String, requestMethod: String, pageNumber: Int, postData: NSMutableDictionary) -> String {
+        let expiredPostData = postData.mutableCopy() as! NSMutableDictionary
+        var expiredPageString = ""
+        var expiredKey = ""
+        if isRefreshed { // force refresh right away, used at Pull-to-refresh
+            expiredPageString = String(format:"%d", 0)
+            expiredPostData.setObject(expiredPageString, forKey: pageKey)
+            expiredKey = Utilities.getKeyFromUrlAndPostData(requestMethod, postData: expiredPostData)
+            CacheManager.cacheExpire(expiredKey)
+            expiredKey = ""
+        } else {
+            expiredPageString = String(format:"%d",(pageNumber + 1))
+            expiredPostData.setObject(expiredPageString, forKey: pageKey)
+            expiredKey = Utilities.getKeyFromUrlAndPostData(requestMethod, postData: expiredPostData)
+        }
+        return expiredKey
+    }
+    
+    func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool = false){
         if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
             Utilities.showHUD()
         }
@@ -62,20 +80,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let expiredTime = NSDate().timeIntervalSince1970 + 30
         
         // need to expire next page if current page is expired
-        let expiredPostData = NSMutableDictionary()
-        var expiredPageString = ""
-        var expiredKey = ""
-        if((isRefreshing) != nil && isRefreshing == true){ // force refresh right away, used at Pull-to-refresh
-            expiredPageString = String(format:"%d",0)
-            expiredPostData.setObject(expiredPageString, forKey: "page")
-            expiredKey = Utilities.getKeyFromUrlAndPostData(GET_GLOBAL_FEED, postData: expiredPostData)
-            CacheManager.cacheExpire(expiredKey)
-            expiredKey = ""
-        } else {
-            expiredPageString = String(format:"%d",(pageNo + 1))
-            expiredPostData.setObject(expiredPageString, forKey: "page")
-            expiredKey = Utilities.getKeyFromUrlAndPostData(GET_GLOBAL_FEED, postData: expiredPostData)
-        }
+        let expiredKey = expiredKeyForPaging(isRefreshing, pageKey: "page", requestMethod: GET_GLOBAL_FEED, pageNumber: pageNo, postData: postData)
         CacheManager.cacheGet(GET_GLOBAL_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if(error != nil){
                 print("Error when get getGlobalNewsfeed = \(error)")
@@ -104,7 +109,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getFollowingNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool? = false){
+    func getFollowingNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool = false){
         if(XAppDelegate.dataStore.newsfeedFollowing.count == 0){
             Utilities.showHUD()
         }
@@ -115,24 +120,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         // change to test  GET_FOLLOWING_FEED
         let expiredTime = NSDate().timeIntervalSince1970 + 600
         
-        let expiredPostData = NSMutableDictionary()
-        var expiredPageString = ""
-        var expiredKey = ""
-        if((isRefreshing) != nil && isRefreshing == true){ // force refresh right away, used at Pull-to-refresh
-            expiredPageString = String(format:"%d",0)
-            expiredPostData.setObject(expiredPageString, forKey: "page")
-            expiredKey = Utilities.getKeyFromUrlAndPostData(GET_FOLLOWING_FEED, postData: expiredPostData)
-            CacheManager.cacheExpire(expiredKey)
-            expiredKey = ""
-        } else {
-            // need to expire next page if current page is expired
-            expiredPageString = String(format:"%d",(pageNo + 1))
-            expiredPostData.setObject(expiredPageString, forKey: "page")
-            expiredKey = Utilities.getKeyFromUrlAndPostData(GET_FOLLOWING_FEED, postData: expiredPostData)
-        }
-        
-        
-        
+        let expiredKey = expiredKeyForPaging(isRefreshing, pageKey: "page", requestMethod: GET_FOLLOWING_FEED, pageNumber: pageNo, postData: postData)
         CacheManager.cacheGet(GET_FOLLOWING_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if(error != nil){
                 print("Error when get getFollowingNewsfeed = \(error)")
@@ -222,7 +210,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getUserFeed(uid: Int, page: Int = 0, completionHandler: (result: ([UserPost], isLastPage: Bool)?, error: NSError?) -> Void) {
+    func getUserFeed(uid: Int, page: Int = 0, isRefreshed: Bool = false, completionHandler: (result: ([UserPost], isLastPage: Bool)?, error: NSError?) -> Void) {
         getProfile("\(uid)", completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -234,12 +222,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let expiredTime = NSDate().timeIntervalSince1970 + 600
                     
                     // need to expire next page if current page is expired
-                    let expiredPostData = NSMutableDictionary()
-                    let expiredPageString = String(format:"%d",(page + 1))
-                    expiredPostData.setObject(expiredPageString, forKey: "page")
-                    expiredPostData.setObject("\(uid)", forKey: "uid")
-                    let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_USER_FEED, postData: expiredPostData)
-                    
+                    let expiredKey = self.expiredKeyForPaging(isRefreshed, pageKey: "page", requestMethod: GET_USER_FEED, pageNumber: page, postData: postData)
                     CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey, completionHandler: { (response, error) -> Void in
                         if let error = error {
                             completionHandler(result: nil, error: error)

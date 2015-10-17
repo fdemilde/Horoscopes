@@ -196,8 +196,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Actions
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        // TODO: update the data source
-        print("Updating its data source...")
+        self.currentPage = 0
         if(self.tabType == NewsfeedTabType.Global){
             XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false, isRefreshing : true)
         } else {
