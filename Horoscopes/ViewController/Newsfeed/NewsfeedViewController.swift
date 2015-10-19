@@ -36,7 +36,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
 //    var userPostArray = [UserPost]()
-    var feedsDisplayNode = ASDisplayNode()
     var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
     var currentPage = 0
