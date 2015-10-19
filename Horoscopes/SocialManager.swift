@@ -426,6 +426,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func loginFacebook(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
         let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_birthday","user_friends"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if let error = error {
