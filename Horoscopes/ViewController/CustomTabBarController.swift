@@ -12,6 +12,7 @@ import UIKit
 class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     
     var selectedSign = -1
+    var lastSelectedIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,6 +53,24 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+        // if current selected tab is Daily, when user tap on Daily again, switch to user's favourite sign
+        if let viewControllers = self.viewControllers {
+            for nav in viewControllers {
+                let nav = nav as! UINavigationController
+                let vc = nav.viewControllers.first!
+                if ((lastSelectedIndex == 0) && tabBarController.selectedIndex == 0){
+                    if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
+                        if XAppDelegate.userSettings.horoscopeSign != -1 {
+                            let dailyVC = vc as! DailyTableViewController
+                            self.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+                            dailyVC.selectedSign = self.selectedSign
+                            dailyVC.reloadData()
+                        }
+                    }
+                }
+            }
+        }
+        lastSelectedIndex = tabBarController.selectedIndex
     }
     
     func reload(){
