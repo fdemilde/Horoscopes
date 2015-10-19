@@ -27,7 +27,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         router = XAppDelegate.mobilePlatform.router
         setupRouter()
         
@@ -117,8 +116,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         // TODO: update the data source
-        print("Updating its data source...")
-        tableView.reloadData()
+//        print("Updating its data source...")
+        self.getNotificationAndReloadData()
         refreshControl.endRefreshing()
     }
     
@@ -127,7 +126,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     @IBAction func clearAllTapped(sender: AnyObject) {
-        XAppDelegate.socialManager.clearAllNotification()
+//        XAppDelegate.socialManager.clearAllNotification()
     }
     
     // MARK: Helpers
@@ -141,6 +140,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
                 self.notifArray = result!
+                // remove all notification 
+//                XAppDelegate.socialManager.clearAllNotification(self.notifArray)
                 self.notifArray.sortInPlace({ $0.created > $1.created })
                 self.tableView.reloadData()
             })

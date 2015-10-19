@@ -81,4 +81,10 @@ class CacheManager {
             CacheManager.cachePut(key , value: cacheValue, expiredTime: 0)
         }
     }
+    
+    // MARK: Notification Cache
+    // There is a special case for the Notification data. Notifications should be stored for a week after they are retrieved from the notification.getall endpoint. Keep a counter of the last checked time and submit it as the “since” parameter to request an incremental update of the latest notifications from the server. Add the new notifications to the notifications store.
+    class func cacheGetNotification(){
+        
+    }
 }

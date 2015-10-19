@@ -164,8 +164,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else { // no error
                     let success = result["success"] as! Int
                     if success == 1 {
-                        self.sendHeartServerNotification(receiverId, postId: postId)
-                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
+//                        self.sendHeartServerNotification(receiverId, postId: postId)
+//                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
                         NSUserDefaults.standardUserDefaults().setBool(true, forKey: postId)
                     } else {
                         print("Post unsuccessful")
@@ -300,7 +300,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_FOLLOW, object: user)
                 })
-                SocialManager.sharedInstance.sendFollowNotification(user.uid)
+//                SocialManager.sharedInstance.sendFollowNotification(user.uid)
                 completionHandler(error: nil)
             }
         }
@@ -600,9 +600,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func clearAllNotification(){
+    func clearAllNotification(array : [NotificationObject]){
         var listIds = [String]()
-        listIds.append("67_8")
+        for notification in array {
+            listIds.append(notification.notification_id)
+        }
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
             print("clearAllNotification result = \(result)")
         })

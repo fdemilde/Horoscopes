@@ -34,6 +34,7 @@ class NotificationTableViewCell: UITableViewCell {
         self.parseAlertObject()
         self.setNotificationType()
         self.setupComponents()
+//        print("notification id === \(notification.notification_id)")
 //        self.getUserProfile()
     }
     

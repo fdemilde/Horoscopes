@@ -7,6 +7,13 @@
 //
 
 #import "NotificationObject.h"
+#define kNotificationId     @"kNotificationId"
+#define kSender             @"kSender"
+#define kCreated            @"kCreated"
+#define kAlert              @"kAlert"
+#define kRoute              @"kRoute"
+#define kData               @"kData"
+#define kRef                @"kRef"
 
 @implementation NotificationObject
 
@@ -38,6 +45,30 @@
 -(NSString* ) toString {
     NSString* result = [NSString stringWithFormat:@" _notification_id = %@ || _sender = %@ || route = %@" , _notification_id , _sender , _route];
     return result;
+}
+
+#pragma mark - encode/decode
+- (id)initWithCoder:(NSCoder *)aDecoder{
+    if(self = [super init]){
+        _notification_id = [aDecoder decodeObjectForKey:kNotificationId];
+        _sender = [aDecoder decodeObjectForKey:kSender];
+        _created = [aDecoder decodeInt64ForKey:kCreated];
+        _alert = [aDecoder decodeObjectForKey:kAlert];
+        _route = [aDecoder decodeObjectForKey:kRoute];
+        _data = [aDecoder decodeObjectForKey:kData];
+        _ref = [aDecoder decodeObjectForKey:kRef];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder{
+    [aCoder encodeObject:self.notification_id forKey:kNotificationId];
+    [aCoder encodeObject:self.sender forKey:kSender];
+    [aCoder encodeInt64:self.created forKey:kCreated];
+    [aCoder encodeObject:self.alert forKey:kAlert];
+    [aCoder encodeObject:self.route forKey:kRoute];
+    [aCoder encodeObject:self.data forKey:kData];
+    [aCoder encodeObject:self.ref forKey:kRef];
 }
 
 

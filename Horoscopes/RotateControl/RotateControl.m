@@ -419,7 +419,7 @@ static int CLOVER_SYMBOL_TAG = 101;
 
 - (void)highlightSelectedSign
 {
-    NSLog(@"highlightSelectedSign highlightSelectedSign");
+//    NSLog(@"highlightSelectedSign highlightSelectedSign");
     UIImageView *im = [self getCloveByValue:currentValue];
     
     UIImageView *signImage = (UIImageView*)[im viewWithTag:CLOVER_IMAGE_TAG];
