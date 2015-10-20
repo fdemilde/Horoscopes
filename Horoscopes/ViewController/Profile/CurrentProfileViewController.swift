@@ -38,6 +38,14 @@ class CurrentProfileViewController: ProfileBaseViewController {
         horoscopeSignView.userInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            _ = scrollView as! UITableView
+            if self.isLastPostPage || self.currentScope != .Post {
+                self.tableView.finishInfiniteScroll()
+                return
+            }
+            self.currentPostPage++
+        }
     }
     
     override func viewWillAppear(animated: Bool) {

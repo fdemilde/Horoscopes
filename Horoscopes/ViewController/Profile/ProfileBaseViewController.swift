@@ -97,7 +97,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.layer.cornerRadius = 4
         
-        setupInfiniteScroll()
+        tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
     }
 
@@ -221,18 +221,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Helper
-    
-    func setupInfiniteScroll(){
-        tableView.infiniteScrollIndicatorStyle = .White
-        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            _ = scrollView as! UITableView
-            if self.isLastPostPage || self.currentScope != .Post {
-                self.tableView.finishInfiniteScroll()
-                return
-            }
-            self.currentPostPage++
-        }
-    }
     
     func getData() {
         getUserProfileCounts()
