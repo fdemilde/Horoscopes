@@ -71,5 +71,11 @@
     [aCoder encodeObject:self.ref forKey:kRef];
 }
 
++ (NSString *)getFilePath{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSURL* url = [manager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+    return [url URLByAppendingPathComponent:@"NotificationObject"].path;
+}
+
 
 @end

@@ -594,10 +594,18 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getAllNotification(since : Int, completionHandler:(result : [NotificationObject]?) -> Void ){
-        XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(since), andCompleteBlock: { (result) -> Void in
-            let resultArray = result as AnyObject as! [NotificationObject]
-            completionHandler(result: resultArray)
-        })
+        
+        CacheManager.cacheGetNotification { (result) -> Void in
+            if let result = result {
+                print("getAllNotification getAllNotification result = \(result)")
+                let resultArray = result 
+                completionHandler(result: resultArray)
+            } else {
+                print("getAllNotification getAllNotification EMPTY")
+                let resultArray = [NotificationObject]()
+                completionHandler(result: resultArray)
+            }
+        }
     }
     
     func clearAllNotification(array : [NotificationObject]){

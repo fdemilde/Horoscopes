@@ -20,5 +20,6 @@
 @property NSString* ref;
 
 -(NSString* ) toString;
++(NSString* ) getFilePath;
 
 @end
