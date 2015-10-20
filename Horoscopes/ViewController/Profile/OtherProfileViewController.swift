@@ -15,6 +15,47 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     @IBOutlet weak var newsfeedFollowButton: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    // MARK: - Property
+    
+    var isLastFollowingPage = false
+    var isLastFollowersPage = false
+    var currentFollowingPage: Int = 0 {
+        didSet {
+            if currentFollowingPage != 0 {
+                SocialManager.sharedInstance.getProfilesOfUsersFollowing(forUser: userProfile.uid, page: currentFollowingPage, completionHandler: { (result, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        self.isLastFollowingPage = result!.1
+                        self.followingUsers += result!.0
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.finishInfiniteScroll()
+                            self.tableView.reloadData()
+                        })
+                    }
+                })
+            }
+        }
+    }
+    var currentFollowersPage: Int = 0 {
+        didSet {
+            if currentFollowersPage != 0 {
+                SocialManager.sharedInstance.getProfilesOfFollowers(forUser: userProfile.uid, page: currentFollowersPage, completionHandler: { (result, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        self.followers += result!.0
+                        self.isLastFollowersPage = result!.1
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.finishInfiniteScroll()
+                            self.tableView.reloadData()
+                        })
+                    }
+                })
+            }
+        }
+    }
+    
     // MARK: - Life cycle
 
     override func viewDidLoad() {
@@ -38,6 +79,28 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 }
             })
         }
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            switch self.currentScope {
+            case .Post:
+                if self.isLastPostPage {
+                    self.tableView.finishInfiniteScroll()
+                    return
+                }
+                self.currentPostPage++
+            case .Following:
+                if self.isLastFollowingPage {
+                    self.tableView.finishInfiniteScroll()
+                    return
+                }
+                self.currentFollowingPage++
+            case .Followers:
+                if self.isLastFollowersPage {
+                    self.tableView.finishInfiniteScroll()
+                    return
+                }
+                self.currentFollowersPage++
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -58,6 +121,36 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     }
     
     // MARK: - Action
+    
+    override func handleRefresh(refreshControl: UIRefreshControl) {
+        switch currentScope {
+        case .Following:
+            self.currentFollowingPage = 0
+            self.isLastFollowingPage = false
+        case .Followers:
+            self.currentFollowersPage = 0
+            self.isLastFollowersPage = false
+        default:
+             break
+        }
+        super.handleRefresh(refreshControl)
+    }
+    
+    override func tapFollowingButton(sender: UIButton) {
+        if currentScope != .Following {
+            self.currentFollowingPage = 0
+            self.isLastFollowingPage = false
+        }
+        super.tapFollowingButton(sender)
+    }
+    
+    override func tapFollowersButton(sender: UIButton) {
+        if currentScope != .Followers {
+            self.currentFollowersPage = 0
+            self.isLastFollowersPage = false
+        }
+        super.tapFollowersButton(sender)
+    }
     
     @IBAction func tapBackButton(sender: UIButton) {
         navigationController?.popViewControllerAnimated(true)
@@ -111,8 +204,9 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
-                if self.isDataUpdated(self.followingUsers, newData: result!) {
-                    self.followingUsers = result!
+                let users = result!.0
+                if self.isDataUpdated(self.followingUsers, newData: users) {
+                    self.followingUsers = users
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
                     })
@@ -127,8 +221,9 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
-                if self.isDataUpdated(self.followers, newData: result!) {
-                    self.followers = result!
+                let users = result!.0
+                if self.isDataUpdated(self.followers, newData: users) {
+                    self.followers = users
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         self.tableView.reloadData()
                     })

@@ -379,7 +379,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func getProfilesOfUsersFollowing(forUser uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfUsersFollowing(forUser uid: Int, page: Int = 0, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: NSError?) -> Void) {
         getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWERS) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -389,7 +389,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getProfilesOfFollowers(forUser uid: Int, page: Int = 0, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfilesOfFollowers(forUser uid: Int, page: Int = 0, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: NSError?) -> Void) {
         getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWING) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -426,6 +426,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func loginFacebook(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
         let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_birthday","user_friends"]
         loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
             if let error = error {
@@ -649,7 +650,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getOtherUserFollowProfile(uid: Int, page: Int = 0, method: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getOtherUserFollowProfile(uid: Int, page: Int = 0, method: String, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject("\(uid)", forKey: "uid")
         postData.setObject("\(page)", forKey: "page")
@@ -668,7 +669,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response!)
                 let profiles: [UserProfile] = Array(Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values)
-                completionHandler(result: profiles, error: nil)
+                let last = json["last"] as! Int
+                let result = (profiles, last == 1)
+                completionHandler(result: result, error: nil)
             }
         }
     }
