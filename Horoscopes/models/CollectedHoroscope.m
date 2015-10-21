@@ -20,21 +20,27 @@
 @synthesize dateInstalledApp = _dateInstalledApp;
 @synthesize collectedData = _collectedData;
 
++ (NSString *)getFilePath{
+    NSFileManager *manager = [NSFileManager defaultManager];
+    NSURL* url = [manager URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask].firstObject;
+    return [url URLByAppendingPathComponent:kCollectedData].path;
+}
 
 - (void)saveCollectedData{
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
-    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
+//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
+//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
+    [NSKeyedArchiver archiveRootObject:self.collectedData toFile:[CollectedHoroscope getFilePath]];
 }
 
 - (NSMutableArray *)collectedData{
     if(!_collectedData){
-        id obj = [[NSUserDefaults standardUserDefaults] objectForKey:kCollectedData];
+        id obj = [NSKeyedUnarchiver unarchiveObjectWithFile:[CollectedHoroscope getFilePath]];
         if(!obj){
             _collectedData = [[NSMutableArray alloc] init];
             [self saveCollectedData];
         }
         else{
-            _collectedData = [NSKeyedUnarchiver unarchiveObjectWithData:[[NSUserDefaults standardUserDefaults] objectForKey:kCollectedData]];
+            _collectedData = obj;
         }
     }
     return _collectedData;

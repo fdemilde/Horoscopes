@@ -124,7 +124,7 @@ class CacheManager {
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
                     completionHandler(result: resultArray)
                 } else {
-                    completionHandler(result: nil)
+                    completionHandler(result: resultArray)
                 }
             })
         }
@@ -135,6 +135,7 @@ class CacheManager {
     class func checkAndRemoveDuplicatingNotification(newArray : [NotificationObject], oldArray : [NotificationObject]) -> [NotificationObject]{
         var resultArray = newArray
         var index: Int
+//        print("checkAndRemoveDuplicatingNotification newArray == \(newArray.count)")
         for (index = 0; index < newArray.count; index++) {
             for oldNotif in oldArray {
                 // notif exists, remove from new Array
