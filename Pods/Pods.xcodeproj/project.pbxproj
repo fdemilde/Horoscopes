@@ -1103,6 +1103,7 @@
 		78DF46C59D4A2DC312E1613DF84A2F85 /* WebASDKImageManager.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = WebASDKImageManager.xcconfig; sourceTree = "<group>"; };
 		79B83F22290078F6462ADE233CA44894 /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+animatedGIF.h"; path = "uiimage-from-animated-gif/UIImage+animatedGIF.h"; sourceTree = "<group>"; };
 		79CEE6B3CE80B939E290143B13C39611 /* Reachability.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		79D8C01960CEF5C9FCE32ACE03C3C0C0 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.5.2/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		79F8620456B2719FD00FF2B9BBA170D2 /* JTCalendarScrollManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = JTCalendarScrollManager.m; path = JTCalendar/Managers/JTCalendarScrollManager.m; sourceTree = "<group>"; };
 		7AAAED0CB921111F67C65784D9852EA5 /* ASControlNode+Subclasses.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ASControlNode+Subclasses.h"; path = "AsyncDisplayKit/ASControlNode+Subclasses.h"; sourceTree = "<group>"; };
 		7ABEC3C9FF2ADF803D2A69CDDBE8C5EA /* ASDisplayNode+Subclasses.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "ASDisplayNode+Subclasses.h"; path = "AsyncDisplayKit/ASDisplayNode+Subclasses.h"; sourceTree = "<group>"; };
@@ -1448,7 +1449,6 @@
 		FD28452533F97C3B49E6D15768295621 /* FBSDKErrorConfiguration.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKErrorConfiguration.m; path = FBSDKCoreKit/FBSDKCoreKit/Internal/ServerConfiguration/FBSDKErrorConfiguration.m; sourceTree = "<group>"; };
 		FD945993264F86543814CA4506BF9205 /* FBSDKConstants.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = FBSDKConstants.m; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKConstants.m; sourceTree = "<group>"; };
 		FDA7B12A9A3F44BCE4640CE3BF549C51 /* FBSDKAppLinkResolver.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKAppLinkResolver.h; path = FBSDKCoreKit/FBSDKCoreKit/FBSDKAppLinkResolver.h; sourceTree = "<group>"; };
-		FDC103ECEF0C536E8BD068C2D45E3C05 /* GoogleMobileAds.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GoogleMobileAds.framework; path = "GoogleMobileAdsSdkiOS-7.4.1/GoogleMobileAds.framework"; sourceTree = "<group>"; };
 		FE013CD691992D9C9C8FE24B0CD90EA9 /* ASImageNode.mm */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.cpp.objcpp; name = ASImageNode.mm; path = AsyncDisplayKit/ASImageNode.mm; sourceTree = "<group>"; };
 		FE4ABBB7B75765F83EF87F75B3AE1175 /* FBSDKLikeObjectType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = FBSDKLikeObjectType.h; path = FBSDKShareKit/FBSDKShareKit/FBSDKLikeObjectType.h; sourceTree = "<group>"; };
 		FE9910E2D33B6D09DADB3592352C5888 /* SDWebImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SDWebImage-prefix.pch"; sourceTree = "<group>"; };
@@ -1805,6 +1805,14 @@
 			path = "../Target Support Files/Bolts";
 			sourceTree = "<group>";
 		};
+		2A471AC18AC519EB71FCA29BED199AEC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				79D8C01960CEF5C9FCE32ACE03C3C0C0 /* GoogleMobileAds.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		333DE0B390029E1FE304B0F8C741D705 /* FBSDKLoginKit */ = {
 			isa = PBXGroup;
 			children = (
@@ -2157,14 +2165,6 @@
 			path = "UIImage+animatedGif";
 			sourceTree = "<group>";
 		};
-		6F10E234FC299ED70A4A281FC6AB25CE /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				FDC103ECEF0C536E8BD068C2D45E3C05 /* GoogleMobileAds.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		708FB88BD31B461513747695DA1AF7A3 /* NSURLConnection */ = {
 			isa = PBXGroup;
 			children = (
@@ -2416,7 +2416,7 @@
 		C304B23110CF1FACC4C3C7FF695F9979 /* Google-Mobile-Ads-SDK */ = {
 			isa = PBXGroup;
 			children = (
-				6F10E234FC299ED70A4A281FC6AB25CE /* Frameworks */,
+				2A471AC18AC519EB71FCA29BED199AEC /* Frameworks */,
 			);
 			path = "Google-Mobile-Ads-SDK";
 			sourceTree = "<group>";

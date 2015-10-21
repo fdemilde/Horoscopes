@@ -44,7 +44,7 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.7.0):
     - FBSDKCoreKit
-  - Google-Mobile-Ads-SDK (7.4.1)
+  - Google-Mobile-Ads-SDK (7.5.2)
   - GoogleAnalytics (3.13.0)
   - JSONKit-NoWarning (1.2)
   - JTCalendar (2.1.4)
@@ -69,7 +69,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 4.7)
   - FBSDKLoginKit (~> 4.7)
   - FBSDKShareKit (~> 4.7)
-  - Google-Mobile-Ads-SDK (~> 7.4)
+  - Google-Mobile-Ads-SDK (~> 7.5)
   - GoogleAnalytics (~> 3.13)
   - JSONKit-NoWarning
   - JTCalendar (~> 2.0)
@@ -88,7 +88,7 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
   FBSDKLoginKit: 01bce8dd3f3a26a023b0ba4ffdde7ef5062889fe
   FBSDKShareKit: 1f927bb05e4d36a99d5d5bf2f4b1ff294ce3e15c
-  Google-Mobile-Ads-SDK: dce4c2728daa0bcbd88b6e3dc111b718a07b1eb6
+  Google-Mobile-Ads-SDK: 24a8ddfc0bcfec281960c5d88f75327df0d86b00
   GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   JTCalendar: 9b1352c7ec41cc26b19c189d6608ba48060a53d9

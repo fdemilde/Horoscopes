@@ -10,7 +10,7 @@ target 'Horoscopes' do
     pod 'FBSDKShareKit', '~> 4.7'
     pod 'MZFormSheetController'
     pod 'WebASDKImageManager'
-    pod 'Google-Mobile-Ads-SDK', '~> 7.4'
+    pod 'Google-Mobile-Ads-SDK', '~> 7.5'
     pod 'AFNetworking', '~> 2.6'
     pod 'JTCalendar', '~> 2.0'
     pod 'CustomIOSAlertView', '~> 0.9.3'
