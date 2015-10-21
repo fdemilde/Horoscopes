@@ -146,7 +146,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func fetchUserInfo(){
         var params = Dictionary<String,String>()
          params["fields"] = "name,id,gender,birthday"
-            FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: params).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String

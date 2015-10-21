@@ -89,7 +89,7 @@ class CacheManager {
      + Notification will be stored as a Dictionary<expiredTime, [NotificationObject]>
      + First, we check if there is any Notifications that haven't expired using Retrieve Time (notification will be expired after 7 days from retrieve time) and return to display, then remove all expired notifications and finally request new notifications from server using Since timestamp.
      + Update Notification data with new data from server and update Since timestamp
-     --------------------------------------------------------------------*/
+     ------------------------------------------------------------------ */
     
     class func cacheGetNotification(completionHandler: (result: [NotificationObject]?) -> Void){
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
@@ -123,6 +123,8 @@ class CacheManager {
                     CacheManager.saveNotificationsData(notificationDict)
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
                     completionHandler(result: resultArray)
+                } else {
+                    completionHandler(result: nil)
                 }
             })
         }
