@@ -590,7 +590,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let receiverIdString = "\(receiverId)"
         let route = "/profile/\(currentUser.uid)/feed"
         XAppDelegate.mobilePlatform.platformNotiff.sendTo(receiverIdString, withRoute: route, withAlert: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
-            print("sendFollowNotification result \(result)")
         }
     }
     
@@ -598,11 +597,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
         CacheManager.cacheGetNotification { (result) -> Void in
             if let result = result {
-                print("getAllNotification getAllNotification result = \(result)")
                 let resultArray = result 
                 completionHandler(result: resultArray)
             } else {
-                print("getAllNotification getAllNotification EMPTY")
                 let resultArray = [NotificationObject]()
                 completionHandler(result: resultArray)
             }

@@ -19,4 +19,5 @@
 - (void)reset; //reset collected horoscopes 
 - (void)saveCollectedData;
 - (void)mySetLastDateOpenApp:(NSDate *)lastDateOpenApp;
++ (NSString *)getFilePath;
 @end

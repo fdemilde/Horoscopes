@@ -89,7 +89,7 @@ class CacheManager {
      + Notification will be stored as a Dictionary<expiredTime, [NotificationObject]>
      + First, we check if there is any Notifications that haven't expired using Retrieve Time (notification will be expired after 7 days from retrieve time) and return to display, then remove all expired notifications and finally request new notifications from server using Since timestamp.
      + Update Notification data with new data from server and update Since timestamp
-     --------------------------------------------------------------------*/
+     ------------------------------------------------------------------ */
     
     class func cacheGetNotification(completionHandler: (result: [NotificationObject]?) -> Void){
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
@@ -114,14 +114,16 @@ class CacheManager {
             let newSince = Int(NSDate().timeIntervalSince1970)
 //            print("get data since resultArray = \(lastSince)")
             XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andCompleteBlock: { (result) -> Void in
-                var notifArray = result as! [NotificationObject]
-                notifArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
-                if(notifArray.count > 0){ // has new data
+                let notifArray = result as! [NotificationObject]
+                let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
+                if(checkArray.count > 0){ // has new data
                     let newExpireTime = String(newSince + (7 * 3600 * 24))
-                    notificationDict[newExpireTime] = notifArray
-                    resultArray += notifArray
+                    notificationDict[newExpireTime] = checkArray
+                    resultArray += checkArray
                     CacheManager.saveNotificationsData(notificationDict)
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
+                    completionHandler(result: resultArray)
+                } else {
                     completionHandler(result: resultArray)
                 }
             })
@@ -131,18 +133,21 @@ class CacheManager {
     // MARK: Helper
     // prevent duplicating notification
     class func checkAndRemoveDuplicatingNotification(newArray : [NotificationObject], oldArray : [NotificationObject]) -> [NotificationObject]{
-        var resultArray = newArray
-        var index: Int
-        for (index = 0; index < newArray.count; index++) {
+        var needRemoveArray = [NotificationObject]()
+        var result = newArray
+        for newNotif in result {
             for oldNotif in oldArray {
                 // notif exists, remove from new Array
-                if(oldNotif.notification_id == newArray[index].notification_id){
-                    resultArray.removeAtIndex(index)
+                if(oldNotif.notification_id == newNotif.notification_id){
+                    needRemoveArray.append(newNotif)
                 }
             }
         }
         
-        return resultArray
+        for notif in needRemoveArray {
+            result.remove(notif)
+        }
+        return result
     }
     
     class func saveNotificationsData(cacheDict : Dictionary<String, AnyObject>){

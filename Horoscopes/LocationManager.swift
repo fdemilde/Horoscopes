@@ -61,7 +61,10 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //stop updating location to save battery life
         locationManager.stopUpdatingLocation()
-        XAppDelegate.finishedGettingLocation(manager.location!)
+        if let location = manager.location {
+            XAppDelegate.finishedGettingLocation(location)
+        }
+        
         
     }
     
