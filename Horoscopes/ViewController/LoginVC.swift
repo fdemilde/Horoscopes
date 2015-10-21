@@ -111,7 +111,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             self.fetchUserInfo()
         } else {
-            XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
+            XAppDelegate.socialManager.login(self) { (error, permissionGranted) -> Void in
                 Utilities.hideHUD(self.view)
                 if(error != nil){
                     print("loginTapped error == \(error)")

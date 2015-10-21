@@ -360,7 +360,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: facebook
     func facebookLogin(sender: UIButton!) {
         Utilities.showHUD()
-        XAppDelegate.socialManager.login { (error, permissionGranted) -> Void in
+        XAppDelegate.socialManager.login(self) { (error, permissionGranted) -> Void in
             Utilities.hideHUD()
             if(error != nil){
                 Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
