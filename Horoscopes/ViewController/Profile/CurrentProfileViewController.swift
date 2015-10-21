@@ -143,7 +143,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     func login(sender: UIButton) {
         Utilities.showHUD()
-        SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
+        SocialManager.sharedInstance.login(self) { (error, permissionGranted) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(error, viewController: self)

@@ -218,7 +218,7 @@ class CookieViewController : ViewControllerWithAds{
     func checkPermissionAndGetFortune(){
         let loginManager = FBSDKLoginManager()
         let permissions = ["public_profile", "email", "user_birthday"]
-        loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
+        loginManager.logInWithReadPermissions(permissions, fromViewController: self) { (result, error) -> Void in
             if((error) != nil){
                 self.showOnlyDescription("Error when login Facebook!")
                 Utilities.hideHUD()
@@ -236,7 +236,7 @@ class CookieViewController : ViewControllerWithAds{
                     Utilities.hideHUD()
                 }
             }
-        })
+        }
     }
     
     func getFortune() {

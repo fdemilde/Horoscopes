@@ -26,7 +26,7 @@ class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertV
     
     @IBAction func loginFacebook(sender: UIButton) {
         Utilities.showHUD(view)
-        SocialManager.sharedInstance.login { (error, permissionGranted) -> Void in
+        SocialManager.sharedInstance.login(self) { (error, permissionGranted) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 if let error = error {
                     Utilities.hideHUD(self.view)

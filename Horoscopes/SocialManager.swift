@@ -424,11 +424,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         return FBSDKAccessToken .currentAccessToken() != nil
     }
     
-    func loginFacebook(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+    func loginFacebook(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_birthday","user_friends"]
-        loginManager.logInWithReadPermissions(permissions, handler: { (result, error) -> Void in
+        loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
             } else {
@@ -442,7 +442,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     }
                 }
             }
-        })
+        }
     }
     
     func isLoggedInZwigglers() -> Bool{
@@ -479,8 +479,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     // Convenience method that log in Facebook then log in Zwigglers
-    func login(completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
-        loginFacebook { (error, permissionGranted) -> Void in
+    func login(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+        loginFacebook(viewController) { (error, permissionGranted) -> Void in
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
             } else {
