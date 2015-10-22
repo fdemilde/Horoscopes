@@ -316,10 +316,12 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     func showOnlyDescription(string: String){
-        self.fortuneDescriptionLabel.text = string
-        self.fortuneDescriptionLabel.sizeToFit();
-        self.hideAll() // only show description label to show error
-        self.fortuneDescriptionLabel.hidden = false
+        dispatch_async(dispatch_get_main_queue(),{
+            self.fortuneDescriptionLabel.text = string
+            self.fortuneDescriptionLabel.sizeToFit();
+            self.hideAll() // only show description label to show error
+            self.fortuneDescriptionLabel.hidden = false
+        })
     }
 }
 
