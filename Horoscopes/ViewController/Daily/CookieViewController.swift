@@ -217,6 +217,7 @@ class CookieViewController : ViewControllerWithAds{
     
     func checkPermissionAndGetFortune(){
         let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_birthday"]
         loginManager.logInWithReadPermissions(permissions, fromViewController: self) { (result, error) -> Void in
             if((error) != nil){
