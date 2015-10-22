@@ -427,7 +427,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func loginFacebook(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = .SystemAccount
-        let permissions = ["public_profile", "email", "user_birthday","user_friends"]
+        let permissions = ["public_profile", "email", "user_friends"]
         loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
@@ -435,7 +435,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if result.isCancelled {
                     completionHandler(error: nil, permissionGranted: false)
                 } else {
-                    if result.grantedPermissions.contains("public_profile") {
+                    var permissionSet = Set<String>()
+                    for permission in permissions {
+                        permissionSet.insert(permission)
+                    }
+                    if result.grantedPermissions == permissionSet {
                         completionHandler(error: nil, permissionGranted: true)
                     } else {
                         completionHandler(error: nil, permissionGranted: false)

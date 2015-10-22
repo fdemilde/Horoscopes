@@ -216,25 +216,15 @@ class CookieViewController : ViewControllerWithAds{
     // MARK: Network data
     
     func checkPermissionAndGetFortune(){
-        let loginManager = FBSDKLoginManager()
-        loginManager.loginBehavior = .SystemAccount
-        let permissions = ["public_profile", "email", "user_birthday"]
-        loginManager.logInWithReadPermissions(permissions, fromViewController: self) { (result, error) -> Void in
-            if((error) != nil){
-                self.showOnlyDescription("Error when login Facebook!")
-                Utilities.hideHUD()
-            } else if (result.isCancelled) {
-                self.showOnlyDescription("Permission denied!")
-                // Handle cancellations
-                Utilities.hideHUD()
+        SocialManager.sharedInstance.login(self) { (error, permissionGranted) -> Void in
+            Utilities.hideHUD()
+            if let _ = error {
+                self.showOnlyDescription("Cannot login. Please try again later.")
             } else {
-                if (result.grantedPermissions.contains("public_profile")) {
-                    // Do work
+                if permissionGranted {
                     self.getFortune()
                 } else {
-                    // Permission denied
                     self.showOnlyDescription("Permission denied!")
-                    Utilities.hideHUD()
                 }
             }
         }
