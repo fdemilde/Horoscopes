@@ -48,7 +48,6 @@ class ChooseSignVC : SpinWheelVC {
     // MARK: Delegata methods
     
     override func wheelDidChangeValue(newValue : Horoscope?){
-        
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)

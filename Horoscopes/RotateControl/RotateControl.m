@@ -320,8 +320,8 @@ static int CLOVER_SYMBOL_TAG = 101;
     double currentVelocity = 0.5;
     // we random decelerationFactor so everytime we spin the wheel will give different result
 //    float decelerationFactor= [self randFloatBetween:0.025 and:0.008] ; //change this to determine how fast the wheel will slow down , default 0.015,
-    while (currentVelocity > 0.002 && self.isRotatingWheel) {
-        currentVelocity *= 0.9985;
+    while (currentVelocity > 0.0023 && self.isRotatingWheel) {
+        currentVelocity *= 0.9972;
         
         double netRotation = currentVelocity;
         if([_initialVelocity doubleValue] < 0) netRotation *= -1;
