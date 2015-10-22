@@ -292,7 +292,6 @@ class DataStore : NSObject{
         recentSearchedProfile = [UserProfile]()
         XAppDelegate.currentUser = UserProfile()
         let fileManager = NSFileManager.defaultManager()
-        NSUserDefaults.standardUserDefaults().removePersistentDomainForName(NSBundle.mainBundle().bundleIdentifier!)
         do {
             try fileManager.removeItemAtPath(UserProfile.filePath)
         } catch {
