@@ -315,14 +315,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             } else {
                 cell.changeHoroscopeSignViewWidthToZero()
             }
-            switch post.type {
-            case .OnYourMind:
-                cell.profileView.backgroundColor = UIColor.newsfeedMindColor()
-            case .Feeling:
-                cell.profileView.backgroundColor = UIColor.newsfeedFeelColor()
-            case .Story:
-                cell.profileView.backgroundColor = UIColor.newsfeedStoryColor()
-            }
             if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
                 cell.likeButton.userInteractionEnabled = false
             } else {

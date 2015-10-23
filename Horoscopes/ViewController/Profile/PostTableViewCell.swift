@@ -205,7 +205,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
             self.profileImageView.userInteractionEnabled = true
             self.profileImageView.addGestureRecognizer(imageGestureRecognizer)
-            })
+            switch self.post.type {
+                case .OnYourMind:
+                    self.profileView.backgroundColor = UIColor.newsfeedMindColor()
+                case .Feeling:
+                    self.profileView.backgroundColor = UIColor.newsfeedFeelColor()
+                case .Story:
+                    self.profileView.backgroundColor = UIColor.newsfeedStoryColor()
+            }
+        })
     }
     
     func configureUserPostUi() {
