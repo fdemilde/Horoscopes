@@ -47,7 +47,7 @@ class FollowTableViewCell: UITableViewCell {
         horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: profile.sign)
         Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                profileImageView?.image = image
+                self.profileImageView?.image = image
             })
         })
     }

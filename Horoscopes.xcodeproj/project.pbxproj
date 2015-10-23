@@ -10,10 +10,10 @@
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
 		7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
-		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */; settings = {ASSET_TAGS = (); }; };
-		704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; };
+		704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */; };
+		704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */; };
+		704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */; };
 		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
 		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
@@ -26,16 +26,16 @@
 		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
 		70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
-		70EBD4471BBBDE9400045572 /* NewsfeedTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBD4461BBBDE9400045572 /* NewsfeedTableHeaderView.swift */; settings = {ASSET_TAGS = (); }; };
-		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; settings = {ASSET_TAGS = (); }; };
+		70EBD4471BBBDE9400045572 /* NewsfeedTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBD4461BBBDE9400045572 /* NewsfeedTableHeaderView.swift */; };
+		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD741B99536C0047185F /* CMPopTipView.m */; };
 		F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD761B99575E0047185F /* MyDatePickerView.swift */; };
 		F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */; };
 		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
-		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; settings = {ASSET_TAGS = (); }; };
-		F42099281BCE030300BF1736 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099271BCE030300BF1736 /* CacheManager.swift */; settings = {ASSET_TAGS = (); }; };
+		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; };
+		F42099281BCE030300BF1736 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099271BCE030300BF1736 /* CacheManager.swift */; };
 		F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E288F1B37C8ED00466CAA /* ShareViewController.swift */; };
 		F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E28911B37CA8F00466CAA /* ShareButton.swift */; };
 		F42E28A71B37D14100466CAA /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28971B37D14100466CAA /* share_facebook.png */; };
@@ -52,9 +52,9 @@
 		F42E28B21B37D14100466CAA /* share_viber@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A21B37D14100466CAA /* share_viber@2x.png */; };
 		F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A31B37D14100466CAA /* share_whatsapp.png */; };
 		F42E28B41B37D14100466CAA /* share_whatsapp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28A41B37D14100466CAA /* share_whatsapp@2x.png */; };
-		F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4241BBA38F0002DCAD5 /* SettingsTableCell.swift */; settings = {ASSET_TAGS = (); }; };
-		F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4261BBA38FE002DCAD5 /* ArchiveCalendarCell.swift */; settings = {ASSET_TAGS = (); }; };
-		F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */; settings = {ASSET_TAGS = (); }; };
+		F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4241BBA38F0002DCAD5 /* SettingsTableCell.swift */; };
+		F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4261BBA38FE002DCAD5 /* ArchiveCalendarCell.swift */; };
+		F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
 		F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */; };
@@ -1046,6 +1046,7 @@
 				F4CACA0F1B1EBE16003C6301 /* Frameworks */,
 				F4CACA101B1EBE16003C6301 /* Resources */,
 				4A12D8C476D7497CBBD704A1 /* Copy Pods Resources */,
+				CA0BCD24553AA3950606555D /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1236,6 +1237,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CA0BCD24553AA3950606555D /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E4D19316B1A9333F33C03617 /* Check Pods Manifest.lock */ = {
