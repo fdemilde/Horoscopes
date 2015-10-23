@@ -435,15 +435,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if result.isCancelled {
                     completionHandler(error: nil, permissionGranted: false)
                 } else {
-                    var permissionSet = Set<String>()
                     for permission in permissions {
-                        permissionSet.insert(permission)
+                        if result.declinedPermissions.contains(permission) {
+                            completionHandler(error: nil, permissionGranted: false)
+                            return
+                        }
                     }
-                    if result.grantedPermissions == permissionSet {
-                        completionHandler(error: nil, permissionGranted: true)
-                    } else {
-                        completionHandler(error: nil, permissionGranted: false)
-                    }
+                    completionHandler(error: nil, permissionGranted: true)
                 }
             }
         }

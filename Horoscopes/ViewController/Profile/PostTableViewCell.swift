@@ -339,7 +339,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                         let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
                         controller.userPost = post
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            viewController.navigationController?.pushViewController(controller, animated: true)
+                            self.viewController.navigationController?.pushViewController(controller, animated: true)
                         })
                     }
                 }

@@ -390,7 +390,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
-            navigationController?.pushViewController(controller, animated: true)
+            self.navigationController?.pushViewController(controller, animated: true)
         })
     }
 
