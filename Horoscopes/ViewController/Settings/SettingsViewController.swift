@@ -181,7 +181,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         var label = ""
         var isOnString = ""
         if (XAppDelegate.userSettings.notifyOfNewHoroscope == true) {
-            self.setLocalPush()
+            Utilities.registerForRemoteNotification()
+            Utilities.setLocalPush(self.getSelectedTime())
             isOnString = "Yes"
             return
         } else {
@@ -245,7 +246,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func doneSelectingTime(time : NSDate){
         
-        if(!XAppDelegate.userSettings.notifyOfNewHoroscope){
+        if(XAppDelegate.userSettings.notifyOfNewHoroscope == false){
             XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }
         notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
@@ -255,26 +256,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: helpers
-    func setLocalPush(){
-        UIApplication.sharedApplication().cancelAllLocalNotifications()
-        let localNotification = UILocalNotification()
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let dateComps = NSCalendar.currentCalendar().components(components, fromDate: NSDate().dateByAddingTimeInterval(24*3600)) // tomorrow date components
-        let selectedTime = self.getSelectedTime()
-        dateComps.hour = selectedTime.hour
-        dateComps.minute = selectedTime.minute
-        dateComps.second = 0
-        
-        let alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
-//        println("set local push == \(alertTime)")
-        localNotification.fireDate = alertTime
-        localNotification.timeZone = NSTimeZone.defaultTimeZone()
-        localNotification.repeatInterval = [.Day]
-        localNotification.alertBody = "Your Horoscope has arrived"
-        localNotification.soundName = "Glass.aiff"
-        localNotification.applicationIconBadgeNumber = 1
-        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
-    }
     
     func getSelectedTime() -> NSDateComponents{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]

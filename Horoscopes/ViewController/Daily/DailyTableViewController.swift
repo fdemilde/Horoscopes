@@ -38,7 +38,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         
-        if XAppDelegate.isFirstTimeUsing() {
+        if Utilities.isFirstTimeUsing() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
             parentViewController!.presentViewController(loginVC, animated: false, completion: nil)

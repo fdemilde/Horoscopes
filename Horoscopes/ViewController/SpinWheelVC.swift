@@ -50,7 +50,6 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         var horoscopesSigns = XAppDelegate.horoscopesManager.getHoroscopesSigns()
         var currentSign = "";
         let setting = XAppDelegate.userSettings
-        
         if (setting.horoscopeSign != -1){ // not load first time
             currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
             let index = setting.horoscopeSign
@@ -66,8 +65,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
                 }
             }
         } else {
-            setting.horoscopeSign = 8
-            currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
+//            setting.horoscopeSign = 8
+//            currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
+            currentSign = horoscopesSigns[8].sign;
         }
         //      Binh Modified
         

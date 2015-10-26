@@ -46,8 +46,13 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         fbLoginBtn.backgroundColor = UIColor.clearColor()
         fbLoginBtn.imageView!.clipsToBounds = true
         XAppDelegate.socialManager.delegate = self
+        if Utilities.isFirstTimeUsing() {
+            self.showNotificationEverydayAlert()
+        }
         self.setupComponents()
         self.initialBirthday()
+        
+        
     }
     
     func initialBirthday(){
@@ -161,6 +166,19 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         
     }
     
+    func showNotificationEverydayAlert(){
+            
+        let alertView: UIAlertView = UIAlertView()
+        
+        alertView.delegate = self
+        alertView.title = "Notify everyday"
+        alertView.message = "Do you want to receive the notification everyday?"
+        alertView.addButtonWithTitle("No")
+        alertView.addButtonWithTitle("Yes")
+        alertView.tag = 1
+        alertView.show()
+    }
+    
     // MARK: helpers
     
     func downloadImage(url:NSURL){
@@ -205,6 +223,35 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.pushToDailyViewController()
     }
     
+    // MARK: AlertView Delegate
+    
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if(buttonIndex == 1){
+            Utilities.registerForRemoteNotification()
+            Utilities.setLocalPush(getNotificationFiredTime())
+            XAppDelegate.userSettings.notifyOfNewHoroscope = true
+        }
+        
+        if(alertView.tag == 1){
+            let alertView: UIAlertView = UIAlertView()
+            
+            alertView.delegate = self
+            alertView.title = "Did you know?"
+            alertView.message = "You can change your horoscope sign and delivery preferences from the Settings page."
+            alertView.addButtonWithTitle("OK, I get it")
+            alertView.tag = 2
+            alertView.show()
+        }
+    }
+    
+    func getNotificationFiredTime() -> NSDateComponents{
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        
+        let date = Utilities.getDateFromDateString(NOTIFICATION_SETTING_DEFAULT_TIME, format: NOTIFICATION_SETTING_DATE_FORMAT)
+        
+        return NSCalendar.currentCalendar().components(components, fromDate: date)
+    }
+    
     // MARK: Button handlers
     
     func startButtonTapped(sender:UIButton!)
@@ -229,7 +276,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             })
         }
         
-        if((FBSDKAccessToken .currentAccessToken()) != nil){
+        if(XAppDelegate.socialManager.isLoggedInFacebook()){
             // server sign is 1 - 12
             XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
             })

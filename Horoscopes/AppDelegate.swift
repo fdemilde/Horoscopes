@@ -27,7 +27,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // hide status bar
         UIApplication.sharedApplication().statusBarHidden = true
         self.setupGAITracker()
-        registerForRemoteNotification()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         
@@ -109,12 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     // MARK: Helpers
-    func isFirstTimeUsing() -> Bool {
-        if(userSettings.horoscopeSign == -1){
-            return true
-        } else { return false }
-        
-    }
     
     func registerForRemoteNotification(){
         if #available(iOS 8.0, *) {

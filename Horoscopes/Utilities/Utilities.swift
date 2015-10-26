@@ -382,6 +382,50 @@ class Utilities {
         }
         return key
     }
+    
+    // MARK: Local Notification
+    
+    class func registerForRemoteNotification(){
+        if #available(iOS 8.0, *) {
+            let types : UIUserNotificationType = [.Sound, .Badge, .Alert]
+            let notifSettings = UIUserNotificationSettings(forTypes: types, categories: nil)
+            UIApplication.sharedApplication().registerUserNotificationSettings(notifSettings)
+        } else {
+            // Fallback on earlier versions
+            let types : UIRemoteNotificationType = [.Sound, .Badge, .Alert]
+            UIApplication.sharedApplication().registerForRemoteNotificationTypes(types)
+        }
+    }
+    
+    class func isFirstTimeUsing() -> Bool {
+        if(XAppDelegate.userSettings.horoscopeSign == -1){
+            return true
+        } else { return false }
+        
+    }
+    
+    
+    class func setLocalPush(dateComponents : NSDateComponents){
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        let localNotification = UILocalNotification()
+        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let dateComps = NSCalendar.currentCalendar().components(components, fromDate: NSDate().dateByAddingTimeInterval(24*3600)) // tomorrow date components
+        let selectedTime = dateComponents
+        dateComps.hour = selectedTime.hour
+        dateComps.minute = selectedTime.minute
+        dateComps.second = 0
+        
+        let alertTime = NSCalendar.currentCalendar().dateFromComponents(dateComps)
+        //        println("set local push == \(alertTime)")
+        localNotification.fireDate = alertTime
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        localNotification.repeatInterval = [.Day]
+        localNotification.alertBody = "Your Horoscope has arrived"
+        localNotification.soundName = "Glass.aiff"
+        localNotification.applicationIconBadgeNumber = 1
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    }
+    
 }
 
 

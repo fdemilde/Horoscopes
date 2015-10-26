@@ -554,12 +554,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject(token, forKey: "device_token")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SERVER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-            print("registerServerNotificationToken == \(response)")
+//            print("registerServerNotificationToken == \(response)")
             let success = response["success"] as! Int
             if(success == 1){
-                print("registerServerNotificationToken successful")
+//                print("registerServerNotificationToken successful")
             } else {
-                print("registerServerNotificationToken failed")
+//                print("registerServerNotificationToken failed")
             }
         })
     }
