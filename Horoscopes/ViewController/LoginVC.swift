@@ -211,6 +211,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             UILabel.setAnimationDuration(0.6)
             self.signNameLabel.alpha = 1
             UILabel.commitAnimations()
+            XAppDelegate.userSettings.birthday = newValue.startDate
+            initialBirthday()
         } else {
             self.signNameLabel.text = ""
             self.signDateLabel.text = ""
