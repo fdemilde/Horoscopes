@@ -239,16 +239,99 @@ class HoroscopesManager : NSObject {
     }
     
     func getSignNameOfDate(date : NSDate) -> String{
-        for index in 0...11 {
-            if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
-            let horoscope = self.horoscopesSigns[index]
-            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
-                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
-                    return horoscope.sign
+        let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        let flags = NSCalendarUnit(rawValue: UInt.max)
+        let components = gregorian.components(flags, fromDate: date)
+        let month = components.month
+        let day = components.day
+        var sign = ""
+        switch month {
+        case 1:
+            if day >= 20 {
+                sign = "Aquarius"
+            } else {
+                sign = "Capricorn"
             }
+        case 2:
+            if day >= 19 {
+                sign = "Pisces"
+            } else {
+                sign = "Aquarius"
+            }
+        case 3:
+            if day >= 21 {
+                sign = "Aries"
+            } else {
+                sign = "Pisces"
+            }
+        case 4:
+            if day >= 20 {
+                sign = "Taurus"
+            } else {
+                sign = "Aries"
+            }
+        case 5:
+            if day >= 21 {
+                sign = "Gemini"
+            } else {
+                sign = "Taurus"
+            }
+        case 6:
+            if day >= 22 {
+                sign = "Cancer"
+            } else {
+                sign = "Gemini"
+            }
+        case 7:
+            if day >= 23 {
+                sign = "Leo"
+            } else {
+                sign = "Cancer"
+            }
+        case 8:
+            if day >= 23 {
+                sign = "Virgo"
+            } else {
+                sign = "Leo"
+            }
+        case 9:
+            if day >= 23 {
+                sign = "Libra"
+            } else {
+                sign = "Virgo"
+            }
+        case 10:
+            if day >= 23 {
+                sign = "Scorpio"
+            } else {
+                sign = "Libra"
+            }
+        case 11:
+            if day >= 22 {
+                sign = "Sagittarius"
+            } else {
+                sign = "Scorpio"
+            }
+        case 12:
+            if day >= 22 {
+                sign = "Capricorn"
+            } else {
+                sign = "Sagittarius"
+            }
+        default:
+            return ""
         }
-        let horoscope = horoscopesSigns[9]
-        return horoscope.sign
+        return sign
+//        for index in 0...11 {
+//            if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
+//            let horoscope = self.horoscopesSigns[index]
+//            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
+//                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
+//                    return horoscope.sign
+//            }
+//        }
+//        let horoscope = horoscopesSigns[9]
+//        return horoscope.sign
     }
 }
 

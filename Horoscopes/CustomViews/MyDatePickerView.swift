@@ -9,7 +9,7 @@
 import Foundation
 
 @objc protocol MyDatePickerViewDelegate {
-    optional func didFinishPickingDate(dayString : String, monthString : String)
+    optional func didFinishPickingDate(dayString : String, monthString : String, yearString: String)
 }
 
 class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
@@ -25,6 +25,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     var dateArray = [String]()
     var selectedMonthIndex = 0
     var selectedDayIndex = 0
+    var selectedYearIndex = 0
     var currentSignIndex = 0
     var selectedView : UIView!
     var oldView : UIView!
@@ -59,7 +60,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     // returns the number of 'columns' to display.
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         
-        return 2
+        return 3
     }
     
     func pickerView(pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
@@ -105,18 +106,21 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if(component == 0){
+        switch component {
+        case 0:
             dateArray = getDayArrayBaseOnMonthIndex(row)
             pickerView.reloadComponent(1)
             selectedMonthIndex = row
             if((selectedDayIndex + 1) > dateArray.count){
                 selectedDayIndex = dateArray.count - 1
             }
-            
-        } else if(component == 1) {
+        case 1:
             selectedDayIndex = row
+        case 2:
+            selectedYearIndex = row
+        default: break
         }
-        delegate.didFinishPickingDate?(dateArray[selectedDayIndex], monthString: monthArray[selectedMonthIndex])
+        delegate.didFinishPickingDate?(dateArray[selectedDayIndex], monthString: monthArray[selectedMonthIndex], yearString: yearArray[selectedYearIndex])
         
     }
     
@@ -126,8 +130,10 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         var currentDateArray = self.getMonthAndDayIndexByDate(birthday)
         picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
         picker.selectRow(currentDateArray[1], inComponent: 1, animated: false)
+        picker.selectRow(currentDateArray[2], inComponent: 2, animated: false)
         selectedDayIndex = currentDateArray[1]
         selectedMonthIndex = currentDateArray[0]
+        selectedYearIndex = currentDateArray[2]
         dateArray = getDayArrayBaseOnMonthIndex(selectedMonthIndex)
     }
     
@@ -142,6 +148,8 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         dateFormatter.dateFormat = "d"
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
+        dateFormatter.dateFormat = "y"
+        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1930)
         return dateArray
     }
     

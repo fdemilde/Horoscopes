@@ -358,11 +358,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     // DatePickerView Delegate
-    func didFinishPickingDate(dayString: String, monthString: String) {
+    func didFinishPickingDate(dayString: String, monthString: String, yearString: String) {
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        let dateString = String(format:"%@/%@",dayString,monthString)
+        let dateString = String(format:"%@/%@/%@",dayString,monthString, yearString)
         let selectedDate = dateFormatter.dateFromString(dateString)
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
         self.birthday = selectedDate
@@ -372,7 +372,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func getDateStringInNumberFormat(date : NSDate) -> String{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
         let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
-        let result = String(format:"%d/%02d", comp.day, comp.month)
+        let result = String(format:"%d/%02d/%04d", comp.day, comp.month, comp.year)
         return result
     }
     
