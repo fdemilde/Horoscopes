@@ -27,8 +27,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        router = XAppDelegate.mobilePlatform.router
-        setupRouter()
+        
         
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
@@ -145,103 +144,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 self.notifArray.sortInPlace({ $0.created > $1.created })
                 self.tableView.reloadData()
             })
-        })
-    }
-    
-    // MARK: Router handler
-    
-    func setupRouter(){
-        router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
-            print("Route == today param dict = \(param)")
-        })
-        
-        router.addRoute("/today/fortunecookie", blockCode: { (param) -> Void in
-            print("Route == fortunecookie param dict = \(param)")
-        })
-        
-        router.addRoute("/archive", blockCode: { (param) -> Void in
-            print("Route == archive param dict = \(param)")
-        })
-        
-        router.addRoute("/archive/:date/:sign", blockCode: { (param) -> Void in
-            print("Route == archive param dict = \(param)")
-        })
-        
-        router.addRoute("/feed/global", blockCode: { (param) -> Void in
-            print("Route == global param dict = \(param)")
-        })
-        
-        router.addRoute("/feed/following", blockCode: { (param) -> Void in
-            print("Route == feed following param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
-            print("Route == feed param dict = \(param)")
-            let uid = param["uid"] as! String
-            Utilities.showHUD()
-            SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
-                Utilities.hideHUD()
-                if let _ = error {
-                    
-                } else {
-                    let userProfile = result![0]
-                    let controller = self.storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-                    controller.userProfile = userProfile
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.navigationController?.pushViewController(controller, animated: true)
-                    })
-                }
-            })
-        })
-        
-        router.addRoute("/profile/:uid/followers", blockCode: { (param) -> Void in
-            print("Route == followers param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/:uid/following", blockCode: { (param) -> Void in
-            print("Route == following param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me", blockCode: { (param) -> Void in
-            print("Route == profile me param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me/setsign", blockCode: { (param) -> Void in
-            print("Route == profile me setsign param dict = \(param)")
-        })
-        
-        router.addRoute("/profile/me/findfriends", blockCode: { (param) -> Void in
-            print("Route == profile findfriends param dict = \(param)")
-        })
-        
-        router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
-            print("Route == post with param dict = \(param)")
-        })
-        
-        router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
-            if let postId = param["post_id"] as? String{
-                Utilities.showHUD()
-                XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
-                    Utilities.hideHUD()
-                    if let _ = error {
-                        
-                    } else {
-                        if let result = result {
-                        for post : UserPost in result {
-                            let controller = self.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                            controller.userPost = post
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.navigationController?.pushViewController(controller, animated: true)
-                                })
-                            }
-                        }
-                    }
-                })
-            }
-        })
-        
-        router.addRoute("/settings", blockCode: { (param) -> Void in
-            print("Route == settings with param dict = \(param)")
         })
     }
     

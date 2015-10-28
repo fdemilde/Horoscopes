@@ -35,6 +35,7 @@ class NotificationTableViewCell: UITableViewCell {
         self.setNotificationType()
         self.setupComponents()
 //        self.getUserProfile()
+//        print("notif notif id = \(notif.notification_id)")
     }
     
     // resetUI

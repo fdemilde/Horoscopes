@@ -19,6 +19,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     var isLastFollowingPage = false
     var isLastFollowersPage = false
+    var isPushedFromNotification = false
     var currentFollowingPage: Int = 0 {
         didSet {
             if currentFollowingPage != 0 {
@@ -153,7 +154,12 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     }
     
     @IBAction func tapBackButton(sender: UIButton) {
-        navigationController?.popViewControllerAnimated(true)
+        if isPushedFromNotification {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        } else {
+            navigationController?.popViewControllerAnimated(true)
+        }
+        
     }
     
     @IBAction func tapFollowButton(sender: UIButton) {
