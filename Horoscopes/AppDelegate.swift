@@ -126,7 +126,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Test function with hardcoded location
     func sendLocation(){
-        print("sendLocation sendLocation sendLocation")
         let googleLink = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng=10.714407,106.735349"
         let url = NSURL(string: googleLink)
         let session = NSURLSession.sharedSession()
@@ -212,23 +211,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
     }
     
-    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject]) {
-//        print("didReceiveRemoteNotification didReceiveRemoteNotification AAAAAAA userInfo = \(userInfo)")
-        
+    func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         if let route = userInfo["route"] as? String{
             dispatch_async(dispatch_get_main_queue()) {
                 XAppDelegate.mobilePlatform.router.handleRoute(route)
             }
-            
         }
-        
     }
     
     // Route handle
     // MARK: Router handler
     
     func setupRouter(){
-        
         router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
             print("Route == today param dict = \(param)")
         })
@@ -254,7 +248,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
-            print("Route == feed param dict = \(param)")
             let uid = param["uid"] as! String
             Utilities.showHUD()
             SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
@@ -301,7 +294,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             if let postId = param["post_id"] as? String{
-//                print("Post ID ID == \(postId)")
                 Utilities.showHUD()
                 XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
                     Utilities.hideHUD()

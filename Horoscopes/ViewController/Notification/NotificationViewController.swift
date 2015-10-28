@@ -27,8 +27,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
