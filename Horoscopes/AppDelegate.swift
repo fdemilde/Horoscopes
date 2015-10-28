@@ -65,6 +65,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        let route = "/" + url.host! + url.path!
+        XAppDelegate.mobilePlatform.router.handleRoute(route)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
@@ -228,6 +230,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // MARK: Router handler
     
     func setupRouter(){
+        router.addRoute("/horoscope/:date") { (param) -> Void in
+            print("Route == horoscope date param dict = \(param)")
+        }
+        
+        router.addRoute("/horoscope/:date/:sign") { (param) -> Void in
+            print("Route == horoscope date and sign param dict = \(param)")
+        }
         
         router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
             print("Route == today param dict = \(param)")
