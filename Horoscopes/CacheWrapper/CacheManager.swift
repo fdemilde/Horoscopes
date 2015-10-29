@@ -158,4 +158,8 @@ class CacheManager {
         let cacheDict = NSKeyedUnarchiver.unarchiveObjectWithFile(NotificationObject.getFilePath()) as? Dictionary<String, AnyObject> ?? Dictionary<String, AnyObject>()
         return cacheDict
     }
+    
+    class func clearAllNotificationData() {
+        NSKeyedArchiver.archiveRootObject(Dictionary<String, AnyObject>(), toFile: NotificationObject.getFilePath())
+    }
 }

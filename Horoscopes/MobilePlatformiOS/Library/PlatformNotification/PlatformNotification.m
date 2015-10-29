@@ -165,7 +165,7 @@
     [sc sendRequest:@"notification.clear" withLoginRequired:OPTIONAL andPostData:params andCompleteBlock:^(NSDictionary *responseDict, NSError *error) {
         id uidObject = [responseDict objectForKey:@"cleared"];
         
-        DebugLog(@"clearWithListID return = %@" , responseDict);
+//        DebugLog(@"clearWithListID return = %@" , responseDict);
    
         completeBlock(uidObject);
     }];
