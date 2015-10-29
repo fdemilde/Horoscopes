@@ -49,6 +49,10 @@
     [originals setObject:route forKey:regex];
 }
 
+-(void)addDefaultHandler:(void(^)())block{
+    defaultHandler = block;
+}
+
 -(void)handleRoute:(NSString*)url{
     url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
     
@@ -60,8 +64,12 @@
             
             void (^ myblock)(NSDictionary*) = [handlers objectForKey:route];
             myblock(params);
-            break;
+            return;
         }
+    }
+    
+    if(defaultHandler != nil){
+        defaultHandler();
     }
 }
 

@@ -329,6 +329,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router.addRoute("/settings", blockCode: { (param) -> Void in
             print("Route == settings with param dict = \(param)")
         })
+        
+        // set router default handler which will redirect to main page
+        router.addDefaultHandler { () -> Void in
+            if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                rootVC?.selectedIndex = 0
+            }
+        }
     }
 }
 

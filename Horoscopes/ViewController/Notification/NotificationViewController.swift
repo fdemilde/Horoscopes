@@ -34,7 +34,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.delegate = self
         tableView.layer.cornerRadius = 4
         tableView.clipsToBounds = true
-        
         tableView.addSubview(refreshControl)
     }
     

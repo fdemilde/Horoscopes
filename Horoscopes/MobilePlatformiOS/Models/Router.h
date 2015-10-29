@@ -13,10 +13,12 @@
     NSMutableArray* routes;
     NSMutableDictionary* originals;
     NSMutableDictionary* handlers;
+    void(^defaultHandler)();
 }
 @property (copy)void (^doStuff)(void);
 -(NSString *)toRegex:(NSString*)route;
 -(int) routeCount;
 -(void)addRoute:(NSString *)route blockCode:(void(^)(NSDictionary* param))block;
+-(void)addDefaultHandler:(void(^)())block;
 -(void)handleRoute:(NSString*) url;
 @end
