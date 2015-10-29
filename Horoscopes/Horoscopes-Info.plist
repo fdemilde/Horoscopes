@@ -98,5 +98,9 @@
 	<false/>
 	<key>privacy - location usage description</key>
 	<string></string>
+    <key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
 </dict>
 </plist>
