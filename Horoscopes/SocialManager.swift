@@ -614,8 +614,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             listIds.append(notification.notification_id)
         }
         XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
-            print("clearAllNotification result = \(result)")
+//            print("clearAllNotification result = \(result)")
         })
+        CacheManager.clearAllNotificationData()
     }
     
     // MARK: Helpers
