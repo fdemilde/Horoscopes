@@ -23,6 +23,11 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         self.setupWheel()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        view.addSubview(wheel)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         wheel.removeFromSuperview()
@@ -77,7 +82,6 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         wheel = RotateControl(frame: frame, andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray, andCurrentSign: currentSign)
         
         self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
-        self.view.addSubview(self.wheel);
     }
     
     func wheelDidChangeValue(newValue : Horoscope?){
