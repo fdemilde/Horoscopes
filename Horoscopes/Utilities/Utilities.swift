@@ -427,6 +427,29 @@ class Utilities {
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     }
     
+    // Tabbar Helpers
+    class func getNotificationViewController() -> NotificationViewController? {
+        if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+            let tabbarVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+            for nav in tabbarVC!.viewControllers! {
+                let nav = nav as! UINavigationController
+                if let vc = nav.viewControllers.first { // every tab in tabbar vc is a Navigation bar with vc as first element
+                    if vc.isKindOfClass( NotificationViewController.classForCoder() ) {
+                        let notificationViewController = vc as! NotificationViewController
+                        return notificationViewController
+                    }
+                }
+            }
+        }
+        return nil
+    }
+    
+    class func updateNotificationBadge(){
+        if (XAppDelegate.window!.rootViewController!.isKindOfClass(CustomTabBarController)){
+            let tabbarViewController = XAppDelegate.window!.rootViewController! as! CustomTabBarController
+            tabbarViewController.updateNotificationBadge()
+        }
+    }
 }
 
 

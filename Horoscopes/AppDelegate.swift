@@ -23,6 +23,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var router : Router!
     var userLocation : CLLocation!
     
+    var badge = 0 as Int
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // hide status bar
@@ -199,6 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let deviceTokenString = String(format:"%@",deviceToken)
+        NSLog("didRegisterForRemoteNotificationsWithDeviceToken = %@", deviceTokenString)
         XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
     
@@ -214,11 +217,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
-        if let route = userInfo["route"] as? String{
-            dispatch_async(dispatch_get_main_queue()) {
-                XAppDelegate.mobilePlatform.router.handleRoute(route)
+        if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
+            badge++
+            Utilities.updateNotificationBadge()
+            
+            
+        } else {
+            if let route = userInfo["route"] as? String{
+                dispatch_async(dispatch_get_main_queue()) {
+                    XAppDelegate.mobilePlatform.router.handleRoute(route)
+                }
             }
         }
+        
     }
     
     // Route handle

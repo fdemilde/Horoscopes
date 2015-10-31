@@ -50,6 +50,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         settingItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
+        
     }
     
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
@@ -84,6 +85,16 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
                     dailyVC.reloadData()
                 }
             }
+        }
+        
+    }
+    
+    func updateNotificationBadge(){
+        let notifItem = self.tabBar.items![2]
+        if(XAppDelegate.badge == 0){
+            notifItem.badgeValue = nil
+        } else {
+            notifItem.badgeValue = "\(XAppDelegate.badge)"
         }
         
     }
