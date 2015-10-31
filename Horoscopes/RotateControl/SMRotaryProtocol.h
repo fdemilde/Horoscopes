@@ -11,7 +11,7 @@
 
 @protocol SMRotaryProtocol <NSObject>
 
-- (void) wheelDidChangeValue:(Horoscope*)newValue;
+- (void) wheelDidChangeValue:(Horoscope*)newValue becauseOf:(BOOL)autoRoll;
 - (void) doneSelectedSign;
 
 @end

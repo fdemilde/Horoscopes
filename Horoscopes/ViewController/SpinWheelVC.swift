@@ -84,7 +84,8 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
     }
     
-    func wheelDidChangeValue(newValue : Horoscope?){
+    func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
+        
     }
     
     func doneSelectedSign(){

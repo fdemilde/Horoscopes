@@ -173,9 +173,10 @@ class Utilities {
     
     class func getDefaultBirthday() -> NSDate{ // return default birthday for first load
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM"
+        dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        return dateFormatter.dateFromString("25/11")!
+        let defaultDate = dateFormatter.dateFromString("25/11/\(defaultYear)")!
+        return defaultDate
     }
     
     // MARK: Alert

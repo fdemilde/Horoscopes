@@ -130,7 +130,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         
     }
     
-    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];    
+    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:YES];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
     [self addGestureRecognizer:tap];
@@ -186,7 +186,7 @@ static int CLOVER_SYMBOL_TAG = 101;
             //set alpha to make it focus
             [self highlightSelectedSign];
             //notify the delegate
-            [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+            [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
         }
         else //user selected the sign => save and go back
         {
@@ -232,7 +232,7 @@ static int CLOVER_SYMBOL_TAG = 101;
             
             //unhighlight all icons
             [self unhighlightAllSigns];
-            [self.delegate wheelDidChangeValue:nil];
+            [self.delegate wheelDidChangeValue:nil becauseOf:NO];
 //            if(!self.thread){
 //                self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(playRotationAnimation:) object:[NSNumber numberWithDouble:velocity.x]];
 //            }
@@ -260,7 +260,7 @@ static int CLOVER_SYMBOL_TAG = 101;
             if(currentValue!=oldValue)
             {
                 [self highlightSelectedSign];
-                [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+                [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
             }
         }
     }
@@ -295,7 +295,7 @@ static int CLOVER_SYMBOL_TAG = 101;
         }
         currentValue = (currentValue + 8) % 12;
         [self highlightSelectedSign];
-        if(currentValue!=oldValue) [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+        if(currentValue!=oldValue) [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
     }
     else if (recognizer.state == UIGestureRecognizerStateBegan)
     {
@@ -365,7 +365,7 @@ static int CLOVER_SYMBOL_TAG = 101;
     container.transform = CGAffineTransformRotate(container.transform, -newVal);
     [UIView commitAnimations];
     [self highlightSelectedSign];
-    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
 
 }
 
@@ -383,7 +383,7 @@ static int CLOVER_SYMBOL_TAG = 101;
     //set alpha to make it focus
     [self highlightSelectedSign];
     //notify the delegate
-    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue]];
+    [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:YES];
 }
 
 

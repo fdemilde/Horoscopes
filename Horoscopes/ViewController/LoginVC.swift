@@ -196,8 +196,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     // MARK: Delegata methods
     
-    override func wheelDidChangeValue(newValue : Horoscope?){
-        
+    override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
@@ -211,14 +210,23 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             UILabel.setAnimationDuration(0.6)
             self.signNameLabel.alpha = 1
             UILabel.commitAnimations()
-            XAppDelegate.userSettings.birthday = newValue.startDate
-            initialBirthday()
+            if !autoRoll {
+                let newDateComponents = NSCalendar.currentCalendar().components([.Month, .Day], fromDate: newValue.startDate)
+                if let appDelegateBirthday = XAppDelegate.userSettings.birthday {
+                    let oldDateComponent = NSCalendar.currentCalendar().components([.Year], fromDate: appDelegateBirthday)
+                    newDateComponents.year = oldDateComponent.year
+                } else {
+                    newDateComponents.year = defaultYear
+                }
+                let newDate = NSCalendar.currentCalendar().dateFromComponents(newDateComponents)
+                XAppDelegate.userSettings.birthday = newDate
+                initialBirthday()
+            }
         } else {
             self.signNameLabel.text = ""
             self.signDateLabel.text = ""
             return
         }
-        
     }
     
     override func doneSelectedSign(){
