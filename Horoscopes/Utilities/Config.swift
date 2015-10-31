@@ -10,7 +10,7 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
-let defaultYear = 1930
+let defaultYear = 2000
 
 // MARK: - Post Date Format
 
