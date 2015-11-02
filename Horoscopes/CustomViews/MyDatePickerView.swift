@@ -30,7 +30,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     var selectedView : UIView!
     var oldView : UIView!
     var delegate : MyDatePickerViewDelegate!
-    var yearArray : [String]!
+    var yearStringArray = [""]
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -40,19 +40,13 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         self.addSubview(picker)
         self.clipsToBounds = true
         dateArray = dayArray31
-        yearArray = setupYearArray()
+        for year in yearArray {
+            yearStringArray.append(String(year))
+        }
     }
     
     required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
-    }
-    
-    func setupYearArray() -> [String]!{
-        var result = [String]()
-        for var index = 1930; index < 2050; ++index {
-            result.append("\(index)")
-        }
-        return result
     }
     
     // MARK: Picker view datasource & Delegate
@@ -81,7 +75,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         } else if component == 1{
             string = dateArray[row]
         } else {
-            string = yearArray[row]
+            string = yearStringArray[row]
         }
         let attString = NSAttributedString(string: string, attributes: [NSForegroundColorAttributeName:UIColor.whiteColor()])
         pickerLabel!.attributedText = attString
@@ -101,7 +95,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         } else if (component == 1){
             return dateArray.count
         } else {
-            return yearArray.count
+            return yearStringArray.count
         }
     }
     
@@ -120,7 +114,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
             selectedYearIndex = row
         default: break
         }
-        delegate.didFinishPickingDate?(dateArray[selectedDayIndex], monthString: monthArray[selectedMonthIndex], yearString: yearArray[selectedYearIndex])
+        delegate.didFinishPickingDate?(dateArray[selectedDayIndex], monthString: monthArray[selectedMonthIndex], yearString: yearStringArray[selectedYearIndex])
         
     }
     
@@ -148,8 +142,20 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         dateFormatter.dateFormat = "d"
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
-        dateFormatter.dateFormat = "y"
-        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1930)
+        
+        let components = NSCalendar.currentCalendar().components(.Year, fromDate: date)
+        let year = components.year
+        var yearIndex = 0
+        for (index, element) in yearStringArray.enumerate() {
+            if let y = Int(element) {
+                if year == y {
+                    yearIndex = index
+                    break
+                }
+            }
+        }
+        dateArray.append(yearIndex)
+        
         return dateArray
     }
     

@@ -10,7 +10,27 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
-let defaultYear = 2000
+let defaultYear = 1900
+var yearArray : [Int] {
+    var result = [Int]()
+    let calendar = NSCalendar.currentCalendar()
+    var nineteenYearsToNow = 1925
+    var thirteenYearsToNow = 2002
+    if #available(iOS 8.0, *) {
+        nineteenYearsToNow = calendar.component(.Year, fromDate: calendar.dateByAddingUnit(.Year, value: -90, toDate: NSDate(), options: .MatchStrictly)!)
+    } else {
+        // Fallback on earlier versions
+    }
+    if #available(iOS 8.0, *) {
+        thirteenYearsToNow = calendar.component(.Year, fromDate: calendar.dateByAddingUnit(.Year, value: -13, toDate: NSDate(), options: .MatchStrictly)!)
+    } else {
+        // Fallback on earlier versions
+    }
+    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; --year {
+        result.append(year)
+    }
+    return result
+}
 
 // MARK: - Post Date Format
 
