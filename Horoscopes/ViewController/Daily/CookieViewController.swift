@@ -64,11 +64,12 @@ class CookieViewController : ViewControllerWithAds{
         } else {
             self.populateCurrentFortune()
         }
+//        Utilities.setLocalPushForTesting()
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popViewControllerAnimated(true)
     }
     
     override func viewDidLayoutSubviews()

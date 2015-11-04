@@ -60,6 +60,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     // MARK: Button Actions
     
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
 }

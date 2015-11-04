@@ -3838,7 +3838,7 @@ on news things</string>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <connections>
-                                                        <action selector="cookieTapped:" destination="efF-06-zfn" eventType="touchUpInside" id="hnn-KC-Xr0"/>
+                                                        <action selector="cookieTapped" destination="efF-06-zfn" eventType="touchUpInside" id="1UV-f5-pNO"/>
                                                     </connections>
                                                 </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cookie_btn_icon" translatesAutoresizingMaskIntoConstraints="NO" id="gXw-UY-cG1">

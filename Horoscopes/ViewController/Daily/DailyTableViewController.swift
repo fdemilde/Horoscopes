@@ -39,7 +39,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
         if Utilities.isFirstTimeUsing() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
@@ -292,11 +291,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         presentViewController(controller, animated: true, completion: nil)
     }
     
-    @IBAction func cookieTapped(sender: AnyObject) {
+    @IBAction func cookieTapped() {
 //        isCookieTapped = true
-        let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
-        cookieViewController.parentVC = self
-        self.navigationController!.pushViewController(cookieViewController, animated: true)
+        dispatch_async(dispatch_get_main_queue(),{
+            let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+            cookieViewController.parentVC = self
+            self.navigationController!.pushViewController(cookieViewController, animated: true)
+        })
     }
     // MARK: - Delegate
     

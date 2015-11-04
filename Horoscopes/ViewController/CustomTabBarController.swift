@@ -59,6 +59,12 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
             for nav in viewControllers {
                 let nav = nav as! UINavigationController
                 let vc = nav.viewControllers.first!
+                if(tabBarController.selectedIndex == 0){ // pop to root view controller which is daily view. This is to make sure when use go back to daily view it'll show daily view instead of Cookie or Archive view
+                    if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
+                        if(nav.viewControllers.count > 1) { nav.popToRootViewControllerAnimated(true) }
+                    }
+                }
+                
                 if ((lastSelectedIndex == 0) && tabBarController.selectedIndex == 0){
                     if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
                         if XAppDelegate.userSettings.horoscopeSign != -1 {

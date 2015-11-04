@@ -427,21 +427,60 @@ class Utilities {
         UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
     }
     
-    // Tabbar Helpers
-    class func getNotificationViewController() -> NotificationViewController? {
+    class func setLocalPushForTesting(){
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        let localNotification = UILocalNotification()
+        //        println("set local push == \(alertTime)")
+        let time = NSDate().timeIntervalSince1970 + 8
+        localNotification.fireDate = NSDate(timeIntervalSince1970: time)
+        localNotification.timeZone = NSTimeZone.defaultTimeZone()
+        localNotification.repeatInterval = [.Day]
+        localNotification.alertBody = "Test arrived"
+        localNotification.soundName = "Glass.aiff"
+        localNotification.applicationIconBadgeNumber = 1
+        UIApplication.sharedApplication().scheduleLocalNotification(localNotification)
+    }
+    
+    // MARK: Tabbar Helpers
+//    class func getNotificationViewController() -> NotificationViewController? {
+//        if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+//            let tabbarVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+//            for nav in tabbarVC!.viewControllers! {
+//                let nav = nav as! UINavigationController
+//                if let vc = nav.viewControllers.first { // every tab in tabbar vc is a Navigation bar with vc as first element
+//                    if vc.isKindOfClass( NotificationViewController.classForCoder() ) {
+//                        let notificationViewController = vc as! NotificationViewController
+//                        return notificationViewController
+//                    }
+//                }
+//            }
+//        }
+//        return nil
+//    }
+    
+    class func getViewController(className : AnyClass) -> UIViewController? {
         if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
             let tabbarVC = XAppDelegate.window!.rootViewController! as? UITabBarController
             for nav in tabbarVC!.viewControllers! {
                 let nav = nav as! UINavigationController
                 if let vc = nav.viewControllers.first { // every tab in tabbar vc is a Navigation bar with vc as first element
-                    if vc.isKindOfClass( NotificationViewController.classForCoder() ) {
-                        let notificationViewController = vc as! NotificationViewController
-                        return notificationViewController
+                    if vc.isKindOfClass(className) {
+                        return vc
                     }
                 }
             }
         }
         return nil
+    }
+    
+    class func popCurrentViewControllerToTop(){ // this will pop current viewcontroller to its top viewcontroller
+        if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+            let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+            for nav in rootVC!.viewControllers! {
+                let navController = nav as! UINavigationController
+                navController.popToRootViewControllerAnimated(false)
+            }
+        }
     }
     
     class func updateNotificationBadge(){

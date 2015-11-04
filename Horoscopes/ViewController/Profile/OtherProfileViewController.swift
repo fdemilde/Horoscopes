@@ -154,11 +154,11 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     }
     
     @IBAction func tapBackButton(sender: UIButton) {
-        if isPushedFromNotification {
-            self.dismissViewControllerAnimated(true, completion: nil)
-        } else {
+//        if isPushedFromNotification {
+//            self.dismissViewControllerAnimated(true, completion: nil)
+//        } else {
             navigationController?.popViewControllerAnimated(true)
-        }
+//        }
         
     }
     
