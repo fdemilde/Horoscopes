@@ -368,10 +368,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     // DatePickerView Delegate
-    func didFinishPickingDate(dayString: String, monthString: String, yearString: String) {
+    func didFinishPickingDate(dayString: String, monthString: String, var yearString: String) {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        yearString = yearString == "" ? String(defaultYear) : yearString
         let dateString = String(format:"%@/%@/%@",dayString,monthString, yearString)
         let selectedDate = dateFormatter.dateFromString(dateString)
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)

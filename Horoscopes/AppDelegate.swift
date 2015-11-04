@@ -68,7 +68,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         let route = "/" + url.host! + url.path!
-        XAppDelegate.mobilePlatform.router.handleRoute(route)
+        if url.host! != "authorize" {
+            XAppDelegate.mobilePlatform.router.handleRoute(route)
+        }
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     

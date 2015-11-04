@@ -147,6 +147,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         
         textView.attributedText = att as! NSAttributedString
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+            likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        } else {
+            likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+        }
     }
     
     func configureCellForNewsfeed(post: UserPost) {
@@ -160,11 +165,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             })
         })
         profileNameLabel.text = post.user?.name
-        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-            likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        } else {
-            likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
-        }
+        
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if post.uid != XAppDelegate.currentUser.uid {
                 newsfeedFollowButton.userInteractionEnabled = true
@@ -182,7 +183,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     func configureCellForProfile(post: UserPost) {
-        configureUserPostUi()
         configureCell(post)
     }
     
@@ -214,10 +214,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                     self.profileView.backgroundColor = UIColor.newsfeedStoryColor()
             }
         })
-    }
-    
-    func configureUserPostUi() {
-        likeButton.hidden = true
     }
     
     func changeHoroscopeSignViewWidthToZero() {
