@@ -1046,6 +1046,7 @@
 				F4CACA0F1B1EBE16003C6301 /* Frameworks */,
 				F4CACA101B1EBE16003C6301 /* Resources */,
 				4A12D8C476D7497CBBD704A1 /* Copy Pods Resources */,
+				9D8D8471703AFA4DBCB7AEAE /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1236,6 +1237,21 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9D8D8471703AFA4DBCB7AEAE /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E4D19316B1A9333F33C03617 /* Check Pods Manifest.lock */ = {
