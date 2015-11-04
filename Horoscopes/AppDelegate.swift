@@ -201,7 +201,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let deviceTokenString = String(format:"%@",deviceToken)
-        NSLog("didRegisterForRemoteNotificationsWithDeviceToken = %@", deviceTokenString)
+//        NSLog("didRegisterForRemoteNotificationsWithDeviceToken = %@", deviceTokenString)
         XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
     
@@ -220,8 +220,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
             badge++
             Utilities.updateNotificationBadge()
-            
-            
         } else {
             if let route = userInfo["route"] as? String{
                 dispatch_async(dispatch_get_main_queue()) {
@@ -232,28 +230,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
     }
     
+    func application(application: UIApplication, didReceiveLocalNotification notification: UILocalNotification) {
+        if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
+            // do nothing
+        } else {
+            XAppDelegate.mobilePlatform.router.handleRoute("/today")
+        }
+    }
+    
     // Route handle
     // MARK: Router handler
     
     func setupRouter(){
+        router.addRoute("/today") { (param) -> Void in
+            print("Route == horoscope today param dict = \(param)")
+        }
+        
+        router.addRoute("/fortune", blockCode: { (param) -> Void in
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 0
+                }
+                if let dailyTableViewController = Utilities.getViewController(DailyTableViewController.classForCoder()) as? DailyTableViewController {
+                    dailyTableViewController.cookieTapped()
+                }
+                
+            })
+        })
+        
         router.addRoute("/horoscope/:date") { (param) -> Void in
             print("Route == horoscope date param dict = \(param)")
         }
         
-        router.addRoute("/horoscope/:date/:sign") { (param) -> Void in
-            print("Route == horoscope date and sign param dict = \(param)")
-        }
-        
-        router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
-            print("Route == today param dict = \(param)")
-        })
-        
-        router.addRoute("/today/fortunecookie", blockCode: { (param) -> Void in
-            print("Route == fortunecookie param dict = \(param)")
-        })
-        
         router.addRoute("/archive", blockCode: { (param) -> Void in
-            print("Route == archive param dict = \(param)")
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 0
+                }
+                if let dailyTableViewController = Utilities.getViewController(DailyTableViewController.classForCoder()) as? DailyTableViewController {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let controller = storyboard.instantiateViewControllerWithIdentifier("ArchiveViewController") as! ArchiveViewController
+                    dailyTableViewController.navigationController?.pushViewController(controller, animated: true)
+                }
+                
+            })
         })
         
         router.addRoute("/archive/:date/:sign", blockCode: { (param) -> Void in
@@ -268,25 +292,47 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Route == feed following param dict = \(param)")
         })
         
-        router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
-            let uid = param["uid"] as! String
-            Utilities.showHUD()
-            SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
-                Utilities.hideHUD()
-                if let _ = error {
-                    
-                } else {
-                    
-                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                    let userProfile = result![0]
-                    let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-                    controller.userProfile = userProfile
-                    controller.isPushedFromNotification = true
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        XAppDelegate.window!.rootViewController!.presentViewController(controller, animated: true,completion: nil)
-                    })
+        router.addRoute("/today/:id/:post_id/*info", blockCode: { (param) -> Void in
+            print("Route == today param dict = \(param)")
+        })
+        
+        router.addRoute("/profile/me/feed", blockCode: { (param) -> Void in
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 3
                 }
             })
+        })
+        
+        router.addRoute("/profile/:uid/feed", blockCode: { (param) -> Void in
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 3
+                }
+                let uid = param["uid"] as! String
+                Utilities.showHUD()
+                SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
+                    Utilities.hideHUD()
+                    if let _ = error {
+                        
+                    } else {
+                        
+                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                        let userProfile = result![0]
+                        let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                        controller.userProfile = userProfile
+//                        controller.isPushedFromNotification = true
+                        if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
+                            profileViewController.navigationController?.pushViewController(controller, animated: true)
+                        }
+                    }
+                })
+            })
+            
         })
         
         router.addRoute("/profile/:uid/followers", blockCode: { (param) -> Void in
@@ -314,39 +360,54 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
-            if let postId = param["post_id"] as? String{
-                Utilities.showHUD()
-                XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
-                    Utilities.hideHUD()
-                    if let _ = error {
-                        
-                    } else {
-                        
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        if let result = result {
-                            for post : UserPost in result {
-                                let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                                controller.userPost = post
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    XAppDelegate.window!.rootViewController!.presentViewController(controller, animated: true, completion: nil)
-                                })
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 2
+                }
+                if let postId = param["post_id"] as? String{
+                    Utilities.showHUD()
+                    XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
+                        Utilities.hideHUD()
+                        if let _ = error {
+                            
+                        } else {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if let result = result {
+                                for post : UserPost in result {
+                                    let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                                    controller.userPost = post
+                                    if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
+                                        notificationViewController.navigationController?.pushViewController(controller, animated: true)
+                                    }
+                                }
                             }
                         }
-                    }
-                })
-            }
+                    })
+                }
+            })
+            
         })
         
         router.addRoute("/settings", blockCode: { (param) -> Void in
-            print("Route == settings with param dict = \(param)")
+            dispatch_async(dispatch_get_main_queue(),{
+                Utilities.popCurrentViewControllerToTop()
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 4
+                }
+            })
         })
         
         // set router default handler which will redirect to main page
         router.addDefaultHandler { () -> Void in
-            if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
-                let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                rootVC?.selectedIndex = 0
-            }
+            dispatch_async(dispatch_get_main_queue(),{
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 0
+                }
+            })
         }
     }
 }

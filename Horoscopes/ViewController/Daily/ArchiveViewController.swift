@@ -36,6 +36,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
+//        Utilities.setLocalPushForTesting()
     }
     
     override func viewDidLayoutSubviews() {
@@ -47,7 +48,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        self.navigationController?.popViewControllerAnimated(true)
+//        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: UI
@@ -109,7 +110,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     // MARK: Buttons action
     @IBAction func backButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: TableView Delegate & Datasource
@@ -194,7 +195,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     // MARK: button Action
     
     @IBAction func backTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+        self.navigationController?.popToRootViewControllerAnimated(true)
     }
     
     // MARK: daily Content Cell Delegate

@@ -30,8 +30,9 @@ class LogOutViewController : UIViewController {
     }
     
     func clearNotification(){
-        if let notificationViewController = Utilities.getNotificationViewController() {
-            XAppDelegate.socialManager.clearAllNotification(notificationViewController.notifArray)
+        if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) {
+            let notificationVC = notificationViewController as! NotificationViewController
+            XAppDelegate.socialManager.clearAllNotification(notificationVC.notifArray)
         }
     }
 }
