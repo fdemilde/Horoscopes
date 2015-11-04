@@ -225,6 +225,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         } else {
             self.signNameLabel.text = ""
             self.signDateLabel.text = ""
+            birthdaySelectButton.setTitle("", forState: UIControlState.Normal)
             return
         }
     }
