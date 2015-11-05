@@ -39,6 +39,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     var userFBImageURL = ""
     var userFBBirthdayString = ""
     var birthday : NSDate!
+    var agreeToDailyPush = false
     
     
     override func viewDidLoad() {
@@ -236,21 +237,27 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     // MARK: AlertView Delegate
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
-        if(buttonIndex == 1){
-            Utilities.registerForRemoteNotification()
-            Utilities.setLocalPush(getNotificationFiredTime())
-            XAppDelegate.userSettings.notifyOfNewHoroscope = true
-        }
-        
         if(alertView.tag == 1){
+            if(buttonIndex == 0){
+                agreeToDailyPush = false
+            } else {
+                agreeToDailyPush = true
+            }
             let alertView: UIAlertView = UIAlertView()
-            
             alertView.delegate = self
             alertView.title = "Did you know?"
             alertView.message = "You can change your horoscope sign and delivery preferences from the Settings page."
             alertView.addButtonWithTitle("OK, I get it")
             alertView.tag = 2
             alertView.show()
+        }
+        
+        if(alertView.tag == 2){
+            if(buttonIndex == 0 && agreeToDailyPush == true){
+                Utilities.registerForRemoteNotification()
+                Utilities.setLocalPush(getNotificationFiredTime())
+                XAppDelegate.userSettings.notifyOfNewHoroscope = true
+            }
         }
     }
     

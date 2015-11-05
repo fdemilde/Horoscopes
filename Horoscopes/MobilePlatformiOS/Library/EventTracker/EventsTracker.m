@@ -51,7 +51,7 @@
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
     //NSString *appOpenCounter= [NSString stringWithFormat:@"%d", value];
     //NSLog(@"appOpenCounter = %d", appOpenCounter);
-    [defaults setObject:[NSString stringWithFormat:@"%d", appOpenCounter]
+    [defaults setObject:[NSString stringWithFormat:@"%d", appOpenCounter + 1]
                  forKey:defaultNumberOfTimesAppOpenSaveKey];
     [defaults synchronize];
 }

@@ -35,6 +35,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
         
+        XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
+        if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
+            Utilities.registerForRemoteNotification()
+        }
+        
         if(socialManager.isLoggedInZwigglers()){
             // sendLocation() // for testing
             locationManager.setupLocationService()
@@ -208,7 +213,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("didFailToRegisterForRemoteNotificationsWithError didFailToRegisterForRemoteNotificationsWithError")
+        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
     }
     
     // ios 8
