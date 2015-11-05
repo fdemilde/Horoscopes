@@ -67,10 +67,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
-        let route = "/" + url.host! + url.path!
-        if url.host! != "authorize" {
-            XAppDelegate.mobilePlatform.router.handleRoute(route)
+        var route = "/"
+        if let host = url.host {
+            if host == "authorize" {
+                return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+            }
+            route += host
         }
+        if let path = url.path {
+            route += path
+        }
+        XAppDelegate.mobilePlatform.router.handleRoute(route)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
     
