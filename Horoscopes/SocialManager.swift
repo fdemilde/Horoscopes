@@ -488,6 +488,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 if permissionGranted {
                     self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                        Utilities.registerForRemoteNotification()
                         if let error = error {
                             completionHandler(error: error, permissionGranted: false)
                         } else {

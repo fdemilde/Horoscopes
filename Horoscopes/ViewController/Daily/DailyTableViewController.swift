@@ -28,9 +28,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         if let parentViewController = self.tabBarController as? CustomTabBarController{
             selectedSign = parentViewController.selectedSign
         }
-        if !Utilities.isFirstTimeUsing(){
-            Utilities.registerForRemoteNotification()
-        }
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         tableView.backgroundView = UIImageView(image: backgroundImage)
