@@ -888,6 +888,13 @@
                                                                                 <constraint firstAttribute="height" constant="20" id="zuZ-4T-Z0d"/>
                                                                             </constraints>
                                                                         </imageView>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S8a-ae-7wH" userLabel="Post Type Label">
+                                                                            <rect key="frame" x="522" y="102" width="0.0" height="0.0"/>
+                                                                            <animations/>
+                                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
+                                                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                            <nil key="highlightedColor"/>
+                                                                        </label>
                                                                     </subviews>
                                                                     <animations/>
                                                                     <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
@@ -900,10 +907,12 @@
                                                                         <constraint firstAttribute="trailing" secondItem="4MM-TI-ig3" secondAttribute="trailing" id="B7D-O0-Ns8"/>
                                                                         <constraint firstItem="fiI-bz-aJe" firstAttribute="centerY" secondItem="KSC-qN-6gT" secondAttribute="centerY" id="CrB-x1-VDH"/>
                                                                         <constraint firstAttribute="trailing" secondItem="KDj-6R-ejn" secondAttribute="trailing" constant="8" id="L2a-Zf-jdi"/>
+                                                                        <constraint firstItem="S8a-ae-7wH" firstAttribute="leading" secondItem="fiI-bz-aJe" secondAttribute="trailing" constant="5" id="NTW-uc-AcD"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" constant="20" id="Rj3-c0-8ZB"/>
                                                                         <constraint firstItem="4MM-TI-ig3" firstAttribute="top" secondItem="KSC-qN-6gT" secondAttribute="bottom" constant="10" id="S3C-5y-cCC"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" constant="10" id="SnN-WB-r8v"/>
                                                                         <constraint firstItem="4MM-TI-ig3" firstAttribute="top" secondItem="KDj-6R-ejn" secondAttribute="bottom" constant="8" id="V56-Xk-cha"/>
+                                                                        <constraint firstItem="S8a-ae-7wH" firstAttribute="centerY" secondItem="KDj-6R-ejn" secondAttribute="centerY" id="ZA0-U9-KyV"/>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="top" secondItem="T1l-BR-e57" secondAttribute="top" constant="46" id="c6H-49-Bxp"/>
                                                                         <constraint firstItem="KSC-qN-6gT" firstAttribute="centerY" secondItem="fiI-bz-aJe" secondAttribute="centerY" id="fBn-Eb-t3B"/>
                                                                         <constraint firstAttribute="height" constant="150" id="fe3-Bf-dVR"/>
@@ -912,6 +921,7 @@
                                                                         <constraint firstItem="fiI-bz-aJe" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" constant="20" id="jqt-J2-DcP"/>
                                                                         <constraint firstItem="4MM-TI-ig3" firstAttribute="leading" secondItem="T1l-BR-e57" secondAttribute="leading" id="l82-36-5sc"/>
                                                                         <constraint firstItem="KSC-qN-6gT" firstAttribute="leading" secondItem="fiI-bz-aJe" secondAttribute="trailing" id="nTp-XP-Xoz"/>
+                                                                        <constraint firstItem="KDj-6R-ejn" firstAttribute="leading" secondItem="S8a-ae-7wH" secondAttribute="trailing" constant="30" id="nss-1W-bMb"/>
                                                                         <constraint firstItem="fiI-bz-aJe" firstAttribute="top" secondItem="6Dr-gD-tyy" secondAttribute="bottom" constant="6" id="v2W-Bu-AjN"/>
                                                                         <constraint firstAttribute="height" constant="150" id="w4T-oJ-dJ6"/>
                                                                     </constraints>
@@ -927,6 +937,7 @@
                                                                             <exclude reference="fBn-Eb-t3B"/>
                                                                             <exclude reference="2Ua-vG-y5R"/>
                                                                             <exclude reference="S3C-5y-cCC"/>
+                                                                            <exclude reference="NTW-uc-AcD"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
@@ -1105,6 +1116,7 @@
                                             <outlet property="newsfeedFollowButton" destination="KSC-qN-6gT" id="ldx-Hw-tXU"/>
                                             <outlet property="postDateLabel" destination="AUz-OP-Buw" id="cbz-SA-MOf"/>
                                             <outlet property="postTypeImageView" destination="KDj-6R-ejn" id="VR7-Bl-r04"/>
+                                            <outlet property="postTypeLabel" destination="S8a-ae-7wH" id="fk1-nS-p93"/>
                                             <outlet property="profileImageView" destination="rU9-3P-TxU" id="b1D-xJ-My8"/>
                                             <outlet property="profileNameLabel" destination="6Dr-gD-tyy" id="MoG-sm-tBz"/>
                                             <outlet property="profileView" destination="T1l-BR-e57" id="00d-kM-dy9"/>
