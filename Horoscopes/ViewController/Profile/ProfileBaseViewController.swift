@@ -74,6 +74,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         return refreshControl
         }()
+    var gradientLayer: CAGradientLayer!
+    var maskLayer: CAShapeLayer!
     
     // MARK: - Life cycle
 
@@ -83,11 +85,24 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
-        horoscopeSignView!.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
         horoscopeSignView!.layer.cornerRadius = 4
         horoscopeSignView!.clipsToBounds = true
         avatarImageView!.layer.cornerRadius = 60 / 2
         avatarImageView!.clipsToBounds = true
+        let centerPoint = CGPoint(x: avatarImageView.frame.origin.x + avatarImageView.frame.size.width/2, y: avatarImageView.frame.origin.y + avatarImageView.frame.height/2)
+        let radius = avatarImageView.frame.size.width/2 + 5
+        let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
+        circleLayer.fillColor = UIColor.clearColor().CGColor
+        let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
+        circleLayer.strokeColor = color.CGColor
+        profileView.layer.addSublayer(circleLayer)
+        profileView.backgroundColor = UIColor.redColor()
+        gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [UIColor(red: 75/255, green: 70/255, blue: 129/255, alpha: 1).CGColor, UIColor(red: 117/255, green: 105/255, blue: 157/255, alpha: 1).CGColor]
+        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
+        profileView.layer.insertSublayer(gradientLayer, atIndex: 0)
+        maskLayer = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -99,6 +114,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        gradientLayer.frame = CGRectMake(0, 0, profileView.frame.width, profileView.frame.height)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        maskLayer.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        profileView.layer.mask = maskLayer
     }
 
     override func didReceiveMemoryWarning() {
@@ -118,9 +144,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureScopeButton() {
-        postButton.setTitle("Post\n\(numberOfPosts)", forState: .Normal)
-        followingButton.setTitle("Following\n\(numberOfUsersFollowing)", forState: .Normal)
-        followersButton.setTitle("Followers\n\(numberOfFollowers)", forState: .Normal)
+        postButton.setTitle("Post: \(numberOfPosts)", forState: .Normal)
+        followingButton.setTitle("Following: \(numberOfUsersFollowing)", forState: .Normal)
+        followersButton.setTitle("Followers: \(numberOfFollowers)", forState: .Normal)
     }
     
     func highlightScopeButton(sender: UIButton) {
@@ -341,27 +367,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
             cell.configureCell(profile)
             return cell
-        }
-    }
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if currentScope == .Post {
-            // BINH BINH: check this again, it crashes, this is temporary fix
-            if let cell = cell as? PostTableViewCell {
-                // -----------------
-                let post = userPosts[indexPath.row]
-                switch post.type {
-                case .OnYourMind:
-                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedMindColor()
-                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedMindColorWithOpacity()
-                case .Feeling:
-                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedFeelColor()
-                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedFeelColorWithOpacity()
-                case .Story:
-                    cell.postTypeShadowUpper.backgroundColor = UIColor.newsfeedStoryColor()
-                    cell.postTypeShadowLower.backgroundColor = UIColor.newsfeedStoryColorWithOpacity()
-                }
-            }
         }
     }
     

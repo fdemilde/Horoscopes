@@ -9,6 +9,15 @@
 import Foundation
 class Utilities {
     
+    // MARK: - Construct a shape layer for drawing circle
+    class func layerForCircle(centerPoint: CGPoint, radius: CGFloat, lineWidth: CGFloat) -> CAShapeLayer {
+        let path = UIBezierPath(arcCenter: centerPoint, radius: radius, startAngle: 0, endAngle: CGFloat(M_PI*2), clockwise: true)
+        let layer = CAShapeLayer()
+        layer.path = path.CGPath
+        layer.lineWidth = lineWidth
+        return layer
+    }
+    
     // MARK: Parsing helpers
     class func parseNSDictionaryToDictionary(dict : NSDictionary) -> Dictionary<String, AnyObject>{
         var result = Dictionary<String, AnyObject>()

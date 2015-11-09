@@ -22,8 +22,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var likeNumberLabel: UILabel!
     @IBOutlet weak var actionView: UIView!
+    @IBOutlet weak var postTypeLabel: UILabel!
+    
     var viewController: UIViewController!
     var post: UserPost!
+    var isPostInProfileTab = false
     
     // MARK: - Newsfeed outlet
     
@@ -45,7 +48,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     // MARK: - Property
     let profileImageSize: CGFloat = 60
-    var postTypeLabel: UILabel!
     var topBorder: CALayer!
     let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
@@ -53,27 +55,16 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     var horoscopeSignImageViewWidthConstant: CGFloat = 18
     var horoscopeSignImageViewTrailingSpaceConstant: CGFloat = 5
     var horoscopeSignLabelTrailingSpaceConstant: CGFloat = 10
-    let postTypeTexts = [
-        "How do you feel today?",
-        "Share your story",
-        "What's on your mind?"
+    let postTypes = [
+        NewsfeedType.Feeling: ("post_type_feel", "How do you feel today?"),
+        NewsfeedType.Story: ("post_type_story", "Share your story"),
+        NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?")
     ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         textView.linkDelegate = self
-        containerView.layer.cornerRadius = 4
-        containerView.clipsToBounds = true
-        postTypeLabel = UILabel()
-        postTypeLabel.textColor = UIColor.whiteColor()
-        if #available(iOS 8.2, *) {
-            postTypeLabel.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
-        } else {
-            // Fallback on earlier versions
-            postTypeLabel.font = UIFont.systemFontOfSize(11)
-        }
-        addSubview(postTypeLabel)
         topBorder = CALayer()
         topBorder.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
         actionView.layer.addSublayer(topBorder)
@@ -93,9 +84,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     override func layoutSubviews() {
-        postTypeLabel.sizeToFit()
-        postTypeLabel.frame.origin = CGPoint(x: postTypeImageView.frame.origin.x + postTypeImageView.frame.width + 20, y: headerView.frame.height/2 - postTypeLabel.frame.height/2)
         topBorder.frame = CGRect(x: 0, y: 0, width: actionView.frame.width, height: 1)
+    }
+    
+    override func drawRect(rect: CGRect) {
+        super.drawRect(rect)
+        if isPostInProfileTab {
+            configurePostUi()
+        }
     }
     
     // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell
@@ -111,14 +107,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     func configureCell(post: UserPost) {
         self.post = post
-        switch post.type {
-        case .OnYourMind:
-            postTypeImageView.image = UIImage(named: "post_type_mind")
-        case .Feeling:
-            postTypeImageView.image = UIImage(named: "post_type_feel")
-        case .Story:
-            postTypeImageView.image = UIImage(named: "post_type_story")
-        }
+        postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
+        postTypeLabel.text = postTypes[post.type]!.1
         postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         var string = "\(post.message)"
         let font = UIFont(name: "Book Antiqua", size: 15)
@@ -167,7 +157,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     func configureCellForProfile(post: UserPost) {
+        isPostInProfileTab = true
         configureCell(post)
+    }
+    
+    private func configurePostUi() {
+        let maskLayer = CAShapeLayer()
+        maskLayer.path = UIBezierPath(roundedRect: containerView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        containerView.layer.mask = maskLayer
     }
     
     func configureNewsfeedUi() {
