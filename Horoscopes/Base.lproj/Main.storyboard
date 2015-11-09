@@ -6089,8 +6089,8 @@ on news things</string>
                                             <constraint firstAttribute="width" constant="60" id="l9z-rX-34F"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHO-9P-L2w">
-                                        <rect key="frame" x="110" y="10" width="0.0" height="0.0"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="Ken" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IHO-9P-L2w">
+                                        <rect key="frame" x="110" y="10" width="25" height="17"/>
                                         <animations/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -6135,7 +6135,7 @@ on news things</string>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F58-fy-g6k" userLabel="Tab View">
                                         <rect key="frame" x="0.0" y="76" width="580" height="44"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="fb8-Bj-PNh">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="fb8-Bj-PNh">
                                                 <rect key="frame" x="0.0" y="0.0" width="193" height="44"/>
                                                 <animations/>
                                                 <constraints>
@@ -6156,7 +6156,7 @@ on news things</string>
                                                     <action selector="tapPostButton:" destination="ZVC-aB-8v3" eventType="touchUpInside" id="Vfe-lI-0aE"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="b92-1m-SnN">
+                                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="b92-1m-SnN">
                                                 <rect key="frame" x="193" y="0.0" width="194" height="44"/>
                                                 <animations/>
                                                 <constraints>
@@ -6177,7 +6177,7 @@ on news things</string>
                                                     <action selector="tapFollowingButton:" destination="ZVC-aB-8v3" eventType="touchUpInside" id="GXH-aa-VBm"/>
                                                 </connections>
                                             </button>
-                                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="a46-c3-o5X">
+                                            <button opaque="NO" alpha="0.5" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="a46-c3-o5X">
                                                 <rect key="frame" x="387" y="0.0" width="193" height="44"/>
                                                 <animations/>
                                                 <constraints>
@@ -6231,6 +6231,13 @@ on news things</string>
                                         </constraints>
                                         <state key="normal" image="settings_btn"/>
                                     </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="London" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nmC-H0-SQq" userLabel="Location Label">
+                                        <rect key="frame" x="110" y="32" width="39" height="14"/>
+                                        <animations/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -6240,9 +6247,11 @@ on news things</string>
                                     <constraint firstItem="IHO-9P-L2w" firstAttribute="leading" secondItem="OQ5-Q1-1i1" secondAttribute="trailing" constant="15" id="N9a-Tr-shO"/>
                                     <constraint firstItem="fMH-qf-eM0" firstAttribute="leading" secondItem="OQ5-Q1-1i1" secondAttribute="trailing" constant="15" id="Qdo-1R-WUR"/>
                                     <constraint firstAttribute="height" constant="120" id="Qlw-VI-RKR"/>
+                                    <constraint firstItem="nmC-H0-SQq" firstAttribute="leading" secondItem="IHO-9P-L2w" secondAttribute="leading" id="SAC-ZL-4f2"/>
                                     <constraint firstItem="F58-fy-g6k" firstAttribute="leading" secondItem="dpl-KS-PRc" secondAttribute="leading" id="b5y-O7-iGH"/>
                                     <constraint firstItem="F58-fy-g6k" firstAttribute="top" secondItem="fMH-qf-eM0" secondAttribute="bottom" constant="8" id="bvg-Rd-ed2"/>
                                     <constraint firstItem="Ny6-uQ-dTF" firstAttribute="centerY" secondItem="fMH-qf-eM0" secondAttribute="centerY" id="cQE-kn-NWa"/>
+                                    <constraint firstItem="nmC-H0-SQq" firstAttribute="centerX" secondItem="IHO-9P-L2w" secondAttribute="centerX" id="fpu-ap-cTK"/>
                                     <constraint firstItem="IHO-9P-L2w" firstAttribute="top" secondItem="dpl-KS-PRc" secondAttribute="top" constant="10" id="gTP-Kw-vEm"/>
                                     <constraint firstItem="fMH-qf-eM0" firstAttribute="top" secondItem="IHO-9P-L2w" secondAttribute="bottom" constant="5" id="jpL-5v-ZXv"/>
                                     <constraint firstItem="Ny6-uQ-dTF" firstAttribute="leading" secondItem="fMH-qf-eM0" secondAttribute="trailing" constant="10" id="lC6-Xr-mka"/>
@@ -6250,11 +6259,13 @@ on news things</string>
                                     <constraint firstAttribute="bottom" secondItem="F58-fy-g6k" secondAttribute="bottom" id="rkv-E5-HIE"/>
                                     <constraint firstAttribute="height" constant="300" id="yER-aG-xrn"/>
                                     <constraint firstAttribute="bottom" secondItem="fMH-qf-eM0" secondAttribute="bottom" constant="40" id="yeX-As-9Xv"/>
+                                    <constraint firstItem="nmC-H0-SQq" firstAttribute="top" secondItem="IHO-9P-L2w" secondAttribute="bottom" constant="5" id="zBz-qd-onN"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="yER-aG-xrn"/>
                                         <exclude reference="bvg-Rd-ed2"/>
+                                        <exclude reference="fpu-ap-cTK"/>
                                         <exclude reference="jpL-5v-ZXv"/>
                                     </mask>
                                 </variation>
@@ -6292,8 +6303,8 @@ on news things</string>
                                                                         <constraint firstAttribute="width" constant="30" id="Pex-Fq-qMh"/>
                                                                     </constraints>
                                                                 </imageView>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sca-kL-8aN" userLabel="Post Type Label">
-                                                                    <rect key="frame" x="54" y="4" width="42" height="21"/>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sca-kL-8aN" userLabel="Post Type Label">
+                                                                    <rect key="frame" x="45" y="15" width="0.0" height="0.0"/>
                                                                     <animations/>
                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -6708,6 +6719,7 @@ on news things</string>
                         <outlet property="horoscopeSignImageView" destination="2qQ-d0-BfU" id="Daa-6j-Le4"/>
                         <outlet property="horoscopeSignLabel" destination="E25-Un-VBA" id="UdT-hR-uiE"/>
                         <outlet property="horoscopeSignView" destination="fMH-qf-eM0" id="KSb-8W-mgn"/>
+                        <outlet property="locationLabel" destination="nmC-H0-SQq" id="fvi-Rc-BJL"/>
                         <outlet property="nameLabel" destination="IHO-9P-L2w" id="IDX-z2-wwx"/>
                         <outlet property="postButton" destination="fb8-Bj-PNh" id="sz1-J0-k57"/>
                         <outlet property="profileView" destination="dpl-KS-PRc" id="XrA-aE-UgU"/>

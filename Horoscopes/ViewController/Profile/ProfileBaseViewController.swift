@@ -25,6 +25,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     @IBOutlet weak var tableLeadingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var tableBottomSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var locationLabel: UILabel!
     
     // MARK: - Property
     
@@ -141,6 +142,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             })
         })
         nameLabel.text = userProfile.name
+        locationLabel.text = userProfile.location
     }
     
     func configureScopeButton() {
