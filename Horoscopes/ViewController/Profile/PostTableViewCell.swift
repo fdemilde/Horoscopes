@@ -24,6 +24,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var actionView: UIView!
     @IBOutlet weak var postTypeLabel: UILabel!
     
+    @IBOutlet weak var headerBackgroundImage: UIImageView!
     var viewController: UIViewController!
     var post: UserPost!
     var isPostInProfileTab = false
@@ -161,6 +162,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     func configureNewsfeedUi() {
         dispatch_async(dispatch_get_main_queue(), {
+            self.headerBackgroundImage = Utilities.makeCornerRadius(self.headerBackgroundImage, maskFrame: self.headerBackgroundImage.bounds, roundOptions: [.TopLeft , .TopRight], radius: 4) as! UIImageView
+            self.actionView = Utilities.makeCornerRadius(self.actionView, maskFrame: self.actionView.bounds, roundOptions: [.BottomLeft , .BottomRight], radius: 4)
             self.horoscopeSignView.layer.cornerRadius = 4
             self.horoscopeSignView.clipsToBounds = true
             self.profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)

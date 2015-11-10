@@ -712,17 +712,17 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="postCell" rowHeight="428" id="c6k-iU-de5" customClass="PostTableViewCell" customModule="Horoscopes" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="postCell" rowHeight="428" id="c6k-iU-de5" customClass="PostTableViewCell" customModule="Horoscopes" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="580" height="428"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="c6k-iU-de5" id="q1g-d5-rbN">
                                             <rect key="frame" x="0.0" y="0.0" width="580" height="428"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4N-ah-9F3" userLabel="Cell View">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="w4N-ah-9F3" userLabel="Cell View">
                                                     <rect key="frame" x="0.0" y="10" width="580" height="408"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Y8-nM-GZK" userLabel="Container View">
+                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9Y8-nM-GZK" userLabel="Container View">
                                                             <rect key="frame" x="0.0" y="0.0" width="580" height="408"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T1l-BR-e57" userLabel="Profile View">
@@ -868,7 +868,7 @@
                                                                         </view>
                                                                     </subviews>
                                                                     <animations/>
-                                                                    <color key="backgroundColor" red="1" green="0.59607843140000005" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstItem="6Dr-gD-tyy" firstAttribute="top" secondItem="T1l-BR-e57" secondAttribute="top" constant="53" id="1I0-7V-tyK"/>
                                                                         <constraint firstAttribute="bottom" secondItem="4MM-TI-ig3" secondAttribute="bottom" id="1L3-CU-qWJ"/>
@@ -1069,6 +1069,7 @@
                                         <connections>
                                             <outlet property="actionView" destination="VUR-RX-tuv" id="adL-tV-Bje"/>
                                             <outlet property="containerView" destination="9Y8-nM-GZK" id="oql-yy-Dj8"/>
+                                            <outlet property="headerBackgroundImage" destination="DKl-ae-qYw" id="Axn-YZ-uN4"/>
                                             <outlet property="headerView" destination="4MM-TI-ig3" id="m1B-wo-2nm"/>
                                             <outlet property="horoscopeSignImageView" destination="Hk2-a5-WFc" id="qAz-94-l1i"/>
                                             <outlet property="horoscopeSignImageViewLeadingSpaceLayoutConstraint" destination="nlv-7W-Ozk" id="l0Q-Tn-JzA"/>

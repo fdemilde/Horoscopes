@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate {
+class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
 
     let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
     let NEWFEEDS_POST_FEEL_TEXT = "How do you feel today?"
@@ -27,14 +27,16 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     ]
     
     let defaultEstimatedRowHeight: CGFloat = 400
-    let addButtonSize: CGFloat = 40
-    var addButton: DCPathButton!
-    
+    let ADD_BUTTON_SIZE: CGFloat = 40
     let FB_BUTTON_SIZE = 80 as CGFloat
+    let POST_BUTTON_SIZE = CGSizeMake(100, 90)
+    var addButton: UIButton!
+    
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
+    
 //    var userPostArray = [UserPost]()
     var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
@@ -60,9 +62,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         setupView()
 //        self.resetTapButtonColor()
         self.setupInfiniteScroll()
-        tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:");
-        tableHeaderView.addGestureRecognizer(tapGestureRecognizer)
+        tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 40))
+        tableHeaderView.setupDate(NSDate())
         tableView.addSubview(refreshControl)
     }
     
@@ -76,11 +77,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
             Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableHeaderView.profileImageView.image = image
+//                    self.tableHeaderView.profileImageView.image = image
                 })
             })
         } else {
-            self.tableHeaderView.profileImageView.image = UIImage(named: "default_avatar")
+//            self.tableHeaderView.profileImageView.image = UIImage(named: "default_avatar")
         }
 
         if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
@@ -125,51 +126,45 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func setupAddPostButton() {
-        addButton = DCPathButton(centerImage: UIImage(named: "newsfeed_add_btn"), highlightedImage: UIImage(named: "newsfeed_add_btn"))
-        addButton.delegate = self
-        addButton.dcButtonCenter = CGPointMake(view.frame.width - addButtonSize/2 - 10, view.frame.height - addButtonSize - TABBAR_HEIGHT)
-        addButton.allowCenterButtonRotation = true
-        addButton.bloomRadius = 145
-        addButton.bloomDirection = kDCPathButtonBloomDirection.DCPathButtonBloomDirectionTop
-        addButton.bloomAngel = 0
-        
-        let itemButton_1 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_FEEL_IMG_NAME))
-        let itemButton_2 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_STORY_IMG_NAME))
-        let itemButton_3 = DCPathItemButton(image: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), highlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME), backgroundHighlightedImage: UIImage(named: NEWFEEDS_POST_MIND_IMG_NAME))
-        addButton.addPathItems([itemButton_1, itemButton_2, itemButton_3])
-        
-        addButton.addButtonText([NEWFEEDS_POST_FEEL_TEXT, NEWFEEDS_POST_STORY_TEXT, NEWFEEDS_POST_MIND_TEXT])
-        
+        addButton = UIButton(frame: CGRectMake(view.frame.width - ADD_BUTTON_SIZE - 10, view.frame.height - ADD_BUTTON_SIZE - TABBAR_HEIGHT - 10, ADD_BUTTON_SIZE, ADD_BUTTON_SIZE))
+        addButton.addTarget(self, action: "postButtonTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        addButton.setImage(UIImage(named: "newsfeed_add_btn"), forState: .Normal)
         
         // setup overlay
         overlay = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
         overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        overlay.hidden = true
+        overlay.alpha = 0
+        
         view.addSubview(overlay)
         view.bringSubviewToFront(overlay)
+        
+        let overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "overlayTapGestureRecognizer:")
+        overlay.addGestureRecognizer(overlayTapGestureRecognizer)
+        
         view.addSubview(addButton)
         view.bringSubviewToFront(addButton)
     }
     
-    // MARK: Post buttons clicked
-    // DCPathButton Delegate
-    //
-    func pathButton(dcPathButton: DCPathButton!, clickItemButtonAtIndex itemButtonIndex: UInt) {
-        overlay.hidden = true
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let controller = storyboard.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
-        controller.type = postTypes[Int(itemButtonIndex)][2]
-        controller.placeholder = postTypes[Int(itemButtonIndex)][0]
-        controller.parentVC = self
-        self.presentViewController(controller, animated: true, completion: nil)
+    // MARK: Post buttons handlers
+    func postButtonTapped(){
+        overlayFadeIn()
+        
     }
     
-    func centerButtonTapped(){
-        if(addButton.isBloom()){
-            overlay.hidden = true
-        } else {
-            overlay.hidden = false
-        }
+    func overlayTapGestureRecognizer(recognizer: UITapGestureRecognizer){
+        overlayFadeout()
+    }
+    
+    func overlayFadeIn(){
+        UIView.animateWithDuration(0.2, animations: {
+            self.overlay.alpha = 1.0
+        })
+    }
+    
+    func overlayFadeout(){
+        UIView.animateWithDuration(0.2, animations: {
+            self.overlay.alpha = 0
+        })
     }
     // MARK: Notification Handlers
     
@@ -204,12 +199,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         
         tableView.reloadData()
         refreshControl.endRefreshing()
-    }
-    
-    func handleTap(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
-            addButton.centerButtonTapped()
-        }
     }
     
     @IBAction func globalBtnTapped(sender: AnyObject) {
