@@ -10,7 +10,6 @@ import UIKit
 
 class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, DCPathButtonDelegate {
 
-    @IBOutlet weak var tableView: UITableView!
     let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
     let NEWFEEDS_POST_FEEL_TEXT = "How do you feel today?"
     
@@ -33,6 +32,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     let FB_BUTTON_SIZE = 80 as CGFloat
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
 //    var userPostArray = [UserPost]()
@@ -58,7 +58,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-        self.resetTapButtonColor()
+//        self.resetTapButtonColor()
         self.setupInfiniteScroll()
         tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 50))
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:");
@@ -115,13 +115,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         // Do any additional setup after loading the view.
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
-        tableView.estimatedRowHeight = defaultEstimatedRowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
+        tableView?.estimatedRowHeight = defaultEstimatedRowHeight
+        tableView?.rowHeight = UITableViewAutomaticDimension
         self.setupAddPostButton()
         // create tabView shadow
-        tabView.layer.shadowOffset = CGSize(width: 0, height: 1)
-        tabView.layer.shadowOpacity = 0.2
-        tabView.layer.shadowRadius = 1
+        tabView?.layer.shadowOffset = CGSize(width: 0, height: 1)
+        tabView?.layer.shadowOpacity = 0.2
+        tabView?.layer.shadowRadius = 1
     }
     
     func setupAddPostButton() {
@@ -179,7 +179,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             if(notif.object == nil){
                 self.tableView.finishInfiniteScroll()
             } else {
-                self.resetTapButtonColor()
                 let newDataArray = notif.object as! [UserPost]
                 self.insertRowsAtBottom(newDataArray)
             }
@@ -223,7 +222,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         XAppDelegate.dataStore.resetPage()
         if(self.tabType != NewsfeedTabType.Global){
             self.tabType = NewsfeedTabType.Global
-            self.resetTapButtonColor()
             tableView.reloadData()
         }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
@@ -241,7 +239,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         XAppDelegate.dataStore.resetPage()
         if(self.tabType != NewsfeedTabType.Following){
             self.tabType = NewsfeedTabType.Following
-            self.resetTapButtonColor()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){
                 tableView.reloadData()
                 
@@ -374,25 +371,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: Helpers
-    
-    func resetTapButtonColor(){ // change button color based on state
-        let blackColorWithOpacity = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
-        switch self.tabType {
-            // Use Internationalization, as appropriate.
-        case NewsfeedTabType.Global:
-            globalButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            followingButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
-            break
-        case NewsfeedTabType.Following:
-            globalButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
-            followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            break
-        default:
-            globalButton.setTitleColor(blackColorWithOpacity, forState: UIControlState.Normal)
-            followingButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-            break
-        }
-    }
     
     func setupInfiniteScroll(){
         tableView.infiniteScrollIndicatorStyle = .White

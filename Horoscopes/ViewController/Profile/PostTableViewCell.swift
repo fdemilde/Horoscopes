@@ -47,7 +47,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     
     // MARK: - Property
-    let profileImageSize: CGFloat = 80
+    let profileImageSize: CGFloat = 60
     var topBorder: CALayer!
     let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
@@ -102,7 +102,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.textView.text = ""
             self.postDateLabel.text = ""
             self.likeNumberLabel.text = ""
-            self.newsfeedFollowButton.setImage(nil, forState: .Normal)
         })
     }
     
@@ -155,21 +154,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             })
         })
         profileNameLabel.text = post.user?.name
-        
-        if SocialManager.sharedInstance.isLoggedInFacebook() {
-            if post.uid != XAppDelegate.currentUser.uid {
-                newsfeedFollowButton.userInteractionEnabled = true
-                if post.user!.isFollowed {
-                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_followed_btn"), forState: .Normal)
-                } else {
-                    newsfeedFollowButton.setImage(UIImage(named: "newsfeed_follow_btn"), forState: .Normal)
-                }
-            } else {
-                newsfeedFollowButton.userInteractionEnabled = false
-            }
-        } else {
-            newsfeedFollowButton.userInteractionEnabled = false
-        }
     }
     
     func configureCellForProfile(post: UserPost) {
@@ -185,16 +169,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     func configureNewsfeedUi() {
         dispatch_async(dispatch_get_main_queue(), {
-            self.containerView.layer.cornerRadius = 4
-            self.containerView.clipsToBounds = true
-            self.horoscopeSignView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.2)
             self.horoscopeSignView.layer.cornerRadius = 4
             self.horoscopeSignView.clipsToBounds = true
             self.profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
             self.profileImageView.layer.shadowOpacity = 0.6
             self.profileImageView.layer.shadowRadius = 2
             self.profileImageView.clipsToBounds = false
-            self.headerView.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.2)
             self.profileImageView.layer.cornerRadius = self.profileImageSize / 2
             self.profileImageView.clipsToBounds = true
             
@@ -204,14 +184,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
             self.profileImageView.userInteractionEnabled = true
             self.profileImageView.addGestureRecognizer(imageGestureRecognizer)
-            switch self.post.type {
-                case .OnYourMind:
-                    self.profileView.backgroundColor = UIColor.newsfeedMindColor()
-                case .Feeling:
-                    self.profileView.backgroundColor = UIColor.newsfeedFeelColor()
-                case .Story:
-                    self.profileView.backgroundColor = UIColor.newsfeedStoryColor()
-            }
         })
     }
     
@@ -224,61 +196,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     func changeHoroscopeSignViewWidthToDefault() {
         horoscopeSignImageViewLeadingSpaceLayoutConstraint.constant = horoscopeSignImageViewLeadingSpaceConstant
+        
         horoscopeSignImageViewWidthLayoutConstraint.constant = horoscopeSignImageViewWidthConstant
         horoscopeSignImageViewTrailingSpaceLayoutConstraint.constant = horoscopeSignImageViewTrailingSpaceConstant
         horoscopeSignLabelTrailingSpaceLayoutConstraint.constant = horoscopeSignLabelTrailingSpaceConstant
-    }
-    
-    @IBAction func tapNewsfeedFollowButton(sender: UIButton) {
-//        viewController = viewController as! NewsfeedViewController
-        let hud = MBProgressHUD.showHUDAddedTo(viewController.view, animated: true)
-        SocialManager.sharedInstance.isFollowing(post.uid, followerId: XAppDelegate.currentUser.uid) { (result, error) -> Void in
-            if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    hud.hide(true)
-                })
-                Utilities.showError(error, viewController: self.viewController)
-            } else {
-                let isFollowing = result!["isfollowing"] as! Int == 1
-                hud.detailsLabelFont = UIFont.systemFontOfSize(11)
-                let name = self.post.user!.name
-                if isFollowing {
-                    SocialManager.sharedInstance.unfollow(self.post.user!, completionHandler: { (error) -> Void in
-                        hud.mode = MBProgressHUDMode.Text
-                        if let _ = error {
-                            hud.detailsLabelText = "Unfollow unsuccessully due to network error!"
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        } else {
-                            hud.detailsLabelText = "\(name) has been removed from your Following list."
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                let parentVC = self.viewController as! NewsfeedViewController
-                                parentVC.tableView.reloadData()
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        }
-                    })
-                } else {
-                    SocialManager.sharedInstance.follow(self.post.user!, completionHandler: { (error) -> Void in
-                        hud.mode = MBProgressHUDMode.Text
-                        if let _ = error {
-                            hud.detailsLabelText = "Follow unsuccessully due to network error!"
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        } else {
-                            hud.detailsLabelText = "\(name) has been added to your Following list."
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                                let parentVC = self.viewController as! NewsfeedViewController
-//                                parentVC.tableView.reloadData()
-                                hud.hide(true, afterDelay: 2)
-                            })
-                        }
-                    })
-                }
-            }
-        }
     }
     
     func tapProfile(sender: UITapGestureRecognizer) {

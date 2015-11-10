@@ -34,7 +34,7 @@ var yearArray : [Int] {
 
 // MARK: - Post Date Format
 
-let postDateFormat = "MMMM dd, yyyy"
+let postDateFormat = "h:mm a, MMM dd, yyyy"
 
 // MARK: Network request
 let GET_DATA_METHOD  = "app.horoscopes.checkin" //debug.logrequest for testing event.upload for actual
