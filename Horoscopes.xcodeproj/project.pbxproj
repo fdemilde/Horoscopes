@@ -26,7 +26,7 @@
 		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
 		70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
-		70EBD4471BBBDE9400045572 /* NewsfeedTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBD4461BBBDE9400045572 /* NewsfeedTableHeaderView.swift */; };
+		70EBD4471BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */; };
 		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
@@ -105,6 +105,7 @@
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
 		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
+		F4A63E9A1BF1A24F0016B27A /* NewsfeedTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
 		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
@@ -219,7 +220,7 @@
 		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTableViewController.swift; sourceTree = "<group>"; };
 		70DB1DD01B998E8300218063 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		70EBD4461BBBDE9400045572 /* NewsfeedTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableHeaderView.swift; sourceTree = "<group>"; };
+		70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableOldHeaderView.swift; sourceTree = "<group>"; };
 		70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileCounts.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -302,6 +303,7 @@
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
+		F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableHeaderView.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
@@ -675,7 +677,8 @@
 			isa = PBXGroup;
 			children = (
 				7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */,
-				70EBD4461BBBDE9400045572 /* NewsfeedTableHeaderView.swift */,
+				70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */,
+				F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -1315,7 +1318,7 @@
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
-				70EBD4471BBBDE9400045572 /* NewsfeedTableHeaderView.swift in Sources */,
+				70EBD4471BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift in Sources */,
 				70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */,
 				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
@@ -1335,6 +1338,7 @@
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
+				F4A63E9A1BF1A24F0016B27A /* NewsfeedTableHeaderView.swift in Sources */,
 				705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */,
 				704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
