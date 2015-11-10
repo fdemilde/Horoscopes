@@ -27,6 +27,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         "onyourmind"
     ]
     var headerHeight: CGFloat = 0
+    var noPostView: NoPostView!
     
     // MARK: - Life cycle
 
@@ -73,6 +74,11 @@ class CurrentProfileViewController: ProfileBaseViewController {
         } else {
             configureLoginView()
         }
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        noPostView = NoPostView(frame: tableView.frame)
     }
 
     override func didReceiveMemoryWarning() {
@@ -241,10 +247,11 @@ class CurrentProfileViewController: ProfileBaseViewController {
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.backgroundView = nil
         if currentScope == .Post {
             if noPost {
                 changeToWhiteTableViewLayout()
-                return 3
+                tableView.backgroundView = noPostView
             } else {
                 changeToClearTableViewLayout()
             }
@@ -273,38 +280,12 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 }
                 return cell
             }
-        } else {
-            if noPost {
-                if let cell = tableView.dequeueReusableCellWithIdentifier("NoPostTableViewCell") {
-                    configureNoPostTableViewCell(cell, index: indexPath.row)
-                    return cell
-                } else {
-                    let cell = UITableViewCell(style: UITableViewCellStyle.Default, reuseIdentifier: "NoPostTableViewCell")
-                    configureNoPostTableViewCell(cell, index: indexPath.row)
-                    return cell
-                }
-            }
         }
         return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if noPost {
-            return 64
-        }
-        return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
-    }
-    
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        switch currentScope {
-        case .Post:
-            if noPost {
-                let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
-                controller.type = postTypes[indexPath.row]
-                controller.placeholder = postTypeTexts[indexPath.row]
-                self.presentViewController(controller, animated: true, completion: nil)
-            }
-        default:
+        if currentScope != .Post {
             var profile: UserProfile!
             if currentScope == .Following {
                 if noFollowingUser {
@@ -319,6 +300,10 @@ class CurrentProfileViewController: ProfileBaseViewController {
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
         }
+//                let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+//                controller.type = postTypes[indexPath.row]
+//                controller.placeholder = postTypeTexts[indexPath.row]
+//                self.presentViewController(controller, animated: true, completion: nil)
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

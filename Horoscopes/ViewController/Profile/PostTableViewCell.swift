@@ -47,8 +47,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     
     // MARK: - Property
-    let profileImageSize: CGFloat = 60
-    var topBorder: CALayer!
+    let profileImageSize: CGFloat = 80
     let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
     var horoscopeSignImageViewLeadingSpaceConstant: CGFloat = 10
@@ -65,9 +64,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         super.awakeFromNib()
         // Initialization code
         textView.linkDelegate = self
-        topBorder = CALayer()
-        topBorder.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
-        actionView.layer.addSublayer(topBorder)
         for subview in subviews {
             for constraint in subview.constraints {
                 if constraint.identifier == "textViewHeight" {
@@ -81,10 +77,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
-    }
-    
-    override func layoutSubviews() {
-        topBorder.frame = CGRect(x: 0, y: 0, width: actionView.frame.width, height: 1)
     }
     
     override func drawRect(rect: CGRect) {
@@ -105,7 +97,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         })
     }
     
-    func configureCell(post: UserPost) {
+    private func configureCell(post: UserPost) {
         self.post = post
         postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
         postTypeLabel.text = postTypes[post.type]!.1

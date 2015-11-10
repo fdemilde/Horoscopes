@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
+class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -76,7 +76,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         return refreshControl
         }()
     var gradientLayer: CAGradientLayer!
-    var maskLayer: CAShapeLayer!
+    var topCorner: CAShapeLayer!
+    var bottomCorner: CAShapeLayer!
     
     // MARK: - Life cycle
 
@@ -103,7 +104,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
         gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
         profileView.layer.insertSublayer(gradientLayer, atIndex: 0)
-        maskLayer = CAShapeLayer()
+        topCorner = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -111,7 +112,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableViewAutomaticDimension
-        tableView.layer.cornerRadius = 4
+        bottomCorner = CAShapeLayer()
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
@@ -124,8 +125,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        maskLayer.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
-        profileView.layer.mask = maskLayer
+        topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        profileView.layer.mask = topCorner
+        bottomCorner.path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        tableView.layer.mask = bottomCorner
     }
 
     override func didReceiveMemoryWarning() {
@@ -342,7 +345,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch currentScope {
         case .Post:
-            return userPosts.count
+//            return userPosts.count
+            return 0
         case .Following:
             return followingUsers.count
         case .Followers:
@@ -369,6 +373,16 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
             cell.configureCell(profile)
             return cell
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if currentScope == .Post {
+            let postCell = cell as! PostTableViewCell
+            let dividerLayer = CALayer()
+            dividerLayer.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
+            dividerLayer.frame = CGRect(x: 0, y: postCell.containerView.frame.height - 40, width: postCell.containerView.frame.width, height: 0.5)
+            postCell.containerView.layer.addSublayer(dividerLayer)
         }
     }
     

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
+		7021E2F11BF1D87A00C275AE /* NoPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7021E2F01BF1D87A00C275AE /* NoPostView.swift */; };
 		7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
 		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; };
@@ -201,6 +202,7 @@
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
+		7021E2F01BF1D87A00C275AE /* NoPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostView.swift; sourceTree = "<group>"; };
 		7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
 		704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
@@ -488,6 +490,7 @@
 				70C973101BA672E50059D77A /* ProfileBaseViewController.swift */,
 				70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */,
 				70C973141BA6893E0059D77A /* OtherProfileViewController.swift */,
+				7021E2F01BF1D87A00C275AE /* NoPostView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -1321,6 +1324,7 @@
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
+				7021E2F11BF1D87A00C275AE /* NoPostView.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */,
