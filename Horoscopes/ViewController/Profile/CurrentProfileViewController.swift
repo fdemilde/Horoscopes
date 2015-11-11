@@ -21,11 +21,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         "newfeeds_post_story",
         "newfeeds_post_mind"
     ]
-    let postTypes = [
-        "feeling",
-        "story",
-        "onyourmind"
-    ]
+    
     var headerHeight: CGFloat = 0
     var noPostView: PostButtonsView!
     
@@ -79,6 +75,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         noPostView = PostButtonsView(frame: tableView.frame)
+        noPostView.hostViewController = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -300,10 +297,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
         }
-//                let controller = storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
-//                controller.type = postTypes[indexPath.row]
-//                controller.placeholder = postTypeTexts[indexPath.row]
-//                self.presentViewController(controller, animated: true, completion: nil)
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

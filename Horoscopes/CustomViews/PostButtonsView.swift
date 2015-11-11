@@ -19,6 +19,7 @@ class PostButtonsView: UIView {
     var fortuneLabel: UILabel!
     var mindLabel: UILabel!
     let POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_story")!.size
+    var hostViewController: UIViewController!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -111,12 +112,19 @@ class PostButtonsView: UIView {
         return CGRectMake(buttonPositionX, buttonPositionY, POST_BUTTON_SIZE.width, POST_BUTTON_SIZE.height)
     }
     
+    private func configureViewController(type: String, placeholder: String) {
+        let controller = hostViewController.storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+        controller.type = type
+        controller.placeholder = placeholder
+        hostViewController.presentViewController(controller, animated: true, completion: nil)
+    }
+    
     func storyButtonTapped(sender: UIButton) {
-        print("button \(sender) tapped")
+        configureViewController("story", placeholder: "Share your story")
     }
     
     func feelButtonTapped(sender: UIButton) {
-        print("button \(sender) tapped")
+        configureViewController("feeling", placeholder: "How do you feel today?")
     }
     
     func fortuneButtonTapped(sender: UIButton) {
@@ -124,7 +132,7 @@ class PostButtonsView: UIView {
     }
     
     func mindButtonTapped(sender: UIButton) {
-        print("button \(sender) tapped")
+        configureViewController("onyourmind", placeholder: "What's on your mind?")
     }
 
     /*
