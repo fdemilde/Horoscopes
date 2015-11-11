@@ -13,7 +13,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     // MARK: - Outlet
     
     @IBOutlet weak var newsfeedFollowButton: UIButton!
-    @IBOutlet weak var searchBar: UISearchBar!
+//    @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: - Property
     
@@ -63,18 +63,23 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        let textField = searchBar.valueForKey("searchField") as! UITextField
-        textField.textColor = UIColor.whiteColor()
-        searchBar.placeholder = "\(userProfile.name)"
-        searchBar.setShowsCancelButton(false, animated: true)
+//        let textField = searchBar.valueForKey("searchField") as! UITextField
+//        textField.textColor = UIColor.whiteColor()
+//        searchBar.placeholder = "\(userProfile.name)"
+//        searchBar.setShowsCancelButton(false, animated: true)
         if userProfile.uid != XAppDelegate.currentUser.uid {
             SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
                 if let _ = error {
                     // Do not show newsfeed follow button
                 } else {
-                    if result!["isfollowing"] as! Int != 1 {
+                    let isFollowed = result!["isfollowing"] as! Int == 1
+                    if isFollowed {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.newsfeedFollowButton.hidden = false
+                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+                        })
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
                         })
                     }
                 }
