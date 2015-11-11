@@ -77,7 +77,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         }()
     var gradientLayer: CAGradientLayer!
     var topCorner: CAShapeLayer!
-    var bottomCorner: CAShapeLayer!
     
     // MARK: - Life cycle
 
@@ -112,7 +111,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         
         tableView.estimatedRowHeight = 300
         tableView.rowHeight = UITableViewAutomaticDimension
-        bottomCorner = CAShapeLayer()
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
@@ -127,8 +125,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLayoutSubviews()
         topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
         profileView.layer.mask = topCorner
-        bottomCorner.path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
-//        tableView.layer.mask = bottomCorner
     }
 
     override func didReceiveMemoryWarning() {
@@ -210,7 +206,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {
             currentScope = .Post
-            tableView.layer.mask = nil
             tapScopeButton(sender)
             currentPostPage = 0
             isLastPostPage = false
@@ -223,7 +218,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapFollowingButton(sender: UIButton) {
         if currentScope != .Following {
             currentScope = .Following
-            tableView.layer.mask = bottomCorner
             tapScopeButton(sender)
             getUsersFollowing({ () -> Void in
                 
@@ -234,7 +228,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapFollowersButton(sender: UIButton) {
         if currentScope != .Followers {
             currentScope = .Followers
-            tableView.layer.mask = bottomCorner
             tapScopeButton(sender)
             getFollowers({ () -> Void in
                 
