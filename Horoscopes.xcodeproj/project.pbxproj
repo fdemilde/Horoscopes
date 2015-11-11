@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
-		7021E2F11BF1D87A00C275AE /* NoPostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7021E2F01BF1D87A00C275AE /* NoPostView.swift */; };
 		7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
 		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; };
@@ -119,6 +118,7 @@
 		F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */; };
 		F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */; };
 		F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */; };
+		F4C4D81F1BF2E285007A8F74 /* PostButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4C4D81E1BF2E285007A8F74 /* PostButtonsView.swift */; };
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
@@ -203,7 +203,6 @@
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
-		7021E2F01BF1D87A00C275AE /* NoPostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NoPostView.swift; sourceTree = "<group>"; };
 		7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
 		704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
@@ -326,6 +325,7 @@
 		F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+WhiteUIDatePickerLabels.m"; sourceTree = "<group>"; };
 		F4C44F9D1B8EC58000910E56 /* UIScrollView+InfiniteScroll.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScrollView+InfiniteScroll.h"; sourceTree = "<group>"; };
 		F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScrollView+InfiniteScroll.m"; sourceTree = "<group>"; };
+		F4C4D81E1BF2E285007A8F74 /* PostButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostButtonsView.swift; sourceTree = "<group>"; };
 		F4CACA121B1EBE16003C6301 /* Horoscopes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Horoscopes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA161B1EBE16003C6301 /* Horoscopes-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Horoscopes-Info.plist"; sourceTree = "<group>"; };
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -492,7 +492,6 @@
 				70C973101BA672E50059D77A /* ProfileBaseViewController.swift */,
 				70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */,
 				70C973141BA6893E0059D77A /* OtherProfileViewController.swift */,
-				7021E2F01BF1D87A00C275AE /* NoPostView.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -527,6 +526,7 @@
 		F41E80C81B340DAE00C2DA95 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				F4C4D81E1BF2E285007A8F74 /* PostButtonsView.swift */,
 				F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */,
 				F46EF8E51B5651BA00625A34 /* MyDatePickerViewController.swift */,
 				F40ECD761B99575E0047185F /* MyDatePickerView.swift */,
@@ -1291,6 +1291,7 @@
 				F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */,
 				70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */,
 				F4CACAD31B2010F2003C6301 /* CrossSellMessageDialog.m in Sources */,
+				F4C4D81F1BF2E285007A8F74 /* PostButtonsView.swift in Sources */,
 				F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */,
 				704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */,
 				F4CACAD91B2010F2003C6301 /* ServerCommunication.m in Sources */,
@@ -1327,7 +1328,6 @@
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
-				7021E2F11BF1D87A00C275AE /* NoPostView.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */,

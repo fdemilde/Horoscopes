@@ -27,7 +27,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         "onyourmind"
     ]
     var headerHeight: CGFloat = 0
-    var noPostView: NoPostView!
+    var noPostView: PostButtonsView!
     
     // MARK: - Life cycle
 
@@ -78,7 +78,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        noPostView = NoPostView(frame: tableView.frame)
+        noPostView = PostButtonsView(frame: tableView.frame)
     }
 
     override func didReceiveMemoryWarning() {

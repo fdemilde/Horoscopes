@@ -48,7 +48,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     
     // MARK: - Property
-    let profileImageSize: CGFloat = 80
+    let profileImageSize: CGFloat = 60
     let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
     var horoscopeSignImageViewLeadingSpaceConstant: CGFloat = 10
@@ -101,7 +101,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     private func configureCell(post: UserPost) {
         self.post = post
         postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
-        postTypeLabel.text = postTypes[post.type]!.1
+        if let type = postTypes[post.type] {
+            postTypeLabel.text = type.1
+        }
         postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         var string = "\(post.message)"
         let font = UIFont(name: "Book Antiqua", size: 15)
@@ -137,16 +139,18 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     func configureCellForNewsfeed(post: UserPost) {
-        configureNewsfeedUi()
-        configureCell(post)
-        horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
-        horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: (post.user?.sign)!)
-        Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                self.profileImageView.image = image
+        dispatch_async(dispatch_get_main_queue(),{
+            self.configureNewsfeedUi()
+            self.configureCell(post)
+            self.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
+            self.horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: (post.user?.sign)!)
+            Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.profileImageView.image = image
+                })
             })
+            self.profileNameLabel.text = post.user?.name
         })
-        profileNameLabel.text = post.user?.name
     }
     
     func configureCellForProfile(post: UserPost) {
@@ -172,6 +176,13 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileImageView.clipsToBounds = false
             self.profileImageView.layer.cornerRadius = self.profileImageSize / 2
             self.profileImageView.clipsToBounds = true
+            let centerPoint = CGPoint(x: self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width/2, y: self.profileImageView.frame.origin.y + self.profileImageView.frame.height/2)
+            let radius = self.profileImageView.frame.size.width/2 + 5
+            let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
+            circleLayer.fillColor = UIColor.clearColor().CGColor
+            let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
+            circleLayer.strokeColor = color.CGColor
+            self.profileView.layer.addSublayer(circleLayer)
             
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
             let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")

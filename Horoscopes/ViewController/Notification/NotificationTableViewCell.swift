@@ -29,44 +29,47 @@ class NotificationTableViewCell: UITableViewCell {
     
     // MARK: for Testing now, only fake data
     func populateData(notif : NotificationObject){
-        notification = notif
+        dispatch_async(dispatch_get_main_queue(),{
+        self.notification = notif
         self.cellImageView.backgroundColor = UIColor.profileImageGrayColor()
         self.parseAlertObject()
         self.setNotificationType()
         self.setupComponents()
-//        self.getUserProfile()
-//        print("notif notif id = \(notif.notification_id)")
+        })
     }
     
     // resetUI
     func resetUI(){
-        timeLabel.text = ""
-        notificationDescLabel.text = ""
-        cellImageView.image = nil
-        cellOverlay.hidden = true
+        dispatch_async(dispatch_get_main_queue(),{
+            self.timeLabel.text = ""
+            self.notificationDescLabel.text = ""
+            self.cellImageView.image = nil
+            self.cellOverlay.hidden = true
+        })
     }
     
     // MARK: Populate UI
     func setupComponents(){
-        timeLabel.text = Utilities.getTimeAgoString(notification.created)
-        notificationDescLabel.text = alertObject.body
-        switch(type){
-            case ServerNotificationType.SendHeart:
-                notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                cellOverlay.hidden = true
-            case ServerNotificationType.Follow:
-                notifTypeImageView.image = UIImage(named: "follow_icon")
-                cellOverlay.hidden = false
-            default:
-                notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                cellOverlay.hidden = true
-            
-            
-        }
-        self.bringSubviewToFront(cellOverlay)
-        self.backgroundColor = UIColor.whiteColor()
-        self.setupCellImage()
-        
+        dispatch_async(dispatch_get_main_queue(),{
+            self.timeLabel.text = Utilities.getTimeAgoString(self.notification.created)
+            self.notificationDescLabel.text = self.alertObject.body
+            switch(self.type){
+                case ServerNotificationType.SendHeart:
+                    self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                    self.cellOverlay.hidden = true
+                case ServerNotificationType.Follow:
+                    self.notifTypeImageView.image = UIImage(named: "follow_icon")
+                    self.cellOverlay.hidden = false
+                default:
+                    self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
+                    self.cellOverlay.hidden = true
+                
+                
+            }
+            self.bringSubviewToFront(self.cellOverlay)
+            self.backgroundColor = UIColor.whiteColor()
+            self.setupCellImage()
+        })
     }
     
     func setupCellImage(){

@@ -393,6 +393,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
                                     controller.userPost = post
                                     if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
+                                        print("Push VC VC!!!!")
                                         notificationViewController.navigationController?.pushViewController(controller, animated: true)
                                     }
                                 }

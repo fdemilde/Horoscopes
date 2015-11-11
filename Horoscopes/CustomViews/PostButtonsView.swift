@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NoPostView: UIView {
+class PostButtonsView: UIView {
     
     var storyButton: UIButton!
     var feelButton: UIButton!

@@ -172,8 +172,9 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     // prevent corner radius from applying to middle rows
-    func resetCornerRadius(cell : NotificationTableViewCell) -> NotificationTableViewCell{
-        
-        return Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner(), radius: 4.0) as! NotificationTableViewCell
+    func resetCornerRadius(cell : NotificationTableViewCell){
+        dispatch_async(dispatch_get_main_queue(),{
+            Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner(), radius: 4.0) as! NotificationTableViewCell
+        })
     }
 }

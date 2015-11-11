@@ -345,8 +345,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         switch currentScope {
         case .Post:
-//            return userPosts.count
-            return 0
+            return userPosts.count
         case .Following:
             return followingUsers.count
         case .Followers:

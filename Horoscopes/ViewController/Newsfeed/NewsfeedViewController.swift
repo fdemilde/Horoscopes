@@ -36,6 +36,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var globalButton: UIButton!
     @IBOutlet weak var followingButton: UIButton!
+    var postButtonsView: PostButtonsView!
     
 //    var userPostArray = [UserPost]()
     var tabType = NewsfeedTabType.Following
@@ -140,6 +141,9 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         
         let overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "overlayTapGestureRecognizer:")
         overlay.addGestureRecognizer(overlayTapGestureRecognizer)
+        postButtonsView = PostButtonsView(frame: overlay.frame)
+        postButtonsView.setTextColor(UIColor.whiteColor())
+        overlay.addSubview(postButtonsView)
         
         view.addSubview(addButton)
         view.bringSubviewToFront(addButton)
@@ -147,7 +151,12 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: Post buttons handlers
     func postButtonTapped(){
-        overlayFadeIn()
+        if(self.overlay.alpha == 1.0){
+            overlayFadeout()
+        } else {
+            overlayFadeIn()
+        }
+        
         
     }
     
