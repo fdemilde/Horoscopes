@@ -329,21 +329,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 let uid = param["uid"] as! String
                 Utilities.showHUD()
-                SocialManager.sharedInstance.getProfile(uid, completionHandler: { (result, error) -> Void in
-                    Utilities.hideHUD()
-                    if let _ = error {
-                        
-                    } else {
-                        
-                        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                        let userProfile = result![0]
-                        let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-                        controller.userProfile = userProfile
-//                        controller.isPushedFromNotification = true
-                        if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
-                            profileViewController.navigationController?.pushViewController(controller, animated: true)
+                SocialManager.sharedInstance.getProfile(uid, ignoreCache: true, completionHandler: { (result, error) -> Void in
+                    dispatch_async(dispatch_get_main_queue(),{
+                        Utilities.hideHUD()
+                        if let _ = error {
+                            
+                        } else {
+                            
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            let userProfile = result![0]
+                            let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                            controller.userProfile = userProfile
+    //                        controller.isPushedFromNotification = true
+                            if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
+                                profileViewController.navigationController?.pushViewController(controller, animated: true)
+                            }
                         }
-                    }
+                    })
                 })
             })
             
@@ -372,7 +374,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
             print("Route == post with param dict = \(param)")
         })
-        
+        print("router.addRoute router.addRoute /post/:post_id/hearts")
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.popCurrentViewControllerToTop()
@@ -382,27 +384,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
                 if let postId = param["post_id"] as? String{
                     Utilities.showHUD()
-                    XAppDelegate.socialManager.getPost(postId, completionHandler: { (result, error) -> Void in
+                    XAppDelegate.socialManager.getPost(postId, ignoreCache: true, completionHandler: { (result, error) -> Void in
+                        dispatch_async(dispatch_get_main_queue(),{
                         Utilities.hideHUD()
-                        if let _ = error {
-                            
-                        } else {
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            if let result = result {
-                                for post : UserPost in result {
-                                    let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                                    controller.userPost = post
-                                    if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
-                                        print("Push VC VC!!!!")
-                                        notificationViewController.navigationController?.pushViewController(controller, animated: true)
+                            if let _ = error {
+                                
+                            } else {
+                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                                if let result = result {
+                                    for post : UserPost in result {
+                                        let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                                        controller.userPost = post
+                                        if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
+                                            notificationViewController.navigationController?.pushViewController(controller, animated: true)
+                                        }
                                     }
                                 }
                             }
-                        }
+                        })
                     })
                 }
             })
-            
         })
         
         router.addRoute("/settings", blockCode: { (param) -> Void in

@@ -12,30 +12,30 @@ class CacheManager {
 //    dont know why cannot make key with these
 //    let CACHE_RESPONSE_KEY = "CACHE_VALUE_KEY" as String
 //    let EXPIRED_TIMESTAMP_KEY = "CACHE_EXPIRED_TIMESTAMP_KEY"
-    class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, forceExpiredKey: String?, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
+    class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, forceExpiredKey: String?, ignoreCache : Bool = false, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            
             let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
-//                    print("cacheGet key == \(key)")
+            //                    print("cacheGet key == \(key)")
             let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
             //        print("cacheGet cacheDict == \(cacheDict)")
-            if var cacheDict = cacheDict{
-                cacheDict = cacheDict as! Dictionary<String, NSObject>
-                let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
-                let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
-                if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
-//                                    print("GOT CACHE !! RETURN")
-                    completionHandler(result: cacheValue, error: nil) // return cache
-                    return
+            if(!ignoreCache){
+                if var cacheDict = cacheDict{
+                    cacheDict = cacheDict as! Dictionary<String, NSObject>
+                    let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
+                    let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
+                    if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+                        completionHandler(result: cacheValue, error: nil) // return cache
+                        return
+                    }
+                    completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
-//                            print("GOT CACHE BUT EXPIRED")
-                completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
             }
             Utilities.showHUD()
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {
                     completionHandler(result: nil, error: error)
                 } else {
-                    //                print("SERVER DATA == \(response)")
                     if let forceExpiredKey = forceExpiredKey {
                         // use for supporting page, need to force next page expired if current page is expired
                         if(forceExpiredKey != "") { CacheManager.cacheExpire(forceExpiredKey) }

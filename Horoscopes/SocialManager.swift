@@ -210,7 +210,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getUserFeed(uid: Int, page: Int = 0, isRefreshed: Bool = false, completionHandler: (result: ([UserPost], isLastPage: Bool)?, error: NSError?) -> Void) {
-        getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+        getProfile("\(uid)",ignoreCache : false, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -246,11 +246,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     // get post with post ids string
-    func getPost(postIds : String, completionHandler: (result: [UserPost]?, error: NSError?) -> Void){
+    func getPost(postIds : String, ignoreCache: Bool = false, completionHandler: (result: [UserPost]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
         postData.setObject("\(postIds)", forKey: "post_id")
-        let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) -> Void in
+        let expiredTime = NSDate().timeIntervalSince1970 + 10
+        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -335,11 +335,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getProfile(usersIdString: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfile(usersIdString: String, ignoreCache : Bool, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject(usersIdString, forKey: "uid")
         let longExpiredTime = NSDate().timeIntervalSince1970 + 86400
-        CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime, forceExpiredKey: nil) { (response, error) -> Void in
+        CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime, forceExpiredKey: nil, ignoreCache : ignoreCache) { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -679,10 +679,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    private func getProfile(usersId: [Int], completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    private func getProfile(usersId: [Int],ignoreCache : Bool = false, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         let usersIdString = usersId.map({"\($0)"})
         let separator = ","
-        self.getProfile(usersIdString.joinWithSeparator(separator), completionHandler: { (result, error) -> Void in
+        self.getProfile(usersIdString.joinWithSeparator(separator),ignoreCache: ignoreCache, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -693,7 +693,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func persistUserProfile(completionHandler: (error: NSError?) -> Void) {
         let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-        self.getProfile("\(uid)", completionHandler: { (result, error) -> Void in
+        self.getProfile("\(uid)",ignoreCache : false, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error)
             } else {
