@@ -3525,6 +3525,9 @@ on news things</string>
                                             <constraint firstAttribute="width" constant="44" id="xfb-dF-psS"/>
                                         </constraints>
                                         <state key="normal" image="settings_btn"/>
+                                        <connections>
+                                            <action selector="openSettings:" destination="xK6-zJ-Ivi" eventType="touchUpInside" id="6ae-RO-nGe"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TdJ-MT-W1Q">
                                         <rect key="frame" x="0.0" y="90" width="191" height="30"/>
@@ -5309,7 +5312,6 @@ on news things</string>
         <!--Navigation Controller-->
         <scene sceneID="gPK-gK-p4s">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="NDO-KY-AzK" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController navigationBarHidden="YES" id="Ozy-jx-5c2" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="settings_btn" id="COC-Kf-1C8"/>
                     <nil key="simulatedStatusBarMetrics"/>
@@ -5323,6 +5325,7 @@ on news things</string>
                         <segue destination="VAX-Q9-xBb" kind="relationship" relationship="rootViewController" id="cvf-sv-1Cl"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="NDO-KY-AzK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1558.5" y="1197.75"/>
         </scene>

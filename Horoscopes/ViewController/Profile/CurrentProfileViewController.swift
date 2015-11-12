@@ -136,6 +136,11 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Action
     
+    @IBAction func openSettings(sender: UIButton) {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func chooseHoroscopeSign(sender: UITapGestureRecognizer) {
         if sender.state == .Ended {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
