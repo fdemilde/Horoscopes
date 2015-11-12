@@ -57,6 +57,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
             }
         }
     }
+    var isFollowed = false
     
     // MARK: - Life cycle
 
@@ -73,8 +74,8 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 if let _ = error {
                     // Do not show newsfeed follow button
                 } else {
-                    let isFollowed = result!["isfollowing"] as! Int == 1
-                    if isFollowed {
+                    self.isFollowed = result!["isfollowing"] as! Int == 1
+                    if self.isFollowed {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.newsfeedFollowButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
                         })
@@ -170,25 +171,49 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     @IBAction func tapFollowButton(sender: UIButton) {
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(userProfile, completionHandler: { (error) -> Void in
-            if let error = error {
-                Utilities.hideHUD()
-                Utilities.showError(error, viewController: self)
-            } else {
-                self.getUserProfileCounts()
-                DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
-                    if let error = error {
-                        Utilities.hideHUD()
-                        Utilities.showError(error, viewController: self)
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.newsfeedFollowButton.removeFromSuperview()
-                        })
-                        Utilities.hideHUD()
-                    }
-                })
-            }
-        })
+        if isFollowed {
+            SocialManager.sharedInstance.unfollow(userProfile, completionHandler: { (error) -> Void in
+                if let error = error {
+                    Utilities.hideHUD()
+                    Utilities.showError(error, viewController: self)
+                } else {
+                    self.getUserProfileCounts()
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                        if let error = error {
+                            Utilities.hideHUD()
+                            Utilities.showError(error, viewController: self)
+                        } else {
+                            self.isFollowed = !self.isFollowed
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.newsfeedFollowButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
+                            })
+                            Utilities.hideHUD()
+                        }
+                    })
+                }
+            })
+        } else {
+            SocialManager.sharedInstance.follow(userProfile, completionHandler: { (error) -> Void in
+                if let error = error {
+                    Utilities.hideHUD()
+                    Utilities.showError(error, viewController: self)
+                } else {
+                    self.getUserProfileCounts()
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                        if let error = error {
+                            Utilities.hideHUD()
+                            Utilities.showError(error, viewController: self)
+                        } else {
+                            self.isFollowed = !self.isFollowed
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.newsfeedFollowButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+                            })
+                            Utilities.hideHUD()
+                        }
+                    })
+                }
+            })
+        }
     }
     
     // MARK: - Configure UI
