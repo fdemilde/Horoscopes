@@ -75,7 +75,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
         return refreshControl
         }()
-    var gradientLayer: CAGradientLayer!
     var topCorner: CAShapeLayer!
     
     // MARK: - Life cycle
@@ -97,12 +96,8 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
         circleLayer.strokeColor = color.CGColor
         profileView.layer.addSublayer(circleLayer)
-        profileView.backgroundColor = UIColor.redColor()
-        gradientLayer = CAGradientLayer()
-        gradientLayer.colors = [UIColor(red: 75/255, green: 70/255, blue: 129/255, alpha: 1).CGColor, UIColor(red: 117/255, green: 105/255, blue: 157/255, alpha: 1).CGColor]
-        gradientLayer.startPoint = CGPoint(x: 0, y: 0.5)
-        gradientLayer.endPoint = CGPoint(x: 1, y: 0.5)
-        profileView.layer.insertSublayer(gradientLayer, atIndex: 0)
+        let profileViewBackground = Utilities.getImageToSupportSize("newsfeed_header_background", size: profileView.frame.size, frame: profileView.bounds)
+        profileView.backgroundColor = UIColor(patternImage: profileViewBackground)
         topCorner = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -119,7 +114,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        gradientLayer.frame = CGRectMake(0, 0, profileView.frame.width, profileView.frame.height)
     }
     
     override func viewDidLayoutSubviews() {
