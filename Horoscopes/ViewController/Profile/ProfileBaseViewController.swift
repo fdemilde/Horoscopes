@@ -187,7 +187,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         tableTrailingSpaceLayoutConstraint.constant = 0
         tableBottomSpaceLayoutConstraint.constant = 0
         tableView.backgroundColor = UIColor.clearColor()
-        tableView.allowsSelection = false
     }
     
     func changeToWhiteTableViewLayout() {
@@ -195,7 +194,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         tableTrailingSpaceLayoutConstraint.constant = 10
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
-        tableView.allowsSelection = true
     }
     
     // MARK: - Action
@@ -228,6 +226,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapPostButton(sender: UIButton) {
         if currentScope != .Post {
             currentScope = .Post
+            tableView.allowsSelection = false
             tapScopeButton(sender)
             currentPostPage = 0
             isLastPostPage = false
@@ -240,6 +239,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapFollowingButton(sender: UIButton) {
         if currentScope != .Following {
             currentScope = .Following
+            tableView.allowsSelection = true
             tapScopeButton(sender)
             getUsersFollowing({ () -> Void in
                 
@@ -250,6 +250,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     @IBAction func tapFollowersButton(sender: UIButton) {
         if currentScope != .Followers {
             currentScope = .Followers
+            tableView.allowsSelection = true
             tapScopeButton(sender)
             getFollowers({ () -> Void in
                 
