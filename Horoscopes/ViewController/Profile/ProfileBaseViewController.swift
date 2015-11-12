@@ -114,6 +114,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
+        highlightScopeButton(postButton)
     }
     
     override func viewWillLayoutSubviews() {
@@ -145,9 +146,30 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func configureScopeButton() {
-        postButton.setTitle("Post: \(numberOfPosts)", forState: .Normal)
-        followingButton.setTitle("Following: \(numberOfUsersFollowing)", forState: .Normal)
-        followersButton.setTitle("Followers: \(numberOfFollowers)", forState: .Normal)
+        postButton.setAttributedTitle(stringForTitle("Post", number: numberOfPosts), forState: .Normal)
+        followingButton.setAttributedTitle(stringForTitle("Following", number: numberOfUsersFollowing), forState: .Normal)
+        followersButton.setAttributedTitle(stringForTitle("Followers", number: numberOfFollowers), forState: .Normal)
+    }
+    
+    private func stringForTitle(title: String, number: Int) -> NSMutableAttributedString {
+        var font: UIFont
+        if #available(iOS 8.2, *) {
+            font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+        } else {
+            font = UIFont.systemFontOfSize(11)
+        }
+        var fontForNumber: UIFont
+        if #available(iOS 8.2, *) {
+            fontForNumber = UIFont.systemFontOfSize(15, weight: UIFontWeightMedium)
+        } else {
+            fontForNumber = UIFont.systemFontOfSize(15)
+        }
+        let attributes = [
+            NSFontAttributeName: font
+        ]
+        let string = NSMutableAttributedString(attributedString: NSAttributedString(string: "\(title): \(number)", attributes: attributes))
+        string.setAttributes([NSFontAttributeName: fontForNumber], range: NSMakeRange(title.characters.count + 2, String(number).characters.count))
+        return string
     }
     
     func highlightScopeButton(sender: UIButton) {
