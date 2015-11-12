@@ -5476,7 +5476,7 @@ on news things</string>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="7:05 AM, Oct 27, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6O-OS-jVj">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="7:05 AM, Oct 27, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z6O-OS-jVj">
                                                         <rect key="frame" x="466" y="14" width="106" height="12"/>
                                                         <animations/>
                                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
@@ -5575,12 +5575,12 @@ on news things</string>
                                                     <mask key="constraints">
                                                         <exclude reference="QJ4-G2-3S0"/>
                                                         <exclude reference="i1k-T7-Sqd"/>
-                                                        <exclude reference="sQ8-l7-Ss8"/>
-                                                        <exclude reference="ls4-rQ-SMd"/>
                                                         <exclude reference="7qr-W2-pvZ"/>
+                                                        <exclude reference="ls4-rQ-SMd"/>
+                                                        <exclude reference="sQ8-l7-Ss8"/>
                                                         <exclude reference="ENX-gh-fDz"/>
-                                                        <exclude reference="l3d-9L-ZmN"/>
                                                         <exclude reference="PnT-R0-m1n"/>
+                                                        <exclude reference="l3d-9L-ZmN"/>
                                                     </mask>
                                                 </variation>
                                             </view>
@@ -5620,21 +5620,21 @@ on news things</string>
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="Yje-ZM-EkU"/>
-                                                <exclude reference="1Ox-EI-LYZ"/>
-                                                <exclude reference="cYw-OW-2gF"/>
-                                                <exclude reference="oGO-7Q-DHU"/>
+                                                <exclude reference="GLn-WN-3ZY"/>
+                                                <exclude reference="Xwg-Gd-Icj"/>
+                                                <exclude reference="2RE-Pc-fQE"/>
+                                                <exclude reference="gaw-7J-Z0R"/>
+                                                <exclude reference="PP3-pa-gpd"/>
+                                                <exclude reference="vBx-pK-Oe1"/>
                                                 <exclude reference="jBR-sj-oSj"/>
                                                 <exclude reference="oYE-cj-7d7"/>
                                                 <exclude reference="3VM-vC-QjS"/>
                                                 <exclude reference="BoW-St-F4Y"/>
                                                 <exclude reference="GBM-Z4-xGu"/>
                                                 <exclude reference="ow0-jy-Vcs"/>
-                                                <exclude reference="GLn-WN-3ZY"/>
-                                                <exclude reference="Xwg-Gd-Icj"/>
-                                                <exclude reference="PP3-pa-gpd"/>
-                                                <exclude reference="vBx-pK-Oe1"/>
-                                                <exclude reference="2RE-Pc-fQE"/>
-                                                <exclude reference="gaw-7J-Z0R"/>
+                                                <exclude reference="1Ox-EI-LYZ"/>
+                                                <exclude reference="cYw-OW-2gF"/>
+                                                <exclude reference="oGO-7Q-DHU"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
@@ -5648,21 +5648,21 @@ on news things</string>
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="Yje-ZM-EkU"/>
-                                                <include reference="1Ox-EI-LYZ"/>
-                                                <include reference="cYw-OW-2gF"/>
-                                                <include reference="oGO-7Q-DHU"/>
+                                                <include reference="GLn-WN-3ZY"/>
+                                                <include reference="Xwg-Gd-Icj"/>
+                                                <include reference="2RE-Pc-fQE"/>
+                                                <include reference="gaw-7J-Z0R"/>
+                                                <include reference="PP3-pa-gpd"/>
+                                                <include reference="vBx-pK-Oe1"/>
                                                 <include reference="jBR-sj-oSj"/>
                                                 <include reference="oYE-cj-7d7"/>
                                                 <include reference="3VM-vC-QjS"/>
                                                 <include reference="BoW-St-F4Y"/>
                                                 <include reference="GBM-Z4-xGu"/>
                                                 <include reference="ow0-jy-Vcs"/>
-                                                <include reference="GLn-WN-3ZY"/>
-                                                <include reference="Xwg-Gd-Icj"/>
-                                                <include reference="PP3-pa-gpd"/>
-                                                <include reference="vBx-pK-Oe1"/>
-                                                <include reference="2RE-Pc-fQE"/>
-                                                <include reference="gaw-7J-Z0R"/>
+                                                <include reference="1Ox-EI-LYZ"/>
+                                                <include reference="cYw-OW-2gF"/>
+                                                <include reference="oGO-7Q-DHU"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -5713,12 +5713,12 @@ on news things</string>
                                             </mask>
                                             <mask key="constraints">
                                                 <exclude reference="fge-DG-gcs"/>
+                                                <exclude reference="5RL-7Q-UBy"/>
+                                                <exclude reference="Enz-OI-c8i"/>
                                                 <exclude reference="Lv6-zw-PfT"/>
                                                 <exclude reference="bSK-b0-Nzn"/>
                                                 <exclude reference="oBu-qX-cQK"/>
                                                 <exclude reference="qyh-TI-0o9"/>
-                                                <exclude reference="5RL-7Q-UBy"/>
-                                                <exclude reference="Enz-OI-c8i"/>
                                             </mask>
                                         </variation>
                                         <variation key="heightClass=regular-widthClass=compact">
@@ -5728,12 +5728,12 @@ on news things</string>
                                             </mask>
                                             <mask key="constraints">
                                                 <include reference="fge-DG-gcs"/>
+                                                <include reference="5RL-7Q-UBy"/>
+                                                <include reference="Enz-OI-c8i"/>
                                                 <include reference="Lv6-zw-PfT"/>
                                                 <include reference="bSK-b0-Nzn"/>
                                                 <include reference="oBu-qX-cQK"/>
                                                 <include reference="qyh-TI-0o9"/>
-                                                <include reference="5RL-7Q-UBy"/>
-                                                <include reference="Enz-OI-c8i"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -5744,7 +5744,7 @@ on news things</string>
                                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                                 <animations/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda. Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                             </textView>
@@ -5807,19 +5807,19 @@ on news things</string>
                                         <exclude reference="Xyf-ZT-nHK"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <exclude reference="8gQ-PK-ULx"/>
+                                        <exclude reference="H7e-UZ-B0s"/>
+                                        <exclude reference="KQE-WF-ErV"/>
+                                        <exclude reference="xa3-hk-XIR"/>
+                                        <exclude reference="0gs-Bz-sh0"/>
+                                        <exclude reference="7mh-bG-2YY"/>
+                                        <exclude reference="DHa-uV-3iL"/>
                                         <exclude reference="0ZD-bv-wWg"/>
                                         <exclude reference="2jq-on-YRp"/>
                                         <exclude reference="9w7-wd-7t9"/>
                                         <exclude reference="Prg-Fz-9cd"/>
                                         <exclude reference="Txs-67-Pq8"/>
                                         <exclude reference="iug-ln-ysq"/>
-                                        <exclude reference="0gs-Bz-sh0"/>
-                                        <exclude reference="7mh-bG-2YY"/>
-                                        <exclude reference="DHa-uV-3iL"/>
-                                        <exclude reference="8gQ-PK-ULx"/>
-                                        <exclude reference="H7e-UZ-B0s"/>
-                                        <exclude reference="KQE-WF-ErV"/>
-                                        <exclude reference="xa3-hk-XIR"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
@@ -5829,19 +5829,19 @@ on news things</string>
                                         <include reference="Xyf-ZT-nHK"/>
                                     </mask>
                                     <mask key="constraints">
+                                        <include reference="8gQ-PK-ULx"/>
+                                        <include reference="H7e-UZ-B0s"/>
+                                        <include reference="KQE-WF-ErV"/>
+                                        <include reference="xa3-hk-XIR"/>
+                                        <include reference="0gs-Bz-sh0"/>
+                                        <include reference="7mh-bG-2YY"/>
+                                        <include reference="DHa-uV-3iL"/>
                                         <include reference="0ZD-bv-wWg"/>
                                         <include reference="2jq-on-YRp"/>
                                         <include reference="9w7-wd-7t9"/>
                                         <include reference="Prg-Fz-9cd"/>
                                         <include reference="Txs-67-Pq8"/>
                                         <include reference="iug-ln-ysq"/>
-                                        <include reference="0gs-Bz-sh0"/>
-                                        <include reference="7mh-bG-2YY"/>
-                                        <include reference="DHa-uV-3iL"/>
-                                        <include reference="8gQ-PK-ULx"/>
-                                        <include reference="H7e-UZ-B0s"/>
-                                        <include reference="KQE-WF-ErV"/>
-                                        <include reference="xa3-hk-XIR"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -5871,13 +5871,13 @@ on news things</string>
                                 <exclude reference="L2e-tT-eln"/>
                             </mask>
                             <mask key="constraints">
+                                <exclude reference="jYn-MQ-F3T"/>
                                 <exclude reference="1JU-QQ-X2k"/>
                                 <exclude reference="3gp-TH-Nfw"/>
                                 <exclude reference="UcS-QI-mXo"/>
                                 <exclude reference="6cg-Qb-eIX"/>
                                 <exclude reference="6k2-wr-CKr"/>
                                 <exclude reference="DWa-aY-m2j"/>
-                                <exclude reference="jYn-MQ-F3T"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -5886,13 +5886,13 @@ on news things</string>
                                 <include reference="L2e-tT-eln"/>
                             </mask>
                             <mask key="constraints">
+                                <include reference="jYn-MQ-F3T"/>
                                 <include reference="1JU-QQ-X2k"/>
                                 <include reference="3gp-TH-Nfw"/>
                                 <include reference="UcS-QI-mXo"/>
                                 <include reference="6cg-Qb-eIX"/>
                                 <include reference="6k2-wr-CKr"/>
                                 <include reference="DWa-aY-m2j"/>
-                                <include reference="jYn-MQ-F3T"/>
                             </mask>
                         </variation>
                     </view>

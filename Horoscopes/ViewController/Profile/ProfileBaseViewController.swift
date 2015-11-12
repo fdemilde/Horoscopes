@@ -112,6 +112,13 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         highlightScopeButton(postButton)
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        if userProfile.uid != -1 {
+            self.getUserProfileCounts()
+        }
+    }
+    
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
     }

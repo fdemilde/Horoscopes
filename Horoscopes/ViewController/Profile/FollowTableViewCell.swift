@@ -57,10 +57,8 @@ class FollowTableViewCell: UITableViewCell {
             followButton.hidden = false
             if isFollowed {
                 followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
-                followButton.userInteractionEnabled = false
             } else {
                 followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
-                followButton.userInteractionEnabled = true
             }
         } else {
             followButton.hidden = true

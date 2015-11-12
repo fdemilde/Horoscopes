@@ -344,25 +344,38 @@ class CurrentProfileViewController: ProfileBaseViewController {
             users = friends
         }
         Utilities.showHUD()
-        SocialManager.sharedInstance.follow(users[index!], completionHandler: { (error) -> Void in
-            if let error = error {
-                Utilities.hideHUD()
-                Utilities.showError(error, viewController: self)
-            } else {
-                self.getUserProfileCounts()
-                DataStore.sharedInstance.checkFollowStatus(users, completionHandler: { (error) -> Void in
-                    if let error = error {
-                        Utilities.hideHUD()
-                        Utilities.showError(error, viewController: self)
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.reloadData()
-                        })
-                        Utilities.hideHUD()
-                    }
-                })
-            }
-        })
+        let user = users[index!]
+        if user.isFollowed {
+            SocialManager.sharedInstance.unfollow(user, completionHandler: { (error) -> Void in
+                if let error = error {
+                    Utilities.hideHUD()
+                    Utilities.showError(error, viewController: self)
+                } else {
+                    user.isFollowed = !user.isFollowed
+                    self.numberOfUsersFollowing -= 1
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell.followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
+                        self.configureScopeButton()
+                    })
+                    Utilities.hideHUD()
+                }
+            })
+        } else {
+            SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
+                if let error = error {
+                    Utilities.hideHUD()
+                    Utilities.showError(error, viewController: self)
+                } else {
+                    user.isFollowed = !user.isFollowed
+                    self.numberOfUsersFollowing += 1
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        cell.followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+                        self.configureScopeButton()
+                    })
+                    Utilities.hideHUD()
+                }
+            })
+        }
     }
 
     // MARK: - Navigation
