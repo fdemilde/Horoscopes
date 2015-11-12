@@ -32,6 +32,7 @@
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD741B99536C0047185F /* CMPopTipView.m */; };
 		F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD761B99575E0047185F /* MyDatePickerView.swift */; };
+		F411F0A11BF48213002B18A5 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */; };
 		F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */; };
 		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
 		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; };
@@ -229,6 +230,7 @@
 		F40ECD731B99536C0047185F /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		F40ECD741B99536C0047185F /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		F40ECD761B99575E0047185F /* MyDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerView.swift; sourceTree = "<group>"; };
+		F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostViewController.swift; sourceTree = "<group>"; };
 		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
 		F42099251BCDFE1C00BF1736 /* CacheEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheEntry.swift; sourceTree = "<group>"; };
@@ -523,6 +525,14 @@
 			path = CMPopTipView;
 			sourceTree = "<group>";
 		};
+		F411F09F1BF48206002B18A5 /* Discover */ = {
+			isa = PBXGroup;
+			children = (
+				F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */,
+			);
+			path = Discover;
+			sourceTree = "<group>";
+		};
 		F41E80C81B340DAE00C2DA95 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
@@ -644,6 +654,7 @@
 		F47C029E1B2691A700C0BA83 /* ViewController */ = {
 			isa = PBXGroup;
 			children = (
+				F411F09F1BF48206002B18A5 /* Discover */,
 				704FF7431BB2BB92006A5A98 /* Settings */,
 				70F31C121B4E15F300A8B3A2 /* Profile */,
 				705E59D61B4CE64200D1E613 /* Notification */,
@@ -1367,6 +1378,7 @@
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
 				F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
+				F411F0A11BF48213002B18A5 /* DiscoverViewController.swift in Sources */,
 				F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */,
 				F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */,
 			);
