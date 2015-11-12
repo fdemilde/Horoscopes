@@ -10,6 +10,7 @@ import UIKit
 
 class CurrentProfileViewController: ProfileBaseViewController {
     
+    @IBOutlet weak var settingsButtonLeadingSpace: NSLayoutConstraint!
     // MARK: - Property
     
     var loginView: UIView!
@@ -98,6 +99,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
             horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
         } else {
+            settingsButtonLeadingSpace.constant -= 50
             horoscopeSignLabel.hidden = true
             horoscopeSignImageView.hidden = true
             horoscopeSignView.hidden = true

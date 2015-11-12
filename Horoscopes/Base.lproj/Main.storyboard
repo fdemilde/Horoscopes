@@ -3789,7 +3789,7 @@ on news things</string>
                                                     <rect key="frame" x="70" y="15" width="122" height="18"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dJO-5d-ALt">
@@ -3852,6 +3852,7 @@ on news things</string>
                         <outlet property="nameLabel" destination="K5O-tx-K2g" id="fd6-4q-aLX"/>
                         <outlet property="postButton" destination="TdJ-MT-W1Q" id="lj2-Z1-v9J"/>
                         <outlet property="profileView" destination="JyZ-gJ-LGo" id="Rqk-wR-PEf"/>
+                        <outlet property="settingsButtonLeadingSpace" destination="jed-pN-uZu" id="aqf-dF-xAc"/>
                         <outlet property="tableBottomSpaceLayoutConstraint" destination="H1P-YM-ooh" id="9M2-se-95f"/>
                         <outlet property="tableLeadingSpaceLayoutConstraint" destination="KWY-gu-rBe" id="5ed-E0-7Nr"/>
                         <outlet property="tableTrailingSpaceLayoutConstraint" destination="12y-hf-sFg" id="zbr-PZ-gd8"/>
@@ -5807,9 +5808,10 @@ on news things</string>
                                         <animations/>
                                         <color key="backgroundColor" red="0.52156862749999999" green="0.48627450979999998" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="100" id="0NX-B6-0x9"/>
+                                            <constraint firstAttribute="width" id="0NX-B6-0x9"/>
                                             <constraint firstItem="fcg-Mq-QKJ" firstAttribute="leading" secondItem="VoQ-R6-3ai" secondAttribute="leading" constant="10" id="Czc-rr-EKM"/>
                                             <constraint firstAttribute="centerY" secondItem="NfV-IG-MyF" secondAttribute="centerY" id="Ff5-a2-szd"/>
+                                            <constraint firstAttribute="width" id="LW8-0m-qrB"/>
                                             <constraint firstAttribute="trailing" secondItem="NfV-IG-MyF" secondAttribute="trailing" constant="10" id="SmD-tp-f0r"/>
                                             <constraint firstItem="NfV-IG-MyF" firstAttribute="leading" secondItem="fcg-Mq-QKJ" secondAttribute="trailing" constant="5" id="cOF-MQ-03u"/>
                                             <constraint firstAttribute="height" constant="30" id="dfE-mZ-Iz1"/>
@@ -5818,6 +5820,7 @@ on news things</string>
                                         <variation key="default">
                                             <mask key="constraints">
                                                 <exclude reference="0NX-B6-0x9"/>
+                                                <exclude reference="LW8-0m-qrB"/>
                                             </mask>
                                         </variation>
                                     </view>
@@ -6104,7 +6107,7 @@ on news things</string>
                                                     <rect key="frame" x="70" y="15" width="122" height="18"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nRT-QC-VxO">
@@ -6158,6 +6161,7 @@ on news things</string>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="7d4-LD-wei" id="qya-Ej-1bU"/>
+                        <outlet property="followButtonLeadingSpace" destination="twH-nf-NIL" id="tpG-as-P6y"/>
                         <outlet property="followersButton" destination="JPb-ao-9uo" id="KUo-x1-fVT"/>
                         <outlet property="followingButton" destination="Dqg-sL-z4e" id="C1g-J6-B0J"/>
                         <outlet property="horoscopeSignImageView" destination="fcg-Mq-QKJ" id="eGE-hd-tSL"/>

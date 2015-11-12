@@ -12,6 +12,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     // MARK: - Outlet
     
+    @IBOutlet weak var followButtonLeadingSpace: NSLayoutConstraint!
     @IBOutlet weak var newsfeedFollowButton: UIButton!
 //    @IBOutlet weak var searchBar: UISearchBar!
     
@@ -202,6 +203,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
             horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
             horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
         } else {
+            followButtonLeadingSpace.constant -= 50
             horoscopeSignLabel.hidden = true
             horoscopeSignImageView.hidden = true
             horoscopeSignView.hidden = true
