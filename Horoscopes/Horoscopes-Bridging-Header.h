@@ -16,11 +16,12 @@
 #import "FBSDKCoreKit.h"
 #import "MBProgressHUD.h"
 #import "RotateControl.h"
-#import "FBSDKLoginKit.h"
-#import "FBSDKShareKit.h"
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 #import "MZFormSheetController.h"
 #import "AFNetworking.h"
 #import "NSDate+NVTimeAgo.h"
+#import <GoogleMobileAds/GADBannerView.h>
 
 // MARK: GAI
 #import "GAI.h"

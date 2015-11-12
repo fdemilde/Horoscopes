@@ -143,6 +143,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         overlay.addGestureRecognizer(overlayTapGestureRecognizer)
         postButtonsView = PostButtonsView(frame: overlay.frame)
         postButtonsView.setTextColor(UIColor.whiteColor())
+        postButtonsView.hostViewController = self
         overlay.addSubview(postButtonsView)
         
         view.addSubview(addButton)

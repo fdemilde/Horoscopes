@@ -374,7 +374,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
             print("Route == post with param dict = \(param)")
         })
-        print("router.addRoute router.addRoute /post/:post_id/hearts")
+        
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.popCurrentViewControllerToTop()
