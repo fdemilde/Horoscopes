@@ -11,21 +11,33 @@ import Foundation
 class DiscoverViewController : ViewControllerWithAds {
     
     @IBOutlet weak var containerView: UIView!
+    @IBOutlet weak var textView: UITextView!
+    @IBOutlet weak var textViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var containerViewWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var profilePictureImageView: UIImageView!
+    @IBOutlet weak var profileNameLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var postTypeImageView: UIImageView!
+    @IBOutlet weak var postTypeLabel: UILabel!
+    @IBOutlet weak var horoscopeSignView: UIView!
+    @IBOutlet weak var horoscopeImageView: UIImageView!
+    @IBOutlet weak var horoscopeLabel: UILabel!
+    
+    let scrollViewInset: CGFloat = 20
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-    }
-    
-    // MARK: Setup View
-    func setupView(){
-        // Do any additional setup after loading the view.
-        let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
-        view.backgroundColor = UIColor(patternImage: backgroundImage)
+        scrollView.contentInset = UIEdgeInsets(top: scrollViewInset, left: scrollViewInset, bottom: scrollViewInset, right: scrollViewInset)
+        containerViewWidthConstraint.constant = UIScreen.mainScreen().bounds.width - 2 * scrollViewInset
         containerView.layer.cornerRadius = 4
         containerView.clipsToBounds = true
-        // testing
-        containerView.frame = CGRectMake(containerView.frame.origin.x,containerView.frame.origin.y, containerView.frame.width, 800 )
-        
+        scrollView.backgroundColor = UIColor(red: 98/255, green: 98/255, blue: 145/255, alpha: 1)
+    }
+    
+    override func viewWillLayoutSubviews() {
+        super.viewWillLayoutSubviews()
+        textViewHeightConstraint.constant = textView.sizeThatFits(CGSize(width: textView.frame.width, height: CGFloat.max)).height
     }
 }
