@@ -380,7 +380,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getProfilesOfUsersFollowing(forUser uid: Int, page: Int = 0, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: NSError?) -> Void) {
-        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWERS) { (result, error) -> Void in
+        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWING) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -390,7 +390,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func getProfilesOfFollowers(forUser uid: Int, page: Int = 0, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: NSError?) -> Void) {
-        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWING) { (result, error) -> Void in
+        getOtherUserFollowProfile(uid, page: page, method: GET_OTHER_USER_FOLLOWERS) { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
