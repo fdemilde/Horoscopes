@@ -44,6 +44,11 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     var numberOfFollowers = 0
     var baseDispatchGroup: dispatch_group_t!
     var noPost = false
+    var noFollowingUser = false
+    var noFollower = false
+    var noPostText = ""
+    var noUsersFollowingText = ""
+    var noFollowersText = ""
     var currentPostPage: Int = 0 {
         didSet {
             if currentPostPage != 0 {
@@ -110,6 +115,8 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
         highlightScopeButton(postButton)
+        
+        tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -422,6 +429,33 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile!
         navigationController?.pushViewController(controller, animated: true)
+    }
+    
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (currentScope == .Post && noPost) || (currentScope == .Following && noFollowingUser) || (currentScope == .Followers && noFollower) {
+            return 26
+        }
+        return 0
+    }
+    
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderFooterView")!
+        switch currentScope {
+        case .Post:
+            view.textLabel!.text = noPostText
+        case .Following:
+            view.textLabel!.text = noUsersFollowingText
+        case .Followers:
+            view.textLabel!.text = noFollowersText
+        }
+        return view
+    }
+    
+    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        let headerView = view as! UITableViewHeaderFooterView
+        headerView.textLabel!.font = UIFont.systemFontOfSize(11)
+        headerView.textLabel!.textColor = UIColor.grayColor()
+        headerView.contentView.backgroundColor = UIColor.whiteColor()
     }
     
     // MARK: - Delegate
