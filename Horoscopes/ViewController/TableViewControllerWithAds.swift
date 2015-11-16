@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import GoogleMobileAds
+import GoogleMobileAds
 class TableViewControllerWithAds : UITableViewController {
     
     @IBOutlet weak var tableHeaderView: UIView!

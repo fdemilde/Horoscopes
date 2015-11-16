@@ -8,8 +8,11 @@
 
 import UIKit
 
+import GoogleMobileAds
+
 class CurrentProfileViewController: ProfileBaseViewController {
     
+    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var settingsButtonLeadingSpace: NSLayoutConstraint!
     // MARK: - Property
     
@@ -44,6 +47,10 @@ class CurrentProfileViewController: ProfileBaseViewController {
             }
             self.currentPostPage++
         }
+        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
+        bannerView.adUnitID = ADMOD_ID
+        bannerView.rootViewController = self
+        bannerView.loadRequest(GADRequest())
     }
     
     override func viewWillAppear(animated: Bool) {
