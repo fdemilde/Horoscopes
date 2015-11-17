@@ -45,6 +45,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locationManager.setupLocationService()
         }
         
+        let text = "this is my w3 link: <a href=\"http://www.w3schools.com\">Visit W3Schools</a> and another one: <a href=\"http://google.com\">GOOGLE</a> for you to test"
+        Utilities.getWebLinkInfomationFromText(text)
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 

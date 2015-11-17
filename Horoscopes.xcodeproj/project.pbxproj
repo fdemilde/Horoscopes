@@ -298,7 +298,7 @@
 		F47BAB2A1B21605C002031AB /* Config.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
 		F47BAB2C1B218817002031AB /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F47C029C1B258B9B00C0BA83 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
-		F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomTabBarController.swift; sourceTree = "<group>"; };
+		F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomTabBarController.swift; path = ../ViewController/CustomTabBarController.swift; sourceTree = "<group>"; };
 		F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinWheelVC.swift; sourceTree = "<group>"; };
 		F47C02A31B2691D200C0BA83 /* LoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		F49EB5611B41C21E00F56092 /* CookieViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CookieViewController.swift; sourceTree = "<group>"; };
@@ -568,6 +568,7 @@
 			children = (
 				F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */,
 				F4DDF6A71B58C1CF00C5F57E /* choose_sign_bg-667h@2x.png */,
+				F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */,
 				F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */,
 				F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */,
 				F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */,
@@ -664,7 +665,6 @@
 				F49FAE411B42499500F38E0C /* Newsfeed */,
 				F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */,
 				F47C02A31B2691D200C0BA83 /* LoginVC.swift */,
-				F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */,
 				F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */,
 				F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */,
 				F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */,

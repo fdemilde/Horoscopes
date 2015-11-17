@@ -498,6 +498,53 @@ class Utilities {
             tabbarViewController.updateNotificationBadge()
         }
     }
+    
+    // extrack weblink information (the link and showing text) from a text
+    // return array [weblink, text]
+    // Dictionary<String,String>
+    class func getWebLinkInfomationFromText(text: String) -> NSAttributedString {
+        do {
+            let regex = try NSRegularExpression(pattern: "<[^>]+>", options: .CaseInsensitive)
+            let matches = regex.matchesInString(text, options: NSMatchingOptions.ReportProgress, range:NSMakeRange(0, text.characters.count))
+            for match in matches {
+                let nsText = text as NSString
+                let substring = nsText.substringWithRange(match.range)
+                print("getWebLinkInfomationFromText substring == \(substring)")
+            }
+            
+            let replacedText = regex.stringByReplacingMatchesInString(text,
+                options: NSMatchingOptions.ReportCompletion,
+                range:NSMakeRange(0, text.characters.count) ,
+                withTemplate: "")
+            print("getWebLinkInfomationFromText replacedText == \(replacedText)")
+        }
+        catch {
+        }
+        
+        let types: NSTextCheckingType = .Link
+        do {
+        let detector = try NSDataDetector(types: types.rawValue)
+            let matches = detector.matchesInString(text, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, text.characters.count))
+            
+            for match in matches {
+                print(match.URL!)
+            }
+        }
+        catch {
+        }
+        
+        let attString = NSMutableAttributedString(string: "\(text)")
+        let font = UIFont(name: "Book Antiqua", size: 15)
+        
+        attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, text.characters.count - 9))
+        attString.addAttribute(CCHLinkAttributeName, value: "Read more", range: NSMakeRange(text.characters.count - 9, 9))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(text.characters.count - 9, 9))
+        let linkAttributes = [NSForegroundColorAttributeName: UIColor.hyperLinkColor(),
+            NSUnderlineStyleAttributeName: 1
+        ]
+        
+        return attString
+    }
 }
 
 

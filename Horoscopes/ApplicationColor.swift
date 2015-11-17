@@ -37,4 +37,8 @@ extension UIColor {
     class func newsfeedStoryColorWithOpacity() -> UIColor {
         return UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 0.5)
     }
+    
+    class func hyperLinkColor() -> UIColor {
+        return UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1)
+    }
 }
