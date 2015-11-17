@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import GoogleMobileAds
+import GoogleMobileAds
 
 class ViewControllerWithAds : UIViewController {
     

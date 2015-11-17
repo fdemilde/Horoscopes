@@ -3543,8 +3543,16 @@ on news things</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geT-hc-lAU" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="0Em-g9-oUq"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JyZ-gJ-LGo" userLabel="Profile View">
-                                <rect key="frame" x="10" y="10" width="580" height="120"/>
+                                <rect key="frame" x="10" y="60" width="580" height="120"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="EnG-Vd-L94">
                                         <rect key="frame" x="35" y="15" width="60" height="60"/>
@@ -3699,7 +3707,7 @@ on news things</string>
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="308" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="T2c-dE-lZJ">
-                                <rect key="frame" x="0.0" y="130" width="600" height="421"/>
+                                <rect key="frame" x="0.0" y="180" width="600" height="371"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -3918,18 +3926,22 @@ on news things</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="T2c-dE-lZJ" secondAttribute="trailing" id="12y-hf-sFg"/>
+                            <constraint firstItem="geT-hc-lAU" firstAttribute="top" secondItem="KTd-Mk-Ofy" secondAttribute="bottom" id="1wI-In-MDv"/>
                             <constraint firstAttribute="trailing" secondItem="JyZ-gJ-LGo" secondAttribute="trailing" constant="10" id="7dJ-QD-yD0"/>
-                            <constraint firstItem="JyZ-gJ-LGo" firstAttribute="top" secondItem="KTd-Mk-Ofy" secondAttribute="bottom" constant="10" id="AJm-Y6-xsO"/>
+                            <constraint firstItem="JyZ-gJ-LGo" firstAttribute="top" secondItem="KTd-Mk-Ofy" secondAttribute="bottom" constant="60" id="AJm-Y6-xsO"/>
                             <constraint firstItem="T2c-dE-lZJ" firstAttribute="top" secondItem="JyZ-gJ-LGo" secondAttribute="bottom" id="GWj-2Y-u7O"/>
                             <constraint firstItem="eZb-OQ-BBl" firstAttribute="top" secondItem="T2c-dE-lZJ" secondAttribute="bottom" id="H1P-YM-ooh"/>
                             <constraint firstItem="T2c-dE-lZJ" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" id="KWY-gu-rBe"/>
                             <constraint firstItem="JyZ-gJ-LGo" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" constant="10" id="PPK-YP-XSP"/>
+                            <constraint firstItem="geT-hc-lAU" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" id="kOn-I8-3Om"/>
+                            <constraint firstAttribute="trailing" secondItem="geT-hc-lAU" secondAttribute="trailing" id="lLP-G9-gtz"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="bbJ-XZ-AvS"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="EnG-Vd-L94" id="KFj-x3-ilX"/>
+                        <outlet property="bannerView" destination="geT-hc-lAU" id="eMr-Wr-BdT"/>
                         <outlet property="followersButton" destination="7Yk-Eh-gSg" id="79h-xS-1Ed"/>
                         <outlet property="followingButton" destination="VZL-Fc-pvy" id="xcC-lE-FW8"/>
                         <outlet property="horoscopeSignImageView" destination="UTH-vK-r9O" id="IJd-1T-F81"/>

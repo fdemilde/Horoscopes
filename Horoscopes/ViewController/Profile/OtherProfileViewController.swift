@@ -86,6 +86,9 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                     }
                 }
             })
+            noPostText = "This person has not posted anything."
+            noUsersFollowingText = "This person has not followed anyone."
+            noFollowersText = "This person does not have any follower."
         }
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
             switch self.currentScope {
@@ -243,6 +246,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 Utilities.showError(error, viewController: self)
             } else {
                 let users = result!.0
+                self.noFollowingUser = users.count == 0
                 if self.isDataUpdated(self.followingUsers, newData: users) {
                     self.followingUsers = users
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -260,6 +264,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 Utilities.showError(error, viewController: self)
             } else {
                 let users = result!.0
+                self.noFollower = users.count == 0
                 if self.isDataUpdated(self.followers, newData: users) {
                     self.followers = users
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in

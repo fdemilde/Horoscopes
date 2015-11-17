@@ -8,15 +8,16 @@
 
 import UIKit
 
+import GoogleMobileAds
+
 class CurrentProfileViewController: ProfileBaseViewController {
     
+    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var settingsButtonLeadingSpace: NSLayoutConstraint!
     // MARK: - Property
     
     var loginView: UIView!
     var friends = [UserProfile]()
-    var noFollowingUser = false
-    var noFollower = false
     let postTypeImages = [
         "newfeeds_post_feel",
         "newfeeds_post_story",
@@ -32,7 +33,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "CurrentProfileHeaderFooterView")
         horoscopeSignView.userInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
@@ -44,6 +44,13 @@ class CurrentProfileViewController: ProfileBaseViewController {
             }
             self.currentPostPage++
         }
+        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
+        bannerView.adUnitID = ADMOD_ID
+        bannerView.rootViewController = self
+        bannerView.loadRequest(GADRequest())
+        noPostText = "You have not posted anything. Start posting something!"
+        noUsersFollowingText = "You have not followed anyone. Start follow someone!"
+        noFollowersText = "You do not have any follower."
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -304,33 +311,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
         }
-    }
-    
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (currentScope == .Post && noPost) || (currentScope == .Following && noFollowingUser) || (currentScope == .Followers && noFollower) {
-            return 26
-        }
-        return 0
-    }
-    
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("CurrentProfileHeaderFooterView")!
-        switch currentScope {
-        case .Post:
-            view.textLabel!.text = "You have not posted anything. Start posting something!"
-        case .Following:
-            view.textLabel!.text = "You have not followed anyone. Start follow someone!"
-        case .Followers:
-            view.textLabel!.text = "You do not have any follower."
-        }
-        return view
-    }
-    
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
-        let headerView = view as! UITableViewHeaderFooterView
-        headerView.textLabel!.font = UIFont.systemFontOfSize(11)
-        headerView.textLabel!.textColor = UIColor.grayColor()
-        headerView.contentView.backgroundColor = UIColor.whiteColor()
     }
     
     // MARK: - Delegate
