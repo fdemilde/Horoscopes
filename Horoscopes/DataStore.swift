@@ -233,28 +233,32 @@ class DataStore : NSObject{
         
     }
     
-    func checkFollowStatus(users: [UserProfile], completionHandler: (error: NSError?) -> Void) {
+    func checkFollowStatus(users: [UserProfile], completionHandler: (error: NSError?, shouldReload: Bool) -> Void) {
+        var shouldReload = false
         let check = {
             for user in users {
                 for userFollowing in self.usersFollowing! {
                     if user.uid == userFollowing.uid {
+                        shouldReload = !user.isFollowed
                         user.isFollowed = true
                         break
+                    } else {
+                        shouldReload = user.isFollowed
                     }
                 }
             }
         }
         if usersFollowing != nil {
             check()
-            completionHandler(error: nil)
+            completionHandler(error: nil, shouldReload: shouldReload)
         } else {
             SocialManager.sharedInstance.getProfilesOfUsersFollowing({ (result, error) -> Void in
                 if let error = error {
-                    completionHandler(error: error)
+                    completionHandler(error: error, shouldReload: shouldReload)
                 } else {
                     self.usersFollowing = result!
                     check()
-                    completionHandler(error: nil)
+                    completionHandler(error: nil, shouldReload: shouldReload)
                 }
             })
         }

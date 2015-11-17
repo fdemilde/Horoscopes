@@ -220,21 +220,21 @@ class CurrentProfileViewController: ProfileBaseViewController {
             } else {
                 let followers = result!
                 self.noFollower = followers.count == 0
-                if self.isDataUpdated(self.followers, newData: result!) {
+                self.getUsersFollowing({ () -> Void in
                     self.followers = followers
-                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error, shouldReload) -> Void in
                         if let error = error {
                             Utilities.showError(error, viewController: self)
                         } else {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.tableView.reloadData()
-                            })
+                            if shouldReload {
+                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                    self.tableView.reloadData()
+                                })
+                            }
                         }
                         completionHandler()
                     })
-                } else {
-                    completionHandler()
-                }
+                })
             }
         }
     }
@@ -349,7 +349,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     user.isFollowed = !user.isFollowed
                     self.numberOfUsersFollowing += 1
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+                        cell.followButton.hidden = true
                         self.configureScopeButton()
                     })
                     Utilities.hideHUD()

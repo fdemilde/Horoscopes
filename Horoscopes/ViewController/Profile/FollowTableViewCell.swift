@@ -56,11 +56,11 @@ class FollowTableViewCell: UITableViewCell {
     
     func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
         if showFollowButton {
-            followButton.hidden = false
             if isFollowed {
-                followButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+                followButton.hidden = true
             } else {
                 followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
+                followButton.hidden = false
             }
         } else {
             followButton.hidden = true

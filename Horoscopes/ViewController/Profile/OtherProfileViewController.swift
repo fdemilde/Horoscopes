@@ -181,7 +181,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                     Utilities.showError(error, viewController: self)
                 } else {
                     self.getUserProfileCounts()
-                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error, shouldReload) -> Void in
                         if let error = error {
                             Utilities.hideHUD()
                             Utilities.showError(error, viewController: self)
@@ -202,7 +202,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                     Utilities.showError(error, viewController: self)
                 } else {
                     self.getUserProfileCounts()
-                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error) -> Void in
+                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error, shouldReload) -> Void in
                         if let error = error {
                             Utilities.hideHUD()
                             Utilities.showError(error, viewController: self)
