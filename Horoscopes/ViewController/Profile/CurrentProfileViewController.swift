@@ -8,8 +8,6 @@
 
 import UIKit
 
-import GoogleMobileAds
-
 class CurrentProfileViewController: ProfileBaseViewController {
     
     @IBOutlet weak var bannerView: GADBannerView!

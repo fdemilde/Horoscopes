@@ -354,24 +354,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         })
         
+        router.addRoute("/profile/me/followers", blockCode: { (param) -> Void in
+            print("Route == me followers param dict = \(param)")
+        })
+        
         router.addRoute("/profile/:uid/followers", blockCode: { (param) -> Void in
             print("Route == followers param dict = \(param)")
+        })
+        
+        router.addRoute("/profile/me/following", blockCode: { (param) -> Void in
+            print("Route ==  /profile/me/following param dict = \(param)")
         })
         
         router.addRoute("/profile/:uid/following", blockCode: { (param) -> Void in
             print("Route == following param dict = \(param)")
         })
         
-        router.addRoute("/profile/me", blockCode: { (param) -> Void in
-            print("Route == profile me param dict = \(param)")
-        })
-        
         router.addRoute("/profile/me/setsign", blockCode: { (param) -> Void in
             print("Route == profile me setsign param dict = \(param)")
         })
         
-        router.addRoute("/profile/me/findfriends", blockCode: { (param) -> Void in
-            print("Route == profile findfriends param dict = \(param)")
+        router.addRoute("/profile/me/dob", blockCode: { (param) -> Void in
+            print("Route == profile dob param dict = \(param)")
+        })
+        
+        router.addRoute("/profile/me/facebookfriends", blockCode: { (param) -> Void in
+            print("Route == profile facebookfriends param dict = \(param)")
         })
         
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in

@@ -53,7 +53,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
 //        print("cellForRowAtIndexPath userPost == \(userPost)")
         cell.configureCellForNewsfeed(userPost)
         cell.viewController = self
-        
+        print("AAAA text view texttt \(cell.textView.text)")
         return cell
     }
     

@@ -44,7 +44,6 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
-        self.setTitleBackgroundColor()
         
     }
     
@@ -66,19 +65,8 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    func setTitleBackgroundColor(){
-        if(type == "feeling"){
-            postTitleBackgroundView.backgroundColor = UIColor(red: 243/255.0, green: 156/255.0, blue: 18/255.0, alpha: 1)
-        } else if(type == "story"){
-            postTitleBackgroundView.backgroundColor = UIColor(red: 46/255.0, green: 204/255.0, blue: 113/255.0, alpha: 1)
-        } else {
-            postTitleBackgroundView.backgroundColor = UIColor(red: 52/255.0, green: 152/255.0, blue: 219/255.0, alpha: 1)
-        }
-    }
-    
     @IBAction func cancel(sender: UIButton) {
         view.endEditing(true)
-//        parentVC.navigationController?.popViewControllerAnimated(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
@@ -115,8 +103,13 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
             Utilities.hideHUD()
             self.view.endEditing(true)
-//            self.parentVC.navigationController?.popViewControllerAnimated(true)
-            self.dismissViewControllerAnimated(true, completion: nil)
+            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                    rootVC?.selectedIndex = 4
+                }
+            })
+            
         })
     }
     

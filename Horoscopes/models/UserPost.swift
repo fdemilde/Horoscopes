@@ -40,7 +40,7 @@ public class UserPost : NSObject{
     }
     
     override public var description: String {
-        let string = ("id = \(post_id) || desc = \(message) || is follow == \(user!.isFollowed) \n")
+        let string = ("id = \(post_id) || desc = \(message) || is follow == \(user!.isFollowed) || truncated == \(truncated) \n")
         return string
     }
     

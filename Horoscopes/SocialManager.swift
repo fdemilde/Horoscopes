@@ -126,7 +126,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 Utilities.showError(error!)
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
-                //                print("getFollowingNewsfeed == \(response)")
+//                                print("getFollowingNewsfeed == \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response!)
                 //                println("result when get getFollowingNewsfeed = \(result)")
                 let errorCode = result["error"] as! Int
@@ -251,6 +251,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(postIds)", forKey: "post_id")
         let expiredTime = NSDate().timeIntervalSince1970 + 10
         CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
+            print("response response == \(response)")
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {

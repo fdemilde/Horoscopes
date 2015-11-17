@@ -108,8 +108,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         var string = "\(post.message)"
         let font = UIFont(name: "Book Antiqua", size: 15)
         
-        
+        print("configureCell configureCell \(post)")
         if(post.truncated == 1){
+            print("GO HERRE !!! ADD readmore")
             string = "\(post.message)... Read more"
             
         }
@@ -130,6 +131,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         }
         
         textView.attributedText = att as! NSAttributedString
+        print("GO HERRE !!! textView == \(textView.text)")
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
             likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
@@ -251,7 +253,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
         print("Tapped to link = \(value)")
         Utilities.showHUD()
-        XAppDelegate.socialManager.getPost(post.post_id, completionHandler: { (result, error) -> Void in
+        XAppDelegate.socialManager.getPost(post.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
             Utilities.hideHUD()
             if let _ = error {
                 
