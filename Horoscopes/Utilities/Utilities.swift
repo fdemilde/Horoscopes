@@ -502,48 +502,57 @@ class Utilities {
     // extrack weblink information (the link and showing text) from a text
     // return array [weblink, text]
     // Dictionary<String,String>
-    class func getWebLinkInfomationFromText(text: String) -> NSAttributedString {
+    class func getTextWithWeblink(text: String) -> NSMutableAttributedString {
         do {
             let regex = try NSRegularExpression(pattern: "<[^>]+>", options: .CaseInsensitive)
             let matches = regex.matchesInString(text, options: NSMatchingOptions.ReportProgress, range:NSMakeRange(0, text.characters.count))
+            var urls = [String]()
             for match in matches {
                 let nsText = text as NSString
                 let substring = nsText.substringWithRange(match.range)
-                print("getWebLinkInfomationFromText substring == \(substring)")
+                let types: NSTextCheckingType = .Link
+                let detector = try NSDataDetector(types: types.rawValue)
+                let matches = detector.matchesInString(substring, options: .ReportProgress, range: NSMakeRange(0, substring.characters.count))
+                for match in matches {
+                    if let url = match.URL {
+                        //NSUTF8StringEncoding
+                        let string = try String(contentsOfURL: url, encoding: NSUTF8StringEncoding)
+                        urls.append(string)
+                    }
+                }
+                
             }
             
             let replacedText = regex.stringByReplacingMatchesInString(text,
                 options: NSMatchingOptions.ReportCompletion,
                 range:NSMakeRange(0, text.characters.count) ,
                 withTemplate: "")
-            print("getWebLinkInfomationFromText replacedText == \(replacedText)")
-        }
-        catch {
-        }
-        
-        let types: NSTextCheckingType = .Link
-        do {
-        let detector = try NSDataDetector(types: types.rawValue)
-            let matches = detector.matchesInString(text, options: NSMatchingOptions.ReportProgress, range: NSMakeRange(0, text.characters.count))
-            
-            for match in matches {
-                print(match.URL!)
+            let attString = NSMutableAttributedString(string: replacedText)
+            let font = UIFont(name: "Book Antiqua", size: 15)
+            attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.characters.count))
+            let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
+            if numberOfMatches / 2 == urls.count {
+                for index in 0..<numberOfMatches {
+                    if index % 2 == 0 && index != numberOfMatches - 1 {
+                        let nsText = text as NSString
+                        let startTag = nsText.substringWithRange(matches[index].range)
+                        let endTag = nsText.substringWithRange(matches[index + 1].range)
+                        let link = text.componentsSeparatedByString(startTag).last?.componentsSeparatedByString(endTag).first
+                        let nsReplacedText = replacedText as NSString
+                        if let link = link {
+                            let nsLinkRange = nsReplacedText.rangeOfString(link)
+                            attString.addAttribute(CCHLinkAttributeName, value: urls[index/2], range: nsLinkRange)
+                            attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: nsLinkRange)
+                        }
+                    }
+                }
             }
+            return attString
         }
         catch {
+            let attString = NSMutableAttributedString(string: "\(text)")
+            return attString
         }
-        
-        let attString = NSMutableAttributedString(string: "\(text)")
-        let font = UIFont(name: "Book Antiqua", size: 15)
-        
-        attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, text.characters.count - 9))
-        attString.addAttribute(CCHLinkAttributeName, value: "Read more", range: NSMakeRange(text.characters.count - 9, 9))
-        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(text.characters.count - 9, 9))
-        let linkAttributes = [NSForegroundColorAttributeName: UIColor.hyperLinkColor(),
-            NSUnderlineStyleAttributeName: 1
-        ]
-        
-        return attString
     }
 }
 
