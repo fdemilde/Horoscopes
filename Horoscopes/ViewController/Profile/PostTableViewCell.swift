@@ -100,28 +100,29 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         }
         postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         var string = "\(post.message)"
+        
         let font = UIFont(name: "Book Antiqua", size: 15)
         
-        if(post.truncated == 1){
-            string = "\(post.message)... Read more"
+//        if(post.truncated == 1){
+//            string = "\(post.message)... Read more"
+        string = "this is my w3 link: <a href=\"http://www.w3schools.com\">Visit W3Schools</a> and another one: <a href=\"http://google.com\">GOOGLE</a> for you to test... Read more"
+//        }
+        let stringWithWebLink = Utilities.getTextWithWeblink(string)
+//        let text = NSMutableAttributedString(string: "\(string)")
+        let att = stringWithWebLink
+//        if(post.truncated == 1){
+            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count - 9))
+            att.addAttribute(CCHLinkAttributeName, value: "readmore", range: NSMakeRange(att.string.characters.count - 9, 9))
+            att.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(att.string.characters.count - 9, 9))
             
-        }
-        let text = NSMutableAttributedString(string: "\(string)")
-        let att = text.mutableCopy()
+//        } else {
+//            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count))
+//        }
+        let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
+            NSUnderlineStyleAttributeName: 1
+        ]
         
-        if(post.truncated == 1){
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, string.characters.count - 9))
-            att.addAttribute(CCHLinkAttributeName, value: "Read more", range: NSMakeRange(string.characters.count - 9, 9))
-            att.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(string.characters.count - 9, 9))
-            let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
-                NSUnderlineStyleAttributeName: 1
-            ]
-            
-            textView!.linkTextAttributes = linkAttributes
-        } else {
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, string.characters.count))
-        }
-        
+        textView!.linkTextAttributes = linkAttributes
         textView.attributedText = att as! NSAttributedString
         
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
@@ -242,22 +243,30 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     // MARK: link textview Delegate
     func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
-        print("Tapped to link = \(value)")
+        let urlString = value as! String
         Utilities.showHUD()
         XAppDelegate.socialManager.getPost(post.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
             Utilities.hideHUD()
             if let _ = error {
                 
             } else {
-                if let result = result {
-                    for post : UserPost in result {
-                        let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                        controller.userPost = post
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.viewController.navigationController?.pushViewController(controller, animated: true)
-                        })
+                if(urlString == "readmore"){
+                    if let result = result {
+                        for post : UserPost in result {
+                            let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                            controller.userPost = post
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.viewController.navigationController?.pushViewController(controller, animated: true)
+                            })
+                        }
                     }
+                } else {
+                    if let url = NSURL(string: urlString) {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                    
                 }
+                
             }
         })
     }
