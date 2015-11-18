@@ -261,6 +261,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupRouter(){
         router.addRoute("/today") { (param) -> Void in
             print("Route == horoscope today param dict = \(param)")
+            Utilities.popCurrentViewControllerToTop()
+            if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                rootVC?.selectedIndex = 0
+            }
         }
         
         router.addRoute("/fortune", blockCode: { (param) -> Void in

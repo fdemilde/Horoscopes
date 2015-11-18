@@ -101,9 +101,8 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
         circleLayer.fillColor = UIColor.clearColor().CGColor
         let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-        circleLayer.strokeColor = UIColor.greenColor().CGColor
+        circleLayer.strokeColor = color.CGColor
         profileView.layer.addSublayer(circleLayer)
-        
         
         let profileViewBackground = Utilities.getImageToSupportSize("newsfeed_header_background", size: profileView.frame.size, frame: profileView.bounds)
         profileView.backgroundColor = UIColor(patternImage: profileViewBackground)
