@@ -103,27 +103,26 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         
         let font = UIFont(name: "Book Antiqua", size: 15)
         
-//        if(post.truncated == 1){
-//            string = "\(post.message)... Read more"
-        string = "this is my w3 link: <a href=\"http://www.w3schools.com\">Visit W3Schools</a> and another one: <a href=\"http://google.com\">GOOGLE</a> for you to test... Read more"
-//        }
+        if(post.truncated == 1){
+            string = "\(post.message)... Read more"
+        }
         let stringWithWebLink = Utilities.getTextWithWeblink(string)
 //        let text = NSMutableAttributedString(string: "\(string)")
         let att = stringWithWebLink
-//        if(post.truncated == 1){
+        if(post.truncated == 1){
             att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count - 9))
             att.addAttribute(CCHLinkAttributeName, value: "readmore", range: NSMakeRange(att.string.characters.count - 9, 9))
             att.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(att.string.characters.count - 9, 9))
             
-//        } else {
-//            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count))
-//        }
+        } else {
+            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count))
+        }
         let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
             NSUnderlineStyleAttributeName: 1
         ]
         
         textView!.linkTextAttributes = linkAttributes
-        textView.attributedText = att as! NSAttributedString
+        textView.attributedText = att
         
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
@@ -261,6 +260,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                         }
                     }
                 } else {
+                    print("urlString urlString = \(urlString)")
                     if let url = NSURL(string: urlString) {
                         UIApplication.sharedApplication().openURL(url)
                     }

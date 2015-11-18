@@ -516,8 +516,7 @@ class Utilities {
                 for match in matches {
                     if let url = match.URL {
                         //NSUTF8StringEncoding
-                        let string = try String(contentsOfURL: url, encoding: NSUTF8StringEncoding)
-                        urls.append(string)
+                        urls.append(url.absoluteString)
                     }
                 }
                 
