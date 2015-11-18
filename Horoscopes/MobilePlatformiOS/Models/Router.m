@@ -43,6 +43,9 @@
 }
 
 -(void)addRoute:(NSString *)route blockCode:(void(^)(NSDictionary* param))block{
+    if([route hasPrefix:@"/"]){
+        route = [route substringFromIndex:1];
+    }
     NSString * regex = [self toRegex:route];
     [routes addObject:regex];
     [handlers setObject:block forKey:regex];
@@ -55,7 +58,9 @@
 
 -(void)handleRoute:(NSString*)url{
     url = [url stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
+    if([url hasPrefix:@"/"]){
+        url = [url substringFromIndex:1];
+    }
     for (NSString* route in routes) {
         BOOL isMatch = [RX(route) isMatch:url];
         

@@ -254,7 +254,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         }
         
         if(alertView.tag == 2){
-            if(buttonIndex == 0 && agreeToDailyPush == true){
+            if(buttonIndex == 0){
                 Utilities.registerForRemoteNotification()
                 Utilities.setLocalPush(getNotificationFiredTime())
                 XAppDelegate.userSettings.notifyOfNewHoroscope = true

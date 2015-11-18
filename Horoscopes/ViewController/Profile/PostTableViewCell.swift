@@ -164,18 +164,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.actionView = Utilities.makeCornerRadius(self.actionView, maskFrame: self.actionView.bounds, roundOptions: [.BottomLeft , .BottomRight], radius: 4)
             self.horoscopeSignView.layer.cornerRadius = 4
             self.horoscopeSignView.clipsToBounds = true
-            self.profileImageView.layer.shadowOffset = CGSize(width: 0, height: 3)
-            self.profileImageView.layer.shadowOpacity = 0.6
-            self.profileImageView.layer.shadowRadius = 2
-            self.profileImageView.clipsToBounds = false
+            
             self.profileImageView.layer.cornerRadius = self.profileImageSize / 2
             self.profileImageView.clipsToBounds = true
+            
+            
             let centerPoint = CGPoint(x: self.profileImageView.frame.origin.x + self.profileImageView.frame.size.width/2, y: self.profileImageView.frame.origin.y + self.profileImageView.frame.height/2)
             let radius = self.profileImageView.frame.size.width/2 + 5
             let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
             circleLayer.fillColor = UIColor.clearColor().CGColor
             let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-            circleLayer.strokeColor = color.CGColor
+            circleLayer.strokeColor = UIColor.greenColor().CGColor
             self.profileView.layer.addSublayer(circleLayer)
             
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")

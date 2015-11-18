@@ -94,15 +94,21 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         horoscopeSignView!.clipsToBounds = true
         avatarImageView!.layer.cornerRadius = 60 / 2
         avatarImageView!.clipsToBounds = true
+        
+        
         let centerPoint = CGPoint(x: avatarImageView.frame.origin.x + avatarImageView.frame.size.width/2, y: avatarImageView.frame.origin.y + avatarImageView.frame.height/2)
         let radius = avatarImageView.frame.size.width/2 + 5
         let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
         circleLayer.fillColor = UIColor.clearColor().CGColor
         let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-        circleLayer.strokeColor = color.CGColor
+        circleLayer.strokeColor = UIColor.greenColor().CGColor
         profileView.layer.addSublayer(circleLayer)
+        
+        
         let profileViewBackground = Utilities.getImageToSupportSize("newsfeed_header_background", size: profileView.frame.size, frame: profileView.bounds)
         profileView.backgroundColor = UIColor(patternImage: profileViewBackground)
+        
+        
         topCorner = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
