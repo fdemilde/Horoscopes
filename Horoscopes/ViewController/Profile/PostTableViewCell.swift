@@ -45,6 +45,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var horoscopeSignImageViewWidthLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var horoscopeSignImageViewTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var horoscopeSignLabelTrailingSpaceLayoutConstraint: NSLayoutConstraint!
+    @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
     
     // MARK: - Property
@@ -65,13 +66,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         super.awakeFromNib()
         // Initialization code
         textView.linkDelegate = self
-        for subview in subviews {
-            for constraint in subview.constraints {
-                if constraint.identifier == "textViewHeight" {
-                    constraint.constant = minimumTextViewHeight
-                }
-            }
-        }
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -108,9 +102,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         var string = "\(post.message)"
         let font = UIFont(name: "Book Antiqua", size: 15)
         
-        print("configureCell configureCell \(post)")
         if(post.truncated == 1){
-            print("GO HERRE !!! ADD readmore")
             string = "\(post.message)... Read more"
             
         }
@@ -131,7 +123,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         }
         
         textView.attributedText = att as! NSAttributedString
-        print("GO HERRE !!! textView == \(textView.text)")
+        
         likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
             likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)

@@ -318,7 +318,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
             })
         })
@@ -328,7 +328,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
                 let uid = param["uid"] as! String
                 Utilities.showHUD()
@@ -338,12 +338,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         if let _ = error {
                             
                         } else {
-                            
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let userProfile = result![0]
                             let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
                             controller.userProfile = userProfile
-    //                        controller.isPushedFromNotification = true
+//                            controller.isPushedFromNotification = true
                             if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
                                 profileViewController.navigationController?.pushViewController(controller, animated: true)
                             }
@@ -391,7 +390,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 2
+                    rootVC?.selectedIndex = 3
                 }
                 if let postId = param["post_id"] as? String{
                     Utilities.showHUD()

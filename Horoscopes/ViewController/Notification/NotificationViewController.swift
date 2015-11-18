@@ -99,6 +99,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
+//                print("didSelectRowAtIndexPath route == \(route)")
                 dispatch_async(dispatch_get_main_queue()) {
                     XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
                 }

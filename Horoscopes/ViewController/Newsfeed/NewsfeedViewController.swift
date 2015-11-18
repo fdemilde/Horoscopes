@@ -31,7 +31,9 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     let FB_BUTTON_SIZE = 80 as CGFloat
     let POST_BUTTON_SIZE = CGSizeMake(100, 90)
     var addButton: UIButton!
-    
+    let PADDING = 20 as CGFloat
+    let HEADER_HEIGHT: CGFloat = 130 as CGFloat
+    let FOOTER_HEIGHT: CGFloat = 80 as CGFloat
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var globalButton: UIButton!
@@ -47,6 +49,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     @IBOutlet weak var tabView: UIView!
     var tableHeaderView: NewsfeedTableHeaderView!
+    let textviewForCalculating = UITextView()
+    
     
     struct TableViewConstants {
         static let defaultTableViewCellIdentifier = "defaultCell"
@@ -320,7 +324,8 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
+        let post = getFeedDataForRow(indexPath.row)
+        return getAboutCellHeight(post.message)
     }
     
     // MARK: - Delegate
@@ -432,6 +437,24 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             }
             
         }
+    }
+    
+    // MARK: Table Cell Helpers
+    
+    func getAboutCellHeight(text : String) -> CGFloat {
+        let font = UIFont(name: "Book Antiqua", size: 15)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
+        let textViewWidth = Utilities.getScreenSize().width - (PADDING * 2)
+        let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
+        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + PADDING * 3
+    }
+    
+    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+        textviewForCalculating.attributedText = string
+        let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let height = ceil(size.height)
+        return height
     }
     
     // MARK: Table Data helpers

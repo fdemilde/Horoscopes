@@ -171,18 +171,19 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - PADDING * 4
-        let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
-        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT
+        var textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
+        let tableHeaderHeight = getTableHeaderHeight()
+        
+        let minTextViewHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - PADDING * 2 - HEADER_HEIGHT - tableHeaderHeight - FOOTER_HEIGHT - TABBAR_HEIGHT
+        
+        textViewHeight = max(textViewHeight, minTextViewHeight)
+        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + TEXTVIEW_PADDING
     }
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
         textviewForCalculating.attributedText = string
         let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
-        
-        let tableHeaderHeight = getTableHeaderHeight()
-        let minTextViewHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - PADDING * 2 - HEADER_HEIGHT - tableHeaderHeight - FOOTER_HEIGHT - TABBAR_HEIGHT
-        let height = max(ceil(size.height), minTextViewHeight)
-        return height + TEXTVIEW_PADDING
+        return ceil(size.height)
     }
     
     // Calendar delegate

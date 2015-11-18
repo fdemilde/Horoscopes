@@ -251,7 +251,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(postIds)", forKey: "post_id")
         let expiredTime = NSDate().timeIntervalSince1970 + 10
         CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
-            print("response response == \(response)")
+//            print("response response == \(response)")
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
@@ -336,7 +336,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func getProfile(usersIdString: String, ignoreCache : Bool, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func getProfile(usersIdString: String, ignoreCache : Bool = false, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject(usersIdString, forKey: "uid")
         let longExpiredTime = NSDate().timeIntervalSince1970 + 86400
@@ -345,6 +345,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 if(response != nil){
+//                    print("social manager getProfile response = \(response)")
                     let json = Utilities.parseNSDictionaryToDictionary(response!)
                     var result = [UserProfile]()
                     for userId in usersIdString.componentsSeparatedByString(",") {

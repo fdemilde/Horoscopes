@@ -11,8 +11,10 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     @IBOutlet weak var tableView: UITableView!
     var userPost : UserPost!
+    let PADDING = 20 as CGFloat
+    let HEADER_HEIGHT: CGFloat = 130 as CGFloat
+    let FOOTER_HEIGHT: CGFloat = 80 as CGFloat
     
-    @IBOutlet weak var navigationView: UIView!
     let defaultEstimatedRowHeight: CGFloat = 400
     
     override func viewDidLoad() {
@@ -29,15 +31,14 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         // Do any additional setup after loading the view.
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         view.backgroundColor = UIColor(patternImage: backgroundImage)
-        navigationView.layer.shadowOffset = CGSize(width: 0, height: 3)
-        navigationView.layer.shadowOpacity = 0.2
-        navigationView.layer.shadowRadius = 1
-        tableView.estimatedRowHeight = defaultEstimatedRowHeight
-        tableView.rowHeight = UITableViewAutomaticDimension
         
     }
     
     // MARK: - Table view data source and delegate
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return getAboutCellHeight(userPost.message)
+    }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
@@ -53,8 +54,26 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
 //        print("cellForRowAtIndexPath userPost == \(userPost)")
         cell.configureCellForNewsfeed(userPost)
         cell.viewController = self
-        print("AAAA text view texttt \(cell.textView.text)")
         return cell
+    }
+    
+    // MARK: Table Cell Helpers
+    
+    func getAboutCellHeight(text : String) -> CGFloat {
+        let font = UIFont(name: "Book Antiqua", size: 15)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
+        let textViewWidth = Utilities.getScreenSize().width - (PADDING * 2)
+        let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
+        return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + PADDING * 3
+    }
+    
+    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+        let textviewForCalculating = UITextView()
+        textviewForCalculating.attributedText = string
+        let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let height = ceil(size.height)
+        return height
     }
     
     // MARK: Button Actions

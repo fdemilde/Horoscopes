@@ -19,6 +19,7 @@ class CacheManager {
             //                    print("cacheGet key == \(key)")
             let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
             //        print("cacheGet cacheDict == \(cacheDict)")
+            // print("\(url) ignore Cache == \(ignoreCache)")
             if(!ignoreCache){
                 if var cacheDict = cacheDict{
                     cacheDict = cacheDict as! Dictionary<String, NSObject>
@@ -31,6 +32,7 @@ class CacheManager {
                     completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
             }
+//            print("\(url) SEND REQUEST TO SERVER")
             Utilities.showHUD()
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {

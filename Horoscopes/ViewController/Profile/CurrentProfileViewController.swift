@@ -42,7 +42,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             }
             self.currentPostPage++
         }
-        print("Google Mobile Ads SDK version: " + GADRequest.sdkVersion())
         bannerView.adUnitID = ADMOD_ID
         bannerView.rootViewController = self
         bannerView.loadRequest(GADRequest())
