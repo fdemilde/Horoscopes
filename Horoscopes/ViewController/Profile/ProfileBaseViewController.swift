@@ -328,21 +328,18 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     }
     
     func getFeed(isRefreshed: Bool = false, completionHandler: () -> Void) {
-        SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage, isRefreshed: isRefreshed) { (result, error) -> Void in
-            if let error = error {
-                Utilities.showError(error, viewController: self)
-            } else {
-                self.currentPostPage = 0
-                let posts = result!.0
-                self.noPost = posts.count == 0
-                if self.isDataUpdated(self.userPosts, newData: posts) {
+        if currentPostPage == 0 {
+            SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
+                if let error = error {
+                    Utilities.showError(error, viewController: self)
+                } else {
+                    let posts = result!.0
+                    self.noPost = posts.count == 0
                     self.userPosts = posts
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        self.tableView.reloadData()
-                    })
+                    self.tableView.reloadData()
                 }
-            }
-            completionHandler()
+                completionHandler()
+            })
         }
     }
     
