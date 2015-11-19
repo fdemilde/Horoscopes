@@ -121,6 +121,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             NSUnderlineStyleAttributeName: 1
         ]
         
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
         textView!.linkTextAttributes = linkAttributes
         textView.attributedText = att
         

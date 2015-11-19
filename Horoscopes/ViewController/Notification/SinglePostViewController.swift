@@ -70,7 +70,11 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
         let textviewForCalculating = UITextView()
-        textviewForCalculating.attributedText = string
+        let style = NSMutableParagraphStyle()
+        style.lineSpacing = 5
+        let att = string.mutableCopy() as! NSMutableAttributedString
+        att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
+        textviewForCalculating.attributedText = att
         let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
         let height = ceil(size.height)
         return height
