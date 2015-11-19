@@ -104,10 +104,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         circleLayer.strokeColor = color.CGColor
         profileView.layer.addSublayer(circleLayer)
         
-        let profileViewBackground = Utilities.getImageToSupportSize("newsfeed_header_background", size: profileView.frame.size, frame: profileView.bounds)
-        profileView.backgroundColor = UIColor(patternImage: profileViewBackground)
-        
-        
         topCorner = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
