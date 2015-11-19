@@ -22,6 +22,8 @@ class ShareViewController : UIViewController {
     var sharingText = ""
     var pictureURL = ""
     var horoscopeSignName = ""
+    var horoscopeSignIndex = 8
+    var postId = ""
     var shareController = ShareController()
     var numberOfButtons = 3
     var paddingY = 15.0 as CGFloat
@@ -191,11 +193,12 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
     }
     
-    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSignName : String, sharingText: String, pictureURL : String){
+    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSign : Int, sharingText: String, pictureURL : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeDaily
         self.timeTag = timeTag
-        self.horoscopeSignName = horoscopeSignName
+        self.horoscopeSignName = Utilities.getHoroscopeNameWithIndex(horoscopeSign)
+        self.horoscopeSignIndex = horoscopeSign
         self.sharingText = sharingText
         self.pictureURL = pictureURL
     }
@@ -207,11 +210,12 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
     }
     
-    func populateNewsfeedShareData(viewType: ShareViewType, sharingText: String, pictureURL : String){
+    func populateNewsfeedShareData(postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeNewsfeed
         self.sharingText = sharingText
         self.pictureURL = pictureURL
+        self.postId = postId
     }
     
     
@@ -289,13 +293,16 @@ class ShareViewController : UIViewController {
         var urlString = ""
         switch (shareType) {
             case ShareType.ShareTypeDaily:
-                urlString = String(format: "http://apps.facebook.com/phonehoroscopes/read.php?rf=nf_iphone&tag=%f&ref_id=%@", timeTag, FACEBOOK_APP_ID)
+                let dateString = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "yyyy-MM-dd")
+                urlString = String(format: "https://horoscopes.zwigglers.com/%@/%d", dateString, horoscopeSignIndex)
+//                print("urlString urlString = \(urlString)")
             break
             case ShareType.ShareTypeFortune:
                 urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
             break
         case ShareType.ShareTypeNewsfeed:
-            urlString = "https://apps.facebook.com/getyourhoroscope/?rf=mobile"
+            urlString = String(format: "https://horoscopes.zwigglers.com/post/%@", postId)
+//            print("urlString urlString = \(urlString)")
             break
         }
         

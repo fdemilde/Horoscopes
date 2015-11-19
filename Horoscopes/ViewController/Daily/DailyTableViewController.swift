@@ -224,8 +224,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
         let sharingText = String(format: "%@", horoscopeDescription)
         let pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        let horoscopeSignName = Utilities.getHoroscopeNameWithIndex(selectedSign)
-        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
+        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL)
         
         return shareVC
     }
