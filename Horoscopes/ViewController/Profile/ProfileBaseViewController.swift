@@ -407,16 +407,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         }
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if currentScope == .Post {
-            let postCell = cell as! PostTableViewCell
-            let dividerLayer = CALayer()
-            dividerLayer.backgroundColor = UIColor(red: 216/255, green: 216/255, blue: 216/255, alpha: 1).CGColor
-            dividerLayer.frame = CGRect(x: 0, y: postCell.containerView.frame.height - 40, width: postCell.containerView.frame.width, height: 0.5)
-            postCell.containerView.layer.addSublayer(dividerLayer)
-        }
-    }
-    
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if currentScope != .Post {
             return 70

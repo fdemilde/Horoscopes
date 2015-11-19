@@ -3897,6 +3897,14 @@ on news things</string>
                                                                 <action selector="tapShareButton:" destination="t06-bA-bXf" eventType="touchUpInside" id="g4I-lr-PNt"/>
                                                             </connections>
                                                         </button>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vqQ-A2-nGf">
+                                                            <rect key="frame" x="0.0" y="257" width="580" height="1"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.84705882352941175" green="0.84705882352941175" blue="0.84705882352941175" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="bgt-G7-Wbs"/>
+                                                            </constraints>
+                                                        </view>
                                                     </subviews>
                                                     <animations/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3907,12 +3915,15 @@ on news things</string>
                                                         <constraint firstItem="jpD-Vb-4Yh" firstAttribute="top" secondItem="78V-Of-oqi" secondAttribute="bottom" constant="10" id="Hd1-eh-yKw"/>
                                                         <constraint firstAttribute="trailing" secondItem="78V-Of-oqi" secondAttribute="trailing" constant="10" id="JVd-16-gCc"/>
                                                         <constraint firstItem="78V-Of-oqi" firstAttribute="top" secondItem="5a8-ye-rOT" secondAttribute="bottom" id="Kvr-5i-Yyl"/>
+                                                        <constraint firstItem="vqQ-A2-nGf" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" id="Oal-jM-WjC"/>
                                                         <constraint firstAttribute="trailing" secondItem="dDy-qm-Wlk" secondAttribute="trailing" constant="10" id="PVW-WW-XwE"/>
                                                         <constraint firstAttribute="trailing" secondItem="5a8-ye-rOT" secondAttribute="trailing" id="RZk-Jg-rJD"/>
                                                         <constraint firstItem="5a8-ye-rOT" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" id="RuP-Q3-rPJ"/>
+                                                        <constraint firstAttribute="trailing" secondItem="vqQ-A2-nGf" secondAttribute="trailing" id="axp-pp-Euv"/>
                                                         <constraint firstItem="Scw-Jy-u1H" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" constant="10" id="dX3-FZ-iw5"/>
                                                         <constraint firstAttribute="bottom" secondItem="dDy-qm-Wlk" secondAttribute="bottom" constant="10" id="grj-Uh-oSJ"/>
                                                         <constraint firstItem="78V-Of-oqi" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" constant="10" id="iWL-mT-pwn"/>
+                                                        <constraint firstAttribute="bottom" secondItem="vqQ-A2-nGf" secondAttribute="bottom" constant="40" id="myu-0P-awT"/>
                                                         <constraint firstAttribute="bottom" secondItem="Scw-Jy-u1H" secondAttribute="bottom" id="pwR-jX-txa"/>
                                                         <constraint firstItem="dDy-qm-Wlk" firstAttribute="bottom" secondItem="Scw-Jy-u1H" secondAttribute="bottom" id="ycA-EL-lwz"/>
                                                         <constraint firstItem="dDy-qm-Wlk" firstAttribute="baseline" secondItem="Scw-Jy-u1H" secondAttribute="baseline" id="z3X-kX-OCG"/>
@@ -6837,6 +6848,14 @@ on news things</string>
                                                             <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BAw-Eh-z0a">
+                                                            <rect key="frame" x="0.0" y="257" width="580" height="1"/>
+                                                            <animations/>
+                                                            <color key="backgroundColor" red="0.84705882349999995" green="0.84705882349999995" blue="0.84705882349999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="dr2-gZ-Jzz"/>
+                                                            </constraints>
+                                                        </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="31A-Fb-Il5">
                                                             <rect key="frame" x="10" y="254" width="47" height="44"/>
                                                             <animations/>
@@ -6875,13 +6894,16 @@ on news things</string>
                                                         <constraint firstAttribute="bottom" secondItem="31A-Fb-Il5" secondAttribute="bottom" id="S2y-lx-wdU"/>
                                                         <constraint firstAttribute="trailing" secondItem="joO-zz-rdT" secondAttribute="trailing" constant="10" id="StD-Do-5Tz"/>
                                                         <constraint firstItem="31A-Fb-Il5" firstAttribute="top" secondItem="Vxe-pm-JE8" secondAttribute="bottom" constant="10" id="VWg-UY-pHp"/>
+                                                        <constraint firstAttribute="bottom" secondItem="BAw-Eh-z0a" secondAttribute="bottom" constant="40" id="XQE-LA-pdw"/>
                                                         <constraint firstItem="Vxe-pm-JE8" firstAttribute="leading" secondItem="vFb-PO-YqH" secondAttribute="leading" constant="10" id="b8h-sc-7CM"/>
                                                         <constraint firstAttribute="bottom" secondItem="joO-zz-rdT" secondAttribute="bottom" constant="10" id="dvS-ag-pYS"/>
                                                         <constraint firstItem="0vs-cl-2Tq" firstAttribute="leading" secondItem="vFb-PO-YqH" secondAttribute="leading" id="eyb-rt-38v"/>
                                                         <constraint firstItem="Vxe-pm-JE8" firstAttribute="top" secondItem="oIg-3A-U2j" secondAttribute="bottom" constant="10" id="f4m-nK-M5i"/>
                                                         <constraint firstAttribute="trailing" secondItem="oIg-3A-U2j" secondAttribute="trailing" constant="10" id="jh9-J4-mix"/>
+                                                        <constraint firstAttribute="trailing" secondItem="BAw-Eh-z0a" secondAttribute="trailing" id="r6U-CU-qCS"/>
                                                         <constraint firstItem="oIg-3A-U2j" firstAttribute="leading" secondItem="vFb-PO-YqH" secondAttribute="leading" constant="10" id="rmJ-2Z-5qX"/>
                                                         <constraint firstItem="31A-Fb-Il5" firstAttribute="leading" secondItem="vFb-PO-YqH" secondAttribute="leading" constant="10" id="xe9-f0-lgf"/>
+                                                        <constraint firstItem="BAw-Eh-z0a" firstAttribute="leading" secondItem="vFb-PO-YqH" secondAttribute="leading" id="z9t-OR-SAt"/>
                                                     </constraints>
                                                     <variation key="default">
                                                         <mask key="constraints">
