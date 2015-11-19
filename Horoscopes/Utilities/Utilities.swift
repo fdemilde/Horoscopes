@@ -176,6 +176,17 @@ class Utilities {
         var suffixes = suffix_string.componentsSeparatedByString("|")
         let suffix = suffixes[date_day!]
         dateString = dateString.stringByAppendingString(suffix)
+        var year = defaultYear
+        if #available(iOS 8.0, *) {
+            let yearComponent = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: date)
+            year = yearComponent
+        } else {
+            let components = NSCalendar.currentCalendar().components([.Year], fromDate: date)
+            year = components.year
+        }
+        if year != defaultYear {
+            dateString += " \(year)"
+        }
         
         return dateString
     }
