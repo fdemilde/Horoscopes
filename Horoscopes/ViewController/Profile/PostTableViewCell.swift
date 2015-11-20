@@ -107,26 +107,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         if let type = postTypes[post.type] {
             postTypeLabel.text = type.1
         }
-//        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
         postDateLabel.text = Utilities.getTimeAgoString(post.ts)
-        var string = "\(post.message)"
-        
-        let font = UIFont(name: "Book Antiqua", size: 15)
-        
-        if(post.truncated == 1){
-            string = "\(post.message)... Read more"
-        }
-        let stringWithWebLink = Utilities.getTextWithWeblink(string)
-//        let text = NSMutableAttributedString(string: "\(string)")
+        let string = "\(post.message)"
+        let stringWithWebLink = Utilities.getTextWithWeblink(string, isTruncated: post.truncated == 1)
         let att = stringWithWebLink
-        if(post.truncated == 1){
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count - 9))
-            att.addAttribute(CCHLinkAttributeName, value: "readmore", range: NSMakeRange(att.string.characters.count - 9, 9))
-            att.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(att.string.characters.count - 9, 9))
-            
-        } else {
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count))
-        }
         let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
             NSUnderlineStyleAttributeName: 1
         ]
