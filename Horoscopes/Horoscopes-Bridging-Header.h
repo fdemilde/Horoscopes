@@ -22,6 +22,7 @@
 #import "AFNetworking.h"
 #import "NSDate+NVTimeAgo.h"
 #import <GoogleMobileAds/GADBannerView.h>
+#import "DateTools.h"
 
 // MARK: GAI
 #import "GAI.h"

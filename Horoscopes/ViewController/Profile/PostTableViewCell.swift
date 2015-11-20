@@ -98,7 +98,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         if let type = postTypes[post.type] {
             postTypeLabel.text = type.1
         }
-        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
+//        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
+        postDateLabel.text = Utilities.getTimeAgoString(post.ts)
         var string = "\(post.message)"
         
         let font = UIFont(name: "Book Antiqua", size: 15)
