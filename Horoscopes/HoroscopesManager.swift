@@ -204,11 +204,17 @@ class HoroscopesManager : NSObject {
         var horoSigns = self.horoscopesSigns
         todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
         tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
-        
+        let todayPermaLink = self.data["today"]!["permalink"]! as! String
+        let tomorrowPermaLink = self.data["tomorrow"]!["permalink"]! as! String
         for var index = 1; index <= 12; index++ {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
+            
             horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
+            
+            horoSigns[index-1].permaLinks.addObject(String(format: "%@/%d", todayPermaLink, index))
+            
+            horoSigns[index-1].permaLinks.addObject(String(format: "%@/%d", tomorrowPermaLink, index))
         }
     }
     

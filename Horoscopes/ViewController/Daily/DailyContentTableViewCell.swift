@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol DailyContentTableViewCellDelegate {
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval)
+    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String)
     optional func didTapOnCalendar()
 }
 
@@ -32,6 +32,7 @@ class DailyContentTableViewCell: UITableViewCell {
     var delegate: DailyContentTableViewCellDelegate!
     var timeTag = NSTimeInterval()
     var selectedSign: Int!
+    var shareUrl = ""
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,7 +63,7 @@ class DailyContentTableViewCell: UITableViewCell {
     // MARK: - Action
     
     @IBAction func share(sender: UIButton) {
-        delegate.didShare(textView.text, timeTag: timeTag)
+        delegate.didShare(textView.text, timeTag: timeTag, shareUrl: self.shareUrl)
     }
     
     @IBAction func like(sender: UIButton) {
@@ -88,7 +89,7 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Helper
     
-    func setUp(type: DailyHoroscopeType, selectedSign: Int) {
+    func setUp(type: DailyHoroscopeType, selectedSign: Int, shareUrl : String) {
         if selectedSign != -1 {
             self.selectedSign = selectedSign
             if type == DailyHoroscopeType.TodayHoroscope {
@@ -97,6 +98,7 @@ class DailyContentTableViewCell: UITableViewCell {
                 dayLabel.text = "Tomorrow"
             }
             dateLabel.text = dateStringForType(type)
+            self.shareUrl = shareUrl
         }
     }
     

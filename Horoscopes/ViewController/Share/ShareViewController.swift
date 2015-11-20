@@ -24,6 +24,7 @@ class ShareViewController : UIViewController {
     var horoscopeSignName = ""
     var horoscopeSignIndex = 8
     var postId = ""
+    var shareUrl = ""
     var shareController = ShareController()
     var numberOfButtons = 3
     var paddingY = 15.0 as CGFloat
@@ -193,7 +194,7 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
     }
     
-    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSign : Int, sharingText: String, pictureURL : String){
+    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSign : Int, sharingText: String, pictureURL : String, shareUrl : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeDaily
         self.timeTag = timeTag
@@ -201,28 +202,31 @@ class ShareViewController : UIViewController {
         self.horoscopeSignIndex = horoscopeSign
         self.sharingText = sharingText
         self.pictureURL = pictureURL
+        self.shareUrl = shareUrl
     }
     
-    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String){
+    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeFortune
         self.sharingText = sharingText
         self.pictureURL = pictureURL
+        self.shareUrl = shareUrl
     }
     
-    func populateNewsfeedShareData(postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String){
+    func populateNewsfeedShareData(postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeNewsfeed
         self.sharingText = sharingText
         self.pictureURL = pictureURL
         self.postId = postId
+        self.shareUrl = shareUrl
     }
     
     
     // MARK: Button Tapp gesture handlers
     
     @IBAction func copyURLTapped(sender: AnyObject) {
-        UIPasteboard.generalPasteboard().string = getSharingURL()
+        UIPasteboard.generalPasteboard().string = self.shareUrl
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
         hud.mode = MBProgressHUDMode.Text
         hud.detailsLabelFont = UIFont.systemFontOfSize(11)
@@ -232,11 +236,11 @@ class ShareViewController : UIViewController {
     
     func handleFBTap(sender: AnyObject){
         
-        shareController.shareFacebook(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: getSharingURL())
+        shareController.shareFacebook(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
     func handleTwTap(sender: AnyObject){
-        shareController.shareTwitter(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: getSharingURL())
+        shareController.shareTwitter(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
     func handleMessageTap(sender: AnyObject){
@@ -252,12 +256,12 @@ class ShareViewController : UIViewController {
     func handleFBMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
         let title = self.getTitle()
-        shareController.shareFbMessage(title, text: sharingText, url: self.getSharingURL(), pictureURL: pictureURL)
+        shareController.shareFbMessage(title, text: sharingText, url: self.self.shareUrl, pictureURL: pictureURL)
     }
     
     func handleWhatsappTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.getSharingURL())
+        shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.self.shareUrl)
     }
     
     // MARK: checkAvailability
@@ -289,26 +293,26 @@ class ShareViewController : UIViewController {
     
     // MARK: Helpers
     
-    func getSharingURL() -> String{
-        var urlString = ""
-        switch (shareType) {
-            case ShareType.ShareTypeDaily:
-                let dateString = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "yyyy-MM-dd")
-                urlString = String(format: "https://horoscopes.zwigglers.com/%@/%d", dateString, horoscopeSignIndex)
-//                print("urlString urlString = \(urlString)")
-            break
-            case ShareType.ShareTypeFortune:
-                urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
-            break
-        case ShareType.ShareTypeNewsfeed:
-            urlString = String(format: "https://horoscopes.zwigglers.com/post/%@", postId)
-//            print("urlString urlString = \(urlString)")
-            break
-        }
-        
-        
-        return urlString
-    }
+//    func getSharingURL() -> String{
+//        var urlString = ""
+//        switch (shareType) {
+//            case ShareType.ShareTypeDaily:
+//                let dateString = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "yyyy-MM-dd")
+//                urlString = String(format: "https://horoscopes.zwigglers.com/%@/%d", dateString, horoscopeSignIndex)
+////                print("urlString urlString = \(urlString)")
+//            break
+//            case ShareType.ShareTypeFortune:
+//                urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
+//            break
+//        case ShareType.ShareTypeNewsfeed:
+//            urlString = String(format: "https://horoscopes.zwigglers.com/post/%@", postId)
+////            print("urlString urlString = \(urlString)")
+//            break
+//        }
+//    
+//        
+//        return urlString
+//    }
     
     func getTextIncludingTitle() -> String{
         var text = ""
