@@ -1,62 +1,63 @@
 PODS:
-  - AFNetworking (2.6.0):
-    - AFNetworking/NSURLConnection (= 2.6.0)
-    - AFNetworking/NSURLSession (= 2.6.0)
-    - AFNetworking/Reachability (= 2.6.0)
-    - AFNetworking/Security (= 2.6.0)
-    - AFNetworking/Serialization (= 2.6.0)
-    - AFNetworking/UIKit (= 2.6.0)
-  - AFNetworking/NSURLConnection (2.6.0):
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.0):
+  - AFNetworking/NSURLSession (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.0)
-  - AFNetworking/Security (2.6.0)
-  - AFNetworking/Serialization (2.6.0)
-  - AFNetworking/UIKit (2.6.0):
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AsyncDisplayKit (1.2.3):
-    - AsyncDisplayKit/ASDealloc2MainObject (= 1.2.3)
-  - AsyncDisplayKit/ASDealloc2MainObject (1.2.3)
-  - Bolts (1.3.0):
-    - Bolts/AppLinks (= 1.3.0)
-    - Bolts/Tasks (= 1.3.0)
-  - Bolts/AppLinks (1.3.0):
+  - AsyncDisplayKit (1.9.1):
+    - AsyncDisplayKit/ASDealloc2MainObject (= 1.9.1)
+  - AsyncDisplayKit/ASDealloc2MainObject (1.9.1)
+  - Bolts (1.5.0):
+    - Bolts/AppLinks (= 1.5.0)
+    - Bolts/Tasks (= 1.5.0)
+  - Bolts/AppLinks (1.5.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.3.0)
+  - Bolts/Tasks (1.5.0)
   - CCHLinkTextView (1.2.0)
   - CustomIOSAlertView (0.9.3)
-  - FBSDKCoreKit (4.7.0):
+  - DateTools (1.7.0)
+  - FBSDKCoreKit (4.8.0):
     - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.7.0)
-    - FBSDKCoreKit/no-arc (= 4.7.0)
-  - FBSDKCoreKit/arc (4.7.0):
+    - FBSDKCoreKit/arc (= 4.8.0)
+    - FBSDKCoreKit/no-arc (= 4.8.0)
+  - FBSDKCoreKit/arc (4.8.0):
     - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.7.0):
+  - FBSDKCoreKit/no-arc (4.8.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.7.0):
+  - FBSDKLoginKit (4.8.0):
     - FBSDKCoreKit
-  - FBSDKShareKit (4.7.0):
+  - FBSDKShareKit (4.8.0):
     - FBSDKCoreKit
   - Google-Mobile-Ads-SDK (7.5.2)
-  - GoogleAnalytics (3.13.0)
+  - GoogleAnalytics (3.14.0)
   - JSONKit-NoWarning (1.2)
   - JTCalendar (2.1.4)
   - MBProgressHUD (0.9.1)
-  - MZAppearance (1.1.5)
-  - MZFormSheetController (3.0.5):
+  - MZAppearance (1.1.6)
+  - MZFormSheetController (3.1.2):
     - MZAppearance
-    - MZFormSheetController/Core (= 3.0.5)
-  - MZFormSheetController/Core (3.0.5):
+    - MZFormSheetController/Core (= 3.1.2)
+  - MZFormSheetController/Core (3.1.2):
     - MZAppearance
   - Reachability (3.2)
-  - SDWebImage/Core (3.7.2)
+  - SDWebImage/Core (3.7.3)
   - UIImage+animatedGif (0.1.0)
   - WebASDKImageManager (1.0.1):
     - AsyncDisplayKit (~> 1.1)
@@ -66,6 +67,7 @@ DEPENDENCIES:
   - AFNetworking (~> 2.6)
   - CCHLinkTextView
   - CustomIOSAlertView (~> 0.9.3)
+  - DateTools
   - FBSDKCoreKit (~> 4.7)
   - FBSDKLoginKit (~> 4.7)
   - FBSDKShareKit (~> 4.7)
@@ -80,23 +82,24 @@ DEPENDENCIES:
   - WebASDKImageManager
 
 SPEC CHECKSUMS:
-  AFNetworking: 79f7eb1a0fcfa7beb409332b2ca49afe9ce53b05
-  AsyncDisplayKit: 5c8f38225f7478e39c48196cec0dd0d2ac3455ed
-  Bolts: 805a4a87413e49d4a0c2b7d469084cbc46b09342
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  AsyncDisplayKit: 7bf2b3fa444284f80fd0c1e36655e324549f79d2
+  Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   CCHLinkTextView: bfe688e0b7d34088375a466524158765832f7657
   CustomIOSAlertView: 94d2401e34fcfb0ac0134679d6947f5e251b0446
-  FBSDKCoreKit: eb580bfc2040ad44f4c0b4f4d0befb1d35bce59c
-  FBSDKLoginKit: 01bce8dd3f3a26a023b0ba4ffdde7ef5062889fe
-  FBSDKShareKit: 1f927bb05e4d36a99d5d5bf2f4b1ff294ce3e15c
+  DateTools: 53288ee8b905fdc75897a1e6b5cc0144b14cba60
+  FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
+  FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
+  FBSDKShareKit: e7577ee3adf80fc04fb656dd133fbb522250672b
   Google-Mobile-Ads-SDK: 24a8ddfc0bcfec281960c5d88f75327df0d86b00
-  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
+  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   JSONKit-NoWarning: 3d27e6f9e6846ecf741e8c64dcadd7d5aa7193cb
   JTCalendar: 9b1352c7ec41cc26b19c189d6608ba48060a53d9
   MBProgressHUD: c47f2c166c126cf2ce36498d80f33e754d4e93ad
-  MZAppearance: 6e9dc64e42074c0a19812a327f590746c3283bab
-  MZFormSheetController: 4b351d487e6abaf2d208eba04581723a5b73c4de
+  MZAppearance: 0c06d3fa9cc55142f1da14bc8631fbe8fd6e19d5
+  MZFormSheetController: 7909e75056fe18366ce00ef8756ce6181414c36c
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
-  SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
   WebASDKImageManager: 8e37e97c115c8e9092fc6111218a71ddec7a73d5
 

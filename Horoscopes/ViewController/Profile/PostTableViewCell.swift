@@ -98,7 +98,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         if let type = postTypes[post.type] {
             postTypeLabel.text = type.1
         }
-        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
+//        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
+        postDateLabel.text = Utilities.getTimeAgoString(post.ts)
         var string = "\(post.message)"
         
         let font = UIFont(name: "Book Antiqua", size: 15)
@@ -181,11 +182,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileView.layer.addSublayer(circleLayer)
             
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
-            let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
             self.profileNameLabel.userInteractionEnabled = true
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
-            self.profileImageView.userInteractionEnabled = true
-            self.profileImageView.addGestureRecognizer(imageGestureRecognizer)
         })
     }
     

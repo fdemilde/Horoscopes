@@ -26,7 +26,7 @@
 #import <UIKit/UIKit.h>
 #import <MZAppearance/MZAppearance.h>
 #import "MZFormSheetBackgroundWindow.h"
-#import "MZTransition.h"
+#import "MZFormSheetTransition.h"
 #import "MZMacro.h"
 
 extern CGFloat const MZFormSheetControllerDefaultAnimationDuration;
@@ -93,6 +93,11 @@ typedef void(^MZFormSheetTransitionCompletionHandler)();
  Returns copy of formSheetController stack, last object in array (form sheet controller) is on top.
  */
 + (nonnull NSArray *)formSheetControllersStack;
+
+/**
+ Returns a boolean if it is animating.
+ */
++ (BOOL)isAnimating;
 
 /**
  Returns the window that form sheet controller is displayed .
