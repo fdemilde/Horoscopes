@@ -17,6 +17,7 @@ public class UserPost : NSObject{
     var hearts : Int = 0
     var shares: Int = 0
     var ts : Int = 0
+    var permalink = ""
     
     var user : UserProfile?
     
@@ -29,6 +30,7 @@ public class UserPost : NSObject{
         self.hearts = data.objectForKey("hearts") as! Int
         shares = data.objectForKey("shares") as! Int
         self.ts = data.objectForKey("ts") as! Int
+        self.permalink = data.objectForKey("permalink") as! String
     }
     
     static func postsFromResults(results: [NSDictionary]) -> [UserPost] {

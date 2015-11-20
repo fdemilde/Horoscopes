@@ -52,6 +52,7 @@ class CookieViewController : ViewControllerWithAds{
     @IBOutlet weak var containerWidthConstraint: NSLayoutConstraint!
     var state = CookieViewState.CookieViewStateUnopened
     var parentVC : DailyTableViewController?
+    var shareUrl = ""
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -142,7 +143,7 @@ class CookieViewController : ViewControllerWithAds{
     func prepareShareVC() -> ShareViewController{
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"))
+        shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"), shareUrl: self.shareUrl)
         
         return shareVC
     }
@@ -279,11 +280,15 @@ class CookieViewController : ViewControllerWithAds{
             //set data
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             let fortuneDescription = fortuneData["fortune"] as? String
+            let fortunePermaLink = fortuneData["permalink"] as? String
             if let fortuneDescription = fortuneDescription {
                 XAppDelegate.dataStore.currentFortuneDescription = "\"\(fortuneDescription)\""
                 self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
             } else {
                 self.fortuneDescriptionLabel.text = ""
+            }
+            if let fortunePermaLink = fortunePermaLink {
+                self.shareUrl = fortunePermaLink
             }
             
             self.luckyNumberLabel.text = ""

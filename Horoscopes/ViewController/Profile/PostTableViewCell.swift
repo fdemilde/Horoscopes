@@ -216,7 +216,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         let postContent = post.message
         let sharingText = String(format: "%@ \n %@", name!, postContent)
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
-        controller.populateNewsfeedShareData(post.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "")
+        controller.populateNewsfeedShareData(post.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: post.permalink)
         Utilities.presentShareFormSheetController(viewController, shareViewController: controller)
     }
     

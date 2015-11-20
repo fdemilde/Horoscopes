@@ -16,6 +16,7 @@
 @property (nonatomic, strong) NSDate *startDate; //horoscope from birthday
 @property (nonatomic, strong) NSDate *endDate; //to birthday
 @property (nonatomic, strong) NSMutableArray *horoscopes; //description of today horoscope
+@property (nonatomic, strong) NSMutableArray *permaLinks;
 
 - (id)initWithSign:(NSString*)sign startFrom:(NSDate*)startDate to:(NSDate*)endDate; //constructor
 - (UIImage*)getIcon; //get the icon for the sign

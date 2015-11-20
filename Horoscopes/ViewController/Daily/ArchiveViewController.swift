@@ -201,7 +201,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     // MARK: daily Content Cell Delegate
     
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval) {
+    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl: String) {
         let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag)
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
@@ -218,15 +218,19 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval) -> ShareViewController{
         var selectedSign = 0
+        var shareUrl = ""
         if let item = collectedItem{
             selectedSign = XAppDelegate.horoscopesManager.getSignIndexOfSignName(item.horoscope.sign)
+            if (item.horoscope.permaLinks.count != 0){
+                shareUrl = item.horoscope.permaLinks[0] as! String
+            }
         }
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
         let sharingText = String(format: "%@", horoscopeDescription)
         let pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL)
+        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
         
         return shareVC
     }

@@ -11,18 +11,27 @@
 #define kStartDate @"Horoscope.startDate"
 #define kEndDate @"Horoscope.endDate"
 #define kHoroscope @"Horoscope.horoscopes"
+#define kPermaLinks @"Horoscope.permaLinks"
 
 @implementation Horoscope
 @synthesize sign = _sign;
 @synthesize startDate = _startDate;
 @synthesize endDate = _endDate;
 @synthesize horoscopes = _horoscopes;
+@synthesize permaLinks = _permaLinks;
 
 - (NSMutableArray *)horoscopes{
     if(!_horoscopes){
         _horoscopes = [[NSMutableArray alloc] init];
     }
     return _horoscopes;
+}
+
+- (NSMutableArray *)permaLinks{
+    if(!_permaLinks){
+        _permaLinks = [[NSMutableArray alloc] init];
+    }
+    return _permaLinks;
 }
 
 #pragma mark - Constructor
@@ -75,6 +84,7 @@
         _startDate = [aDecoder decodeObjectForKey:kStartDate];
         _endDate = [aDecoder decodeObjectForKey:kEndDate];
         _horoscopes = [aDecoder decodeObjectForKey:kHoroscope];
+        _permaLinks = [aDecoder decodeObjectForKey:kPermaLinks];
     }
     return self;
 }
@@ -84,6 +94,7 @@
     [aCoder encodeObject:self.startDate forKey:kStartDate];
     [aCoder encodeObject:self.endDate forKey:kEndDate];
     [aCoder encodeObject:self.horoscopes forKey:kHoroscope];
+    [aCoder encodeObject:self.permaLinks forKey:kPermaLinks];
 }
 
 @end

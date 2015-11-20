@@ -97,18 +97,24 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
             var description = ""
+            var shareUrl = ""
             if indexPath.row == 1 {
                 if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
                     description = horoscopeDescription
                 }
-                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign)
+                if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[0] as? String {
+                    shareUrl = permaLink
+                }
+                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl)
                 
             } else {
-                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign)
                 if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
                     description = horoscopeDescription
                 }
-                
+                if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
+                    shareUrl = permaLink
+                }
+                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl)
             }
             cell.textView.text = description
             return cell
@@ -219,12 +225,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
     }
     
-    func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval) -> ShareViewController{
+    func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String) -> ShareViewController{
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
         let sharingText = String(format: "%@", horoscopeDescription)
         let pictureURL = String(format: "http://dv7.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL)
+        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
         
         return shareVC
     }
@@ -309,8 +315,8 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         tableView.reloadData()
     }
     
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval) {
-        let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag)
+    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String) {
+        let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag, shareUrl : shareUrl)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }
 }
