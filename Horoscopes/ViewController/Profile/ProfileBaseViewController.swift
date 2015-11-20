@@ -81,6 +81,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         return refreshControl
         }()
     var topCorner: CAShapeLayer!
+    var bottomCorner: CAShapeLayer!
     
     // MARK: - Life cycle
 
@@ -105,6 +106,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         profileView.layer.addSublayer(circleLayer)
         
         topCorner = CAShapeLayer()
+        bottomCorner = CAShapeLayer()
         
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
@@ -118,6 +120,8 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         highlightScopeButton(postButton)
         
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
+        
+        tableView.layer.cornerRadius = 4
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -135,6 +139,11 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         super.viewDidLayoutSubviews()
         topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
         profileView.layer.mask = topCorner
+//        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
+//        bottomCorner.path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+//        dispatch_after(delayTime, dispatch_get_main_queue()) {
+//            self.tableView.layer.mask = self.bottomCorner
+//        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -242,6 +251,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFeed(completionHandler: { () -> Void in
                 
             })
+            tableView.clipsToBounds = false
         }
     }
     
@@ -253,6 +263,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getUsersFollowing({ () -> Void in
                 
             })
+            tableView.clipsToBounds = true
         }
     }
     
@@ -264,6 +275,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFollowers({ () -> Void in
                 
             })
+            tableView.clipsToBounds = true
         }
     }
     
