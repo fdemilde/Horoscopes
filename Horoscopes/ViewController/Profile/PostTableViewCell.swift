@@ -181,11 +181,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileView.layer.addSublayer(circleLayer)
             
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
-            let imageGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
             self.profileNameLabel.userInteractionEnabled = true
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
-            self.profileImageView.userInteractionEnabled = true
-            self.profileImageView.addGestureRecognizer(imageGestureRecognizer)
         })
     }
     
