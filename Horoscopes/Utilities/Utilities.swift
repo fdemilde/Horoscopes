@@ -287,33 +287,6 @@ class Utilities {
         return ret;
     }
     
-    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
-    }
-    
-    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = dateFormat
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        let date = NSDate(timeIntervalSince1970:ts)
-        let dateString = String(format: "%@", dateFormatter.stringFromDate(date))
-        return dateString
-    }
-    
-    class func getDateFromDateString(dateString : String, format : String) -> NSDate {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = format
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        return dateFormatter.dateFromString(dateString)!
-    }
-    
-    class func getTimestampFromDateString(dateString: String, dateFormat: String) -> NSTimeInterval {
-        return getDateFromDateString(dateString, format: dateFormat).timeIntervalSince1970
-    }
-    
     class func getLabelSizeWithString(text : String, font: UIFont) -> CGSize {
         let label:UILabel = UILabel(frame: CGRectMake(0, 0, CGFloat.max, CGFloat.max))
         label.numberOfLines = 0
@@ -365,6 +338,34 @@ class Utilities {
         maskLayer.path = maskPath.CGPath
         view.layer.mask = maskLayer
         return view
+    }
+    
+    // MARK: Time format
+    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = "MMM dd"
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
+    }
+    
+    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        let date = NSDate(timeIntervalSince1970:ts)
+        let dateString = String(format: "%@", dateFormatter.stringFromDate(date))
+        return dateString
+    }
+    
+    class func getDateFromDateString(dateString : String, format : String) -> NSDate {
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateFormat = format
+        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        return dateFormatter.dateFromString(dateString)!
+    }
+    
+    class func getTimestampFromDateString(dateString: String, dateFormat: String) -> NSTimeInterval {
+        return getDateFromDateString(dateString, format: dateFormat).timeIntervalSince1970
     }
     
     // MARK: Notification support
