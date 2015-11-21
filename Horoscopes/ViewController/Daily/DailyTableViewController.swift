@@ -239,7 +239,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func calculateBodyHeight(cell : DailyContentTableViewCell? ,text : String) -> CGFloat{
         
-        let font = UIFont(name: "Book Antiqua", size: 15)
+        let font = UIFont(name: "Book Antiqua", size: 14)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = self.view.frame.width - PADDING * 4

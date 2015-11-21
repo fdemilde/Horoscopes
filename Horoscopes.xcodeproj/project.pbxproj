@@ -189,6 +189,7 @@
 		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
+		F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -432,6 +433,7 @@
 		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
+		F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -529,6 +531,7 @@
 			isa = PBXGroup;
 			children = (
 				F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */,
+				F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -1337,6 +1340,7 @@
 				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,
 				F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */,
 				F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */,
+				F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,

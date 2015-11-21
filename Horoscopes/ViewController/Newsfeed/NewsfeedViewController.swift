@@ -76,7 +76,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         super.viewWillAppear(animated)
         // remove all observer first
         NSNotificationCenter.defaultCenter().removeObserver(self)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowingStatusFinished:", name: NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED, object: nil)
         if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
@@ -183,6 +183,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Notification Handlers
     
     func feedsFinishedLoading(notif : NSNotification){
+        print("feedsFinishedLoading feedsFinishedLoading feedsFinishedLoading")
         dispatch_async(dispatch_get_main_queue(),{
             Utilities.hideHUD()
             if(notif.object == nil){
@@ -442,7 +443,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Table Cell Helpers
     
     func getAboutCellHeight(text : String) -> CGFloat {
-        let font = UIFont(name: "Book Antiqua", size: 15)
+        let font = UIFont(name: "Book Antiqua", size: 14)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - (PADDING * 2)
@@ -498,8 +499,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             let p2 = post2 as! UserPost
             return (p1.post_id == p2.post_id);
         }
-//        print("self.oldNewsfeedArray == \(self.getFeedArray())")
-//        print("getFeedArray() == \(newData)")
+        
         let delta = deltaCalculator.deltaFromOldArray(self.getFeedArray(), toNewArray:newData)
 //        oldNewsfeedArray = newData
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)

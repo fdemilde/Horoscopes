@@ -39,6 +39,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var horoscopeSignLabel: UILabel!
     @IBOutlet weak var newsfeedFollowButton: UIButton!
     
+    @IBOutlet weak var locationLabel: UILabel!
     // MARK: - Newsfeed constraint
     
     @IBOutlet weak var horoscopeSignImageViewLeadingSpaceLayoutConstraint: NSLayoutConstraint!
@@ -56,11 +57,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     var horoscopeSignImageViewWidthConstant: CGFloat = 18
     var horoscopeSignImageViewTrailingSpaceConstant: CGFloat = 5
     var horoscopeSignLabelTrailingSpaceConstant: CGFloat = 10
-    let postTypes = [
-        NewsfeedType.Feeling: ("post_type_feel", "How do you feel today?"),
-        NewsfeedType.Story: ("post_type_story", "Share your story"),
-        NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?")
-    ]
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -93,16 +89,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     private func configureCell(post: UserPost) {
+        dispatch_async(dispatch_get_main_queue(), {
         self.post = post
-        postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
+        self.postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
         if let type = postTypes[post.type] {
-            postTypeLabel.text = type.1
+            self.postTypeLabel.text = type.1
         }
 //        postDateLabel.text = Utilities.getDateStringFromTimestamp(NSTimeInterval(post.ts), dateFormat: postDateFormat)
-        postDateLabel.text = Utilities.getTimeAgoString(post.ts)
+        self.postDateLabel.text = Utilities.getTimeAgoString(post.ts)
         var string = "\(post.message)"
         
-        let font = UIFont(name: "Book Antiqua", size: 15)
+        let font = UIFont(name: "Book Antiqua", size: 14)
         
         if(post.truncated == 1){
             string = "\(post.message)... Read more"
@@ -125,15 +122,16 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
-        textView!.linkTextAttributes = linkAttributes
-        textView.attributedText = att
+        self.textView!.linkTextAttributes = linkAttributes
+        self.textView.attributedText = att
         
-        likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+        self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-            likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+            self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         } else {
-            likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+            self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
         }
+        })
     }
     
     func configureCellForNewsfeed(post: UserPost) {
@@ -141,12 +139,13 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.configureNewsfeedUi()
             self.configureCell(post)
             self.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
-            self.horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: (post.user?.sign)!)
+            self.horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: (post.user?.sign)!)
             Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.profileImageView.image = image
                 })
             })
+            self.locationLabel.text = post.user?.location
             self.profileNameLabel.text = post.user?.name
         })
     }
@@ -184,6 +183,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
             self.profileNameLabel.userInteractionEnabled = true
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
+            
+            let nameGestureRecognizer2 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            self.locationLabel.userInteractionEnabled = true
+            self.locationLabel.addGestureRecognizer(nameGestureRecognizer2)
+            
+            let nameGestureRecognizer3 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            self.horoscopeSignView.userInteractionEnabled = true
+            self.horoscopeSignView.addGestureRecognizer(nameGestureRecognizer3)
         })
     }
     

@@ -260,6 +260,14 @@ class Utilities {
         }
     }
     
+    class func horoscopeSignIconImage(fromSignNumber sign: Int) -> UIImage {
+        if sign >= 0 {
+            return UIImage(named: String(format:"%@_icon_selected", horoscopeSignString(fromSignNumber: sign)))!
+        } else {
+            return UIImage()
+        }
+    }
+    
     class func getImageFromUrlString(imgUrl: String, completionHandler: (image: UIImage?) -> Void) {
         if let url = NSURL(string: imgUrl) {
             NSURLSession.sharedSession().dataTaskWithURL(url, completionHandler: { (data, response, error) -> Void in
@@ -539,7 +547,7 @@ class Utilities {
                 range:NSMakeRange(0, text.characters.count) ,
                 withTemplate: "")
             let attString = NSMutableAttributedString(string: replacedText)
-            let font = UIFont(name: "Book Antiqua", size: 15)
+            let font = UIFont(name: "Book Antiqua", size: 14)
             attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.characters.count))
             let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
             if numberOfMatches / 2 == urls.count {

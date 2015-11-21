@@ -60,7 +60,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     // MARK: Table Cell Helpers
     
     func getAboutCellHeight(text : String) -> CGFloat {
-        let font = UIFont(name: "Book Antiqua", size: 15)
+        let font = UIFont(name: "Book Antiqua", size: 14)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - (PADDING * 2)
