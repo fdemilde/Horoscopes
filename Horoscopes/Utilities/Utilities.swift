@@ -522,7 +522,7 @@ class Utilities {
     // extrack weblink information (the link and showing text) from a text
     // return array [weblink, text]
     // Dictionary<String,String>
-    class func getTextWithWeblink(text: String) -> NSMutableAttributedString {
+    class func getTextWithWeblink(text: String, isTruncated: Bool) -> NSMutableAttributedString {
         do {
             let regex = try NSRegularExpression(pattern: "<[^>]+>", options: .CaseInsensitive)
             let matches = regex.matchesInString(text, options: NSMatchingOptions.ReportProgress, range:NSMakeRange(0, text.characters.count))
@@ -542,13 +542,23 @@ class Utilities {
                 
             }
             
-            let replacedText = regex.stringByReplacingMatchesInString(text,
+            var replacedText = regex.stringByReplacingMatchesInString(text,
                 options: NSMatchingOptions.ReportCompletion,
                 range:NSMakeRange(0, text.characters.count) ,
                 withTemplate: "")
+            let readMorePhrase = "... Read more"
+            if isTruncated {
+                replacedText += readMorePhrase
+            }
             let attString = NSMutableAttributedString(string: replacedText)
             let font = UIFont(name: "Book Antiqua", size: 14)
             attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.characters.count))
+            let nsReplacedText = replacedText as NSString
+            let readMoreRange = nsReplacedText.rangeOfString("Read more")
+            if isTruncated {
+                attString.addAttribute(CCHLinkAttributeName, value: "readmore", range: readMoreRange)
+                attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: readMoreRange)
+            }
             let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
             if numberOfMatches / 2 == urls.count {
                 for index in 0..<numberOfMatches {
@@ -557,7 +567,7 @@ class Utilities {
                         let startTag = nsText.substringWithRange(matches[index].range)
                         let endTag = nsText.substringWithRange(matches[index + 1].range)
                         let link = text.componentsSeparatedByString(startTag).last?.componentsSeparatedByString(endTag).first
-                        let nsReplacedText = replacedText as NSString
+                        
                         if let link = link {
                             let nsLinkRange = nsReplacedText.rangeOfString(link)
                             attString.addAttribute(CCHLinkAttributeName, value: urls[index/2], range: nsLinkRange)

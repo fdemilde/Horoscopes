@@ -168,7 +168,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             text = item.horoscope.horoscopes[0] as! String
         }
         
-        let font = UIFont(name: "Book Antiqua", size: 14)
+        let font = UIFont(name: "Book Antiqua", size: 151)
         let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - PADDING * 4

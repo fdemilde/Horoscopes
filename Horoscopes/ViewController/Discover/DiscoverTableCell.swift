@@ -29,6 +29,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
     let profileImageSize = 60 as CGFloat
     
     var userPost : UserPost!
+    var alreadyAddCircle = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -55,15 +56,19 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
                 self.profileImage.image = image
             })
         })
+        if (alreadyAddCircle == false){
+            // create a circle
+            let centerPoint = CGPoint(x: self.profileImage.frame.origin.x + self.profileImage.frame.size.width/2, y: self.profileImage.frame.origin.y + self.profileImage.frame.height/2)
+            let radius = self.profileImage.frame.size.width/2 + 5
+            let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
+            circleLayer.fillColor = UIColor.clearColor().CGColor
+            let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
+            circleLayer.strokeColor = color.CGColor
+            self.headerView.layer.addSublayer(circleLayer)
+            alreadyAddCircle = true
+        }
         
-        // create a circle
-        let centerPoint = CGPoint(x: self.profileImage.frame.origin.x + self.profileImage.frame.size.width/2, y: self.profileImage.frame.origin.y + self.profileImage.frame.height/2)
-        let radius = self.profileImage.frame.size.width/2 + 5
-        let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
-        circleLayer.fillColor = UIColor.clearColor().CGColor
-        let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-        circleLayer.strokeColor = color.CGColor
-        self.headerView.layer.addSublayer(circleLayer)
+        
         self.name.text = self.userPost.user!.name
         self.location.text = self.userPost.user!.location
         if(self.userPost.user?.sign == -1){
@@ -82,27 +87,12 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
             self.postTypeLabel.text = type.1
         }
         self.timeAgoLabel.text = Utilities.getTimeAgoString(userPost.ts)
-        var string = "\(userPost.message)"
-        
-        let font = UIFont(name: "Book Antiqua", size: 14)
-        
-        if(userPost.truncated == 1){
-            string = "\(userPost.message)... Read more"
-        }
-        let stringWithWebLink = Utilities.getTextWithWeblink(string)
+        let string = "\(userPost.message)"
+        let stringWithWebLink = Utilities.getTextWithWeblink(string, isTruncated: userPost.truncated == 1)
         let att = stringWithWebLink
-        if(userPost.truncated == 1){
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count - 9))
-            att.addAttribute(CCHLinkAttributeName, value: "readmore", range: NSMakeRange(att.string.characters.count - 9, 9))
-            att.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: NSMakeRange(att.string.characters.count - 9, 9))
-            
-        } else {
-            att.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, att.string.characters.count))
-        }
         let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
             NSUnderlineStyleAttributeName: 1
         ]
-        
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
@@ -116,6 +106,21 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
             }
         }
         
+        let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        self.profileImage.userInteractionEnabled = true
+        self.profileImage.addGestureRecognizer(nameGestureRecognizer)
+        
+        let nameGestureRecognizer2 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        self.location.userInteractionEnabled = true
+        self.location.addGestureRecognizer(nameGestureRecognizer2)
+        
+        let nameGestureRecognizer3 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        self.horoscopeSignView.userInteractionEnabled = true
+        self.horoscopeSignView.addGestureRecognizer(nameGestureRecognizer3)
+        
+        let nameGestureRecognizer4 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+        self.name.userInteractionEnabled = true
+        self.name.addGestureRecognizer(nameGestureRecognizer4)
     }
     
     // MARK: Button action
@@ -149,6 +154,19 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
             print("urlString urlString = \(urlString)")
             if let url = NSURL(string: urlString) {
                 UIApplication.sharedApplication().openURL(url)
+            }
+        }
+    }
+    
+    func tapProfile(sender: UITapGestureRecognizer) {
+        if sender.state == .Ended {
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
+                let profile = userPost.user
+                let controller = parentViewController.storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                controller.userProfile = profile!
+                parentViewController.navigationController?.pushViewController(controller, animated: true)
+            } else {
+                Utilities.showAlert(parentViewController, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
             }
         }
     }

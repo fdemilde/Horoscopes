@@ -183,7 +183,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Notification Handlers
     
     func feedsFinishedLoading(notif : NSNotification){
-        print("feedsFinishedLoading feedsFinishedLoading feedsFinishedLoading")
         dispatch_async(dispatch_get_main_queue(),{
             Utilities.hideHUD()
             if(notif.object == nil){
