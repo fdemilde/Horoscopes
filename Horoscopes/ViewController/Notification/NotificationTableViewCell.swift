@@ -46,7 +46,7 @@ class NotificationTableViewCell: UITableViewCell {
             self.timeLabel.text = ""
             self.notificationDescLabel.text = ""
             self.cellImageView.image = nil
-            self.cellOverlay.hidden = true
+//            self.cellOverlay.hidden = true
         })
     }
     
@@ -58,18 +58,18 @@ class NotificationTableViewCell: UITableViewCell {
             switch(self.type){
                 case ServerNotificationType.SendHeart:
                     self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                    self.cellOverlay.hidden = true
+//                    self.cellOverlay.hidden = true
                 case ServerNotificationType.Follow:
                     self.notifTypeImageView.image = UIImage(named: "follow_icon")
-                    self.cellOverlay.hidden = false
+//                    self.cellOverlay.hidden = false
                 default:
                     self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
-                    self.cellOverlay.hidden = true
+//                    self.cellOverlay.hidden = true
                 
                 
             }
-            self.bringSubviewToFront(self.cellOverlay)
-            self.backgroundColor = UIColor.whiteColor()
+//            self.bringSubviewToFront(self.cellOverlay)
+//            self.backgroundColor = UIColor.whiteColor()
             self.setupCellImage()
         })
     }

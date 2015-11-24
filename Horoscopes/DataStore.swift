@@ -301,6 +301,7 @@ class DataStore : NSObject{
         } catch {
             
         }
+        NSUserDefaults.standardUserDefaults().removeObjectForKey(notificationKey)
     }
     
 }

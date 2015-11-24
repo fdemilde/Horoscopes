@@ -121,7 +121,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
         
-        tableView.layer.cornerRadius = 4
+        tableView.clipsToBounds = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -251,7 +251,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFeed(completionHandler: { () -> Void in
                 
             })
-            tableView.clipsToBounds = false
+            tableView.layer.cornerRadius = 0
         }
     }
     
@@ -263,7 +263,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getUsersFollowing({ () -> Void in
                 
             })
-            tableView.clipsToBounds = true
+            tableView.layer.cornerRadius = 4
         }
     }
     
@@ -275,7 +275,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFollowers({ () -> Void in
                 
             })
-            tableView.clipsToBounds = true
+            tableView.layer.cornerRadius = 4
         }
     }
     
