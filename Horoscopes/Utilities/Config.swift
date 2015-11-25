@@ -118,10 +118,12 @@ let NOTIFICATION_SETTING_DEFAULT_TIME = "08:00 AM"
 let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng="
 
 // MARK: post type
+// postType: image name, label, server type
 let postTypes = [
-    NewsfeedType.Feeling: ("post_type_feel", "How do you feel today?"),
-    NewsfeedType.Story: ("post_type_story", "Share your story"),
-    NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?")
+    NewsfeedType.Feeling: ("post_type_feel", "How do you feel today?","feeling"),
+    NewsfeedType.Story: ("post_type_story", "Share your story","story"),
+    NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?","onyourmind"),
+    NewsfeedType.Fortune: ("post_type_fortune", "Fortune Cookie","fortune")
 ]
 
 // MARK: Enum Type
@@ -149,6 +151,8 @@ enum NewsfeedType {
     case OnYourMind
     case Story
     case Feeling
+    case Fortune
+    case Invalid
 }
 
 enum NewsfeedTabType {

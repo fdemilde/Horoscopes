@@ -29,29 +29,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // MARK: Network - Newsfeed
     
-    func getUserNewsfeed(pageNo : Int, uid : Int){
-        let postData = NSMutableDictionary()
-        let pageString = String(format:"%d",pageNo)
-        postData.setObject(pageString, forKey: "page")
-        postData.setObject(uid, forKey: "uid")
-        let expiredTime = NSDate().timeIntervalSince1970 + 600
-        
-        // need to expire next page if current page is expired
-        let expiredPostData = NSMutableDictionary()
-        let expiredPageString = String(format:"%d",(pageNo + 1))
-        expiredPostData.setObject(expiredPageString, forKey: "page")
-        expiredPostData.setObject(uid, forKey: "uid")
-        let expiredKey = Utilities.getKeyFromUrlAndPostData(GET_USER_FEED, postData: expiredPostData)
-        
-        CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
-            if(error != nil){
-                print("Error when get getUserNewsfeed = \(error)")
-            } else {
-                //                println("getUserNewsfeed response = \(response)")
-            }
-        }
-    }
-    
     private func expiredKeyForPaging (isRefreshed: Bool, pageKey: String, requestMethod: String, pageNumber: Int, postData: NSMutableDictionary) -> String {
         let expiredPostData = postData.mutableCopy() as! NSMutableDictionary
         var expiredPageString = ""
@@ -87,7 +64,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response!)
-                //                println("getGlobalNewsfeed result = \(result)")
+//                print("getGlobalNewsfeed result = \(result)")
                 let errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     print("Error code = \(errorCode)")
@@ -181,9 +158,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
-        
+//        print("postdata postdata postdata == \(postData)")
         let createPost = { () -> () in
             XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
+//                print("createPost createPost response == \(response)")
                 if let error = error {
                     completionHandler(result: nil, error: error)
                 } else {
@@ -218,7 +196,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let postData = NSMutableDictionary()
                     postData.setObject("\(page)", forKey: "page")
                     postData.setObject("\(uid)", forKey: "uid")
-                    let expiredTime = NSDate().timeIntervalSince1970 + 600
+                    let expiredTime = NSDate().timeIntervalSince1970 + 10
                     
                     // need to expire next page if current page is expired
                     let expiredKey = self.expiredKeyForPaging(isRefreshed, pageKey: "page", requestMethod: GET_USER_FEED, pageNumber: page, postData: postData)

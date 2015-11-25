@@ -11,7 +11,7 @@ import Foundation
 public class UserPost : NSObject{
     var post_id : String = ""
     var uid : Int = -1
-    var type : NewsfeedType
+    var type = NewsfeedType.Invalid
     var message : String = ""
     var truncated : Int = 0
     var hearts : Int = 0
@@ -21,22 +21,30 @@ public class UserPost : NSObject{
     
     var user : UserProfile?
     
-    init(data: NSDictionary){
+    init?(data: NSDictionary){
+        super.init()
+        // if data doesn't have a type or type is invalid, ignore it
+        self.type = Utilities.getNewsfeedTypeByString(data.objectForKey("type") as! String)
         self.uid = data.objectForKey("uid") as! Int
         self.post_id = data.objectForKey("post_id") as! String
-        self.type = Utilities.getNewsfeedTypeByString(data.objectForKey("type") as! String)
         self.message = data.objectForKey("message") as! String
         self.truncated = data.objectForKey("truncated") as! Int
         self.hearts = data.objectForKey("hearts") as! Int
         shares = data.objectForKey("shares") as! Int
         self.ts = data.objectForKey("ts") as! Int
         self.permalink = data.objectForKey("permalink") as! String
+        
+        if(self.type == NewsfeedType.Invalid){
+            return nil
+        }
     }
     
     static func postsFromResults(results: [NSDictionary]) -> [UserPost] {
         var posts = [UserPost]()
         for result in results {
-            posts.append(UserPost(data: result))
+            if (UserPost(data: result) != nil) {
+                posts.append(UserPost(data: result)!)
+            }
         }
         return posts
     }

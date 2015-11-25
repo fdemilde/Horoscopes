@@ -9,22 +9,6 @@
 import UIKit
 
 class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
-
-    let NEWFEEDS_POST_FEEL_IMG_NAME = "newfeeds_post_feel"
-    let NEWFEEDS_POST_FEEL_TEXT = "How do you feel today?"
-    
-    let NEWFEEDS_POST_STORY_IMG_NAME = "newfeeds_post_story"
-    let NEWFEEDS_POST_STORY_TEXT = "Share your story"
-    
-    let NEWFEEDS_POST_MIND_IMG_NAME = "newfeeds_post_mind"
-    let NEWFEEDS_POST_MIND_TEXT = "What’s on your mind?"
-    
-    let postTypes = [
-        ["How do you feel today?", "post_type_feel", "feeling"],
-        ["Share a story", "post_type_story", "story"],
-        ["What's on your mind?", "post_type_mind", "onyourmind"]
-        
-    ]
     
     let defaultEstimatedRowHeight: CGFloat = 400
     let ADD_BUTTON_SIZE: CGFloat = 40
@@ -304,23 +288,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    }
-    
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        if let cell = cell as? PostTableViewCell {
-            let post = getFeedDataForRow(indexPath.row)
-            cell.configureNewsfeedUi()
-            if post.user?.sign >= 0 {
-                cell.changeHoroscopeSignViewWidthToDefault()
-            } else {
-                cell.changeHoroscopeSignViewWidthToZero()
-            }
-            if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-                cell.likeButton.userInteractionEnabled = false
-            } else {
-                cell.likeButton.userInteractionEnabled = true
-            }
-        }
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {

@@ -99,31 +99,31 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     private func configureCell(post: UserPost) {
         dispatch_async(dispatch_get_main_queue(), {
-        self.post = post
-        self.postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
-        if let type = postTypes[post.type] {
-            self.postTypeLabel.text = type.1
-        }
-        self.postDateLabel.text = Utilities.getTimeAgoString(post.ts)
-        let string = "\(post.message)"
-        let stringWithWebLink = Utilities.getTextWithWeblink(string, isTruncated: post.truncated == 1)
-        let att = stringWithWebLink
-        let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
-            NSUnderlineStyleAttributeName: 1
-        ]
-        
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = 5
-        att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
-        self.textView!.linkTextAttributes = linkAttributes
-        self.textView.attributedText = att
-        
-        self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
-        if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-            self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        } else {
-            self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
-        }
+            self.post = post
+            self.postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
+            if let type = postTypes[post.type] {
+                self.postTypeLabel.text = type.1
+            }
+            self.postDateLabel.text = Utilities.getTimeAgoString(post.ts)
+            let string = "\(post.message)"
+            let stringWithWebLink = Utilities.getTextWithWeblink(string, isTruncated: post.truncated == 1)
+            let att = stringWithWebLink
+            let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
+                NSUnderlineStyleAttributeName: 1
+            ]
+            
+            let style = NSMutableParagraphStyle()
+            style.lineSpacing = 5
+            att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
+            self.textView!.linkTextAttributes = linkAttributes
+            self.textView.attributedText = att
+            
+            self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+            if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
+                self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+            } else {
+                self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+            }
         })
     }
     

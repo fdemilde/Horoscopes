@@ -50,8 +50,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SinglePostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
-//        cell.resetUI()
-//        print("cellForRowAtIndexPath userPost == \(userPost)")
         cell.configureCellForNewsfeed(userPost)
         cell.viewController = self
         return cell

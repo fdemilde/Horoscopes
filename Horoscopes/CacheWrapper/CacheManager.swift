@@ -21,14 +21,17 @@ class CacheManager {
             //        print("cacheGet cacheDict == \(cacheDict)")
             // print("\(url) ignore Cache == \(ignoreCache)")
             if(!ignoreCache){
+//                print("ko co ignore cache!")
                 if var cacheDict = cacheDict{
                     cacheDict = cacheDict as! Dictionary<String, NSObject>
                     let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
                     let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
                     if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+//                        print("Cache valid!! return")
                         completionHandler(result: cacheValue, error: nil) // return cache
                         return
                     }
+//                    print("Cache NOT valid!! return")
                     completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
             }

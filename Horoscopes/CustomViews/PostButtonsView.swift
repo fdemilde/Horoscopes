@@ -132,7 +132,7 @@ class PostButtonsView: UIView {
     }
     
     func fortuneButtonTapped(sender: UIButton) {
-        print("button \(sender) tapped")
+        configureViewController("fortune", placeholder: "Write a fortune")
     }
     
     func mindButtonTapped(sender: UIButton) {

@@ -131,13 +131,17 @@ class Utilities {
         var userDict = Utilities.parseUsersArray(userDataDict)
         
         for postData in postsDataArray{
+            
             let postObject = UserPost(data: postData as! NSDictionary)
-            let uid = postObject.uid
-            let uidString = String(format: "%d", uid)
-            if let userObj = userDict[uidString] {
-                postObject.user = userObj
+            if(postObject != nil){
+                let uid = postObject!.uid
+                let uidString = String(format: "%d", uid)
+                if let userObj = userDict[uidString] {
+                    postObject!.user = userObj
+                }
+                resultArray.append(postObject!)
             }
-            resultArray.append(postObject)
+            
         }
         
         return resultArray
@@ -156,7 +160,8 @@ class Utilities {
         if(typeString == "onyourmind") {return NewsfeedType.OnYourMind}
         if(typeString == "story") {return NewsfeedType.Story}
         if(typeString == "feeling") {return NewsfeedType.Feeling}
-        return NewsfeedType.OnYourMind
+        if(typeString == "fortune") {return NewsfeedType.Fortune}
+        return NewsfeedType.Invalid
     }
     
     // MARK: Birthday Format helpers
@@ -320,14 +325,18 @@ class Utilities {
     }
     
     
-    class func getFeedTypeImageName(userPost : UserPost) -> String{
-        switch(userPost.type){
+    class func getFeedTypeImageName(type : NewsfeedType) -> String{
+        switch(type){
         case NewsfeedType.OnYourMind:
             return "post_type_mind"
         case NewsfeedType.Feeling:
             return "post_type_feel"
         case NewsfeedType.Story:
             return "post_type_story"
+        case NewsfeedType.Fortune:
+            return "post_type_fortune"
+        case NewsfeedType.Invalid:
+            return ""
         }
     }
     

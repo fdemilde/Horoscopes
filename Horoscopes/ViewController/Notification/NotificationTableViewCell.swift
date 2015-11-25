@@ -30,13 +30,13 @@ class NotificationTableViewCell: UITableViewCell {
     // MARK: for Testing now, only fake data
     func populateData(notif : NotificationObject){
         dispatch_async(dispatch_get_main_queue(),{
-        self.notification = notif
-        self.cellImageView.backgroundColor = UIColor.profileImageGrayColor()
-        self.cellImageView.layer.cornerRadius = self.cellImageView.frame.width/2
-        
-        self.parseAlertObject()
-        self.setNotificationType()
-        self.setupComponents()
+            self.notification = notif
+            self.cellImageView.backgroundColor = UIColor.profileImageGrayColor()
+            self.cellImageView.layer.cornerRadius = self.cellImageView.frame.width/2
+            
+            self.parseAlertObject()
+            self.setNotificationType()
+            self.setupComponents()
         })
     }
     

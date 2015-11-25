@@ -337,7 +337,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     
     func getFeed(isRefreshed: Bool = false, completionHandler: () -> Void) {
         if currentPostPage == 0 {
-            SocialManager.sharedInstance.getUserFeed(userProfile.uid, completionHandler: { (result, error) -> Void in
+            SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage, isRefreshed: isRefreshed, completionHandler: { (result, error) -> Void in
                 if let error = error {
                     Utilities.showError(error, viewController: self)
                 } else {
