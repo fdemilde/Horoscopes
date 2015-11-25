@@ -331,12 +331,6 @@ class Utilities {
         }
     }
     
-    class func getTimeAgoString(ts : Int) -> String {
-        let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
-        let facebookTimeAgoString = timeAgoDate.formattedAsTimeAgo()
-        return facebookTimeAgoString
-    }
-    
     // Corner Radius manipulation 
     class func makeCornerRadius(view : UIView, maskFrame : CGRect, roundOptions : UIRectCorner, radius : CGFloat) -> UIView {
         let maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: roundOptions, cornerRadii: CGSizeMake(radius, radius))
@@ -349,6 +343,12 @@ class Utilities {
     }
     
     // MARK: Time format
+    class func getTimeAgoString(ts : Int) -> String {
+        let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
+//        let facebookTimeAgoString = timeAgoDate.formattedAsTimeAgo()
+        return timeAgoDate.timeAgoSinceNow()
+    }
+    
     class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
