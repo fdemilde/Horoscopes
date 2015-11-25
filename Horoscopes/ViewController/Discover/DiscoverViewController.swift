@@ -25,6 +25,7 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
         setupInfiniteScroll()
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         self.tableView.pagingEnabled = true
+        tableView.addSubview(refreshControl)
     }
     
     override func viewWillAppear(animated: Bool) {
