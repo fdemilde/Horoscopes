@@ -32,6 +32,9 @@ var yearArray : [Int] {
     return result
 }
 
+// MARK: - NSUserDefaults Key
+let notificationKey = "notification"
+
 // MARK: - Post Date Format
 
 let postDateFormat = "h:mm a, MMM dd, yyyy"

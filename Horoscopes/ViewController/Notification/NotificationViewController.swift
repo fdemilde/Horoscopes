@@ -26,6 +26,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         return refreshControl
         }()
     
+    var notificationIds = Set<String>()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
@@ -93,9 +95,22 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         return cell
     }
     
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        let id = notifArray[indexPath.row].notification_id
+        if notificationIds.contains(id) {
+            cell.backgroundColor = UIColor.whiteColor()
+        } else {
+            cell.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
+        }
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         if let cell = cell {
+            let id = notifArray[indexPath.row].notification_id
+            notificationIds.insert(id)
+            let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
+            NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
@@ -143,6 +158,9 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 // remove all notification 
 //                XAppDelegate.socialManager.clearAllNotification(self.notifArray)
                 self.notifArray.sortInPlace({ $0.created > $1.created })
+                if let data = NSUserDefaults.standardUserDefaults().objectForKey(notificationKey) as? NSData {
+                    self.notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Set<String>
+                }
                 self.tableView.reloadData()
             })
         })
