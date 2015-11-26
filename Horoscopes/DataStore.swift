@@ -237,14 +237,23 @@ class DataStore : NSObject{
         var shouldReload = false
         let check = {
             for user in users {
+                var unfollow = true
+                if user.isFollowed {
+                    unfollow = false
+                }
                 for userFollowing in self.usersFollowing! {
                     if user.uid == userFollowing.uid {
-                        shouldReload = !user.isFollowed
+                        if !shouldReload {
+                            shouldReload = !user.isFollowed
+                        }
+                        unfollow = true
                         user.isFollowed = true
                         break
-                    } else {
-                        shouldReload = user.isFollowed
                     }
+                }
+                if !unfollow {
+                    user.isFollowed = false
+                    shouldReload = true
                 }
             }
         }

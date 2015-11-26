@@ -217,20 +217,23 @@ class CurrentProfileViewController: ProfileBaseViewController {
             } else {
                 let followers = result!
                 self.noFollower = followers.count == 0
-                self.getUsersFollowing({ () -> Void in
+                if self.isDataUpdated(self.followers, newData: followers) {
                     self.followers = followers
-                    DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error, shouldReload) -> Void in
-                        if let error = error {
-                            Utilities.showError(error, viewController: self)
-                        } else {
-                            if shouldReload {
-                                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                    self.tableView.reloadData()
-                                })
-                            }
-                        }
-                        completionHandler()
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.tableView.reloadData()
                     })
+                }
+                DataStore.sharedInstance.checkFollowStatus(self.followers, completionHandler: { (error, shouldReload) -> Void in
+                    if let error = error {
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        if shouldReload {
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.tableView.reloadData()
+                            })
+                        }
+                    }
+                    completionHandler()
                 })
             }
         }
@@ -322,37 +325,20 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
         Utilities.showHUD()
         let user = users[index!]
-        if user.isFollowed {
-            SocialManager.sharedInstance.unfollow(user, completionHandler: { (error) -> Void in
-                if let error = error {
-                    Utilities.hideHUD()
-                    Utilities.showError(error, viewController: self)
-                } else {
-                    user.isFollowed = !user.isFollowed
-                    self.numberOfUsersFollowing -= 1
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
-                        self.configureScopeButton()
-                    })
-                    Utilities.hideHUD()
-                }
-            })
-        } else {
-            SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
-                if let error = error {
-                    Utilities.hideHUD()
-                    Utilities.showError(error, viewController: self)
-                } else {
-                    user.isFollowed = !user.isFollowed
-                    self.numberOfUsersFollowing += 1
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                        cell.followButton.hidden = true
-                        self.configureScopeButton()
-                    })
-                    Utilities.hideHUD()
-                }
-            })
-        }
+        SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
+            if let error = error {
+                Utilities.hideHUD()
+                Utilities.showError(error, viewController: self)
+            } else {
+                user.isFollowed = true
+                self.numberOfUsersFollowing += 1
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    cell.followButton.hidden = true
+                    self.configureScopeButton()
+                })
+                Utilities.hideHUD()
+            }
+        })
     }
 
     // MARK: - Navigation

@@ -341,10 +341,12 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
                 if let error = error {
                     Utilities.showError(error, viewController: self)
                 } else {
-                    let posts = result!.0
-                    self.noPost = posts.count == 0
-                    self.userPosts = posts
-                    self.tableView.reloadData()
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        let posts = result!.0
+                        self.noPost = posts.count == 0
+                        self.userPosts = posts
+                        self.tableView.reloadData()
+                    })
                 }
                 completionHandler()
             })
