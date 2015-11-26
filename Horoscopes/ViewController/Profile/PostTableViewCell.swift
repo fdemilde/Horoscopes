@@ -58,19 +58,13 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     var horoscopeSignImageViewTrailingSpaceConstant: CGFloat = 5
     var horoscopeSignLabelTrailingSpaceConstant: CGFloat = 10
     
+    var alreadyAddCircle = false
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         textView.linkDelegate = self
-        if profileImageView != nil {
-            let centerPoint = CGPoint(x: profileImageView.frame.origin.x + profileImageView.frame.size.width/2, y: profileImageView.frame.origin.y + profileImageView.frame.height/2)
-            let radius = profileImageView.frame.size.width/2 + 5
-            let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
-            circleLayer.fillColor = UIColor.clearColor().CGColor
-            let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-            circleLayer.strokeColor = color.CGColor
-            profileView.layer.addSublayer(circleLayer)
-        }
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -81,6 +75,18 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     override func drawRect(rect: CGRect) {
         super.drawRect(rect)
+        // should add circle here so it renders at right position
+        if profileImageView != nil {
+            if (alreadyAddCircle == false){
+                let centerPoint = CGPoint(x: profileImageView.frame.origin.x + profileImageView.frame.size.width/2, y: profileImageView.frame.origin.y + profileImageView.frame.height/2)
+                let radius = profileImageView.frame.size.width/2 + 5
+                let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
+                circleLayer.fillColor = UIColor.clearColor().CGColor
+                let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
+                circleLayer.strokeColor = color.CGColor
+                profileView.layer.addSublayer(circleLayer)
+            }
+        }
         if isPostInProfileTab {
             configurePostUi()
         }
