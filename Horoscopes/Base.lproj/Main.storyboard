@@ -3815,6 +3815,149 @@ on news things</string>
             </objects>
             <point key="canvasLocation" x="-2200.5" y="2754.75"/>
         </scene>
+        <!--Like Detail Table View Controller-->
+        <scene sceneID="rEg-3H-SlD">
+            <objects>
+                <viewController storyboardIdentifier="LikeDetailTableViewController" id="1OP-cA-hHt" customClass="LikeDetailTableViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ry7-YA-fVW"/>
+                        <viewControllerLayoutGuide type="bottom" id="xat-lS-S4Y"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Tr-Z0-NCk">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TKQ-Tb-Q0N">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="FollowTableViewCell" rowHeight="74" id="jvG-gY-zxp" customClass="FollowTableViewCell" customModule="Horoscopes" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="22" width="580" height="74"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jvG-gY-zxp" id="4cV-Wu-aGy">
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="73"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="separator" translatesAutoresizingMaskIntoConstraints="NO" id="6aA-AN-S8s">
+                                                    <rect key="frame" x="10" y="73" width="560" height="1"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="1" id="SD1-yR-Ybg"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8sA-Gh-Aan">
+                                                    <rect key="frame" x="10" y="10" width="50" height="50"/>
+                                                    <animations/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="50" id="fzF-UG-FM0"/>
+                                                        <constraint firstAttribute="height" constant="50" id="rrI-lw-AHF"/>
+                                                        <constraint firstAttribute="width" constant="50" id="xg4-xx-K3j"/>
+                                                    </constraints>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="fzF-UG-FM0"/>
+                                                        </mask>
+                                                    </variation>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Donald Patterson" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RyK-6D-2DF">
+                                                    <rect key="frame" x="69" y="15" width="122" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
+                                                    <color key="textColor" red="0.20000000000000001" green="0.20000000000000001" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricorn" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pz-Xg-3Yd">
+                                                    <rect key="frame" x="69" y="37" width="67" height="18"/>
+                                                    <animations/>
+                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
+                                                    <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <animations/>
+                                            <constraints>
+                                                <constraint firstItem="1pz-Xg-3Yd" firstAttribute="leading" secondItem="8sA-Gh-Aan" secondAttribute="trailing" constant="9" id="1Fb-lk-LwB"/>
+                                                <constraint firstAttribute="trailing" secondItem="6aA-AN-S8s" secondAttribute="trailing" constant="10" id="A42-fY-ilZ"/>
+                                                <constraint firstAttribute="bottom" secondItem="6aA-AN-S8s" secondAttribute="bottom" id="ATM-3b-a0H"/>
+                                                <constraint firstItem="6aA-AN-S8s" firstAttribute="leading" secondItem="4cV-Wu-aGy" secondAttribute="leading" constant="10" id="Ays-nn-ry0"/>
+                                                <constraint firstItem="6aA-AN-S8s" firstAttribute="leading" secondItem="4cV-Wu-aGy" secondAttribute="leadingMargin" constant="10" id="Ef2-D7-Hxx"/>
+                                                <constraint firstItem="RyK-6D-2DF" firstAttribute="top" secondItem="4cV-Wu-aGy" secondAttribute="top" constant="15" id="JWo-aO-bE6"/>
+                                                <constraint firstItem="8sA-Gh-Aan" firstAttribute="leading" secondItem="4cV-Wu-aGy" secondAttribute="leading" constant="10" id="PTh-hX-pG0"/>
+                                                <constraint firstAttribute="bottom" secondItem="8sA-Gh-Aan" secondAttribute="bottom" constant="10" id="Pqi-qX-B6R"/>
+                                                <constraint firstItem="RyK-6D-2DF" firstAttribute="leading" secondItem="8sA-Gh-Aan" secondAttribute="trailing" constant="9" id="XT5-0c-Qcl"/>
+                                                <constraint firstItem="8sA-Gh-Aan" firstAttribute="top" secondItem="4cV-Wu-aGy" secondAttribute="top" constant="10" id="alA-lE-OCg"/>
+                                                <constraint firstItem="6aA-AN-S8s" firstAttribute="leading" secondItem="1pz-Xg-3Yd" secondAttribute="trailing" constant="10" id="dfv-1o-vR3"/>
+                                                <constraint firstAttribute="trailing" secondItem="6aA-AN-S8s" secondAttribute="trailing" constant="10" id="dsS-cL-vwq"/>
+                                                <constraint firstItem="1pz-Xg-3Yd" firstAttribute="top" secondItem="RyK-6D-2DF" secondAttribute="bottom" constant="4" id="eRh-HK-PNb"/>
+                                                <constraint firstAttribute="bottom" secondItem="6aA-AN-S8s" secondAttribute="bottom" id="l4u-7e-rsL"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="6aA-AN-S8s" secondAttribute="trailing" constant="10" id="yFu-Vu-jU7"/>
+                                                <constraint firstAttribute="bottom" secondItem="8sA-Gh-Aan" secondAttribute="bottom" constant="10" id="yaJ-AD-am6"/>
+                                            </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Pqi-qX-B6R"/>
+                                                    <exclude reference="yaJ-AD-am6"/>
+                                                    <exclude reference="Ef2-D7-Hxx"/>
+                                                    <exclude reference="dfv-1o-vR3"/>
+                                                    <exclude reference="dsS-cL-vwq"/>
+                                                    <exclude reference="l4u-7e-rsL"/>
+                                                    <exclude reference="yFu-Vu-jU7"/>
+                                                </mask>
+                                            </variation>
+                                        </tableViewCellContentView>
+                                        <animations/>
+                                        <gestureRecognizers/>
+                                        <connections>
+                                            <outlet property="horoscopeSignLabel" destination="1pz-Xg-3Yd" id="Lqo-gS-VA8"/>
+                                            <outlet property="profileImageView" destination="8sA-Gh-Aan" id="IUa-MY-ko7"/>
+                                            <outlet property="profileNameLabel" destination="RyK-6D-2DF" id="GBx-9e-x9j"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <animations/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="top" secondItem="Ry7-YA-fVW" secondAttribute="bottom" constant="70" id="9Lw-FV-YCa"/>
+                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="leading" secondItem="9Tr-Z0-NCk" secondAttribute="leading" constant="10" id="Xpl-S8-mb1"/>
+                            <constraint firstItem="xat-lS-S4Y" firstAttribute="top" secondItem="TKQ-Tb-Q0N" secondAttribute="bottom" constant="70" id="gph-jI-ykr"/>
+                            <constraint firstAttribute="trailing" secondItem="TKQ-Tb-Q0N" secondAttribute="trailing" constant="10" id="iAQ-eY-2ic"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="TKQ-Tb-Q0N"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="gph-jI-ykr"/>
+                                <exclude reference="9Lw-FV-YCa"/>
+                                <exclude reference="Xpl-S8-mb1"/>
+                                <exclude reference="iAQ-eY-2ic"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="TKQ-Tb-Q0N"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="gph-jI-ykr"/>
+                                <include reference="9Lw-FV-YCa"/>
+                                <include reference="Xpl-S8-mb1"/>
+                                <include reference="iAQ-eY-2ic"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <nil key="simulatedStatusBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="tableView" destination="TKQ-Tb-Q0N" id="M4o-FC-iUt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BwK-WF-7tv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-676.5" y="2754.75"/>
+        </scene>
         <!--Collect Horoscope DetailVC-->
         <scene sceneID="aGy-y9-6ER">
             <objects>

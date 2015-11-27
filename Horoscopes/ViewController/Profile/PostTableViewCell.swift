@@ -130,6 +130,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             } else {
                 self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
             }
+            
+            
+            let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: "tapLikeLable:")
+            self.likeNumberLabel.userInteractionEnabled = true
+            self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
         })
     }
     
@@ -146,6 +151,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             })
             self.locationLabel.text = post.user?.location
             self.profileNameLabel.text = post.user?.name
+            
         })
     }
     
@@ -231,6 +237,26 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
         controller.populateNewsfeedShareData(post.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: post.permalink)
         Utilities.presentShareFormSheetController(viewController, shareViewController: controller)
+    }
+    
+    func tapLikeLable(sender: UITapGestureRecognizer){
+        if sender.state == .Ended {
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
+                let postId = post.post_id
+                SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
+                    if((error) != nil){
+                        Utilities.showAlert(self.viewController, title: "Action Denied", message: "Only post owner can view", error: nil)
+                    } else {
+                        let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
+                        controller.postId = postId
+                        self.viewController.navigationController?.pushViewController(controller, animated: true)
+                    }
+                    
+                }
+            } else {
+                Utilities.showAlert(viewController, title: "Action Denied", message: "You have to login to Facebook to see post like!", error: nil)
+            }
+        }
     }
     
     //     Notification handler

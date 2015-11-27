@@ -78,6 +78,7 @@ let GET_FRIEND_LIST = "app.horoscopes.profile.facebookfriends"
 let GET_OTHER_USER_FOLLOWING = "app.horoscopes.profile.following"
 let GET_OTHER_USER_FOLLOWERS = "app.horoscopes.profile.followers"
 let GET_PROFILE_COUNTS = "app.horoscopes.profile.counts"
+let GET_LIKED_USERS = "app.horoscopes.post.hearts"
 
 // MARK: Notification method
 

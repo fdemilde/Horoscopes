@@ -714,4 +714,34 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             }
         }
     }
+    
+    func retrieveUsersWhoLikedPost(postId : String, page: Int, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+        let postData = NSMutableDictionary()
+        postData.setObject(postId, forKey: "post_id")
+        postData.setObject("\(page)", forKey: "page")
+        let expiredTime = NSDate().timeIntervalSince1970 + 10
+        CacheManager.cacheGet(GET_LIKED_USERS, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (result, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(result!)
+                print("retrieveUsersWhoLikedPost == \(result)")
+                var userArray = [UserProfile]()
+                let profiles = result["profiles"] as! Dictionary<String, AnyObject>
+                let profileIDArray = result["hearts"] as! [Int]
+                print("profileIDArray profileIDArray == \(profileIDArray)")
+                let userDict = Utilities.parseUsersArray(profiles)
+                // sort userdict following server profileIDArray
+                for userId in profileIDArray {
+                    for (keyId, userProfile) in userDict {
+                        if keyId == "\(userId)" {
+                            userArray.append(userProfile)
+                        }
+                    }
+                }
+                print("userArray userArray == \(userArray)")
+                completionHandler(result: userArray, error: nil)
+            }
+        }
+    }
 }

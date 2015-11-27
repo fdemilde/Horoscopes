@@ -181,6 +181,7 @@
 		F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC41B2010F2003C6301 /* UserCreds.m */; };
 		F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACAC81B2010F2003C6301 /* RegExCategories.m */; };
 		F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = F4CACACB1B2010F2003C6301 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4D9A9761C06C980007083A4 /* LikeDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */; };
 		F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */; };
 		F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */; };
 		F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */; };
@@ -425,6 +426,7 @@
 		F4CACAC81B2010F2003C6301 /* RegExCategories.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RegExCategories.m; sourceTree = "<group>"; };
 		F4CACACA1B2010F2003C6301 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		F4CACACB1B2010F2003C6301 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
+		F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeDetailTableViewController.swift; sourceTree = "<group>"; };
 		F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithAds.swift; sourceTree = "<group>"; };
 		F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerWithAds.swift; sourceTree = "<group>"; };
 		F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignVC.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 				7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */,
 				70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */,
 				F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */,
+				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -1359,6 +1362,7 @@
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
 				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
+				F4D9A9761C06C980007083A4 /* LikeDetailTableViewController.swift in Sources */,
 				F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */,
 				F4326A061B3A553E00334B56 /* ShareController.swift in Sources */,
 				70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */,
