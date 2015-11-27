@@ -98,13 +98,6 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
         att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
         self.textView!.linkTextAttributes = linkAttributes
         self.textView.attributedText = att
-        followButton.hidden = false
-        
-        if let currentUser = XAppDelegate.currentUser {
-            if(currentUser.uid == userPost.uid){
-                followButton.hidden = true
-            }
-        }
         
         let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         self.profileImage.userInteractionEnabled = true
@@ -123,10 +116,22 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
         self.name.addGestureRecognizer(nameGestureRecognizer4)
     }
     
-    // MARK: Button action
-    
-    @IBAction func followTapped(sender: AnyObject) {
+    func configureFollowButton(isFollowed: Bool) {
+        if let currentUser = XAppDelegate.currentUser {
+            if(currentUser.uid == userPost.uid){
+                followButton.hidden = true
+                return
+            }
+        }
+        followButton.hidden = false
+        if isFollowed {
+            followButton.setImage(UIImage(named: "discover_follow_button_check"), forState: .Normal)
+        } else {
+            followButton.setImage(UIImage(named: "discover_follow_button"), forState: .Normal)
+        }
     }
+    
+    // MARK: Button action
     
     // MARK: link textview Delegate
     func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {

@@ -2218,14 +2218,13 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="216" height="50"/>
                                                                             </variation>
                                                                         </imageView>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tC0-cX-x8s">
+                                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tC0-cX-x8s">
                                                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                                             <animations/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="62" id="0sk-es-dpO"/>
                                                                                 <constraint firstAttribute="height" constant="29" id="Ihi-xU-Ynr"/>
                                                                             </constraints>
-                                                                            <state key="normal" image="discover_follow_button"/>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
                                                                                     <exclude reference="0sk-es-dpO"/>
@@ -2239,9 +2238,6 @@
                                                                                     <include reference="Ihi-xU-Ynr"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <connections>
-                                                                                <action selector="followTapped:" destination="ivJ-cv-1Cb" eventType="touchUpInside" id="fDz-bl-SVO"/>
-                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <animations/>
@@ -7125,7 +7121,6 @@ on news things</string>
         <image name="daily_like_btn" width="51" height="20"/>
         <image name="daily_sign_bg" width="80" height="80"/>
         <image name="default_avatar" width="75" height="75"/>
-        <image name="discover_follow_button" width="62" height="29"/>
         <image name="discover_footer_background" width="280" height="50"/>
         <image name="discover_header_background" width="280" height="160"/>
         <image name="fb_login_icon" width="60" height="60"/>

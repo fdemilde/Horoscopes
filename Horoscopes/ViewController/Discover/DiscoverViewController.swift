@@ -19,6 +19,8 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
         return refreshControl
     }()
     
+    var isFollowed = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupBackground()
@@ -31,6 +33,7 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -68,6 +71,21 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
         let post = XAppDelegate.dataStore.newsfeedGlobal[indexPath.row]
         cell.parentViewController = self
         cell.setupCell(post)
+        
+        if let users = XAppDelegate.dataStore.usersFollowing {
+            let userId = post.uid
+            isFollowed = false
+            for user in users {
+                if user.uid == userId {
+                    isFollowed = true
+                    break
+                }
+            }
+            cell.configureFollowButton(isFollowed)
+            cell.followButton.addTarget(self, action: "followButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+            cell.followButton.tag = indexPath.row
+        }
+        
         return cell
     }
     
@@ -119,6 +137,38 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     }
     
     // MARK: Actions
+    
+    func followButtonTapped(sender: UIButton) {
+        if let user = XAppDelegate.dataStore.newsfeedGlobal[sender.tag].user {
+            if isFollowed {
+                Utilities.showHUD()
+                SocialManager.sharedInstance.unfollow(user, completionHandler: { (error) -> Void in
+                    if let error = error {
+                        Utilities.hideHUD()
+                        Utilities.showError(error)
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.reloadData()
+                            Utilities.hideHUD()
+                        })
+                    }
+                })
+            } else {
+                Utilities.showHUD()
+                SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
+                    if let error = error {
+                        Utilities.hideHUD()
+                        Utilities.showError(error)
+                    } else {
+                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            self.tableView.reloadData()
+                            Utilities.hideHUD()
+                        })
+                    }
+                })
+            }
+        }
+    }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.currentPage = 0

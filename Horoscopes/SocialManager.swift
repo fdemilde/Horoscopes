@@ -473,6 +473,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             completionHandler(error: error, permissionGranted: false)
                         } else {
                             completionHandler(error: nil, permissionGranted: true)
+                            self.getProfilesOfUsersFollowing({ (result, error) -> Void in
+                                if let _ = error {
+                                    
+                                } else {
+                                    XAppDelegate.dataStore.usersFollowing = result!
+                                }
+                            })
                         }
                     })
                 } else {
