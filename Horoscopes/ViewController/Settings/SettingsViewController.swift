@@ -140,6 +140,14 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     // MARK: Button action
+    @IBAction func backButtonTapped(sender: UIButton) {
+        navigationController?.popViewControllerAnimated(true)
+    }
+    
+    @IBAction func searchButtonTapped(sender: UIButton) {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+        navigationController?.presentViewController(controller, animated: true, completion: nil)
+    }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()
