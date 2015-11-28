@@ -1617,7 +1617,7 @@
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="253" y="14" width="57" height="22"/>
+                                                                                        <rect key="frame" x="253" y="3" width="57" height="44"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="NGu-QD-sLq" eventType="touchUpInside" id="WK5-Vr-UIc"/>
@@ -2822,6 +2822,9 @@ on news things</string>
                                                                 <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="14"/>
                                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                                    <rect key="frame" x="20" y="20" width="340" height="33"/>
+                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check back tomorrow for a new fortune." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSi-ft-WGg">
                                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -3829,7 +3832,7 @@ on news things</string>
                                         <rect key="frame" x="0.0" y="22" width="580" height="74"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jvG-gY-zxp" id="4cV-Wu-aGy">
-                                            <rect key="frame" x="0.0" y="0.0" width="240" height="73"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="240" height="74"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="separator" translatesAutoresizingMaskIntoConstraints="NO" id="6aA-AN-S8s">
@@ -6503,11 +6506,11 @@ on news things</string>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="4hl-Vy-SPz"/>
-                                        <exclude reference="6QR-50-4hn"/>
-                                        <exclude reference="nyj-0E-KYS"/>
                                         <exclude reference="7Wc-2m-D1K"/>
                                         <exclude reference="dO7-Yh-XgS"/>
                                         <exclude reference="pgV-kO-1Td"/>
+                                        <exclude reference="6QR-50-4hn"/>
+                                        <exclude reference="nyj-0E-KYS"/>
                                         <exclude reference="HTU-zk-IdH"/>
                                         <exclude reference="Pi2-bG-nqA"/>
                                     </mask>
@@ -6520,11 +6523,11 @@ on news things</string>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="4hl-Vy-SPz"/>
-                                        <include reference="6QR-50-4hn"/>
-                                        <include reference="nyj-0E-KYS"/>
                                         <include reference="7Wc-2m-D1K"/>
                                         <include reference="dO7-Yh-XgS"/>
                                         <include reference="pgV-kO-1Td"/>
+                                        <include reference="6QR-50-4hn"/>
+                                        <include reference="nyj-0E-KYS"/>
                                         <include reference="HTU-zk-IdH"/>
                                         <include reference="Pi2-bG-nqA"/>
                                     </mask>
@@ -6573,7 +6576,7 @@ on news things</string>
                                                     <rect key="frame" x="531" y="17" width="51" height="31"/>
                                                     <animations/>
                                                     <color key="onTintColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="0.5" colorSpace="calibratedRGB"/>
-                                                    <color key="thumbTintColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="thumbTintColor" red="0.42352941179999998" green="0.41176470590000003" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="BAj-mD-Smg" eventType="valueChanged" id="5vu-1m-MIQ"/>
                                                     </connections>

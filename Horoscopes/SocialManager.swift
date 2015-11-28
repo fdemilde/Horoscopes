@@ -53,7 +53,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         let pageString = String(format:"%d",pageNo)
         postData.setObject(pageString, forKey: "page")
-        let expiredTime = NSDate().timeIntervalSince1970 + 30
+        let expiredTime = NSDate().timeIntervalSince1970 + 600
         
         // need to expire next page if current page is expired
         let expiredKey = expiredKeyForPaging(isRefreshing, pageKey: "page", requestMethod: GET_GLOBAL_FEED, pageNumber: pageNo, postData: postData)
@@ -196,7 +196,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let postData = NSMutableDictionary()
                     postData.setObject("\(page)", forKey: "page")
                     postData.setObject("\(uid)", forKey: "uid")
-                    let expiredTime = NSDate().timeIntervalSince1970 + 10
+                    let expiredTime = NSDate().timeIntervalSince1970 + 600
                     
                     // need to expire next page if current page is expired
                     let expiredKey = self.expiredKeyForPaging(isRefreshed, pageKey: "page", requestMethod: GET_USER_FEED, pageNumber: page, postData: postData)
@@ -227,7 +227,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func getPost(postIds : String, ignoreCache: Bool = false, completionHandler: (result: [UserPost]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
         postData.setObject("\(postIds)", forKey: "post_id")
-        let expiredTime = NSDate().timeIntervalSince1970 + 10
+        let expiredTime = NSDate().timeIntervalSince1970 + 600
         CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
 //            print("response response == \(response)")
             if let error = error {

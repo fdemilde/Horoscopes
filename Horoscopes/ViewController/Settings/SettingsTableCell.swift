@@ -28,7 +28,6 @@ class SettingsTableCell : UITableViewCell {
     
     func setupCell(type: SettingsType){
         self.type = type
-        
         if(self.type == SettingsType.Notification){
             timeLabel.hidden = false
             switchButton.hidden = false
