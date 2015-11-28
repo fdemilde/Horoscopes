@@ -107,7 +107,13 @@ class PostButtonsView: UIView {
         let colNumber = buttonIndex % 2
         let paddingWidth = (screenWidth - (POST_BUTTON_SIZE.width * 2)) / 3
         let buttonPositionX = paddingWidth * CGFloat(colNumber + 1) + (CGFloat(colNumber) * POST_BUTTON_SIZE.width)
-        let paddingHeight = (screenHeight - (POST_BUTTON_SIZE.height * 2)) / 3
+        var paddingHeight = (screenHeight - (POST_BUTTON_SIZE.height * 2)) / 3
+        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
+            let size = UIScreen.mainScreen().bounds.size
+            if size.height == 480 {
+                paddingHeight -= 20
+            }
+        }
         let buttonPositionY = paddingHeight * CGFloat(rowNumber + 1) + (CGFloat(rowNumber) * POST_BUTTON_SIZE.height)
         return CGRectMake(buttonPositionX, buttonPositionY, POST_BUTTON_SIZE.width, POST_BUTTON_SIZE.height)
     }

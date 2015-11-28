@@ -1617,7 +1617,7 @@
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="253" y="3" width="57" height="44"/>
+                                                                                        <rect key="frame" x="253" y="14" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="NGu-QD-sLq" eventType="touchUpInside" id="WK5-Vr-UIc"/>
@@ -2218,14 +2218,13 @@
                                                                                 <rect key="frame" x="0.0" y="0.0" width="216" height="50"/>
                                                                             </variation>
                                                                         </imageView>
-                                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tC0-cX-x8s">
+                                                                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tC0-cX-x8s">
                                                                             <rect key="frame" x="-23" y="-15" width="46" height="30"/>
                                                                             <animations/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="width" constant="62" id="0sk-es-dpO"/>
                                                                                 <constraint firstAttribute="height" constant="29" id="Ihi-xU-Ynr"/>
                                                                             </constraints>
-                                                                            <state key="normal" image="discover_follow_button"/>
                                                                             <variation key="default">
                                                                                 <mask key="constraints">
                                                                                     <exclude reference="0sk-es-dpO"/>
@@ -2239,9 +2238,6 @@
                                                                                     <include reference="Ihi-xU-Ynr"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <connections>
-                                                                                <action selector="followTapped:" destination="ivJ-cv-1Cb" eventType="touchUpInside" id="fDz-bl-SVO"/>
-                                                                            </connections>
                                                                         </button>
                                                                     </subviews>
                                                                     <animations/>
@@ -2826,9 +2822,6 @@ on news things</string>
                                                                 <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="14"/>
                                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
-                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="20" y="20" width="340" height="33"/>
-                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check back tomorrow for a new fortune." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSi-ft-WGg">
                                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -6439,37 +6432,101 @@ on news things</string>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CkX-72-eSP">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="44" id="8WP-Mx-9Nu"/>
+                                            <constraint firstAttribute="width" constant="44" id="eSV-7f-1WH"/>
+                                        </constraints>
+                                        <state key="normal" image="back_button"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="8WP-Mx-9Nu"/>
+                                                <exclude reference="eSV-7f-1WH"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="8WP-Mx-9Nu"/>
+                                                <include reference="eSV-7f-1WH"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="backButtonTapped:" destination="VAX-Q9-xBb" eventType="touchUpInside" id="uqF-5y-tLh"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DP7-P2-dqr">
+                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                        <animations/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="44" id="DlE-mm-kJl"/>
+                                            <constraint firstAttribute="height" constant="44" id="nEp-eq-o6g"/>
+                                        </constraints>
+                                        <state key="normal" image="search_icon"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="DlE-mm-kJl"/>
+                                                <exclude reference="nEp-eq-o6g"/>
+                                            </mask>
+                                        </variation>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <mask key="constraints">
+                                                <include reference="DlE-mm-kJl"/>
+                                                <include reference="nEp-eq-o6g"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <action selector="searchButtonTapped:" destination="VAX-Q9-xBb" eventType="touchUpInside" id="X40-By-g97"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <animations/>
                                 <color key="backgroundColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4hl-Vy-SPz"/>
+                                    <constraint firstItem="CkX-72-eSP" firstAttribute="leading" secondItem="yQz-8m-BTT" secondAttribute="leading" id="6QR-50-4hn"/>
                                     <constraint firstItem="qFh-1P-YHC" firstAttribute="leading" secondItem="yQz-8m-BTT" secondAttribute="leading" id="7Wc-2m-D1K"/>
+                                    <constraint firstAttribute="trailing" secondItem="DP7-P2-dqr" secondAttribute="trailing" id="HTU-zk-IdH"/>
+                                    <constraint firstItem="DP7-P2-dqr" firstAttribute="centerY" secondItem="yQz-8m-BTT" secondAttribute="centerY" id="Pi2-bG-nqA"/>
                                     <constraint firstAttribute="centerY" secondItem="qFh-1P-YHC" secondAttribute="centerY" constant="0.5" id="dO7-Yh-XgS">
                                         <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
                                     </constraint>
+                                    <constraint firstItem="CkX-72-eSP" firstAttribute="centerY" secondItem="yQz-8m-BTT" secondAttribute="centerY" id="nyj-0E-KYS"/>
                                     <constraint firstAttribute="trailing" secondItem="qFh-1P-YHC" secondAttribute="trailing" id="pgV-kO-1Td"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="subviews">
                                         <exclude reference="qFh-1P-YHC"/>
+                                        <exclude reference="CkX-72-eSP"/>
+                                        <exclude reference="DP7-P2-dqr"/>
                                     </mask>
                                     <mask key="constraints">
                                         <exclude reference="4hl-Vy-SPz"/>
+                                        <exclude reference="6QR-50-4hn"/>
+                                        <exclude reference="nyj-0E-KYS"/>
                                         <exclude reference="7Wc-2m-D1K"/>
                                         <exclude reference="dO7-Yh-XgS"/>
                                         <exclude reference="pgV-kO-1Td"/>
+                                        <exclude reference="HTU-zk-IdH"/>
+                                        <exclude reference="Pi2-bG-nqA"/>
                                     </mask>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <mask key="subviews">
                                         <include reference="qFh-1P-YHC"/>
+                                        <include reference="CkX-72-eSP"/>
+                                        <include reference="DP7-P2-dqr"/>
                                     </mask>
                                     <mask key="constraints">
                                         <include reference="4hl-Vy-SPz"/>
+                                        <include reference="6QR-50-4hn"/>
+                                        <include reference="nyj-0E-KYS"/>
                                         <include reference="7Wc-2m-D1K"/>
                                         <include reference="dO7-Yh-XgS"/>
                                         <include reference="pgV-kO-1Td"/>
+                                        <include reference="HTU-zk-IdH"/>
+                                        <include reference="Pi2-bG-nqA"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -6543,9 +6600,6 @@ on news things</string>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="517" y="19" width="73" height="17"/>
-                                                    </variation>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhT-xF-3wa">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -6559,8 +6613,7 @@ on news things</string>
                                                             <exclude reference="sgF-V5-4mP"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="517" y="37" width="73" height="1"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="constraints">
                                                             <include reference="sgF-V5-4mP"/>
                                                         </mask>
@@ -7283,7 +7336,6 @@ on news things</string>
         <image name="daily_like_btn" width="51" height="20"/>
         <image name="daily_sign_bg" width="80" height="80"/>
         <image name="default_avatar" width="75" height="75"/>
-        <image name="discover_follow_button" width="62" height="29"/>
         <image name="discover_footer_background" width="280" height="50"/>
         <image name="discover_header_background" width="280" height="160"/>
         <image name="fb_login_icon" width="60" height="60"/>
@@ -7292,7 +7344,7 @@ on news things</string>
         <image name="newsfeed_heart_icon" width="47" height="20"/>
         <image name="newsfeed_share_icon" width="57" height="17"/>
         <image name="next_button" width="30" height="30"/>
-        <image name="search_icon" width="30" height="30"/>
+        <image name="search_icon" width="28" height="28"/>
         <image name="separator" width="280" height="1"/>
         <image name="settings_btn" width="40" height="30"/>
         <image name="share_copy" width="94" height="23"/>

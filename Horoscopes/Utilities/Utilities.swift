@@ -566,7 +566,6 @@ class Utilities {
             let readMoreRange = nsReplacedText.rangeOfString("Read more")
             if isTruncated {
                 attString.addAttribute(CCHLinkAttributeName, value: "readmore", range: readMoreRange)
-                attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: readMoreRange)
             }
             let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
             if numberOfMatches / 2 == urls.count {
@@ -580,7 +579,6 @@ class Utilities {
                         if let link = link {
                             let nsLinkRange = nsReplacedText.rangeOfString(link)
                             attString.addAttribute(CCHLinkAttributeName, value: urls[index/2], range: nsLinkRange)
-                            attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11), range: nsLinkRange)
                         }
                     }
                 }
