@@ -3827,7 +3827,7 @@ on news things</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TKQ-Tb-Q0N">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="TKQ-Tb-Q0N">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -3845,6 +3845,9 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="1" id="SD1-yR-Ybg"/>
                                                     </constraints>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="10" y="73" width="360" height="1"/>
+                                                    </variation>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8sA-Gh-Aan">
                                                     <rect key="frame" x="10" y="10" width="50" height="50"/>
@@ -3915,15 +3918,27 @@ on news things</string>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="1OP-cA-hHt" id="DbV-kP-5Rf"/>
+                                    <outlet property="delegate" destination="1OP-cA-hHt" id="tmb-4v-8pB"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <animations/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.80000000000000004" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="top" secondItem="Ry7-YA-fVW" secondAttribute="bottom" constant="70" id="9Lw-FV-YCa"/>
-                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="leading" secondItem="9Tr-Z0-NCk" secondAttribute="leading" constant="10" id="Xpl-S8-mb1"/>
-                            <constraint firstItem="xat-lS-S4Y" firstAttribute="top" secondItem="TKQ-Tb-Q0N" secondAttribute="bottom" constant="70" id="gph-jI-ykr"/>
-                            <constraint firstAttribute="trailing" secondItem="TKQ-Tb-Q0N" secondAttribute="trailing" constant="10" id="iAQ-eY-2ic"/>
+                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="top" secondItem="Ry7-YA-fVW" secondAttribute="bottom" constant="70" id="9Lw-FV-YCa">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="TKQ-Tb-Q0N" firstAttribute="leading" secondItem="9Tr-Z0-NCk" secondAttribute="leading" constant="10" id="Xpl-S8-mb1">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstItem="xat-lS-S4Y" firstAttribute="top" secondItem="TKQ-Tb-Q0N" secondAttribute="bottom" constant="70" id="gph-jI-ykr">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
+                            <constraint firstAttribute="trailing" secondItem="TKQ-Tb-Q0N" secondAttribute="trailing" constant="10" id="iAQ-eY-2ic">
+                                <variation key="heightClass=regular-widthClass=compact" constant="0.0"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">

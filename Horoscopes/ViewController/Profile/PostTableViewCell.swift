@@ -241,21 +241,25 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     func tapLikeLable(sender: UITapGestureRecognizer){
         if sender.state == .Ended {
-            if SocialManager.sharedInstance.isLoggedInFacebook() {
-                let postId = post.post_id
-                SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
-                    if((error) != nil){
-                        Utilities.showAlert(self.viewController, title: "Action Denied", message: "Only post owner can view", error: nil)
-                    } else {
-                        let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
-                        controller.postId = postId
-                        self.viewController.navigationController?.pushViewController(controller, animated: true)
+            
+                if SocialManager.sharedInstance.isLoggedInFacebook() {
+                    let postId = self.post.post_id
+                    SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
+                        if(error != ""){
+                            Utilities.showAlert(self.viewController, title: "Action Denied", message: "\(error)", error: nil)
+                        } else {
+                            let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                            let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
+                            viewController.postId = postId
+                            viewController.userProfile = result!
+                            viewController.parentVC = self.viewController
+                            self.displayViewController(viewController)
+                        }
                     }
-                    
+                } else {
+                    Utilities.showAlert(self.viewController, title: "Action Denied", message: "You have to login to Facebook to see post like!", error: nil)
                 }
-            } else {
-                Utilities.showAlert(viewController, title: "Action Denied", message: "You have to login to Facebook to see post like!", error: nil)
-            }
+            
         }
     }
     
@@ -294,6 +298,19 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 
             }
         })
+    }
+    
+    // MARK: display View controller
+    func displayViewController(viewController : UIViewController){
+        dispatch_async(dispatch_get_main_queue()) {
+        let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
+        let formSheet = MZFormSheetController(viewController: viewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.portraitTopInset = paddingTop;
+            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
+        self.viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        }
     }
 }
 

@@ -715,32 +715,35 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func retrieveUsersWhoLikedPost(postId : String, page: Int, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
+    func retrieveUsersWhoLikedPost(postId : String, page: Int, completionHandler: (result: [UserProfile]?, error: String) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
         postData.setObject("\(page)", forKey: "page")
         let expiredTime = NSDate().timeIntervalSince1970 + 10
-        CacheManager.cacheGet(GET_LIKED_USERS, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (result, error) -> Void in
-            if let error = error {
-                completionHandler(result: nil, error: error)
+        CacheManager.cacheGet(GET_LIKED_USERS, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true) { (result, error) -> Void in
+            if let _ = error {
+                completionHandler(result: nil, error: "Network Error")
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(result!)
-                print("retrieveUsersWhoLikedPost == \(result)")
-                var userArray = [UserProfile]()
-                let profiles = result["profiles"] as! Dictionary<String, AnyObject>
-                let profileIDArray = result["hearts"] as! [Int]
-                print("profileIDArray profileIDArray == \(profileIDArray)")
-                let userDict = Utilities.parseUsersArray(profiles)
-                // sort userdict following server profileIDArray
-                for userId in profileIDArray {
-                    for (keyId, userProfile) in userDict {
-                        if keyId == "\(userId)" {
-                            userArray.append(userProfile)
+                if result["error"] as! Int == 1 {
+                    completionHandler(result: nil, error: result["error_message"] as! String)
+                } else {
+                    var userArray = [UserProfile]()
+                    let profiles = result["profiles"] as! Dictionary<String, AnyObject>
+                    let profileIDArray = result["hearts"] as! [Int]
+                    let userDict = Utilities.parseUsersArray(profiles)
+                    // sort userdict following server profileIDArray
+                    for userId in profileIDArray {
+                        for (keyId, userProfile) in userDict {
+                            if keyId == "\(userId)" {
+                                userArray.append(userProfile)
+                            }
                         }
                     }
+                    completionHandler(result: userArray, error: "")
                 }
-                print("userArray userArray == \(userArray)")
-                completionHandler(result: userArray, error: nil)
+                
+                
             }
         }
     }
