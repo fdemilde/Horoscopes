@@ -14,6 +14,9 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     @IBOutlet weak var followButtonLeadingSpace: NSLayoutConstraint!
     @IBOutlet weak var newsfeedFollowButton: UIButton!
+    
+    @IBOutlet weak var bannerView: GADBannerView!
+    
 //    @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: - Property
@@ -86,6 +89,9 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                     }
                 }
             })
+            bannerView.adUnitID = ADMOD_ID
+            bannerView.rootViewController = self
+            bannerView.loadRequest(GADRequest())
             noPostText = "This person has not posted anything."
             noUsersFollowingText = "This person has not followed anyone."
             noFollowersText = "This person does not have any follower."

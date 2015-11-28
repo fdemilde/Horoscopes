@@ -722,7 +722,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
     }
     
-    func retrieveUsersWhoLikedPost(postId : String, page: Int, completionHandler: (result: [UserProfile]?, error: String) -> Void) {
+    func retrieveUsersWhoLikedPost(postId : String, page: Int, completionHandler: (result: ([UserProfile], isLastPage: Bool)?, error: String) -> Void) {
+        
         let postData = NSMutableDictionary()
         postData.setObject(postId, forKey: "post_id")
         postData.setObject("\(page)", forKey: "page")
@@ -737,6 +738,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else {
                     var userArray = [UserProfile]()
                     let profiles = result["profiles"] as! Dictionary<String, AnyObject>
+                    let last = result["last"] as! Int
                     let profileIDArray = result["hearts"] as! [Int]
                     let userDict = Utilities.parseUsersArray(profiles)
                     // sort userdict following server profileIDArray
@@ -747,7 +749,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             }
                         }
                     }
-                    completionHandler(result: userArray, error: "")
+                    let result = (userArray, isLastPage: last == 1)
+                    completionHandler(result: result, error: "")
                 }
                 
                 

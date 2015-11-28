@@ -251,7 +251,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                             let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
                             viewController.postId = postId
-                            viewController.userProfile = result!
+                            viewController.userProfile = result!.0
                             viewController.parentVC = self.viewController
                             self.displayViewController(viewController)
                         }

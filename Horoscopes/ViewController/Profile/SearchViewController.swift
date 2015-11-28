@@ -131,7 +131,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let profile = filteredResult[indexPath.row]
         DataStore.sharedInstance.saveSearchedProfile(profile)
-        delegate.didChooseUser(profile)
+        delegate?.didChooseUser(profile)
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -161,15 +161,17 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
         let user = filteredResult[index!]
-        Utilities.showHUD()
+        Utilities.showHUD(self.view)
         SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
             if let error = error {
                 Utilities.hideHUD()
                 Utilities.showError(error, viewController: self)
             } else {
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    user.isFollowed = true
+                    cell.followButton.hidden = true
                     self.tableView.reloadData()
-                    Utilities.hideHUD()
+                    Utilities.hideHUD(self.view)
                 })
             }
         })

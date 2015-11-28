@@ -416,7 +416,8 @@
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UHw-10-Mgh">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                                     <animations/>
-                                                    <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.050000000000000003" colorSpace="calibratedRGB"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                             </subviews>
                                             <animations/>
@@ -6886,6 +6887,14 @@ on news things</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0w-fm-CYw" customClass="GADBannerView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                <animations/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="nuA-Ii-jDh"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fh-L8-WtP" userLabel="Profile View">
                                 <rect key="frame" x="10" y="10" width="580" height="120"/>
                                 <subviews>
@@ -7289,19 +7298,47 @@ on news things</string>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="q0w-fm-CYw" firstAttribute="top" secondItem="GhV-GK-Pz2" secondAttribute="bottom" id="3o1-da-KLj"/>
                             <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="GhV-GK-Pz2" secondAttribute="bottom" constant="10" id="HbV-kY-ZtS"/>
                             <constraint firstItem="nXH-b6-zfT" firstAttribute="top" secondItem="ylX-64-nXL" secondAttribute="bottom" id="PS0-xd-Wih"/>
                             <constraint firstAttribute="trailing" secondItem="7Fh-L8-WtP" secondAttribute="trailing" constant="10" id="UJ5-ga-viS"/>
                             <constraint firstItem="ylX-64-nXL" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" id="bbi-JB-VXJ"/>
                             <constraint firstItem="7Fh-L8-WtP" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" constant="10" id="cf2-3Z-IF7"/>
+                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="q0w-fm-CYw" secondAttribute="bottom" constant="10" id="fgO-AB-F1D"/>
                             <constraint firstAttribute="trailing" secondItem="ylX-64-nXL" secondAttribute="trailing" id="r6o-Mg-PPc"/>
+                            <constraint firstAttribute="trailing" secondItem="q0w-fm-CYw" secondAttribute="trailing" id="wYi-ID-axO"/>
                             <constraint firstItem="ylX-64-nXL" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="bottom" id="xbI-1V-cPb"/>
+                            <constraint firstItem="q0w-fm-CYw" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" id="y0n-ZJ-bEN"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="q0w-fm-CYw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="3o1-da-KLj"/>
+                                <exclude reference="wYi-ID-axO"/>
+                                <exclude reference="y0n-ZJ-bEN"/>
+                                <exclude reference="fgO-AB-F1D"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="q0w-fm-CYw"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="3o1-da-KLj"/>
+                                <include reference="wYi-ID-axO"/>
+                                <include reference="y0n-ZJ-bEN"/>
+                                <exclude reference="HbV-kY-ZtS"/>
+                                <include reference="fgO-AB-F1D"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="aKc-rU-8K9"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="7d4-LD-wei" id="qya-Ej-1bU"/>
+                        <outlet property="bannerView" destination="q0w-fm-CYw" id="9Rd-UF-lOY"/>
                         <outlet property="followButtonLeadingSpace" destination="twH-nf-NIL" id="tpG-as-P6y"/>
                         <outlet property="followersButton" destination="JPb-ao-9uo" id="KUo-x1-fVT"/>
                         <outlet property="followingButton" destination="Dqg-sL-z4e" id="C1g-J6-B0J"/>

@@ -463,6 +463,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - Delegate
     
     func didChooseUser(profile: UserProfile) {
+        print("didChooseUser didChooseUser")
         let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in

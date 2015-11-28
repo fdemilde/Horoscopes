@@ -17,6 +17,7 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
     let TABLE_ROW_HEIGHT = 74 as CGFloat
     let HEADER_VIEW_HEIGHT = 40 as CGFloat
     var parentVC : UIViewController!
+    var isLastPostPage = false
     
     var currentPostPage: Int = 0 {
         didSet {
@@ -25,10 +26,10 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
                     if (error != "") {
                         Utilities.showAlert(self.parentVC, title: "Action Denied", message: "\(error)", error: nil)
                     } else {
-                        //                        let posts = result!.0
-                        //                        let isLastPage = result!.isLastPage
-                        //                        self.isLastPostPage = isLastPage
-                        //                        self.userPosts += posts
+                        let profiles = result!.0
+                        let isLastPage = result!.isLastPage
+                        self.isLastPostPage = isLastPage
+                        self.userProfile += profiles
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.tableView.finishInfiniteScroll()
                             self.tableView.reloadData()
@@ -56,6 +57,15 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
                 }
             }
         })
+        
+        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            _ = scrollView as! UITableView
+            if self.isLastPostPage {
+                self.tableView.finishInfiniteScroll()
+                return
+            }
+            self.currentPostPage++
+        }
     }
     
     // MARK: table view datasource and delegate
@@ -112,5 +122,26 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return HEADER_VIEW_HEIGHT
+    }
+    
+    // MARK: cell delegate
+    func didTapFollowButton(cell: FollowTableViewCell) {
+        let index = tableView.indexPathForCell(cell)?.row
+        let user = userProfile[index!]
+        Utilities.showHUD(self.view)
+        SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
+            if let error = error {
+                Utilities.hideHUD()
+                Utilities.showError(error, viewController: self)
+            } else {
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    
+                    user.isFollowed = true
+                    cell.followButton.hidden = true
+                    self.tableView.reloadData()
+                    Utilities.hideHUD(self.view)
+                })
+            }
+        })
     }
 }

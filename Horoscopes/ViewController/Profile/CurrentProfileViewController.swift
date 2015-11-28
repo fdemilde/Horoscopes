@@ -144,6 +144,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     @IBAction func openSettings(sender: UIButton) {
         let controller = storyboard?.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+        controller.parentVC = self
         navigationController?.pushViewController(controller, animated: true)
     }
     

@@ -14,6 +14,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var tableFooterView : UIView!
     var birthday : NSDate!
     var birthdayString : String!
+    var parentVC : CurrentProfileViewController!
 //    var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     @IBOutlet weak var titleBackgroundView: UIView!
     
@@ -146,6 +147,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     @IBAction func searchButtonTapped(sender: UIButton) {
         let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+        controller.delegate = self.parentVC
         navigationController?.presentViewController(controller, animated: true, completion: nil)
     }
     
