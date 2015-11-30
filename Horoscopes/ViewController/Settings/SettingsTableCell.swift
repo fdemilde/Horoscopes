@@ -65,10 +65,13 @@ class SettingsTableCell : UITableViewCell {
                 titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
                 break;
         }
+        checkAndChangeSwitchColor()
+        
     }
     
     @IBAction func toogleNotification(sender: AnyObject) {
         let switchControl = sender as! UISwitch
+        checkAndChangeSwitchColor()
         XAppDelegate.userSettings.notifyOfNewHoroscope = switchControl.on
         parentVC.saveNotificationSetting()
     }
@@ -85,5 +88,13 @@ class SettingsTableCell : UITableViewCell {
             dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
         }
         birthdayLabel.text = dateString
+    }
+    
+    func checkAndChangeSwitchColor(){
+        if switchButton.on {
+            switchButton.thumbTintColor = UIColor(red: 108.0/255.0, green: 105.0/255.0, blue: 153.0/255.0, alpha: 1)
+        } else {
+            switchButton.thumbTintColor = UIColor(red: 201/255.0, green: 201/255.0, blue: 201/255.0, alpha: 1)
+        }
     }
 }

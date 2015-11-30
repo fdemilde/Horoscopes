@@ -2034,7 +2034,9 @@
                                                                                 <constraint firstItem="S4o-ak-9Ja" firstAttribute="leading" secondItem="t4W-tw-IpW" secondAttribute="leading" constant="5" id="Zwa-7E-0Sp"/>
                                                                                 <constraint firstItem="S4o-ak-9Ja" firstAttribute="leading" secondItem="t4W-tw-IpW" secondAttribute="leading" constant="5" id="cnI-Dk-lcx"/>
                                                                                 <constraint firstAttribute="trailing" secondItem="1iq-42-rvr" secondAttribute="trailing" constant="8" id="iF0-Il-UV1"/>
-                                                                                <constraint firstItem="LH8-yB-Xek" firstAttribute="leading" secondItem="t4W-tw-IpW" secondAttribute="leading" id="ieY-Kd-k03"/>
+                                                                                <constraint firstItem="LH8-yB-Xek" firstAttribute="leading" secondItem="t4W-tw-IpW" secondAttribute="leading" id="ieY-Kd-k03">
+                                                                                    <variation key="heightClass=regular-widthClass=compact" constant="4"/>
+                                                                                </constraint>
                                                                                 <constraint firstItem="1iq-42-rvr" firstAttribute="centerY" secondItem="t4W-tw-IpW" secondAttribute="centerY" id="zju-U3-ljV"/>
                                                                             </constraints>
                                                                             <variation key="default">
@@ -4659,12 +4661,16 @@ on news things</string>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5a8-ye-rOT">
                                                             <rect key="frame" x="0.0" y="0.0" width="580" height="40"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Di8-cG-cr2">
+                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Di8-cG-cr2">
                                                                     <rect key="frame" x="5" y="5" width="35" height="35"/>
                                                                     <animations/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="width" constant="35" id="BvK-6o-Qqx"/>
-                                                                        <constraint firstAttribute="height" constant="35" id="KX8-DW-yzh"/>
+                                                                        <constraint firstAttribute="width" constant="35" id="BvK-6o-Qqx">
+                                                                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                                                        </constraint>
+                                                                        <constraint firstAttribute="height" constant="35" id="KX8-DW-yzh">
+                                                                            <variation key="heightClass=regular-widthClass=compact" constant="40"/>
+                                                                        </constraint>
                                                                     </constraints>
                                                                 </imageView>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Post Type" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eWB-k5-kB9" userLabel="Post Type Label">
@@ -4691,7 +4697,9 @@ on news things</string>
                                                                 <constraint firstItem="eWB-k5-kB9" firstAttribute="leading" secondItem="Di8-cG-cr2" secondAttribute="trailing" constant="5" id="PNg-a9-WHh"/>
                                                                 <constraint firstItem="Di8-cG-cr2" firstAttribute="centerY" secondItem="5a8-ye-rOT" secondAttribute="centerY" id="YEP-BZ-zvO"/>
                                                                 <constraint firstItem="Nwp-lU-hV5" firstAttribute="centerY" secondItem="5a8-ye-rOT" secondAttribute="centerY" id="aue-hQ-3DX"/>
-                                                                <constraint firstItem="Di8-cG-cr2" firstAttribute="leading" secondItem="5a8-ye-rOT" secondAttribute="leading" constant="5" id="it7-Ib-eoV"/>
+                                                                <constraint firstItem="Di8-cG-cr2" firstAttribute="leading" secondItem="5a8-ye-rOT" secondAttribute="leading" constant="5" id="it7-Ib-eoV">
+                                                                    <variation key="heightClass=regular-widthClass=compact" constant="4"/>
+                                                                </constraint>
                                                                 <constraint firstAttribute="trailing" secondItem="Nwp-lU-hV5" secondAttribute="trailing" constant="10" id="ubt-7O-ei8"/>
                                                             </constraints>
                                                             <variation key="default">
@@ -6582,7 +6590,7 @@ on news things</string>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fL2-x3-CFV">
                                                     <rect key="frame" x="531" y="17" width="51" height="31"/>
                                                     <animations/>
-                                                    <color key="onTintColor" red="0.42352941176470588" green="0.41176470588235292" blue="0.59999999999999998" alpha="0.5" colorSpace="calibratedRGB"/>
+                                                    <color key="onTintColor" red="0.42352941179999998" green="0.41176470590000003" blue="0.59999999999999998" alpha="0.5" colorSpace="calibratedRGB"/>
                                                     <color key="thumbTintColor" red="0.42352941179999998" green="0.41176470590000003" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="toogleNotification:" destination="BAj-mD-Smg" eventType="valueChanged" id="5vu-1m-MIQ"/>
