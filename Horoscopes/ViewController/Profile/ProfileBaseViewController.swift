@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
+class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
     // MARK: - Outlet
     
@@ -112,7 +112,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         
-        tableView.estimatedRowHeight = 300
+        tableView.estimatedRowHeight = 190
         tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.infiniteScrollIndicatorStyle = .White
@@ -122,6 +122,7 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
         
         tableView.clipsToBounds = true
+        tableView.layer.cornerRadius = 4
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -251,7 +252,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFeed(completionHandler: { () -> Void in
                 
             })
-            tableView.layer.cornerRadius = 0
         }
     }
     
@@ -263,7 +263,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getUsersFollowing({ () -> Void in
                 
             })
-            tableView.layer.cornerRadius = 4
         }
     }
     
@@ -275,7 +274,6 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
             getFollowers({ () -> Void in
                 
             })
-            tableView.layer.cornerRadius = 4
         }
     }
     
@@ -343,7 +341,8 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
                 } else {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let posts = result!.0
-                        self.noPost = posts.count == 0
+//                        self.noPost = posts.count == 0
+                        self.noPost = true
                         self.userPosts = posts
                         self.tableView.reloadData()
                     })
@@ -382,9 +381,17 @@ class ProfileBaseViewController: UIViewController, UITableViewDataSource, UITabl
     // MARK: - Table view data source
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.scrollEnabled = true
         switch currentScope {
         case .Post:
-            return userPosts.count
+            if noPost {
+                tableView.scrollEnabled = false
+                changeToWhiteTableViewLayout()
+            } else {
+                changeToClearTableViewLayout()
+            }
+//            return userPosts.count
+            return 0
         case .Following:
             return followingUsers.count
         case .Followers:
