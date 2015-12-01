@@ -341,8 +341,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                 } else {
                     dispatch_async(dispatch_get_main_queue(), { () -> Void in
                         let posts = result!.0
-//                        self.noPost = posts.count == 0
-                        self.noPost = true
+                        self.noPost = posts.count == 0
                         self.userPosts = posts
                         self.tableView.reloadData()
                     })
@@ -390,8 +389,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             } else {
                 changeToClearTableViewLayout()
             }
-//            return userPosts.count
-            return 0
+            return userPosts.count
         case .Following:
             return followingUsers.count
         case .Followers:
