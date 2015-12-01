@@ -61,8 +61,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                         self.isLastPostPage = isLastPage
                         self.userPosts += posts
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.finishInfiniteScroll()
                             self.tableView.reloadData()
+                            self.tableView.finishInfiniteScroll()
                         })
                     }
                 }
