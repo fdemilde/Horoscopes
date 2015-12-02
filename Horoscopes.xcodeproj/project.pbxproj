@@ -191,6 +191,7 @@
 		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
+		F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */; };
 		F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -437,6 +438,7 @@
 		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
+		F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateNewsfeedViewController.swift; sourceTree = "<group>"; };
 		F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -701,6 +703,7 @@
 				70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */,
 				F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */,
 				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
+				F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -1314,6 +1317,7 @@
 				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				F42099281BCE030300BF1736 /* CacheManager.swift in Sources */,
+				F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */,
 				704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,

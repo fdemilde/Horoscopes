@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
+class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewDelegate {
     
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var profileImage: UIImageView!
@@ -19,13 +19,15 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
     @IBOutlet weak var postTypeLabel: UILabel!
     @IBOutlet weak var timeAgoLabel: UILabel!
     @IBOutlet weak var horoscopeSignView: UIView!
-    
     @IBOutlet weak var textView: CCHLinkTextView!
-    
     @IBOutlet weak var followButton: UIButton!
-    
     @IBOutlet weak var headerView: UIView!
-    var parentViewController : DiscoverViewController!
+    @IBOutlet weak var likeNumberLabel: UILabel!
+    @IBOutlet weak var likeButton: UIButton!
+    
+    
+    
+    var parentViewController : UIViewController!
     let profileImageSize = 60 as CGFloat
     
     var userPost : UserPost!
@@ -131,8 +133,79 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate {
         }
     }
     
+    func configureCellForNewsfeed() {
+        self.likeNumberLabel.text = "\(userPost.hearts) Likes  \(userPost.shares) Shares"
+        if NSUserDefaults.standardUserDefaults().boolForKey(String(userPost.post_id)) {
+            self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        } else {
+            self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+        }
+        
+        
+        let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: "tapLikeLable:")
+        self.likeNumberLabel.userInteractionEnabled = true
+        self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
+    }
+    
     // MARK: Button action
     
+    @IBAction func tapLikeButton(sender: UIButton) {
+        if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            return
+        }
+        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        self.likeButton.userInteractionEnabled = false
+        self.likeNumberLabel.text = "\(++userPost.hearts) Likes  \(userPost.shares) Shares"
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(userPost.uid, postId: userPost.post_id, type: SEND_HEART_USER_POST_TYPE)
+    }
+    
+    @IBAction func tapShareButton(sender: UIButton) {
+        let name = userPost.user?.name
+        let postContent = userPost.message
+        let sharingText = String(format: "%@ \n %@", name!, postContent)
+        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+        controller.populateNewsfeedShareData(userPost.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: userPost.permalink)
+        Utilities.presentShareFormSheetController(self.parentViewController, shareViewController: controller)
+    }
+    
+    func tapLikeLable(sender: UITapGestureRecognizer){
+        if sender.state == .Ended {
+            
+            if SocialManager.sharedInstance.isLoggedInFacebook() {
+                let postId = self.userPost.post_id
+                SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
+                    if(error != ""){
+                        Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "\(error)", error: nil)
+                    } else {
+                        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                        let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
+                        viewController.postId = postId
+                        viewController.userProfile = result!.0
+                        viewController.parentVC = self.parentViewController
+                        self.displayViewController(viewController)
+                    }
+                }
+            } else {
+                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "You have to login to Facebook to see post like!", error: nil)
+            }
+            
+        }
+    }
+    
+    // MARK: display View controller
+    func displayViewController(viewController : UIViewController){
+        dispatch_async(dispatch_get_main_queue()) {
+            let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
+            let formSheet = MZFormSheetController(viewController: viewController)
+            formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+            formSheet.shouldDismissOnBackgroundViewTap = true
+            formSheet.portraitTopInset = paddingTop;
+            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
+            self.parentViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        }
+    }
     // MARK: link textview Delegate
     func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
         let urlString = value as! String
