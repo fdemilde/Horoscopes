@@ -100,7 +100,10 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
         XAppDelegate.dataStore.newsfeedFollowing = newData
         self.tableView.endUpdates()
-        
+        if let indexes = tableView.indexPathsForVisibleRows {
+            let targetRow = indexes[indexes.count - 1].row
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
         tableView.finishInfiniteScroll()
         
     }
