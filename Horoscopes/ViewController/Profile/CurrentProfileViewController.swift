@@ -190,6 +190,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func getUsersFollowing(completionHandler: () -> Void) {
         SocialManager.sharedInstance.getProfilesOfUsersFollowing { (result, error) -> Void in
+            Utilities.hideHUD()
             if let error = error {
                 Utilities.showError(error, viewController: self)
             } else {
@@ -208,6 +209,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func getFollowers(completionHandler: () -> Void) {
         SocialManager.sharedInstance.getProfilesOfFollowers { (result, error) -> Void in
+            Utilities.hideHUD()
             if let error = error {
                 completionHandler()
                 Utilities.showError(error, viewController: self)

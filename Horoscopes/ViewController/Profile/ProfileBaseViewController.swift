@@ -352,10 +352,16 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func getUsersFollowing(completionHandler: () -> Void) {
+        if followingUsers.count != numberOfUsersFollowing {
+            Utilities.showHUD()
+        }
         preconditionFailure("This method must be overridden")
     }
     
     func getFollowers(completionHandler: () -> Void) {
+        if followers.count != numberOfFollowers {
+            Utilities.showHUD()
+        }
         preconditionFailure("This method must be overridden")
     }
     

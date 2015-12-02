@@ -20,9 +20,9 @@ PODS:
   - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - AsyncDisplayKit (1.9.1):
-    - AsyncDisplayKit/ASDealloc2MainObject (= 1.9.1)
-  - AsyncDisplayKit/ASDealloc2MainObject (1.9.1)
+  - AsyncDisplayKit (1.9.2):
+    - AsyncDisplayKit/ASDealloc2MainObject (= 1.9.2)
+  - AsyncDisplayKit/ASDealloc2MainObject (1.9.2)
   - Bolts (1.5.0):
     - Bolts/AppLinks (= 1.5.0)
     - Bolts/Tasks (= 1.5.0)
@@ -83,7 +83,7 @@ DEPENDENCIES:
 
 SPEC CHECKSUMS:
   AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
-  AsyncDisplayKit: 7bf2b3fa444284f80fd0c1e36655e324549f79d2
+  AsyncDisplayKit: 181097819b528d9337983acc5040df6687f06369
   Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   CCHLinkTextView: bfe688e0b7d34088375a466524158765832f7657
   CustomIOSAlertView: 94d2401e34fcfb0ac0134679d6947f5e251b0446
