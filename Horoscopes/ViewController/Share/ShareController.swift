@@ -24,7 +24,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
-        composerVC.setInitialText(text)
+        composerVC.setInitialText(url)
         
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
@@ -45,7 +45,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
-        composerVC.setInitialText(text)
+        composerVC.setInitialText(url)
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
             composerVC.addImage(ShareController.getImageFromURL(pictureURL))
@@ -56,11 +56,11 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // Messages
     
-    func shareMessage(parentVC : UIViewController, text : String){
+    func shareMessage(parentVC : UIViewController, text : String, shareUrl : String){
         let messageComposeVC = MFMessageComposeViewController()
         messageComposeVC.messageComposeDelegate = self  //  Make sure to set this property to self, so that the controller can be dismissed!
         //        messageComposeVC.recipients
-        messageComposeVC.body = text
+        messageComposeVC.body = shareUrl
         
         // Present the configured MFMessageComposeViewController instance
         // Note that the dismissal of the VC will be handled by the messageComposer instance,
@@ -75,11 +75,11 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // Mail
     
-    func shareMail(parentVC : UIViewController, text : String){
+    func shareMail(parentVC : UIViewController, text : String, shareUrl : String){
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self  //  Make sure to set this property to self, so that the controller can be dismissed!
         mailComposeVC.setSubject("My Horoscope Today")
-        mailComposeVC.setMessageBody(text, isHTML: false)
+        mailComposeVC.setMessageBody(shareUrl, isHTML: false)
         
         // Present the configured MFMessageComposeViewController instance
         // Note that the dismissal of the VC will be handled by the messageComposer instance,

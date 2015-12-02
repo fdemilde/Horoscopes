@@ -245,23 +245,23 @@ class ShareViewController : UIViewController {
     
     func handleMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        shareController.shareMessage(self,text: self.getTextIncludingTitle())
+        shareController.shareMessage(self,text: self.getTextIncludingTitle(), shareUrl: self.shareUrl)
     }
     
     func handleEmailTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        shareController.shareMail(self,text: self.getTextIncludingTitle())
+        shareController.shareMail(self,text: self.getTextIncludingTitle(),shareUrl: self.shareUrl)
     }
     
     func handleFBMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
         let title = self.getTitle()
-        shareController.shareFbMessage(title, text: sharingText, url: self.self.shareUrl, pictureURL: pictureURL)
+        shareController.shareFbMessage(title, text: sharingText, url: self.shareUrl, pictureURL: pictureURL)
     }
     
     func handleWhatsappTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
-        shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.self.shareUrl)
+        shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.shareUrl)
     }
     
     // MARK: checkAvailability

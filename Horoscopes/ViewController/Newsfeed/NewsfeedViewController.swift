@@ -25,7 +25,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     var postButtonsView: PostButtonsView!
     
 //    var userPostArray = [UserPost]()
-    var tabType = NewsfeedTabType.Following
+//    var tabType = NewsfeedTabType.Following
     var currentSelectedSign = 0 // 0 is all
     var currentPage = 0
     var overlay : UIView!
@@ -49,7 +49,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
-//        self.resetTapButtonColor()
         self.setupInfiniteScroll()
         tableHeaderView = NewsfeedTableHeaderView(frame: CGRect(x: tableView.frame.origin.x, y: tableView.frame.origin.y, width: tableView.frame.width, height: 40))
         tableHeaderView.setupDate(NSDate())
@@ -60,20 +59,9 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         super.viewWillAppear(animated)
         // remove all observer first
         NSNotificationCenter.defaultCenter().removeObserver(self)
-//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateFollowingStatusFinished:", name: NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED, object: nil)
-        if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
-            Utilities.getImageFromUrlString(XAppDelegate.currentUser.imgURL, completionHandler: { (image) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-//                    self.tableHeaderView.profileImageView.image = image
-                })
-            })
-        } else {
-//            self.tableHeaderView.profileImageView.image = UIImage(named: "default_avatar")
-        }
-
-        if(tabType == NewsfeedTabType.Following && XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
+        if(XAppDelegate.dataStore.newsfeedFollowing.count == 0){ // only check if no data for following yet
             tableView.reloadData()
             if(XAppDelegate.socialManager.isLoggedInFacebook()){ // user already logged in facebook
                 dispatch_async(dispatch_get_main_queue(),{
@@ -82,8 +70,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             }
             
         }
-        
-        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -173,7 +159,13 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.tableView.finishInfiniteScroll()
             } else {
                 let newDataArray = notif.object as! [UserPost]
-                self.insertRowsAtBottom(newDataArray)
+                
+                XAppDelegate.dataStore.newsfeedFollowing = newDataArray
+//                let indexPath = NSIndexPath(forRow: XAppDelegate.dataStore.newsfeedFollowing.count - 1, inSection: 0)
+//                self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: UITableViewRowAnimation.Fade)
+//                [self.tableView insertRowsAtIndexPaths:@[[NSIndexPath indexPathForRow:self->testArray.count - 1 inSection:0]] withRowAnimation:UITableViewRowAnimationLeft];
+                self.tableView.reloadData()
+                self.tableView.finishInfiniteScroll()
             }
         })
     }
@@ -188,61 +180,11 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func handleRefresh(refreshControl: UIRefreshControl) {
         self.currentPage = 0
-        if(self.tabType == NewsfeedTabType.Global){
-            XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false, isRefreshing : true)
-        } else {
-            XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
-        }
+        XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         
-        tableView.reloadData()
+//        tableView.reloadData()
         refreshControl.endRefreshing()
-    }
-    
-    @IBAction func globalBtnTapped(sender: AnyObject) {
-//        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
-//        self.scrollToTop()
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        currentPage = 0
-        tableView.finishInfiniteScroll()
-        XAppDelegate.dataStore.resetPage()
-        if(self.tabType != NewsfeedTabType.Global){
-            self.tabType = NewsfeedTabType.Global
-            tableView.reloadData()
-        }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
-    }
-    
-    @IBAction func followingButtonTapped(sender: AnyObject) {
-//        oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
-//        self.scrollToTop()
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED,object: nil)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-        // when button is tapped, we load data again
-        currentPage = 0
-        tableView.finishInfiniteScroll()
-        XAppDelegate.dataStore.resetPage()
-        if(self.tabType != NewsfeedTabType.Following){
-            self.tabType = NewsfeedTabType.Following
-            if(XAppDelegate.socialManager.isLoggedInFacebook()){
-                tableView.reloadData()
-                
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
-            } else {
-//                userPostArray.removeAll(keepCapacity: false)
-                self.tableView.reloadData()
-            }
-        } else {
-            if(XAppDelegate.socialManager.isLoggedInFacebook()){
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-                XAppDelegate.socialManager.getFollowingNewsfeed(0, isAddingData: false)
-            } else {
-                tableView.reloadData()
-            }
-        }
     }
     
     // MARK: - Table view data source and delegate
@@ -254,21 +196,19 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
             // if Following tab and not logged in, show log in view
-            if(self.tabType == NewsfeedTabType.Following){
-                let bg = self.createEmptyTableHeaderBackground()
-                let facebookButton = UIButton()
-                facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
-                facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
-                facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
-                bg.addSubview(facebookButton)
-                let label = UILabel()
-                label.text = "Login Facebook to follow your friends"
-                label.sizeToFit()
-                label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
-                bg.addSubview(label)
-                tableView.tableHeaderView = bg
-                return 1
-            }
+            let bg = self.createEmptyTableHeaderBackground()
+            let facebookButton = UIButton()
+            facebookButton.frame = CGRectMake((tableView.bounds.width - FB_BUTTON_SIZE)/2, (tableView.bounds.height - FB_BUTTON_SIZE)/2 - 40, FB_BUTTON_SIZE, FB_BUTTON_SIZE)
+            facebookButton.addTarget(self, action: "facebookLogin:", forControlEvents: UIControlEvents.TouchUpInside)
+            facebookButton.setImage(UIImage(named: "fb_login_icon"), forState: UIControlState.Normal)
+            bg.addSubview(facebookButton)
+            let label = UILabel()
+            label.text = "Login Facebook to follow your friends"
+            label.sizeToFit()
+            label.frame = CGRectMake((tableView.bounds.width - label.frame.size.width)/2, facebookButton.frame.origin.y + facebookButton.frame.height + 25, label.frame.size.width, label.frame.size.height) // 15 is padding b/w button and label
+            bg.addSubview(label)
+            tableView.tableHeaderView = bg
+            return 1
         }
         
         if(getFeedArray().count == 0){
@@ -344,9 +284,14 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: Helpers
     
     func setupInfiniteScroll(){
-        tableView.infiniteScrollIndicatorStyle = .White
+        // Set custom indicator
+        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
+        
+        // Set custom indicator margin
+        tableView.infiniteScrollIndicatorMargin = 40
+        
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            if(!XAppDelegate.socialManager.isLoggedInFacebook() && self.tabType == NewsfeedTabType.Following){
+            if(!XAppDelegate.socialManager.isLoggedInFacebook()){
                 self.tableView.finishInfiniteScroll()
                 return
             }
@@ -356,14 +301,7 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 return
             } // last page dont need to request more
             self.currentPage++
-            
-            if(self.tabType == NewsfeedTabType.Following){
-//                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedFollowing
-                XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
-            } else {
-//                self.oldNewsfeedArray = XAppDelegate.dataStore.newsfeedGlobal
-                XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
-            }
+            XAppDelegate.socialManager.getFollowingNewsfeed(self.currentPage, isAddingData: true)
         }
     }
     
@@ -433,52 +371,19 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func getTotalRowsInTable() -> Int{
         var result = 0 // default 1 row for "What's on your mind" cell
-        if(tabType == NewsfeedTabType.Global){
-             result += XAppDelegate.dataStore.newsfeedGlobal.count
-        } else {
-             result += XAppDelegate.dataStore.newsfeedFollowing.count
-        }
+        result += XAppDelegate.dataStore.newsfeedFollowing.count
         return result
     }
     
     func getFeedDataForRow(row : Int) -> UserPost {
-        if(tabType == NewsfeedTabType.Global){
-            return XAppDelegate.dataStore.newsfeedGlobal[row]
-        } else {
-            return XAppDelegate.dataStore.newsfeedFollowing[row]
-        }
+        return XAppDelegate.dataStore.newsfeedFollowing[row]
     }
     
     func getFeedArray() -> [UserPost]{
-        if(tabType == NewsfeedTabType.Global){
-            return XAppDelegate.dataStore.newsfeedGlobal
-        } else {
-            return XAppDelegate.dataStore.newsfeedFollowing
-        }
+        return XAppDelegate.dataStore.newsfeedFollowing
     }
     
-    // MARK: infinite scrolling support 
-    func insertRowsAtBottom(newData : [UserPost]){
-        self.tableView.beginUpdates()
-        let deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
-            let p1 = post1 as! UserPost
-            let p2 = post2 as! UserPost
-            return (p1.post_id == p2.post_id);
-        }
-        
-        let delta = deltaCalculator.deltaFromOldArray(self.getFeedArray(), toNewArray:newData)
-//        oldNewsfeedArray = newData
-        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
-        if(tabType == NewsfeedTabType.Following){
-            XAppDelegate.dataStore.newsfeedFollowing = newData
-        } else {
-            XAppDelegate.dataStore.newsfeedGlobal = newData
-        }
-        self.tableView.endUpdates()
-        
-        tableView.finishInfiniteScroll()
-        
-    }
+    // MARK: infinite scrolling support
     
     func tableReloadWithAnimation(){
         self.tableView.dataSource?.numberOfSectionsInTableView!(self.tableView)

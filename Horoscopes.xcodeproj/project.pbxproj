@@ -37,6 +37,7 @@
 		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
 		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; };
 		F42099281BCE030300BF1736 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099271BCE030300BF1736 /* CacheManager.swift */; };
+		F4237A611C0C56E20070F3D8 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4237A601C0C56E20070F3D8 /* CustomInfiniteIndicator.swift */; };
 		F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E288F1B37C8ED00466CAA /* ShareViewController.swift */; };
 		F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E28911B37CA8F00466CAA /* ShareButton.swift */; };
 		F42E28A71B37D14100466CAA /* share_facebook.png in Resources */ = {isa = PBXBuildFile; fileRef = F42E28971B37D14100466CAA /* share_facebook.png */; };
@@ -190,6 +191,7 @@
 		F4DDF6AD1B58C1CF00C5F57E /* choose_sign_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */; };
 		F4DDF6AE1B58C1CF00C5F57E /* choose_sign_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */; };
 		F4DDF6AF1B58C1CF00C5F57E /* choose_sign_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */; };
+		F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */; };
 		F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -237,6 +239,7 @@
 		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
 		F42099251BCDFE1C00BF1736 /* CacheEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheEntry.swift; sourceTree = "<group>"; };
 		F42099271BCE030300BF1736 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
+		F4237A601C0C56E20070F3D8 /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
 		F42E288F1B37C8ED00466CAA /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
 		F42E28911B37CA8F00466CAA /* ShareButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareButton.swift; sourceTree = "<group>"; };
 		F42E28971B37D14100466CAA /* share_facebook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = share_facebook.png; sourceTree = "<group>"; };
@@ -435,6 +438,7 @@
 		F4DDF6A81B58C1CF00C5F57E /* choose_sign_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = choose_sign_bg.png; sourceTree = "<group>"; };
 		F4DDF6A91B58C1CF00C5F57E /* choose_sign_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@2x.png"; sourceTree = "<group>"; };
 		F4DDF6AA1B58C1CF00C5F57E /* choose_sign_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg@3x.png"; sourceTree = "<group>"; };
+		F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateNewsfeedViewController.swift; sourceTree = "<group>"; };
 		F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -699,6 +703,7 @@
 				70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */,
 				F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */,
 				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
+				F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */,
 			);
 			path = Newsfeed;
 			sourceTree = "<group>";
@@ -723,6 +728,7 @@
 				F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */,
 				F4C44F9D1B8EC58000910E56 /* UIScrollView+InfiniteScroll.h */,
 				F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */,
+				F4237A601C0C56E20070F3D8 /* CustomInfiniteIndicator.swift */,
 			);
 			path = OpenSources;
 			sourceTree = "<group>";
@@ -1302,6 +1308,7 @@
 				705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */,
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
+				F4237A611C0C56E20070F3D8 /* CustomInfiniteIndicator.swift in Sources */,
 				7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
@@ -1310,6 +1317,7 @@
 				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F46EF8E61B5651BA00625A34 /* MyDatePickerViewController.swift in Sources */,
 				F42099281BCE030300BF1736 /* CacheManager.swift in Sources */,
+				F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */,
 				704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,

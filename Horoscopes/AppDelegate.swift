@@ -388,37 +388,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
             print("Route == post with param dict = \(param)")
+            dispatch_async(dispatch_get_main_queue(),{
+                self.gotoPost(param)
+            })
         })
         
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
-                Utilities.popCurrentViewControllerToTop()
-                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
-                    let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
-                }
-                if let postId = param["post_id"] as? String{
-                    Utilities.showHUD()
-                    XAppDelegate.socialManager.getPost(postId, ignoreCache: true, completionHandler: { (result, error) -> Void in
-                        dispatch_async(dispatch_get_main_queue(),{
-                        Utilities.hideHUD()
-                            if let _ = error {
-                                
-                            } else {
-                                let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                                if let result = result {
-                                    for post : UserPost in result {
-                                        let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                                        controller.userPost = post
-                                        if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
-                                            notificationViewController.navigationController?.pushViewController(controller, animated: true)
-                                        }
-                                    }
-                                }
-                            }
-                        })
-                    })
-                }
+                self.gotoPost(param)
             })
         })
         
@@ -441,6 +418,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             })
         }
+    }
+    
+    func gotoPost(param : Dictionary<NSObject, AnyObject>){
+        dispatch_async(dispatch_get_main_queue(),{
+            Utilities.popCurrentViewControllerToTop()
+            if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
+                rootVC?.selectedIndex = 3
+            }
+            if let postId = param["post_id"] as? String{
+                Utilities.showHUD()
+                XAppDelegate.socialManager.getPost(postId, ignoreCache: true, completionHandler: { (result, error) -> Void in
+                    dispatch_async(dispatch_get_main_queue(),{
+                        Utilities.hideHUD()
+                        if let _ = error {
+                            
+                        } else {
+                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                            if let result = result {
+                                for post : UserPost in result {
+                                    let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                                    controller.userPost = post
+                                    if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
+                                        notificationViewController.navigationController?.pushViewController(controller, animated: true)
+                                    }
+                                }
+                            }
+                        }
+                    })
+                })
+            }
+        })
     }
 }
 
