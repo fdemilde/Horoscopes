@@ -116,6 +116,10 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
         XAppDelegate.dataStore.newsfeedGlobal = newData
         self.tableView.endUpdates()
+        if let indexes = tableView.indexPathsForVisibleRows {
+            let targetRow = indexes[indexes.count - 1].row
+            tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+        }
         
         tableView.finishInfiniteScroll()
         
@@ -140,8 +144,8 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     
     func followButtonTapped(sender: UIButton) {
         if let user = XAppDelegate.dataStore.newsfeedGlobal[sender.tag].user {
+            Utilities.showHUD()
             if isFollowed {
-                Utilities.showHUD()
                 SocialManager.sharedInstance.unfollow(user, completionHandler: { (error) -> Void in
                     if let error = error {
                         Utilities.hideHUD()
@@ -154,7 +158,6 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
                     }
                 })
             } else {
-                Utilities.showHUD()
                 SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
                     if let error = error {
                         Utilities.hideHUD()
