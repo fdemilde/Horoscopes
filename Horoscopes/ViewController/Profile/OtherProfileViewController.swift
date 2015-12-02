@@ -15,8 +15,6 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     @IBOutlet weak var followButtonLeadingSpace: NSLayoutConstraint!
     @IBOutlet weak var newsfeedFollowButton: UIButton!
     
-    @IBOutlet weak var bannerView: GADBannerView!
-    
 //    @IBOutlet weak var searchBar: UISearchBar!
     
     // MARK: - Property
@@ -34,8 +32,8 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                         self.isLastFollowingPage = result!.1
                         self.followingUsers += result!.0
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.finishInfiniteScroll()
                             self.tableView.reloadData()
+                            self.tableView.finishInfiniteScroll()
                         })
                     }
                 })
@@ -52,8 +50,8 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                         self.followers += result!.0
                         self.isLastFollowersPage = result!.1
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.finishInfiniteScroll()
                             self.tableView.reloadData()
+                            self.tableView.finishInfiniteScroll()
                         })
                     }
                 })
@@ -89,9 +87,6 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                     }
                 }
             })
-            bannerView.adUnitID = ADMOD_ID
-            bannerView.rootViewController = self
-            bannerView.loadRequest(GADRequest())
             noPostText = "This person has not posted anything."
             noUsersFollowingText = "This person has not followed anyone."
             noFollowersText = "This person does not have any follower."

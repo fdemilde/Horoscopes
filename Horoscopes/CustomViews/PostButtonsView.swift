@@ -18,11 +18,19 @@ class PostButtonsView: UIView {
     var feelLabel: UILabel!
     var fortuneLabel: UILabel!
     var mindLabel: UILabel!
-    let POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_story")!.size
+    var POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_story")!.size
     var hostViewController: UIViewController!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
+            let size = UIScreen.mainScreen().bounds.size
+            if size.height == 480 {
+                POST_BUTTON_SIZE.width = POST_BUTTON_SIZE.width * 3 / 4
+                POST_BUTTON_SIZE.height = POST_BUTTON_SIZE.height * 3 / 4
+            }
+        }
+        
         storyButton = UIButton()
         storyButton.setImage(UIImage(named: "newsfeed_post_story"), forState: .Normal)
         storyButton.addTarget(self, action: "storyButtonTapped:", forControlEvents: .TouchUpInside)
@@ -79,10 +87,21 @@ class PostButtonsView: UIView {
         label.textAlignment = .Center
         label.numberOfLines = 0
         label.frame.size.width = POST_BUTTON_SIZE.width
-        if #available(iOS 8.2, *) {
-            label.font = UIFont.systemFontOfSize(14, weight: UIFontWeightLight)
-        } else {
-            label.font = UIFont.systemFontOfSize(14)
+        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
+            let size = UIScreen.mainScreen().bounds.size
+            if size.height == 480 {
+                if #available(iOS 8.2, *) {
+                    label.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+                } else {
+                    label.font = UIFont.systemFontOfSize(11)
+                }
+            } else {
+                if #available(iOS 8.2, *) {
+                    label.font = UIFont.systemFontOfSize(14, weight: UIFontWeightLight)
+                } else {
+                    label.font = UIFont.systemFontOfSize(14)
+                }
+            }
         }
         addSubview(label)
         label.sizeToFit()
@@ -107,13 +126,7 @@ class PostButtonsView: UIView {
         let colNumber = buttonIndex % 2
         let paddingWidth = (screenWidth - (POST_BUTTON_SIZE.width * 2)) / 3
         let buttonPositionX = paddingWidth * CGFloat(colNumber + 1) + (CGFloat(colNumber) * POST_BUTTON_SIZE.width)
-        var paddingHeight = (screenHeight - (POST_BUTTON_SIZE.height * 2)) / 3
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
-            let size = UIScreen.mainScreen().bounds.size
-            if size.height == 480 {
-                paddingHeight -= 20
-            }
-        }
+        let paddingHeight = (screenHeight - (POST_BUTTON_SIZE.height * 2)) / 3
         let buttonPositionY = paddingHeight * CGFloat(rowNumber + 1) + (CGFloat(rowNumber) * POST_BUTTON_SIZE.height)
         return CGRectMake(buttonPositionX, buttonPositionY, POST_BUTTON_SIZE.width, POST_BUTTON_SIZE.height)
     }

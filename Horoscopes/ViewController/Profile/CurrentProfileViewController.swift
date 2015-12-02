@@ -10,7 +10,6 @@ import UIKit
 
 class CurrentProfileViewController: ProfileBaseViewController {
     
-    @IBOutlet weak var bannerView: GADBannerView!
     @IBOutlet weak var settingsButtonLeadingSpace: NSLayoutConstraint!
     // MARK: - Property
     
@@ -49,9 +48,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
             }
             self.currentPostPage++
         }
-        bannerView.adUnitID = ADMOD_ID
-        bannerView.rootViewController = self
-        bannerView.loadRequest(GADRequest())
         noPostText = "You have not posted anything. Start posting something!"
         noUsersFollowingText = "You have not followed anyone. Start follow someone!"
         noFollowersText = "You do not have any follower."
@@ -269,10 +265,8 @@ class CurrentProfileViewController: ProfileBaseViewController {
         tableView.backgroundView = nil
         if currentScope == .Post {
             if noPost {
-                changeToWhiteTableViewLayout()
                 tableView.backgroundView = noPostView
             } else {
-                changeToClearTableViewLayout()
             }
         } else if currentScope == .Following && noFollowingUser {
             return friends.count

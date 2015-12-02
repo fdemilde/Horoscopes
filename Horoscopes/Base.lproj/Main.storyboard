@@ -4887,17 +4887,23 @@ on news things</string>
                             <constraint firstItem="eZb-OQ-BBl" firstAttribute="top" secondItem="T2c-dE-lZJ" secondAttribute="bottom" id="H1P-YM-ooh"/>
                             <constraint firstItem="T2c-dE-lZJ" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" id="KWY-gu-rBe"/>
                             <constraint firstItem="JyZ-gJ-LGo" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" constant="10" id="PPK-YP-XSP"/>
+                            <constraint firstItem="JyZ-gJ-LGo" firstAttribute="top" secondItem="geT-hc-lAU" secondAttribute="bottom" constant="10" id="ate-8N-Xi4"/>
                             <constraint firstItem="geT-hc-lAU" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" id="kOn-I8-3Om"/>
                             <constraint firstAttribute="trailing" secondItem="geT-hc-lAU" secondAttribute="trailing" id="lLP-G9-gtz"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="AJm-Y6-xsO"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="bbJ-XZ-AvS"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="EnG-Vd-L94" id="KFj-x3-ilX"/>
-                        <outlet property="bannerView" destination="geT-hc-lAU" id="eMr-Wr-BdT"/>
                         <outlet property="followersButton" destination="7Yk-Eh-gSg" id="79h-xS-1Ed"/>
                         <outlet property="followingButton" destination="VZL-Fc-pvy" id="xcC-lE-FW8"/>
+                        <outlet property="headerView" destination="geT-hc-lAU" id="x8D-wn-Te4"/>
                         <outlet property="horoscopeSignImageView" destination="UTH-vK-r9O" id="IJd-1T-F81"/>
                         <outlet property="horoscopeSignLabel" destination="Xvj-wZ-a8O" id="yBc-nP-pKW"/>
                         <outlet property="horoscopeSignView" destination="EmC-F0-wid" id="xQM-Bb-Hpb"/>
@@ -6895,16 +6901,16 @@ on news things</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="q0w-fm-CYw" customClass="GADBannerView">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tps-Jb-lKH" customClass="GADBannerView">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
                                 <animations/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="nuA-Ii-jDh"/>
+                                    <constraint firstAttribute="height" constant="50" id="L8g-rv-kY8"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fh-L8-WtP" userLabel="Profile View">
-                                <rect key="frame" x="10" y="10" width="580" height="120"/>
+                                <rect key="frame" x="10" y="60" width="580" height="120"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="newsfeed_header_background" translatesAutoresizingMaskIntoConstraints="NO" id="8ov-31-U71">
                                         <rect key="frame" x="0.0" y="0.0" width="580" height="120"/>
@@ -7080,7 +7086,7 @@ on news things</string>
                                 </variation>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="308" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="ylX-64-nXL">
-                                <rect key="frame" x="0.0" y="130" width="600" height="470"/>
+                                <rect key="frame" x="0.0" y="180" width="600" height="420"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -7306,39 +7312,23 @@ on news things</string>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="q0w-fm-CYw" firstAttribute="top" secondItem="GhV-GK-Pz2" secondAttribute="bottom" id="3o1-da-KLj"/>
-                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="GhV-GK-Pz2" secondAttribute="bottom" constant="10" id="HbV-kY-ZtS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Tps-Jb-lKH" secondAttribute="trailing" id="BtF-8x-cNC"/>
+                            <constraint firstAttribute="trailing" secondItem="Tps-Jb-lKH" secondAttribute="trailing" id="EY8-DI-Hyt"/>
+                            <constraint firstItem="Tps-Jb-lKH" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leadingMargin" id="L0J-rF-jzy"/>
                             <constraint firstItem="nXH-b6-zfT" firstAttribute="top" secondItem="ylX-64-nXL" secondAttribute="bottom" id="PS0-xd-Wih"/>
+                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="Tps-Jb-lKH" secondAttribute="bottom" constant="10" id="Smc-Cq-tra"/>
                             <constraint firstAttribute="trailing" secondItem="7Fh-L8-WtP" secondAttribute="trailing" constant="10" id="UJ5-ga-viS"/>
+                            <constraint firstItem="Tps-Jb-lKH" firstAttribute="top" secondItem="GhV-GK-Pz2" secondAttribute="bottom" id="W0Y-xk-kAS"/>
                             <constraint firstItem="ylX-64-nXL" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" id="bbi-JB-VXJ"/>
+                            <constraint firstItem="Tps-Jb-lKH" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" id="bxm-x5-lpn"/>
                             <constraint firstItem="7Fh-L8-WtP" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" constant="10" id="cf2-3Z-IF7"/>
-                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="q0w-fm-CYw" secondAttribute="bottom" constant="10" id="fgO-AB-F1D"/>
                             <constraint firstAttribute="trailing" secondItem="ylX-64-nXL" secondAttribute="trailing" id="r6o-Mg-PPc"/>
-                            <constraint firstAttribute="trailing" secondItem="q0w-fm-CYw" secondAttribute="trailing" id="wYi-ID-axO"/>
                             <constraint firstItem="ylX-64-nXL" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="bottom" id="xbI-1V-cPb"/>
-                            <constraint firstItem="q0w-fm-CYw" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leading" id="y0n-ZJ-bEN"/>
                         </constraints>
                         <variation key="default">
-                            <mask key="subviews">
-                                <exclude reference="q0w-fm-CYw"/>
-                            </mask>
                             <mask key="constraints">
-                                <exclude reference="3o1-da-KLj"/>
-                                <exclude reference="wYi-ID-axO"/>
-                                <exclude reference="y0n-ZJ-bEN"/>
-                                <exclude reference="fgO-AB-F1D"/>
-                            </mask>
-                        </variation>
-                        <variation key="heightClass=regular-widthClass=compact">
-                            <mask key="subviews">
-                                <include reference="q0w-fm-CYw"/>
-                            </mask>
-                            <mask key="constraints">
-                                <include reference="3o1-da-KLj"/>
-                                <include reference="wYi-ID-axO"/>
-                                <include reference="y0n-ZJ-bEN"/>
-                                <exclude reference="HbV-kY-ZtS"/>
-                                <include reference="fgO-AB-F1D"/>
+                                <exclude reference="BtF-8x-cNC"/>
+                                <exclude reference="L0J-rF-jzy"/>
                             </mask>
                         </variation>
                     </view>
@@ -7346,10 +7336,10 @@ on news things</string>
                     <nil key="simulatedStatusBarMetrics"/>
                     <connections>
                         <outlet property="avatarImageView" destination="7d4-LD-wei" id="qya-Ej-1bU"/>
-                        <outlet property="bannerView" destination="q0w-fm-CYw" id="9Rd-UF-lOY"/>
                         <outlet property="followButtonLeadingSpace" destination="twH-nf-NIL" id="tpG-as-P6y"/>
                         <outlet property="followersButton" destination="JPb-ao-9uo" id="KUo-x1-fVT"/>
                         <outlet property="followingButton" destination="Dqg-sL-z4e" id="C1g-J6-B0J"/>
+                        <outlet property="headerView" destination="Tps-Jb-lKH" id="OhC-O1-ddJ"/>
                         <outlet property="horoscopeSignImageView" destination="fcg-Mq-QKJ" id="eGE-hd-tSL"/>
                         <outlet property="horoscopeSignLabel" destination="NfV-IG-MyF" id="XbL-EI-ctZ"/>
                         <outlet property="horoscopeSignView" destination="VoQ-R6-3ai" id="cQI-bA-RzQ"/>
