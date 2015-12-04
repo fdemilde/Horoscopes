@@ -59,6 +59,7 @@
 		F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */; };
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
+		F44174F11C0FFAC00007C5C0 /* AlternateCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */; };
 		F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
@@ -261,6 +262,7 @@
 		F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveDetailTableCell.swift; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
+		F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateCommunityViewController.swift; sourceTree = "<group>"; };
 		F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
@@ -538,6 +540,7 @@
 			children = (
 				F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */,
 				F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */,
+				F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -1347,6 +1350,7 @@
 				F47C02A41B2691D200C0BA83 /* LoginVC.swift in Sources */,
 				70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */,
 				70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */,
+				F44174F11C0FFAC00007C5C0 /* AlternateCommunityViewController.swift in Sources */,
 				F4CACAE11B2010F2003C6301 /* OpenUDID.m in Sources */,
 				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,
 				F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */,

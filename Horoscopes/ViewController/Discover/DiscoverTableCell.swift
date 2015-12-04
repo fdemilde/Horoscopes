@@ -21,7 +21,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     @IBOutlet weak var horoscopeSignView: UIView!
     @IBOutlet weak var textView: CCHLinkTextView!
     @IBOutlet weak var followButton: UIButton!
-    @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var likeNumberLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     
@@ -66,7 +66,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
             circleLayer.fillColor = UIColor.clearColor().CGColor
             let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
             circleLayer.strokeColor = color.CGColor
-            self.headerView.layer.addSublayer(circleLayer)
+            self.profileView.layer.addSublayer(circleLayer)
             alreadyAddCircle = true
         }
         
