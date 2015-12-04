@@ -31,8 +31,8 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
                         self.isLastPostPage = isLastPage
                         self.userProfile += profiles
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.tableView.finishInfiniteScroll()
                             self.tableView.reloadData()
+                            self.tableView.finishInfiniteScroll()
                         })
                     }
                 }
@@ -108,8 +108,10 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
                     cell.profileImageView?.image = image
                 })
             })
-            let isFollow = (userProfile[indexPath.row].isFollowed || userProfile[indexPath.row].uid == XAppDelegate.currentUser.uid) ? true : false
-            cell.configureFollowButton(isFollow, showFollowButton: true)
+        
+            // BINH modify: comment out all follow button, do not delete commented code
+            // let isFollow = (userProfile[indexPath.row].isFollowed || userProfile[indexPath.row].uid == XAppDelegate.currentUser.uid) ? true : false
+            // cell.configureFollowButton(isFollow, showFollowButton: true)
             return cell
         }
     

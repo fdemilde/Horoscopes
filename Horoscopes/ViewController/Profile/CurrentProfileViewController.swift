@@ -283,16 +283,18 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 cell.delegate = self
                 let friend = friends[indexPath.row]
                 cell.configureCell(friend)
-                cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
+                // BINH modify: comment out all follow button, do not delete commented code
+                // cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
                 return cell
             } else {
                 let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! FollowTableViewCell
                 cell.delegate = self
-                if currentScope == .Following {
-                    cell.configureFollowButton(false, showFollowButton: false)
-                } else {
-                    cell.configureFollowButton(followers[indexPath.row].isFollowed, showFollowButton: true)
-                }
+                // BINH modify: comment out all follow button, do not delete commented code
+//                if currentScope == .Following {
+//                    cell.configureFollowButton(false, showFollowButton: false)
+//                } else {
+//                    cell.configureFollowButton(followers[indexPath.row].isFollowed, showFollowButton: true)
+//                }
                 return cell
             }
         }

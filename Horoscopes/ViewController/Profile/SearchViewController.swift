@@ -124,7 +124,9 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 cell.profileImageView?.image = image
             })
         })
-        cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
+        
+        // BINH modify: comment out all follow button, do not delete commented code
+        // cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
         return cell
     }
     

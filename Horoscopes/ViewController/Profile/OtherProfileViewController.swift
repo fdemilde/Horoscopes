@@ -66,27 +66,25 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        let textField = searchBar.valueForKey("searchField") as! UITextField
-//        textField.textColor = UIColor.whiteColor()
-//        searchBar.placeholder = "\(userProfile.name)"
-//        searchBar.setShowsCancelButton(false, animated: true)
         if userProfile.uid != XAppDelegate.currentUser.uid {
-            SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
-                if let _ = error {
-                    // Do not show newsfeed follow button
-                } else {
-                    self.isFollowed = result!["isfollowing"] as! Int == 1
-                    if self.isFollowed {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
-                        })
-                    } else {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
-                        })
-                    }
-                }
-            })
+            // BINH modify, we comment out all follow button for this ver sion, please don't delete
+            
+//            SocialManager.sharedInstance.isFollowing(userProfile.uid, followerId: XAppDelegate.currentUser.uid, completionHandler: { (result, error) -> Void in
+//                if let _ = error {
+//                    // Do not show newsfeed follow button
+//                } else {
+//                    self.isFollowed = result!["isfollowing"] as! Int == 1
+//                    if self.isFollowed {
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_check_icon"), forState: .Normal)
+//                        })
+//                    } else {
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            self.newsfeedFollowButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
+//                        })
+//                    }
+//                }
+//            })
             noPostText = "This person has not posted anything."
             noUsersFollowingText = "This person has not followed anyone."
             noFollowersText = "This person does not have any follower."
@@ -113,6 +111,10 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
                 self.currentFollowersPage++
             }
         }
+        
+        // Binh modify
+        // hide follow button
+        newsfeedFollowButton.hidden = true
     }
 
     override func didReceiveMemoryWarning() {

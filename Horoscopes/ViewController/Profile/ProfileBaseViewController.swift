@@ -111,13 +111,19 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         postButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
         followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        highlightScopeButton(postButton)
+        
+        // hide 3 button in header
+        postButton.hidden = true
+        followingButton.hidden = true
+        followersButton.hidden = true
+        
         
         tableView.estimatedRowHeight = 190
         tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
-        highlightScopeButton(postButton)
         
         tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
         

@@ -1200,6 +1200,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                    <rect key="frame" x="10" y="50" width="380" height="701"/>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="SfV-d6-o0a" id="MYN-vo-mEI"/>
                                     <outlet property="delegate" destination="SfV-d6-o0a" id="Bxa-Cl-zyW"/>
@@ -5165,7 +5168,9 @@ on news things</string>
                                         <rect key="frame" x="0.0" y="90" width="191" height="30"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="yFR-kk-oqx"/>
+                                            <constraint firstAttribute="height" constant="30" id="yFR-kk-oqx">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                            </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                         <state key="normal" title="Post: 0">
@@ -5179,7 +5184,9 @@ on news things</string>
                                         <rect key="frame" x="195" y="90" width="191" height="30"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="Uc3-v2-If5"/>
+                                            <constraint firstAttribute="height" constant="30" id="Uc3-v2-If5">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                            </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                         <state key="normal" title="Following: 0">
@@ -5193,7 +5200,9 @@ on news things</string>
                                         <rect key="frame" x="389" y="90" width="191" height="30"/>
                                         <animations/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="dKB-ML-8fP"/>
+                                            <constraint firstAttribute="height" constant="30" id="dKB-ML-8fP">
+                                                <variation key="heightClass=regular-widthClass=compact" constant="30"/>
+                                            </constraint>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                         <state key="normal" title="Follower: 0">
@@ -5229,7 +5238,9 @@ on news things</string>
                                     <constraint firstItem="7Yk-Eh-gSg" firstAttribute="leading" secondItem="VZL-Fc-pvy" secondAttribute="trailing" id="DrK-2j-e4l"/>
                                     <constraint firstItem="EmC-F0-wid" firstAttribute="centerY" secondItem="JyZ-gJ-LGo" secondAttribute="centerY" id="Dyf-h3-pvC"/>
                                     <constraint firstItem="RNI-il-qcR" firstAttribute="top" secondItem="JyZ-gJ-LGo" secondAttribute="top" id="Hth-WA-sP1"/>
-                                    <constraint firstAttribute="bottom" secondItem="EmC-F0-wid" secondAttribute="bottom" constant="40" id="Kz5-gR-CsP"/>
+                                    <constraint firstAttribute="bottom" secondItem="EmC-F0-wid" secondAttribute="bottom" constant="40" id="Kz5-gR-CsP">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                    </constraint>
                                     <constraint firstItem="RNI-il-qcR" firstAttribute="leading" secondItem="JyZ-gJ-LGo" secondAttribute="leading" id="Q0U-vq-pQh"/>
                                     <constraint firstItem="TdJ-MT-W1Q" firstAttribute="leading" secondItem="JyZ-gJ-LGo" secondAttribute="leading" id="QJN-pz-gNz"/>
                                     <constraint firstItem="tdd-7J-6ru" firstAttribute="centerY" secondItem="JyZ-gJ-LGo" secondAttribute="centerY" id="QL9-Qc-y62"/>
@@ -5244,7 +5255,9 @@ on news things</string>
                                     <constraint firstItem="K5O-tx-K2g" firstAttribute="leading" secondItem="EnG-Vd-L94" secondAttribute="trailing" constant="15" id="qX2-3H-rBk"/>
                                     <constraint firstAttribute="bottom" secondItem="TdJ-MT-W1Q" secondAttribute="bottom" id="t7m-XI-3cS"/>
                                     <constraint firstItem="VZL-Fc-pvy" firstAttribute="centerX" secondItem="JyZ-gJ-LGo" secondAttribute="centerX" id="tJk-2T-A0H"/>
-                                    <constraint firstAttribute="height" constant="120" id="uu1-xt-wgL"/>
+                                    <constraint firstAttribute="height" constant="120" id="uu1-xt-wgL">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="90"/>
+                                    </constraint>
                                     <constraint firstItem="Hzy-94-Bvv" firstAttribute="top" secondItem="K5O-tx-K2g" secondAttribute="bottom" constant="5" id="xp9-ds-25O"/>
                                 </constraints>
                                 <variation key="default">
@@ -6949,7 +6962,7 @@ on news things</string>
         <scene sceneID="d9w-pk-HcD">
             <objects>
                 <navigationController navigationBarHidden="YES" id="ZfF-PS-n2H" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="tabbar_discover" id="xD3-ca-aSc"/>
+                    <tabBarItem key="tabBarItem" title="" image="tabbar_community" id="xD3-ca-aSc"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="J1I-78-Y8l">
@@ -7669,11 +7682,15 @@ on news things</string>
                                     <constraint firstItem="QHq-Nk-CvZ" firstAttribute="leading" secondItem="7Fh-L8-WtP" secondAttribute="leading" id="9Cc-U3-k50"/>
                                     <constraint firstAttribute="trailing" secondItem="JPb-ao-9uo" secondAttribute="trailing" id="Bb8-IZ-ZU6"/>
                                     <constraint firstItem="JPb-ao-9uo" firstAttribute="leading" secondItem="QHq-Nk-CvZ" secondAttribute="trailing" id="CtD-qA-JoM"/>
-                                    <constraint firstAttribute="bottom" secondItem="VoQ-R6-3ai" secondAttribute="bottom" constant="40" id="DPU-OH-lNt"/>
+                                    <constraint firstAttribute="bottom" secondItem="VoQ-R6-3ai" secondAttribute="bottom" constant="40" id="DPU-OH-lNt">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="10"/>
+                                    </constraint>
                                     <constraint firstItem="7d4-LD-wei" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="top" constant="15" id="Ek0-5d-fCx"/>
                                     <constraint firstItem="8ov-31-U71" firstAttribute="leading" secondItem="7Fh-L8-WtP" secondAttribute="leading" id="Fu8-Dx-3p6"/>
                                     <constraint firstAttribute="bottom" secondItem="Dqg-sL-z4e" secondAttribute="bottom" id="JbQ-Co-sq1"/>
-                                    <constraint firstAttribute="height" constant="120" id="JrC-2G-Eu3"/>
+                                    <constraint firstAttribute="height" constant="120" id="JrC-2G-Eu3">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="90"/>
+                                    </constraint>
                                     <constraint firstItem="Dqg-sL-z4e" firstAttribute="centerX" secondItem="7Fh-L8-WtP" secondAttribute="centerX" id="K6n-8b-XHh"/>
                                     <constraint firstItem="eI8-a5-sI6" firstAttribute="leading" secondItem="7d4-LD-wei" secondAttribute="trailing" constant="15" id="Ngb-34-TSU"/>
                                     <constraint firstItem="eI8-a5-sI6" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="top" constant="10" id="NsB-tq-6Uh"/>
@@ -8659,8 +8676,8 @@ on news things</string>
         <image name="separator" width="280" height="1"/>
         <image name="settings_btn" width="40" height="30"/>
         <image name="share_copy" width="94" height="23"/>
+        <image name="tabbar_community" width="27" height="26"/>
         <image name="tabbar_daily.png" width="22" height="23"/>
-        <image name="tabbar_discover" width="29" height="29"/>
         <image name="tabbar_newsfeed.png" width="23" height="18"/>
         <image name="tabbar_notification.png" width="21" height="26"/>
         <image name="tabbar_profile.png" width="17" height="22"/>
