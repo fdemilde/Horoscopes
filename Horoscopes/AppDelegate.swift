@@ -401,11 +401,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         router.addRoute("/settings", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
+                if(!XAppDelegate.socialManager.isLoggedInFacebook()){
+                    return
+                }
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 4
+                    rootVC?.selectedIndex = 3
                 }
+                if let profileViewController = Utilities.getViewController(CurrentProfileViewController.classForCoder()) as? CurrentProfileViewController {
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let controller = storyboard.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+                    controller.parentVC = profileViewController
+                    profileViewController.navigationController?.pushViewController(controller, animated: true)
+                }
+                
             })
         })
         

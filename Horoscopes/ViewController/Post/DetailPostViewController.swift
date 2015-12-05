@@ -106,7 +106,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 4
+                    rootVC?.selectedIndex = 3
                 }
             })
             

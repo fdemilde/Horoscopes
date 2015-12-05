@@ -6151,7 +6151,6 @@ on news things</string>
                         <segue destination="ZfF-PS-n2H" kind="relationship" relationship="viewControllers" id="4at-5E-I56"/>
                         <segue destination="eGr-ah-kWW" kind="relationship" relationship="viewControllers" id="GQM-aq-oVB"/>
                         <segue destination="hGq-DD-r5m" kind="relationship" relationship="viewControllers" id="7Jf-Mj-UeI"/>
-                        <segue destination="kgA-pd-j8g" kind="relationship" relationship="viewControllers" id="rp8-aO-2hi"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cbv-eC-NLp" userLabel="First Responder" sceneMemberID="firstResponder"/>
