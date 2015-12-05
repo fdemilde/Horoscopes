@@ -152,10 +152,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let session = NSURLSession.sharedSession()
         let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
             error: NSError?) -> Void in
-            
+        let latlon = "10.714407,106.735349"
             if let data = data {
                 let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+                XAppDelegate.socialManager.sendUserUpdateLocation(string as? String,latlon: latlon, completionHandler: { (result, error) -> Void in
                     if(error == nil){
                         let errorCode = result?["error"] as! Int
                         if(errorCode == 0){
@@ -182,8 +182,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(userLocation == nil){
             userLocation = location
             let googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
-//            println("finishedGettingLocation  === \(googleLink)")
             
+            let latlon = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
             let url = NSURL(string: googleLink)
             let session = NSURLSession.sharedSession()
             let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
@@ -191,7 +191,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let data = data {
                     let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, completionHandler: { (result, error) -> Void in
+                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, latlon: latlon, completionHandler: { (result, error) -> Void in
                         if(error == nil){
                             let errorCode = result?["error"] as! Int
                             if(errorCode == 0){

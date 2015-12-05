@@ -491,10 +491,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // MARK: Location
     
-    func sendUserUpdateLocation(location : String?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
-        
+    func sendUserUpdateLocation(location : String?, latlon : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
         postData.setObject(location!, forKey: "location_result")
+        postData.setObject(latlon, forKey: "latlon")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {
