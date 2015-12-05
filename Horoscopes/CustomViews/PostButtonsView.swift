@@ -136,8 +136,8 @@ class PostButtonsView: UIView {
         controller.type = type
         controller.placeholder = placeholder
         hostViewController.presentViewController(controller, animated: true, completion: nil)
-        if(hostViewController.isKindOfClass(NewsfeedViewController)){
-            let newsfeedViewController = hostViewController as! NewsfeedViewController
+        if(hostViewController.isKindOfClass(AlternateCommunityViewController)){
+            let newsfeedViewController = hostViewController as! AlternateCommunityViewController
            newsfeedViewController.overlayFadeout()
         }
     }
