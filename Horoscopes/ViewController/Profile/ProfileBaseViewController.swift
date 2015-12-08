@@ -129,6 +129,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         
         tableView.clipsToBounds = true
         tableView.layer.cornerRadius = 4
+        tableView.pagingEnabled = true
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -258,6 +259,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             getFeed(completionHandler: { () -> Void in
                 
             })
+            tableView.pagingEnabled = true
         }
     }
     
@@ -269,6 +271,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             getUsersFollowing({ () -> Void in
                 
             })
+            tableView.pagingEnabled = false
         }
     }
     
@@ -280,6 +283,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             getFollowers({ () -> Void in
                 
             })
+            tableView.pagingEnabled = false
         }
     }
     
@@ -434,8 +438,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if currentScope != .Post {
             return 70
+        } else {
+            return tableView.frame.height
         }
-        return UITableViewAutomaticDimension
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
