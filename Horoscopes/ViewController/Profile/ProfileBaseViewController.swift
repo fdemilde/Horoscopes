@@ -63,6 +63,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.tableView.reloadData()
                             self.tableView.finishInfiniteScroll()
+                            if let indexes = self.tableView.indexPathsForVisibleRows {
+                                let targetRow = indexes[indexes.count - 1].row
+                                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                            }
                         })
                     }
                 }
@@ -117,10 +121,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         postButton.hidden = true
         followingButton.hidden = true
         followersButton.hidden = true
-        
-        
-        tableView.estimatedRowHeight = 190
-        tableView.rowHeight = UITableViewAutomaticDimension
         
         tableView.infiniteScrollIndicatorStyle = .White
         tableView.addSubview(refreshControl)
@@ -438,9 +438,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         if currentScope != .Post {
             return 70
-        } else {
-            return tableView.frame.height
         }
+        return tableView.frame.height
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
