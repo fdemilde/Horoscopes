@@ -155,6 +155,9 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
     
     func updateCollectedData() {
+        if(XAppDelegate.horoscopesManager.data.count == 0){
+            return
+        }
         if shouldCollectData {
             shouldCollectData = false
             let currentCal = NSCalendar.currentCalendar()

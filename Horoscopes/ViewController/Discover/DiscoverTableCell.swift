@@ -36,6 +36,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     override func awakeFromNib() {
         super.awakeFromNib()
         textView.linkDelegate = self
+        
     }
     
     func setupCell(userPost : UserPost){

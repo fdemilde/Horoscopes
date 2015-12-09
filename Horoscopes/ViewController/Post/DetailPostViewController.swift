@@ -11,8 +11,9 @@ import UIKit
 class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     
     @IBOutlet weak var textView: UITextView!
-    @IBOutlet weak var textViewBottomSpaceConstraint: NSLayoutConstraint!
+    @IBOutlet weak var contentViewBottomSpaceConstraint: NSLayoutConstraint!
     
+    @IBOutlet weak var switchButton: UISwitch!
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var postTitleBackgroundView: UIView!
     
@@ -45,12 +46,14 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
         
+        checkAndChangeSwitchColor()
+        
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
-        bottomSpaceConstraint = textViewBottomSpaceConstraint.constant
+        bottomSpaceConstraint = contentViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
     }
     
@@ -72,10 +75,11 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
 
     @IBAction func post() {
         let createPost = { () -> Void in
-            Utilities.showHUD()
-            SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, completionHandler: { (result, error) -> Void in
+            Utilities.showHUD(self.view)
+            let postToFacebook = self.switchButton.on
+            SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, postToFacebook: postToFacebook, completionHandler: { (result, error) -> Void in
                 if let error = error {
-                    Utilities.hideHUD()
+                    Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Post Error", message: "Your post cannot be created.", error: error)
                 } else {
                     self.finishPost()
@@ -101,12 +105,12 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     
     func finishPost() {
         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            Utilities.hideHUD()
+            Utilities.hideHUD(self.view)
             self.view.endEditing(true)
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
             })
             
@@ -114,6 +118,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     }
     
     func showLoginFormSheet() {
+        self.view.endEditing(true)
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
         controller.detailPostViewController = self
         let formSheet = MZFormSheetController(viewController: controller)
@@ -129,8 +134,23 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     func keyboardWillChangeFrame(notification: NSNotification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        textViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height
+        contentViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height
     }
+    
+    @IBAction func toogleSwitch(sender: AnyObject) {
+        checkAndChangeSwitchColor()
+    }
+    
+    // MARK: Helpers
+    
+    func checkAndChangeSwitchColor(){
+        if switchButton.on {
+            switchButton.thumbTintColor = UIColor(red: 108.0/255.0, green: 105.0/255.0, blue: 153.0/255.0, alpha: 1)
+        } else {
+            switchButton.thumbTintColor = UIColor(red: 201/255.0, green: 201/255.0, blue: 201/255.0, alpha: 1)
+        }
+    }
+    
     
     /*
     // MARK: - Navigation
