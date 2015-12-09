@@ -154,14 +154,18 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // MARK: Post
 
-    func createPost(type: String, message: String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
+    func createPost(type: String, message: String, postToFacebook : Bool = false, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type")
         postData.setObject(message, forKey: "message")
-//        print("postdata postdata postdata == \(postData)")
+        if(postToFacebook){
+            postData.setObject("1", forKey: "post_to_facebook")
+            postData.setObject(FACEBOOK_APP_ID, forKey: "app_id")
+            postData.setObject(FBSDKAccessToken .currentAccessToken().tokenString, forKey: "access_token")
+            
+        }
         let createPost = { () -> () in
             XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
-//                print("createPost createPost response == \(response)")
                 if let error = error {
                     completionHandler(result: nil, error: error)
                 } else {
@@ -409,6 +413,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_friends"]
         loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
+            print("loginFacebook loginFacebook")
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
             } else {

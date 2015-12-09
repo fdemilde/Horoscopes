@@ -23,13 +23,6 @@ class PostButtonsView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
-            let size = UIScreen.mainScreen().bounds.size
-            if size.height == 480 {
-                POST_BUTTON_SIZE.width = POST_BUTTON_SIZE.width * 3 / 4
-                POST_BUTTON_SIZE.height = POST_BUTTON_SIZE.height * 3 / 4
-            }
-        }
         
         storyButton = UIButton()
         storyButton.setImage(UIImage(named: "newsfeed_post_story"), forState: .Normal)
@@ -59,6 +52,16 @@ class PostButtonsView: UIView {
         configureLabel(fortuneLabel, text: "Write a fortune")
         mindLabel = UILabel()
         configureLabel(mindLabel, text: "What's on your mind?")
+    }
+    
+    convenience init(frame: CGRect, forceChangeButtonSize : Bool) {
+        self.init(frame: frame)
+        if(forceChangeButtonSize){
+            if(DeviceType.IS_IPHONE_4_OR_LESS){
+                POST_BUTTON_SIZE.width = POST_BUTTON_SIZE.width * 3 / 4
+                POST_BUTTON_SIZE.height = POST_BUTTON_SIZE.height * 3 / 4
+            }
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -136,8 +139,8 @@ class PostButtonsView: UIView {
         controller.type = type
         controller.placeholder = placeholder
         hostViewController.presentViewController(controller, animated: true, completion: nil)
-        if(hostViewController.isKindOfClass(AlternateCommunityViewController)){
-            let newsfeedViewController = hostViewController as! AlternateCommunityViewController
+        if(hostViewController.isKindOfClass(CustomTabBarController)){
+            let newsfeedViewController = hostViewController as! CustomTabBarController
            newsfeedViewController.overlayFadeout()
         }
     }

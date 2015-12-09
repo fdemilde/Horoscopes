@@ -323,7 +323,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
             })
         })
@@ -333,7 +333,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
                 let uid = param["uid"] as! String
                 Utilities.showHUD()
@@ -435,7 +435,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Utilities.popCurrentViewControllerToTop()
             if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                 let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                rootVC?.selectedIndex = 2
+                rootVC?.selectedIndex = 3
             }
             if let postId = param["post_id"] as? String{
                 Utilities.showHUD()

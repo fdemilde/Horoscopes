@@ -35,12 +35,13 @@ class CurrentProfileViewController: ProfileBaseViewController {
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
         
         // Set custom indicator
-        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
+//        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
         
         // Set custom indicator margin
         tableView.infiniteScrollIndicatorMargin = 40
         
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+            print("tableview.contentoffset start == \(self.tableView.contentOffset)")
             _ = scrollView as! UITableView
             if self.isLastPostPage || self.currentScope != .Post {
                 self.tableView.finishInfiniteScroll()
@@ -82,7 +83,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
-        noPostView = PostButtonsView(frame: tableView.frame)
+        noPostView = PostButtonsView(frame: tableView.frame, forceChangeButtonSize: true)
         noPostView.hostViewController = self
     }
 
