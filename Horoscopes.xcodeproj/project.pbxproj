@@ -125,7 +125,6 @@
 		F4CACA181B1EBE16003C6301 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA171B1EBE16003C6301 /* AppDelegate.swift */; };
 		F4CACA1D1B1EBE16003C6301 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1B1B1EBE16003C6301 /* Main.storyboard */; };
 		F4CACA1F1B1EBE16003C6301 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA1E1B1EBE16003C6301 /* Images.xcassets */; };
-		F4CACA221B1EBE16003C6301 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */; };
 		F4CACA2E1B1EBE16003C6301 /* HoroscopesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4CACA2D1B1EBE16003C6301 /* HoroscopesTests.swift */; };
 		F4CACA581B1EEE72003C6301 /* selected_tabbar_daily.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA3A1B1EEE72003C6301 /* selected_tabbar_daily.png */; };
 		F4CACA591B1EEE72003C6301 /* selected_tabbar_daily@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4CACA3B1B1EEE72003C6301 /* selected_tabbar_daily@2x.png */; };
@@ -340,7 +339,6 @@
 		F4CACA171B1EBE16003C6301 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F4CACA1C1B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		F4CACA1E1B1EBE16003C6301 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Horoscopes/Images.xcassets; sourceTree = SOURCE_ROOT; };
-		F4CACA211B1EBE16003C6301 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		F4CACA271B1EBE16003C6301 /* HoroscopesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoroscopesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F4CACA2C1B1EBE16003C6301 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4CACA2D1B1EBE16003C6301 /* HoroscopesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoroscopesTests.swift; sourceTree = "<group>"; };
@@ -818,7 +816,6 @@
 				F47C029F1B2691A700C0BA83 /* CustomTabBarController.swift */,
 				F4CACA1B1B1EBE16003C6301 /* Main.storyboard */,
 				F42E28931B37D14100466CAA /* Images */,
-				F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */,
 				F4CACA151B1EBE16003C6301 /* Supporting Files */,
 				F4CACA951B20083A003C6301 /* Horoscopes-Bridging-Header.h */,
 			);
@@ -1166,7 +1163,6 @@
 				F42E28B21B37D14100466CAA /* share_viber@2x.png in Resources */,
 				F460982C1B50D1F30026F0C9 /* moon_ani_12@3x.png in Resources */,
 				F46098251B50D1F30026F0C9 /* moon_ani_10@2x.png in Resources */,
-				F4CACA221B1EBE16003C6301 /* LaunchScreen.xib in Resources */,
 				F4CACA751B1EEE72003C6301 /* tabbar_profile@3x.png in Resources */,
 				F4CACA631B1EEE72003C6301 /* selected_tabbar_post@3x.png in Resources */,
 				F460980D1B50D1F30026F0C9 /* moon_ani_02.png in Resources */,
@@ -1431,14 +1427,6 @@
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		F4CACA201B1EBE16003C6301 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				F4CACA211B1EBE16003C6301 /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -1540,6 +1528,7 @@
 			baseConfigurationReference = 38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
@@ -1561,6 +1550,7 @@
 			baseConfigurationReference = D974B7A2517DE65A29486B8D /* Pods-Horoscopes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";

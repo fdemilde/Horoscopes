@@ -41,9 +41,9 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        if(overlay == nil){
-            self.setupAddPostButton()
-        }
+//        if(overlay == nil){
+//            self.setupAddPostButton()
+//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
