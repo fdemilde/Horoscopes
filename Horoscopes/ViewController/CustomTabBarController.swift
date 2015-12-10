@@ -101,6 +101,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
                             let dailyVC = vc as! DailyTableViewController
                             self.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
                             dailyVC.selectedSign = self.selectedSign
+                            dailyVC.shouldHideNumberOfLike = true
                             dailyVC.reloadData()
                         }
                     }
