@@ -232,7 +232,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
             horoscopeSignImageView.hidden = false
             horoscopeSignView.hidden = false
             horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
-            horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
+            horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: sign)
         } else {
             followButtonLeadingSpace.constant -= 50
             horoscopeSignLabel.hidden = true

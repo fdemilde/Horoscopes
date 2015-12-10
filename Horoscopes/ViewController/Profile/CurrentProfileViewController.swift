@@ -105,7 +105,8 @@ class CurrentProfileViewController: ProfileBaseViewController {
             horoscopeSignImageView.hidden = false
             horoscopeSignView.hidden = false
             horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
-            horoscopeSignImageView.image = Utilities.horoscopeSignImage(fromSignNumber: sign)
+            horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: sign)
+            
         } else {
             settingsButtonLeadingSpace.constant -= 50
             horoscopeSignLabel.hidden = true
