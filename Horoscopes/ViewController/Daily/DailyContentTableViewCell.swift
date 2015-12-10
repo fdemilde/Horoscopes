@@ -33,6 +33,7 @@ class DailyContentTableViewCell: UITableViewCell {
     var timeTag = NSTimeInterval()
     var selectedSign: Int!
     var shareUrl = ""
+    var parentViewController: UIViewController!
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -60,6 +61,15 @@ class DailyContentTableViewCell: UITableViewCell {
         }
     }
     
+    // MARK: - Configuration
+    
+    private func configureNumberOfLike(shouldHideIt: Bool) {
+        if shouldHideIt {
+            self.likedLabel.alpha = 0
+            self.likedImageView.alpha = 0
+        }
+    }
+    
     // MARK: - Action
     
     @IBAction func share(sender: UIButton) {
@@ -67,11 +77,17 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     
     @IBAction func like(sender: UIButton) {
+        if let controller = parentViewController as? DailyTableViewController {
+            controller.shouldHideNumberOfLike = false
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(5)), repeats: false)
     }
     
     @IBAction func dislike(sender: UIButton) {
+        if let controller = parentViewController as? DailyTableViewController {
+            controller.shouldHideNumberOfLike = false
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
         NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(1)), repeats: false)
     }
@@ -89,7 +105,7 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Helper
     
-    func setUp(type: DailyHoroscopeType, selectedSign: Int, shareUrl : String) {
+    func setUp(type: DailyHoroscopeType, selectedSign: Int, shareUrl : String, controller: UIViewController) {
         if selectedSign != -1 {
             self.selectedSign = selectedSign
             if type == DailyHoroscopeType.TodayHoroscope {
@@ -99,6 +115,10 @@ class DailyContentTableViewCell: UITableViewCell {
             }
             dateLabel.text = dateStringForType(type)
             self.shareUrl = shareUrl
+        }
+        parentViewController = controller
+        if let dailyController = controller as? DailyTableViewController {
+            configureNumberOfLike(dailyController.shouldHideNumberOfLike)
         }
     }
     

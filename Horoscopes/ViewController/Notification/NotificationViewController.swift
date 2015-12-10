@@ -130,8 +130,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     // MARK: Button actions
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        // TODO: update the data source
-//        print("Updating its data source...")
         self.getNotificationAndReloadData()
         refreshControl.endRefreshing()
     }

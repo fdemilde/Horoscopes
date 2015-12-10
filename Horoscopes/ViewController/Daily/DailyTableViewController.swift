@@ -22,6 +22,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     var textViewForCalculating = UITextView()
     var tableFooterView : UIView!
+    var shouldHideNumberOfLike = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,7 +106,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                 if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[0] as? String {
                     shareUrl = permaLink
                 }
-                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl)
+                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl, controller: self)
                 
             } else {
                 if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
@@ -114,7 +115,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                 if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
                     shareUrl = permaLink
                 }
-                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl)
+                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
             }
             cell.textView.text = description
             return cell
@@ -284,14 +285,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     // MARK: - Action
     
     @IBAction func handleRefresh(sender: UIRefreshControl) {
-        // TODO: update the data source
-        print("Updating its data source...")
         XAppDelegate.horoscopesManager.getAllHoroscopes(true)
         tableView.reloadData()
         sender.endRefreshing()
     }
 
     @IBAction func chooseHoroscopeSign(sender: UIButton) {
+        shouldHideNumberOfLike = true
         let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
         controller.delegate = self
         presentViewController(controller, animated: true, completion: nil)
