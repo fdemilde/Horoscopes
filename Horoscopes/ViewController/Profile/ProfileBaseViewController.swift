@@ -117,8 +117,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
         highlightScopeButton(postButton)
         
-        // hide 3 button in header
-        postButton.hidden = true
+        // Temporarily hide 2 button in header, disable post button
+        postButton.enabled = false
         followingButton.hidden = true
         followersButton.hidden = true
         
