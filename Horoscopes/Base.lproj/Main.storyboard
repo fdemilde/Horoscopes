@@ -7810,9 +7810,11 @@ on news things</string>
                                     <constraint firstItem="VoQ-R6-3ai" firstAttribute="leading" secondItem="eI8-a5-sI6" secondAttribute="leading" id="VBt-9K-a8n"/>
                                     <constraint firstItem="QHq-Nk-CvZ" firstAttribute="width" secondItem="7Fh-L8-WtP" secondAttribute="width" multiplier="0.33" id="VsU-50-ik6"/>
                                     <constraint firstItem="HEe-l6-AwY" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="top" id="WXf-Kv-gX8"/>
+                                    <constraint firstAttribute="bottom" secondItem="VoQ-R6-3ai" secondAttribute="bottom" constant="40" id="Z5f-rd-JwY"/>
                                     <constraint firstItem="7d4-LD-wei" firstAttribute="leading" secondItem="7Fh-L8-WtP" secondAttribute="leading" constant="35" id="cS5-f5-Ldw"/>
                                     <constraint firstItem="Flp-Zy-Wls" firstAttribute="top" secondItem="7Fh-L8-WtP" secondAttribute="top" constant="50" id="fE7-ar-gP5"/>
                                     <constraint firstAttribute="bottom" secondItem="JPb-ao-9uo" secondAttribute="bottom" id="gOg-HC-Zk3"/>
+                                    <constraint firstAttribute="height" constant="120" id="j6b-KX-zeI"/>
                                     <constraint firstAttribute="bottom" secondItem="QHq-Nk-CvZ" secondAttribute="bottom" id="lqt-1R-YX1"/>
                                     <constraint firstItem="HEe-l6-AwY" firstAttribute="leading" secondItem="7Fh-L8-WtP" secondAttribute="leading" id="mLO-j5-KEo"/>
                                     <constraint firstItem="VoQ-R6-3ai" firstAttribute="centerY" secondItem="7Fh-L8-WtP" secondAttribute="centerY" id="tlC-VN-v6k"/>
@@ -7821,10 +7823,18 @@ on news things</string>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
+                                        <exclude reference="JrC-2G-Eu3"/>
+                                        <exclude reference="DPU-OH-lNt"/>
                                         <exclude reference="tlC-VN-v6k"/>
                                         <exclude reference="8Oc-HI-PJ1"/>
                                         <exclude reference="CtD-qA-JoM"/>
                                         <exclude reference="OnL-wR-9p1"/>
+                                    </mask>
+                                </variation>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="JrC-2G-Eu3"/>
+                                        <exclude reference="DPU-OH-lNt"/>
                                     </mask>
                                 </variation>
                             </view>
