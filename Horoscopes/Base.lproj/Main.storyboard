@@ -6220,13 +6220,13 @@ on news things</string>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" translucent="NO" id="xMo-6s-d1d">
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="xMo-6s-d1d">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <animations/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="0.3803921569" green="0.37647058820000001" blue="0.56470588239999997" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.38039215686274508" green="0.37647058823529411" blue="0.56470588235294117" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
                         <segue destination="IIy-zW-d5E" kind="relationship" relationship="viewControllers" id="lwg-FQ-Zy0"/>
@@ -8887,7 +8887,7 @@ on news things</string>
         <image name="settings_btn" width="40" height="30"/>
         <image name="share_copy" width="94" height="23"/>
         <image name="tabbar_community" width="27" height="26"/>
-        <image name="tabbar_create_post" width="54" height="52"/>
+        <image name="tabbar_create_post" width="54" height="49"/>
         <image name="tabbar_daily.png" width="22" height="23"/>
         <image name="tabbar_newsfeed.png" width="23" height="18"/>
         <image name="tabbar_notification.png" width="21" height="26"/>

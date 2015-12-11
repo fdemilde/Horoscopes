@@ -15,17 +15,19 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     var lastSelectedIndex = 0
     
     let POST_BUTTON_PADDING = 35 as CGFloat
-    let CLOSE_BUTTON_SIZE = CGSizeMake(54,52)
+    let CLOSE_BUTTON_SIZE = CGSizeMake(54,49)
     var postButtonsView: PostButtonsView!
     var overlay : UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        let view = UIView(frame: CGRectMake(0,2,self.view.frame.size.width, 50))
-        view.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
-        self.tabBar.addSubview(view)
         
-//        self.tabBar.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
+        // create a smaller purple background view
+//        let view = UIView(frame: CGRectMake(0,2,self.view.frame.size.width, 50))
+//        view.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
+//        self.tabBar.addSubview(view)
+        
+        self.tabBar.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
         self.setupTabBarItems()
         self.delegate = self
         selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
@@ -34,16 +36,16 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         }
         
         
-        var tabFrame = self.tabBar.frame //self.TabBar is IBOutlet of your TabBar
-        tabFrame.size.height = 52
-        tabFrame.origin.y = self.view.frame.size.height - 52
-        self.tabBar.frame = tabFrame
+//        var tabFrame = self.tabBar.frame //self.TabBar is IBOutlet of your TabBar
+//        tabFrame.size.height = 52
+//        tabFrame.origin.y = self.view.frame.size.height - 52
+//        self.tabBar.frame = tabFrame
         
+        // make tabbar transparent
         self.tabBar.translucent = true
-//        UITabBar.appearance().tintColor = UIColor.blueColor()
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
-        setupAddPostButton() 
+        setupAddPostButton()
     }
     
     override func viewWillLayoutSubviews(){
@@ -73,12 +75,12 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         profileItem.selectedImage = UIImage(named: "selected_tabbar_profile")!.imageWithRenderingMode(.AlwaysOriginal)
 //        settingItem.selectedImage = UIImage(named: "selected_setting_icon")!.imageWithRenderingMode(.AlwaysOriginal)
         
-        dailyItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
+        dailyItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
 //        newsFeedItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-        discoveryItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
+        discoveryItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         createPostItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
-        notifItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
-        profileItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
+        notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
+        profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
 //        settingItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         
     }
