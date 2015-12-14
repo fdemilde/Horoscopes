@@ -88,8 +88,8 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
         // if current selected tab is Daily, when user tap on Daily again, switch to user's favourite sign
         if let viewControllers = self.viewControllers {
-            for nav in viewControllers {
-                let nav = nav as! UINavigationController
+            for viewController in viewControllers {
+                let nav = viewController as! UINavigationController
                 let vc = nav.viewControllers.first!
                 if(tabBarController.selectedIndex == 0){ // pop to root view controller which is daily view. This is to make sure when use go back to daily view it'll show daily view instead of Cookie or Archive view
                     if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
@@ -97,15 +97,20 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
                     }
                 }
                 
-                if ((lastSelectedIndex == 0) && tabBarController.selectedIndex == 0){
-                    if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
-                        if XAppDelegate.userSettings.horoscopeSign != -1 {
-                            let dailyVC = vc as! DailyTableViewController
-                            self.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
-                            dailyVC.selectedSign = self.selectedSign
-                            dailyVC.shouldHideNumberOfLike = true
-                            dailyVC.reloadData()
+                if lastSelectedIndex == tabBarController.selectedIndex {
+                    if tabBarController.selectedIndex == 0 {
+                        if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
+                            if XAppDelegate.userSettings.horoscopeSign != -1 {
+                                let dailyVC = vc as! DailyTableViewController
+                                self.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+                                dailyVC.selectedSign = self.selectedSign
+                                dailyVC.shouldHideNumberOfLike = true
+                                dailyVC.reloadData()
+                            }
                         }
+                    } else if tabBarController.selectedIndex == viewControllers.count - 1 && vc.isKindOfClass(ProfileBaseViewController.classForCoder()) {
+                        let controller = vc as! ProfileBaseViewController
+                        controller.scrollToTop()
                     }
                 }
             }
