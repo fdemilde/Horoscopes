@@ -190,4 +190,8 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         tableView.reloadData()
         refreshControl.endRefreshing()
     }
+    
+    func scrollToTop() {
+        tableView.setContentOffset(CGPointZero, animated: true)
+    }
 }

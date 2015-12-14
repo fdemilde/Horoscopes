@@ -162,6 +162,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     // MARK: - Configure UI
     
+    func scrollToTop() {
+        tableView.setContentOffset(CGPointZero, animated: true)
+    }
+    
     func configureProfileView() {
         Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in

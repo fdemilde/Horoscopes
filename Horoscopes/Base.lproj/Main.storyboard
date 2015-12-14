@@ -341,7 +341,7 @@
                         <viewControllerLayoutGuide type="bottom" id="pzb-NJ-KAL"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Kgb-Yc-P91">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3SS-VW-yoY">
@@ -5192,7 +5192,7 @@ on news things</string>
                         <viewControllerLayoutGuide type="bottom" id="eZb-OQ-BBl"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Y3c-5I-Q2R">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="geT-hc-lAU" customClass="GADBannerView">
@@ -5710,7 +5710,7 @@ on news things</string>
             <objects>
                 <tableViewController id="efF-06-zfn" customClass="DailyTableViewController" customModule="Horoscopes" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="elh-8m-qel">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" red="0.396078431372549" green="0.396078431372549" blue="0.5725490196078431" alpha="1" colorSpace="calibratedRGB"/>
@@ -7082,7 +7082,7 @@ on news things</string>
             <objects>
                 <tableViewController id="Cpq-eJ-t1P" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="kph-Vq-WQ5">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -8176,7 +8176,7 @@ on news things</string>
                         <viewControllerLayoutGuide type="bottom" id="8NE-2Q-npr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Abi-kP-BBg">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="551"/>
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qoy-pX-s9k" userLabel="Banner View">

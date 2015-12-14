@@ -178,7 +178,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                 let postId = self.userPost.post_id
                 SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
                     if(error != ""){
-                        Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "\(error)", error: nil)
+                        Utilities.showAlert(self.parentViewController, title: "\(self.userPost.hearts) likes", message: "", error: nil)
                     } else {
                         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                         let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
