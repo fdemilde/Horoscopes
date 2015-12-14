@@ -1620,7 +1620,7 @@
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="253" y="3" width="57" height="44"/>
+                                                                                        <rect key="frame" x="253" y="14" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="NGu-QD-sLq" eventType="touchUpInside" id="WK5-Vr-UIc"/>
@@ -2827,9 +2827,6 @@ on news things</string>
                                                                 <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="14"/>
                                                                 <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
-                                                                <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                    <rect key="frame" x="20" y="20" width="340" height="33"/>
-                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Check back tomorrow for a new fortune." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSi-ft-WGg">
                                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
@@ -4081,7 +4078,7 @@ on news things</string>
                                                                         </mask>
                                                                     </variation>
                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="130" width="216" height="317"/>
+                                                                        <rect key="frame" x="0.0" y="130" width="216" height="320"/>
                                                                         <mask key="constraints">
                                                                             <exclude reference="5Az-6i-nAl"/>
                                                                             <exclude reference="L3H-km-Mqf"/>
@@ -4137,7 +4134,7 @@ on news things</string>
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="149" y="3" width="57" height="44"/>
+                                                                                        <rect key="frame" x="149" y="14" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="XBB-Mr-uBb" eventType="touchUpInside" id="r3e-S9-a15"/>
@@ -7413,6 +7410,9 @@ on news things</string>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                     <color key="textColor" red="0.2901960784" green="0.56470588239999997" blue="0.8862745098" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="517" y="19" width="73" height="17"/>
+                                                    </variation>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NhT-xF-3wa">
                                                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
@@ -7426,7 +7426,8 @@ on news things</string>
                                                             <exclude reference="sgF-V5-4mP"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact">
+                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
+                                                        <rect key="frame" x="517" y="37" width="73" height="1"/>
                                                         <mask key="constraints">
                                                             <include reference="sgF-V5-4mP"/>
                                                         </mask>
@@ -8523,9 +8524,6 @@ on news things</string>
                                                                                     <state key="normal" image="newsfeed_share_icon">
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
-                                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="149" y="3" width="57" height="44"/>
-                                                                                    </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="Lvu-i1-R9G" eventType="touchUpInside" id="sIE-9E-Hbw"/>
                                                                                     </connections>
@@ -8699,16 +8697,16 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstItem="JG7-sz-hZI" firstAttribute="top" secondItem="exz-8G-ggB" secondAttribute="top" constant="20" id="3DG-QV-tPG"/>
                                                         <constraint firstAttribute="bottom" secondItem="JG7-sz-hZI" secondAttribute="bottom" constant="20" id="5D6-hy-F51">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                                         </constraint>
                                                         <constraint firstItem="JG7-sz-hZI" firstAttribute="leading" secondItem="exz-8G-ggB" secondAttribute="leading" constant="20" id="Co0-2W-jg3">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                                         </constraint>
                                                         <constraint firstItem="JG7-sz-hZI" firstAttribute="top" secondItem="exz-8G-ggB" secondAttribute="top" constant="20" id="OVd-4I-vTy">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                                         </constraint>
                                                         <constraint firstAttribute="trailing" secondItem="JG7-sz-hZI" secondAttribute="trailing" constant="20" id="UlK-Bc-bzN">
-                                                            <variation key="heightClass=regular-widthClass=compact" constant="12"/>
+                                                            <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                                                         </constraint>
                                                     </constraints>
                                                     <variation key="default">
