@@ -561,7 +561,9 @@ class Utilities {
             }
             let attString = NSMutableAttributedString(string: replacedText)
             let font = UIFont(name: "Book Antiqua", size: 14)
+            let textColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1)
             attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.characters.count))
+            attString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSMakeRange(0, replacedText.characters.count))
             let nsReplacedText = replacedText as NSString
             let readMoreRange = nsReplacedText.rangeOfString("Read more")
             if isTruncated {
