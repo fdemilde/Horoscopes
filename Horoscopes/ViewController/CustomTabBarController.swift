@@ -111,6 +111,9 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
                     } else if tabBarController.selectedIndex == viewControllers.count - 1 && vc.isKindOfClass(ProfileBaseViewController.classForCoder()) {
                         let controller = vc as! ProfileBaseViewController
                         controller.scrollToTop()
+                    } else if tabBarController.selectedIndex == 1 && vc.isKindOfClass(AlternateCommunityViewController.classForCoder()) {
+                        let controller = vc as! AlternateCommunityViewController
+                        controller.scrollToTop()
                     }
                 }
             }
