@@ -1848,8 +1848,12 @@
                             <constraint firstItem="Bab-9q-Sdy" firstAttribute="leading" secondItem="oeE-BV-2dq" secondAttribute="leading" id="Hkj-3D-JSA"/>
                             <constraint firstItem="heP-px-OYT" firstAttribute="top" secondItem="m4G-6x-pOG" secondAttribute="bottom" id="WC6-WJ-Xxu"/>
                             <constraint firstItem="m4G-6x-pOG" firstAttribute="top" secondItem="Bab-9q-Sdy" secondAttribute="bottom" id="aDP-b7-DCg"/>
-                            <constraint firstAttribute="trailing" secondItem="m4G-6x-pOG" secondAttribute="trailing" constant="10" id="aTv-Rc-PZe"/>
-                            <constraint firstItem="m4G-6x-pOG" firstAttribute="leading" secondItem="oeE-BV-2dq" secondAttribute="leading" constant="10" id="bZm-V3-Pet"/>
+                            <constraint firstAttribute="trailing" secondItem="m4G-6x-pOG" secondAttribute="trailing" constant="10" id="aTv-Rc-PZe">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
+                            <constraint firstItem="m4G-6x-pOG" firstAttribute="leading" secondItem="oeE-BV-2dq" secondAttribute="leading" constant="10" id="bZm-V3-Pet">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="m4G-6x-pOG" secondAttribute="trailing" id="c8c-6c-qfl"/>
                             <constraint firstItem="m4G-6x-pOG" firstAttribute="leading" secondItem="oeE-BV-2dq" secondAttribute="leading" id="cH8-1A-Q30"/>
                         </constraints>
@@ -5531,9 +5535,15 @@ on news things</string>
                                             </subviews>
                                             <animations/>
                                             <constraints>
-                                                <constraint firstAttribute="bottom" secondItem="dNx-cM-f6m" secondAttribute="bottom" constant="10" id="Thn-wD-c3b"/>
-                                                <constraint firstAttribute="trailing" secondItem="dNx-cM-f6m" secondAttribute="trailing" constant="10" id="eHq-Uc-NsS"/>
-                                                <constraint firstItem="dNx-cM-f6m" firstAttribute="leading" secondItem="hJd-LI-cuK" secondAttribute="leading" constant="10" id="vaa-FQ-ZIo"/>
+                                                <constraint firstAttribute="bottom" secondItem="dNx-cM-f6m" secondAttribute="bottom" constant="10" id="Thn-wD-c3b">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                                </constraint>
+                                                <constraint firstAttribute="trailing" secondItem="dNx-cM-f6m" secondAttribute="trailing" constant="10" id="eHq-Uc-NsS">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                                </constraint>
+                                                <constraint firstItem="dNx-cM-f6m" firstAttribute="leading" secondItem="hJd-LI-cuK" secondAttribute="leading" constant="10" id="vaa-FQ-ZIo">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="dNx-cM-f6m" firstAttribute="top" secondItem="hJd-LI-cuK" secondAttribute="top" id="vcL-Qz-gZW"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -8216,9 +8226,6 @@ on news things</string>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="90" id="dki-0g-iUo"/>
                                                                             </constraints>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="216" height="90"/>
-                                                                            </variation>
                                                                         </imageView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judith Bell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Od7-RZ-hCe">
                                                                             <rect key="frame" x="90" y="16" width="67" height="17"/>
@@ -8236,9 +8243,6 @@ on news things</string>
                                                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="10"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <nil key="highlightedColor"/>
-                                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="102" y="14" width="106" height="12"/>
-                                                                                    </variation>
                                                                                 </label>
                                                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jsx-cA-env">
                                                                                     <rect key="frame" x="4" y="0.0" width="40" height="40"/>
@@ -8286,9 +8290,6 @@ on news things</string>
                                                                                     <exclude reference="XuQ-mf-3Qh"/>
                                                                                     <exclude reference="dNs-09-D6L"/>
                                                                                 </mask>
-                                                                            </variation>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="0.0" y="90" width="216" height="40"/>
                                                                             </variation>
                                                                         </view>
                                                                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="OXw-PG-Pf4">
@@ -8406,9 +8407,6 @@ on news things</string>
                                                                             <exclude reference="nJJ-N9-hOI"/>
                                                                         </mask>
                                                                     </variation>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="216" height="130"/>
-                                                                    </variation>
                                                                 </view>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bB5-Lc-rGQ">
                                                                     <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
@@ -8435,8 +8433,7 @@ on news things</string>
                                                                                     <exclude reference="zoy-SP-MCf"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="10" y="10" width="196" height="236"/>
+                                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                                 <mask key="constraints">
                                                                                     <exclude reference="jgn-sy-Jm2"/>
                                                                                     <exclude reference="lSu-E9-a7u"/>
@@ -8464,8 +8461,7 @@ on news things</string>
                                                                             <exclude reference="x0g-Zl-dZ0"/>
                                                                         </mask>
                                                                     </variation>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="130" width="216" height="266"/>
+                                                                    <variation key="heightClass=regular-widthClass=compact">
                                                                         <mask key="subviews">
                                                                             <include reference="ekl-KS-HOJ"/>
                                                                         </mask>
@@ -8508,8 +8504,7 @@ on news things</string>
                                                                                             <exclude reference="cKa-ng-a1A"/>
                                                                                         </mask>
                                                                                     </variation>
-                                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="216" height="1"/>
+                                                                                    <variation key="heightClass=regular-widthClass=compact">
                                                                                         <mask key="constraints">
                                                                                             <include reference="cKa-ng-a1A"/>
                                                                                         </mask>
@@ -8562,8 +8557,7 @@ on news things</string>
                                                                                     <exclude reference="hqz-M3-Xym"/>
                                                                                 </mask>
                                                                             </variation>
-                                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                <rect key="frame" x="0.0" y="30" width="216" height="50"/>
+                                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                                 <mask key="subviews">
                                                                                     <include reference="6LK-1y-5iJ"/>
                                                                                     <include reference="syo-pG-hxi"/>
@@ -8620,8 +8614,7 @@ on news things</string>
                                                                             <exclude reference="hLy-0F-EIl"/>
                                                                         </mask>
                                                                     </variation>
-                                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="396" width="216" height="80"/>
+                                                                    <variation key="heightClass=regular-widthClass=compact">
                                                                         <mask key="subviews">
                                                                             <include reference="WOU-by-wlP"/>
                                                                             <include reference="at9-UW-U9j"/>
@@ -8670,8 +8663,7 @@ on news things</string>
                                                                     <exclude reference="lzn-W2-lun"/>
                                                                 </mask>
                                                             </variation>
-                                                            <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                <rect key="frame" x="12" y="12" width="216" height="476"/>
+                                                            <variation key="heightClass=regular-widthClass=compact">
                                                                 <mask key="subviews">
                                                                     <include reference="P4c-pc-lr9"/>
                                                                     <include reference="bB5-Lc-rGQ"/>
@@ -8721,8 +8713,7 @@ on news things</string>
                                                             <exclude reference="UlK-Bc-bzN"/>
                                                         </mask>
                                                     </variation>
-                                                    <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                        <rect key="frame" x="0.0" y="0.0" width="240" height="500"/>
+                                                    <variation key="heightClass=regular-widthClass=compact">
                                                         <mask key="subviews">
                                                             <include reference="JG7-sz-hZI"/>
                                                         </mask>
