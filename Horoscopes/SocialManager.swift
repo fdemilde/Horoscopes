@@ -327,7 +327,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 if(response != nil){
-//                    print("social manager getProfile response = \(response)")
                     let json = Utilities.parseNSDictionaryToDictionary(response!)
                     var result = [UserProfile]()
                     for userId in usersIdString.componentsSeparatedByString(",") {

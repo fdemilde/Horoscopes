@@ -28,7 +28,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         horoscopeSignView.userInteractionEnabled = true
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
@@ -41,7 +40,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
         tableView.infiniteScrollIndicatorMargin = 40
         
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            print("tableview.contentoffset start == \(self.tableView.contentOffset)")
             _ = scrollView as! UITableView
             if self.isLastPostPage || self.currentScope != .Post {
                 self.tableView.finishInfiniteScroll()
@@ -261,6 +259,15 @@ class CurrentProfileViewController: ProfileBaseViewController {
         cell.textLabel?.text = postTypeTexts[index]
         cell.textLabel?.textColor = UIColor.grayColor()
         cell.imageView?.image = UIImage(named: postTypeImages[index])
+    }
+    
+    func reloadFeeds(){
+        currentPostPage = 0
+        isLastPostPage = false
+        getFeed(true, completionHandler: { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            })
+        })
     }
     
     // MARK: - Table view data source

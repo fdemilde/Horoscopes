@@ -108,6 +108,16 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
             Utilities.hideHUD(self.view)
             self.view.endEditing(true)
             self.dismissViewControllerAnimated(true, completion: { () -> Void in
+                
+                
+                if let profileViewController = Utilities.getViewController(CurrentProfileViewController.classForCoder()) as? CurrentProfileViewController {
+                    if(profileViewController.userProfile.uid != -1){
+                        profileViewController.reloadFeeds()
+                    } else {
+                        profileViewController.needToRefreshFeed = true
+                    }
+                }
+                
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
                     rootVC?.selectedIndex = 4

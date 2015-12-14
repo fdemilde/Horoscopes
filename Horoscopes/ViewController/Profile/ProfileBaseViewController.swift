@@ -49,6 +49,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var noPostText = ""
     var noUsersFollowingText = ""
     var noFollowersText = ""
+    var needToRefreshFeed = false // this help when we need to refresh feed right at view did load
     var currentPostPage: Int = 0 {
         didSet {
             if currentPostPage != 0 {
@@ -305,9 +306,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         getUserProfileCounts()
         switch currentScope {
         case .Post:
-            getFeed(completionHandler: { () -> Void in
+            getFeed(needToRefreshFeed, completionHandler: { () -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.hidden = false
+                    self.needToRefreshFeed = false
                 })
             })
         case .Following:

@@ -407,7 +407,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 Utilities.popCurrentViewControllerToTop()
                 if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                    rootVC?.selectedIndex = 3
+                    rootVC?.selectedIndex = 4
                 }
                 if let profileViewController = Utilities.getViewController(CurrentProfileViewController.classForCoder()) as? CurrentProfileViewController {
                     let storyboard = UIStoryboard(name: "Main", bundle: nil)
