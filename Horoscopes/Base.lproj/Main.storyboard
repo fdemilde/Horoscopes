@@ -1807,10 +1807,14 @@
                                                 <constraint firstItem="YRB-Zy-KUb" firstAttribute="leading" secondItem="sHW-U6-G82" secondAttribute="leading" constant="10" id="03I-cZ-jNc"/>
                                                 <constraint firstAttribute="bottom" secondItem="YRB-Zy-KUb" secondAttribute="bottom" constant="10" id="MDe-bD-lw2"/>
                                                 <constraint firstAttribute="trailing" secondItem="YRB-Zy-KUb" secondAttribute="trailing" id="bT2-MQ-kzG"/>
-                                                <constraint firstItem="YRB-Zy-KUb" firstAttribute="top" secondItem="sHW-U6-G82" secondAttribute="top" constant="10" id="iWe-ep-o8b"/>
+                                                <constraint firstItem="YRB-Zy-KUb" firstAttribute="top" secondItem="sHW-U6-G82" secondAttribute="top" constant="10" id="iWe-ep-o8b">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                                </constraint>
                                                 <constraint firstAttribute="trailing" secondItem="YRB-Zy-KUb" secondAttribute="trailing" constant="10" id="jxe-IL-hvR"/>
                                                 <constraint firstItem="YRB-Zy-KUb" firstAttribute="leading" secondItem="sHW-U6-G82" secondAttribute="leading" id="ljJ-rn-4wr"/>
-                                                <constraint firstAttribute="bottom" secondItem="YRB-Zy-KUb" secondAttribute="bottom" constant="10" id="nAv-0S-wkp"/>
+                                                <constraint firstAttribute="bottom" secondItem="YRB-Zy-KUb" secondAttribute="bottom" constant="10" id="nAv-0S-wkp">
+                                                    <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                                                </constraint>
                                                 <constraint firstItem="YRB-Zy-KUb" firstAttribute="top" secondItem="sHW-U6-G82" secondAttribute="top" constant="10" id="qkV-57-KN3"/>
                                                 <constraint firstItem="YRB-Zy-KUb" firstAttribute="top" secondItem="sHW-U6-G82" secondAttribute="top" constant="10" id="xTv-dD-8Rw"/>
                                             </constraints>
@@ -5120,12 +5124,20 @@ on news things</string>
                         <animations/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="1Yi-Fl-oxH" secondAttribute="trailing" id="0Eo-zw-KW3"/>
-                            <constraint firstItem="Pru-Qu-tbF" firstAttribute="leading" secondItem="KKB-G9-SQt" secondAttribute="leading" constant="10" id="65W-M9-I9p"/>
-                            <constraint firstItem="Qed-Vx-UEz" firstAttribute="top" secondItem="Pru-Qu-tbF" secondAttribute="bottom" constant="10" id="6n9-Zc-T7m"/>
-                            <constraint firstItem="Pru-Qu-tbF" firstAttribute="top" secondItem="1Yi-Fl-oxH" secondAttribute="bottom" constant="11" id="E9u-uA-bqD"/>
+                            <constraint firstItem="Pru-Qu-tbF" firstAttribute="leading" secondItem="KKB-G9-SQt" secondAttribute="leading" constant="10" id="65W-M9-I9p">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
+                            <constraint firstItem="Qed-Vx-UEz" firstAttribute="top" secondItem="Pru-Qu-tbF" secondAttribute="bottom" constant="10" id="6n9-Zc-T7m">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
+                            <constraint firstItem="Pru-Qu-tbF" firstAttribute="top" secondItem="1Yi-Fl-oxH" secondAttribute="bottom" constant="11" id="E9u-uA-bqD">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstItem="1Yi-Fl-oxH" firstAttribute="top" secondItem="iMh-33-YSg" secondAttribute="bottom" id="J1O-tL-zvm"/>
                             <constraint firstItem="1Yi-Fl-oxH" firstAttribute="leading" secondItem="KKB-G9-SQt" secondAttribute="leading" id="Lqw-Lo-AAE"/>
-                            <constraint firstAttribute="trailing" secondItem="Pru-Qu-tbF" secondAttribute="trailing" constant="10" id="op8-Mi-mPf"/>
+                            <constraint firstAttribute="trailing" secondItem="Pru-Qu-tbF" secondAttribute="trailing" constant="10" id="op8-Mi-mPf">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -5368,7 +5380,7 @@ on news things</string>
                                     </label>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.52156862749999999" green="0.48627450979999998" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="EnG-Vd-L94" firstAttribute="leading" secondItem="JyZ-gJ-LGo" secondAttribute="leading" constant="35" id="09g-RH-MHO"/>
                                     <constraint firstItem="7Yk-Eh-gSg" firstAttribute="leading" secondItem="TdJ-MT-W1Q" secondAttribute="trailing" id="49G-g4-xGb"/>
@@ -5691,7 +5703,9 @@ on news things</string>
                             <constraint firstItem="JyZ-gJ-LGo" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" constant="10" id="PPK-YP-XSP">
                                 <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>
-                            <constraint firstItem="JyZ-gJ-LGo" firstAttribute="top" secondItem="geT-hc-lAU" secondAttribute="bottom" constant="10" id="ate-8N-Xi4"/>
+                            <constraint firstItem="JyZ-gJ-LGo" firstAttribute="top" secondItem="geT-hc-lAU" secondAttribute="bottom" constant="10" id="ate-8N-Xi4">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstItem="geT-hc-lAU" firstAttribute="leading" secondItem="Y3c-5I-Q2R" secondAttribute="leading" id="kOn-I8-3Om"/>
                             <constraint firstAttribute="trailing" secondItem="geT-hc-lAU" secondAttribute="trailing" id="lLP-G9-gtz"/>
                         </constraints>
@@ -7905,7 +7919,7 @@ on news things</string>
                                     </button>
                                 </subviews>
                                 <animations/>
-                                <color key="backgroundColor" red="0.52156862749999999" green="0.48627450979999998" blue="0.67843137249999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="erl-gL-fJK" firstAttribute="top" secondItem="eI8-a5-sI6" secondAttribute="bottom" constant="5" id="04g-6Z-Lex"/>
                                     <constraint firstItem="eI8-a5-sI6" firstAttribute="leading" secondItem="erl-gL-fJK" secondAttribute="leading" id="7O8-QX-KMh"/>
@@ -7979,7 +7993,7 @@ on news things</string>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0vs-cl-2Tq">
                                                             <rect key="frame" x="0.0" y="0.0" width="580" height="40"/>
                                                             <subviews>
-                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VrO-Cb-TJh">
+                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VrO-Cb-TJh">
                                                                     <rect key="frame" x="5" y="5" width="35" height="35"/>
                                                                     <animations/>
                                                                     <constraints>
@@ -8216,7 +8230,9 @@ on news things</string>
                             <constraint firstAttribute="trailing" secondItem="Tps-Jb-lKH" secondAttribute="trailing" id="EY8-DI-Hyt"/>
                             <constraint firstItem="Tps-Jb-lKH" firstAttribute="leading" secondItem="07P-2q-64N" secondAttribute="leadingMargin" id="L0J-rF-jzy"/>
                             <constraint firstItem="nXH-b6-zfT" firstAttribute="top" secondItem="ylX-64-nXL" secondAttribute="bottom" id="PS0-xd-Wih"/>
-                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="Tps-Jb-lKH" secondAttribute="bottom" constant="10" id="Smc-Cq-tra"/>
+                            <constraint firstItem="7Fh-L8-WtP" firstAttribute="top" secondItem="Tps-Jb-lKH" secondAttribute="bottom" constant="10" id="Smc-Cq-tra">
+                                <variation key="heightClass=regular-widthClass=compact" constant="8"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="7Fh-L8-WtP" secondAttribute="trailing" constant="10" id="UJ5-ga-viS">
                                 <variation key="heightClass=regular-widthClass=compact" constant="8"/>
                             </constraint>

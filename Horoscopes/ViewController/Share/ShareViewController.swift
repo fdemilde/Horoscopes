@@ -79,8 +79,8 @@ class ShareViewController : UIViewController {
         }
         if(self.isMessageAvailable()){self.createMessageButton()}
         if(self.isMailAvailable()){self.createEmailButton()}
-        if(self.isFBMessageAvailable()){self.createFBMessageButton()}
-        if(self.isWhatsappAvailable()){self.createWhatappsButton()}
+//        if(self.isFBMessageAvailable()){self.createFBMessageButton()}
+//        if(self.isWhatsappAvailable()){self.createWhatappsButton()}
     }
     
     func createSeparatorLine(){
