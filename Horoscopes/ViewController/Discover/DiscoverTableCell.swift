@@ -135,7 +135,8 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     }
     
     func configureCellForNewsfeed() {
-        self.likeNumberLabel.text = "\(userPost.hearts) Likes  \(userPost.shares) Shares"
+//        self.likeNumberLabel.text = "\(userPost.hearts) Likes  \(userPost.shares) Shares"
+        self.likeNumberLabel.text = "\(userPost.hearts) Likes"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(userPost.post_id)) {
             self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         } else {
@@ -157,7 +158,8 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         }
         self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         self.likeButton.userInteractionEnabled = false
-        self.likeNumberLabel.text = "\(++userPost.hearts) Likes  \(userPost.shares) Shares"
+//        self.likeNumberLabel.text = "\(++userPost.hearts) Likes  \(userPost.shares) Shares"
+        self.likeNumberLabel.text = "\(++userPost.hearts) Likes"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         XAppDelegate.socialManager.sendHeart(userPost.uid, postId: userPost.post_id, type: SEND_HEART_USER_POST_TYPE)
     }

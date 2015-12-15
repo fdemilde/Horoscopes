@@ -124,7 +124,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.textView!.linkTextAttributes = linkAttributes
             self.textView.attributedText = att
             
-            self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+//            self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
+            self.likeNumberLabel.text = "\(post.hearts) Likes"
             if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
                 self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
             } else {
@@ -225,7 +226,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         }
         self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         self.likeButton.userInteractionEnabled = false
-        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
+//        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
+        self.likeNumberLabel.text = "\(++post.hearts) Likes"
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
         XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
