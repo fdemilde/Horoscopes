@@ -148,11 +148,11 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
     // MARK: infinite scrolling support
     func insertRowsAtBottom(newData : [UserPost]){
         self.tableView.beginUpdates()
-        let deltaCalculator = BKDeltaCalculator.defaultCalculator { (post1 , post2) -> Bool in
+        let deltaCalculator = BKDeltaCalculator(equalityTest: { (post1 , post2) -> Bool in
             let p1 = post1 as! UserPost
             let p2 = post2 as! UserPost
             return (p1.post_id == p2.post_id);
-        }
+        })
         
         let delta = deltaCalculator.deltaFromOldArray(XAppDelegate.dataStore.newsfeedFollowing, toNewArray:newData)
         delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)

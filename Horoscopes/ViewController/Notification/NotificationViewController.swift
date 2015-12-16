@@ -76,11 +76,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             view.addSubview(fixedLabel)
             self.tableView.backgroundView = view
         }
-        return 0
+        return 1
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return notifArray.count
+        return self.notifArray.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -152,14 +152,20 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
+                
+                self.tableView.beginUpdates()
+                let deltaCalculator = BKDeltaCalculator(equalityTest: { (notif1 , notif2) -> Bool in
+                    let n1 = notif1 as! NotificationObject
+                    let n2 = notif2 as! NotificationObject
+                    return (n1.notification_id == n2.notification_id);
+                })
+                let delta = deltaCalculator.deltaFromOldArray(self.notifArray, toNewArray:result!)
+                delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
                 self.notifArray = result!
-                // remove all notification 
-//                XAppDelegate.socialManager.clearAllNotification(self.notifArray)
                 self.notifArray.sortInPlace({ $0.created > $1.created })
-                if let data = NSUserDefaults.standardUserDefaults().objectForKey(notificationKey) as? NSData {
-                    self.notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(data) as! Set<String>
-                }
-                self.tableView.reloadData()
+//                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
+                self.tableView.endUpdates()
+                
             })
         })
     }

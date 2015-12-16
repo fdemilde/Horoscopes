@@ -77,5 +77,7 @@
     return [url URLByAppendingPathComponent:@"NotificationObject"].path;
 }
 
-
+- (NSString *)description {
+    return [NSString stringWithFormat:@"id = %@", self.notification_id];
+}
 @end

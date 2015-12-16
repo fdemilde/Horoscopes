@@ -114,8 +114,10 @@ class CacheManager {
                 } else {
                     notificationDict[expiredTime] = nil
                 }
-                completionHandler(result: resultArray)
             }
+            resultArray.sortInPlace({ $0.created > $1.created })
+            completionHandler(result: resultArray)
+            
             let newSince = Int(NSDate().timeIntervalSince1970)
 //            print("get data since resultArray = \(lastSince)")
             XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andCompleteBlock: { (result) -> Void in
@@ -127,8 +129,7 @@ class CacheManager {
                     resultArray += checkArray
                     CacheManager.saveNotificationsData(notificationDict)
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
-                    completionHandler(result: resultArray)
-                } else {
+                    resultArray.sortInPlace({ $0.created > $1.created })
                     completionHandler(result: resultArray)
                 }
             })
