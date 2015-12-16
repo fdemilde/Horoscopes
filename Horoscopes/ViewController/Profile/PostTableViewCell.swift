@@ -128,8 +128,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.likeNumberLabel.text = "\(post.hearts) Likes"
             if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
                 self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+                self.likeButton.userInteractionEnabled = false
             } else {
                 self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+                self.likeButton.userInteractionEnabled = true
             }
             
             
@@ -255,6 +257,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                             viewController.postId = postId
                             viewController.userProfile = result!.0
                             viewController.parentVC = self.viewController
+                            viewController.numberOfLike = self.post.hearts
                             self.displayViewController(viewController)
                         }
                     }
