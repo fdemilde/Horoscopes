@@ -18,6 +18,7 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
     let HEADER_VIEW_HEIGHT = 40 as CGFloat
     var parentVC : UIViewController!
     var isLastPostPage = false
+    var numberOfLike = 0
     
     var currentPostPage: Int = 0 {
         didSet {
@@ -84,10 +85,10 @@ class LikeDetailTableViewController : UIViewController, UITableViewDelegate, UIT
         label.font = UIFont(name: "HelveticaNeue", size: 11)
         
         var labelString = ""
-        if(userProfile.count > 1){
-            labelString = "\(userProfile.count) people like your post"
+        if numberOfLike > 1 {
+            labelString = "\(numberOfLike) people like your post"
         } else {
-            labelString = "\(userProfile.count) person likes your post"
+            labelString = "\(numberOfLike) person likes your post"
         }
         label.text = labelString
         label.textColor = UIColor.whiteColor()
