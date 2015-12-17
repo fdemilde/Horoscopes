@@ -23,6 +23,9 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     var headerHeight: CGFloat = 0
     var noPostView: PostButtonsView!
+    var LOGIN_VIEW_PADDING: CGFloat = 10
+    
+    let SETTINGS_BTN_SIZE = CGSizeMake(40,30)
     
     // MARK: - Life cycle
 
@@ -118,21 +121,39 @@ class CurrentProfileViewController: ProfileBaseViewController {
             profileView.hidden = true
             tableView.hidden = true
             
-            let loginFrame = CGRect(x: view.frame.origin.x, y: view.frame.origin.y + ADMOD_HEIGHT, width: view.frame.width, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT)
+            let loginFrame = CGRect(x: view.frame.origin.x + LOGIN_VIEW_PADDING, y: view.frame.origin.y + ADMOD_HEIGHT + LOGIN_VIEW_PADDING, width: view.frame.width - LOGIN_VIEW_PADDING * 2, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT - LOGIN_VIEW_PADDING * 2)
             loginView = UIView(frame: loginFrame)
+            loginView.backgroundColor = UIColor(red: 97/255.0, green: 96/255.0, blue: 144/255.0, alpha: 1)
+            
+            // add corner radius
+            loginView.layer.cornerRadius = 4
+            
+            // add shadow
+            loginView.layer.shadowColor = UIColor.blackColor().CGColor
+            loginView.layer.shadowOffset = CGSizeMake(0, 3)
+            loginView.layer.shadowRadius = 2
+            loginView.layer.shadowOpacity = 0.3
+            
+            // Create setting button
+            let buttonPadding: CGFloat = 10
+            let settingsButton = UIButton(frame: CGRectMake(loginFrame.size.width - buttonPadding - SETTINGS_BTN_SIZE.width, buttonPadding, SETTINGS_BTN_SIZE.width, SETTINGS_BTN_SIZE.height))
+            settingsButton.setImage(UIImage(named: "settings_btn"), forState: UIControlState.Normal)
+            settingsButton.addTarget(self, action: "openSettings:", forControlEvents: UIControlEvents.TouchUpInside)
+            loginView.addSubview(settingsButton)
             let padding: CGFloat = 8
             
             let facebookLoginButton = UIButton()
             let facebookLoginImage = UIImage(named: "fb_login_icon")
             facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
             facebookLoginButton.sizeToFit()
-            facebookLoginButton.frame = CGRectMake(loginFrame.width/2 - facebookLoginButton.frame.width/2, loginFrame.height/2 - facebookLoginButton.frame.height/2, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
+            facebookLoginButton.frame = CGRectMake(loginFrame.width/2 - facebookLoginButton.frame.width/2, loginFrame.height/2 - facebookLoginButton.frame.height/2 - 20, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
             facebookLoginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
             loginView.addSubview(facebookLoginButton)
             
             let facebookLoginLabel = UILabel()
-            facebookLoginLabel.text = "You need to login to Facebook\nto enjoy this feature"
-            facebookLoginLabel.textColor = UIColor.lightTextColor()
+            facebookLoginLabel.font = UIFont(name: "HelveticaNeue", size: 11)
+            facebookLoginLabel.text = "You need to login to Facebook\nto view your profile"
+            facebookLoginLabel.textColor = UIColor.whiteColor()
             facebookLoginLabel.numberOfLines = 2
             facebookLoginLabel.sizeToFit()
             facebookLoginLabel.textAlignment = NSTextAlignment.Center
