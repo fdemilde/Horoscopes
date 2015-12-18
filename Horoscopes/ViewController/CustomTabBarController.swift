@@ -78,7 +78,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         dailyItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
 //        newsFeedItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         discoveryItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
-        createPostItem.imageInsets = UIEdgeInsetsMake(6, 0, -6, 0)
+        createPostItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         notifItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         profileItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
 //        settingItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
