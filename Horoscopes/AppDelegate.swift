@@ -45,8 +45,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locationManager.setupLocationService()
         }
         
-        let text = "this is my w3 link: <a href=\"http://www.w3schools.com\">Visit W3Schools</a> and another one: <a href=\"http://google.com\">GOOGLE</a> for you to test www.lala.com"
-        Utilities.getTextWithWeblink(text, isTruncated: false)
+        if let launchOptions = launchOptions {
+            if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
+                let url = value as! NSURL
+                self.getRouteAndHandle(url.absoluteString)
+            }
+        }
+        
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
@@ -386,6 +391,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Route == profile facebookfriends param dict = \(param)")
         })
         
+//        print("add route !! == /post/:post_id")
+//        NSLog("add route !! == /post/:post_id")
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
             print("Route == post with param dict = \(param)")
             dispatch_async(dispatch_get_main_queue(),{
@@ -393,6 +400,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             })
         })
         
+//        print("add route !! == /post/:post_id/hearts")
+//        NSLog("add route !! == /post/:post_id/hearts")
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 self.gotoPost(param)
@@ -430,12 +439,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    func getRouteAndHandle(url : String){
+        
+        if let schemeRange = url.rangeOfString("zwigglers-horoscopes://") {
+            let route = url.substringFromIndex(schemeRange.endIndex)
+            XAppDelegate.mobilePlatform.router.handleRoute(route)
+        }
+    }
+    
     func gotoPost(param : Dictionary<NSObject, AnyObject>){
         dispatch_async(dispatch_get_main_queue(),{
+            
+//            print("Go to post param == \(param)")
+//            NSLog("gotoPost == %@", param)
             Utilities.popCurrentViewControllerToTop()
             if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                 let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                rootVC?.selectedIndex = 3
+                rootVC?.selectedIndex = 1
             }
             if let postId = param["post_id"] as? String{
                 Utilities.showHUD()
@@ -450,7 +470,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 for post : UserPost in result {
                                     let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
                                     controller.userPost = post
-                                    if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
+                                    if let notificationViewController = Utilities.getViewController(AlternateCommunityViewController.classForCoder()) as? AlternateCommunityViewController {
                                         notificationViewController.navigationController?.pushViewController(controller, animated: true)
                                     }
                                 }
