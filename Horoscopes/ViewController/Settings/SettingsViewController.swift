@@ -150,11 +150,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         navigationController?.popViewControllerAnimated(true)
     }
     
-    @IBAction func searchButtonTapped(sender: UIButton) {
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
-        controller.delegate = self.parentVC
-        navigationController?.presentViewController(controller, animated: true, completion: nil)
-    }
+//    @IBAction func searchButtonTapped(sender: UIButton) {
+//        let controller = storyboard?.instantiateViewControllerWithIdentifier("SearchViewController") as! SearchViewController
+//        controller.delegate = self.parentVC
+//        navigationController?.presentViewController(controller, animated: true, completion: nil)
+//    }
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()

@@ -67,6 +67,13 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
         return cell
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        let friend = friends[indexPath.row]
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        controller.userProfile = friend
+        navigationController?.pushViewController(controller, animated: true)
+    }
+    
     func didTapFollowButton(cell: FollowTableViewCell) {
         let index = tableView.indexPathForCell(cell)?.row
         let friend = friends[index!]

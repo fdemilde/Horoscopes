@@ -142,17 +142,14 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
+        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
         profileView.layer.mask = topCorner
-//        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-//        bottomCorner.path = UIBezierPath(roundedRect: tableView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
-//        dispatch_after(delayTime, dispatch_get_main_queue()) {
-//            self.tableView.layer.mask = self.bottomCorner
-//        }
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -221,8 +218,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func changeToWhiteTableViewLayout() {
-        tableLeadingSpaceLayoutConstraint.constant = 10
-        tableTrailingSpaceLayoutConstraint.constant = 10
+        tableLeadingSpaceLayoutConstraint.constant = 8
+        tableTrailingSpaceLayoutConstraint.constant = 8
         tableBottomSpaceLayoutConstraint.constant = 8
         tableView.backgroundColor = UIColor.whiteColor()
     }
