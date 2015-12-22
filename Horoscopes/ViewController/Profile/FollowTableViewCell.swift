@@ -35,7 +35,7 @@ class FollowTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         followButton.frame = CGRect(x: frame.width - followButtonWidth - 10, y: frame.height/2 - followButtonHeight/2 , width: followButtonWidth, height: followButtonHeight)
-        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
+//        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 
     override func setSelected(selected: Bool, animated: Bool) {

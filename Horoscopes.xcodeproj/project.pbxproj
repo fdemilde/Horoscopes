@@ -16,6 +16,7 @@
 		704FF74B1BB2BB92006A5A98 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */; };
 		705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */; };
 		705E59DA1B4CE75F00D1E613 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */; };
+		706A6EDE1C29096500ED199A /* FacebookFriendViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 706A6EDD1C29096500ED199A /* FacebookFriendViewController.swift */; };
 		70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70A4E2771B623F5100711B4F /* ApplicationColor.swift */; };
 		70AE131E1B8589E100E9E781 /* DailyContentTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */; };
 		70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */; };
@@ -216,6 +217,7 @@
 		704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
 		705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		706A6EDD1C29096500ED199A /* FacebookFriendViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FacebookFriendViewController.swift; sourceTree = "<group>"; };
 		70A4E2771B623F5100711B4F /* ApplicationColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApplicationColor.swift; sourceTree = "<group>"; };
 		70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyContentTableViewCell.swift; sourceTree = "<group>"; };
 		70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyButtonTableViewCell.swift; sourceTree = "<group>"; };
@@ -479,6 +481,7 @@
 				704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */,
 				704FF7461BB2BB92006A5A98 /* MyTimePickerViewController.swift */,
 				704FF7471BB2BB92006A5A98 /* SettingsViewController.swift */,
+				706A6EDD1C29096500ED199A /* FacebookFriendViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1368,6 +1371,7 @@
 				70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */,
 				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
+				706A6EDE1C29096500ED199A /* FacebookFriendViewController.swift in Sources */,
 				701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */,
 				F47C02A21B2691A700C0BA83 /* SpinWheelVC.swift in Sources */,
 				F4D9A9761C06C980007083A4 /* LikeDetailTableViewController.swift in Sources */,

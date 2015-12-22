@@ -26,7 +26,7 @@ class SettingsTableCell : UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setupCell(type: SettingsType){
+    func setupCell(type: SettingsType, title: String){
         self.type = type
         if(self.type == SettingsType.Notification){
             timeLabel.hidden = false
@@ -50,20 +50,9 @@ class SettingsTableCell : UITableViewCell {
             birthdayLabel.hidden = true
             birthdayUnderline.hidden = true
         }
-        switch(self.type!){
-            case SettingsType.Notification:
-                titleLabel.text = "Notify Everyday"
-                break;
-            case SettingsType.ChangeDOB:
-                titleLabel.text = "DOB"
-                break;
-            case SettingsType.BugsReport:
-                titleLabel.text = "Bugs Report"
-                break;
-            case SettingsType.Logout:
-                titleLabel.text = "Logout"
-                titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
-                break;
+        titleLabel.text = title
+        if type == .Logout {
+            titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
         }
         checkAndChangeSwitchColor()
         
