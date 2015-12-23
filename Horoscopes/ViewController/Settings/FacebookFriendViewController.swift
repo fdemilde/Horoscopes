@@ -11,27 +11,39 @@ import UIKit
 class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, UITableViewDataSource, FollowTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var titleBackgroundView: UIView!
+    
     var friends = [UserProfile]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
+        self.view.backgroundColor = UIColor(patternImage: image)
+        titleBackgroundView.layer.shadowOffset = CGSizeMake(0, 1)
+        titleBackgroundView.layer.shadowRadius = 2.0
+        titleBackgroundView.layer.shadowColor = UIColor.blackColor().CGColor
+        titleBackgroundView.layer.shadowOpacity = 0.2
         // Do any additional setup after loading the view.
         tableView.layer.cornerRadius = 4
         tableView.rowHeight = 66
     }
     
     override func viewWillAppear(animated: Bool) {
+        Utilities.showHUD(self.view)
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
+            
             if let error = error {
+                Utilities.hideHUD(self.view)
                 Utilities.showError(error)
             } else {
                 self.friends = result!
                 DataStore.sharedInstance.checkFollowStatus(self.friends, completionHandler: { (error, shouldReload) -> Void in
                     if let error = error {
+                        Utilities.hideHUD(self.view)
                         Utilities.showError(error)
                     } else if shouldReload {
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            Utilities.hideHUD(self.view)
                             self.tableView.reloadData()
                         })
                     }
