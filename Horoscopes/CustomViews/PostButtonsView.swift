@@ -18,19 +18,19 @@ class PostButtonsView: UIView {
     var feelLabel: UILabel!
     var fortuneLabel: UILabel!
     var mindLabel: UILabel!
-    var POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_story")!.size
+    var POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_advice")!.size
     var hostViewController: UIViewController!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         storyButton = UIButton()
-        storyButton.setImage(UIImage(named: "newsfeed_post_story"), forState: .Normal)
+        storyButton.setImage(UIImage(named: "newsfeed_post_advice"), forState: .Normal)
         storyButton.addTarget(self, action: "storyButtonTapped:", forControlEvents: .TouchUpInside)
         addSubview(storyButton)
         
         feelButton = UIButton()
-        feelButton.setImage(UIImage(named: "newsfeed_post_feel"), forState: .Normal)
+        feelButton.setImage(UIImage(named: "newsfeed_post_horoscope"), forState: .Normal)
         feelButton.addTarget(self, action: "feelButtonTapped:", forControlEvents: .TouchUpInside)
         addSubview(feelButton)
         

@@ -158,8 +158,8 @@ class Utilities {
     
     class func getNewsfeedTypeByString(typeString : String) -> NewsfeedType{
         if(typeString == "onyourmind") {return NewsfeedType.OnYourMind}
-        if(typeString == "shareadvice") {return NewsfeedType.Story}
-        if(typeString == "howhoroscope") {return NewsfeedType.Feeling}
+        if(typeString == "shareadvice") {return NewsfeedType.ShareAdvice}
+        if(typeString == "howhoroscope") {return NewsfeedType.HowHoroscope}
         if(typeString == "fortune") {return NewsfeedType.Fortune}
         return NewsfeedType.Invalid
     }
@@ -329,10 +329,10 @@ class Utilities {
         switch(type){
         case NewsfeedType.OnYourMind:
             return "post_type_mind"
-        case NewsfeedType.Feeling:
-            return "post_type_feel"
-        case NewsfeedType.Story:
-            return "post_type_story"
+        case NewsfeedType.HowHoroscope:
+            return "post_type_horoscope"
+        case NewsfeedType.ShareAdvice:
+            return "post_type_advice"
         case NewsfeedType.Fortune:
             return "post_type_fortune"
         case NewsfeedType.Invalid:

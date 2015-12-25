@@ -124,8 +124,8 @@ let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key
 // MARK: post type
 // postType: image name, label, server type
 let postTypes = [
-    NewsfeedType.Feeling: ("post_type_feel", "How’s your horoscope?","howhoroscope"),
-    NewsfeedType.Story: ("post_type_story", "Share some advice","shareadvice"),
+    NewsfeedType.HowHoroscope: ("post_type_horoscope", "How’s your horoscope?","howhoroscope"),
+    NewsfeedType.ShareAdvice: ("post_type_advice", "Share some advice","shareadvice"),
     NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?","onyourmind"),
     NewsfeedType.Fortune: ("post_type_fortune", "Fortune Cookie","fortune")
 ]
@@ -153,8 +153,8 @@ enum ShareType {
 
 enum NewsfeedType {
     case OnYourMind
-    case Story
-    case Feeling
+    case ShareAdvice
+    case HowHoroscope
     case Fortune
     case Invalid
 }
