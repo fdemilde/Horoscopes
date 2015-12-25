@@ -45,9 +45,9 @@ class PostButtonsView: UIView {
         addSubview(mindButton)
         
         storyLabel = UILabel()
-        configureLabel(storyLabel, text: "Share your story")
+        configureLabel(storyLabel, text: "Share some advice")
         feelLabel = UILabel()
-        configureLabel(feelLabel, text: "How do you feel today?")
+        configureLabel(feelLabel, text: "How’s your horoscope?")
         fortuneLabel = UILabel()
         configureLabel(fortuneLabel, text: "Write a fortune")
         mindLabel = UILabel()
@@ -146,11 +146,11 @@ class PostButtonsView: UIView {
     }
     
     func storyButtonTapped(sender: UIButton) {
-        configureViewController("story", placeholder: "Share your story")
+        configureViewController("shareadvice", placeholder: "Share some advice")
     }
     
     func feelButtonTapped(sender: UIButton) {
-        configureViewController("feeling", placeholder: "How do you feel today?")
+        configureViewController("howhoroscope", placeholder: "How’s your horoscope?")
     }
     
     func fortuneButtonTapped(sender: UIButton) {

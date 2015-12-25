@@ -75,8 +75,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     let postTypeTexts = [
-        "How do you feel today?",
-        "Share your story",
+        "How’s your horoscope?",
+        "Share some advice",
         "What's on your mind?"
     ]
     var isLastPostPage = false

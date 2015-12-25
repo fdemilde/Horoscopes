@@ -158,8 +158,8 @@ class Utilities {
     
     class func getNewsfeedTypeByString(typeString : String) -> NewsfeedType{
         if(typeString == "onyourmind") {return NewsfeedType.OnYourMind}
-        if(typeString == "story") {return NewsfeedType.Story}
-        if(typeString == "feeling") {return NewsfeedType.Feeling}
+        if(typeString == "shareadvice") {return NewsfeedType.Story}
+        if(typeString == "howhoroscope") {return NewsfeedType.Feeling}
         if(typeString == "fortune") {return NewsfeedType.Fortune}
         return NewsfeedType.Invalid
     }
