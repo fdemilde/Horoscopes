@@ -191,7 +191,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                     }
                 }
             } else {
-                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "You have to login to Facebook to see post like!", error: nil)
+                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "You have to login to Facebook to see post like", error: nil)
             }
             
         }
@@ -247,7 +247,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                 controller.userProfile = profile!
                 parentViewController.navigationController?.pushViewController(controller, animated: true)
             } else {
-                Utilities.showAlert(parentViewController, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
+                Utilities.showAlert(parentViewController, title: "Action Denied", message: "You have to login to Facebook to view profile", error: nil)
             }
         }
     }

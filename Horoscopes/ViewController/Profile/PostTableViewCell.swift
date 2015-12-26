@@ -216,7 +216,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 controller.userProfile = profile!
                 viewController.navigationController?.pushViewController(controller, animated: true)
             } else {
-                Utilities.showAlert(viewController, title: "Action Denied", message: "You have to login to Facebook to view profile!", error: nil)
+                Utilities.showAlert(viewController, title: "Action Denied", message: "You have to login to Facebook to view profile", error: nil)
             }
         }
     }
