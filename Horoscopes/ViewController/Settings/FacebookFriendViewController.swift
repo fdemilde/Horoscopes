@@ -29,6 +29,10 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
     }
     
     override func viewWillAppear(animated: Bool) {
+        showFriendList()
+    }
+    
+    func showFriendList() {
         Utilities.showHUD(self.view)
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             

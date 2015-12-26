@@ -8,9 +8,13 @@
 
 import UIKit
 
-class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertViewDelegate {
+protocol LoginViewControllerDelegate {
+    func didLoginSuccessfully()
+}
+
+class PostLoginViewController: UIViewController, SocialManagerDelegate {
     
-    var detailPostViewController : DetailPostViewController!
+    var delegate: LoginViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,7 +40,7 @@ class PostLoginViewController: UIViewController, SocialManagerDelegate, UIAlertV
                     if permissionGranted {
                         Utilities.hideHUD(self.view)
                         self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
-                            self.detailPostViewController.post()
+                            self.delegate.didLoginSuccessfully()
                         })
                     } else {
                         Utilities.hideHUD(self.view)

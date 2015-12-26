@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
+class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, LoginViewControllerDelegate {
     
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var contentViewBottomSpaceConstraint: NSLayoutConstraint!
@@ -130,11 +130,15 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate {
     func showLoginFormSheet() {
         self.view.endEditing(true)
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
-        controller.detailPostViewController = self
+        controller.delegate = self
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    func didLoginSuccessfully() {
+        post()
     }
     
     func textViewDidChange(textView: UITextView) {
