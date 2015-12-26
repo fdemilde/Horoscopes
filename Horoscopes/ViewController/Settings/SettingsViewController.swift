@@ -7,7 +7,7 @@
 //
 
 import Foundation
-class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate {
+class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate, LoginViewControllerDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     var tableHeaderView : UIView!
@@ -96,8 +96,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
             case 0:
-                let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
-                navigationController?.pushViewController(controller, animated: true)
+                if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
+                    let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
+                    navigationController?.pushViewController(controller, animated: true)
+                } else {
+                    let controller = storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+                    controller.delegate = self
+                    let formSheet = MZFormSheetController(viewController: controller)
+                    formSheet.shouldDismissOnBackgroundViewTap = true
+                    formSheet.cornerRadius = 5
+                    self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+                }
             case 1:
                 let timePickerViewController = self.setupNotificationTimePickerViewController()
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
@@ -118,6 +127,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             default:
                 break
         }
+    }
+    
+    func didLoginSuccessfully() {
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
+        navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: Setup and display View Controller
