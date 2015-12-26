@@ -70,10 +70,10 @@ class PostButtonsView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        storyButton.frame = getPostButtonFrame(0)
-        feelButton.frame = getPostButtonFrame(1)
-        fortuneButton.frame = getPostButtonFrame(2)
-        mindButton.frame = getPostButtonFrame(3)
+        storyButton.frame = getPostButtonFrame(1)
+        feelButton.frame = getPostButtonFrame(0)
+        fortuneButton.frame = getPostButtonFrame(3)
+        mindButton.frame = getPostButtonFrame(2)
         
         configureOriginOf(storyLabel, basedOn: storyButton)
         configureOriginOf(feelLabel, basedOn: feelButton)
