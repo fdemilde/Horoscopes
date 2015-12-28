@@ -26,10 +26,12 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
         // Do any additional setup after loading the view.
         tableView.layer.cornerRadius = 4
         tableView.rowHeight = 66
+        showFriendList()
     }
     
     override func viewWillAppear(animated: Bool) {
-        showFriendList()
+        super.viewWillAppear(animated)
+//        showFriendList()
     }
     
     func showFriendList() {
@@ -41,17 +43,21 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
                 Utilities.showError(error)
             } else {
                 self.friends = result!
-                DataStore.sharedInstance.checkFollowStatus(self.friends, completionHandler: { (error, shouldReload) -> Void in
-                    if let error = error {
-                        Utilities.hideHUD(self.view)
-                        Utilities.showError(error)
-                    } else if shouldReload {
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            Utilities.hideHUD(self.view)
-                            self.tableView.reloadData()
-                        })
-                    }
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.tableView.reloadData()
                 })
+                Utilities.hideHUD(self.view)
+//                DataStore.sharedInstance.checkFollowStatus(self.friends, completionHandler: { (error, shouldReload) -> Void in
+//                    if let error = error {
+//                        Utilities.hideHUD(self.view)
+//                        Utilities.showError(error)
+//                    } else if shouldReload {
+//                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+//                            Utilities.hideHUD(self.view)
+//                            self.tableView.reloadData()
+//                        })
+//                    }
+//                })
             }
         }
     }
@@ -79,7 +85,7 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
                 cell.profileImageView.image = image
             })
         }
-        cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
+//        cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
         return cell
     }
     
