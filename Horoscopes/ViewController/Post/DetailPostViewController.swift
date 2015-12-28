@@ -80,7 +80,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
             SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, postToFacebook: postToFacebook, completionHandler: { (result, error) -> Void in
                 if let error = error {
                     Utilities.hideHUD(self.view)
-                    Utilities.showAlert(self, title: "Post Error", message: "Your post cannot be created.", error: error)
+                    Utilities.showAlert(self, title: "Error", message: "Your post could not be created. Please try again later.", error: error)
                 } else {
                     self.finishPost()
                 }
@@ -92,7 +92,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
             } else {
                 SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
                     if let error = error {
-                        Utilities.showAlert(self, title: "Server Error", message: "There is an error on server. Please try again later.", error: error)
+                        Utilities.showAlert(self, title: "Error", message: "An unknown error has occured. Please try again later.", error: error)
                     } else {
                         createPost()
                     }

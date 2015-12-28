@@ -152,7 +152,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             
             let facebookLoginLabel = UILabel()
             facebookLoginLabel.font = UIFont(name: "HelveticaNeue", size: 11)
-            facebookLoginLabel.text = "You need to login to Facebook\nto view your profile"
+            facebookLoginLabel.text = "Login via Facebook to unlock your Horoscopes profile"
             facebookLoginLabel.textColor = UIColor.whiteColor()
             facebookLoginLabel.numberOfLines = 2
             facebookLoginLabel.sizeToFit()
@@ -196,7 +196,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                     self.getData()
                 } else {
                     Utilities.hideHUD()
-                    Utilities.showAlert(self, title: "Permission Denied", message: "Not enough permission is granted.", error: nil)
+                    Utilities.showAlert(self, title: "Permission Denied", message: "Please grant permissions and try again", error: nil)
                 }
             }
         }

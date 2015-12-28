@@ -153,7 +153,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     
     @IBAction func tapLikeButton(sender: UIButton) {
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-            Utilities.showAlertView(self, title: "", message: "Must Login facebook to send heart", tag: 1)
+            Utilities.showAlertView(self, title: "", message: "Please login via Facebook to perform this action", tag: 1)
             return
         }
         self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
@@ -191,7 +191,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                     }
                 }
             } else {
-                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "You have to login to Facebook to see post like", error: nil)
+                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
             }
             
         }
@@ -247,7 +247,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                 controller.userProfile = profile!
                 parentViewController.navigationController?.pushViewController(controller, animated: true)
             } else {
-                Utilities.showAlert(parentViewController, title: "Action Denied", message: "You have to login to Facebook to view profile", error: nil)
+                Utilities.showAlert(parentViewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
             }
         }
     }

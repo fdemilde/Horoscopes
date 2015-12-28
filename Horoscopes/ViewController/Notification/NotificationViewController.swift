@@ -61,7 +61,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             // Display a message when the table is empty
             let messageLabel = UILabel(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
             // This is created to calculate label position
-            messageLabel.text = "There is no notification"
+            messageLabel.text = "You have no notifications yet"
             messageLabel.font = UIFont(name: "HelveticaNeue-Light", size:15)
             messageLabel.sizeToFit()
             let view = UIView(frame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height))

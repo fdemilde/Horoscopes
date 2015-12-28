@@ -19,7 +19,7 @@ class ArchiveDetailTableCell : DailyContentTableViewCell {
         dayLabel.text = "Archive"
         textView.text = item.horoscope.horoscopes[0] as! String
         timeTag = item.collectedDate.timeIntervalSince1970
-        dateLabel.text = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, YYYY")
+        dateLabel.text = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, yyyy")
         
         calendarButton.hidden = false
         dayLabel.hidden = true

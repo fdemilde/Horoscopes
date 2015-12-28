@@ -121,11 +121,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
                 Utilities.hideHUD(self.view)
                 if(error != nil){
                     print("loginTapped error == \(error)")
-                    Utilities.showAlertView(self, title: "Error occured", message: "Try again later")
+                    Utilities.showAlertView(self, title: "Error", message: "An error has occured, please try again later")
                     return
                 } else {
                     if(permissionGranted == false){
-                        Utilities.showAlertView(self, title: "Permission denied", message: "Please check your permission again")
+                        Utilities.showAlertView(self, title: "Permission denied", message: "Please grant permissions and try again")
                         return
                     } else {
                         dispatch_async(dispatch_get_main_queue(),{
@@ -173,7 +173,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         
         alertView.delegate = self
         alertView.title = "Notify everyday"
-        alertView.message = "Do you want to receive the notification everyday?"
+        alertView.message = "Do you want to be notified of your horoscope every day?"
         alertView.addButtonWithTitle("No")
         alertView.addButtonWithTitle("Yes")
         alertView.tag = 1
@@ -247,7 +247,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             let alertView: UIAlertView = UIAlertView()
             alertView.delegate = self
             alertView.title = "Did you know?"
-            alertView.message = "You can change your horoscope sign and delivery preferences from the Settings page."
+            alertView.message = "You can change your horoscope sign and delivery preferences from your profile page"
             alertView.addButtonWithTitle("OK, I get it")
             alertView.tag = 2
             alertView.show()

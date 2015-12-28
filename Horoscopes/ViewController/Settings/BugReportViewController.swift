@@ -89,14 +89,14 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
         Utilities.showHUD()
         if(self.textView.text == ""){
             Utilities.hideHUD()
-            Utilities.showAlertView(self, title: "Error", message: "Cannot send empty message", tag: 2)
+            Utilities.showAlertView(self, title: "Error", message: "Unable to post empty message.", tag: 2)
             return
         }
         
         XAppDelegate.socialManager.reportIssue(self.textView.text, completionHandler: { (result, error) -> Void in
             Utilities.hideHUD()
             if(error != nil){ // error
-                Utilities.showAlertView(self, title: "Error", message: "There's an error when trying to send the data, please try again later!", tag: 2)
+                Utilities.showAlertView(self, title: "Error", message: "There was an error while trying to contact the server. Please try again later.", tag: 2)
             } else {
                 Utilities.showAlertView(self, title: "Success", message: "Thank you for your report. We will try our best to fix your issue as soon as we can", tag: 1)
             }

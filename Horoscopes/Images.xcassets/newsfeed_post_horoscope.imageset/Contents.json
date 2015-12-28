@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Feel.png",
+      "filename" : "newsfeed_post_horoscope.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feel@2x.png",
+      "filename" : "newsfeed_post_horoscope@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Feel@3x.png",
+      "filename" : "newsfeed_post_horoscope@3x.png",
       "scale" : "3x"
     }
   ],

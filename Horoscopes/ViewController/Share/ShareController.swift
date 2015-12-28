@@ -45,7 +45,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
-        composerVC.setInitialText(url)
+//        composerVC.setInitialText(url)
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
             composerVC.addImage(ShareController.getImageFromURL(pictureURL))
@@ -78,7 +78,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     func shareMail(parentVC : UIViewController, text : String, shareUrl : String){
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self  //  Make sure to set this property to self, so that the controller can be dismissed!
-        mailComposeVC.setSubject("My Horoscope Today")
+        mailComposeVC.setSubject("Horoscopes - daily horoscope and fortune")
         mailComposeVC.setMessageBody(shareUrl, isHTML: false)
         
         // Present the configured MFMessageComposeViewController instance

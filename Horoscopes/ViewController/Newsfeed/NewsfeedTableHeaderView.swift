@@ -55,7 +55,7 @@ class NewsfeedTableHeaderView : UIView {
         let day = dateFormatter.stringFromDate(date)
         
         
-        dateFormatter.dateFormat = "MMMM YYYY"
+        dateFormatter.dateFormat = "MMMM yyyy"
         let monthYear = dateFormatter.stringFromDate(date)
         
         dateFormatter.dateFormat = "EEEE"

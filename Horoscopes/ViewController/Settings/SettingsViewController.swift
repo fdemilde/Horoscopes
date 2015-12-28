@@ -75,11 +75,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 cell.setupCell(SettingsType.BugsReport, title: "Find Facebook friends")
             case 1:
                 cell.parentVC = self
-                cell.setupCell(SettingsType.Notification, title: "Notify Everyday")
+                cell.setupCell(SettingsType.Notification, title: "Daily Notification")
                 break
             case 2:
                 cell.parentVC = self
-                cell.setupCell(SettingsType.ChangeDOB, title: "DOB")
+                cell.setupCell(SettingsType.ChangeDOB, title: "Birthday")
                 break
             case 3:
                 cell.setupCell(SettingsType.BugsReport, title: "Bugs Report")

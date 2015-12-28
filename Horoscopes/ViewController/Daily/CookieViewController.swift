@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class CookieViewController : ViewControllerWithAds{
+class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate {
     
     enum CookieViewState {
         case CookieViewStateUnopened
@@ -117,10 +117,7 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     @IBAction func cookieTapped(sender: AnyObject) {
-        
-        Utilities.showHUD()
         self.getFortune()
-        
     }
     
     @IBAction func shareFortuneCookieTapped(sender: AnyObject) {
@@ -233,33 +230,72 @@ class CookieViewController : ViewControllerWithAds{
     }
     
     func getFortune() {
-            if((FBSDKAccessToken .currentAccessToken()) != nil){
-                FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-                    if(error == nil){
-                        // println("User information = \(result)")
-                        let userFBID = result["id"] as! String
-                        let postData = NSMutableDictionary()
-                        postData.setObject(userFBID, forKey: "fb_uid")
-                        let expiredTime = NSDate().timeIntervalSince1970 + 600
-                        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
-                            if(error != nil){
-                                Utilities.hideHUD()
-                                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-                            } else {
-                                let result = Utilities.parseNSDictionaryToDictionary(response!)
-                                // println("fortune result = \(result)")
-                                self.reloadFortuneData(result)
-                            }
-                        })
+        
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            
+            if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                retrieveFortuneFromServer()
+            } else {
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(error, viewController: self)
                     } else {
-                        Utilities.hideHUD()
-                        print("fetch Info Error = \(error)")
-                        self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+                        self.retrieveFortuneFromServer()
                     }
                 })
-            } else {
-                self.checkPermissionAndGetFortune()
             }
+        } else {
+            showLoginFormSheet()
+        }
+        
+        
+        
+//            if((FBSDKAccessToken .currentAccessToken()) != nil){
+//                FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
+//                    if(error == nil){
+//                        // println("User information = \(result)")
+//                        let userFBID = result["id"] as! String
+//                        let postData = NSMutableDictionary()
+//                        postData.setObject(userFBID, forKey: "fb_uid")
+//                        let expiredTime = NSDate().timeIntervalSince1970 + 600
+//                        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+//                            if(error != nil){
+//                                Utilities.hideHUD()
+//                                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+//                            } else {
+//                                let result = Utilities.parseNSDictionaryToDictionary(response!)
+//                                // println("fortune result = \(result)")
+//                                self.reloadFortuneData(result)
+//                            }
+//                        })
+//                    } else {
+//                        Utilities.hideHUD()
+//                        print("fetch Info Error = \(error)")
+//                        self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+//                    }
+//                })
+//            } else {
+//                self.checkPermissionAndGetFortune()
+//            }
+    }
+    
+    func retrieveFortuneFromServer() {
+        Utilities.showHUD()
+        let accessToken = FBSDKAccessToken.currentAccessToken()
+        let userFBID = accessToken.userID as String
+        let postData = NSMutableDictionary()
+        postData.setObject(userFBID, forKey: "fb_uid")
+        let expiredTime = NSDate().timeIntervalSince1970 + 600
+        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+            if(error != nil){
+                Utilities.hideHUD()
+                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response!)
+                // println("fortune result = \(result)")
+                self.reloadFortuneData(result)
+            }
+        })
     }
     
     func populateCurrentFortune(){
@@ -319,6 +355,21 @@ class CookieViewController : ViewControllerWithAds{
             self.hideAll() // only show description label to show error
             self.fortuneDescriptionLabel.hidden = false
         })
+    }
+    
+    func showLoginFormSheet() {
+        self.view.endEditing(true)
+        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        controller.delegate = self
+        let formSheet = MZFormSheetController(viewController: controller)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.cornerRadius = 5
+        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    // MARK: FBLogin delegate
+    func didLoginSuccessfully() {
+        retrieveFortuneFromServer()
     }
 }
 

@@ -1643,7 +1643,7 @@
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="253" y="3" width="57" height="44"/>
+                                                                                        <rect key="frame" x="253" y="14" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="NGu-QD-sLq" eventType="touchUpInside" id="WK5-Vr-UIc"/>
@@ -2866,7 +2866,7 @@ on news things</string>
                                                                 <color key="textColor" red="0.59999999999999998" green="0.59999999999999998" blue="0.59999999999999998" alpha="1" colorSpace="calibratedRGB"/>
                                                                 <nil key="highlightedColor"/>
                                                             </label>
-                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your lucky number for today:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2r-sH-DKr">
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your lucky numbers for today:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m2r-sH-DKr">
                                                                 <rect key="frame" x="0.0" y="-21" width="42" height="21"/>
                                                                 <animations/>
                                                                 <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
@@ -4109,7 +4109,7 @@ on news things</string>
                                                                         </mask>
                                                                     </variation>
                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="130" width="216" height="317"/>
+                                                                        <rect key="frame" x="0.0" y="130" width="216" height="320"/>
                                                                         <mask key="constraints">
                                                                             <exclude reference="5Az-6i-nAl"/>
                                                                             <exclude reference="L3H-km-Mqf"/>
@@ -4165,7 +4165,7 @@ on news things</string>
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="149" y="3" width="57" height="44"/>
+                                                                                        <rect key="frame" x="149" y="14" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="XBB-Mr-uBb" eventType="touchUpInside" id="r3e-S9-a15"/>
@@ -5204,7 +5204,7 @@ on news things</string>
                                     <action selector="loginFacebook:" destination="G2M-w7-vdM" eventType="touchUpInside" id="3hE-B8-kaW"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You need to login to Facebook to share this post" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="e2P-gG-l85">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Facebook to share this post" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="e2P-gG-l85">
                                 <rect key="frame" x="20" y="340" width="560" height="20"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
@@ -6119,7 +6119,7 @@ on news things</string>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="Zag-FD-gEj"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <state key="normal" title="Discover Your Fortune Cookie">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -6148,15 +6148,16 @@ on news things</string>
                                                         </mask>
                                                     </variation>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
-                                                    <rect key="frame" x="0.0" y="60" width="600" height="40"/>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
+                                                    <rect key="frame" x="0.0" y="62" width="600" height="40"/>
                                                     <animations/>
                                                     <color key="backgroundColor" red="0.54509803921568623" green="0.76470588235294112" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="BfT-b9-fJQ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <state key="normal" title="Join Horoscopes Community">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <state key="normal" title="Posts from the Horoscopes Community">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -6319,7 +6320,7 @@ on news things</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Facebook For More Cool Features" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JJ-Pe-ELr">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login via Facebook for more features" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9JJ-Pe-ELr">
                                 <rect key="frame" x="0.0" y="110" width="600" height="20"/>
                                 <animations/>
                                 <constraints>
@@ -6343,7 +6344,7 @@ on news things</string>
                                     <action selector="loginTapped:" destination="rOq-XD-0HE" eventType="touchUpInside" id="vAY-bE-6aA"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Your DOB is" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0im-Hn-oXg">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Your birthday is" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0im-Hn-oXg">
                                 <rect key="frame" x="269" y="172" width="63" height="14"/>
                                 <animations/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="11"/>
@@ -7339,14 +7340,14 @@ on news things</string>
                                                     <rect key="frame" x="66" y="15" width="86" height="18"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pisces" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uEb-jj-5N1">
                                                     <rect key="frame" x="66" y="37" width="44" height="18"/>
                                                     <animations/>
                                                     <fontDescription key="fontDescription" type="system" weight="light" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -7493,30 +7494,6 @@ on news things</string>
                                         </variation>
                                         <connections>
                                             <action selector="backButtonTapped:" destination="VAX-Q9-xBb" eventType="touchUpInside" id="uqF-5y-tLh"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DP7-P2-dqr">
-                                        <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                        <animations/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="44" id="DlE-mm-kJl"/>
-                                            <constraint firstAttribute="height" constant="44" id="nEp-eq-o6g"/>
-                                        </constraints>
-                                        <state key="normal" image="search_icon"/>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="DlE-mm-kJl"/>
-                                                <exclude reference="nEp-eq-o6g"/>
-                                            </mask>
-                                        </variation>
-                                        <variation key="heightClass=regular-widthClass=compact">
-                                            <mask key="constraints">
-                                                <include reference="DlE-mm-kJl"/>
-                                                <include reference="nEp-eq-o6g"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="searchButtonTapped:" destination="VAX-Q9-xBb" eventType="touchUpInside" id="X40-By-g97"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -8783,7 +8760,7 @@ on news things</string>
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="157" y="7" width="57" height="44"/>
+                                                                                        <rect key="frame" x="157" y="18" width="57" height="22"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="Lvu-i1-R9G" eventType="touchUpInside" id="sIE-9E-Hbw"/>

@@ -226,7 +226,7 @@ class Utilities {
 //                    if let error = error {
 //                        alert.message = "\(message) \(error)"
 //                    }
-                    let action = UIAlertAction(title: "OK", style: UIAlertActionStyle.Default, handler: nil)
+                    let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
                     alert.addAction(action)
                     viewController.presentViewController(alert, animated: true, completion: nil)
                 }
