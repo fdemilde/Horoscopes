@@ -71,13 +71,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         var cell : SettingsTableCell!
         cell = tableView.dequeueReusableCellWithIdentifier("SettingsTableCell", forIndexPath: indexPath) as! SettingsTableCell
         switch (indexPath.row) {
-            case 0:
+            case 2:
                 cell.setupCell(SettingsType.BugsReport, title: "Find Facebook friends")
-            case 1:
+            case 0:
                 cell.parentVC = self
                 cell.setupCell(SettingsType.Notification, title: "Notify Everyday")
                 break
-            case 2:
+            case 1:
                 cell.parentVC = self
                 cell.setupCell(SettingsType.ChangeDOB, title: "DOB")
                 break
@@ -95,7 +95,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
-            case 0:
+            case 2:
                 if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
                     let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
                     navigationController?.pushViewController(controller, animated: true)
@@ -107,11 +107,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                     formSheet.cornerRadius = 5
                     self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
                 }
-            case 1:
+            case 0:
                 let timePickerViewController = self.setupNotificationTimePickerViewController()
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
-            case 2:
+            case 1:
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 presentViewController(loginVC, animated: true, completion: nil)
