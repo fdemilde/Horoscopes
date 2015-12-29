@@ -134,6 +134,8 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5
+        formSheet.shouldCenterVertically = true
+        formSheet.presentedFormSheetSize = CGSize(width: formSheet.view.frame.width, height: 150)
         self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
