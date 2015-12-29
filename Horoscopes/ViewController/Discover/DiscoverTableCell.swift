@@ -139,8 +139,10 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         self.likeNumberLabel.text = "\(userPost.hearts) Likes"
         if NSUserDefaults.standardUserDefaults().boolForKey(String(userPost.post_id)) {
             self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+            self.likeButton.userInteractionEnabled = false
         } else {
             self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
+            self.likeButton.userInteractionEnabled = true
         }
         
         
@@ -250,5 +252,11 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                 Utilities.showAlert(parentViewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
             }
         }
+    }
+    
+    //     Notification handler
+    func sendHeartSuccessful(notif: NSNotification){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        userPost.hearts++
     }
 }

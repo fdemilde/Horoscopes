@@ -2,17 +2,17 @@
   "images" : [
     {
       "idiom" : "universal",
-      "filename" : "Path 1126.png",
+      "filename" : "hows_horoscopes_icon.png",
       "scale" : "1x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Path 1126@2x.png",
+      "filename" : "hows_horoscopes_icon@2x.png",
       "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "filename" : "Path 1126@3x.png",
+      "filename" : "hows_horoscopes_icon@3x.png",
       "scale" : "3x"
     }
   ],

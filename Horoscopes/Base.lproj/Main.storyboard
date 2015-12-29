@@ -1643,7 +1643,7 @@
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="253" y="14" width="57" height="22"/>
+                                                                                        <rect key="frame" x="253" y="3" width="57" height="44"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="NGu-QD-sLq" eventType="touchUpInside" id="WK5-Vr-UIc"/>
@@ -4109,7 +4109,7 @@ on news things</string>
                                                                         </mask>
                                                                     </variation>
                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                        <rect key="frame" x="0.0" y="130" width="216" height="320"/>
+                                                                        <rect key="frame" x="0.0" y="130" width="216" height="317"/>
                                                                         <mask key="constraints">
                                                                             <exclude reference="5Az-6i-nAl"/>
                                                                             <exclude reference="L3H-km-Mqf"/>
@@ -4165,7 +4165,7 @@ on news things</string>
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="149" y="14" width="57" height="22"/>
+                                                                                        <rect key="frame" x="149" y="3" width="57" height="44"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="XBB-Mr-uBb" eventType="touchUpInside" id="r3e-S9-a15"/>
@@ -8760,7 +8760,7 @@ on news things</string>
                                                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     </state>
                                                                                     <variation key="heightClass=regular-widthClass=compact" misplaced="YES">
-                                                                                        <rect key="frame" x="157" y="18" width="57" height="22"/>
+                                                                                        <rect key="frame" x="157" y="7" width="57" height="44"/>
                                                                                     </variation>
                                                                                     <connections>
                                                                                         <action selector="tapShareButton:" destination="Lvu-i1-R9G" eventType="touchUpInside" id="sIE-9E-Hbw"/>
