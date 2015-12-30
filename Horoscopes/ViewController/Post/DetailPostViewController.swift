@@ -131,6 +131,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         self.view.endEditing(true)
         let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
         controller.delegate = self
+        controller.titleString = "Login to Facebook to share this post"
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5

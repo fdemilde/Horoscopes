@@ -14,13 +14,17 @@ protocol LoginViewControllerDelegate {
 
 class PostLoginViewController: UIViewController, SocialManagerDelegate {
     
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
     var delegate: LoginViewControllerDelegate!
+    var titleString = "Login to Facebook"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
         SocialManager.sharedInstance.delegate = self
+        titleLabel.text = titleString
     }
 
     override func didReceiveMemoryWarning() {

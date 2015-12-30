@@ -235,6 +235,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
+//        NSLog("didRegisterUserNotificationSettings notificationSettings")
         application.registerForRemoteNotifications()
     }
     
