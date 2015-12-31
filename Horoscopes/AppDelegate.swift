@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GAI.sharedInstance().trackerWithTrackingId(kAnalyticsAccountId)
     }
     
-    func sendTrackEventWithActionName(actionName: String, label:String?, value: Int32){
+    func sendTrackEventWithActionName(eventName: EventConfig.Event, label:String?, value: Int32 = -1){
         // if the value < 0, we should override it with appOpenCounter value
         var _value = 0
         
@@ -114,25 +114,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         let udid = XAppDelegate.mobilePlatform.userCred.getUDID()
-        let dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: actionName, label: label, value: NSNumber(int: Int32(_value))).build() as NSDictionary
+        let dict = GAIDictionaryBuilder.createEventWithCategory(udid, action: eventName.rawValue, label: label, value: NSNumber(int: Int32(_value))).build() as NSDictionary
         
         GAI.sharedInstance().defaultTracker.send(dict as [NSObject : AnyObject])
         
-        var priority = 3
-        if(label == defaultAppOpenAction) { priority = 1 }
-        if(label == defaultNotificationQuestion) { priority = 3 }
-        if(label == defaultViewHoroscope) { priority = 4 }
-        if(label == defaultViewArchive) { priority = 3 }
-        if(label == defaultChangeSetting) { priority = 2 }
-        if(label == defaultFacebook) { priority = 2 }
-        if(label == defaultNotification) { priority = 4 }
-        if(label == defaultRefreshClick) { priority = 3 }
-        if(label == defaultIDFAEventKey) { priority = 1 }
+        let priority = EventConfig.getLogLevel(eventName)
         
         if let label = label {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(actionName, label: String(format:"Open=%i,Label=%@", value,label), priority: Int32(priority))
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i,%@", value,label), priority: priority)
         } else {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(actionName, label: String(format:"Open=%i,Label=%@", value,""), priority: Int32(priority))
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i", value), priority: priority)
         }
     }
     

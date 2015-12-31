@@ -182,6 +182,9 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     
     // MARK: Post buttons handlers
     func postButtonTapped(){
+        let isLoggedIn = XAppDelegate.socialManager.isLoggedInFacebook() ? 1 : 0
+        let label = "logged_in = \(isLoggedIn)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postOpen, label: label)
         if(self.overlay.alpha == 1.0){
             overlayFadeout()
         } else {

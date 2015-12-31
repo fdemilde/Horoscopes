@@ -9,7 +9,7 @@
 import Foundation
 class EventConfig {
     
-    static let defaultLogValue = 3
+    static let defaultLogValue = Int32(3)
     
     enum Event: String {
         case extLaunch              = "ext-launch"
@@ -26,7 +26,7 @@ class EventConfig {
         case firstLoadDailyReply    = "first-load:daily-reply"
         case dailyCommunity         = "daily:community"
         case dailyChooser           = "daily:chooser"
-        case dailyOpen           = "daily:open"
+        case dailyOpen              = "daily:open"
         case archiveOpen            = "archive:open"
         case archiveReading         = "archive:reading"
         case fortuneOpen            = "fortune:open"
@@ -122,9 +122,25 @@ class EventConfig {
         .dobDobChange,
     ]
     
-    class func getLogLevel(eventName : Event) -> Int{
+    class func getLogLevel(eventName : Event) -> Int32{
         if LogLevel1.contains(eventName) {
-            return 1
+            return Int32(1)
+        }
+        
+        if LogLevel2.contains(eventName) {
+            return Int32(2)
+        }
+        
+        if LogLevel3.contains(eventName) {
+            return Int32(3)
+        }
+        
+        if LogLevel4.contains(eventName) {
+            return Int32(4)
+        }
+        
+        if LogLevel5.contains(eventName) {
+            return Int32(5)
         }
         
         
