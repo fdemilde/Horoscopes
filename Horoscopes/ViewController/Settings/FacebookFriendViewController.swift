@@ -42,6 +42,8 @@ class FacebookFriendViewController: ViewControllerWithAds, UITableViewDelegate, 
                 Utilities.hideHUD(self.view)
                 Utilities.showError(error)
             } else {
+                let label = "no_friends = \(result!.count)"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbFriendsResult, label: label)
                 self.friends = result!
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tableView.reloadData()

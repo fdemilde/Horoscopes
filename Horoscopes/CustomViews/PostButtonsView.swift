@@ -145,20 +145,26 @@ class PostButtonsView: UIView {
         }
     }
     
+    private func buttonTapped(type: String, placeholder: String) {
+        let label = "type = \(type)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postSelect, label: label)
+        configureViewController(type, placeholder: placeholder)
+    }
+    
     func storyButtonTapped(sender: UIButton) {
-        configureViewController("shareadvice", placeholder: "Share some advice")
+        buttonTapped("shareadvice", placeholder: "Share some advice")
     }
     
     func feelButtonTapped(sender: UIButton) {
-        configureViewController("howhoroscope", placeholder: "How’s your horoscope?")
+        buttonTapped("howhoroscope", placeholder: "How’s your horoscope?")
     }
     
     func fortuneButtonTapped(sender: UIButton) {
-        configureViewController("fortune", placeholder: "Write a fortune")
+        buttonTapped("fortune", placeholder: "Write a fortune")
     }
     
     func mindButtonTapped(sender: UIButton) {
-        configureViewController("onyourmind", placeholder: "What's on your mind?")
+        buttonTapped("onyourmind", placeholder: "What's on your mind?")
     }
 
     /*

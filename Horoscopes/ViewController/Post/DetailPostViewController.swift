@@ -69,6 +69,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     }
     
     @IBAction func cancel(sender: UIButton) {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postClose, label: nil)
         view.endEditing(true)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

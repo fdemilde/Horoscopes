@@ -279,7 +279,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func pushToDailyViewController(){
         XAppDelegate.userSettings.horoscopeSign = Int32(self.selectedIndex)
-        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+//        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
         customTabBarController.reload()
@@ -382,6 +382,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
         yearString = yearString == "" ? String(defaultYear) : yearString
         let dateString = String(format:"%@/%@/%@",dayString,monthString, yearString)
+        let label = "dob = " + dateString
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobDobChange, label: label)
         let selectedDate = dateFormatter.dateFromString(dateString)
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
         self.birthday = selectedDate

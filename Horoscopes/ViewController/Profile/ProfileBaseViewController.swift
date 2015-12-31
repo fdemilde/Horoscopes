@@ -53,6 +53,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var currentPostPage: Int = 0 {
         didSet {
             if currentPostPage != 0 {
+                let label = "page = \(currentPostPage)"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileLoadmore, label: label)
                 SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage) { (result, error) -> Void in
                     if let error = error {
                         Utilities.showError(error, viewController: self)
@@ -87,6 +89,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }()
     var topCorner: CAShapeLayer!
     var bottomCorner: CAShapeLayer!
+    var lastContentOffset: CGFloat!
     
     // MARK: - Life cycle
 
@@ -131,6 +134,8 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableView.clipsToBounds = true
         tableView.layer.cornerRadius = 4
         tableView.pagingEnabled = true
+        
+        lastContentOffset = tableView.contentOffset.y
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -229,6 +234,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func handleRefresh(refreshControl: UIRefreshControl) {
         switch currentScope {
         case .Post:
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileReload, label: nil)
             currentPostPage = 0
             isLastPostPage = false
             getFeed(true, completionHandler: { () -> Void in
@@ -485,6 +491,13 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     // MARK: - Delegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        let isScrolledUp = lastContentOffset > scrollView.contentOffset.y ? 1 : 0
+        let label = "up = \(isScrolledUp)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileSwipe, label: label)
+        lastContentOffset = scrollView.contentOffset.y
+    }
     
     func didChooseUser(profile: UserProfile) {
         print("didChooseUser didChooseUser")

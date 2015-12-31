@@ -126,6 +126,8 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         super.viewWillAppear(animated)
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
+                let label = "uid \(userProfile.uid)"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileOther, label: label)
                 configureProfileView()
                 getData()
                 return

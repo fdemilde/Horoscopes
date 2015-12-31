@@ -34,6 +34,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     }
     
     override func viewWillAppear(animated: Bool) {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         tableView.reloadData()
@@ -178,11 +179,14 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 return
             } // last page dont need to request more
             self.currentPage++
+            let label = "page = \(self.currentPage)"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commLoadmore, label: label)
             XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
         }
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commReload, label: nil)
         self.currentPage = 0
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false, isRefreshing : true)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)

@@ -97,6 +97,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         switch (indexPath.row) {
             case 2:
                 if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
+                    XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbFriendsOpen, label: nil)
                     let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
                     navigationController?.pushViewController(controller, animated: true)
                 } else {
@@ -114,6 +115,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 presentViewController(loginVC, animated: true, completion: nil)
@@ -151,6 +153,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func setupBugsReportViewController() -> UIViewController {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsBug, label: nil)
         let bugsReportViewController = self.storyboard!.instantiateViewControllerWithIdentifier("BugReportViewController") as! BugReportViewController
         return bugsReportViewController
     }
@@ -296,7 +299,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func sendSetNotificationTracker(label: String){
-        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+//        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
     }
     
     //  MARK: HELPERS

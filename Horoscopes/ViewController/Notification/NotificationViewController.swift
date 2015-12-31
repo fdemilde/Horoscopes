@@ -41,6 +41,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     override func viewWillAppear(animated: Bool) {
+        let label = "no_notif = \(notifArray.count)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
         super.viewWillAppear(animated)
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
@@ -114,6 +116,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
+                let label = "notif_id = \(id) route = \(route)"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifSelect, label: label)
 //                print("didSelectRowAtIndexPath route == \(route)")
                 dispatch_async(dispatch_get_main_queue()) {
                     XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);

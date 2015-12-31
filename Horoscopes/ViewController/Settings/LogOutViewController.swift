@@ -17,6 +17,8 @@ class LogOutViewController : UIViewController {
     
     
     @IBAction func logoutTapped(sender: AnyObject) {
+        let label = "uid = \(XAppDelegate.currentUser.uid)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsLogout, label: label)
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         self.clearNotification()

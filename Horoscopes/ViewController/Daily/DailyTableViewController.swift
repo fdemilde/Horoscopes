@@ -42,7 +42,10 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
             parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
+            return
         }
+        let label = "sign = \(selectedSign)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyOpen, label: label)
     }
     
     deinit {
@@ -152,7 +155,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         }
 //        print("refreshView self.selectedSign == \(self.selectedSign)")
         let label = String(format:"type=view,sign=%d", self.selectedSign)
-        XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
+//        XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
     }
     
     func updateCollectedData() {

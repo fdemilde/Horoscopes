@@ -57,6 +57,9 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        let isLoggedIn = XAppDelegate.socialManager.isLoggedInFacebook() ? 1 : 0
+        let label = "logged_in \(isLoggedIn)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileOwn, label: label)
         if SocialManager.sharedInstance.isLoggedInFacebook() {
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
                 removeLoginView()
