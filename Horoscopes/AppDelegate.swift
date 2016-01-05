@@ -47,10 +47,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let launchOptions = launchOptions {
             if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
-//                print("launchOptions open with web link")
                 let url = value as! NSURL
+                let label = "Type = web, Route = \(url.absoluteString)"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
                 self.getRouteAndHandle(url.absoluteString)
             }
+        } else {
+            let label = "Type = homescreen"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
         }
         
         
@@ -85,15 +89,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if let host = url.host { // if login with facebook in the app, it will redirect here
 //            print("application application login facebook in app")
             if host == "authorize" {
-//                print("host == authorize")
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
             }
             route += host
         }
-//        print("application openURL sourceApplication")
         if let path = url.path {
             route += path
         }
+        let label = "Type = web, Route = \(route)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
         XAppDelegate.mobilePlatform.router.handleRoute(route)
         return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
     }
@@ -239,11 +243,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             badge++
             Utilities.updateNotificationBadge()
         } else {
+            var label = "Type = web"
             if let route = userInfo["route"] as? String{
                 dispatch_async(dispatch_get_main_queue()) {
+                    label += ", Route = \(route)"
                     XAppDelegate.mobilePlatform.router.handleRoute(route)
                 }
             }
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
         }
         
     }
@@ -252,6 +259,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
             // do nothing
         } else {
+            let label = "Type = local notification"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
             XAppDelegate.mobilePlatform.router.handleRoute("/today")
         }
     }
@@ -463,6 +472,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         } else {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let result = result {
+//                                print("result gotopost == \(result)")
                                 for post : UserPost in result {
                                     let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
                                     controller.userPost = post
