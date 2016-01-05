@@ -294,6 +294,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
 
     @IBAction func chooseHoroscopeSign(sender: UIButton) {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
         shouldHideNumberOfLike = true
         let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
         controller.delegate = self

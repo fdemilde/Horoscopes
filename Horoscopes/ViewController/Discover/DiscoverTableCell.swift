@@ -158,6 +158,8 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
             Utilities.showAlertView(self, title: "", message: "Please login via Facebook to perform this action", tag: 1)
             return
         }
+        let label = "type = post, like = 1, info = \(userPost.post_id)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
         self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
         self.likeButton.userInteractionEnabled = false
 //        self.likeNumberLabel.text = "\(++userPost.hearts) Likes  \(userPost.shares) Shares"

@@ -96,7 +96,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         progressBarContainer.frame = CGRectMake((tableHeaderView.frame.width - PROGRESS_BAR_CONTAINER_SIZE)/2, (tableHeaderView.frame.height - PROGRESS_BAR_CONTAINER_SIZE)/2, PROGRESS_BAR_CONTAINER_SIZE, PROGRESS_BAR_CONTAINER_SIZE)
         let collectedHoro = CollectedHoroscope()
         let collectedPercentLabel = UILabel()
-        collectedPercentLabel.text = String(format:"%g%%",round(collectedHoro.getScore()*100))
+        let percentage = round(collectedHoro.getScore() * 100)
+        let label = "pc = \(percentage)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.archiveOpen, label: label)
+        collectedPercentLabel.text = String(format:"%g%%", percentage)
         collectedPercentLabel.font = UIFont.boldSystemFontOfSize(24)
         collectedPercentLabel.textColor = UIColor.whiteColor()
         collectedPercentLabel.sizeToFit()
@@ -189,6 +192,11 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     // Calendar delegate
     func didTapOnArchiveDate(item : CollectedItem){
+        let df = NSDateFormatter()
+        df.dateStyle = .FullStyle
+        let date = df.stringFromDate(item.collectedDate)
+        let label = "date = \(date)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.archiveReading, label: label)
         collectedItem = item
         type = .HoroscopeDetail
         tableView.reloadData()

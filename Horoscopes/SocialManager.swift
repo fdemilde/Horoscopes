@@ -419,6 +419,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if result.isCancelled {
                     completionHandler(error: nil, permissionGranted: false)
                 } else {
+                    let label = "granted = \(result.grantedPermissions)"
+                    print("label: " + label)
+                    XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
                     for permission in permissions {
                         if result.declinedPermissions.contains(permission) {
                             completionHandler(error: nil, permissionGranted: false)
@@ -468,8 +471,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func login(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
         loginFacebook(viewController) { (error, permissionGranted) -> Void in
             if let error = error {
+                let label = "success = 0"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
                 completionHandler(error: error, permissionGranted: false)
             } else {
+                let label = "success = 1"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
                 if permissionGranted {
                     self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
                         Utilities.registerForRemoteNotification()

@@ -25,7 +25,7 @@ class ShareViewController : UIViewController {
     var horoscopeSignIndex = 8
     var postId = ""
     var shareUrl = ""
-    var shareController = ShareController()
+    var shareController: ShareController!
     var numberOfButtons = 3
     var paddingY = 15.0 as CGFloat
     
@@ -51,6 +51,8 @@ class ShareViewController : UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        let label = "type = " + getTypeString() + ", info = " + getInfoString()
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareDialog, label: label)
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -235,32 +237,45 @@ class ShareViewController : UIViewController {
     }
     
     func handleFBTap(sender: AnyObject){
-        
+        let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = facebook"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
+        shareController = ShareController(eventTrackerStr: label)
         shareController.shareFacebook(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
     func handleTwTap(sender: AnyObject){
+        let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = twitter"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
+        shareController = ShareController(eventTrackerStr: label)
         shareController.shareTwitter(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
     func handleMessageTap(sender: AnyObject){
+        let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = messages"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         // Obtain a configured MFMessageComposeViewController
+        shareController = ShareController(eventTrackerStr: label)
         shareController.shareMessage(self,text: self.getTextIncludingTitle(), shareUrl: self.shareUrl)
     }
     
     func handleEmailTap(sender: AnyObject){
+        let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = email"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         // Obtain a configured MFMessageComposeViewController
+        shareController = ShareController(eventTrackerStr: label)
         shareController.shareMail(self,text: self.getTextIncludingTitle(),shareUrl: self.shareUrl)
     }
     
     func handleFBMessageTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
         let title = self.getTitle()
+        shareController = ShareController(eventTrackerStr: "")
         shareController.shareFbMessage(title, text: sharingText, url: self.shareUrl, pictureURL: pictureURL)
     }
     
     func handleWhatsappTap(sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
+        shareController = ShareController(eventTrackerStr: "")
         shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.shareUrl)
     }
     
@@ -292,6 +307,28 @@ class ShareViewController : UIViewController {
     }
     
     // MARK: Helpers
+    
+    func getTypeString() -> String {
+        switch shareType {
+        case .ShareTypeDaily:
+            return "horoscope"
+        case .ShareTypeFortune:
+            return "fortune"
+        case .ShareTypeNewsfeed:
+            return "post"
+        }
+    }
+    
+    func getInfoString() -> String {
+        if shareType == .ShareTypeNewsfeed {
+            return postId
+        }
+        let df = NSDateFormatter()
+        df.dateStyle = .FullStyle
+        let date = NSDate(timeIntervalSince1970: timeTag)
+        let dateString = df.stringFromDate(date)
+        return dateString
+    }
     
 //    func getSharingURL() -> String{
 //        var urlString = ""

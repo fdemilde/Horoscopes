@@ -1111,6 +1111,7 @@
 				TargetAttributes = {
 					F4CACA111B1EBE16003C6301 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = H384AE4X53;
 					};
 					F4CACA261B1EBE16003C6301 = {
 						CreatedOnToolsVersion = 6.3.2;
@@ -1523,6 +1524,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Horoscopes/Horoscopes-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
@@ -1545,7 +1547,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Horoscopes/Horoscopes-Info.plist";

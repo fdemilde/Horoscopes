@@ -77,6 +77,12 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     
     @IBAction func like(sender: UIButton) {
+        let df = NSDateFormatter()
+        df.dateStyle = .FullStyle
+        let date = NSDate(timeIntervalSince1970: timeTag)
+        let dateString = df.stringFromDate(date)
+        let label = "type = horoscope, like = 1, info = " + dateString
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }
@@ -85,6 +91,12 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     
     @IBAction func dislike(sender: UIButton) {
+        let df = NSDateFormatter()
+        df.dateStyle = .FullStyle
+        let date = NSDate(timeIntervalSince1970: timeTag)
+        let dateString = df.stringFromDate(date)
+        let label = "type = horoscope, like = 0, info = " + dateString
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }

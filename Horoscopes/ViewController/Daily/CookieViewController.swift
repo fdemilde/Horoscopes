@@ -68,6 +68,11 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
 //        Utilities.setLocalPushForTesting()
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fortuneOpen, label: nil)
+    }
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
 //        self.navigationController?.popViewControllerAnimated(true)
@@ -117,6 +122,9 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     }
     
     @IBAction func cookieTapped(sender: AnyObject) {
+        let isLoggedIn = XAppDelegate.socialManager.isLoggedInFacebook() ? 1 : 0
+        let label = "logged_in = \(isLoggedIn)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fortuneRead, label: label)
         self.getFortune()
     }
     

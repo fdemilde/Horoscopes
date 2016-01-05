@@ -11,6 +11,11 @@ import Social
 import MessageUI
 
 class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMailComposeViewControllerDelegate {
+    var eventTrackerString: String!
+    
+    init(eventTrackerStr: String) {
+        eventTrackerString = eventTrackerStr
+    }
     
     // MARK: Facebook
     
@@ -18,8 +23,11 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         let composerVC = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
         composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
             if (result == SLComposeViewControllerResult.Cancelled) {
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
                 print("Share FB Cancel!!")
             } else {
+                self.eventTrackerString! += ", result = Done"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
                 print("Share FB OK!!")
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
@@ -28,7 +36,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
-            composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+            composerVC.addImage(getImageFromURL(pictureURL))
         }
         parentVC.presentViewController(composerVC, animated: true, completion: nil)
     }
@@ -39,8 +47,11 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         let composerVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
         composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
             if (result == SLComposeViewControllerResult.Cancelled) {
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
                 print("Share TW Cancel!!")
             } else {
+                self.eventTrackerString! += ", result = Done"
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
                 print("Share TW OK!!")
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
@@ -48,7 +59,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
 //        composerVC.setInitialText(url)
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
-            composerVC.addImage(ShareController.getImageFromURL(pictureURL))
+            composerVC.addImage(getImageFromURL(pictureURL))
         }
         
         parentVC.presentViewController(composerVC, animated: true, completion: nil)
@@ -70,6 +81,12 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
     func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
+        if result.rawValue == MessageComposeResultCancelled.rawValue {
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
+        } else if result.rawValue == MessageComposeResultSent.rawValue {
+            self.eventTrackerString! += ", result = Sent"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
+        }
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -89,6 +106,12 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MFMailComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
     func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        if result.rawValue == MFMailComposeResultCancelled.rawValue {
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
+        } else if result.rawValue == MFMailComposeResultSent.rawValue {
+            self.eventTrackerString! += ", result = Sent"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
+        }
         controller.dismissViewControllerAnimated(true, completion: nil)
     }
     
@@ -117,7 +140,7 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MARK: Helpers
     
-    class func getImageFromURL(urlString: String) -> UIImage{
+    func getImageFromURL(urlString: String) -> UIImage{
         let url = NSURL(string: urlString)
         let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
         if let checkData = data {
