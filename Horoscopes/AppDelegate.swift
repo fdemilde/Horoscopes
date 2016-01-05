@@ -47,6 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if let launchOptions = launchOptions {
             if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
+//                print("launchOptions open with web link")
                 let url = value as! NSURL
                 self.getRouteAndHandle(url.absoluteString)
             }
@@ -81,12 +82,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
         var route = "/"
-        if let host = url.host {
+        if let host = url.host { // if login with facebook in the app, it will redirect here
+//            print("application application login facebook in app")
             if host == "authorize" {
+//                print("host == authorize")
                 return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
             }
             route += host
         }
+//        print("application openURL sourceApplication")
         if let path = url.path {
             route += path
         }
