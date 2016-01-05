@@ -26,11 +26,13 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.setupBackground()
         setupInfiniteScroll()
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         self.tableView.pagingEnabled = true
         tableView.addSubview(refreshControl)
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -59,6 +61,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
+        self.view.sendSubviewToBack(bgImageView)
     }
     
     func setupAddPostButton() {
