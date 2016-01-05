@@ -151,7 +151,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func fetchUserInfo(){
         var params = Dictionary<String,String>()
-         params["fields"] = "name,id,gender,birthday"
+        params["fields"] = "name,id,gender,birthday"
+        let permissionLabel = "additional permission = \(params["fields"])"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
+        
             FBSDKGraphRequest(graphPath: "me", parameters: params).startWithCompletionHandler({ (connection, result, error) -> Void in
                 if(error == nil){
                     self.userFBID = result["id"] as! String

@@ -411,6 +411,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_friends"]
+        let permissionLabel = "permission = \(permissions)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
+        
         loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
             print("loginFacebook loginFacebook")
             if let error = error {
