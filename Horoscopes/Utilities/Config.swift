@@ -127,7 +127,7 @@ let postTypes = [
     NewsfeedType.HowHoroscope: ("post_type_horoscope", "How’s your horoscope?","howhoroscope"),
     NewsfeedType.ShareAdvice: ("post_type_advice", "Share some advice","shareadvice"),
     NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?","onyourmind"),
-    NewsfeedType.Fortune: ("post_type_fortune", "Fortune Cookie","fortune")
+    NewsfeedType.Fortune: ("post_type_fortune", "Write a fortune","fortune")
 ]
 
 // MARK: Enum Type

@@ -280,7 +280,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     }
     
     func configureNoPostTableViewCell(cell: UITableViewCell, index: Int) {
-        cell.textLabel?.text = postTypeTexts[index]
+        cell.textLabel?.text = postTypeText[index]
         cell.textLabel?.textColor = UIColor.grayColor()
         cell.imageView?.image = UIImage(named: postTypeImages[index])
     }
