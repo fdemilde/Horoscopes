@@ -76,10 +76,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
         }
     }
-    let postTypeTexts = [
-        "How’s your horoscope?",
-        "Share some advice",
-        "What's on your mind?"
+    let postTypeText = [
+        postTypes[NewsfeedType.HowHoroscope]!.1,
+        postTypes[NewsfeedType.ShareAdvice]!.1,
+        postTypes[NewsfeedType.OnYourMind]!.1
     ]
     var isLastPostPage = false
     lazy var refreshControl: UIRefreshControl = {
