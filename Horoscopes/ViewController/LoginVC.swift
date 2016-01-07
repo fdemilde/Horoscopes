@@ -52,7 +52,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         }
         self.setupComponents()
         self.initialBirthday()
-        
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
         
     }
     
@@ -81,7 +81,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         startButton.setTitle("", forState: UIControlState.Normal)
 //        startButton.backgroundColor = UIColor.blueColor()
         self.view .addSubview(startButton)
-        
         startButton.addTarget(self, action: "startButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
         
         birthdaySelectButton.layer.shadowColor = UIColor.blackColor().CGColor
@@ -109,6 +108,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.view .bringSubviewToFront(signDateLabel)
         self.view .bringSubviewToFront(DOBLabel)
         self.view .bringSubviewToFront(starIcon)
+        self.view .bringSubviewToFront(startButton)
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         self.view .bringSubviewToFront(startButton)
     }
     
@@ -205,6 +209,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
             let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
+                if(self.selectedIndex != index!){
+                    XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobSignChange, label: "sign = \(index! + 1)")
+                }
                 self.selectedIndex = index!
             }
             self.starIcon.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
@@ -234,6 +241,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     override func doneSelectedSign(){
+        var trackerLabel = "sign = \(self.selectedIndex + 1)"
+        if let dobString = birthdaySelectButton.titleLabel!.text {
+            trackerLabel += ", dob = \(dobString)"
+        }
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobSaveSign, label: trackerLabel)
         self.pushToDailyViewController()
     }
     
@@ -280,12 +292,16 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func startButtonTapped(sender:UIButton!)
     {
+        var trackerLabel = "sign = \(self.selectedIndex + 1)"
+        if let dobString = birthdaySelectButton.titleLabel!.text {
+            trackerLabel += ", dob = \(dobString)"
+        }
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobStart, label: trackerLabel)
         self.pushToDailyViewController()
     }
     
     func pushToDailyViewController(){
         XAppDelegate.userSettings.horoscopeSign = Int32(self.selectedIndex)
-//        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: String(format: "default_sign=%d", self.selectedIndex), value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
         customTabBarController.selectedSign = self.selectedIndex
         customTabBarController.reload()

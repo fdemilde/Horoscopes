@@ -115,7 +115,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
-                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 presentViewController(loginVC, animated: true, completion: nil)

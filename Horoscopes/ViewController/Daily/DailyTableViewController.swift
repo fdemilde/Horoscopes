@@ -312,6 +312,8 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     // MARK: - Delegate
     
     func didTapJoinHoroscopesCommunityButton() {
+    
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyCommunity, label: nil)
         tabBarController?.selectedIndex = 1
     }
     

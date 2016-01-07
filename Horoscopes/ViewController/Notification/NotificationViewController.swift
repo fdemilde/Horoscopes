@@ -41,9 +41,13 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
-        super.viewWillAppear(animated)
+        let retrieveLabel = "no_retrieved = \(XAppDelegate.badge)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: retrieveLabel)
+//        print("retrieveLabel retrieveLabel == \(retrieveLabel)")
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
         self.getNotificationAndReloadData()

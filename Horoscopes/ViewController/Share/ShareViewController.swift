@@ -200,7 +200,7 @@ class ShareViewController : UIViewController {
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeDaily
         self.timeTag = timeTag
-        self.horoscopeSignName = Utilities.getHoroscopeNameWithIndex(horoscopeSign)
+        self.horoscopeSignName = Utilities.getHoroscopeNameWithIndex(horoscopeSign - 1)
         self.horoscopeSignIndex = horoscopeSign
         self.sharingText = sharingText
         self.pictureURL = pictureURL

@@ -233,13 +233,6 @@ static int CLOVER_SYMBOL_TAG = 101;
             //unhighlight all icons
             [self unhighlightAllSigns];
             [self.delegate wheelDidChangeValue:nil becauseOf:NO];
-//            if(!self.thread){
-//                self.thread = [[NSThread alloc] initWithTarget:self selector:@selector(playRotationAnimation:) object:[NSNumber numberWithDouble:velocity.x]];
-//            }
-//            else if (![self.thread isFinished]){
-//                self.isRotatingWheel = NO;
-//                while(![self.thread isFinished]);
-//            }
             //do the animation
             self.isRotatingWheel = YES;//flag
 //            [self.thread start];
@@ -249,19 +242,15 @@ static int CLOVER_SYMBOL_TAG = 101;
             
             
             [NSThread detachNewThreadSelector:@selector(playRotationAnimation:) toTarget:self withObject:[NSNumber numberWithDouble:modified_velocity]];
-        }
-        else {
+        } else {
             currentValue = (currentValue + 8) % 12;
             [UIView beginAnimations:nil context:NULL];
             [UIView setAnimationDuration:0.2];
             CGAffineTransform t = CGAffineTransformRotate(container.transform, -newVal);
             container.transform = t;
             [UIView commitAnimations];
-            if(currentValue!=oldValue)
-            {
-                [self highlightSelectedSign];
-                [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
-            }
+            [self highlightSelectedSign];
+            [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
         }
     }
     else if (recognizer.state == UIGestureRecognizerStateChanged) //dragging
@@ -295,7 +284,6 @@ static int CLOVER_SYMBOL_TAG = 101;
         }
         currentValue = (currentValue + 8) % 12;
         [self highlightSelectedSign];
-        if(currentValue!=oldValue) [self.delegate wheelDidChangeValue:[self getCloveName:currentValue] becauseOf:NO];
     }
     else if (recognizer.state == UIGestureRecognizerStateBegan)
     {

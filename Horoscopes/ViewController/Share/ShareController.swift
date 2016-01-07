@@ -32,8 +32,6 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
             }
             composerVC.dismissViewControllerAnimated(true, completion: nil)
         }
-        composerVC.setInitialText(url)
-        
         composerVC.addURL(NSURL(string: url)!)
         if(pictureURL != ""){
             composerVC.addImage(getImageFromURL(pictureURL))

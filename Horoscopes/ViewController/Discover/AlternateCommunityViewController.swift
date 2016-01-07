@@ -17,6 +17,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     var addButton: UIButton!
     var postButtonsView: PostButtonsView!
     var overlay : UIView!
+    var lastContentOffsetY = 0 as CGFloat
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -134,6 +135,23 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         cell.setupCell(post)
         cell.configureCellForNewsfeed()
         return cell
+    }
+    
+    // MARK: Scrollview delegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        var trackerLabel = "up = "
+        if (self.lastContentOffsetY > scrollView.contentOffset.y) {
+            trackerLabel += "1"
+        } else {
+            trackerLabel += "0"
+        }
+        
+        self.lastContentOffsetY = scrollView.contentOffset.y
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commSwipe, label: trackerLabel)
     }
     
     // MARK: Notification Handlers
