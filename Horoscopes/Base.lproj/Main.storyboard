@@ -836,7 +836,7 @@
                                                                                 <constraint firstAttribute="height" constant="90" id="uxx-qf-YN8"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Judith Bell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5i-uM-jGW">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Judith Bell" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I5i-uM-jGW">
                                                                             <rect key="frame" x="135" y="16" width="67" height="17"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -851,14 +851,14 @@
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="n1S-cb-qXA">
+                                                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n1S-cb-qXA">
                                                                                     <rect key="frame" x="4" y="0.0" width="40" height="40"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="40" id="M73-Ob-4WP"/>
                                                                                         <constraint firstAttribute="width" constant="40" id="Wpb-GJ-QfI"/>
                                                                                     </constraints>
                                                                                 </imageView>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Share a story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ks-fq-GDO">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Share a story" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ks-fq-GDO">
                                                                                     <rect key="frame" x="49" y="13" width="72" height="14"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="medium" pointSize="11"/>
                                                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -876,30 +876,30 @@
                                                                                 <constraint firstItem="n1S-cb-qXA" firstAttribute="leading" secondItem="4od-Z0-5G8" secondAttribute="leading" constant="4" id="z8Q-A7-xf8"/>
                                                                             </constraints>
                                                                         </view>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="z4Z-mX-Rqk">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="default_avatar" translatesAutoresizingMaskIntoConstraints="NO" id="z4Z-mX-Rqk">
                                                                             <rect key="frame" x="45" y="15" width="75" height="75"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="60" id="JIJ-MR-lyG"/>
                                                                                 <constraint firstAttribute="width" constant="60" id="yO1-zy-fxp"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="New York, US" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scm-G1-UUU">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="New York, US" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="scm-G1-UUU">
                                                                             <rect key="frame" x="135" y="38" width="71" height="14"/>
                                                                             <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
                                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <view contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tmf-al-m9h">
+                                                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tmf-al-m9h">
                                                                             <rect key="frame" x="90" y="60" width="72" height="20"/>
                                                                             <subviews>
-                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tHu-1w-6jl">
+                                                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tHu-1w-6jl">
                                                                                     <rect key="frame" x="6" y="3" width="14" height="14"/>
                                                                                     <constraints>
                                                                                         <constraint firstAttribute="height" constant="14" id="2hQ-UO-xBf"/>
                                                                                         <constraint firstAttribute="width" constant="14" id="A37-tj-IEZ"/>
                                                                                     </constraints>
                                                                                 </imageView>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Scorpio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZH-Gw-nS6">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Scorpio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VZH-Gw-nS6">
                                                                                     <rect key="frame" x="23" y="3" width="41" height="14"/>
                                                                                     <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
@@ -1816,7 +1816,7 @@ on news things</string>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RxJ-31-jqq">
                                                     <rect key="frame" x="0.0" y="199" width="600" height="101"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dKy-FU-PMC">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="dKy-FU-PMC">
                                                             <rect key="frame" x="10" y="10" width="30" height="30"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="kS4-Jd-Cwv"/>
@@ -1833,7 +1833,7 @@ on news things</string>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oTE-zy-YsL">
                                                             <rect key="frame" x="0.0" y="51" width="600" height="50"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vk-OI-w2B">
+                                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7vk-OI-w2B">
                                                                     <rect key="frame" x="0.0" y="0.0" width="51" height="22"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="74" id="GRU-hL-1KO"/>
@@ -1884,7 +1884,7 @@ on news things</string>
                                                                 <constraint firstItem="bTm-vN-Ilk" firstAttribute="height" secondItem="oTE-zy-YsL" secondAttribute="height" id="v80-fJ-eDt"/>
                                                             </constraints>
                                                         </view>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xtx-G9-aM4">
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xtx-G9-aM4">
                                                             <rect key="frame" x="46" y="25" width="0.0" height="0.0"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                             <color key="textColor" red="0.40000000000000002" green="0.40000000000000002" blue="0.40000000000000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -5245,10 +5245,10 @@ on news things</string>
                                                                             </constraints>
                                                                             <variation key="heightClass=regular-widthClass=compact">
                                                                                 <mask key="constraints">
-                                                                                    <include reference="Jo0-l4-fEm"/>
-                                                                                    <include reference="psv-94-bVZ"/>
                                                                                     <include reference="KG4-um-k5R"/>
                                                                                     <include reference="Wdq-j6-4tJ"/>
+                                                                                    <include reference="Jo0-l4-fEm"/>
+                                                                                    <include reference="psv-94-bVZ"/>
                                                                                     <include reference="ANj-WD-95L"/>
                                                                                     <include reference="hqz-M3-Xym"/>
                                                                                 </mask>
@@ -5279,12 +5279,12 @@ on news things</string>
                                                                     <variation key="heightClass=regular-widthClass=compact">
                                                                         <mask key="constraints">
                                                                             <include reference="rog-ac-nl9"/>
+                                                                            <include reference="2sW-1L-mt8"/>
+                                                                            <include reference="hLy-0F-EIl"/>
                                                                             <include reference="Kr0-MD-X0c"/>
                                                                             <include reference="Yiv-Ti-FsR"/>
                                                                             <include reference="cbH-KQ-g7O"/>
                                                                             <include reference="t81-At-hZT"/>
-                                                                            <include reference="2sW-1L-mt8"/>
-                                                                            <include reference="hLy-0F-EIl"/>
                                                                         </mask>
                                                                     </variation>
                                                                 </view>
@@ -5304,12 +5304,12 @@ on news things</string>
                                                             </constraints>
                                                             <variation key="heightClass=regular-widthClass=compact">
                                                                 <mask key="constraints">
-                                                                    <include reference="9yX-Ur-b3e"/>
-                                                                    <include reference="QHT-AY-PXR"/>
-                                                                    <include reference="mbp-so-wdV"/>
                                                                     <include reference="9qQ-no-PKP"/>
                                                                     <include reference="Mhg-La-nlc"/>
                                                                     <include reference="raW-GY-NRT"/>
+                                                                    <include reference="9yX-Ur-b3e"/>
+                                                                    <include reference="QHT-AY-PXR"/>
+                                                                    <include reference="mbp-so-wdV"/>
                                                                     <include reference="KEO-hn-UU0"/>
                                                                     <include reference="azt-hV-kbX"/>
                                                                     <include reference="dxl-HB-Hfr"/>
@@ -5388,13 +5388,13 @@ on news things</string>
                         </constraints>
                         <variation key="heightClass=regular-widthClass=compact">
                             <mask key="constraints">
-                                <include reference="l7U-as-787"/>
                                 <include reference="hJC-M2-ETB"/>
                                 <include reference="mfa-wc-Ezo"/>
                                 <include reference="qb1-wF-qzL"/>
                                 <include reference="4ju-yo-Big"/>
                                 <include reference="cjv-b0-dOL"/>
                                 <include reference="nfI-kN-gsQ"/>
+                                <include reference="l7U-as-787"/>
                             </mask>
                         </variation>
                     </view>
