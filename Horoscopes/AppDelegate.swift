@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Utilities.registerForRemoteNotification()
         }
         
-//        if(socialManager.isLoggedInZwigglers()){
+        if(socialManager.isLoggedInZwigglers()){
             // sendLocation() // for testing
             locationManager.setupLocationService()
-//        }
+        }
         
         if let launchOptions = launchOptions {
             if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
