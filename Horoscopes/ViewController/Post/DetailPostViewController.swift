@@ -34,6 +34,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         let screenSize = Utilities.getScreenSize()
         let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
+        self.view.sendSubviewToBack(bgImageView)
         self.view.addSubview(bgImageView)
         postTitle.text = placeholder
         placeholderLabel.text = placeholder

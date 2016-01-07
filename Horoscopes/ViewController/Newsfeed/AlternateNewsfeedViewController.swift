@@ -55,6 +55,7 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
         let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
+        self.view.sendSubviewToBack(bgImageView)
     }
     
     func setupAddPostButton() {
