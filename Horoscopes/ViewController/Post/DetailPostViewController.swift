@@ -111,6 +111,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                 
                 
                 if let profileViewController = Utilities.getViewController(CurrentProfileViewController.classForCoder()) as? CurrentProfileViewController {
+                    profileViewController.refreshPostAndScrollToTop()
                     if(profileViewController.userProfile.uid != -1){
                         profileViewController.reloadFeeds()
                     } else {

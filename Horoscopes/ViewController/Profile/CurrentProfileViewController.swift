@@ -207,6 +207,22 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Helper
     
+    func refreshPostAndScrollToTop() {
+        if currentScope != .Post {
+            currentScope = .Post
+            tableView.allowsSelection = false
+            tapScopeButton(postButton)
+            tableView.pagingEnabled = true
+        }
+        currentPostPage = 0
+        isLastPostPage = false
+        getFeed(true, completionHandler: { () -> Void in
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                self.scrollToTop()
+            })
+        })
+    }
+    
     func removeLoginView() {
         if loginView != nil {
             loginView.removeFromSuperview()
