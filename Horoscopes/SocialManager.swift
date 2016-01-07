@@ -408,6 +408,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func loginFacebook(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+        XAppDelegate.locationManager.setupLocationService()
         let loginManager = FBSDKLoginManager()
         loginManager.loginBehavior = .SystemAccount
         let permissions = ["public_profile", "email", "user_friends"]
@@ -451,7 +452,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(responseDict: nil, error: error)
             } else {
-                XAppDelegate.locationManager.setupLocationService()
                 self.persistUserProfile({ (error) -> Void in
                     if let error = error {
                         completionHandler(responseDict: nil, error: error)
