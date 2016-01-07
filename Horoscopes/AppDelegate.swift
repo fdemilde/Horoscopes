@@ -40,10 +40,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Utilities.registerForRemoteNotification()
         }
         
-        if(socialManager.isLoggedInZwigglers()){
+//        if(socialManager.isLoggedInZwigglers()){
             // sendLocation() // for testing
             locationManager.setupLocationService()
-        }
+//        }
         
         if let launchOptions = launchOptions {
             if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
@@ -222,19 +222,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let deviceTokenString = String(format:"%@",deviceToken)
-//        NSLog("didRegisterForRemoteNotificationsWithDeviceToken = %@", deviceTokenString)
+        var notificationInfo = "success = "
+        if #available(iOS 8.0, *) {
+            if let notificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+                let currentNotificationTypes = notificationSettings.types
+                if currentNotificationTypes.isEmpty {
+                    notificationInfo += "0"
+                } else {
+                    notificationInfo += "1"
+                }
+            } else {
+                notificationInfo += "0"
+            }
+        } else {
+            // Fallback on earlier versions
+            let enabledNotificationTypes = UIApplication.sharedApplication().enabledRemoteNotificationTypes()
+            if(enabledNotificationTypes.isEmpty){
+                notificationInfo += "0"
+            } else {
+                notificationInfo += "1"
+            }
+        }
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
         XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
         print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
+        let notificationInfo = "success = 0"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
     }
     
     // ios 8
     
     @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-//        NSLog("didRegisterUserNotificationSettings notificationSettings")
+        NSLog("didRegisterUserNotificationSettings notificationSettings = \(notificationSettings)")
         application.registerForRemoteNotifications()
     }
     
