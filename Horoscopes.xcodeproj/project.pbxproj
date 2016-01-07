@@ -1115,6 +1115,7 @@
 					};
 					F4CACA261B1EBE16003C6301 = {
 						CreatedOnToolsVersion = 6.3.2;
+						DevelopmentTeam = 399QS5Z8J6;
 						TestTargetID = F4CACA111B1EBE16003C6301;
 					};
 				};
@@ -1547,7 +1548,7 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Yaowei Yeo (P2RHG3Y2MS)";
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Horoscopes/Horoscopes-Info.plist";
@@ -1568,6 +1569,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1590,6 +1592,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
 					"$(inherited)",
@@ -1599,6 +1602,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zwigglers.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9ca45bea-dcd8-4c6f-ac82-d43a4e891cab";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Horoscopes.app/Horoscopes";
 			};
 			name = Release;

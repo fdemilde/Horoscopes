@@ -171,9 +171,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     func showNotificationEverydayAlert(){
-            
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.firstLoadDailyAsk, label: "")
         let alertView: UIAlertView = UIAlertView()
-        
         alertView.delegate = self
         alertView.title = "Notify everyday"
         alertView.message = "Do you want to be notified of your horoscope every day?"
@@ -242,11 +241,15 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
         if(alertView.tag == 1){
+            var replyLabel = ""
             if(buttonIndex == 0){
+                replyLabel += "daily = 0"
                 agreeToDailyPush = false
             } else {
+                replyLabel += "daily = 1"
                 agreeToDailyPush = true
             }
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.firstLoadDailyReply, label: replyLabel)
             let alertView: UIAlertView = UIAlertView()
             alertView.delegate = self
             alertView.title = "Did you know?"

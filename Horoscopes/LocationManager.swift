@@ -53,9 +53,15 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     // MARK: CLLocationManagerDelegate
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status != CLAuthorizationStatus.NotDetermined {
+        
+        var notificationInfo = "success = "
+        if status != CLAuthorizationStatus.NotDetermined && status != CLAuthorizationStatus.Denied{
+            notificationInfo += "1"
             manager.startUpdatingLocation()
+        } else {
+            notificationInfo += "0"
         }
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permLocation, label: notificationInfo)
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
