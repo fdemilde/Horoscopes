@@ -113,11 +113,6 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         return progressBarContainer
     }
     
-    // MARK: Buttons action
-    @IBAction func backButtonTapped(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
-    }
-    
     // MARK: TableView Delegate & Datasource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -206,7 +201,11 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     // MARK: button Action
     
     @IBAction func backTapped(sender: AnyObject) {
-        self.navigationController?.popToRootViewControllerAnimated(true)
+        if type == .Calendar {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+        } else {
+            didTapOnCalendar()
+        }
     }
     
     // MARK: daily Content Cell Delegate
