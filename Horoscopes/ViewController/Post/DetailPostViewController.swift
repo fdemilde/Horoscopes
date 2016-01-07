@@ -34,19 +34,17 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         let screenSize = Utilities.getScreenSize()
         let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
-        self.view.sendSubviewToBack(bgImageView)
         self.view.addSubview(bgImageView)
+        self.view.sendSubviewToBack(bgImageView)
         postTitle.text = placeholder
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
-        placeholderLabel.frame.origin = CGPointMake(textView.frame.origin.x + 4, textView.frame.origin.y + 7)
+        placeholderLabel.frame.origin = CGPointMake(4, 7)
         placeholderLabel.textColor = UIColor.grayColor()
         placeholderLabel.sizeToFit()
         textView.addSubview(placeholderLabel)
-        
         textView.layer.cornerRadius = 5
         textView.layer.masksToBounds = true
-        
         checkAndChangeSwitchColor()
         
     }
@@ -63,7 +61,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
         textView.resignFirstResponder()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
