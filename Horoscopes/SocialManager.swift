@@ -408,33 +408,32 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func loginFacebook(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
-        XAppDelegate.locationManager.setupLocationService()
-        let loginManager = FBSDKLoginManager()
-        loginManager.loginBehavior = .SystemAccount
-        let permissions = ["public_profile", "email", "user_friends"]
-        let permissionLabel = "permission = \(permissions)"
-        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
         
-        loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
-            if let error = error {
-                completionHandler(error: error, permissionGranted: false)
-            } else {
-                if result.isCancelled {
-                    completionHandler(error: nil, permissionGranted: false)
+            let loginManager = FBSDKLoginManager()
+            loginManager.loginBehavior = .SystemAccount
+            let permissions = ["public_profile", "email", "user_friends"]
+            let permissionLabel = "permission = \(permissions)"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
+            
+            loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
+                if let error = error {
+                    completionHandler(error: error, permissionGranted: false)
                 } else {
-                    let label = "granted = \(result.grantedPermissions)"
-                    print("label: " + label)
-                    XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
-                    for permission in permissions {
-                        if result.declinedPermissions.contains(permission) {
-                            completionHandler(error: nil, permissionGranted: false)
-                            return
+                    if result.isCancelled {
+                        completionHandler(error: nil, permissionGranted: false)
+                    } else {
+                        let label = "granted = \(result.grantedPermissions)"
+                        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
+                        for permission in permissions {
+                            if result.declinedPermissions.contains(permission) {
+                                completionHandler(error: nil, permissionGranted: false)
+                                return
+                            }
                         }
+                        completionHandler(error: nil, permissionGranted: true)
                     }
-                    completionHandler(error: nil, permissionGranted: true)
                 }
             }
-        }
     }
     
     func isLoggedInZwigglers() -> Bool{
@@ -486,7 +485,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             completionHandler(error: error, permissionGranted: false)
                         } else {
                             completionHandler(error: nil, permissionGranted: true)
-                            self.getProfilesOfUsersFollowing({ (result, error) -> Void in
+                            
+                            XAppDelegate.locationManager.setupLocationService()
+                                self.getProfilesOfUsersFollowing({ (result, error) -> Void in
                                 if let _ = error {
                                     
                                 } else {

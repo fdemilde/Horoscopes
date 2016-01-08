@@ -205,6 +205,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             // update server sign
             if((FBSDKAccessToken .currentAccessToken()) != nil){
                 XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
+                    let errorCode = result?["error"] as! Int
+                    if(errorCode == 0){
+                        let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+                        for (_, profileDetail) in profileDict {
+                            let profile = UserProfile(data: profileDetail as! NSDictionary)
+                            XAppDelegate.currentUser = profile
+                        }
+                    } else {
+                        print("Error code === \(errorCode)")
+                    }
+                    
                 })
             }
         }

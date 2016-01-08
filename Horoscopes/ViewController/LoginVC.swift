@@ -319,6 +319,17 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             // server sign is 1 - 12
             XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
+                
+                let errorCode = result?["error"] as! Int
+                if(errorCode == 0){
+                    let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+                    for (_, profileDetail) in profileDict {
+                        let profile = UserProfile(data: profileDetail as! NSDictionary)
+                        XAppDelegate.currentUser = profile
+                    }
+                } else {
+                    print("Error code === \(errorCode)")
+                }
             })
         }
         

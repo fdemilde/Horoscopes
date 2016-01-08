@@ -187,6 +187,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if(userLocation == nil){
             userLocation = location
             let googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
+//            print("googleLink googleLink == \(googleLink)")
             
             let latlon = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
             let url = NSURL(string: googleLink)
@@ -196,7 +197,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let data = data {
                     let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-//                    print("finishedGettingLocation == \(string)")
                     XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, latlon: latlon, completionHandler: { (result, error) -> Void in
                         if(error == nil){
                             let errorCode = result?["error"] as! Int

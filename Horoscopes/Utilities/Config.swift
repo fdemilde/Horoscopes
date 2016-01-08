@@ -119,7 +119,8 @@ let NOTIFICATION_SETTING_DATE_FORMAT = "hh:mm a"
 let NOTIFICATION_SETTING_DEFAULT_TIME = "08:00 AM"
 
 // MARK: Location
-let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng="
+let LOCATION_IOS_KEY = "AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY"
+let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY&latlng="
 
 // MARK: post type
 // postType: image name, label, server type
