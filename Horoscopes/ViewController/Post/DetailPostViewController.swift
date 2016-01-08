@@ -77,6 +77,13 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         let createPost = { () -> Void in
             Utilities.showHUD(self.view)
             let postToFacebook = self.switchButton.on
+            var trackerLabel = ""
+            if let type = self.type {
+                 trackerLabel += "type = \(type), strlen = \(self.textView.text.characters.count), post_to_facebook = \(postToFacebook)"
+            } else {
+                trackerLabel += "type = undefined, strlen = \(self.textView.text.characters.count), post_to_facebook = \(postToFacebook)"
+            }
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postSend, label: trackerLabel)
             SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, postToFacebook: postToFacebook, completionHandler: { (result, error) -> Void in
                 if let error = error {
                     Utilities.hideHUD(self.view)

@@ -416,7 +416,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
         
         loginManager.logInWithReadPermissions(permissions, fromViewController: viewController) { (result, error) -> Void in
-            print("loginFacebook loginFacebook")
             if let error = error {
                 completionHandler(error: error, permissionGranted: false)
             } else {
@@ -699,6 +698,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(error: error)
             } else {
                 if let userProfile = result?[0]{
+//                    print("persistUserProfile persistUserProfile == \(userProfile)")
                     XAppDelegate.currentUser = userProfile
                     NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
                     completionHandler(error: nil)

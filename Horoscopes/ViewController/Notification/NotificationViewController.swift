@@ -45,9 +45,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
-        let retrieveLabel = "no_retrieved = \(XAppDelegate.badge)"
-        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: retrieveLabel)
-//        print("retrieveLabel retrieveLabel == \(retrieveLabel)")
+        if(XAppDelegate.badge > 0){
+            let retrieveLabel = "no_retrieved = \(XAppDelegate.badge)"
+            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifRetrieved, label: retrieveLabel)
+        }
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
         self.getNotificationAndReloadData()

@@ -20,6 +20,8 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
+        let label = "post_id = \(userPost.post_id)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.singlePostOpen, label: label)
     }
     
     override func viewWillDisappear(animated: Bool) {

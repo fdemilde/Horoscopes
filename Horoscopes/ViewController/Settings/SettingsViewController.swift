@@ -44,6 +44,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     override func viewWillAppear(animated: Bool) {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsOpen, label: "")
         self.birthday = XAppDelegate.userSettings.birthday
         self.tableView.reloadData()
     }
@@ -115,6 +116,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 self.displayViewController(timePickerViewController, type: SettingsType.Notification)
                 break
             case 1:
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
                 let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 presentViewController(loginVC, animated: true, completion: nil)
@@ -212,18 +214,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func saveNotificationSetting(){
         var label = ""
-        var isOnString = ""
         if (XAppDelegate.userSettings.notifyOfNewHoroscope == true) {
             Utilities.registerForRemoteNotification()
             Utilities.setLocalPush(self.getSelectedTime())
-            isOnString = "Yes"
-            return
+            label += "enabled = 1"
         } else {
             UIApplication.sharedApplication().cancelAllLocalNotifications()
-            isOnString = "No"
+            label += "enabled = 0"
         }
-        label = String(format:"alarm_type=%@", isOnString)
-        self.sendSetNotificationTracker(label)
+        
+        label += ", time = \(notificationFireTime)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsNotify, label: label)
     }
     
     // MARK: Helpers
@@ -278,7 +279,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func doneSelectingTime(time : NSDate){
-        
         if(XAppDelegate.userSettings.notifyOfNewHoroscope == false){
             XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }

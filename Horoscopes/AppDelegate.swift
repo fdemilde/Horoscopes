@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupGAITracker()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
+//        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
         XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
         if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
@@ -195,6 +196,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
                 if let data = data {
                     let string = NSString(data: data, encoding: NSUTF8StringEncoding)
+//                    print("finishedGettingLocation == \(string)")
                     XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, latlon: latlon, completionHandler: { (result, error) -> Void in
                         if(error == nil){
                             let errorCode = result?["error"] as! Int
@@ -248,7 +250,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
-        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
+//        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
         let notificationInfo = "success = 0"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
     }
@@ -257,7 +259,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 8.0, *)
     func application(application: UIApplication, didRegisterUserNotificationSettings notificationSettings: UIUserNotificationSettings) {
-        NSLog("didRegisterUserNotificationSettings notificationSettings = \(notificationSettings)")
+//        NSLog("didRegisterUserNotificationSettings notificationSettings = \(notificationSettings)")
         application.registerForRemoteNotifications()
     }
     

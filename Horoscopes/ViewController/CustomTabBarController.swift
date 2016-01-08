@@ -137,7 +137,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     }
     
     func updateNotificationBadge(){
-        let notifItem = self.tabBar.items![2]
+        let notifItem = self.tabBar.items![3]
         if(XAppDelegate.badge == 0){
             notifItem.badgeValue = nil
         } else {

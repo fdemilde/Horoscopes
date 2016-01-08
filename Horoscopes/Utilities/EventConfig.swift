@@ -58,6 +58,7 @@ class EventConfig {
         case postSelect             = "post:select"
         case postSend               = "post:send"
         case postClose              = "post:close"
+        case settingsOpen           = "settings:open"
     }
     
     static let LogLevel1 : Set<Event> = [
@@ -111,7 +112,7 @@ class EventConfig {
         .settingsBug,
         .postOpen,
         .postClose,
-        
+        .settingsOpen
     ]
     
     static let LogLevel5 : Set<Event> = [
