@@ -14,7 +14,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     var selectedIndex = -1
     var signDescription = ""
     var signDate = ""
-    
+    var bgImageView : UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,6 +25,9 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
         view.addSubview(wheel)
     }
     
@@ -40,7 +43,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
         let rect = CGRectMake(0,0,screenSize.width,screenSize.height)
-        let bgImageView = UIImageView(frame: rect)
+        bgImageView = UIImageView(frame: rect)
         if(screenSize.height == 568){ // iP6
             bgImageView.image = UIImage(named: "choose_sign_bg-568h.png")
         } else {

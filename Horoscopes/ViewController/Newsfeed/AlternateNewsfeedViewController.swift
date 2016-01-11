@@ -18,6 +18,7 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
     var currentPage = 0
     var postButtonsView: PostButtonsView!
     var overlay : UIView!
+    var bgImageView : UIImageView!
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -37,6 +38,9 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
         tableView.reloadData()
     }
@@ -52,7 +56,7 @@ class AlternateNewsfeedViewController: ViewControllerWithAds, UITableViewDataSou
     
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
-        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)

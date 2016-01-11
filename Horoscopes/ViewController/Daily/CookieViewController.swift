@@ -53,6 +53,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     var state = CookieViewState.CookieViewStateUnopened
     var parentVC : DailyTableViewController?
     var shareUrl = ""
+    var bgImageView : UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -75,6 +76,9 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
 //        self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -85,7 +89,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     func setupBackground(){
         containerView.layer.cornerRadius = 4
         let screenSize = Utilities.getScreenSize()
-        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)

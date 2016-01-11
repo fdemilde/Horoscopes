@@ -20,6 +20,7 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     }()
     
     var isFollowed = false
+    var bgImageView : UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,9 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         tableView.reloadData()
     }
@@ -47,7 +51,7 @@ class DiscoverViewController : ViewControllerWithAds, UITableViewDelegate, UITab
     
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
-        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)

@@ -18,6 +18,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     var postButtonsView: PostButtonsView!
     var overlay : UIView!
     var lastContentOffsetY = 0 as CGFloat
+    var bgImageView : UIImageView!
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -39,6 +40,9 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     override func viewWillAppear(animated: Bool) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         tableView.reloadData()
     }
@@ -59,7 +63,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
-        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)

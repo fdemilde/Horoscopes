@@ -23,6 +23,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat = 0
     var parentVC : NewsfeedViewController!
+    var bgImageView : UIImageView!
     
     @IBOutlet weak var contentView: UIView!
     
@@ -32,7 +33,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         contentView.clipsToBounds = true
         // Do any additional setup after loading the view.
         let screenSize = Utilities.getScreenSize()
-        let bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)
@@ -51,6 +52,9 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        if let bgImageView = self.bgImageView{
+            self.view.sendSubviewToBack(bgImageView)
+        }
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
         bottomSpaceConstraint = contentViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
