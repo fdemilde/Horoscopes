@@ -120,6 +120,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if (value < 0) {
             _value = Int(XAppDelegate.mobilePlatform.tracker.appOpenCounter);
+        } else {
+            _value = Int(value)
         }
         
         let udid = XAppDelegate.mobilePlatform.userCred.getUDID()
@@ -130,9 +132,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let priority = EventConfig.getLogLevel(eventName)
         
         if let label = label {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i,%@", value,label), priority: priority)
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i,%@", _value,label), priority: priority)
         } else {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i", value), priority: priority)
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i", _value), priority: priority)
         }
     }
     
