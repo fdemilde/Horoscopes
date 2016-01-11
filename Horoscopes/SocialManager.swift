@@ -434,7 +434,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         // if user logs in Facebook first time.
                         if !NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey) {
                             let pickedSign = XAppDelegate.userSettings.horoscopeSign
-                            var signSentToServer = 8
+                            var signSentToServer = 0
                             if pickedSign != -1 {
                                 signSentToServer = Int(XAppDelegate.userSettings.horoscopeSign + 1)
                             }
