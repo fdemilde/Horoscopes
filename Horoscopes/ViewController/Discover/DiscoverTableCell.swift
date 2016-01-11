@@ -32,11 +32,12 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     
     var userPost : UserPost!
     var alreadyAddCircle = false
+    var profilePicturePlaceholder: UIImage!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         textView.linkDelegate = self
-        
+        profilePicturePlaceholder = UIImage(named: "default_avatar")
     }
     
     func setupCell(userPost : UserPost){
@@ -54,6 +55,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     }
     
     func populateUI(){
+        self.profileImage.image = profilePicturePlaceholder
         Utilities.getImageFromUrlString(userPost.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.profileImage.image = image
