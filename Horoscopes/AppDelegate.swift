@@ -174,6 +174,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func finishedGettingLocation(location : CLLocation){
         // only update once
         let lastLocationDict = NSUserDefaults.standardUserDefaults().objectForKey(LAST_LOCATION_DICT_KEY)
+        let locationExpireTime = NSUserDefaults.standardUserDefaults().doubleForKey(LAST_LOCATION_EXPIRE_TIME_KEY)
+        // expire in 1 week
+        if NSDate().timeIntervalSince1970 >= locationExpireTime {
+            updateLocationToServer(location)
+            return
+        }
         // if first time getting location or current location is 10,000m away from last location, update location to server
         if let lastLocationValue = lastLocationDict as? Dictionary<String, Double>{
             let lat = lastLocationValue["lat"]
@@ -194,6 +200,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locationDict["lat"] = location.coordinate.latitude
         locationDict["lon"] = location.coordinate.longitude
         NSUserDefaults.standardUserDefaults().setObject(locationDict, forKey: LAST_LOCATION_DICT_KEY)
+        NSUserDefaults.standardUserDefaults().setObject(NSDate().timeIntervalSince1970 + (7*86400), forKey: LAST_LOCATION_EXPIRE_TIME_KEY)
         let latlon = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
         XAppDelegate.socialManager.sendUserUpdateLocation(latlon, completionHandler: { (result, error) -> Void in
             if(error == nil){
