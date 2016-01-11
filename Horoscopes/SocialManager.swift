@@ -450,7 +450,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(responseDict: nil, error: error)
             } else {
-                self.persistUserProfile({ (error) -> Void in
+                self.persistUserProfile(completionHandler: { (error) -> Void in
                     if let error = error {
                         completionHandler(responseDict: nil, error: error)
                     } else {
@@ -505,9 +505,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // MARK: Location
     
-    func sendUserUpdateLocation(location : String?, latlon : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
+    func sendUserUpdateLocation(latlon : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
-        postData.setObject(location!, forKey: "location_result")
         postData.setObject(latlon, forKey: "latlon")
         
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
@@ -515,6 +514,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(result)
+                print("sendUserUpdateLocation sendUserUpdateLocation == \(result)")
                 completionHandler(result: result, error: nil)
             }
         })
@@ -692,15 +692,16 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
-    func persistUserProfile(completionHandler: (error: NSError?) -> Void) {
+    func persistUserProfile(ignoreCache : Bool = false, completionHandler: (error: NSError?) -> Void) {
         let uid = XAppDelegate.mobilePlatform.userCred.getUid()
-        self.getProfile("\(uid)",ignoreCache : false, completionHandler: { (result, error) -> Void in
+        self.getProfile("\(uid)",ignoreCache : ignoreCache, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(error: error)
             } else {
                 if let userProfile = result?[0]{
-//                    print("persistUserProfile persistUserProfile == \(userProfile)")
+                    
                     XAppDelegate.currentUser = userProfile
+                    print("persistUserProfile XAppDelegate.currentUser == \(XAppDelegate.currentUser)")
                     NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
                     completionHandler(error: nil)
                 } else {

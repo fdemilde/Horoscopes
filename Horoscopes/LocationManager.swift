@@ -70,8 +70,6 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         if let location = manager.location {
             XAppDelegate.finishedGettingLocation(location)
         }
-        
-        
     }
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {

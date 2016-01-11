@@ -121,6 +121,7 @@ let NOTIFICATION_SETTING_DEFAULT_TIME = "08:00 AM"
 // MARK: Location
 let LOCATION_IOS_KEY = "AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY"
 let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY&latlng="
+let LAST_LOCATION_DICT_KEY = "LAST_LOCATION_DICT_KEY"
 
 // MARK: post type
 // postType: image name, label, server type

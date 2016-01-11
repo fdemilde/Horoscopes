@@ -152,72 +152,66 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Test function with hardcoded location
     func sendLocation(){
-        let googleLink = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyD5jrlKA2Sw6qxgtdVlIDsnuEj7AJbpRtk&latlng=10.714407,106.735349"
-        let url = NSURL(string: googleLink)
-        let session = NSURLSession.sharedSession()
-        let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
-            error: NSError?) -> Void in
         let latlon = "10.714407,106.735349"
-            if let data = data {
-                let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                XAppDelegate.socialManager.sendUserUpdateLocation(string as? String,latlon: latlon, completionHandler: { (result, error) -> Void in
-                    if(error == nil){
-                        let errorCode = result?["error"] as! Int
-                        if(errorCode == 0){
-                            let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-                            for (_, profileDetail) in profileDict {
-                                let profile = UserProfile(data: profileDetail as! NSDictionary)
-                                XAppDelegate.currentUser = profile
-                            }
-                        } else {
-                            print("Error code === \(errorCode)")
-                        }
-                    } else {
-                        print("Error === \(error)")
+        XAppDelegate.socialManager.sendUserUpdateLocation(latlon, completionHandler: { (result, error) -> Void in
+            if(error == nil){
+                let errorCode = result?["error"] as! Int
+                if(errorCode == 0){
+                    let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
+                    for (_, profileDetail) in profileDict {
+                        let profile = UserProfile(data: profileDetail as! NSDictionary)
+                        XAppDelegate.currentUser = profile
                     }
-                })
-
+                } else {
+                    print("Error code === \(errorCode)")
+                }
+            } else {
+                print("Error === \(error)")
             }
         })
-        dataTask.resume()
     }
     
     func finishedGettingLocation(location : CLLocation){
         // only update once
-        if(userLocation == nil){
-            userLocation = location
-            let googleLink = String(format:"%@%f,%f",GOOGLE_LOCATION_API,location.coordinate.latitude,location.coordinate.longitude)
-//            print("googleLink googleLink == \(googleLink)")
-            
-            let latlon = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
-            let url = NSURL(string: googleLink)
-            let session = NSURLSession.sharedSession()
-            let dataTask = session.dataTaskWithURL(url!, completionHandler: { (data: NSData?, response:NSURLResponse?,
-                error: NSError?) -> Void in
-                
-                if let data = data {
-                    let string = NSString(data: data, encoding: NSUTF8StringEncoding)
-                    XAppDelegate.socialManager.sendUserUpdateLocation(string as? String, latlon: latlon, completionHandler: { (result, error) -> Void in
-                        if(error == nil){
-                            let errorCode = result?["error"] as! Int
-                            if(errorCode == 0){
-                                let profileDict = result?["profile"] as! Dictionary<String,AnyObject>
-                                for (_, profileDetail) in profileDict {
-                                    let profile = UserProfile(data: profileDetail as! NSDictionary)
-                                    XAppDelegate.currentUser = profile
-                                }
-                            } else {
-                                print("Error code === \(errorCode)")
-                            }
+        let lastLocationDict = NSUserDefaults.standardUserDefaults().objectForKey(LAST_LOCATION_DICT_KEY)
+        // if first time getting location or current location is 10,000m away from last location, update location to server
+        if let lastLocationValue = lastLocationDict as? Dictionary<String, Double>{
+            let lat = lastLocationValue["lat"]
+            let lon = lastLocationValue["lon"]
+            let lastLocation = CLLocation(latitude: lat!, longitude: lon!)
+            let distance = location.distanceFromLocation(lastLocation)
+            if distance >= 10000 {
+                Utilities.showAlertView(nil, title: "Update Location", message: "Distance == \(distance)")
+                updateLocationToServer(location)
+            }
+        } else {
+            updateLocationToServer(location)
+        }
+    }
+    
+    func updateLocationToServer(location : CLLocation){
+        var locationDict = Dictionary<String, Double>()
+        locationDict["lat"] = location.coordinate.latitude
+        locationDict["lon"] = location.coordinate.longitude
+        NSUserDefaults.standardUserDefaults().setObject(locationDict, forKey: LAST_LOCATION_DICT_KEY)
+        let latlon = "\(location.coordinate.latitude),\(location.coordinate.longitude)"
+        XAppDelegate.socialManager.sendUserUpdateLocation(latlon, completionHandler: { (result, error) -> Void in
+            if(error == nil){
+                let errorCode = result?["error"] as! Int
+                if(errorCode == 0){
+                    XAppDelegate.socialManager.persistUserProfile(true, completionHandler: { (profileError) -> Void in
+                        if(profileError != nil) {
+                            Utilities.showError(profileError!)
                         } else {
-                            print("Error === \(error)")
                         }
                     })
-                    
+                } else {
+                    print("Error code === \(errorCode)")
                 }
-            })
-            dataTask.resume()
-        }
+            } else {
+                print("Error === \(error)")
+            }
+        })
     }
     
     // MARK: Notification handler
