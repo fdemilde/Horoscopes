@@ -431,26 +431,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             }
                         }
                         completionHandler(error: nil, permissionGranted: true)
-                        // if user logs in Facebook first time.
-                        if !NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey) {
-                            let pickedSign = XAppDelegate.userSettings.horoscopeSign
-                            var signSentToServer = 0
-                            if pickedSign != -1 {
-                                signSentToServer = Int(XAppDelegate.userSettings.horoscopeSign + 1)
-                            }
-                            self.sendUserUpdateSign(signSentToServer, completionHandler: { (result, error) -> Void in
-                                let errorCode = result?["error"] as! Int
-                                if errorCode == 0 {
-                                    self.persistUserProfile(true, completionHandler: { (error) -> Void in
-                                        if let _ = error {
-                                            
-                                        } else {
-                                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: isNotLoggedInFacebookFirstTimeKey)
-                                        }
-                                    })
-                                }
-                            })
-                        }
                     }
                 }
             }
@@ -505,9 +485,31 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             completionHandler(error: error, permissionGranted: false)
                         } else {
                             completionHandler(error: nil, permissionGranted: true)
+                            // if user logs in Facebook first time.
+                            if !NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey) {
+                                let pickedSign = XAppDelegate.userSettings.horoscopeSign
+                                var signSentToServer = 0
+                                if pickedSign != -1 {
+                                    signSentToServer = Int(XAppDelegate.userSettings.horoscopeSign + 1)
+                                }
+                                self.sendUserUpdateSign(signSentToServer, completionHandler: { (result, error) -> Void in
+                                    let errorCode = result?["error"] as! Int
+                                    if errorCode == 0 {
+                                        self.persistUserProfile(true, completionHandler: { (error) -> Void in
+                                            if let _ = error {
+                                                
+                                            } else {
+                                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: isNotLoggedInFacebookFirstTimeKey)
+                                            }
+                                        })
+                                    } else {
+                                        print(" ko log in duoc")
+                                    }
+                                })
+                            }
                             
                             XAppDelegate.locationManager.setupLocationService()
-                                self.getProfilesOfUsersFollowing({ (result, error) -> Void in
+                            self.getProfilesOfUsersFollowing({ (result, error) -> Void in
                                 if let _ = error {
                                     
                                 } else {
@@ -725,7 +727,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if let userProfile = result?[0]{
                     
                     XAppDelegate.currentUser = userProfile
-                    print("persistUserProfile XAppDelegate.currentUser == \(XAppDelegate.currentUser)")
                     NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
                     completionHandler(error: nil)
                 } else {

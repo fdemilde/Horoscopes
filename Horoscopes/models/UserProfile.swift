@@ -60,7 +60,7 @@ public class UserProfile: NSObject, NSCoding {
     }
     
     override public var description: String {
-        let string = ("name = \(name)")
+        let string = ("name = \(name) || sign = \(sign)")
         return string
     }
 }

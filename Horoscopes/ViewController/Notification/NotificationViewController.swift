@@ -30,6 +30,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
+            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+        }
+        
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
@@ -91,7 +95,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
         var cell : NotificationTableViewCell!
         cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
         if let cell = cell {
@@ -116,8 +119,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         if let cell = cell {
             let id = notifArray[indexPath.row].notification_id
             notificationIds.insert(id)
+            cell.backgroundColor = UIColor.whiteColor()
             let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
             NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+            
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
@@ -157,7 +162,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             Utilities.showHUD()
             tableView.backgroundColor = UIColor.whiteColor()
         }
-        
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
