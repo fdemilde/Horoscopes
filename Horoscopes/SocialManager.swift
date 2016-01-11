@@ -431,6 +431,26 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             }
                         }
                         completionHandler(error: nil, permissionGranted: true)
+                        // if user logs in Facebook first time.
+                        if !NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey) {
+                            let pickedSign = XAppDelegate.userSettings.horoscopeSign
+                            var signSentToServer = 8
+                            if pickedSign != -1 {
+                                signSentToServer = Int(XAppDelegate.userSettings.horoscopeSign + 1)
+                            }
+                            self.sendUserUpdateSign(signSentToServer, completionHandler: { (result, error) -> Void in
+                                let errorCode = result?["error"] as! Int
+                                if errorCode == 0 {
+                                    self.persistUserProfile(true, completionHandler: { (error) -> Void in
+                                        if let _ = error {
+                                            
+                                        } else {
+                                            NSUserDefaults.standardUserDefaults().setBool(true, forKey: isNotLoggedInFacebookFirstTimeKey)
+                                        }
+                                    })
+                                }
+                            })
+                        }
                     }
                 }
             }
@@ -624,6 +644,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     // MARK: Helpers
+    func isNotLoggedInFacebookFirstTime() -> Bool {
+        return NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey)
+    }
+    
     func getCurrentUserFollowProfile(method: String, completionHandler: (result: [UserProfile]?, error: NSError?) -> Void) {
         XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
             if let error = error {
