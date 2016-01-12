@@ -65,11 +65,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                         self.userPosts += posts
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             self.tableView.reloadData()
-                            self.tableView.finishInfiniteScroll()
-                            if let indexes = self.tableView.indexPathsForVisibleRows {
-                                let targetRow = indexes[indexes.count - 1].row
-                                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-                            }
+                            // TODO: remove this later
+//                            self.tableView.finishInfiniteScroll()
+//                            if let indexes = self.tableView.indexPathsForVisibleRows {
+//                                let targetRow = indexes[indexes.count - 1].row
+//                                self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//                            }
                         })
                     }
                 }
@@ -429,6 +430,9 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
             cell.viewController = self
             cell.configureCellForProfile(post)
+            if(indexPath.row == userPosts.count - 1){ // last row
+                loadDataForNextPage()
+            }
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
@@ -506,6 +510,17 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
             self.navigationController?.pushViewController(controller, animated: true)
         })
+    }
+    
+    
+    
+    // MARK: Load Next Page
+    
+    func loadDataForNextPage(){
+        if self.isLastPostPage || self.currentScope != .Post {
+            return
+        }
+        self.currentPostPage++
     }
 
     /*

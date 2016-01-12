@@ -36,16 +36,15 @@ class CurrentProfileViewController: ProfileBaseViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
         
-        // Set custom indicator
-//        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
-        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
-            _ = scrollView as! UITableView
-            if self.isLastPostPage || self.currentScope != .Post {
-                self.tableView.finishInfiniteScroll()
-                return
-            }
-            self.currentPostPage++
-        }
+        // remove infinite scrolling for now, we use func loadDataForNextPage instead
+//        tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
+//            _ = scrollView as! UITableView
+//            if self.isLastPostPage || self.currentScope != .Post {
+//                self.tableView.finishInfiniteScroll()
+//                return
+//            }
+//            self.currentPostPage++
+//        }
         noPostText = "You have not posted anything. Start posting something!"
         noUsersFollowingText = "You have not followed anyone. Start follow someone!"
         noFollowersText = "You do not have any follower."

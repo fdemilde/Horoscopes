@@ -36,7 +36,7 @@ class CacheManager {
                 }
             }
 //            print("\(url) SEND REQUEST TO SERVER")
-            Utilities.showHUD()
+//            Utilities.showHUD()
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {
                     completionHandler(result: nil, error: error)
@@ -54,7 +54,7 @@ class CacheManager {
                     }
                     completionHandler(result: response, error: error)
                 }
-                Utilities.hideHUD()
+//                Utilities.hideHUD()
             }
         }
     }

@@ -30,7 +30,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         super.viewDidLoad()
         
         self.setupBackground()
-        setupInfiniteScroll()
+//        setupInfiniteScroll()
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         self.tableView.pagingEnabled = true
         tableView.addSubview(refreshControl)
@@ -138,6 +138,9 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         cell.parentViewController = self
         cell.setupCell(post)
         cell.configureCellForNewsfeed()
+        if(indexPath.row == XAppDelegate.dataStore.newsfeedGlobal.count-1){ // last row
+            loadDataForNextPage()
+        }
         return cell
     }
     
@@ -169,12 +172,12 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 let newDataArray = notif.object as! [UserPost]
                 XAppDelegate.dataStore.newsfeedGlobal = newDataArray
                 self.tableView.reloadData()
-                self.tableView.finishInfiniteScroll()
+//                self.tableView.finishInfiniteScroll()
 //                self.insertRowsAtBottom(newDataArray)
-                if let indexes = self.tableView.indexPathsForVisibleRows {
-                    let targetRow = indexes[indexes.count - 1].row
-               self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-                }
+//                if let indexes = self.tableView.indexPathsForVisibleRows {
+//                    let targetRow = indexes[indexes.count - 1].row
+//               self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+//                }
             }
         })
     }
@@ -189,14 +192,14 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         })
         
         let delta = deltaCalculator.deltaFromOldArray(XAppDelegate.dataStore.newsfeedGlobal, toNewArray:newData)
-        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
+        delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Middle)
         XAppDelegate.dataStore.newsfeedGlobal = newData
         self.tableView.endUpdates()
         if let indexes = tableView.indexPathsForVisibleRows {
             let targetRow = indexes[indexes.count - 1].row
             tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
-        tableView.finishInfiniteScroll()
+//        tableView.finishInfiniteScroll()
         
     }
     
@@ -210,11 +213,22 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 self.tableView.finishInfiniteScroll()
                 return
             } // last page dont need to request more
-            self.currentPage++
+//            self.currentPage++
             let label = "page = \(self.currentPage)"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commLoadmore, label: label)
-            XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
+//            XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
+            self.tableView.finishInfiniteScroll()
         }
+    }
+    
+    func loadDataForNextPage(){
+        if(XAppDelegate.dataStore.isLastPage){
+            return
+        }
+        self.currentPage++
+        let label = "page = \(self.currentPage)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commLoadmore, label: label)
+        XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
     }
     
     func handleRefresh(refreshControl: UIRefreshControl) {

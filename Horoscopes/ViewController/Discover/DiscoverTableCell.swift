@@ -55,7 +55,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     }
     
     func populateUI(){
-        self.profileImage.image = profilePicturePlaceholder
+//        self.profileImage.image = profilePicturePlaceholder
         Utilities.getImageFromUrlString(userPost.user!.imgURL, completionHandler: { (image) -> Void in
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
                 self.profileImage.image = image
