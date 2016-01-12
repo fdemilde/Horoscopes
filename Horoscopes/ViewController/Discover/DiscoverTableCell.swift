@@ -153,6 +153,12 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
     }
     
+    // MARK: reuse 
+    
+    override func prepareForReuse() {
+        self.profileImage.image = profilePicturePlaceholder
+    }
+    
     // MARK: Button action
     
     @IBAction func tapLikeButton(sender: UIButton) {
