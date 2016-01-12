@@ -488,7 +488,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             Utilities.popCurrentViewControllerToTop()
             if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
                 let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
-                rootVC?.selectedIndex = 1
+                rootVC?.selectedIndex = 3
             }
             if let postId = param["post_id"] as? String{
                 Utilities.showHUD()
@@ -504,7 +504,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 for post : UserPost in result {
                                     let controller = storyboard.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
                                     controller.userPost = post
-                                    if let notificationViewController = Utilities.getViewController(AlternateCommunityViewController.classForCoder()) as? AlternateCommunityViewController {
+                                    if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
                                         notificationViewController.navigationController?.pushViewController(controller, animated: true)
                                     }
                                 }
