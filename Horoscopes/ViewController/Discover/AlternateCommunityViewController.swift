@@ -40,11 +40,12 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     override func viewWillAppear(animated: Bool) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        tableView.reloadData()
         if let bgImageView = self.bgImageView{
             self.view.sendSubviewToBack(bgImageView)
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {

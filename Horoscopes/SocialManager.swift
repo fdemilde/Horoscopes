@@ -75,6 +75,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let postsArray = result["posts"] as! [AnyObject]
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
+                    
                     if(isAddingData){
                         XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global, isLastPage: Bool(isLastAsNumber))
                     } else {

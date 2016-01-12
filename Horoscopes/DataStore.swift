@@ -166,7 +166,6 @@ class DataStore : NSObject{
     
     // this function is for supporting paging, when table reaches the end we will add more contents to it
     func addData(oldDataArray : [UserPost], newDataArray : [UserPost])  -> [UserPost]{
-        
         var mutableOldArray = oldDataArray
         let oldPostIDArray = self.parseUserPostDataIntoPostIdArray(oldDataArray)
         let newPostIDArray = self.parseUserPostDataIntoPostIdArray(newDataArray)
@@ -174,12 +173,9 @@ class DataStore : NSObject{
         for (index,newPostId) in newPostIDArray.enumerate() {
             if !oldPostIDArray.contains(newPostId) {
                 if(!newsfeedIsUpdated) { newsfeedIsUpdated = true }
-                mutableOldArray.insert(newDataArray[index], atIndex: 0)
+                mutableOldArray.append(newDataArray[index])
             }
         }
-        
-        // sort new data with post ts
-        mutableOldArray.sortInPlace { $0.ts > $1.ts }
         return mutableOldArray
     }
     
