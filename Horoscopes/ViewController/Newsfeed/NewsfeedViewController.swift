@@ -285,10 +285,6 @@ class NewsfeedViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func setupInfiniteScroll(){
         // Set custom indicator
-        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
-        
-        // Set custom indicator margin
-        tableView.infiniteScrollIndicatorMargin = 40
         
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
             if(!XAppDelegate.socialManager.isLoggedInFacebook()){

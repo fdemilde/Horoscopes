@@ -10,12 +10,12 @@ import UIKit
 
 class PostButtonsView: UIView {
     
-    var storyButton: UIButton!
-    var feelButton: UIButton!
+    var adviceButton: UIButton!
+    var howButton: UIButton!
     var fortuneButton: UIButton!
     var mindButton: UIButton!
-    var storyLabel: UILabel!
-    var feelLabel: UILabel!
+    var adviceLabel: UILabel!
+    var howLabel: UILabel!
     var fortuneLabel: UILabel!
     var mindLabel: UILabel!
     var POST_BUTTON_SIZE = UIImage(named: "newsfeed_post_advice")!.size
@@ -24,15 +24,15 @@ class PostButtonsView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        storyButton = UIButton()
-        storyButton.setImage(UIImage(named: "newsfeed_post_advice"), forState: .Normal)
-        storyButton.addTarget(self, action: "storyButtonTapped:", forControlEvents: .TouchUpInside)
-        addSubview(storyButton)
+        adviceButton = UIButton()
+        adviceButton.setImage(UIImage(named: "newsfeed_post_advice"), forState: .Normal)
+        adviceButton.addTarget(self, action: "adviceButtonTapped:", forControlEvents: .TouchUpInside)
+        addSubview(adviceButton)
         
-        feelButton = UIButton()
-        feelButton.setImage(UIImage(named: "newsfeed_post_horoscope"), forState: .Normal)
-        feelButton.addTarget(self, action: "feelButtonTapped:", forControlEvents: .TouchUpInside)
-        addSubview(feelButton)
+        howButton = UIButton()
+        howButton.setImage(UIImage(named: "newsfeed_post_horoscope"), forState: .Normal)
+        howButton.addTarget(self, action: "feelButtonTapped:", forControlEvents: .TouchUpInside)
+        addSubview(howButton)
         
         fortuneButton = UIButton()
         fortuneButton.setImage(UIImage(named: "newsfeed_post_fortune"), forState: .Normal)
@@ -44,14 +44,17 @@ class PostButtonsView: UIView {
         mindButton.addTarget(self, action: "mindButtonTapped:", forControlEvents: .TouchUpInside)
         addSubview(mindButton)
         
-        storyLabel = UILabel()
-        configureLabel(storyLabel, text: "Share some advice")
-        feelLabel = UILabel()
-        configureLabel(feelLabel, text: "How’s your horoscope?")
+        adviceLabel = UILabel()
+        configureLabel(adviceLabel, text: postTypes[NewsfeedType.ShareAdvice]!.1)
+        
+        howLabel = UILabel()
+        configureLabel(howLabel, text: postTypes[NewsfeedType.HowHoroscope]!.1)
+        
         fortuneLabel = UILabel()
-        configureLabel(fortuneLabel, text: "Write a fortune")
+        configureLabel(fortuneLabel, text: postTypes[NewsfeedType.Fortune]!.1)
+        
         mindLabel = UILabel()
-        configureLabel(mindLabel, text: "What's on your mind?")
+        configureLabel(mindLabel, text: postTypes[NewsfeedType.OnYourMind]!.1)
     }
     
     convenience init(frame: CGRect, forceChangeButtonSize : Bool) {
@@ -70,13 +73,15 @@ class PostButtonsView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        storyButton.frame = getPostButtonFrame(1)
-        feelButton.frame = getPostButtonFrame(0)
+        
+        howButton.frame = getPostButtonFrame(0)
+        adviceButton.frame = getPostButtonFrame(1)
         fortuneButton.frame = getPostButtonFrame(3)
         mindButton.frame = getPostButtonFrame(2)
         
-        configureOriginOf(storyLabel, basedOn: storyButton)
-        configureOriginOf(feelLabel, basedOn: feelButton)
+        
+        configureOriginOf(howLabel, basedOn: howButton)
+        configureOriginOf(adviceLabel, basedOn: adviceButton)
         configureOriginOf(fortuneLabel, basedOn: fortuneButton)
         configureOriginOf(mindLabel, basedOn: mindButton)
     }
@@ -111,8 +116,8 @@ class PostButtonsView: UIView {
     }
     
     func setTextColor(color: UIColor) {
-        storyLabel.textColor = color
-        feelLabel.textColor = color
+        adviceLabel.textColor = color
+        howLabel.textColor = color
         fortuneLabel.textColor = color
         mindLabel.textColor = color
     }
@@ -151,20 +156,20 @@ class PostButtonsView: UIView {
         configureViewController(type, placeholder: placeholder)
     }
     
-    func storyButtonTapped(sender: UIButton) {
-        buttonTapped("shareadvice", placeholder: "Share some advice")
+    func adviceButtonTapped(sender: UIButton) {
+        buttonTapped("shareadvice", placeholder: postTypes[NewsfeedType.ShareAdvice]!.1)
     }
     
     func feelButtonTapped(sender: UIButton) {
-        buttonTapped("howhoroscope", placeholder: "How’s your horoscope?")
+        buttonTapped("howhoroscope", placeholder: postTypes[NewsfeedType.HowHoroscope]!.1)
     }
     
     func fortuneButtonTapped(sender: UIButton) {
-        buttonTapped("fortune", placeholder: "Write a fortune")
+        buttonTapped("fortune", placeholder: postTypes[NewsfeedType.Fortune]!.1)
     }
     
     func mindButtonTapped(sender: UIButton) {
-        buttonTapped("onyourmind", placeholder: "What's on your mind?")
+        buttonTapped("onyourmind", placeholder: postTypes[NewsfeedType.OnYourMind]!.1)
     }
 
     /*

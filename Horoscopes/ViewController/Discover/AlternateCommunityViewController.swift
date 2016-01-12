@@ -167,7 +167,14 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 self.tableView.finishInfiniteScroll()
             } else {
                 let newDataArray = notif.object as! [UserPost]
-                self.insertRowsAtBottom(newDataArray)
+                XAppDelegate.dataStore.newsfeedGlobal = newDataArray
+                self.tableView.reloadData()
+                self.tableView.finishInfiniteScroll()
+//                self.insertRowsAtBottom(newDataArray)
+                if let indexes = self.tableView.indexPathsForVisibleRows {
+                    let targetRow = indexes[indexes.count - 1].row
+               self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
+                }
             }
         })
     }

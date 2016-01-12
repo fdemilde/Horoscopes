@@ -129,8 +129,8 @@ let LAST_LOCATION_EXPIRE_TIME_KEY = "LAST_LOCATION_EXPIRE_TIME_KEY"
 // postType: image name, label, server type
 let postTypes = [
     NewsfeedType.HowHoroscope: ("post_type_horoscope", "How’s your horoscope?","howhoroscope"),
-    NewsfeedType.ShareAdvice: ("post_type_advice", "Share some advice","shareadvice"),
-    NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind?","onyourmind"),
+    NewsfeedType.ShareAdvice: ("post_type_advice", "Share some daily advice","shareadvice"),
+    NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind today?","onyourmind"),
     NewsfeedType.Fortune: ("post_type_fortune", "Write a fortune","fortune")
 ]
 

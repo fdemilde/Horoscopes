@@ -38,10 +38,6 @@ class CurrentProfileViewController: ProfileBaseViewController {
         
         // Set custom indicator
 //        tableView.infiniteScrollIndicatorView = CustomInfiniteIndicator(frame: CGRectMake(0, 0, 24, 24))
-        
-        // Set custom indicator margin
-        tableView.infiniteScrollIndicatorMargin = 40
-        
         tableView.addInfiniteScrollWithHandler { (scrollView) -> Void in
             _ = scrollView as! UITableView
             if self.isLastPostPage || self.currentScope != .Post {
