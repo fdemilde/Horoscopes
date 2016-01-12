@@ -58,6 +58,7 @@ let GET_FOLLOWING_FEED = "app.horoscopes.feed.following"
 let SEND_HEART = "app.horoscopes.heart.send"
 
 let SEND_HEART_USER_POST_TYPE = "userpost"
+let REGISTER_SHARE = "app.horoscopes.share.register"
 
 // MARK: - Post request
 let CREATE_POST = "app.horoscopes.post.create"

@@ -28,6 +28,7 @@ class ShareViewController : UIViewController {
     var shareController: ShareController!
     var numberOfButtons = 3
     var paddingY = 15.0 as CGFloat
+    var fortuneId = 0
     
     @IBOutlet weak var topBarView: UIView!
     @IBOutlet weak var shareView: UIView!
@@ -205,14 +206,19 @@ class ShareViewController : UIViewController {
         self.sharingText = sharingText
         self.pictureURL = pictureURL
         self.shareUrl = shareUrl
+        XAppDelegate.socialManager.registerShare(self.shareType, postId:  "", timetag: self.timeTag, sign: self.horoscopeSignIndex) { (result, error) -> Void in
+        }
     }
     
-    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
+    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String, fortuneId : Int){
         self.viewType = viewType
         self.shareType = ShareType.ShareTypeFortune
         self.sharingText = sharingText
         self.pictureURL = pictureURL
         self.shareUrl = shareUrl
+        self.fortuneId = fortuneId
+        XAppDelegate.socialManager.registerShare(self.shareType, postId:  "", timetag: 0, sign: 0, fortuneId: self.fortuneId) { (result, error) -> Void in
+        }
     }
     
     func populateNewsfeedShareData(postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
@@ -222,6 +228,8 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
         self.postId = postId
         self.shareUrl = shareUrl
+        XAppDelegate.socialManager.registerShare(self.shareType, postId: self.postId) { (result, error) -> Void in
+        }
     }
     
     

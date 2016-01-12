@@ -54,6 +54,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     var parentVC : DailyTableViewController?
     var shareUrl = ""
     var bgImageView : UIImageView!
+    var fortuneId = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -153,7 +154,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     func prepareShareVC() -> ShareViewController{
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"), shareUrl: self.shareUrl)
+        shareVC.populateCookieShareData(ShareViewType.ShareViewTypeHybrid, sharingText: String(format: "%@",self.luckyNumberLabel.text!), pictureURL: String(format: "http://dv2.zwigglers.com/fortune3/pic/cookie-ff3.jpg"), shareUrl: self.shareUrl, fortuneId: fortuneId)
         
         return shareVC
     }
@@ -330,6 +331,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
             var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
             let fortuneDescription = fortuneData["fortune"] as? String
             let fortunePermaLink = fortuneData["permalink"] as? String
+            let fortuneIdInt = fortuneData["fortune_id"] as? Int
             if let fortuneDescription = fortuneDescription {
                 XAppDelegate.dataStore.currentFortuneDescription = "\"\(fortuneDescription)\""
                 self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
@@ -338,6 +340,10 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
             }
             if let fortunePermaLink = fortunePermaLink {
                 self.shareUrl = fortunePermaLink
+            }
+            
+            if let fortuneId = fortuneIdInt {
+                self.fortuneId = fortuneId
             }
             
             self.luckyNumberLabel.text = ""

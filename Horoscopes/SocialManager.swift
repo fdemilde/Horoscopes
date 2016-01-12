@@ -798,4 +798,30 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             }
         }
     }
+    
+    // MARK: Share
+    
+    func registerShare(type : ShareType, postId : String? = "", timetag : NSTimeInterval? = 0, sign : Int? = 0, fortuneId : Int? = 0, completionHandler: (result: Dictionary<String,AnyObject>?, error: NSError?) -> Void ){
+        let postData = NSMutableDictionary()
+        switch type {
+            case .ShareTypeDaily:
+                postData.setObject("horoscope", forKey: "type")
+                postData.setObject("\(timetag!)", forKey: "time_tag")
+                postData.setObject("\(sign!)", forKey: "sign")
+            case .ShareTypeFortune:
+                postData.setObject("fortune", forKey: "type")
+                postData.setObject("\(fortuneId!)", forKey: "fortune_id")
+            case .ShareTypeNewsfeed:
+                postData.setObject("userpost", forKey: "type")
+                postData.setObject("\(postId!)", forKey: "post_id")
+        }
+        XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SHARE, andPostData: postData) { (response, error) -> Void in
+            if let error = error {
+                completionHandler(result: nil, error: error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response)
+                completionHandler(result: result, error: nil)
+            }
+        }
+    }
 }

@@ -404,10 +404,9 @@ class Utilities {
         hostViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
     }
     
-    class func shareViewControllerForType(viewType: ShareViewType, shareType: ShareType, timeTag: NSTimeInterval = 0, horoscopeSignName : String = "", sharingText: String, pictureURL : String = "") -> ShareViewController {
+    class func getShareViewController() -> ShareViewController {
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
         let shareViewController = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
-        shareViewController.populateShareData(viewType, shareType: shareType, timeTag: timeTag, horoscopeSignName: horoscopeSignName, sharingText: sharingText, pictureURL: pictureURL)
         return shareViewController
     }
     

@@ -180,7 +180,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         let name = userPost.user?.name
         let postContent = userPost.message
         let sharingText = String(format: "%@ \n %@", name!, postContent)
-        let controller = Utilities.shareViewControllerForType(ShareViewType.ShareViewTypeHybrid, shareType: ShareType.ShareTypeNewsfeed, sharingText: sharingText)
+        let controller = Utilities.getShareViewController()
         controller.populateNewsfeedShareData(userPost.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: userPost.permalink)
         Utilities.presentShareFormSheetController(self.parentViewController, shareViewController: controller)
     }
