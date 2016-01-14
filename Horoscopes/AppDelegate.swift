@@ -58,7 +58,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
         }
         
-        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
@@ -267,6 +266,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
         if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
             badge++
             Utilities.updateNotificationBadge()

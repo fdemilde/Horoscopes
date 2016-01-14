@@ -134,11 +134,10 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("DiscoverTableCell", forIndexPath: indexPath) as! DiscoverTableCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("DiscoverTableCell", forIndexPath: indexPath) as! PostTableViewCell
         let post = XAppDelegate.dataStore.newsfeedGlobal[indexPath.row]
-        cell.parentViewController = self
-        cell.setupCell(post)
-        cell.configureCellForNewsfeed()
+        cell.viewController = self
+        cell.configureCellForNewsfeed(post)
         if(indexPath.row == XAppDelegate.dataStore.newsfeedGlobal.count-1){ // last row
             loadDataForNextPage()
         }

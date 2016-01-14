@@ -46,6 +46,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)

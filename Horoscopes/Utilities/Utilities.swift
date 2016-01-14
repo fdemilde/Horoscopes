@@ -555,9 +555,11 @@ class Utilities {
                 range:NSMakeRange(0, text.characters.count) ,
                 withTemplate: "")
             let readMorePhrase = "... Read more"
+            // check if it's trucated by server
             if isTruncated {
                 replacedText += readMorePhrase
             }
+            
             let attString = NSMutableAttributedString(string: replacedText)
             let font = UIFont(name: "Book Antiqua", size: 14)
             let textColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1)
@@ -568,6 +570,8 @@ class Utilities {
             if isTruncated {
                 attString.addAttribute(CCHLinkAttributeName, value: "readmore", range: readMoreRange)
             }
+            
+            
             let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
             if numberOfMatches / 2 == urls.count {
                 for index in 0..<numberOfMatches {
@@ -590,6 +594,63 @@ class Utilities {
             let attString = NSMutableAttributedString(string: "\(text)")
             return attString
         }
+    }
+    
+    // Method to check if client should truncate the text
+    // Base on current device size to check
+    class func shouldBeTruncatedOnClient(text: String) -> Bool{
+        let width = Utilities.getScreenSize().width - 16 // Margin = 8
+        let font = UIFont(name: "Book Antiqua", size: 14)
+        let checkTextView = CCHLinkTextView()
+        checkTextView.font = font
+        checkTextView.text = text
+        
+        let size = checkTextView.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        
+        let lineHeight = font?.lineHeight
+        let bottomInset = checkTextView.contentInset.bottom
+        let topInset = checkTextView.contentInset.bottom
+        let numberOfLine = ceil((size.height - topInset - bottomInset) / lineHeight!)
+        
+        
+        if(DeviceType.IS_IPHONE_4_OR_LESS) {
+            if numberOfLine > MAX_LINES_IP4 { return true }
+        }
+        
+        if(DeviceType.IS_IPHONE_5) {
+            if numberOfLine > MAX_LINES_IP5 { return true }
+        }
+        
+        if(DeviceType.IS_IPHONE_6) {
+            if numberOfLine > MAX_LINES_IP6 { return true }
+        }
+        
+        if(DeviceType.IS_IPHONE_6P) {
+            if numberOfLine > MAX_LINES_IP6P {
+                return true
+            }
+        }
+        
+        return false
+    }
+    
+    class func getTextViewMaxLines() -> Int{
+        if (DeviceType.IS_IPHONE_4_OR_LESS){
+             return Int(MAX_LINES_IP4)
+        }
+        if (DeviceType.IS_IPHONE_5) {
+            return Int(MAX_LINES_IP5)
+        }
+        
+        if (DeviceType.IS_IPHONE_6) {
+            return Int(MAX_LINES_IP6)
+        }
+        
+        if (DeviceType.IS_IPHONE_6P) {
+            return Int(MAX_LINES_IP6P)
+        }
+        
+        return Int(MAX_LINES_IP5)
     }
 }
 

@@ -537,7 +537,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 completionHandler(result: nil, error: error)
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(result)
-                print("sendUserUpdateLocation sendUserUpdateLocation == \(result)")
                 completionHandler(result: result, error: nil)
             }
         })

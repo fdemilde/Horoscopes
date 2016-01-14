@@ -230,3 +230,11 @@ struct DeviceType
     static let IS_IPHONE_6P = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
+// MARK: MAX NO LINES
+let MAX_LINES_IP4 = 4 as CGFloat
+let MAX_LINES_IP5 = 8 as CGFloat
+let MAX_LINES_IP6 = 13 as CGFloat
+let MAX_LINES_IP6P = 15 as CGFloat
+
+
+

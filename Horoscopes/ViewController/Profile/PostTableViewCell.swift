@@ -48,6 +48,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var horoscopeSignLabelTrailingSpaceLayoutConstraint: NSLayoutConstraint!
     @IBOutlet weak var textViewHeight: NSLayoutConstraint!
     
+    @IBOutlet weak var fakeReadmoreLabel: UILabel?
+    
+    var profilePicturePlaceholder: UIImage!
     
     // MARK: - Property
     let profileImageSize: CGFloat = 60
@@ -64,6 +67,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         super.awakeFromNib()
         // Initialization code
         textView.linkDelegate = self
+        profilePicturePlaceholder = UIImage(named: "default_avatar")
         
     }
 
@@ -94,13 +98,19 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     // MARK: BINH BINH, need to reset all UI before populating to prevent wrong UI from reusing cell
     func resetUI(){
-        dispatch_async(dispatch_get_main_queue(), {
-            self.profileImageView.image = nil
-            self.profileNameLabel.text = ""
-            self.textView.text = ""
-            self.postDateLabel.text = ""
-            self.likeNumberLabel.text = ""
-        })
+//        dispatch_async(dispatch_get_main_queue(), {
+//            self.profileImageView.image = nil
+//            self.profileNameLabel.text = ""
+//            self.textView.text = ""
+//            self.postDateLabel.text = ""
+//            self.likeNumberLabel.text = ""
+//        })
+    }
+    
+    // MARK: reuse
+    
+    override func prepareForReuse() {
+        self.profileImageView?.image = profilePicturePlaceholder
     }
     
     private func configureCell(post: UserPost) {
@@ -134,10 +144,27 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 self.likeButton.userInteractionEnabled = true
             }
             
-            
             let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: "tapLikeLable:")
             self.likeNumberLabel.userInteractionEnabled = true
             self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
+            
+            self.fakeReadmoreLabel?.userInteractionEnabled = true
+            let tapGesture = UITapGestureRecognizer(target: self, action: "readmoreTapped")
+            self.fakeReadmoreLabel?.addGestureRecognizer(tapGesture)
+            self.fakeReadmoreLabel?.font = UIFont(name: "Book Antiqua", size: 14)
+            if(!self.viewController.isKindOfClass(SinglePostViewController.classForCoder())){
+                self.setupTextViewMaxLines()
+            } else {
+                print("ignore max lines")
+            }
+            
+            // fake a read more button if it should be truncate on client side
+            if(Utilities.shouldBeTruncatedOnClient(post.message)){
+                self.fakeReadmoreLabel?.hidden = false
+            } else {
+                self.fakeReadmoreLabel?.hidden = true
+            }
+            self.textView.contentInset = UIEdgeInsets(top: 0, left: 2, bottom: 0,right: 2)
         })
     }
     
@@ -279,6 +306,35 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     // MARK: link textview Delegate
     func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
         let urlString = value as! String
+        
+        self.tapOnLink(urlString)
+    }
+    
+    // MARK: display View controller
+    func displayViewController(viewController : UIViewController){
+        dispatch_async(dispatch_get_main_queue()) {
+        let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
+        let formSheet = MZFormSheetController(viewController: viewController)
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.portraitTopInset = paddingTop;
+            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
+        self.viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        }
+    }
+    
+    // MARK: Text view Max Lines
+    func setupTextViewMaxLines(){
+        self.textView.textContainer.maximumNumberOfLines = Utilities.getTextViewMaxLines()
+    }
+    
+    //MARK: Read more action
+    
+    func readmoreTapped(){
+        tapOnLink("readmore")
+    }
+    
+    func tapOnLink(urlString : String){
         Utilities.showHUD()
         XAppDelegate.socialManager.getPost(post.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
             Utilities.hideHUD()
@@ -305,19 +361,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 
             }
         })
-    }
-    
-    // MARK: display View controller
-    func displayViewController(viewController : UIViewController){
-        dispatch_async(dispatch_get_main_queue()) {
-        let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
-        let formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
-        formSheet.shouldDismissOnBackgroundViewTap = true
-        formSheet.portraitTopInset = paddingTop;
-            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
-        self.viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
-        }
     }
 }
 

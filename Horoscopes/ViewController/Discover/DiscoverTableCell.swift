@@ -24,8 +24,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
     @IBOutlet weak var profileView: UIView!
     @IBOutlet weak var likeNumberLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
-    
-    
+    @IBOutlet weak var fakeReadmoreLabel: UILabel!
     
     var parentViewController : UIViewController!
     let profileImageSize = 60 as CGFloat
@@ -51,6 +50,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
             self.profileImage.layer.cornerRadius = self.profileImageSize / 2
             self.profileImage.clipsToBounds = true
             self.populateUI()
+            
         })
     }
     
@@ -103,7 +103,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
         self.textView!.linkTextAttributes = linkAttributes
         self.textView.attributedText = att
-        
+//        print("populate UI text == \(self.textView.text)")
         let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
         self.profileImage.userInteractionEnabled = true
         self.profileImage.addGestureRecognizer(nameGestureRecognizer)
@@ -119,6 +119,12 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         let nameGestureRecognizer4 = UITapGestureRecognizer(target: self, action: "tapProfile:")
         self.name.userInteractionEnabled = true
         self.name.addGestureRecognizer(nameGestureRecognizer4)
+        
+        self.textView.contentInset.bottom = 2
+        
+                self.setupTextViewMaxLines()
+        self.textView.backgroundColor = UIColor.redColor()
+        
     }
     
     func configureFollowButton(isFollowed: Bool) {
@@ -151,9 +157,21 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: "tapLikeLable:")
         self.likeNumberLabel.userInteractionEnabled = true
         self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
+        
+        print("add gesture discover")
+        let readmoreRecognizer = UITapGestureRecognizer(target: self, action: "readmoreTapped:")
+        self.fakeReadmoreLabel.userInteractionEnabled = true
+        self.fakeReadmoreLabel.addGestureRecognizer(readmoreRecognizer)
+        
+        self.fakeReadmoreLabel.font = UIFont(name: "Book Antiqua", size: 14)
+
     }
     
-    // MARK: reuse 
+    func setupTextViewMaxLines(){
+        self.textView.textContainer.maximumNumberOfLines = Utilities.getTextViewMaxLines()
+    }
+    
+    // MARK: reuse
     
     override func prepareForReuse() {
         self.profileImage.image = profilePicturePlaceholder
@@ -209,6 +227,49 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
         }
     }
     
+    
+    // MARK: link textview Delegate
+    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
+        let urlString = value as! String
+        tapOnLink(urlString)
+    }
+    
+    //MARK: Read more action
+    func readmoreTapped(sender: UITapGestureRecognizer){
+        print("readmoreTapped readmoreTapped")
+        tapOnLink("readmore")
+    }
+    
+    func tapOnLink(urlString : String){
+        Utilities.showHUD()
+        print("tapOnReadMore tapOnReadMore!!!")
+        XAppDelegate.socialManager.getPost(userPost.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
+            Utilities.hideHUD()
+            if let _ = error {
+                
+            } else {
+                if(urlString == "readmore"){
+                    if let result = result {
+                        for post : UserPost in result {
+                            let controller = self.parentViewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                            controller.userPost = post
+                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                                self.parentViewController.navigationController?.pushViewController(controller, animated: true)
+                            })
+                        }
+                    }
+                } else {
+                    print("urlString urlString = \(urlString)")
+                    if let url = NSURL(string: urlString) {
+                        UIApplication.sharedApplication().openURL(url)
+                    }
+                    
+                }
+                
+            }
+        })
+    }
+    
     // MARK: display View controller
     func displayViewController(viewController : UIViewController){
         dispatch_async(dispatch_get_main_queue()) {
@@ -219,35 +280,6 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
             formSheet.portraitTopInset = paddingTop;
             formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
             self.parentViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
-        }
-    }
-    // MARK: link textview Delegate
-    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
-        let urlString = value as! String
-        
-        if(urlString == "readmore"){
-            XAppDelegate.socialManager.getPost(userPost.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
-                Utilities.hideHUD()
-                if let _ = error {
-                    
-                } else {
-                    
-                    if let result = result {
-                        for post : UserPost in result {
-                            let controller = self.parentViewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
-                            controller.userPost = post
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                                self.parentViewController.navigationController?.pushViewController(controller, animated: true)
-                            })
-                        }
-                    }
-                }
-            })
-        } else {
-            print("urlString urlString = \(urlString)")
-            if let url = NSURL(string: urlString) {
-                UIApplication.sharedApplication().openURL(url)
-            }
         }
     }
     
