@@ -2924,7 +2924,7 @@ on news things</string>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cTy-iN-g31" userLabel="Container View">
-                                            <rect key="frame" x="0.0" y="10" width="400" height="80"/>
+                                            <rect key="frame" x="0.0" y="18" width="600" height="80"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Capricon" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="03V-qI-T2d">
                                                     <rect key="frame" x="104" y="18" width="79" height="22"/>
@@ -2932,17 +2932,8 @@ on news things</string>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
-                                                    <rect key="frame" x="348" y="23" width="44" height="44"/>
-                                                    <state key="normal" image="daily_archive_icon">
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <connections>
-                                                        <segue destination="tv9-T7-Xvx" kind="show" id="QiB-up-Psl"/>
-                                                    </connections>
-                                                </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100%" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WuO-Av-7nC">
-                                                    <rect key="frame" x="355" y="16" width="31" height="14"/>
+                                                    <rect key="frame" x="555" y="16" width="31" height="14"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -2960,6 +2951,15 @@ on news things</string>
                                                     </state>
                                                     <connections>
                                                         <action selector="chooseHoroscopeSign:" destination="efF-06-zfn" eventType="touchUpInside" id="R5c-jE-f5a"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
+                                                    <rect key="frame" x="548" y="25" width="44" height="44"/>
+                                                    <state key="normal" image="daily_archive_icon">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <segue destination="tv9-T7-Xvx" kind="show" id="QiB-up-Psl"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
@@ -2981,8 +2981,8 @@ on news things</string>
                                         </view>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="cTy-iN-g31" secondAttribute="trailing" constant="200" id="Z9i-Gh-kyl"/>
-                                        <constraint firstItem="cTy-iN-g31" firstAttribute="top" secondItem="Sct-Dm-QWu" secondAttribute="topMargin" constant="2" id="sZu-aF-9bx"/>
+                                        <constraint firstAttribute="trailing" secondItem="cTy-iN-g31" secondAttribute="trailing" id="Z9i-Gh-kyl"/>
+                                        <constraint firstItem="cTy-iN-g31" firstAttribute="top" secondItem="Sct-Dm-QWu" secondAttribute="topMargin" constant="10" id="sZu-aF-9bx"/>
                                         <constraint firstItem="cTy-iN-g31" firstAttribute="leading" secondItem="Sct-Dm-QWu" secondAttribute="leading" id="x8d-Xn-f5N"/>
                                     </constraints>
                                 </tableViewCellContentView>

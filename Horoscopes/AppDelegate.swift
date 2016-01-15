@@ -188,7 +188,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let lastLocation = CLLocation(latitude: lat!, longitude: lon!)
             let distance = location.distanceFromLocation(lastLocation)
             if distance >= 10000 {
-                Utilities.showAlertView(nil, title: "Update Location", message: "Distance == \(distance)")
                 updateLocationToServer(location)
             }
         } else {
@@ -209,7 +208,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 if(errorCode == 0){
                     XAppDelegate.socialManager.persistUserProfile(true, completionHandler: { (profileError) -> Void in
                         if(profileError != nil) {
-                            Utilities.showError(profileError!)
                         } else {
                         }
                     })
