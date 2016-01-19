@@ -35,7 +35,7 @@ class CacheManager {
                     completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
             }
-//            print("\(url) SEND REQUEST TO SERVER")
+//            print("\(url) || postData = \(postData) SEND REQUEST TO SERVER")
 //            Utilities.showHUD()
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {
@@ -86,6 +86,24 @@ class CacheManager {
             let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
             CacheManager.cachePut(key , value: cacheValue, expiredTime: 0)
         }
+    }
+    
+    // check if cache is expired or not
+    class func isCacheExpired(url : String, postData: NSMutableDictionary?) -> Bool{
+        
+        let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
+        //            print("cacheGet key == \(key)")
+        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+        if var cacheDict = cacheDict{
+            cacheDict = cacheDict as! Dictionary<String, NSObject>
+            let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
+            if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+                return false
+            } else {
+                return true
+            }
+        }
+        return true
     }
     
     // MARK: Notification Cache

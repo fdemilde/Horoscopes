@@ -45,7 +45,6 @@
 #define REFRESH_DATA_METHOD @"app.horoscopes.refresh"
 #define EVENT_UPLOAD @"event.upload"
 #define GET_FORTUNE_METHOD @"app.horoscopes.getfortune"
-#define REGISTER_NOTIFICATION_TOKEN @"app.horoscopes.registerapns"
 #define RATE_HOROSCOPE @"app.horoscopes.ratehoroscope"
 
 #endif

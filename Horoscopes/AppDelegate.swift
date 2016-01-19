@@ -423,20 +423,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             print("Route == profile facebookfriends param dict = \(param)")
         })
         
-//        print("add route !! == /post/:post_id")
-//        NSLog("add route !! == /post/:post_id")
         router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
-            print("Route == post with param dict = \(param)")
             dispatch_async(dispatch_get_main_queue(),{
                 self.gotoPost(param)
             })
         })
         
-//        print("add route !! == /post/:post_id/hearts")
-//        NSLog("add route !! == /post/:post_id/hearts")
         router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
             dispatch_async(dispatch_get_main_queue(),{
-                self.gotoPost(param)
+                self.gotoPost(param, popUpLikeDetail: true)
             })
         })
         
@@ -479,7 +474,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
-    func gotoPost(param : Dictionary<NSObject, AnyObject>){
+    // MARK: Route Helper
+    
+    func gotoPost(param : Dictionary<NSObject, AnyObject>, popUpLikeDetail : Bool? = false){
         dispatch_async(dispatch_get_main_queue(),{
             
 //            print("Go to post param == \(param)")
@@ -505,6 +502,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                     controller.userPost = post
                                     if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) as? NotificationViewController {
                                         notificationViewController.navigationController?.pushViewController(controller, animated: true)
+                                        if((popUpLikeDetail) != nil && popUpLikeDetail == true) {
+                                            self.popupLikeDetail(controller, post: post)
+                                        }
                                     }
                                 }
                             }
@@ -513,6 +513,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 })
             }
         })
+    }
+    
+    func popupLikeDetail(fromViewController : UIViewController, post : UserPost){
+        if SocialManager.sharedInstance.isLoggedInFacebook() {
+            let postId = post.post_id
+            SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
+                if(error != ""){
+                    Utilities.showAlert(fromViewController, title: "Action Denied", message: "\(error)", error: nil)
+                } else {
+                    let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+                    let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
+                    viewController.postId = postId
+                    viewController.userProfile = result!.0
+                    viewController.parentVC = viewController
+                    viewController.numberOfLike = post.hearts
+                    self.displayViewController(viewController, fromViewController: fromViewController)
+                }
+            }
+        } else {
+            Utilities.showAlert(fromViewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
+        }
+    }
+    
+    // MARK: display View controller
+    func displayViewController(viewController : UIViewController, fromViewController : UIViewController){
+        dispatch_async(dispatch_get_main_queue()) {
+            let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
+            let formSheet = MZFormSheetController(viewController: viewController)
+            formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+            formSheet.shouldDismissOnBackgroundViewTap = true
+            formSheet.portraitTopInset = paddingTop;
+            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
+            fromViewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        }
     }
 }
 

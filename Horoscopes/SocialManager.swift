@@ -46,7 +46,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         return expiredKey
     }
     
-    func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool = false){
+    func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool = false, ignoreCache : Bool = false){
         if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
             Utilities.showHUD()
         }
@@ -70,7 +70,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     print("Error code = \(errorCode)")
                     Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
                 } else { // no error
-                    //                    println("result == \(result)")
                     let userDict = result["profiles"] as! Dictionary<String, AnyObject>
                     let postsArray = result["posts"] as! [AnyObject]
                     let isLastAsNumber = result["last"] as! Int
@@ -79,7 +78,15 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     if(isAddingData){
                         XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.Global, isLastPage: Bool(isLastAsNumber))
                     } else {
-                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Global)
+                        
+                        // because each time user goes to Community page, we have to check if it should reload or not
+                        // this part is for checking that if the cache is not expired, we do nothing so data will not be touched
+                        // ignore this part on first load since data needs to be initialize
+                        if (XAppDelegate.dataStore.newsfeedGlobal.count != 0 && !CacheManager.isCacheExpired(GET_GLOBAL_FEED, postData: postData)) {
+                            return
+                        }
+                        let scrollToTop = pageNo == 0 ? true : false
+                        XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.Global,scrollToTop : scrollToTop)
                     }
                 }
             }
@@ -559,19 +566,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     // MARK: Server Notification
-    
-    
-    
-    func registerAPNSNotificationToken(token : String, completionHandler:(response : Dictionary<String,AnyObject>?, error : NSError?) -> Void ){
-        let postData = NSMutableDictionary()
-        postData.setObject(token, forKey: "device_token")
-        XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_APNS_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-            let result = Utilities.parseNSDictionaryToDictionary(response)
-            completionHandler(response: result, error: error)
-        })
-    }
-    
-    
     
     func registerServerNotificationToken(token : String){
         let postData = NSMutableDictionary()

@@ -1109,9 +1109,12 @@
 				LastUpgradeCheck = 0700;
 				ORGANIZATIONNAME = "Binh Dang";
 				TargetAttributes = {
+					F4CACA111B1EBE16003C6301 = {
+						DevelopmentTeam = ZPFAZGQHUM;
+					};
 					F4CACA261B1EBE16003C6301 = {
 						CreatedOnToolsVersion = 6.3.2;
-						DevelopmentTeam = 399QS5Z8J6;
+						DevelopmentTeam = ZPFAZGQHUM;
 						TestTargetID = F4CACA111B1EBE16003C6301;
 					};
 				};
@@ -1579,6 +1582,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "com.zwigglers.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Horoscopes.app/Horoscopes";
 			};
 			name = Debug;

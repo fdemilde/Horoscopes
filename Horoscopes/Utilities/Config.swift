@@ -43,7 +43,6 @@ let postDateFormat = "h:mm a, MMM dd, yyyy"
 // MARK: Network request
 let GET_DATA_METHOD  = "app.horoscopes.checkin" //debug.logrequest for testing event.upload for actual
 let REFRESH_DATA_METHOD  = "app.horoscopes.refresh"
-let REGISTER_APNS_NOTIFICATION_TOKEN = "app.horoscopes.registerapns"
 let REGISTER_SERVER_NOTIFICATION_TOKEN = "notification.registerpush"
 let RATE_HOROSCOPE = "app.horoscopes.ratehoroscope"
 
@@ -98,6 +97,7 @@ let NOTIFICATION_UPDATE_POST = "NOTIFICATION_UPDATE_POST"
 let NOTIFICATION_FOLLOW = "NOTIFICATION_FOLLOW"
 let NOTIFICATION_UNFOLLOW = "NOTIFICATION_UNFOLLOW"
 let NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED = "NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED"
+let NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP = "NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP"
 
 // MARK: event tracker constances
 let defaultAppOpenAction            = "OpenApp"

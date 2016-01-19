@@ -28,10 +28,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.setupBackground()
-//        setupInfiniteScroll()
-        XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false)
         self.tableView.pagingEnabled = true
         tableView.addSubview(refreshControl)
         
@@ -40,9 +37,11 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     override func viewWillAppear(animated: Bool) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
-        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleScrollToTop:", name: NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object: nil)
+        currentPage = 0
+        XAppDelegate.socialManager.getGlobalNewsfeed(currentPage, isAddingData: false)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-        tableView.reloadData()
+//        tableView.reloadData()
         if let bgImageView = self.bgImageView{
             self.view.sendSubviewToBack(bgImageView)
         }
@@ -170,16 +169,15 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 self.tableView.finishInfiniteScroll()
             } else {
                 let newDataArray = notif.object as! [UserPost]
-                XAppDelegate.dataStore.newsfeedGlobal = newDataArray
-                self.tableView.reloadData()
-//                self.tableView.finishInfiniteScroll()
-//                self.insertRowsAtBottom(newDataArray)
-//                if let indexes = self.tableView.indexPathsForVisibleRows {
-//                    let targetRow = indexes[indexes.count - 1].row
-//               self.tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
-//                }
+                    XAppDelegate.dataStore.newsfeedGlobal = newDataArray
+                    self.tableView.reloadData()
             }
         })
+    }
+    
+    func handleScrollToTop(notif : NSNotification){
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object: nil)
+        tableView.setContentOffset(CGPointZero, animated: false)
     }
     
     // MARK: infinite scrolling support
@@ -199,8 +197,6 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
             let targetRow = indexes[indexes.count - 1].row
             tableView.scrollToRowAtIndexPath(NSIndexPath(forRow: targetRow, inSection: 0), atScrollPosition: UITableViewScrollPosition.Top, animated: true)
         }
-//        tableView.finishInfiniteScroll()
-        
     }
     
     // MARK: Helpers
