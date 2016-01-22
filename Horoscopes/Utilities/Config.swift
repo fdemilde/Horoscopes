@@ -35,6 +35,7 @@ var yearArray : [Int] {
 // MARK: - NSUserDefaults Key
 let notificationKey = "notification"
 let isNotLoggedInFacebookFirstTimeKey = "isNotLoggedInFacebookFirstTimeKey"
+let V2_NOTIF_CHECK = "V2_NOTIF_CHECK"
 
 // MARK: - Post Date Format
 

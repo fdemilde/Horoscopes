@@ -27,14 +27,14 @@
 }
 
 - (void)saveCollectedData{
-//    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
-//    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
-    [NSKeyedArchiver archiveRootObject:self.collectedData toFile:[CollectedHoroscope getFilePath]];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self.collectedData];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:kCollectedData];
 }
 
 - (NSMutableArray *)collectedData{
     if(!_collectedData){
-        id obj = [NSKeyedUnarchiver unarchiveObjectWithFile:[CollectedHoroscope getFilePath]];
+        NSData *data = [[NSUserDefaults standardUserDefaults] objectForKey:kCollectedData];
+        id obj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
         if(!obj){
             _collectedData = [[NSMutableArray alloc] init];
             [self saveCollectedData];

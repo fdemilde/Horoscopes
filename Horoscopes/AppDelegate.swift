@@ -37,6 +37,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
         XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
+        let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
+        if !didRegisterForV2 {
+            Utilities.registerForRemoteNotification()
+        }
         if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
             Utilities.registerForRemoteNotification()
         }
@@ -245,6 +249,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 notificationInfo += "1"
             }
         }
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
         XAppDelegate.socialManager.registerServerNotificationToken(deviceTokenString)
     }
