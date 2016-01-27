@@ -206,9 +206,6 @@ static int CLOVER_SYMBOL_TAG = 101;
         
         CGFloat radians = atan2f(container.transform.b, container.transform.a);
         CGFloat newVal = 0.0;
-        
-        int oldValue = currentValue;
-//
         for (SMClove *c in cloves) {
             if (c.minValue > 0 && c.maxValue < 0) { // anomalous case
                 if (c.maxValue > radians || c.minValue < radians) {
@@ -261,8 +258,6 @@ static int CLOVER_SYMBOL_TAG = 101;
         float ang = atan2(dy,dx);
         float angleDifference = deltaAngle - ang;
         container.transform = CGAffineTransformRotate(startTransform, -angleDifference);
-        
-        int oldValue = currentValue;
         [self unhighlightAllSigns];
         CGFloat radians = atan2f(container.transform.b, container.transform.a);
         CGFloat newVal = 0.0;

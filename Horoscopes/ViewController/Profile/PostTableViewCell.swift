@@ -279,7 +279,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                     let postId = self.post.post_id
                     SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
                         if(error != ""){
-                            Utilities.showAlert(self.viewController, title: "Action Denied", message: "\(error)", error: nil)
+                            Utilities.showAlert(self.viewController, title: "\(self.post.hearts) likes", message: "", error: nil)
                         } else {
                             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
                             let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
@@ -291,7 +291,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                         }
                     }
                 } else {
-                    Utilities.showAlert(self.viewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
+                    Utilities.showAlert(self.viewController, title: "\(self.post.hearts) likes", message: "", error: nil)
                 }
             
         }

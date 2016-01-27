@@ -272,11 +272,13 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         }
         
         if(alertView.tag == 2){
-            if(buttonIndex == 0){
+            if(agreeToDailyPush){
+                print("AGREE TO PUSH!!!")
                 Utilities.registerForRemoteNotification()
                 Utilities.setLocalPush(getNotificationFiredTime())
                 XAppDelegate.userSettings.notifyOfNewHoroscope = true
             }
+            
         }
     }
     

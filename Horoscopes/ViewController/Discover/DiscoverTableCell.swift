@@ -221,7 +221,7 @@ class DiscoverTableCell : UITableViewCell, CCHLinkTextViewDelegate, UIAlertViewD
                     }
                 }
             } else {
-                Utilities.showAlert(self.parentViewController, title: "Action Denied", message: "Please login via Facebook to perform this action", error: nil)
+                Utilities.showAlert(self.parentViewController, title: "\(self.userPost.hearts) likes", message: "", error: nil)
             }
             
         }

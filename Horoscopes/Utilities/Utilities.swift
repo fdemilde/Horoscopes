@@ -421,7 +421,30 @@ class Utilities {
         return key
     }
     
-    // MARK: Local Notification
+    // MARK: Remote & Local Notification
+    
+    class func isNotificationGranted() -> Bool {
+        if #available(iOS 8.0, *) {
+            if let notificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings() {
+                let currentNotificationTypes = notificationSettings.types
+                if currentNotificationTypes.isEmpty {
+                    return false
+                } else {
+                    return true
+                }
+            } else {
+                return false
+            }
+        } else {
+            // Fallback on earlier versions
+            let enabledNotificationTypes = UIApplication.sharedApplication().enabledRemoteNotificationTypes()
+            if(enabledNotificationTypes.isEmpty){
+                return false
+            } else {
+                return true
+            }
+        }
+    }
     
     class func registerForRemoteNotification(){
         if #available(iOS 8.0, *) {

@@ -14,9 +14,9 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     @IBOutlet weak var tableView: UITableView!
     var currentPage = 0
-    var addButton: UIButton!
-    var postButtonsView: PostButtonsView!
-    var overlay : UIView!
+    
+    @IBOutlet weak var overlay: UIView!
+    
     var lastContentOffsetY = 0 as CGFloat
     var bgImageView : UIImageView!
     
@@ -31,6 +31,8 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         self.setupBackground()
         self.tableView.pagingEnabled = true
         tableView.addSubview(refreshControl)
+        checkAndAddWelcomeView()
+        
         
     }
     
@@ -49,9 +51,6 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-//        if(overlay == nil){
-//            self.setupAddPostButton()
-//        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -59,7 +58,9 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    override func viewWillLayoutSubviews() {    }
+    override func viewWillLayoutSubviews() {
+        
+    }
     
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
@@ -67,55 +68,6 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
         self.view.sendSubviewToBack(bgImageView)
-    }
-    
-    func setupAddPostButton() {
-        addButton = UIButton(frame: CGRectMake(view.frame.width - ADD_BUTTON_SIZE - 10, view.frame.height - ADD_BUTTON_SIZE - TABBAR_HEIGHT - 10, ADD_BUTTON_SIZE, ADD_BUTTON_SIZE))
-        addButton.addTarget(self, action: "postButtonTapped", forControlEvents: UIControlEvents.TouchUpInside)
-        addButton.setImage(UIImage(named: "newsfeed_add_btn"), forState: .Normal)
-        
-        // setup overlay
-        overlay = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
-        overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-        overlay.alpha = 0
-        
-        view.addSubview(overlay)
-        view.bringSubviewToFront(overlay)
-        
-        let overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "overlayTapGestureRecognizer:")
-        overlay.addGestureRecognizer(overlayTapGestureRecognizer)
-        postButtonsView = PostButtonsView(frame: overlay.frame)
-        postButtonsView.setTextColor(UIColor.whiteColor())
-        postButtonsView.hostViewController = self
-        overlay.addSubview(postButtonsView)
-        
-        view.addSubview(addButton)
-        view.bringSubviewToFront(addButton)
-    }
-    
-    // MARK: Post buttons handlers
-    func postButtonTapped(){
-        if(self.overlay.alpha == 1.0){
-            overlayFadeout()
-        } else {
-            overlayFadeIn()
-        }
-    }
-    
-    func overlayTapGestureRecognizer(recognizer: UITapGestureRecognizer){
-        overlayFadeout()
-    }
-    
-    func overlayFadeIn(){
-        UIView.animateWithDuration(0.2, animations: {
-            self.overlay.alpha = 1.0
-        })
-    }
-    
-    func overlayFadeout(){
-        UIView.animateWithDuration(0.2, animations: {
-            self.overlay.alpha = 0
-        })
     }
     
     // MARK: Table datasource & delegate
@@ -239,5 +191,25 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     
     func scrollToTop() {
         tableView.setContentOffset(CGPointZero, animated: true)
+    }
+    
+    // MARK: Welcomeview
+    func checkAndAddWelcomeView() {
+        // if first time go to Community page, show welcome
+        let haveShownWelcome = NSUserDefaults.standardUserDefaults().boolForKey(HAVE_SHOWN_WELCOME_SCREEN)
+        if(haveShownWelcome){
+            return
+        }
+        
+        // Open community welcome view here
+        if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+            let rootVC = XAppDelegate.window!.rootViewController! as? CustomTabBarController
+            // setup community welcome view here
+            let communityWelcomeView = CommunityWelcomeView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
+            communityWelcomeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
+//            communityWelcomeView.delegate = self
+            rootVC!.view.addSubview(communityWelcomeView)
+        }
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: HAVE_SHOWN_WELCOME_SCREEN)
     }
 }

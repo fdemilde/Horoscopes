@@ -4943,8 +4943,8 @@ on news things</string>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5EY-yU-RX1" userLabel="Main View">
                                                                     <rect key="frame" x="0.0" y="130" width="584" height="202"/>
                                                                     <subviews>
-                                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" editable="NO" text="--" translatesAutoresizingMaskIntoConstraints="NO" id="cMA-xp-PJI" customClass="CCHLinkTextView">
-                                                                            <rect key="frame" x="8" y="8" width="568" height="168"/>
+                                                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" editable="NO" text="--" translatesAutoresizingMaskIntoConstraints="NO" id="cMA-xp-PJI" customClass="CCHLinkTextView">
+                                                                            <rect key="frame" x="8" y="8" width="568" height="50"/>
                                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" priority="750" constant="50" identifier="textViewHeight" id="Dk4-Hx-t50"/>
@@ -4953,8 +4953,8 @@ on news things</string>
                                                                             <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="14"/>
                                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                         </textView>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LU-FO-ofe">
-                                                                            <rect key="frame" x="8" y="176" width="82" height="31"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LU-FO-ofe">
+                                                                            <rect key="frame" x="11" y="58" width="82" height="144"/>
                                                                             <attributedString key="attributedText">
                                                                                 <fragment content="... ">
                                                                                     <attributes>

@@ -85,9 +85,6 @@ class ChooseSignVC : SpinWheelVC {
     }
     
     func dismissChooseSignViewController(){
-        let label = String(format:"type=view,sign=%d", self.selectedIndex)
-        
-//        XAppDelegate.sendTrackEventWithActionName(defaultHoroscopeChooser, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
         delegate.didSelectHoroscopeSign(selectedIndex)
     }
 }

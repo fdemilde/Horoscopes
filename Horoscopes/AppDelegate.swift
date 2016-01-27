@@ -37,9 +37,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
         XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
+        
+        // if v1 update to v2
         let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
         if !didRegisterForV2 {
-            Utilities.registerForRemoteNotification()
+            if (Utilities.isNotificationGranted()){
+                Utilities.registerForRemoteNotification()
+            } else {
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
+            }
         }
         if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
             Utilities.registerForRemoteNotification()
@@ -229,25 +235,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: NSData) {
         let deviceTokenString = String(format:"%@",deviceToken)
         var notificationInfo = "success = "
-        if #available(iOS 8.0, *) {
-            if let notificationSettings = UIApplication.sharedApplication().currentUserNotificationSettings() {
-                let currentNotificationTypes = notificationSettings.types
-                if currentNotificationTypes.isEmpty {
-                    notificationInfo += "0"
-                } else {
-                    notificationInfo += "1"
-                }
-            } else {
-                notificationInfo += "0"
-            }
+        if(Utilities.isNotificationGranted()){
+            notificationInfo += "1"
         } else {
-            // Fallback on earlier versions
-            let enabledNotificationTypes = UIApplication.sharedApplication().enabledRemoteNotificationTypes()
-            if(enabledNotificationTypes.isEmpty){
-                notificationInfo += "0"
-            } else {
-                notificationInfo += "1"
-            }
+            notificationInfo += "0"
         }
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)

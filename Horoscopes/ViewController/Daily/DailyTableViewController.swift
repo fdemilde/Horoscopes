@@ -153,9 +153,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             shouldReloadData = false
             XAppDelegate.horoscopesManager.getAllHoroscopes(false)
         }
-//        print("refreshView self.selectedSign == \(self.selectedSign)")
-        let label = String(format:"type=view,sign=%d", self.selectedSign)
-//        XAppDelegate.sendTrackEventWithActionName(defaultViewHoroscope, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
     }
     
     func updateCollectedData() {
