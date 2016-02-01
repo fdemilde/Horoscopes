@@ -130,14 +130,25 @@ class HoroscopesManager : NSObject {
             CacheManager.cacheGet(GET_DATA_METHOD, postData: nil, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
+                    self.showErrorDialog()
                 } else {
                     if let result = result {
-                        self.data = Utilities.parseNSDictionaryToDictionary(result)
-                        self.saveData()
-                        Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
-                        Utilities.hideHUD()
+//                        print("result == \(result)")
+                        if let dataError = result["error"] {
+                            let dataErrorAsInt = dataError as! Int
+                            if(dataErrorAsInt != 0){ // data error occured
+                                self.showErrorDialog()
+                            } else {
+                                self.data = Utilities.parseNSDictionaryToDictionary(result)
+                                self.saveData()
+                                Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                            }
+                        } else {
+                            self.showErrorDialog()
+                        }
+                    } else {
+                        self.showErrorDialog()
                     }
-                    
                 }
             })
         } else {
@@ -145,11 +156,29 @@ class HoroscopesManager : NSObject {
             XAppDelegate.mobilePlatform.sc.sendRequest(REFRESH_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
                 if(error != nil){
                     Utilities.hideHUD()
+                    self.showErrorDialog()
                 } else {
-                    self.data = Utilities.parseNSDictionaryToDictionary(response)
-    //                print(self.data)
-                    self.saveData()
-                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                    if(error != nil){
+                        self.showErrorDialog()
+                    } else {
+                        if let result = response {
+                            //                        print("result == \(result)")
+                            if let dataError = result["error"] {
+                                let dataErrorAsInt = dataError as! Int
+                                if(dataErrorAsInt != 0){ // data error occured
+                                    self.showErrorDialog()
+                                } else {
+                                    self.data = Utilities.parseNSDictionaryToDictionary(result)
+                                    self.saveData()
+                                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                                }
+                            } else {
+                                self.showErrorDialog()
+                            }
+                        } else {
+                            self.showErrorDialog()
+                        }
+                    }
                     Utilities.hideHUD()
                 }
             })
@@ -202,6 +231,7 @@ class HoroscopesManager : NSObject {
         var todayReadings = Dictionary<String, String>()
         var tomorrowReadings = Dictionary<String, String>()
         var horoSigns = self.horoscopesSigns
+//        print("self.data == \(self.data)")
         todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
         tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
         for var index = 1; index <= 12; index++ {
@@ -326,16 +356,12 @@ class HoroscopesManager : NSObject {
             return ""
         }
         return sign
-//        for index in 0...11 {
-//            if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
-//            let horoscope = self.horoscopesSigns[index]
-//            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
-//                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
-//                    return horoscope.sign
-//            }
-//        }
-//        let horoscope = horoscopesSigns[9]
-//        return horoscope.sign
+    }
+    
+    // show Error alert
+    
+    func showErrorDialog(){
+        Utilities.showAlertView(nil, title: "Error", message: "An error has occured, please try again later")
     }
 }
 

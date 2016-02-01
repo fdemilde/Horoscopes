@@ -48,7 +48,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func getGlobalNewsfeed(pageNo : Int, isAddingData : Bool, isRefreshing: Bool = false, ignoreCache : Bool = false){
         if(XAppDelegate.dataStore.newsfeedGlobal.count == 0){
-            Utilities.showHUD()
+            let haveShownWelcome = NSUserDefaults.standardUserDefaults().boolForKey(HAVE_SHOWN_WELCOME_SCREEN)
+            if(haveShownWelcome){
+                Utilities.showHUD()
+            }
         }
         let postData = NSMutableDictionary()
         let pageString = String(format:"%d",pageNo)

@@ -273,7 +273,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         
         if(alertView.tag == 2){
             if(agreeToDailyPush){
-                print("AGREE TO PUSH!!!")
                 Utilities.registerForRemoteNotification()
                 Utilities.setLocalPush(getNotificationFiredTime())
                 XAppDelegate.userSettings.notifyOfNewHoroscope = true
@@ -285,8 +284,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func getNotificationFiredTime() -> NSDateComponents{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
         
-        let date = Utilities.getDateFromDateString(NOTIFICATION_SETTING_DEFAULT_TIME, format: NOTIFICATION_SETTING_DATE_FORMAT)
-        
+//        let date = Utilities.getDateFromDateString(NOTIFICATION_SETTING_DEFAULT_TIME, format: NOTIFICATION_SETTING_DATE_FORMAT)
+        let timeInterval = NSDate().timeIntervalSince1970 - 60 // set it 1 minute ealier to avoid firing immediately
+        let date = NSDate(timeIntervalSince1970: timeInterval)
         return NSCalendar.currentCalendar().components(components, fromDate: date)
     }
     
@@ -360,10 +360,19 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func getBirthdayString() -> String{
         var dateString = ""
-        if let birthday = birthday{
+        if let birthday = birthday {
             dateString = Utilities.getBirthdayString(birthday)
         } else {
-            dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
+            if(XAppDelegate.userSettings.horoscopeSign != -1){
+                let signIndex = Int(XAppDelegate.userSettings.horoscopeSign)
+                let sign = XAppDelegate.horoscopesManager.horoscopesSigns[signIndex]
+                let dateComponent = NSCalendar.currentCalendar().components([.Month, .Day], fromDate: sign.startDate)
+                dateComponent.year = defaultYear
+                let date = NSCalendar.currentCalendar().dateFromComponents(dateComponent)
+                dateString = Utilities.getBirthdayString(date!)
+            } else {
+                dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
+            }
         }
         
         return dateString

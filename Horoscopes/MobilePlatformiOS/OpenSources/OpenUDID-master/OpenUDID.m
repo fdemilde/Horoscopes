@@ -58,13 +58,14 @@
 //#define OpenUDIDLog(fmt, ...) NSLog((@"[Line %d] " fmt), __LINE__, ##__VA_ARGS__);
 
 static NSString * kOpenUDIDSessionCache = nil;
-static NSString * const kOpenUDIDKey = @"OpenUDID";
-static NSString * const kOpenUDIDSlotKey = @"OpenUDID_slot";
+static NSString * const kOpenUDIDKey = @"fcsUDID";
+static NSString * const kOpenUDIDSlotKey = @"fcsUDID_slot";
 static NSString * const kOpenUDIDAppUIDKey = @"OpenUDID_appUID";
-static NSString * const kOpenUDIDTSKey = @"OpenUDID_createdTS";
-static NSString * const kOpenUDIDOOTSKey = @"OpenUDID_optOutTS";
-static NSString * const kOpenUDIDDomain = @"org.OpenUDID";
-static NSString * const kOpenUDIDSlotPBPrefix = @"org.OpenUDID.slot.";
+static NSString * const kOpenUDIDTSKey = @"fcsUDID_createdTS";
+static NSString * const kOpenUDIDOOTSKey = @"fcsUDID_optOutTS";
+static NSString * const kOpenUDIDDomain = @"com.floatingcube";
+static NSString * const kOpenUDIDSlotPBPrefix = @"com.floatingcube.";
+
 static int const kOpenUDIDRedundancySlots = 100;
 
 @interface OpenUDID (Private)

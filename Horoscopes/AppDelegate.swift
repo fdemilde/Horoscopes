@@ -37,16 +37,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
         XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
-        
-        // if v1 update to v2
-        let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
-        if !didRegisterForV2 {
-            if (Utilities.isNotificationGranted()){
-                Utilities.registerForRemoteNotification()
-            } else {
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
-            }
-        }
         if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
             Utilities.registerForRemoteNotification()
         }
@@ -247,6 +237,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: NSError) {
 //        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
+        NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
         let notificationInfo = "success = 0"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
     }

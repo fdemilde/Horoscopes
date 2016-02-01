@@ -12,6 +12,14 @@ NSString * const LOGIN_TOKEN = @"LOGIN_TOKEN";
 NSString * const LOGIN_UID = @"LOGIN_UID";
 NSString * const UDID = @"UDID";
 
+static NSString * const kOpenUDIDKey = @"fcsUDID";
+static NSString * const kOpenUDIDSlotKey = @"fcsUDID_slot";
+static NSString * const kOpenUDIDAppUIDKey = @"OpenUDID_appUID";
+static NSString * const kOpenUDIDTSKey = @"fcsUDID_createdTS";
+static NSString * const kOpenUDIDOOTSKey = @"fcsUDID_optOutTS";
+static NSString * const kOpenUDIDDomain = @"com.floatingcube";
+static NSString * const kOpenUDIDSlotPBPrefix = @"com.floatingcube.";
+
 @implementation UserCreds 
 
 - (id)init{
@@ -27,18 +35,7 @@ NSString * const UDID = @"UDID";
 
 - (NSString*) getUDID
 {
-    if (udid != nil)
-        return udid;
-    
-    udid = [[NSUserDefaults standardUserDefaults] stringForKey:UDID];
-    
-    if ([udid length] != 0) {
-        return udid;
-    }
-    
-    udid = [OpenUDID value];
-    [[NSUserDefaults standardUserDefaults] setObject:udid forKey:UDID];
-    return udid;
+    return [OpenUDID value];
 }
 
 - (NSNumber *) getUid {

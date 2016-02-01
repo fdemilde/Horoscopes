@@ -38,6 +38,24 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // if v1 update to v2, show login VC with previous selected sign
+        let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
+        if !didRegisterForV2 {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+            parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
+            
+            if (Utilities.isNotificationGranted()){
+                Utilities.registerForRemoteNotification()
+            } else {
+                NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
+            }
+            
+            return
+        }
+        
+        // this shouldn't be running at all if logic is correct, code is here just in case v2 check is wrong
         if Utilities.isFirstTimeUsing() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC

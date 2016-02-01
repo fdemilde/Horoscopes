@@ -8,7 +8,7 @@
 
 import UIKit
 
-class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDelegate {
+class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDelegate, LoginViewControllerDelegate {
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerView: UIView!
@@ -250,17 +250,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     @IBAction func tapLikeButton(sender: UIButton) {
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
-            Utilities.showAlertView(self, title: "", message: "Please login via Facebook to perform this action", tag: 1)
+//            Utilities.showAlertView(self, title: "", message: "Please login via Facebook to perform this action", tag: 1)
+            showLoginFormSheet()
             return
         }
-        let label = "type = post, like = 1, info = \(post.post_id)"
-        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
-        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        self.likeButton.userInteractionEnabled = false
-//        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
-        self.likeNumberLabel.text = "\(++post.hearts) Likes"
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
+        likePost()
     }
 
     @IBAction func tapShareButton(sender: UIButton) {
@@ -277,8 +271,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             
                 if SocialManager.sharedInstance.isLoggedInFacebook() {
                     let postId = self.post.post_id
+                    Utilities.showHUD(viewController.view)
                     SocialManager.sharedInstance.retrieveUsersWhoLikedPost(postId, page: 0) { (result, error) -> Void in
                         if(error != ""){
+                            Utilities.hideHUD(self.viewController.view)
                             Utilities.showAlert(self.viewController, title: "\(self.post.hearts) likes", message: "", error: nil)
                         } else {
                             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
@@ -287,6 +283,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                             viewController.userProfile = result!.0
                             viewController.parentVC = self.viewController
                             viewController.numberOfLike = self.post.hearts
+                            Utilities.hideHUD(self.viewController.view)
                             self.displayViewController(viewController)
                         }
                     }
@@ -361,6 +358,36 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 
             }
         })
+    }
+    
+    // MARK: FB Login dialog
+    
+    func showLoginFormSheet() {
+        let controller = viewController.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        controller.delegate = self
+        let formSheet = MZFormSheetController(viewController: controller)
+        formSheet.shouldDismissOnBackgroundViewTap = true
+        formSheet.cornerRadius = 5
+        formSheet.shouldCenterVertically = true
+        formSheet.presentedFormSheetSize = CGSize(width: formSheet.view.frame.width, height: 150)
+        viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+    }
+    
+    func didLoginSuccessfully() {
+        likePost()
+    }
+    
+    // MARK: Like post 
+    
+    func likePost(){
+        let label = "type = post, like = 1, info = \(post.post_id)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
+        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
+        self.likeButton.userInteractionEnabled = false
+        //        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
+        self.likeNumberLabel.text = "\(++post.hearts) Likes"
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
 }
 

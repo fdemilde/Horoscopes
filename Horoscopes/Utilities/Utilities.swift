@@ -104,7 +104,6 @@ class Utilities {
                 loadingNotification = MBProgressHUD.showHUDAddedTo(viewToShow, animated: true)
             } else {
                 let viewController = XAppDelegate.window!.rootViewController
-                
                 loadingNotification = MBProgressHUD.showHUDAddedTo(viewController!.view, animated: true)
             }
             loadingNotification.mode = MBProgressHUDMode.Indeterminate

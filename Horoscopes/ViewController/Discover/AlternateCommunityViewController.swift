@@ -31,8 +31,6 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         self.setupBackground()
         self.tableView.pagingEnabled = true
         tableView.addSubview(refreshControl)
-        checkAndAddWelcomeView()
-        
         
     }
     
@@ -40,13 +38,17 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleScrollToTop:", name: NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object: nil)
-        currentPage = 0
+        
+        // if page 0 cache expire, reset page number = 0
+        if isFirstPageExpired() {
+            currentPage = 0
+        }
         XAppDelegate.socialManager.getGlobalNewsfeed(currentPage, isAddingData: false)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-//        tableView.reloadData()
         if let bgImageView = self.bgImageView{
             self.view.sendSubviewToBack(bgImageView)
         }
+        checkAndAddWelcomeView()
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -189,6 +191,20 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         refreshControl.endRefreshing()
     }
     
+    // func check page 0 cache
+    
+    func isFirstPageExpired() -> Bool {
+        let postData = NSMutableDictionary()
+        let pageString = String(format:"%d", 0)
+        postData.setObject(pageString, forKey: "page")
+        if(CacheManager.isCacheExpired(GET_GLOBAL_FEED, postData: postData)){
+            return true
+        } else {
+            return false
+        }
+
+    }
+    
     func scrollToTop() {
         tableView.setContentOffset(CGPointZero, animated: true)
     }
@@ -209,6 +225,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
             communityWelcomeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
 //            communityWelcomeView.delegate = self
             rootVC!.view.addSubview(communityWelcomeView)
+            rootVC!.view.bringSubviewToFront(communityWelcomeView)
         }
         NSUserDefaults.standardUserDefaults().setBool(true, forKey: HAVE_SHOWN_WELCOME_SCREEN)
     }
