@@ -230,7 +230,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func getData() {
         super.getData()
-        getFriends()
+//        getFriends()
     }
     
     override func getUsersFollowing(completionHandler: () -> Void) {

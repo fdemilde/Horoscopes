@@ -218,9 +218,16 @@ class HoroscopesManager : NSObject {
         let birthday = String(format:"%@",birthdayString)
         postData.setObject(birthday, forKey: "birthday")
         XAppDelegate.mobilePlatform.sc.sendRequest(UPDATE_BIRTHDAY, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-//            println(response)
-            let result = Utilities.parseNSDictionaryToDictionary(response)
-            completionHandler(responseDict: result,error: error)
+            if(error != nil){
+                
+            } else {
+                if let response = response {
+                    let result = Utilities.parseNSDictionaryToDictionary(response)
+                    completionHandler(responseDict: result,error: error)
+                } else {
+                    completionHandler(responseDict: nil,error: error)
+                }
+            }
         })
     }
     

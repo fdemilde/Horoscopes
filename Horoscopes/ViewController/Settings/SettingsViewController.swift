@@ -195,9 +195,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             if(self.birthdayString != nil){
                 XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
                     if(error == nil){
-                        XAppDelegate.userSettings.horoscopeSign = newSign
-                        let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
-                        customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+                        if(responseDict != nil){
+                            XAppDelegate.userSettings.horoscopeSign = newSign
+                            let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
+                            customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
+                        } else {
+                        }
+                        
                     }
                 })
             }

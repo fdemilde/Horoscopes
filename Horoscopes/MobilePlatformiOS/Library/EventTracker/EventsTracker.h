@@ -22,7 +22,7 @@
 @interface EventsTracker : NSObject {
     int loglevel;
     int ttl;
-    long configup;
+    NSInteger configup;
     BOOL timerrunning;
     BOOL hasInternet;
     BOOL timerIsRunning;

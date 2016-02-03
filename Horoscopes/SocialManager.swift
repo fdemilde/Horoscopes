@@ -632,14 +632,19 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func clearAllNotification(array : [NotificationObject]){
-        var listIds = [String]()
-        for notification in array {
-            listIds.append(notification.notification_id)
-        }
-        XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
+//        var listIds = [String]()
+//        for notification in array {
+//            listIds.append(notification.notification_id)
+//        }
+//        XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
 //            print("clearAllNotification result = \(result)")
-        })
+//        })
         CacheManager.clearAllNotificationData()
+    }
+    
+    func clearNotificationWithId(notifId : String){
+        XAppDelegate.mobilePlatform.platformNotiff.clearWithID(notifId) { (result) -> Void in
+        }
     }
     
     // MARK: Helpers

@@ -34,11 +34,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         tableView.backgroundView = UIImageView(image: backgroundImage)
         refreshView()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
         // if v1 update to v2, show login VC with previous selected sign
         let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
         if !didRegisterForV2 {
@@ -62,6 +57,11 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
             return
         }
+        
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         let label = "sign = \(selectedSign)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyOpen, label: label)
     }

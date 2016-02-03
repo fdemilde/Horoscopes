@@ -123,7 +123,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             cell.backgroundColor = UIColor.whiteColor()
             let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
             NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
-            
+            SocialManager.sharedInstance.clearNotificationWithId(id)
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
@@ -145,6 +145,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     // MARK: Button actions
     
     func handleRefresh(refreshControl: UIRefreshControl) {
+        CacheManager.resetNotificationSinceTs()
         self.getNotificationAndReloadData()
         refreshControl.endRefreshing()
     }
@@ -155,15 +156,22 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     @IBAction func clearAllTapped(sender: AnyObject) {
 //        XAppDelegate.socialManager.clearAllNotification()
+        
     }
     
     // MARK: Helpers
     func getNotificationAndReloadData(){
+        if !SocialManager.sharedInstance.isLoggedInFacebook() {
+            notifArray = [NotificationObject]()
+            tableView.reloadData()
+            return
+        }
         if(notifArray.count == 0){ // first load
             Utilities.showHUD()
             tableView.backgroundColor = UIColor.whiteColor()
         }
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
+//            print("getNotificationAndReloadData == \(result)")
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
                 

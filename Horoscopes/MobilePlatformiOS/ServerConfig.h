@@ -25,26 +25,26 @@
  END
  */
 
-#define DATA_KEY @"events"
-
-#define KEY_ROWID @"id"
-#define KEY_EVENT @"event"
-#define KEY_INFO @"info"
-#define KEY_TS @"ts"
-#define KEY_PRIORITYLEVEL @"level"
-
-#define EVENT_TRACKER_LOG_LEVEL_SAVE_KEY @"EventTrackerLogLevel"
-#define EVENT_TRACKER_LOG_DEFAULT_LEVEL 5
-#define EVENT_TRACKER_TIME_STAMP_SAVE_KEY @"EventTrackerTTL"
-#define EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY @"EventTrackerLastConfig"
-
-#define minimumTimeBetweenSendingDataFlush 15L
-#define getConfigMethod @"event.getconfig"
-
-#define REPORT_ISSUE_METHOD @"app.horoscopes.reportissue"
-#define REFRESH_DATA_METHOD @"app.horoscopes.refresh"
-#define EVENT_UPLOAD @"event.upload"
-#define GET_FORTUNE_METHOD @"app.horoscopes.getfortune"
-#define RATE_HOROSCOPE @"app.horoscopes.ratehoroscope"
+//#define DATA_KEY @"events"
+//
+//#define KEY_ROWID @"id"
+//#define KEY_EVENT @"event"
+//#define KEY_INFO @"info"
+//#define KEY_TS @"ts"
+//#define KEY_PRIORITYLEVEL @"level"
+//
+//#define EVENT_TRACKER_LOG_LEVEL_SAVE_KEY @"EventTrackerLogLevel"
+//#define EVENT_TRACKER_LOG_DEFAULT_LEVEL 5
+//#define EVENT_TRACKER_TIME_STAMP_SAVE_KEY @"EventTrackerTTL"
+//#define EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY_V2 @"EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY_V2"
+//
+//#define minimumTimeBetweenSendingDataFlush 15L
+//#define getConfigMethod @"event.getconfig"
+//
+//#define REPORT_ISSUE_METHOD @"app.horoscopes.reportissue"
+//#define REFRESH_DATA_METHOD @"app.horoscopes.refresh"
+//#define EVENT_UPLOAD @"event.upload"
+//#define GET_FORTUNE_METHOD @"app.horoscopes.getfortune"
+//#define RATE_HOROSCOPE @"app.horoscopes.ratehoroscope"
 
 #endif

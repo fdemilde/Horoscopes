@@ -365,6 +365,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     func showLoginFormSheet() {
         let controller = viewController.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
         controller.delegate = self
+        controller.titleString = "Login to Facebook to like this post"
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.cornerRadius = 5

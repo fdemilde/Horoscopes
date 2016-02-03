@@ -9,6 +9,7 @@
 import Foundation
 class CacheManager {
     
+static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
 //    dont know why cannot make key with these
 //    let CACHE_RESPONSE_KEY = "CACHE_VALUE_KEY" as String
 //    let EXPIRED_TIMESTAMP_KEY = "CACHE_EXPIRED_TIMESTAMP_KEY"
@@ -116,7 +117,7 @@ class CacheManager {
     
     class func cacheGetNotification(completionHandler: (result: [NotificationObject]?) -> Void){
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
+            
     //        let NOTIFICATION_CACHE_KEY = "NOTIFICATION_CACHE_KEY"
             var lastSince = NSUserDefaults.standardUserDefaults().integerForKey(NOTIFICATION_SINCE_KEY)
             if lastSince == 0 { lastSince = 1 }
@@ -133,22 +134,24 @@ class CacheManager {
                     notificationDict[expiredTime] = nil
                 }
             }
+            
             resultArray.sortInPlace({ $0.created > $1.created })
             completionHandler(result: resultArray)
             
             let newSince = Int(NSDate().timeIntervalSince1970)
-//            print("get data since resultArray = \(lastSince)")
             XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andCompleteBlock: { (result) -> Void in
-                let notifArray = result as! [NotificationObject]
-                let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
-                if(checkArray.count > 0){ // has new data
-                    let newExpireTime = String(newSince + (7 * 3600 * 24))
-                    notificationDict[newExpireTime] = checkArray
-                    resultArray += checkArray
-                    CacheManager.saveNotificationsData(notificationDict)
+                if let result = result {
+                    let notifArray = result as! [NotificationObject]
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
-                    resultArray.sortInPlace({ $0.created > $1.created })
-                    completionHandler(result: resultArray)
+                    let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
+                    if(checkArray.count > 0){ // has new data
+                        let newExpireTime = String(newSince + (7 * 3600 * 24))
+                        notificationDict[newExpireTime] = checkArray
+                        resultArray += checkArray
+                        CacheManager.saveNotificationsData(notificationDict)
+                        resultArray.sortInPlace({ $0.created > $1.created })
+                        completionHandler(result: resultArray)
+                    }
                 }
             })
         }
@@ -184,6 +187,11 @@ class CacheManager {
     }
     
     class func clearAllNotificationData() {
+        NSUserDefaults.standardUserDefaults().setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
         NSKeyedArchiver.archiveRootObject(Dictionary<String, AnyObject>(), toFile: NotificationObject.getFilePath())
+    }
+    
+    class func resetNotificationSinceTs() {
+        NSUserDefaults.standardUserDefaults().setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
     }
 }

@@ -18,6 +18,8 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     let dayArray29 = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29"]
     
+    let dayArray28 = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28"]
+    
     let dayArray30 = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30"]
     
     let dayArray31 = ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"]
@@ -112,6 +114,12 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
             selectedDayIndex = row
         case 2:
             selectedYearIndex = row
+            dateArray = getDayArrayBaseOnMonthIndex(selectedMonthIndex)
+            pickerView.reloadComponent(1)
+            if((selectedDayIndex + 1) > dateArray.count){
+                selectedDayIndex = dateArray.count - 1
+            }
+            
         default: break
         }
         delegate.didFinishPickingDate?(dateArray[selectedDayIndex], monthString: monthArray[selectedMonthIndex], yearString: yearStringArray[selectedYearIndex])
@@ -165,7 +173,35 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         } else if (monthIndex == 3 || monthIndex == 5 || monthIndex == 8 || monthIndex == 10 ){
             return dayArray30
         } else {
-            return dayArray29
+            if(selectedYearIndex == 0){ // default year = 1900
+                return dayArray28
+            }
+            
+            let yearString = yearStringArray[selectedYearIndex]
+            
+            if(yearString != ""){ // prevent default year
+                if(isLeapYear(Int(yearString)!)){
+                    return dayArray29
+                }
+            }
+            
+            return dayArray28
+        }
+    }
+    
+    func isLeapYear(year : Int) -> Bool{
+        if year % 4 == 0 {
+            if year % 100 == 0 {
+                if year % 400 == 0 {
+                    return true
+                } else {
+                    return false
+                }
+            } else {
+                return true
+            }
+        } else {
+            return false
         }
     }
 }

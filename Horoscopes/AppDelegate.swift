@@ -129,11 +129,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GAI.sharedInstance().defaultTracker.send(dict as [NSObject : AnyObject])
         
         let priority = EventConfig.getLogLevel(eventName)
-        
         if let label = label {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i,%@", _value,label), priority: priority)
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"%@",label), priority: priority)
         } else {
-            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: String(format:"Open=%i", _value), priority: priority)
+            XAppDelegate.mobilePlatform.tracker .logWithAction(eventName.rawValue, label: "", priority: priority)
         }
     }
     
@@ -257,6 +256,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             badge++
             Utilities.updateNotificationBadge()
         } else {
+            if let notifId = userInfo["notification_id"]{
+                let notifIdString = notifId as! String
+                var notificationIds = Set<String>()
+                if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
+                    notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+                }
+                
+                if !notificationIds.contains(notifIdString) {
+                    notificationIds.insert(notifIdString)
+                    let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
+                    NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+                    SocialManager.sharedInstance.clearNotificationWithId(notifIdString)
+                }
+            }
             var label = "Type = web"
             if let route = userInfo["route"] as? String{
                 dispatch_async(dispatch_get_main_queue()) {

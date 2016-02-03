@@ -107,6 +107,7 @@
 }
 
 - (void)addEventWithAction:(NSString *)action label:(NSString *)label priority:(int)priority {
+    
     long ts = (long)([[NSDate date] timeIntervalSince1970]);
     
     NSDictionary *event = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -175,9 +176,7 @@
 
 - (void)startTimer {
     if (timerIsRunning) return;
-    
     timerIsRunning = YES;
-    
     // run flush events in a period of time
     timer = [NSTimer scheduledTimerWithTimeInterval:FLUSHING_TIME
                                              target:self
@@ -219,12 +218,11 @@
         } else {
             loglevel = [[responseDict valueForKey:@"logLevel"] intValue];
             ttl = [[responseDict valueForKey:@"TTL"] intValue];
-            configup = (long)[[NSDate date] timeIntervalSince1970];
-            
+            configup = [[NSDate date] timeIntervalSince1970];
             // save config to user defaults
             [userDefaults setObject:[NSString stringWithFormat:@"%d", loglevel] forKey:EVENT_TRACKER_LOG_LEVEL_SAVE_KEY];
             [userDefaults setObject:[NSString stringWithFormat:@"%d", ttl] forKey:EVENT_TRACKER_TIME_STAMP_SAVE_KEY];
-            [userDefaults setObject:[NSString stringWithFormat:@"%ld", configup] forKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY];
+            [userDefaults setInteger:configup forKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY_V2];
             
             [[NSUserDefaults standardUserDefaults] synchronize];
         }
@@ -234,6 +232,8 @@
 #pragma mark - INTERFACES
 
 - (void)logWithAction:(NSString *)action label:(NSString *)label priority:(int)priority {
+    if (priority > loglevel) { return; }
+    
     [self addEventWithAction:action label:label priority:priority];
     [self startTimer];
 }
@@ -271,8 +271,7 @@
         // get the log level, ttl and configup that save in user defaults, if not set to the default value
         loglevel = ([userDefaults objectForKey:EVENT_TRACKER_LOG_LEVEL_SAVE_KEY] ? [[userDefaults objectForKey:EVENT_TRACKER_LOG_LEVEL_SAVE_KEY]intValue] : EVENT_TRACKER_LOG_DEFAULT_LEVEL);
         ttl = ([userDefaults objectForKey:EVENT_TRACKER_TIME_STAMP_SAVE_KEY] ? [[userDefaults objectForKey:EVENT_TRACKER_TIME_STAMP_SAVE_KEY] intValue] : 3600 );
-        configup = ([userDefaults objectForKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY] ? (long)[userDefaults objectForKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY] : 0);
-        
+        configup = ([userDefaults integerForKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY_V2] ? [userDefaults integerForKey:EVENT_TRACKER_LAST_UPDATE_TIME_SAVE_KEY_V2] : 0);
         
         // get config for first time
         if (((long)[[NSDate date] timeIntervalSince1970] - configup) > ttl) {
