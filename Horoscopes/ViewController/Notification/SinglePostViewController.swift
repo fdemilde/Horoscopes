@@ -73,7 +73,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         let att = string.mutableCopy() as! NSMutableAttributedString
-        att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
+        att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.utf16.count))
         textviewForCalculating.attributedText = att
         let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
         let height = ceil(size.height)

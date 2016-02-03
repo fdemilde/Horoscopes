@@ -555,14 +555,14 @@ class Utilities {
     class func getTextWithWeblink(text: String, isTruncated: Bool) -> NSMutableAttributedString {
         do {
             let regex = try NSRegularExpression(pattern: "<[^>]+>", options: .CaseInsensitive)
-            let matches = regex.matchesInString(text, options: NSMatchingOptions.ReportProgress, range:NSMakeRange(0, text.characters.count))
+            let matches = regex.matchesInString(text, options: NSMatchingOptions.ReportProgress, range:NSMakeRange(0, text.utf16.count))
             var urls = [String]()
             for match in matches {
                 let nsText = text as NSString
                 let substring = nsText.substringWithRange(match.range)
                 let types: NSTextCheckingType = .Link
                 let detector = try NSDataDetector(types: types.rawValue)
-                let matches = detector.matchesInString(substring, options: .ReportProgress, range: NSMakeRange(0, substring.characters.count))
+                let matches = detector.matchesInString(substring, options: .ReportProgress, range: NSMakeRange(0, substring.utf16.count))
                 for match in matches {
                     if let url = match.URL {
                         //NSUTF8StringEncoding
@@ -574,7 +574,7 @@ class Utilities {
             
             var replacedText = regex.stringByReplacingMatchesInString(text,
                 options: NSMatchingOptions.ReportCompletion,
-                range:NSMakeRange(0, text.characters.count) ,
+                range:NSMakeRange(0, text.utf16.count) ,
                 withTemplate: "")
             let readMorePhrase = "... Read more"
             // check if it's trucated by server
@@ -585,8 +585,8 @@ class Utilities {
             let attString = NSMutableAttributedString(string: replacedText)
             let font = UIFont(name: "Book Antiqua", size: 14)
             let textColor = UIColor(red: 102.0/255.0, green: 102.0/255.0, blue: 102.0/255.0, alpha: 1)
-            attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.characters.count))
-            attString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSMakeRange(0, replacedText.characters.count))
+            attString.addAttribute(NSFontAttributeName, value: font!, range: NSMakeRange(0, replacedText.utf16.count))
+            attString.addAttribute(NSForegroundColorAttributeName, value: textColor, range: NSMakeRange(0, replacedText.utf16.count))
             let nsReplacedText = replacedText as NSString
             let readMoreRange = nsReplacedText.rangeOfString("Read more")
             if isTruncated {
@@ -594,7 +594,7 @@ class Utilities {
             }
             
             
-            let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.characters.count))
+            let numberOfMatches = regex.numberOfMatchesInString(text, options: .ReportProgress, range: NSMakeRange(0, text.utf16.count))
             if numberOfMatches / 2 == urls.count {
                 for index in 0..<numberOfMatches {
                     if index % 2 == 0 && index != numberOfMatches - 1 {

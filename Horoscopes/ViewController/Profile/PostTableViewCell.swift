@@ -130,9 +130,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             
             let style = NSMutableParagraphStyle()
             style.lineSpacing = 5
-            att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.characters.count))
+            att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.utf16.count))
             self.textView!.linkTextAttributes = linkAttributes
             self.textView.attributedText = att
+            self.textView.font = UIFont(name: "Book Antiqua", size: 14)
             
 //            self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
             self.likeNumberLabel.text = "\(post.hearts) Likes"
