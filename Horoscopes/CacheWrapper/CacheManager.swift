@@ -209,6 +209,7 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
         let data = NSKeyedArchiver.archivedDataWithRootObject(Set<String>())
         NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
         NSKeyedArchiver.archiveRootObject(Dictionary<String, AnyObject>(), toFile: NotificationObject.getFilePath())
+        XAppDelegate.lastGetAllNotificationsTs = 0
     }
     
     class func resetNotificationSinceTs() {

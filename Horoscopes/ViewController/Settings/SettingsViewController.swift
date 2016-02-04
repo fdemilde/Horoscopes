@@ -146,12 +146,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         timePickerVC.parentVC = self
         return timePickerVC
     }
-    // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
-    func setupBirthdayViewController() -> UIViewController {
-        let selectBirthdayVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyDatePickerViewController") as! MyDatePickerViewController
-        selectBirthdayVC.setupViewController(self, currentSetupBirthday: birthday)
-        return selectBirthdayVC
-    }
     
     func setupBugsReportViewController() -> UIViewController {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsBug, label: nil)

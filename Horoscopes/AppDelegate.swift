@@ -254,6 +254,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didReceiveRemoteNotification userInfo: [NSObject : AnyObject], fetchCompletionHandler completionHandler: (UIBackgroundFetchResult) -> Void) {
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
+        XAppDelegate.lastGetAllNotificationsTs = 0 // reset to force notification page reload
         if ( application.applicationState == UIApplicationState.Active ){ // receive notif on foreground
             badge++
             Utilities.updateNotificationBadge()
@@ -271,7 +272,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
                     SocialManager.sharedInstance.clearNotificationWithId(notifIdString)
                 }
-                XAppDelegate.lastGetAllNotificationsTs = 0 // reset to force notification page reload
             }
             var label = "Type = web"
             if let route = userInfo["route"] as? String{

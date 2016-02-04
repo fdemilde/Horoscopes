@@ -496,6 +496,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             completionHandler(error: error, permissionGranted: false)
                         } else {
                             completionHandler(error: nil, permissionGranted: true)
+                            
+                            XAppDelegate.lastGetAllNotificationsTs = 0
+                            CacheManager.resetNotificationSinceTs()
                             // if user logs in Facebook first time.
                             if !NSUserDefaults.standardUserDefaults().boolForKey(isNotLoggedInFacebookFirstTimeKey) {
                                 let pickedSign = XAppDelegate.userSettings.horoscopeSign
@@ -632,13 +635,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func clearAllNotification(array : [NotificationObject]){
-//        var listIds = [String]()
-//        for notification in array {
-//            listIds.append(notification.notification_id)
-//        }
-//        XAppDelegate.mobilePlatform.platformNotiff.clearWithListID(listIds, andCompleteBlock: { (result) -> Void in
-//            print("clearAllNotification result = \(result)")
-//        })
+        
         CacheManager.clearAllNotificationData()
     }
     

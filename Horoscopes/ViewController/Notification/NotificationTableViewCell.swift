@@ -161,5 +161,11 @@ class NotificationTableViewCell: UITableViewCell {
             self.alertObject = alertObject
         }
     }
+    
+    func updateTimeAgo(){
+        if let notification = self.notification{
+            self.timeLabel.text = Utilities.getTimeAgoString(notification.created)
+        }
+    }
 
 }

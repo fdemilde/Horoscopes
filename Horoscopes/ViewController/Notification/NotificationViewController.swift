@@ -19,6 +19,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     var tableHeaderView : UIView!
     var tableFooterView : UIView!
     var noNotificationView : UIView!
+    var updateTimer : NSTimer!
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
@@ -32,7 +33,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         super.viewDidLoad()
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
-        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.layer.cornerRadius = 4
@@ -42,10 +42,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
+        updateTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "update", userInfo: nil, repeats: true)
         if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
             notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
         }
+        
         UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
@@ -59,6 +60,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         if(time > 60){
             self.getNotificationAndReloadData()
         }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        updateTimer.invalidate()
+        updateTimer = nil
     }
 
     override func didReceiveMemoryWarning() {
@@ -109,7 +115,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
-        
         let id = notifArray[indexPath.row].notification_id
         if notificationIds.contains(id) {
             cell.backgroundColor = UIColor.whiteColor()
@@ -164,18 +169,21 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     // MARK: Helpers
     func getNotificationAndReloadData(){
-        if !SocialManager.sharedInstance.isLoggedInFacebook() {
-            notifArray = [NotificationObject]()
-            tableView.reloadData()
-            return
-        }
-        XAppDelegate.lastGetAllNotificationsTs = NSDate().timeIntervalSince1970
+//        if !SocialManager.sharedInstance.isLoggedInFacebook() {
+//            notifArray = [NotificationObject]()
+//            tableView.reloadData()
+//            return
+//        }
         
         if(notifArray.count == 0){ // first load
             Utilities.showHUD()
             tableView.backgroundColor = UIColor.whiteColor()
         }
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
+            if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
+                self.notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+            }
+            XAppDelegate.lastGetAllNotificationsTs = NSDate().timeIntervalSince1970
 //            print("getNotificationAndReloadData == \(result)")
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
@@ -226,5 +234,15 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         dispatch_async(dispatch_get_main_queue(),{
             Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner(), radius: 4.0) as! NotificationTableViewCell
         })
+    }
+    
+    // MARK: update timer
+    func update() {
+        let visibleCells = self.tableView.visibleCells
+        for cell in visibleCells {
+            if let castedCell = cell as? NotificationTableViewCell {
+                castedCell.updateTimeAgo()
+            }
+        }
     }
 }

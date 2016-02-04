@@ -72,6 +72,7 @@ static NSString * const kOpenUDIDSlotPBPrefix = @"com.floatingcube.";
 - (void) clearCreds {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:LOGIN_UID];
     token = nil;
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LOGIN_TOKEN];
     uid = 0;
 }
 
