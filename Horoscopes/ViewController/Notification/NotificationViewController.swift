@@ -30,10 +30,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
-            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
-        }
-        
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
@@ -46,8 +42,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         
+        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
+            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+        }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
         if(XAppDelegate.badge > 0){
@@ -56,7 +55,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         }
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
-        self.getNotificationAndReloadData()
+        let time = NSDate().timeIntervalSince1970 - XAppDelegate.lastGetAllNotificationsTs
+        if(time > 60){
+            self.getNotificationAndReloadData()
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -107,6 +109,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
         let id = notifArray[indexPath.row].notification_id
         if notificationIds.contains(id) {
             cell.backgroundColor = UIColor.whiteColor()
@@ -118,9 +121,9 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let cell = tableView.cellForRowAtIndexPath(indexPath)
         if let cell = cell {
+            cell.backgroundColor = UIColor.whiteColor()
             let id = notifArray[indexPath.row].notification_id
             notificationIds.insert(id)
-            cell.backgroundColor = UIColor.whiteColor()
             let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
             NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
             SocialManager.sharedInstance.clearNotificationWithId(id)
@@ -145,7 +148,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     // MARK: Button actions
     
     func handleRefresh(refreshControl: UIRefreshControl) {
-        CacheManager.resetNotificationSinceTs()
+        CacheManager.clearAllNotificationData()
         self.getNotificationAndReloadData()
         refreshControl.endRefreshing()
     }
@@ -166,6 +169,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             tableView.reloadData()
             return
         }
+        XAppDelegate.lastGetAllNotificationsTs = NSDate().timeIntervalSince1970
+        
         if(notifArray.count == 0){ // first load
             Utilities.showHUD()
             tableView.backgroundColor = UIColor.whiteColor()

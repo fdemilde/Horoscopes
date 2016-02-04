@@ -14,11 +14,12 @@
 #define kRoute              @"kRoute"
 #define kData               @"kData"
 #define kRef                @"kRef"
+#define kClear                @"kClear"
 
 @implementation NotificationObject
 
 
-- (id) initWithNotificationID:(NSString*) notifId withSender:(NSString*) sender withTimeCreated:(long) created withAlert:(NSString*) alert withRoute:(NSString*)route withData:(NSString*) data withRef:(NSString*)ref withType:(NSString*)type{
+- (id) initWithNotificationID:(NSString*) notifId withSender:(NSString*) sender withTimeCreated:(long) created withAlert:(NSString*) alert withRoute:(NSString*)route withData:(NSString*) data withRef:(NSString*)ref withType:(NSString*)type isClear:(BOOL)cleared{
     self = [super init];
     
     _notification_id = notifId;
@@ -28,6 +29,7 @@
     _route = route;
     _data = data;
     _ref = ref;
+    _cleared = cleared;
     return self;
 }
 
@@ -57,6 +59,7 @@
         _route = [aDecoder decodeObjectForKey:kRoute];
         _data = [aDecoder decodeObjectForKey:kData];
         _ref = [aDecoder decodeObjectForKey:kRef];
+        _cleared = [aDecoder decodeBoolForKey:kClear];
     }
     return self;
 }
@@ -69,6 +72,7 @@
     [aCoder encodeObject:self.route forKey:kRoute];
     [aCoder encodeObject:self.data forKey:kData];
     [aCoder encodeObject:self.ref forKey:kRef];
+    [aCoder encodeBool:self.cleared forKey:kClear];
 }
 
 + (NSString *)getFilePath{
@@ -78,6 +82,6 @@
 }
 
 - (NSString *)description {
-    return [NSString stringWithFormat:@"id = %@", self.notification_id];
+    return [NSString stringWithFormat:@"id = %@ || cleared = %d", self.notification_id, self.cleared];
 }
 @end

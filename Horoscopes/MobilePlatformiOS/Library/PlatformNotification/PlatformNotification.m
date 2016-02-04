@@ -119,7 +119,8 @@
         no.sender = [[notif objectForKey:@"sender"] stringValue];
         no.route = [notif objectForKey:@"route"];
         no.notification_id = [notif objectForKey:@"notification_id"];
-        
+        int clearedInt = [[notif objectForKey:@"cleared"] intValue];
+        no.cleared = (clearedInt == 1) ? true : false;
         [arrayNotiffs addObject:no];
 //        NSLog(@"data = %@" , [no toString]);
     }
@@ -143,7 +144,7 @@
         
         id uidObject = [responseDict objectForKey:@"cleared"];
         
-        DebugLog(@"clearWithID return = %@" , responseDict);
+//        DebugLog(@"clearWithID return = %@" , responseDict);
         completeBlock(uidObject);
     }];
 

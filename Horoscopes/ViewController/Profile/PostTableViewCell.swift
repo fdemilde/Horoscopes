@@ -155,8 +155,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.fakeReadmoreLabel?.font = UIFont(name: "Book Antiqua", size: 14)
             if(!self.viewController.isKindOfClass(SinglePostViewController.classForCoder())){
                 self.setupTextViewMaxLines()
-            } else {
-                print("ignore max lines")
             }
             
             // fake a read more button if it should be truncate on client side

@@ -25,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var badge = 0 as Int
     
+    var lastGetAllNotificationsTs = 0 as Double // have to put it here for easy reset
+    
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         // hide status bar
@@ -269,6 +271,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
                     SocialManager.sharedInstance.clearNotificationWithId(notifIdString)
                 }
+                XAppDelegate.lastGetAllNotificationsTs = 0 // reset to force notification page reload
             }
             var label = "Type = web"
             if let route = userInfo["route"] as? String{

@@ -142,6 +142,7 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
             XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andCompleteBlock: { (result) -> Void in
                 if let result = result {
                     let notifArray = result as! [NotificationObject]
+                    CacheManager.addNotificationIdToReadList(notifArray)
                     NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
                     let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
                     if(checkArray.count > 0){ // has new data
@@ -177,6 +178,23 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
         return result
     }
     
+    class func addNotificationIdToReadList(notifArray : [NotificationObject]){
+        var notificationIds = Set<String>()
+        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
+            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+        }
+        // check if notification from server cleared or not, if they're cleared, add to cleared list
+        for notif in notifArray {
+            if (notif.cleared == true) {
+                if (!notificationIds.contains(notif.notification_id)) {
+                    notificationIds.insert(notif.notification_id)
+                }
+            }
+        }
+        let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+    }
+    
     class func saveNotificationsData(cacheDict : Dictionary<String, AnyObject>){
         NSKeyedArchiver.archiveRootObject(cacheDict, toFile: NotificationObject.getFilePath())
     }
@@ -188,6 +206,8 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
     
     class func clearAllNotificationData() {
         NSUserDefaults.standardUserDefaults().setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
+        let data = NSKeyedArchiver.archivedDataWithRootObject(Set<String>())
+        NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
         NSKeyedArchiver.archiveRootObject(Dictionary<String, AnyObject>(), toFile: NotificationObject.getFilePath())
     }
     

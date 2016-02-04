@@ -18,6 +18,7 @@
 @property NSString* route;
 @property NSString* data;
 @property NSString* ref;
+@property BOOL      cleared;
 
 -(NSString* ) toString;
 +(NSString* ) getFilePath;
