@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
-		7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
 		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; };
 		704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */; };
@@ -27,16 +26,14 @@
 		70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70C973141BA6893E0059D77A /* OtherProfileViewController.swift */; };
 		70CB8FD51B8481E300A70C41 /* DailyTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */; };
 		70DB1DD11B998E8300218063 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70DB1DD01B998E8300218063 /* SearchViewController.swift */; };
-		70EBD4471BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */; };
 		70EFC02A1BB13E1800ECDC1C /* UserProfileCounts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */; };
 		70F31C181B4E6F9300A8B3A2 /* PostLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */; };
 		909BC2F9095624DAA413A59E /* libPods-Horoscopes.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C42BBE61572323217476FD56 /* libPods-Horoscopes.a */; };
 		F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD741B99536C0047185F /* CMPopTipView.m */; };
 		F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F40ECD761B99575E0047185F /* MyDatePickerView.swift */; };
-		F411F0A11BF48213002B18A5 /* DiscoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */; };
 		F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */; };
+		F41859BE1C64B21A00209CB1 /* bg-ip6@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F41859BD1C64B21A00209CB1 /* bg-ip6@2x.png */; };
 		F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */; };
-		F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099251BCDFE1C00BF1736 /* CacheEntry.swift */; };
 		F42099281BCE030300BF1736 /* CacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42099271BCE030300BF1736 /* CacheManager.swift */; };
 		F4237A611C0C56E20070F3D8 /* CustomInfiniteIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4237A601C0C56E20070F3D8 /* CustomInfiniteIndicator.swift */; };
 		F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F42E288F1B37C8ED00466CAA /* ShareViewController.swift */; };
@@ -108,16 +105,10 @@
 		F49FAE491B4290E500F38E0C /* SocialManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE481B4290E500F38E0C /* SocialManager.swift */; };
 		F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = F49FAE4A1B42E41000F38E0C /* UserProfile.swift */; };
 		F4A206C51B94199B002676DE /* Book Antiqua Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */; };
-		F4A63E9A1BF1A24F0016B27A /* NewsfeedTableHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */; };
 		F4AB5C731B4F84AA00041AC6 /* CircularProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */; };
 		F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4BF7B421B623D0400E3A491 /* LocationManager.swift */; };
 		F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8B1B8EC58000910E56 /* BKDelta.m */; };
 		F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */; };
-		F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F921B8EC58000910E56 /* DCPathButton.m */; };
-		F4C44FA21B8EC58000910E56 /* DCPathItemButton.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F941B8EC58000910E56 /* DCPathItemButton.m */; };
-		F4C44FA31B8EC58000910E56 /* bloom.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F961B8EC58000910E56 /* bloom.caf */; };
-		F4C44FA41B8EC58000910E56 /* fold.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F971B8EC58000910E56 /* fold.caf */; };
-		F4C44FA51B8EC58000910E56 /* selected.caf in Resources */ = {isa = PBXBuildFile; fileRef = F4C44F981B8EC58000910E56 /* selected.caf */; };
 		F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */; };
 		F4C44FA71B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9C1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.m */; };
 		F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C44F9E1B8EC58000910E56 /* UIScrollView+InfiniteScroll.m */; };
@@ -187,10 +178,7 @@
 		F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */; };
 		F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */; };
 		F4DCC7881B3BA6D500B39280 /* ChooseSignVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */; };
-		F4DDF6AB1B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */; };
-		F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */; };
 		F4F195161C33E4F2004A68E7 /* EventConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F195151C33E4F2004A68E7 /* EventConfig.swift */; };
-		F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,7 +194,6 @@
 /* Begin PBXFileReference section */
 		38FE2C9EC2EB65DDAED7FFDE /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
-		7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedViewController.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
 		704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BugReportViewController.swift; sourceTree = "<group>"; };
 		704FF7451BB2BB92006A5A98 /* LogOutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogOutViewController.swift; sourceTree = "<group>"; };
@@ -225,7 +212,6 @@
 		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
 		70CB8FD41B8481E300A70C41 /* DailyTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyTableViewController.swift; sourceTree = "<group>"; };
 		70DB1DD01B998E8300218063 /* SearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
-		70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableOldHeaderView.swift; sourceTree = "<group>"; };
 		70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfileCounts.swift; sourceTree = "<group>"; };
 		70F31C171B4E6F9300A8B3A2 /* PostLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostLoginViewController.swift; sourceTree = "<group>"; };
 		C42BBE61572323217476FD56 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -233,10 +219,9 @@
 		F40ECD731B99536C0047185F /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		F40ECD741B99536C0047185F /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		F40ECD761B99575E0047185F /* MyDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerView.swift; sourceTree = "<group>"; };
-		F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostViewController.swift; sourceTree = "<group>"; };
+		F41859BD1C64B21A00209CB1 /* bg-ip6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-ip6@2x.png"; sourceTree = "<group>"; };
 		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
-		F42099251BCDFE1C00BF1736 /* CacheEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheEntry.swift; sourceTree = "<group>"; };
 		F42099271BCE030300BF1736 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
 		F4237A601C0C56E20070F3D8 /* CustomInfiniteIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfiniteIndicator.swift; sourceTree = "<group>"; };
 		F42E288F1B37C8ED00466CAA /* ShareViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareViewController.swift; sourceTree = "<group>"; };
@@ -310,7 +295,6 @@
 		F49FAE481B4290E500F38E0C /* SocialManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialManager.swift; sourceTree = "<group>"; };
 		F49FAE4A1B42E41000F38E0C /* UserProfile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		F4A206C41B94199B002676DE /* Book Antiqua Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Book Antiqua Regular.ttf"; sourceTree = "<group>"; };
-		F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsfeedTableHeaderView.swift; sourceTree = "<group>"; };
 		F4AB5C721B4F84AA00041AC6 /* CircularProgressBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CircularProgressBar.swift; sourceTree = "<group>"; };
 		F4BF7B421B623D0400E3A491 /* LocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		F4C44F8A1B8EC58000910E56 /* BKDelta.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta.h; sourceTree = "<group>"; };
@@ -318,13 +302,6 @@
 		F4C44F8C1B8EC58000910E56 /* BKDelta_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDelta_Internal.h; sourceTree = "<group>"; };
 		F4C44F8D1B8EC58000910E56 /* BKDeltaCalculator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BKDeltaCalculator.h; sourceTree = "<group>"; };
 		F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BKDeltaCalculator.m; sourceTree = "<group>"; };
-		F4C44F911B8EC58000910E56 /* DCPathButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPathButton.h; sourceTree = "<group>"; };
-		F4C44F921B8EC58000910E56 /* DCPathButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPathButton.m; sourceTree = "<group>"; };
-		F4C44F931B8EC58000910E56 /* DCPathItemButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DCPathItemButton.h; sourceTree = "<group>"; };
-		F4C44F941B8EC58000910E56 /* DCPathItemButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DCPathItemButton.m; sourceTree = "<group>"; };
-		F4C44F961B8EC58000910E56 /* bloom.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = bloom.caf; sourceTree = "<group>"; };
-		F4C44F971B8EC58000910E56 /* fold.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = fold.caf; sourceTree = "<group>"; };
-		F4C44F981B8EC58000910E56 /* selected.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = selected.caf; sourceTree = "<group>"; };
 		F4C44F991B8EC58000910E56 /* NSDate+NVTimeAgo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+NVTimeAgo.h"; sourceTree = "<group>"; };
 		F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+NVTimeAgo.m"; sourceTree = "<group>"; };
 		F4C44F9B1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+WhiteUIDatePickerLabels.h"; sourceTree = "<group>"; };
@@ -428,14 +405,11 @@
 		F4CACACA1B2010F2003C6301 /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		F4CACACB1B2010F2003C6301 /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		F4D364D41C562222009EF06A /* CommunityWelcomeView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommunityWelcomeView.swift; sourceTree = "<group>"; };
-		F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LikeDetailTableViewController.swift; sourceTree = "<group>"; };
+		F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LikeDetailTableViewController.swift; path = ../Newsfeed/LikeDetailTableViewController.swift; sourceTree = "<group>"; };
 		F4DA35C21B4E27B000B6F165 /* ViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerWithAds.swift; sourceTree = "<group>"; };
 		F4DA35C41B4E2F1E00B6F165 /* TableViewControllerWithAds.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableViewControllerWithAds.swift; sourceTree = "<group>"; };
 		F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChooseSignVC.swift; sourceTree = "<group>"; };
-		F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "choose_sign_bg-568h@2x.png"; sourceTree = "<group>"; };
-		F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateNewsfeedViewController.swift; sourceTree = "<group>"; };
 		F4F195151C33E4F2004A68E7 /* EventConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventConfig.swift; sourceTree = "<group>"; };
-		F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverTableCell.swift; sourceTree = "<group>"; };
 		F4F877971B20447600C828C2 /* Horoscope-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Horoscope-Prefix.pch"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -533,9 +507,8 @@
 		F411F09F1BF48206002B18A5 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				F411F0A01BF48213002B18A5 /* DiscoverViewController.swift */,
-				F4F42DC41BFF16530030D9C9 /* DiscoverTableCell.swift */,
 				F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */,
+				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
 			);
 			path = Discover;
 			sourceTree = "<group>";
@@ -554,7 +527,6 @@
 		F42099241BCDFCE500BF1736 /* CacheWrapper */ = {
 			isa = PBXGroup;
 			children = (
-				F42099251BCDFE1C00BF1736 /* CacheEntry.swift */,
 				F42099271BCE030300BF1736 /* CacheManager.swift */,
 			);
 			path = CacheWrapper;
@@ -573,7 +545,7 @@
 		F42E28931B37D14100466CAA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				F4DDF6A61B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png */,
+				F41859BD1C64B21A00209CB1 /* bg-ip6@2x.png */,
 				F4CACA1E1B1EBE16003C6301 /* Images.xcassets */,
 				F46097E41B50D1F30026F0C9 /* moon animation */,
 				F42E28941B37D14100466CAA /* share */,
@@ -665,7 +637,6 @@
 				702804F31B4B7193001B8A1F /* Post */,
 				F49EB55E1B41C21E00F56092 /* Daily */,
 				F42E288E1B37C8ED00466CAA /* Share */,
-				F49FAE411B42499500F38E0C /* Newsfeed */,
 				F47C02A01B2691A700C0BA83 /* SpinWheelVC.swift */,
 				F47C02A31B2691D200C0BA83 /* LoginVC.swift */,
 				F4DCC7871B3BA6D500B39280 /* ChooseSignVC.swift */,
@@ -690,18 +661,6 @@
 			path = Daily;
 			sourceTree = "<group>";
 		};
-		F49FAE411B42499500F38E0C /* Newsfeed */ = {
-			isa = PBXGroup;
-			children = (
-				7027F5CB1B86DD4F00988956 /* NewsfeedViewController.swift */,
-				70EBD4461BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift */,
-				F4A63E991BF1A24F0016B27A /* NewsfeedTableHeaderView.swift */,
-				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
-				F4E1C1D51C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift */,
-			);
-			path = Newsfeed;
-			sourceTree = "<group>";
-		};
 		F4A206BD1B9410BA002676DE /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -715,7 +674,6 @@
 			children = (
 				F40ECD721B99536C0047185F /* CMPopTipView */,
 				F4C44F891B8EC58000910E56 /* BKDeltaCalculator */,
-				F4C44F8F1B8EC58000910E56 /* DCPathButton */,
 				F4C44F991B8EC58000910E56 /* NSDate+NVTimeAgo.h */,
 				F4C44F9A1B8EC58000910E56 /* NSDate+NVTimeAgo.m */,
 				F4C44F9B1B8EC58000910E56 /* UILabel+WhiteUIDatePickerLabels.h */,
@@ -737,36 +695,6 @@
 				F4C44F8E1B8EC58000910E56 /* BKDeltaCalculator.m */,
 			);
 			path = BKDeltaCalculator;
-			sourceTree = "<group>";
-		};
-		F4C44F8F1B8EC58000910E56 /* DCPathButton */ = {
-			isa = PBXGroup;
-			children = (
-				F4C44F901B8EC58000910E56 /* Classes */,
-				F4C44F951B8EC58000910E56 /* Sounds */,
-			);
-			path = DCPathButton;
-			sourceTree = "<group>";
-		};
-		F4C44F901B8EC58000910E56 /* Classes */ = {
-			isa = PBXGroup;
-			children = (
-				F4C44F911B8EC58000910E56 /* DCPathButton.h */,
-				F4C44F921B8EC58000910E56 /* DCPathButton.m */,
-				F4C44F931B8EC58000910E56 /* DCPathItemButton.h */,
-				F4C44F941B8EC58000910E56 /* DCPathItemButton.m */,
-			);
-			path = Classes;
-			sourceTree = "<group>";
-		};
-		F4C44F951B8EC58000910E56 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				F4C44F961B8EC58000910E56 /* bloom.caf */,
-				F4C44F971B8EC58000910E56 /* fold.caf */,
-				F4C44F981B8EC58000910E56 /* selected.caf */,
-			);
-			path = Sounds;
 			sourceTree = "<group>";
 		};
 		F4CACA091B1EBE16003C6301 = {
@@ -1162,13 +1090,13 @@
 				F4CACA5A1B1EEE72003C6301 /* selected_tabbar_daily@3x.png in Resources */,
 				F46098141B50D1F30026F0C9 /* moon_ani_04@2x.png in Resources */,
 				F46098181B50D1F30026F0C9 /* moon_ani_05@3x.png in Resources */,
+				F41859BE1C64B21A00209CB1 /* bg-ip6@2x.png in Resources */,
 				F4CACA6F1B1EEE72003C6301 /* tabbar_notification@3x.png in Resources */,
 				F460981B1B50D1F30026F0C9 /* moon_ani_07.png in Resources */,
 				F42E28AC1B37D14100466CAA /* share_mail@2x.png in Resources */,
 				F4CACA681B1EEE72003C6301 /* tabbar_daily@2x.png in Resources */,
 				F46098111B50D1F30026F0C9 /* moon_ani_03@2x.png in Resources */,
 				F460982A1B50D1F30026F0C9 /* moon_ani_12.png in Resources */,
-				F4C44FA31B8EC58000910E56 /* bloom.caf in Resources */,
 				F4CACA661B1EEE72003C6301 /* selected_tabbar_profile@3x.png in Resources */,
 				F42E28B31B37D14100466CAA /* share_whatsapp.png in Resources */,
 				F46098261B50D1F30026F0C9 /* moon_ani_10@3x.png in Resources */,
@@ -1199,17 +1127,14 @@
 				F4CACA6D1B1EEE72003C6301 /* tabbar_notification.png in Resources */,
 				F46098231B50D1F30026F0C9 /* moon_ani_09@3x.png in Resources */,
 				F4CACA651B1EEE72003C6301 /* selected_tabbar_profile@2x.png in Resources */,
-				F4DDF6AB1B58C1CF00C5F57E /* choose_sign_bg-568h@2x.png in Resources */,
 				F42E28B01B37D14100466CAA /* share_twitter@2x.png in Resources */,
 				F46098201B50D1F30026F0C9 /* moon_ani_08@3x.png in Resources */,
 				F4CACA581B1EEE72003C6301 /* selected_tabbar_daily.png in Resources */,
-				F4C44FA41B8EC58000910E56 /* fold.caf in Resources */,
 				F42E28A71B37D14100466CAA /* share_facebook.png in Resources */,
 				F42E28A81B37D14100466CAA /* share_facebook@2x.png in Resources */,
 				F460981F1B50D1F30026F0C9 /* moon_ani_08@2x.png in Resources */,
 				F42E28B11B37D14100466CAA /* share_viber.png in Resources */,
 				F4CACA621B1EEE72003C6301 /* selected_tabbar_post@2x.png in Resources */,
-				F4C44FA51B8EC58000910E56 /* selected.caf in Resources */,
 				F4CACA5B1B1EEE72003C6301 /* selected_tabbar_newsfeed.png in Resources */,
 				F42078ED1B8D72CF00C0C979 /* moon_ani_06@2x.png in Resources */,
 				F42E28AB1B37D14100466CAA /* share_mail.png in Resources */,
@@ -1299,7 +1224,6 @@
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
 				F4237A611C0C56E20070F3D8 /* CustomInfiniteIndicator.swift in Sources */,
-				7027F5CC1B86DD4F00988956 /* NewsfeedViewController.swift in Sources */,
 				F4F195161C33E4F2004A68E7 /* EventConfig.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,
@@ -1307,7 +1231,6 @@
 				70C973151BA6893E0059D77A /* OtherProfileViewController.swift in Sources */,
 				70C973111BA672E50059D77A /* ProfileBaseViewController.swift in Sources */,
 				F42099281BCE030300BF1736 /* CacheManager.swift in Sources */,
-				F4E1C1D61C0EA41E00C47A7F /* AlternateNewsfeedViewController.swift in Sources */,
 				704FF74A1BB2BB92006A5A98 /* MyTimePickerViewController.swift in Sources */,
 				F49FAE4B1B42E41000F38E0C /* UserProfile.swift in Sources */,
 				F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */,
@@ -1329,7 +1252,6 @@
 				F4C44F9F1B8EC58000910E56 /* BKDelta.m in Sources */,
 				F4C44FA61B8EC58000910E56 /* NSDate+NVTimeAgo.m in Sources */,
 				F4C44FA81B8EC58000910E56 /* UIScrollView+InfiniteScroll.m in Sources */,
-				F42099261BCDFE1C00BF1736 /* CacheEntry.swift in Sources */,
 				F4CACADC1B2010F2003C6301 /* Alert.m in Sources */,
 				F4CACAD51B2010F2003C6301 /* EventsTracker.m in Sources */,
 				F40ECD771B99575E0047185F /* MyDatePickerView.swift in Sources */,
@@ -1342,7 +1264,6 @@
 				F40ECD751B99536C0047185F /* CMPopTipView.m in Sources */,
 				F430F4251BBA38F0002DCAD5 /* SettingsTableCell.swift in Sources */,
 				F430F4271BBA38FE002DCAD5 /* ArchiveCalendarCell.swift in Sources */,
-				F4F42DC51BFF16530030D9C9 /* DiscoverTableCell.swift in Sources */,
 				F4CACA901B2003E1003C6301 /* CollectedItem.m in Sources */,
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
@@ -1351,11 +1272,9 @@
 				F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */,
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,
 				F4CACAD11B2010F2003C6301 /* CrossSellManager.m in Sources */,
-				F4C44FA21B8EC58000910E56 /* DCPathItemButton.m in Sources */,
 				F49FAE471B42899700F38E0C /* UserPost.swift in Sources */,
 				70AE13221B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift in Sources */,
 				F4CACADE1B2010F2003C6301 /* Router.m in Sources */,
-				70EBD4471BBBDE9400045572 /* NewsfeedTableOldHeaderView.swift in Sources */,
 				70C973131BA67EAA0059D77A /* CurrentProfileViewController.swift in Sources */,
 				F4DA35C31B4E27B000B6F165 /* ViewControllerWithAds.swift in Sources */,
 				F4BF7B431B623D0400E3A491 /* LocationManager.swift in Sources */,
@@ -1378,16 +1297,13 @@
 				F4CACA801B200149003C6301 /* RotateControl.m in Sources */,
 				F4CACADD1B2010F2003C6301 /* Request.m in Sources */,
 				F42E28901B37C8ED00466CAA /* ShareViewController.swift in Sources */,
-				F4A63E9A1BF1A24F0016B27A /* NewsfeedTableHeaderView.swift in Sources */,
 				705E59D81B4CE65F00D1E613 /* NotificationViewController.swift in Sources */,
 				704FF7491BB2BB92006A5A98 /* LogOutViewController.swift in Sources */,
 				F4CACAD81B2010F2003C6301 /* PlatformNotification.m in Sources */,
 				F4CACA931B2003E1003C6301 /* MessageInfo.m in Sources */,
 				F47BAB281B205617002031AB /* HoroscopesManager.swift in Sources */,
 				F4CACADF1B2010F2003C6301 /* UserCreds.m in Sources */,
-				F4C44FA11B8EC58000910E56 /* DCPathButton.m in Sources */,
 				F4CACAD41B2010F2003C6301 /* CrossSellServerMessenging.m in Sources */,
-				F411F0A11BF48213002B18A5 /* DiscoverViewController.swift in Sources */,
 				F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */,
 				F42E28921B37CA8F00466CAA /* ShareButton.swift in Sources */,
 			);

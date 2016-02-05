@@ -163,17 +163,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     }
     
     @IBAction func clearAllTapped(sender: AnyObject) {
-//        XAppDelegate.socialManager.clearAllNotification()
         
     }
     
     // MARK: Helpers
     func getNotificationAndReloadData(){
-//        if !SocialManager.sharedInstance.isLoggedInFacebook() {
-//            notifArray = [NotificationObject]()
-//            tableView.reloadData()
-//            return
-//        }
         
         if(notifArray.count == 0){ // first load
             Utilities.showHUD()
@@ -198,7 +192,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
                 self.notifArray = result!
                 self.notifArray.sortInPlace({ $0.created > $1.created })
-//                self.tableView.reloadSections(NSIndexSet(index: 0), withRowAnimation: UITableViewRowAnimation.Fade)
                 self.tableView.endUpdates()
                 
             })

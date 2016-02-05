@@ -93,8 +93,8 @@ static int CLOVER_SYMBOL_TAG = 101;
         int symbolPosX = [self getPositionXBaseOnScreen:80];
         int symbolPosY = [self getPositionYBaseOnScreen:33];
         if(IS_IPHONE_6){
-            symbolPosX = [self getPositionXBaseOnScreen:66];
-            symbolPosY = [self getPositionYBaseOnScreen:30];
+            symbolPosX = [self getPositionXBaseOnScreen:78];
+            symbolPosY = [self getPositionYBaseOnScreen:33];
         }
         UIImageView *symbol = [[UIImageView alloc] initWithFrame:CGRectMake(symbolPosX, symbolPosY, 30, 30)];
         symbol.image = [[horoscope getSymbol] imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];

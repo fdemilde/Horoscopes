@@ -2,13 +2,13 @@
   "images" : [
     {
       "idiom" : "iphone",
-      "scale" : "1x",
-      "filename" : "bg-320x480.png"
+      "filename" : "bg-320x480.png",
+      "scale" : "1x"
     },
     {
       "idiom" : "iphone",
-      "scale" : "2x",
-      "filename" : "bg-640x960.png"
+      "filename" : "bg-640x960.png",
+      "scale" : "2x"
     },
     {
       "idiom" : "iphone",
@@ -18,8 +18,8 @@
     },
     {
       "idiom" : "iphone",
-      "scale" : "3x",
-      "filename" : "bg-ip6plus.png"
+      "filename" : "bg-ip6plus.png",
+      "scale" : "3x"
     }
   ],
   "info" : {

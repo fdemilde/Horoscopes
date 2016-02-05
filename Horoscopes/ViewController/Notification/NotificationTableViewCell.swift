@@ -58,18 +58,13 @@ class NotificationTableViewCell: UITableViewCell {
             switch(self.type){
                 case ServerNotificationType.SendHeart:
                     self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
-//                    self.cellOverlay.hidden = true
                 case ServerNotificationType.Follow:
                     self.notifTypeImageView.image = UIImage(named: "follow_icon")
-//                    self.cellOverlay.hidden = false
                 default:
                     self.notifTypeImageView.image = UIImage(named: "send_heart_icon")
-//                    self.cellOverlay.hidden = true
                 
                 
             }
-//            self.bringSubviewToFront(self.cellOverlay)
-//            self.backgroundColor = UIColor.whiteColor()
             self.setupCellImage()
         })
     }

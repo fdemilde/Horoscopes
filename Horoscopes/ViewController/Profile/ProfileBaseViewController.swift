@@ -433,12 +433,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             if(indexPath.row == userPosts.count - 1){ // last row
                 loadDataForNextPage()
             }
-            
-//            if(Utilities.shouldBeTruncatedOnClient(post.message)){
-//                cell.fakeReadmoreLabel?.hidden = false
-//            } else {
-//                cell.fakeReadmoreLabel?.hidden = true
-//            }
             return cell
         default:
             let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell

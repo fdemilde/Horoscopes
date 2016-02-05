@@ -22,7 +22,6 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     var keyboardHeight: CGFloat = 0
     var placeholderLabel: UILabel = UILabel()
     var bottomSpaceConstraint: CGFloat = 0
-    var parentVC : NewsfeedViewController!
     var bgImageView : UIImageView!
     
     @IBOutlet weak var contentView: UIView!

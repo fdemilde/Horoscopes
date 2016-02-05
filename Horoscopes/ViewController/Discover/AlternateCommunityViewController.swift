@@ -163,10 +163,8 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
                 self.tableView.finishInfiniteScroll()
                 return
             } // last page dont need to request more
-//            self.currentPage++
             let label = "page = \(self.currentPage)"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commLoadmore, label: label)
-//            XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
             self.tableView.finishInfiniteScroll()
         }
     }
@@ -223,7 +221,6 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
             // setup community welcome view here
             let communityWelcomeView = CommunityWelcomeView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
             communityWelcomeView.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
-//            communityWelcomeView.delegate = self
             rootVC!.view.addSubview(communityWelcomeView)
             rootVC!.view.bringSubviewToFront(communityWelcomeView)
         }
