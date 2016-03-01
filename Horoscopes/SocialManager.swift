@@ -506,6 +506,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                                 if pickedSign != -1 {
                                     signSentToServer = Int(XAppDelegate.userSettings.horoscopeSign + 1)
                                 }
+                                
                                 self.sendUserUpdateSign(signSentToServer, completionHandler: { (result, error) -> Void in
                                     let errorCode = result?["error"] as! Int
                                     if errorCode == 0 {
@@ -544,7 +545,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func sendUserUpdateLocation(latlon : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
         postData.setObject(latlon, forKey: "latlon")
-        
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
@@ -556,9 +556,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
     }
     
-    func sendUserUpdateSign(sign : Int?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
-        
+    func sendUserUpdateSign(var sign : Int?, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
+        if sign == nil {
+            sign = 9
+        }
         postData.setObject("\(sign!)", forKey: "sign")
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
             if let error = error {

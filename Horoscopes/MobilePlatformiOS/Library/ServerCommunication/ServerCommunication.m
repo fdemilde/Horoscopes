@@ -377,6 +377,15 @@ BOOL hasInternet;
     }
     long currtime = (long)([[NSDate date] timeIntervalSince1970]);
     postData = [self fillParams:rpcName andUserCredsLoginRequired:loginRequired andPostData:postData andCurrentTime:currtime];
+    if(postData == nil){
+        NSLog(@"Post Data is nil, Login require but has no token!");
+        NSDictionary *res = [[NSDictionary alloc] init];
+        NSMutableDictionary* details = [NSMutableDictionary dictionary];
+        [details setValue:@"User has no token but token is required" forKey:NSLocalizedDescriptionKey];
+        NSError *error = [NSError errorWithDomain:@"world" code:81111 userInfo:details];
+        completeBlock(res, error);
+        return;
+    }
     [self doPost:postData withFilePath:filePath andCompleteBlock:^(NSData* data, NSError *error) {
         if(data == nil || error){
             [self doPost:postData withFilePath:filePath andCompleteBlock:^(NSData* data, NSError *error) {
@@ -452,6 +461,7 @@ BOOL hasInternet;
     if(loginRequired == REQUIRED){
         if([creds hasToken] == NO){
             DebugLog(@"ERROR. Login Require BUT user token not existed."); // TODO: must handle later
+            return nil;
         } else {
             [postData setObject:[creds getToken] forKey:@"token"];
         }

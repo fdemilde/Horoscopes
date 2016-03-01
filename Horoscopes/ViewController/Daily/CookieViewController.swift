@@ -261,55 +261,40 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
         } else {
             showLoginFormSheet()
         }
-        
-        
-        
-//            if((FBSDKAccessToken .currentAccessToken()) != nil){
-//                FBSDKGraphRequest(graphPath: "me", parameters: nil).startWithCompletionHandler({ (connection, result, error) -> Void in
-//                    if(error == nil){
-//                        // println("User information = \(result)")
-//                        let userFBID = result["id"] as! String
-//                        let postData = NSMutableDictionary()
-//                        postData.setObject(userFBID, forKey: "fb_uid")
-//                        let expiredTime = NSDate().timeIntervalSince1970 + 600
-//                        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
-//                            if(error != nil){
-//                                Utilities.hideHUD()
-//                                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-//                            } else {
-//                                let result = Utilities.parseNSDictionaryToDictionary(response!)
-//                                // println("fortune result = \(result)")
-//                                self.reloadFortuneData(result)
-//                            }
-//                        })
-//                    } else {
-//                        Utilities.hideHUD()
-//                        print("fetch Info Error = \(error)")
-//                        self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-//                    }
-//                })
-//            } else {
-//                self.checkPermissionAndGetFortune()
-//            }
     }
     
     func retrieveFortuneFromServer() {
         Utilities.showHUD()
-        let accessToken = FBSDKAccessToken.currentAccessToken()
-        let userFBID = accessToken.userID as String
-        let postData = NSMutableDictionary()
-        postData.setObject(userFBID, forKey: "fb_uid")
-        let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
-            if(error != nil){
+        if let accessToken = FBSDKAccessToken.currentAccessToken() {
+            if let userFBID = accessToken.userID {
+                let postData = NSMutableDictionary()
+                postData.setObject(userFBID, forKey: "fb_uid")
+                let expiredTime = NSDate().timeIntervalSince1970 + 600
+                CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+                    if(error != nil){
+                        Utilities.hideHUD()
+                        self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+                    } else {
+                        if let response = response {
+                            
+                            let result = Utilities.parseNSDictionaryToDictionary(response)
+                            // println("fortune result = \(result)")
+                            self.reloadFortuneData(result)
+                        } else {
+                            Utilities.hideHUD()
+                            self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+                        }
+                    }
+                })
+            } else {
                 Utilities.hideHUD()
                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-            } else {
-                let result = Utilities.parseNSDictionaryToDictionary(response!)
-                // println("fortune result = \(result)")
-                self.reloadFortuneData(result)
             }
-        })
+        } else {
+            Utilities.hideHUD()
+            showLoginFormSheet()
+        }
+        
     }
     
     func populateCurrentFortune(){
@@ -326,40 +311,46 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
             if(error != 0){
                 self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
                 Utilities.hideHUD()
+                return
             }
             //set data
-            var fortuneData = data["fortune"] as! Dictionary<String,AnyObject>
-            let fortuneDescription = fortuneData["fortune"] as? String
-            let fortunePermaLink = fortuneData["permalink"] as? String
-            let fortuneIdInt = fortuneData["fortune_id"] as? Int
-            if let fortuneDescription = fortuneDescription {
-                XAppDelegate.dataStore.currentFortuneDescription = "\"\(fortuneDescription)\""
-                self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
-            } else {
-                self.fortuneDescriptionLabel.text = ""
-            }
-            if let fortunePermaLink = fortunePermaLink {
-                self.shareUrl = fortunePermaLink
-            }
+            let fortuneData = data["fortune"] as? Dictionary<String,AnyObject>
             
-            if let fortuneId = fortuneIdInt {
-                self.fortuneId = fortuneId
-            }
-            
-            self.luckyNumberLabel.text = ""
-            let luckyNumbers = fortuneData["lucky_numbers"] as? [AnyObject]
-            if let luckyNumbers = luckyNumbers {
-                for number in luckyNumbers {
-                    if(self.luckyNumberLabel.text != ""){
-                        self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(" ")
-                    }
-                    self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(String(format:"%d", number as! Int))
+            if let fortuneData = fortuneData {
+                let fortuneDescription = fortuneData["fortune"] as? String
+                let fortunePermaLink = fortuneData["permalink"] as? String
+                let fortuneIdInt = fortuneData["fortune_id"] as? Int
+                if let fortuneDescription = fortuneDescription {
+                    XAppDelegate.dataStore.currentFortuneDescription = "\"\(fortuneDescription)\""
+                    self.fortuneDescriptionLabel.text = "\"\(fortuneDescription)\""
+                } else {
+                    self.fortuneDescriptionLabel.text = ""
                 }
-                XAppDelegate.dataStore.currentLuckyNumber = self.luckyNumberLabel.text!
+                if let fortunePermaLink = fortunePermaLink {
+                    self.shareUrl = fortunePermaLink
+                }
+                
+                if let fortuneId = fortuneIdInt {
+                    self.fortuneId = fortuneId
+                }
+                
+                self.luckyNumberLabel.text = ""
+                let luckyNumbers = fortuneData["lucky_numbers"] as? [AnyObject]
+                if let luckyNumbers = luckyNumbers {
+                    for number in luckyNumbers {
+                        if(self.luckyNumberLabel.text != ""){
+                            self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(" ")
+                        }
+                        self.luckyNumberLabel.text = self.luckyNumberLabel.text?.stringByAppendingString(String(format:"%d", number as! Int))
+                    }
+                    XAppDelegate.dataStore.currentLuckyNumber = self.luckyNumberLabel.text!
+                }
+                XAppDelegate.dataStore.lastCookieOpenDate = NSDate()
+                self.state = CookieViewState.CookieViewStateOpened
+                self.reloadState()
+            } else {
+                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
             }
-            XAppDelegate.dataStore.lastCookieOpenDate = NSDate()
-            self.state = CookieViewState.CookieViewStateOpened
-            self.reloadState()
             
             Utilities.hideHUD()
         })

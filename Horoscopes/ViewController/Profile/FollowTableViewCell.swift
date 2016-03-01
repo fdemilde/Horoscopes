@@ -30,6 +30,7 @@ class FollowTableViewCell: UITableViewCell {
         followButton.hidden = true
         followButton.addTarget(self, action: "tapFollowButton:", forControlEvents: .TouchUpInside)
         addSubview(followButton)
+        self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
     }
     

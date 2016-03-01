@@ -202,20 +202,35 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             
             // update server sign
             if((FBSDKAccessToken .currentAccessToken()) != nil){
-                XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
-                    let errorCode = result?["error"] as! Int
-                    if(errorCode == 0){
-                        XAppDelegate.socialManager.persistUserProfile(true, completionHandler: { (error) -> Void in
-                        })
-                    } else {
-                        print("Error code === \(errorCode)")
-                    }
-                    
-                })
+                if(XAppDelegate.socialManager.isLoggedInZwigglers()){
+                    sendUpdateSign(newSign)
+                } else {
+                    SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                        if let error = error {
+                            Utilities.showError(error, viewController: self)
+                        } else {
+                            self.sendUpdateSign(newSign)
+                        }
+                    })
+                }
             }
         }
         
         
+    }
+    
+    func sendUpdateSign(newSign : Int32){
+        
+        XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
+            let errorCode = result?["error"] as! Int
+            if(errorCode == 0){
+                XAppDelegate.socialManager.persistUserProfile(true, completionHandler: { (error) -> Void in
+                })
+            } else {
+                print("Error code === \(errorCode)")
+            }
+            
+        })
     }
     
     func saveNotificationSetting(){

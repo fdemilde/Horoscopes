@@ -319,9 +319,29 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         }
         
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
-            // server sign is 1 - 12
-            XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
-                
+//            // server sign is 1 - 12
+            if(XAppDelegate.socialManager.isLoggedInZwigglers()){
+                sendUpdateSign()
+            } else {
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                    if let error = error {
+                        Utilities.showError(error, viewController: self)
+                    } else {
+                        self.sendUpdateSign()
+                    }
+                })
+            }
+        }
+
+        self.dismissViewControllerAnimated(true, completion: nil)
+//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+    }
+        
+    func sendUpdateSign(){
+        XAppDelegate.socialManager.sendUserUpdateSign(Int(XAppDelegate.userSettings.horoscopeSign + 1), completionHandler: { (result, error) -> Void in
+            if let error = error {
+                print("Send update user gets error = \(error)")
+            } else {
                 let errorCode = result?["error"] as! Int
                 if(errorCode == 0){
                     XAppDelegate.socialManager.persistUserProfile(true, completionHandler: { (error) -> Void in
@@ -329,11 +349,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
                 } else {
                     print("Error code === \(errorCode)")
                 }
-            })
-        }
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
-//        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+            }
+        })
     }
     
     @IBAction func birthdayButtonTapped(sender: AnyObject) {
