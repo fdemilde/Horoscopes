@@ -178,7 +178,6 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 self.notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
             }
             XAppDelegate.lastGetAllNotificationsTs = NSDate().timeIntervalSince1970
-//            print("getNotificationAndReloadData == \(result)")
             dispatch_async(dispatch_get_main_queue(),{
                 Utilities.hideHUD()
                 

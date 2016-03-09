@@ -83,7 +83,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 cell.setupCell(SettingsType.ChangeDOB, title: "Birthday")
                 break
             case 3:
-                cell.setupCell(SettingsType.BugsReport, title: "Bugs Report")
+                cell.setupCell(SettingsType.BugsReport, title: "Report a problem")
                 break
             case 4:
                 cell.setupCell(SettingsType.Logout, title: "Logout")

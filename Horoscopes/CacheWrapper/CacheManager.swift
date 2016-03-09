@@ -17,27 +17,19 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             
             let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
-//            print("cacheGet key == \(key)")
             let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
-//            print("cacheGet cacheDict == \(cacheDict)")
-            // print("\(url) ignore Cache == \(ignoreCache)")
             if(!ignoreCache){
-//                print("ko co ignore cache!")
                 if var cacheDict = cacheDict{
                     cacheDict = cacheDict as! Dictionary<String, NSObject>
                     let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
                     let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
                     if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
-//                        print("Cache valid!! return == \(cacheValue)")
                         completionHandler(result: cacheValue, error: nil) // return cache
                         return
                     }
-//                    print("Cache NOT valid!! return")
                     completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
             }
-//            print("\(url) || postData = \(postData) SEND REQUEST TO SERVER")
-//            Utilities.showHUD()
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {
                     completionHandler(result: nil, error: error)
@@ -55,7 +47,6 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
                     }
                     completionHandler(result: response, error: error)
                 }
-//                Utilities.hideHUD()
             }
         }
     }
@@ -117,8 +108,6 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
     
     class func cacheGetNotification(completionHandler: (result: [NotificationObject]?) -> Void){
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            
-    //        let NOTIFICATION_CACHE_KEY = "NOTIFICATION_CACHE_KEY"
             var lastSince = NSUserDefaults.standardUserDefaults().integerForKey(NOTIFICATION_SINCE_KEY)
             if lastSince == 0 { lastSince = 1 }
             var notificationDict = CacheManager.loadNotificationData()

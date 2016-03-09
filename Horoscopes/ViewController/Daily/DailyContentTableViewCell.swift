@@ -73,6 +73,10 @@ class DailyContentTableViewCell: UITableViewCell {
     // MARK: - Action
     
     @IBAction func share(sender: UIButton) {
+        let df = NSDateFormatter()
+        df.dateStyle = .FullStyle
+        let date = NSDate(timeIntervalSince1970: timeTag)
+        let dateString = df.stringFromDate(date)
         delegate.didShare(textView.text, timeTag: timeTag, shareUrl: self.shareUrl)
     }
     

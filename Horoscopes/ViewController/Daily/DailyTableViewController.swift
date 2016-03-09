@@ -33,6 +33,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         tableView.backgroundView = UIImageView(image: backgroundImage)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
         refreshView()
         // if v1 update to v2, show login VC with previous selected sign
         let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)

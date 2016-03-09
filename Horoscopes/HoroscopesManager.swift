@@ -79,7 +79,6 @@ class HoroscopesManager : NSObject {
     
     func getAllHoroscopes(refreshOnly : Bool) {
         Utilities.showHUD()
-        
         let offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
         let offsetString = String(format: "%d",offset)
         let postData = NSMutableDictionary()
@@ -127,7 +126,7 @@ class HoroscopesManager : NSObject {
             postData.setObject(iOSVersion, forKey: "device_systemVersion")
             postData.setObject(devideType, forKey: "device_model")
             let expiredTime = NSDate().timeIntervalSince1970 + 600
-            CacheManager.cacheGet(GET_DATA_METHOD, postData: nil, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (result, error) -> Void in
+            CacheManager.cacheGet(GET_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
                     self.showErrorDialog()
@@ -238,14 +237,16 @@ class HoroscopesManager : NSObject {
         var todayReadings = Dictionary<String, String>()
         var tomorrowReadings = Dictionary<String, String>()
         var horoSigns = self.horoscopesSigns
-//        print("self.data == \(self.data)")
         todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
         tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
         for var index = 1; index <= 12; index++ {
             let indexString = "\(index)"
             let todayPermaLink = self.data["today"]!["permalinks"]![indexString] as! String
             let tomorrowPermaLink = self.data["tomorrow"]!["permalinks"]![indexString] as! String
+            //
             horoSigns[index-1].horoscopes.removeAllObjects()
+            horoSigns[index-1].permaLinks.removeAllObjects()
+            
             horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
             horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
             horoSigns[index-1].permaLinks.addObject(String(format: "%@", todayPermaLink))

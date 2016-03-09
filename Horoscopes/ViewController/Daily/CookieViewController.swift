@@ -266,30 +266,27 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     func retrieveFortuneFromServer() {
         Utilities.showHUD()
         if let accessToken = FBSDKAccessToken.currentAccessToken() {
+            let postData = NSMutableDictionary()
             if let userFBID = accessToken.userID {
-                let postData = NSMutableDictionary()
                 postData.setObject(userFBID, forKey: "fb_uid")
-                let expiredTime = NSDate().timeIntervalSince1970 + 600
-                CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
-                    if(error != nil){
+            }
+            
+            let expiredTime = NSDate().timeIntervalSince1970 + 600
+            CacheManager.cacheGet(GET_FORTUNE_METHOD, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+                if(error != nil){
+                    Utilities.hideHUD()
+                    self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
+                } else {
+                    if let response = response {
+                        
+                        let result = Utilities.parseNSDictionaryToDictionary(response)
+                        self.reloadFortuneData(result)
+                    } else {
                         Utilities.hideHUD()
                         self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-                    } else {
-                        if let response = response {
-                            
-                            let result = Utilities.parseNSDictionaryToDictionary(response)
-                            // println("fortune result = \(result)")
-                            self.reloadFortuneData(result)
-                        } else {
-                            Utilities.hideHUD()
-                            self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-                        }
                     }
-                })
-            } else {
-                Utilities.hideHUD()
-                self.showOnlyDescription("There was an error that occurred during fetching the data. Please try again later!")
-            }
+                }
+            })
         } else {
             Utilities.hideHUD()
             showLoginFormSheet()
