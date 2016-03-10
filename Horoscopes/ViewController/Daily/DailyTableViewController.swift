@@ -186,7 +186,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
     
     func updateCollectedData() {
-        if(XAppDelegate.horoscopesManager.data.count == 0){
+        if(XAppDelegate.horoscopesManager.data.count == 0 || XAppDelegate.horoscopesManager.hasNoData == true){ // has no data == true mean we are using hardcoded data to show error
             return
         }
         if shouldCollectData {

@@ -13,6 +13,7 @@ class HoroscopesManager : NSObject {
     var horoscopesSigns = [Horoscope]()
     var data = Dictionary<String,AnyObject>()
     static let sharedInstance = HoroscopesManager()
+    var hasNoData = false
     
     override init(){
         
@@ -83,7 +84,6 @@ class HoroscopesManager : NSObject {
         let offsetString = String(format: "%d",offset)
         let postData = NSMutableDictionary()
         if(refreshOnly == false){
-            
             var mccString = "123"
             var mncString = "12"
             let netInfo = CTTelephonyNetworkInfo()
@@ -111,7 +111,7 @@ class HoroscopesManager : NSObject {
             
             let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
             
-            let sign = XAppDelegate.userSettings.horoscopeSign
+            let sign = XAppDelegate.userSettings.horoscopeSign + 1
             let signString = String(format: "%d",sign)
             
             // sc.sendRequest need an NSMutableDictionary to process
@@ -129,57 +129,54 @@ class HoroscopesManager : NSObject {
             CacheManager.cacheGet(GET_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
-                    self.showErrorDialog()
+                    self.setupNodata()
                 } else {
                     if let result = result {
-//                        print("result == \(result)")
                         if let dataError = result["error"] {
                             let dataErrorAsInt = dataError as! Int
                             if(dataErrorAsInt != 0){ // data error occured
-                                self.showErrorDialog()
+                                self.setupNodata()
                             } else {
                                 self.data = Utilities.parseNSDictionaryToDictionary(result)
                                 if(self.data.count != 0){ self.saveData() }
-                                
                                 Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+                                return
                             }
                         } else {
-                            self.showErrorDialog()
+                            self.setupNodata()
                         }
                     } else {
-                        self.showErrorDialog()
+                        self.setupNodata()
                     }
                 }
+                Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
             })
         } else {
+            let expiredTime = NSDate().timeIntervalSince1970 + 600
             postData.setObject(offsetString, forKey: "tz")
-            XAppDelegate.mobilePlatform.sc.sendRequest(REFRESH_DATA_METHOD, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+            CacheManager.cacheGet(REFRESH_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+                Utilities.hideHUD()
                 if(error != nil){
-                    Utilities.hideHUD()
-                    self.showErrorDialog()
+                    self.setupNodata()
                 } else {
-                    if(error != nil){
-                        self.showErrorDialog()
-                    } else {
-                        if let result = response {
-                            //                        print("result == \(result)")
-                            if let dataError = result["error"] {
-                                let dataErrorAsInt = dataError as! Int
-                                if(dataErrorAsInt != 0){ // data error occured
-                                    self.showErrorDialog()
-                                } else {
-                                    self.data = Utilities.parseNSDictionaryToDictionary(result)
-                                    self.saveData()
-                                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
-                                }
+                    if let result = response {
+                        if let dataError = result["error"] {
+                            let dataErrorAsInt = dataError as! Int
+                            if(dataErrorAsInt != 0){ // data error occured 
+                                self.setupNodata()
                             } else {
-                                self.showErrorDialog()
+                                self.data = Utilities.parseNSDictionaryToDictionary(result)
+                                self.saveData()
+                                Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object:nil)
+                                return
                             }
                         } else {
-                            self.showErrorDialog()
+                            self.setupNodata()
                         }
+                    } else {
+                        self.setupNodata()
                     }
-                    Utilities.hideHUD()
+                    Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
                 }
             })
         }
@@ -234,7 +231,7 @@ class HoroscopesManager : NSObject {
     // MARK: Helpers
     
     func saveData(){
-        
+        hasNoData = false;
         var todayReadings = Dictionary<String, String>()
         var tomorrowReadings = Dictionary<String, String>()
         var horoSigns = self.horoscopesSigns
@@ -252,6 +249,27 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
             horoSigns[index-1].permaLinks.addObject(String(format: "%@", todayPermaLink))
             horoSigns[index-1].permaLinks.addObject(String(format: "%@", tomorrowPermaLink))
+        }
+    }
+    
+    func setupNodata(){
+        var horoSigns = self.horoscopesSigns
+        hasNoData = true
+        var todayTimeTagDict = Dictionary<String, String>()
+        todayTimeTagDict["time_tag"] = String(format:"%f", NSDate().timeIntervalSince1970)
+        self.data["today"] = todayTimeTagDict
+        
+        var tomorrowTimeTagDict = Dictionary<String, String>()
+        tomorrowTimeTagDict["time_tag"] = String(format:"%f", NSDate().timeIntervalSince1970 + 60*60*24)
+        self.data["tomorrow"] = tomorrowTimeTagDict
+        for var index = 1; index <= 12; index++ {
+            horoSigns[index-1].horoscopes.removeAllObjects()
+            horoSigns[index-1].permaLinks.removeAllObjects()
+            
+            horoSigns[index-1].horoscopes.addObject("Network Error, please check your internet and pull down to refresh.")
+            horoSigns[index-1].horoscopes.addObject("")
+            horoSigns[index-1].permaLinks.addObject("")
+            horoSigns[index-1].permaLinks.addObject("")
         }
     }
     
@@ -273,6 +291,7 @@ class HoroscopesManager : NSObject {
     }
     
     func getSignIndexOfSignName(name : String) -> Int{
+        
         for index in 0...11 {
             if(name == self.horoscopesSigns[index].sign){
                 return index
