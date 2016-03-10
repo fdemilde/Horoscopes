@@ -19,6 +19,7 @@ class DataStore : NSObject{
     var lastCookieOpenDate : NSDate!
     var currentFortuneDescription = ""
     var currentLuckyNumber = ""
+    var currentCookieShareLink = ""
     
     static let sharedInstance = DataStore()
     

@@ -175,6 +175,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
             lastOpenComp.hour = 0
             lastOpenComp.minute = 0
             lastOpenComp.second = 1
+            
             if(fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24))) >= 1) {
                 return true
             }
@@ -267,8 +268,10 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
         Utilities.showHUD()
         if let accessToken = FBSDKAccessToken.currentAccessToken() {
             let postData = NSMutableDictionary()
-            if let userFBID = accessToken.userID {
-                postData.setObject(userFBID, forKey: "fb_uid")
+            if(!XAppDelegate.socialManager.isLoggedInZwigglers()){ // if user doesn't have zwiggler token, use facebook id
+                if let userFBID = accessToken.userID {
+                    postData.setObject(userFBID, forKey: "fb_uid")
+                }
             }
             
             let expiredTime = NSDate().timeIntervalSince1970 + 600
@@ -298,6 +301,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
         self.fortuneDescriptionLabel.text = XAppDelegate.dataStore.currentFortuneDescription
         self.luckyNumberLabel.text = XAppDelegate.dataStore.currentLuckyNumber
         self.state = CookieViewState.CookieViewStateOpened
+        self.shareUrl = XAppDelegate.dataStore.currentCookieShareLink
         self.reloadState()
     }
     
@@ -325,6 +329,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
                 }
                 if let fortunePermaLink = fortunePermaLink {
                     self.shareUrl = fortunePermaLink
+                    XAppDelegate.dataStore.currentCookieShareLink = fortunePermaLink
                 }
                 
                 if let fortuneId = fortuneIdInt {
