@@ -86,15 +86,17 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             return 110
         default:
             var description = ""
-            if indexPath.row == 1 {
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
-                    description = horoscopeDescription
+            if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
+                if indexPath.row == 1 {
+                    if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
+                        description = horoscopeDescription
+                    }
+                } else {
+                    if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
+                        description = horoscopeDescription
+                    }
+                    
                 }
-            } else {
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
-                    description = horoscopeDescription
-                }
-                
             }
             let cellBodyHeight = self.calculateBodyHeight(nil, text: description)
             return CELL_HEADER_HEIGHT + cellBodyHeight + CELL_FOOTER_HEIGHT
@@ -122,23 +124,32 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             var description = ""
             var shareUrl = ""
             if indexPath.row == 1 {
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
-                    description = horoscopeDescription
+                
+                if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
+                    if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[0] as? String {
+                        description = horoscopeDescription
+                    }
+                    if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[0] as? String {
+                        shareUrl = permaLink
+                    }
                 }
-                if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[0] as? String {
-                    shareUrl = permaLink
-                }
+                
                 cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl, controller: self)
                 
             } else {
-                if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
-                    description = horoscopeDescription
+                
+                if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
+                    if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
+                        description = horoscopeDescription
+                    }
+                    if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
+                        shareUrl = permaLink
+                    }
                 }
-                if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
-                    shareUrl = permaLink
-                }
+                
                 cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
             }
+            
             cell.textView.text = description
             return cell
         }

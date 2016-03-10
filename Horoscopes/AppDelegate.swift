@@ -384,13 +384,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                             
                         } else {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let userProfile = result![0]
-                            let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
-                            controller.userProfile = userProfile
-//                            controller.isPushedFromNotification = true
-                            if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
-                                profileViewController.navigationController?.pushViewController(controller, animated: true)
+                            if let result = result {
+                                let userProfile = result[0]
+                                let controller = storyboard.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                                controller.userProfile = userProfile
+                                //                            controller.isPushedFromNotification = true
+                                if let profileViewController = Utilities.getViewController(ProfileBaseViewController.classForCoder()) as? ProfileBaseViewController {
+                                    profileViewController.navigationController?.pushViewController(controller, animated: true)
+                                }
                             }
+                            
                         }
                     })
                 })

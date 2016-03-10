@@ -372,7 +372,8 @@ BOOL hasInternet;
         NSMutableDictionary* details = [NSMutableDictionary dictionary];
         [details setValue:@"No internet connection" forKey:NSLocalizedDescriptionKey];
         NSError *error = [NSError errorWithDomain:@"world" code:8008135 userInfo:details];
-        completeBlock(nil, error);
+        NSDictionary *emptyResponse = [[NSDictionary alloc] init];
+        completeBlock(emptyResponse, error);
         return;
     }
     long currtime = (long)([[NSDate date] timeIntervalSince1970]);

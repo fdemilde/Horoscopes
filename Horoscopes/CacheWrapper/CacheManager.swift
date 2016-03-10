@@ -39,10 +39,11 @@ static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
                         if(forceExpiredKey != "") { CacheManager.cacheExpire(forceExpiredKey) }
                         
                     }
-                    
-                    if let errorRes = response["error"]{
-                        if(errorRes as! Int == 0){
-                            CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                    if let response = response {
+                        if let errorRes = response["error"]{
+                            if(errorRes as? Int == 0){
+                                CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                            }
                         }
                     }
                     completionHandler(result: response, error: error)

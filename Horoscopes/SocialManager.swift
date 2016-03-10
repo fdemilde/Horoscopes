@@ -145,20 +145,24 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 print("Error when get sendHeart = \(error)")
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response)
-                let errorCode = result["error"] as! Int
-                if(errorCode != 0){
-                    print("Error code = \(errorCode)")
-                    Utilities.showError(error)
-                } else { // no error
-                    let success = result["success"] as! Int
-                    if success == 1 {
-//                        self.sendHeartServerNotification(receiverId, postId: postId)
-//                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
-                        NSUserDefaults.standardUserDefaults().setBool(true, forKey: postId)
-                    } else {
-                        print("Post unsuccessful")
+                if let errorCode = result["error"] as? Int {
+                    if(errorCode != 0){
+                        print("Error code = \(errorCode)")
+                        Utilities.showError(error)
+                    } else { // no error
+                        if let success = result["success"] as? Int {
+                            if success == 1 {
+                                //                        self.sendHeartServerNotification(receiverId, postId: postId)
+                                //                        Utilities.postNotification(NOTIFICATION_SEND_HEART_FINISHED, object: postId)
+                                NSUserDefaults.standardUserDefaults().setBool(true, forKey: postId)
+                            } else {
+                                print("Post unsuccessful")
+                            }
+                        }
+                        
                     }
                 }
+                
             }
         })
     }
@@ -337,8 +341,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                if(response != nil){
-                    let json = Utilities.parseNSDictionaryToDictionary(response!)
+                if let response = response {
+                    let json = Utilities.parseNSDictionaryToDictionary(response)
                     var result = [UserProfile]()
                     for userId in usersIdString.componentsSeparatedByString(",") {
                         if let users = json["profiles"] as? Dictionary<String, AnyObject> {
@@ -545,11 +549,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func sendUserUpdateLocation(latlon : String, completionHandler: (result: [String: AnyObject]?, error: NSError?) -> Void){
         let postData = NSMutableDictionary()
         postData.setObject(latlon, forKey: "latlon")
-        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (result, error) -> Void in
+        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andCompleteBlock: { (response, error) -> Void in
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
-                let result = Utilities.parseNSDictionaryToDictionary(result)
+                let result = Utilities.parseNSDictionaryToDictionary(response)
                 completionHandler(result: result, error: nil)
             }
         })
@@ -578,17 +582,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func registerServerNotificationToken(token : String){
         let postData = NSMutableDictionary()
         postData.setObject(token, forKey: "device_token")
-//        print("registerServerNotificationToken == \(token)")
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SERVER_NOTIFICATION_TOKEN, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
-//            print("registerServerNotificationToken == \(response)")
-            if let success = response["success"] as? Int {
-                if(success == 1){
-                    //                print("registerServerNotificationToken successful")
-                } else {
-                    //                print("registerServerNotificationToken failed")
-                }
-            }
-            
         })
     }
     

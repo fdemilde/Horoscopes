@@ -139,7 +139,8 @@ class HoroscopesManager : NSObject {
                                 self.showErrorDialog()
                             } else {
                                 self.data = Utilities.parseNSDictionaryToDictionary(result)
-                                self.saveData()
+                                if(self.data.count != 0){ self.saveData() }
+                                
                                 Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
                             }
                         } else {

@@ -312,14 +312,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         if(self.birthdayStringInServerFormat != nil){
             birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
             XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(self.birthdayStringInServerFormat, completionHandler: { (responseDict, error) -> Void in
-                if(error == nil){
-//                    println("set birthday success! responseDict = \(responseDict)")
-                }
             })
         }
         
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
-//            // server sign is 1 - 12
+            // server sign is 1 - 12
             if(XAppDelegate.socialManager.isLoggedInZwigglers()){
                 sendUpdateSign()
             } else {
