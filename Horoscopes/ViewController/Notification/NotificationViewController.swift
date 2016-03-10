@@ -47,13 +47,14 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
         }
         
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
         let label = "no_notif = \(notifArray.count)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifOpen, label: label)
         if(XAppDelegate.badge > 0){
             let retrieveLabel = "no_retrieved = \(XAppDelegate.badge)"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifRetrieved, label: retrieveLabel)
         }
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
         let time = NSDate().timeIntervalSince1970 - XAppDelegate.lastGetAllNotificationsTs

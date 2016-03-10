@@ -17,6 +17,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     @IBOutlet weak var postTitle: UILabel!
     @IBOutlet weak var postTitleBackgroundView: UIView!
     
+    @IBOutlet weak var postButton: UIButton!
     var type: String?
     var placeholder: String?
     var keyboardHeight: CGFloat = 0
@@ -80,6 +81,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         let createPost = { () -> Void in
             Utilities.showHUD(self.view)
             let postToFacebook = self.switchButton.on
+            self.postButton.enabled = false
             var trackerLabel = ""
             if let type = self.type {
                  trackerLabel += "type = \(type), strlen = \(self.textView.text.characters.count), post_to_facebook = \(postToFacebook)"
@@ -88,6 +90,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
             }
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postSend, label: trackerLabel)
             SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, postToFacebook: postToFacebook, completionHandler: { (result, error) -> Void in
+                self.postButton.enabled = true
                 if let error = error {
                     Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Error", message: "Your post could not be created. Please try again later.", error: error)

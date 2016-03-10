@@ -2366,6 +2366,7 @@ on news things</string>
                         <outlet property="contentView" destination="Pru-Qu-tbF" id="Vp3-bK-c3g"/>
                         <outlet property="contentViewBottomSpaceConstraint" destination="6n9-Zc-T7m" id="NsD-Nx-K2i"/>
                         <outlet property="headerView" destination="1Yi-Fl-oxH" id="O7i-A6-43P"/>
+                        <outlet property="postButton" destination="kFX-VE-UTq" id="lhG-xU-uQ8"/>
                         <outlet property="postTitle" destination="gRw-dl-9LQ" id="dRj-Nc-0GT"/>
                         <outlet property="postTitleBackgroundView" destination="wTO-46-yPA" id="wbp-TM-mAX"/>
                         <outlet property="switchButton" destination="7w9-Qf-kqx" id="T0R-bR-K7h"/>

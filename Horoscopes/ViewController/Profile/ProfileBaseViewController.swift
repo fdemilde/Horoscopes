@@ -504,7 +504,6 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func didChooseUser(profile: UserProfile) {
-        print("didChooseUser didChooseUser")
         let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile
         presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
