@@ -129,6 +129,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
             let collectDate = item.collectedDate
             let collectDateString = self.dateFormatter().stringFromDate(collectDate)
             let dateString = self.dateFormatter().stringFromDate(date)
+            
             if(dateString == collectDateString){ return item }
         }
         return CollectedItem()

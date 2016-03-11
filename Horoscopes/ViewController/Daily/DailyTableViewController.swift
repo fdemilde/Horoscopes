@@ -175,11 +175,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     // MARK: - Data handler
     
     func refreshView() {
+        print("refresh refresh")
         if daysPassed() >= 1 || collectedHoroscope.collectedData.count == 0 {
             shouldCollectData = true
             shouldReloadData = true
         }
         if shouldReloadData {
+            print("day passed!! reload view")
             shouldReloadData = false
             XAppDelegate.horoscopesManager.getAllHoroscopes(false)
         }
@@ -191,13 +193,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         }
         if shouldCollectData {
             shouldCollectData = false
-            let currentCal = NSCalendar.currentCalendar()
+            
             let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-            let todayComp = currentCal.components(components, fromDate: NSDate())
+            let todayComp = defaultCalendar.components(components, fromDate: NSDate())
+            todayComp.calendar = defaultCalendar
             todayComp.hour = 1
             todayComp.minute = 1
             todayComp.second = 1
-            todayComp.calendar = currentCal
             collectedHoroscope.mySetLastDateOpenApp(todayComp.date)
             saveCollectedHoroscopeData()
         } else {
@@ -221,10 +223,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
         collectedHoroscope.collectedData.insertObject(item, atIndex: 0)
         collectedHoroscope.saveCollectedData()
-//        if let firstCell = firstCell{
-//            firstCell.collectTextLabel.text = String(format:"%g",collectedHoro.getScore()*100)
-//            firstCell.updateAndAnimateCollectHoroscope()
-//        }
         
     }
     
@@ -243,19 +241,20 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func daysPassed() -> Double {
         collectedHoroscope = CollectedHoroscope()
-        let currentCal = NSCalendar.currentCalendar()
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
         
-        let todayComp = currentCal.components(components, fromDate: NSDate())
-        todayComp.calendar = currentCal
-        
-        let lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: collectedHoroscope.lastDateOpenApp)
-        lastOpenComp.calendar = currentCal
+        let todayComp = defaultCalendar.components(components, fromDate: NSDate())
+        todayComp.calendar = defaultCalendar
         
         todayComp.hour = 1
         todayComp.minute = 1
         todayComp.second = 1
         
+        let lastOpenComp = defaultCalendar.components(components, fromDate: collectedHoroscope.lastDateOpenApp)
+        lastOpenComp.calendar = defaultCalendar
+        lastOpenComp.hour = 1
+        lastOpenComp.minute = 1
+        lastOpenComp.second = 1
         return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
     }
     

@@ -221,14 +221,14 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             self.signNameLabel.alpha = 1
             UILabel.commitAnimations()
             if !autoRoll {
-                let newDateComponents = NSCalendar.currentCalendar().components([.Month, .Day], fromDate: newValue.startDate)
+                let newDateComponents = defaultCalendar.components([.Month, .Day], fromDate: newValue.startDate)
                 if let appDelegateBirthday = XAppDelegate.userSettings.birthday {
-                    let oldDateComponent = NSCalendar.currentCalendar().components([.Year], fromDate: appDelegateBirthday)
+                    let oldDateComponent = defaultCalendar.components([.Year], fromDate: appDelegateBirthday)
                     newDateComponents.year = oldDateComponent.year
                 } else {
                     newDateComponents.year = defaultYear
                 }
-                let newDate = NSCalendar.currentCalendar().dateFromComponents(newDateComponents)
+                let newDate = defaultCalendar.dateFromComponents(newDateComponents)
                 XAppDelegate.userSettings.birthday = newDate
                 initialBirthday()
             }
@@ -283,8 +283,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func getNotificationFiredTime() -> NSDateComponents{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        
-//        let date = Utilities.getDateFromDateString(NOTIFICATION_SETTING_DEFAULT_TIME, format: NOTIFICATION_SETTING_DATE_FORMAT)
+        // use local time to fire notification
         let timeInterval = NSDate().timeIntervalSince1970 - 60 // set it 1 minute ealier to avoid firing immediately
         let date = NSDate(timeIntervalSince1970: timeInterval)
         return NSCalendar.currentCalendar().components(components, fromDate: date)
@@ -380,9 +379,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             if(XAppDelegate.userSettings.horoscopeSign != -1){
                 let signIndex = Int(XAppDelegate.userSettings.horoscopeSign)
                 let sign = XAppDelegate.horoscopesManager.horoscopesSigns[signIndex]
-                let dateComponent = NSCalendar.currentCalendar().components([.Month, .Day], fromDate: sign.startDate)
+                let dateComponent = defaultCalendar.components([.Month, .Day], fromDate: sign.startDate)
                 dateComponent.year = defaultYear
-                let date = NSCalendar.currentCalendar().dateFromComponents(dateComponent)
+                let date = defaultCalendar.dateFromComponents(dateComponent)
                 dateString = Utilities.getBirthdayString(date!)
             } else {
                 dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
@@ -435,19 +434,23 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
+        
         yearString = yearString == "" ? String(defaultYear) : yearString
         let dateString = String(format:"%@/%@/%@",dayString,monthString, yearString)
         let label = "dob = " + dateString
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobDobChange, label: label)
         let selectedDate = dateFormatter.dateFromString(dateString)
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
+        
+        
         self.birthday = selectedDate
         self.finishedSelectingBirthday(dateStringInNumberFormat)
     }
     
     func getDateStringInNumberFormat(date : NSDate) -> String{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        let comp = defaultCalendar.components(components, fromDate: date)
         let result = String(format:"%d/%02d/%04d", comp.day, comp.month, comp.year)
         return result
     }

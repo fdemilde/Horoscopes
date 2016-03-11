@@ -146,12 +146,13 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
         var dateArray = [Int]()
         let dateFormatter: NSDateFormatter = NSDateFormatter()
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         dateFormatter.dateFormat = "M"
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         dateFormatter.dateFormat = "d"
         dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
         
-        let components = NSCalendar.currentCalendar().components(.Year, fromDate: date)
+        let components = defaultCalendar.components(.Year, fromDate: date)
         let year = components.year
         var yearIndex = 0
         for (index, element) in yearStringArray.enumerate() {

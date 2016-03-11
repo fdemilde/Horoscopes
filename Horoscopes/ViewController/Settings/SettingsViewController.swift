@@ -289,7 +289,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         let array = UIApplication.sharedApplication().scheduledLocalNotifications
         if let array = array {
             if(array.count > 0){ // have notification setup already
-                notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
+                notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
                 lastSaveNotificationFireTime = notificationFireTime
             } else {
                 notificationFireTime = NOTIFICATION_SETTING_DEFAULT_TIME
@@ -303,7 +303,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         if(XAppDelegate.userSettings.notifyOfNewHoroscope == false){
             XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }
-        notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
+        notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
         lastSaveNotificationFireTime = notificationFireTime
         self.saveNotificationSetting()
         tableView.reloadData()
@@ -313,7 +313,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func getSelectedTime() -> NSDateComponents{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
+        let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
         
         return NSCalendar.currentCalendar().components(components, fromDate: date)
     }
@@ -347,7 +347,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func getDateStringInNumberFormat(date : NSDate) -> String{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let comp = NSCalendar.currentCalendar().components(components, fromDate: date)
+        let comp = defaultCalendar.components(components, fromDate: date)
         let result = String(format:"%d/%02d", comp.day, comp.month)
         return result
     }

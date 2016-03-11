@@ -161,17 +161,16 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
     
     func isNewDay() -> Bool {
         if let lastDateOpen = XAppDelegate.dataStore.lastCookieOpenDate {
-            let currentCal = NSCalendar.currentCalendar()
             let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
             
-            let todayComp = currentCal.components(components, fromDate: NSDate())
-            todayComp.calendar = currentCal
+            let todayComp = defaultCalendar.components(components, fromDate: NSDate())
+            todayComp.calendar = defaultCalendar
             todayComp.hour = 0
             todayComp.minute = 0
             todayComp.second = 1
             
-            let lastOpenComp = NSCalendar.currentCalendar().components(components, fromDate: lastDateOpen)
-            lastOpenComp.calendar = currentCal
+            let lastOpenComp = defaultCalendar.components(components, fromDate: lastDateOpen)
+            lastOpenComp.calendar = defaultCalendar
             lastOpenComp.hour = 0
             lastOpenComp.minute = 0
             lastOpenComp.second = 1

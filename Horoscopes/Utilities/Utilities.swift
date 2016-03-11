@@ -168,9 +168,11 @@ class Utilities {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMMM d"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         
         let dayOfMonthFormatter = NSDateFormatter()
         dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         dayOfMonthFormatter.dateFormat = "d"
         var dateString = dateFormatter.stringFromDate(date)
         let dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(date)
@@ -182,10 +184,10 @@ class Utilities {
         dateString = dateString.stringByAppendingString(suffix)
         var year = defaultYear
         if #available(iOS 8.0, *) {
-            let yearComponent = NSCalendar.currentCalendar().component(NSCalendarUnit.Year, fromDate: date)
+            let yearComponent = defaultCalendar.component(NSCalendarUnit.Year, fromDate: date)
             year = yearComponent
         } else {
-            let components = NSCalendar.currentCalendar().components([.Year], fromDate: date)
+            let components = defaultCalendar.components([.Year], fromDate: date)
             year = components.year
         }
         if year != defaultYear {
@@ -199,6 +201,7 @@ class Utilities {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         let defaultDate = dateFormatter.dateFromString("25/11/\(defaultYear)")!
         return defaultDate
     }
@@ -353,7 +356,6 @@ class Utilities {
     // MARK: Time format
     class func getTimeAgoString(ts : Int) -> String {
         let timeAgoDate = NSDate(timeIntervalSince1970: NSTimeInterval(ts))
-//        let facebookTimeAgoString = timeAgoDate.formattedAsTimeAgo()
         return timeAgoDate.timeAgoSinceNow()
     }
     
@@ -361,22 +363,31 @@ class Utilities {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
     
-    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
+    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String, useLocalTimezone : Bool? = false) -> String{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        if((useLocalTimezone == nil) || useLocalTimezone == false){
+            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
+        }
+        
         let date = NSDate(timeIntervalSince1970:ts)
         let dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
     }
     
-    class func getDateFromDateString(dateString : String, format : String) -> NSDate {
+    class func getDateFromDateString(dateString : String, format : String, useLocalTimezone : Bool? = false) -> NSDate {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        if((useLocalTimezone == nil) || useLocalTimezone == false){
+            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
+        }
+        
         return dateFormatter.dateFromString(dateString)!
     }
     

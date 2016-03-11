@@ -247,7 +247,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject("\(postIds)", forKey: "post_id")
         let expiredTime = NSDate().timeIntervalSince1970 + 600
-        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
+        CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
 //            print("response response == \(response)")
             if let error = error {
                 completionHandler(result: nil, error: error)

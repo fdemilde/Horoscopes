@@ -48,6 +48,7 @@
 }
 
 - (double)getScore{
+    
     int totalDays = round([self.lastDateOpenApp timeIntervalSinceDate:self.dateInstalledApp] / (3600*24))+1;
     double result = [self.collectedData count] / (double)totalDays;
     if(result >= 1) return 1;
@@ -58,7 +59,8 @@
     [self.collectedData removeAllObjects];
     [self saveCollectedData];
     NSDate *date = [NSDate date];
-    NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSUIntegerMax fromDate:date];
+    NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+    NSDateComponents *comp = [calendar components:NSUIntegerMax fromDate:date];
     comp.hour = comp.minute = comp.second = 1;
     [[NSUserDefaults standardUserDefaults] setObject:comp.date forKey:kDateInstalledApp];
     [[NSUserDefaults standardUserDefaults] setObject:comp.date forKey:kLastDateOpenApp];
@@ -70,7 +72,8 @@
         NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:kDateInstalledApp];
         if(!date){
             date = [NSDate date];
-            NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSUIntegerMax fromDate:date];
+            NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+            NSDateComponents *comp = [calendar components:NSUIntegerMax fromDate:date];
             comp.hour = comp.minute = comp.second = 1;
             [[NSUserDefaults standardUserDefaults] setObject:comp.date forKey:kDateInstalledApp];
         }
@@ -84,7 +87,8 @@
         NSDate *date = [[NSUserDefaults standardUserDefaults] objectForKey:kLastDateOpenApp];
         if(!date){
             date = [NSDate date];
-            NSDateComponents *comp = [[NSCalendar currentCalendar] components:NSUIntegerMax fromDate:date];
+            NSCalendar *calendar = [NSCalendar calendarWithIdentifier:NSCalendarIdentifierGregorian];
+            NSDateComponents *comp = [calendar components:NSUIntegerMax fromDate:date];
             comp.hour = comp.minute = comp.second = 1;
             [[NSUserDefaults standardUserDefaults] setObject:comp.date forKey:kLastDateOpenApp];
         }

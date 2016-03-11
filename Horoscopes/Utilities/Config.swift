@@ -10,10 +10,16 @@ import Foundation
 
 let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
 
+
+var defaultCalendar : NSCalendar {
+    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+    return calendar
+}
+
 let defaultYear = 1900
 var yearArray : [Int] {
     var result = [Int]()
-    let calendar = NSCalendar.currentCalendar()
+    let calendar = defaultCalendar
     var nineteenYearsToNow = 1925
     var thirteenYearsToNow = 2002
     if #available(iOS 8.0, *) {
@@ -126,6 +132,9 @@ let LOCATION_IOS_KEY = "AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY"
 let GOOGLE_LOCATION_API = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBFMxh4ame-g9U93NBKSF1pgIsi2UkinpY&latlng="
 let LAST_LOCATION_DICT_KEY = "LAST_LOCATION_DICT_KEY"
 let LAST_LOCATION_EXPIRE_TIME_KEY = "LAST_LOCATION_EXPIRE_TIME_KEY"
+
+// Timezone offset = -8
+let TIMEZONE_OFFSET = -28800
 
 // MARK: post type
 // postType: image name, label, server type

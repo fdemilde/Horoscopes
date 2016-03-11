@@ -19,7 +19,7 @@ class MyTimePickerViewController : UIViewController{
         picker.datePickerMode = .Time
         picker.backgroundColor = UIColor.clearColor()
         if let parentVC = parentVC{
-            let date = Utilities.getDateFromDateString(parentVC.lastSaveNotificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
+            let date = Utilities.getDateFromDateString(parentVC.lastSaveNotificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
             picker.date = date
         }
         

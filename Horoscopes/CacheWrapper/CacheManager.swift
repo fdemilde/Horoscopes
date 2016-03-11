@@ -33,6 +33,13 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                     }
                     completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
                 }
+            } else {
+                if(url == GET_DATA_METHOD || url == REFRESH_DATA_METHOD) {
+                    if var cacheDict = cacheDict{
+                        cacheDict = cacheDict as! Dictionary<String, NSObject>
+                        cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
+                    }
+                }
             }
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {

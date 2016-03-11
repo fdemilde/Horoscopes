@@ -24,6 +24,7 @@ class HoroscopesManager : NSObject {
         if horoscopesSigns.isEmpty {
 //            println("getHoroscopesSigns getHoroscopesSigns empty")
             let dateFormatter = NSDateFormatter()
+            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
             dateFormatter.dateFormat = "dd-MM";
             horoscopesSigns.append(Horoscope(sign:"Aries",
                                         startFrom: dateFormatter.dateFromString("21-03"),
@@ -126,7 +127,7 @@ class HoroscopesManager : NSObject {
             postData.setObject(iOSVersion, forKey: "device_systemVersion")
             postData.setObject(devideType, forKey: "device_model")
             let expiredTime = NSDate().timeIntervalSince1970 + 600
-            CacheManager.cacheGet(GET_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (result, error) -> Void in
+            CacheManager.cacheGet(GET_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
                     self.setupNodata()
@@ -154,7 +155,7 @@ class HoroscopesManager : NSObject {
         } else {
             let expiredTime = NSDate().timeIntervalSince1970 + 600
             postData.setObject(offsetString, forKey: "tz")
-            CacheManager.cacheGet(REFRESH_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, completionHandler: { (response, error) -> Void in
+            CacheManager.cacheGet(REFRESH_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true, completionHandler: { (response, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
                     self.setupNodata()
@@ -282,6 +283,7 @@ class HoroscopesManager : NSObject {
                     let dateformatter = NSDateFormatter()
                     dateformatter.dateFormat = "MMM - dd"
                     dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+                    dateformatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
                     _ = dateformatter.stringFromDate(horoscope.startDate)
                     _ = dateformatter.stringFromDate(horoscope.endDate)
                     return index
@@ -301,9 +303,9 @@ class HoroscopesManager : NSObject {
     }
     
     func getSignNameOfDate(date : NSDate) -> String{
-        let gregorian = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+        
         let flags = NSCalendarUnit(rawValue: UInt.max)
-        let components = gregorian.components(flags, fromDate: date)
+        let components = defaultCalendar.components(flags, fromDate: date)
         let month = components.month
         let day = components.day
         var sign = ""
