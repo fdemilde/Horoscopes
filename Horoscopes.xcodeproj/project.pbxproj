@@ -58,6 +58,7 @@
 		F4326A061B3A553E00334B56 /* ShareController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4326A051B3A553E00334B56 /* ShareController.swift */; };
 		F43D43211B6B31D800FB94A7 /* DataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F43D43201B6B31D800FB94A7 /* DataStore.swift */; };
 		F44174F11C0FFAC00007C5C0 /* AlternateCommunityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */; };
+		F45497821C947295005B07CA /* StandardDate.m in Sources */ = {isa = PBXBuildFile; fileRef = F45497811C947295005B07CA /* StandardDate.m */; };
 		F456C8991B9F3F99009CED4D /* ArchiveViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */; };
 		F460980A1B50D1F30026F0C9 /* moon_ani_01.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E61B50D1F30026F0C9 /* moon_ani_01.png */; };
 		F460980B1B50D1F30026F0C9 /* moon_ani_01@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */; };
@@ -246,6 +247,8 @@
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
 		F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateCommunityViewController.swift; sourceTree = "<group>"; };
+		F45497801C947295005B07CA /* StandardDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardDate.h; sourceTree = "<group>"; };
+		F45497811C947295005B07CA /* StandardDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandardDate.m; sourceTree = "<group>"; };
 		F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
 		F46097E61B50D1F30026F0C9 /* moon_ani_01.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = moon_ani_01.png; sourceTree = "<group>"; };
 		F46097E71B50D1F30026F0C9 /* moon_ani_01@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_01@2x.png"; sourceTree = "<group>"; };
@@ -836,6 +839,8 @@
 				F49FAE461B42899700F38E0C /* UserPost.swift */,
 				F49FAE4A1B42E41000F38E0C /* UserProfile.swift */,
 				70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */,
+				F45497801C947295005B07CA /* StandardDate.h */,
+				F45497811C947295005B07CA /* StandardDate.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -1224,6 +1229,7 @@
 				F4CACADB1B2010F2003C6301 /* MobilePlatform.m in Sources */,
 				70AE13201B8592FE00E9E781 /* DailyButtonTableViewCell.swift in Sources */,
 				F4237A611C0C56E20070F3D8 /* CustomInfiniteIndicator.swift in Sources */,
+				F45497821C947295005B07CA /* StandardDate.m in Sources */,
 				F4F195161C33E4F2004A68E7 /* EventConfig.swift in Sources */,
 				F4CACA911B2003E1003C6301 /* Horoscope.m in Sources */,
 				70A4E2781B623F5100711B4F /* ApplicationColor.swift in Sources */,

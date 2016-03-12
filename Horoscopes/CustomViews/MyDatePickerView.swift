@@ -127,7 +127,7 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     }
     
     
-    func setCurrentBirthday(birthday : NSDate){
+    func setCurrentBirthday(birthday : StandardDate){
         //        println("setCurrentBirthdaySign setCurrentBirthdaySign ")
         var currentDateArray = self.getMonthAndDayIndexByDate(birthday)
         picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
@@ -142,18 +142,11 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     // MARK: helpers
     
     // parse current birthday into array of Int as array[0] = month, array[1] = day
-    func getMonthAndDayIndexByDate(date : NSDate) -> [Int]{
+    func getMonthAndDayIndexByDate(date : StandardDate) -> [Int]{
         var dateArray = [Int]()
-        let dateFormatter: NSDateFormatter = NSDateFormatter()
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        dateFormatter.dateFormat = "M"
-        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
-        dateFormatter.dateFormat = "d"
-        dateArray.append(Int(dateFormatter.stringFromDate(date))! - 1)
-        
-        let components = defaultCalendar.components(.Year, fromDate: date)
-        let year = components.year
+        dateArray.append(Int(date.month - 1))
+        dateArray.append(Int(date.day - 1))
+        let year = (Int)(date.year)
         var yearIndex = 0
         for (index, element) in yearStringArray.enumerate() {
             if let y = Int(element) {

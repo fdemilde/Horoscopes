@@ -163,47 +163,16 @@ class Utilities {
         return NewsfeedType.Invalid
     }
     
-    // MARK: Birthday Format helpers
-    class func getBirthdayString(date : NSDate) -> String{
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMMM d"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        
-        let dayOfMonthFormatter = NSDateFormatter()
-        dayOfMonthFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        dayOfMonthFormatter.dateFormat = "d"
-        var dateString = dateFormatter.stringFromDate(date)
-        let dayOfMonthFormatterString = dayOfMonthFormatter.stringFromDate(date)
-        
-        let date_day = Int(dayOfMonthFormatterString)
-        let suffix_string = "|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st"
-        var suffixes = suffix_string.componentsSeparatedByString("|")
-        let suffix = suffixes[date_day!]
-        dateString = dateString.stringByAppendingString(suffix)
-        var year = defaultYear
-        if #available(iOS 8.0, *) {
-            let yearComponent = defaultCalendar.component(NSCalendarUnit.Year, fromDate: date)
-            year = yearComponent
-        } else {
-            let components = defaultCalendar.components([.Year], fromDate: date)
-            year = components.year
-        }
-        if year != defaultYear {
-            dateString += " \(year)"
-        }
-        
-        return dateString
+    class func getDefaultBirthday() -> StandardDate{ // return default birthday for first load
+        return StandardDate(day: 22, month: 11)
     }
     
-    class func getDefaultBirthday() -> NSDate{ // return default birthday for first load
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        let defaultDate = dateFormatter.dateFromString("25/11/\(defaultYear)")!
-        return defaultDate
+    class func getMonthAsNumberFromMonthName(monthName : String) -> Int{
+        let monthArray = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        if let monthIdex = monthArray.indexOf(monthName){
+            return monthIdex + 1;
+        }
+        return 12;
     }
     
     // MARK: Alert
@@ -360,21 +329,17 @@ class Utilities {
     }
     
     class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
+//        print("getSignDateString == \(startDate) || endDate = \(endDate)")
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = "MMM dd"
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
     }
     
-    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String, useLocalTimezone : Bool? = false) -> String{
+    class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = dateFormat
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        if((useLocalTimezone == nil) || useLocalTimezone == false){
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        }
-        
         let date = NSDate(timeIntervalSince1970:ts)
         let dateString = String(format: "%@", dateFormatter.stringFromDate(date))
         return dateString
@@ -384,15 +349,7 @@ class Utilities {
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateFormat = format
         dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        if((useLocalTimezone == nil) || useLocalTimezone == false){
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-        }
-        
         return dateFormatter.dateFromString(dateString)!
-    }
-    
-    class func getTimestampFromDateString(dateString: String, dateFormat: String) -> NSTimeInterval {
-        return getDateFromDateString(dateString, format: dateFormat).timeIntervalSince1970
     }
     
     // MARK: Notification support

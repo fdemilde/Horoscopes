@@ -72,9 +72,9 @@ class SettingsTableCell : UITableViewCell {
     func setupBirthday(){
         var dateString = ""
         if let birthday = parentVC.birthday{
-            dateString = Utilities.getBirthdayString(birthday)
+            dateString = birthday.toStringWithDaySuffix()
         } else {
-            dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
+            dateString = Utilities.getDefaultBirthday().toStringWithDaySuffix()
         }
         birthdayLabel.text = dateString
     }

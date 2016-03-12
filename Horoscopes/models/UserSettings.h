@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "StandardDate.h"
 
 @interface UserSettings : NSObject
 @property (nonatomic) BOOL notifyOfNewHoroscope;
 @property (nonatomic) int horoscopeSign;
-@property (nonatomic) NSDate *birthday;
+@property (nonatomic) StandardDate *birthday;
 
 -(void)setHoroscopeSign:(int)horoscopeSign;
--(void)setBirthday:(NSDate *)birthday;
+-(void)setBirthday:(StandardDate *)birthday;
 
 @end

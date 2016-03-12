@@ -38,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         currentUser = NSKeyedUnarchiver.unarchiveObjectWithFile(UserProfile.filePath) as? UserProfile ?? UserProfile()
 //        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
+        // reset icon bagde
+        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        
         XAppDelegate.mobilePlatform.tracker.saveAppOpenCounter()
         if(XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue() == 4){ // 4th load will ask for notification permission
             Utilities.registerForRemoteNotification()

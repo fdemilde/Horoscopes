@@ -16,6 +16,7 @@
 #define KNotifyNewHoroscope @"UserSettings.notifyOfNewHoroscope"
 #define KHoroscope @"UserSettings.horoscopeSign"
 #define KBirthday @"UserSettings.birthday"
+#define KNewBirthday @"UserSettings.KNewBirthday"
 
 - (BOOL)notifyOfNewHoroscope
 {
@@ -54,20 +55,39 @@
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithInt:_horoscopeSign] forKey:KHoroscope];
 }
 
-- (void)setBirthday:(NSDate*)birthday
+- (void)setBirthday:(StandardDate*)birthday
 {
     _birthday = birthday;
-    [[NSUserDefaults standardUserDefaults] setObject:_birthday forKey:KBirthday];
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:_birthday];
+    [[NSUserDefaults standardUserDefaults] setObject:data forKey:KNewBirthday];
 }
 
-- (NSDate *)birthday
+- (StandardDate *)birthday
 {
     if(!_birthday)
     {
         NSNumber *obj = [[NSUserDefaults standardUserDefaults] objectForKey:KBirthday];
-        if(!obj)
-            _birthday = nil;
-        else _birthday = (NSDate *)obj;
+        if(obj){
+            // check if object is NSDate class, convert it into StandardDate and return
+            if ([obj isKindOfClass:[NSDate class]]){
+                NSDate* nsdate = (NSDate *)obj;
+                NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:nsdate];
+                int day = (int)components.day;
+                int month = (int)components.month;
+                int year = (int)components.year;
+                _birthday = [[StandardDate alloc] initWithDay:day month:month year:year];
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:KBirthday];
+            }
+        }
+        else {
+            NSData *data = [[NSUserDefaults standardUserDefaults] dataForKey:KNewBirthday];
+            NSObject *newObj = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            if(!newObj) {
+                _birthday = nil;
+            } else {
+                _birthday = (StandardDate *) newObj;
+            }
+        }
     }
     return _birthday;
 }

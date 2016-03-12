@@ -136,21 +136,10 @@ class DailyContentTableViewCell: UITableViewCell {
     
     func dateStringForType(type: DailyHoroscopeType) -> String {
         if type == DailyHoroscopeType.TodayHoroscope {
-            if let dictionary = XAppDelegate.horoscopesManager.data["today"] as? Dictionary<String, AnyObject> {
-                if let string = dictionary["time_tag"] as? String {
-                    timeTag = NSTimeInterval((string as NSString).doubleValue)
-                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, yyyy")
-                }
-            }
+            return Utilities.getDateStringFromTimestamp(NSDate().timeIntervalSince1970, dateFormat: "MMM dd, yyyy")
         } else {
-            if let dictionary = XAppDelegate.horoscopesManager.data["tomorrow"] as? [String: AnyObject] {
-                if let string = dictionary["time_tag"] as? String {
-                    timeTag = NSTimeInterval((string as NSString).doubleValue)
-                    return Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "MMM dd, yyyy")
-                }
-            }
+            return Utilities.getDateStringFromTimestamp((NSDate().timeIntervalSince1970 + 86400), dateFormat: "MMM dd, yyyy")
         }
-        return ""
     }
     
     func updateLikedLabel(votes : Int, likedPercentage: Int){

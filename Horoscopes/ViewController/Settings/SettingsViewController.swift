@@ -12,7 +12,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     @IBOutlet weak var tableView: UITableView!
     var tableHeaderView : UIView!
     var tableFooterView : UIView!
-    var birthday : NSDate!
+    var birthday : StandardDate!
     var birthdayString : String!
     var parentVC : CurrentProfileViewController!
 //    var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
@@ -172,7 +172,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     @IBAction func saveButtonTapped(sender: AnyObject) {
         self.saveNotificationSetting()
-        self.saveBirthdaySetting()
         let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
         hud.mode = MBProgressHUDMode.Text
         hud.detailsLabelFont = UIFont.systemFontOfSize(11)
@@ -182,42 +181,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: save changes
     // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
-    func saveBirthdaySetting(){
-        if(XAppDelegate.userSettings.birthday != self.birthday){
-            XAppDelegate.userSettings.birthday = self.birthday
-            let newSign = Int32(XAppDelegate.horoscopesManager.getSignIndexOfDate(self.birthday))
-            if(self.birthdayString != nil){
-                XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(birthdayString, completionHandler: { (responseDict, error) -> Void in
-                    if(error == nil){
-                        if(responseDict != nil){
-                            XAppDelegate.userSettings.horoscopeSign = newSign
-                            let customTabBarController = XAppDelegate.window!.rootViewController as! CustomTabBarController
-                            customTabBarController.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
-                        } else {
-                        }
-                        
-                    }
-                })
-            }
-            
-            // update server sign
-            if((FBSDKAccessToken .currentAccessToken()) != nil){
-                if(XAppDelegate.socialManager.isLoggedInZwigglers()){
-                    sendUpdateSign(newSign)
-                } else {
-                    SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
-                        if let error = error {
-                            Utilities.showError(error, viewController: self)
-                        } else {
-                            self.sendUpdateSign(newSign)
-                        }
-                    })
-                }
-            }
-        }
-        
-        
-    }
     
     func sendUpdateSign(newSign : Int32){
         
@@ -250,7 +213,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: Helpers
     // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
-    func finishedSelectingBirthday(date : NSDate){
+    func finishedSelectingBirthday(date : StandardDate){
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
         self.birthday = date
         self.birthdayString = dateStringInNumberFormat
@@ -289,7 +252,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         let array = UIApplication.sharedApplication().scheduledLocalNotifications
         if let array = array {
             if(array.count > 0){ // have notification setup already
-                notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
+                notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
                 lastSaveNotificationFireTime = notificationFireTime
             } else {
                 notificationFireTime = NOTIFICATION_SETTING_DEFAULT_TIME
@@ -303,7 +266,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         if(XAppDelegate.userSettings.notifyOfNewHoroscope == false){
             XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }
-        notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
+        notificationFireTime = Utilities.getDateStringFromTimestamp(time.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
         lastSaveNotificationFireTime = notificationFireTime
         self.saveNotificationSetting()
         tableView.reloadData()
@@ -313,7 +276,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func getSelectedTime() -> NSDateComponents{
         let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT, useLocalTimezone: true)
+        let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
         
         return NSCalendar.currentCalendar().components(components, fromDate: date)
     }
@@ -345,10 +308,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return tableHeaderView
     }
     
-    func getDateStringInNumberFormat(date : NSDate) -> String{
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let comp = defaultCalendar.components(components, fromDate: date)
-        let result = String(format:"%d/%02d", comp.day, comp.month)
+    func getDateStringInNumberFormat(date : StandardDate) -> String{
+        let result = String(format:"%d/%02d", date.day, date.month)
         return result
     }
 }

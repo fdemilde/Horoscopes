@@ -16,6 +16,12 @@ var defaultCalendar : NSCalendar {
     return calendar
 }
 
+var calendarWithTimeOffset : NSCalendar {
+    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+    calendar.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
+    return calendar
+}
+
 let defaultYear = 1900
 var yearArray : [Int] {
     var result = [Int]()

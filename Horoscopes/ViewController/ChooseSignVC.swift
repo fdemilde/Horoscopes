@@ -50,7 +50,7 @@ class ChooseSignVC : SpinWheelVC {
     override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
-            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
+            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate.nsDate, endDate: newValue.endDate.nsDate)
             let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
                 self.selectedIndex = index!;

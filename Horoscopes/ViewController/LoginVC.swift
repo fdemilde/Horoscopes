@@ -38,7 +38,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     var userFBName = ""
     var userFBImageURL = ""
     var userFBBirthdayString = ""
-    var birthday : NSDate!
+    var birthday : StandardDate!
     var agreeToDailyPush = false
     
     
@@ -206,7 +206,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
-            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
+            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate.nsDate, endDate: newValue.endDate.nsDate)
             let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
                 if(self.selectedIndex != index!){
@@ -221,15 +221,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             self.signNameLabel.alpha = 1
             UILabel.commitAnimations()
             if !autoRoll {
-                let newDateComponents = defaultCalendar.components([.Month, .Day], fromDate: newValue.startDate)
+                var year = defaultYear
                 if let appDelegateBirthday = XAppDelegate.userSettings.birthday {
-                    let oldDateComponent = defaultCalendar.components([.Year], fromDate: appDelegateBirthday)
-                    newDateComponents.year = oldDateComponent.year
-                } else {
-                    newDateComponents.year = defaultYear
+                    year = (Int)(appDelegateBirthday.year)
                 }
-                let newDate = defaultCalendar.dateFromComponents(newDateComponents)
-                XAppDelegate.userSettings.birthday = newDate
+                XAppDelegate.userSettings.birthday = StandardDate(day: newValue.startDate.day, month: newValue.startDate.month, year: (Int32)(year))
                 initialBirthday()
             }
         } else {
@@ -374,17 +370,14 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     func getBirthdayString() -> String{
         var dateString = ""
         if let birthday = birthday {
-            dateString = Utilities.getBirthdayString(birthday)
+            dateString = birthday.toStringWithDaySuffix()
         } else {
             if(XAppDelegate.userSettings.horoscopeSign != -1){
                 let signIndex = Int(XAppDelegate.userSettings.horoscopeSign)
                 let sign = XAppDelegate.horoscopesManager.horoscopesSigns[signIndex]
-                let dateComponent = defaultCalendar.components([.Month, .Day], fromDate: sign.startDate)
-                dateComponent.year = defaultYear
-                let date = defaultCalendar.dateFromComponents(dateComponent)
-                dateString = Utilities.getBirthdayString(date!)
+                dateString = sign.startDate.toStringWithDaySuffix()
             } else {
-                dateString = Utilities.getBirthdayString(Utilities.getDefaultBirthday())
+                dateString = Utilities.getDefaultBirthday().toStringWithDaySuffix()
             }
         }
         
@@ -431,27 +424,22 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     // DatePickerView Delegate
     func didFinishPickingDate(dayString: String, monthString: String, var yearString: String) {
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
         
         yearString = yearString == "" ? String(defaultYear) : yearString
+        
         let dateString = String(format:"%@/%@/%@",dayString,monthString, yearString)
         let label = "dob = " + dateString
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobDobChange, label: label)
-        let selectedDate = dateFormatter.dateFromString(dateString)
+        let monthAsInt = Utilities.getMonthAsNumberFromMonthName(monthString)
+        let selectedDate = StandardDate(day: (Int32)(dayString)!, month: (Int32)(monthAsInt), year: (Int32)(yearString)!)
+        
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(selectedDate!)
-        
-        
         self.birthday = selectedDate
         self.finishedSelectingBirthday(dateStringInNumberFormat)
     }
     
-    func getDateStringInNumberFormat(date : NSDate) -> String{
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-        let comp = defaultCalendar.components(components, fromDate: date)
-        let result = String(format:"%d/%02d/%04d", comp.day, comp.month, comp.year)
+    func getDateStringInNumberFormat(date : StandardDate) -> String{
+        let result = String(format:"%d/%02d/%04d", date.day, date.month, date.year)
         return result
     }
     

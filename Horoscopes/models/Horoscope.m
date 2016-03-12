@@ -35,7 +35,7 @@
 }
 
 #pragma mark - Constructor
-- (id)initWithSign:(NSString*)sign startFrom:(NSDate*)startDate to:(NSDate*)endDate
+- (id)initWithSign:(NSString*)sign startFrom:(StandardDate*)startDate to:(StandardDate*)endDate
 {
     if((self = [super init]))
     {

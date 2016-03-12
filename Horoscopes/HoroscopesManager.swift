@@ -22,57 +22,52 @@ class HoroscopesManager : NSObject {
     func getHoroscopesSigns() -> [Horoscope] {
         
         if horoscopesSigns.isEmpty {
-//            println("getHoroscopesSigns getHoroscopesSigns empty")
-            let dateFormatter = NSDateFormatter()
-            dateFormatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-            dateFormatter.dateFormat = "dd-MM";
             horoscopesSigns.append(Horoscope(sign:"Aries",
-                                        startFrom: dateFormatter.dateFromString("21-03"),
-                                               to:dateFormatter.dateFromString("19-04")))
+                                        startFrom: StandardDate(day: 21, month: 3),
+                                               to: StandardDate(day: 19, month: 4)))
             horoscopesSigns.append(Horoscope(sign:"Taurus",
-                startFrom: dateFormatter.dateFromString("20-04"),
-                to:dateFormatter.dateFromString("20-05")))
+                startFrom: StandardDate(day: 20, month: 4),
+                to:StandardDate(day: 20, month: 5)))
             horoscopesSigns.append(Horoscope(sign:"Gemini",
-                startFrom: dateFormatter.dateFromString("21-05"),
-                to:dateFormatter.dateFromString("21-06")))
+                startFrom: StandardDate(day: 21, month: 5),
+                to:StandardDate(day: 21, month: 6)))
             
             horoscopesSigns.append(Horoscope(sign:"Cancer",
-                startFrom: dateFormatter.dateFromString("22-06"),
-                to:dateFormatter.dateFromString("22-07")))
+                startFrom: StandardDate(day: 22, month: 6),
+                to:StandardDate(day: 22, month: 7)))
             
             horoscopesSigns.append(Horoscope(sign:"Leo",
-                startFrom: dateFormatter.dateFromString("23-07"),
-                to:dateFormatter.dateFromString("22-08")))
+                startFrom: StandardDate(day: 23, month: 7),
+                to:StandardDate(day: 22, month: 8)))
             
             horoscopesSigns.append(Horoscope(sign:"Virgo",
-                startFrom: dateFormatter.dateFromString("23-08"),
-                to:dateFormatter.dateFromString("22-09")))
+                startFrom: StandardDate(day: 23, month: 8),
+                to:StandardDate(day: 22, month: 9)))
             
             horoscopesSigns.append(Horoscope(sign:"Libra",
-                startFrom: dateFormatter.dateFromString("23-09"),
-                to:dateFormatter.dateFromString("22-10")))
+                startFrom: StandardDate(day: 23, month: 9),
+                to:StandardDate(day: 22, month: 10)))
             
             horoscopesSigns.append(Horoscope(sign:"Scorpio",
-                startFrom: dateFormatter.dateFromString("23-10"),
-                to:dateFormatter.dateFromString("21-11")))
+                startFrom: StandardDate(day: 23, month: 10),
+                to:StandardDate(day: 21, month: 11)))
             
             horoscopesSigns.append(Horoscope(sign:"Sagittarius",
-                startFrom: dateFormatter.dateFromString("22-11"),
-                to:dateFormatter.dateFromString("21-12")))
+                startFrom: StandardDate(day: 22, month: 11),
+                to:StandardDate(day: 21, month: 12)))
             
             horoscopesSigns.append(Horoscope(sign:"Capricorn",
-                startFrom: dateFormatter.dateFromString("22-12"),
-                to:dateFormatter.dateFromString("19-01")))
+                startFrom: StandardDate(day: 22, month: 12),
+                to:StandardDate(day: 19, month: 1)))
             
             horoscopesSigns.append(Horoscope(sign:"Aquarius",
-                startFrom: dateFormatter.dateFromString("20-01"),
-                to:dateFormatter.dateFromString("18-02")))
+                startFrom: StandardDate(day: 20, month: 1),
+                to:StandardDate(day: 18, month: 2)))
             
             horoscopesSigns.append(Horoscope(sign:"Pisces",
-                startFrom: dateFormatter.dateFromString("19-02"),
-                to:dateFormatter.dateFromString("20-03")))
+                startFrom: StandardDate(day: 19, month: 2),
+                to:StandardDate(day: 20, month: 3)))
         } else {
-//            println("getHoroscopesSigns getHoroscopesSigns not empty!!!")
         }
         return horoscopesSigns
     }
@@ -278,14 +273,8 @@ class HoroscopesManager : NSObject {
         for index in 0...11 {
             if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
             let horoscope = self.horoscopesSigns[index]
-            if((date.compare(horoscope.startDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate) == NSComparisonResult.OrderedSame)
-                && (date.compare(horoscope.endDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate) == NSComparisonResult.OrderedSame)){
-                    let dateformatter = NSDateFormatter()
-                    dateformatter.dateFormat = "MMM - dd"
-                    dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-                    dateformatter.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
-                    _ = dateformatter.stringFromDate(horoscope.startDate)
-                    _ = dateformatter.stringFromDate(horoscope.endDate)
+            if((date.compare(horoscope.startDate.nsDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate.nsDate) == NSComparisonResult.OrderedSame)
+                && (date.compare(horoscope.endDate.nsDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate.nsDate) == NSComparisonResult.OrderedSame)){
                     return index
             }
         }
@@ -302,82 +291,78 @@ class HoroscopesManager : NSObject {
         return -1
     }
     
-    func getSignNameOfDate(date : NSDate) -> String{
+    func getSignNameOfDate(date : StandardDate) -> String{
         
-        let flags = NSCalendarUnit(rawValue: UInt.max)
-        let components = defaultCalendar.components(flags, fromDate: date)
-        let month = components.month
-        let day = components.day
         var sign = ""
-        switch month {
+        switch date.month {
         case 1:
-            if day >= 20 {
+            if date.day >= 20 {
                 sign = "Aquarius"
             } else {
                 sign = "Capricorn"
             }
         case 2:
-            if day >= 19 {
+            if date.day >= 19 {
                 sign = "Pisces"
             } else {
                 sign = "Aquarius"
             }
         case 3:
-            if day >= 21 {
+            if date.day >= 21 {
                 sign = "Aries"
             } else {
                 sign = "Pisces"
             }
         case 4:
-            if day >= 20 {
+            if date.day >= 20 {
                 sign = "Taurus"
             } else {
                 sign = "Aries"
             }
         case 5:
-            if day >= 21 {
+            if date.day >= 21 {
                 sign = "Gemini"
             } else {
                 sign = "Taurus"
             }
         case 6:
-            if day >= 22 {
+            if date.day >= 22 {
                 sign = "Cancer"
             } else {
                 sign = "Gemini"
             }
         case 7:
-            if day >= 23 {
+            if date.day >= 23 {
                 sign = "Leo"
             } else {
                 sign = "Cancer"
             }
         case 8:
-            if day >= 23 {
+            if date.day >= 23 {
                 sign = "Virgo"
             } else {
                 sign = "Leo"
             }
         case 9:
-            if day >= 23 {
+            if date.day >= 23 {
                 sign = "Libra"
             } else {
                 sign = "Virgo"
             }
         case 10:
-            if day >= 23 {
+            if date.day >= 23 {
                 sign = "Scorpio"
             } else {
                 sign = "Libra"
             }
         case 11:
-            if day >= 22 {
+            if date.day >= 22 {
                 sign = "Sagittarius"
             } else {
                 sign = "Scorpio"
             }
         case 12:
-            if day >= 22 {
+            if date.day >= 22 {
                 sign = "Capricorn"
             } else {
                 sign = "Sagittarius"

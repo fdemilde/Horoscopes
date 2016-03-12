@@ -175,13 +175,11 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     // MARK: - Data handler
     
     func refreshView() {
-        print("refresh refresh")
         if daysPassed() >= 1 || collectedHoroscope.collectedData.count == 0 {
             shouldCollectData = true
             shouldReloadData = true
         }
         if shouldReloadData {
-            print("day passed!! reload view")
             shouldReloadData = false
             XAppDelegate.horoscopesManager.getAllHoroscopes(false)
         }
@@ -205,8 +203,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         } else {
             let settings = XAppDelegate.userSettings
             let item = CollectedItem()
-            let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
-            item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
+            item.collectedDate = NSDate()
             if(settings.horoscopeSign >= 0 && Int(settings.horoscopeSign) < XAppDelegate.horoscopesManager.horoscopesSigns.count){
                 item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
                 collectedHoroscope.collectedData.replaceObjectAtIndex(0, withObject: item)
@@ -218,8 +215,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func saveCollectedHoroscopeData(){
         let item = CollectedItem()
-        let todayTimetag = XAppDelegate.horoscopesManager.data["today"]!["time_tag"]! as! String
-        item.collectedDate = NSDate(timeIntervalSince1970: (todayTimetag as NSString).doubleValue as NSTimeInterval)
+        item.collectedDate = NSDate()
         item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
         collectedHoroscope.collectedData.insertObject(item, atIndex: 0)
         collectedHoroscope.saveCollectedData()
@@ -234,7 +230,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let image = UIImage(named: String(format: "%@_selected", horoscope.sign))
             cell.horoscopesSignButton.setImage(image, forState: .Normal)
             cell.horoscopesSignLabel.text = horoscope.sign
-            cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
+            cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate.nsDate, endDate: horoscope.endDate.nsDate)
             cell.collectedPercentageLabel.text = String(format:"%g%%", round(collectedHoroscope.getScore() * 100))
         }
     }
