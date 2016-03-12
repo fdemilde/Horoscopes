@@ -61,6 +61,13 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                         if let errorRes = response["error"]{
                             if(errorRes as? Int == 0){
                                 CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                            } else {
+                                print("error code is != 0")
+                                if let errorCode = response["error_code"]{
+                                    if(errorCode as? String == "error.invalidtoken"){
+                                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                                    }
+                                }
                             }
                         }
                     }

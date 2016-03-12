@@ -150,6 +150,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         print("Error code = \(errorCode)")
                         Utilities.showError(error)
                     } else { // no error
+                        if let errorCode = response["error_code"]{
+                            if(errorCode as? String == "error.invalidtoken"){
+                                XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                                return
+                            }
+                        }
                         if let success = result["success"] as? Int {
                             if success == 1 {
                                 //                        self.sendHeartServerNotification(receiverId, postId: postId)
@@ -184,6 +190,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if let error = error {
                     completionHandler(result: nil, error: error)
                 } else {
+                    if let errorCode = response["error_code"]{
+                        if(errorCode as? String == "error.invalidtoken"){
+                            XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                            return
+                        }
+                    }
                     let result = Utilities.parseNSDictionaryToDictionary(response)
                     completionHandler(result: result, error: nil)
                 }
@@ -295,6 +307,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_FOLLOW, object: user)
                 })
@@ -311,6 +329,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     NSNotificationCenter.defaultCenter().postNotificationName(NOTIFICATION_UNFOLLOW, object: user)
                 })
@@ -327,6 +351,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 let result = Utilities.parseNSDictionaryToDictionary(response)
                 completionHandler(result: result, error: nil)
             }
@@ -410,6 +440,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = result["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 let result = Utilities.parseNSDictionaryToDictionary(result)
                 completionHandler(result: result, error: nil)
             }
@@ -477,6 +513,14 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
+    func logoutWhenRetrieveInvalidToken(){
+        XAppDelegate.mobilePlatform.userCred.clearCreds()
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut()
+        XAppDelegate.socialManager.clearNotification()
+        XAppDelegate.dataStore.clearData()
+    }
+    
     func logoutZwigglers(completionHandler: (responseDict: [NSObject: AnyObject]?, error: NSError?) -> Void){
         XAppDelegate.mobilePlatform.userModule.logoutWithCompleteBlock { (result, error) -> Void in
             print("logoutZwigglers result == \(result)")
@@ -485,20 +529,27 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // Convenience method that log in Facebook then log in Zwigglers
     func login(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
+        NSLog("call login")
         loginFacebook(viewController) { (error, permissionGranted) -> Void in
+            NSLog("loginFacebook loginFacebook")
             if let error = error {
+                NSLog("loginFacebook ERROR = \(error)")
                 let label = "success = 0"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
                 completionHandler(error: error, permissionGranted: false)
             } else {
                 let label = "success = 1"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
+                NSLog("loginFacebook NO ERRROR")
                 if permissionGranted {
+                    NSLog("loginZwigglers loginZwigglers")
                     self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
                         Utilities.registerForRemoteNotification()
                         if let error = error {
+                            NSLog("loginZwigglers error == \(error)")
                             completionHandler(error: error, permissionGranted: false)
                         } else {
+                            NSLog("loginZwigglers error OK!OK!)")
                             completionHandler(error: nil, permissionGranted: true)
                             
                             XAppDelegate.lastGetAllNotificationsTs = 0
@@ -522,7 +573,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                                             }
                                         })
                                     } else {
-                                        print(" ko log in duoc")
+                                        NSLog(" ko log in duoc")
                                     }
                                 })
                             }
@@ -553,6 +604,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 let result = Utilities.parseNSDictionaryToDictionary(response)
                 completionHandler(result: result, error: nil)
             }
@@ -570,6 +627,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = result["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 let result = Utilities.parseNSDictionaryToDictionary(result)
                 completionHandler(result: result, error: nil)
             }
@@ -635,6 +698,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         CacheManager.clearAllNotificationData()
     }
     
+    func clearNotification(){
+        if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) {
+            let notificationVC = notificationViewController as! NotificationViewController
+            XAppDelegate.socialManager.clearAllNotification(notificationVC.notifArray)
+        }
+    }
+    
     func clearNotificationWithId(notifId : String){
         XAppDelegate.mobilePlatform.platformNotiff.clearWithID(notifId) { (result) -> Void in
         }
@@ -650,6 +720,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
 //                println("getCurrentUserFollowProfile == \(response)")
                 let json = Utilities.parseNSDictionaryToDictionary(response)
                 var key = ""
@@ -814,6 +890,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(result: nil, error: error)
             } else {
+                if let errorCode = response["error_code"]{
+                    if(errorCode as? String == "error.invalidtoken"){
+                        XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                        return
+                    }
+                }
                 let result = Utilities.parseNSDictionaryToDictionary(response)
                 completionHandler(result: result, error: nil)
             }

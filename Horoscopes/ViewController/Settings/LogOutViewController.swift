@@ -21,7 +21,7 @@ class LogOutViewController : UIViewController {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsLogout, label: label)
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
-        self.clearNotification()
+        XAppDelegate.socialManager.clearNotification()
         XAppDelegate.dataStore.clearData()
         XAppDelegate.socialManager.logoutZwigglers { (responseDict, error) -> Void in
             print("logoutZwigglers responseDict == \(responseDict)")
@@ -31,10 +31,4 @@ class LogOutViewController : UIViewController {
         })
     }
     
-    func clearNotification(){
-        if let notificationViewController = Utilities.getViewController(NotificationViewController.classForCoder()) {
-            let notificationVC = notificationViewController as! NotificationViewController
-            XAppDelegate.socialManager.clearAllNotification(notificationVC.notifArray)
-        }
-    }
 }

@@ -153,9 +153,11 @@ class HoroscopesManager : NSObject {
             CacheManager.cacheGet(REFRESH_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true, completionHandler: { (response, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
+                    print("error == \(error)")
                     self.setupNodata()
                 } else {
                     if let result = response {
+                        print("result == \(result)")
                         if let dataError = result["error"] {
                             let dataErrorAsInt = dataError as! Int
                             if(dataErrorAsInt != 0){ // data error occured 
@@ -198,6 +200,12 @@ class HoroscopesManager : NSObject {
                 if error != nil {
                     Utilities.showError(error)
                 } else {
+                    if let errorCode = response["error_code"]{
+                        if(errorCode as? String == "error.invalidtoken"){
+                            XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                            return
+                        }
+                    }
                     let result = Utilities.parseNSDictionaryToDictionary(response)
                     Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
                 }
@@ -215,6 +223,12 @@ class HoroscopesManager : NSObject {
                 
             } else {
                 if let response = response {
+                    if let errorCode = response["error_code"]{
+                        if(errorCode as? String == "error.invalidtoken"){
+                            XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
+                            return
+                        }
+                    }
                     let result = Utilities.parseNSDictionaryToDictionary(response)
                     completionHandler(responseDict: result,error: error)
                 } else {

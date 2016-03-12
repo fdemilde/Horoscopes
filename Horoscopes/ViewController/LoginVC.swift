@@ -206,7 +206,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
             self.signNameLabel.text = newValue.sign.uppercaseString
-            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate.nsDate, endDate: newValue.endDate.nsDate)
+            self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
             let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
             if(index != nil){
                 if(self.selectedIndex != index!){

@@ -230,7 +230,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             let image = UIImage(named: String(format: "%@_selected", horoscope.sign))
             cell.horoscopesSignButton.setImage(image, forState: .Normal)
             cell.horoscopesSignLabel.text = horoscope.sign
-            cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate.nsDate, endDate: horoscope.endDate.nsDate)
+            cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
             cell.collectedPercentageLabel.text = String(format:"%g%%", round(collectedHoroscope.getScore() * 100))
         }
     }
@@ -251,6 +251,8 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         lastOpenComp.hour = 1
         lastOpenComp.minute = 1
         lastOpenComp.second = 1
+        
+        
         return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
     }
     

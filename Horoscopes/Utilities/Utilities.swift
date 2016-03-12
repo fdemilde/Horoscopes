@@ -328,12 +328,8 @@ class Utilities {
         return timeAgoDate.timeAgoSinceNow()
     }
     
-    class func getSignDateString(startDate : NSDate, endDate:NSDate) -> String{
-//        print("getSignDateString == \(startDate) || endDate = \(endDate)")
-        let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "MMM dd"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
-        return String(format: "%@ - %@", dateFormatter.stringFromDate(startDate),dateFormatter.stringFromDate(endDate))
+    class func getSignDateString(startDate : StandardDate, endDate:StandardDate) -> String{
+        return String(format: "%@ - %@", startDate.toString("MMM dd"),endDate.toString("MMM dd"))
     }
     
     class func getDateStringFromTimestamp(ts : NSTimeInterval, dateFormat : String) -> String{

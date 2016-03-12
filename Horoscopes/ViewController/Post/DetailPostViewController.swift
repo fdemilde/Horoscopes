@@ -95,6 +95,19 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                     Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Error", message: "Your post could not be created. Please try again later.", error: error)
                 } else {
+                    print("error code is != 0")
+                    if let result = result {
+                        if let errorCode = result["error_code"]{
+                            if(errorCode as? String == "error.invalidtoken"){
+                                XAppDelegate.mobilePlatform.userCred.clearCreds()
+                                let loginManager = FBSDKLoginManager()
+                                loginManager.logOut()
+                                XAppDelegate.socialManager.clearNotification()
+                                XAppDelegate.dataStore.clearData()
+                            }
+                        }
+                    }
+                    
                     self.finishPost()
                 }
             })
