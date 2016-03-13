@@ -157,7 +157,6 @@ class HoroscopesManager : NSObject {
                     self.setupNodata()
                 } else {
                     if let result = response {
-                        print("result == \(result)")
                         if let dataError = result["error"] {
                             let dataErrorAsInt = dataError as! Int
                             if(dataErrorAsInt != 0){ // data error occured 

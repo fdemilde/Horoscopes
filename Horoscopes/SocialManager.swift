@@ -529,9 +529,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     // Convenience method that log in Facebook then log in Zwigglers
     func login(viewController: UIViewController, completionHandler: (error: NSError?, permissionGranted: Bool) -> Void) {
-        NSLog("call login")
         loginFacebook(viewController) { (error, permissionGranted) -> Void in
-            NSLog("loginFacebook loginFacebook")
             if let error = error {
                 NSLog("loginFacebook ERROR = \(error)")
                 let label = "success = 0"
@@ -540,16 +538,12 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 let label = "success = 1"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
-                NSLog("loginFacebook NO ERRROR")
                 if permissionGranted {
-                    NSLog("loginZwigglers loginZwigglers")
                     self.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
                         Utilities.registerForRemoteNotification()
                         if let error = error {
-                            NSLog("loginZwigglers error == \(error)")
                             completionHandler(error: error, permissionGranted: false)
                         } else {
-                            NSLog("loginZwigglers error OK!OK!)")
                             completionHandler(error: nil, permissionGranted: true)
                             
                             XAppDelegate.lastGetAllNotificationsTs = 0

@@ -180,6 +180,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             shouldReloadData = true
         }
         if shouldReloadData {
+            self.shouldHideNumberOfLike = true
             shouldReloadData = false
             XAppDelegate.horoscopesManager.getAllHoroscopes(false)
         }
@@ -313,6 +314,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     @IBAction func handleRefresh(sender: UIRefreshControl) {
         XAppDelegate.horoscopesManager.getAllHoroscopes(true)
+        self.shouldHideNumberOfLike = true
         tableView.reloadData()
         sender.endRefreshing()
     }
