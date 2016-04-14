@@ -37,14 +37,14 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
     override func viewWillAppear(animated: Bool) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commOpen, label: nil)
         super.viewWillAppear(animated)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "handleScrollToTop:", name: NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AlternateCommunityViewController.handleScrollToTop(_:)), name: NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object: nil)
         
         // if page 0 cache expire, reset page number = 0
         if isFirstPageExpired() {
             currentPage = 0
         }
         XAppDelegate.socialManager.getGlobalNewsfeed(currentPage, isAddingData: false)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AlternateCommunityViewController.feedsFinishedLoading(_:)), name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         if let bgImageView = self.bgImageView{
             self.view.sendSubviewToBack(bgImageView)
         }
@@ -173,7 +173,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         if(XAppDelegate.dataStore.isLastPage){
             return
         }
-        self.currentPage++
+        self.currentPage += 1
         let label = "page = \(self.currentPage)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commLoadmore, label: label)
         XAppDelegate.socialManager.getGlobalNewsfeed(self.currentPage, isAddingData: true)
@@ -183,7 +183,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.commReload, label: nil)
         self.currentPage = 0
         XAppDelegate.socialManager.getGlobalNewsfeed(0, isAddingData: false, isRefreshing : true)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "feedsFinishedLoading:", name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AlternateCommunityViewController.feedsFinishedLoading(_:)), name: NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
         
         tableView.reloadData()
         refreshControl.endRefreshing()

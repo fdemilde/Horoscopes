@@ -145,12 +145,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 self.likeButton.userInteractionEnabled = true
             }
             
-            let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: "tapLikeLable:")
+            let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapLikeLable(_:)))
             self.likeNumberLabel.userInteractionEnabled = true
             self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
             
             self.fakeReadmoreLabel?.userInteractionEnabled = true
-            let tapGesture = UITapGestureRecognizer(target: self, action: "readmoreTapped")
+            let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.readmoreTapped))
             self.fakeReadmoreLabel?.addGestureRecognizer(tapGesture)
             self.fakeReadmoreLabel?.font = UIFont(name: "Book Antiqua", size: 14)
             if(!self.viewController.isKindOfClass(SinglePostViewController.classForCoder())){
@@ -173,6 +173,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.configureCell(post)
             self.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
             self.horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: (post.user?.sign)!)
+            if(post.user?.sign >= 0){
+                self.horoscopeSignView.hidden = false
+            } else {
+                self.horoscopeSignView.hidden = true
+            }
             Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.profileImageView.image = image
@@ -205,15 +210,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileImageView.layer.cornerRadius = self.profileImageSize / 2
             self.profileImageView.clipsToBounds = true
             
-            let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
             self.profileNameLabel.userInteractionEnabled = true
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
             
-            let nameGestureRecognizer2 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            let nameGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
             self.locationLabel.userInteractionEnabled = true
             self.locationLabel.addGestureRecognizer(nameGestureRecognizer2)
             
-            let nameGestureRecognizer3 = UITapGestureRecognizer(target: self, action: "tapProfile:")
+            let nameGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
             self.horoscopeSignView.userInteractionEnabled = true
             self.horoscopeSignView.addGestureRecognizer(nameGestureRecognizer3)
         })
@@ -296,7 +301,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     //     Notification handler
     func sendHeartSuccessful(notif: NSNotification){
         NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
-        post.hearts++
+        post.hearts += 1
     }
     
     // MARK: link textview Delegate

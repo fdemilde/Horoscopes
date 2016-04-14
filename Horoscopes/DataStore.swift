@@ -20,6 +20,7 @@ class DataStore : NSObject{
     var currentFortuneDescription = ""
     var currentLuckyNumber = ""
     var currentCookieShareLink = ""
+    var previousPostMessage = ""
     
     static let sharedInstance = DataStore()
     

@@ -55,7 +55,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         if let bgImageView = self.bgImageView{
             self.view.sendSubviewToBack(bgImageView)
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillChangeFrame:", name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DetailPostViewController.keyboardWillChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
         bottomSpaceConstraint = contentViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
     }
@@ -78,6 +78,16 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     }
 
     @IBAction func post() {
+        if(self.textView.text.isEmpty){
+            Utilities.showAlert(self, title: "Error", message: "Post cannot be empty", error: nil)
+            return
+        }
+        
+        if(self.textView.text == XAppDelegate.dataStore.previousPostMessage){
+            self.finishPost()
+            return
+        }
+        
         let createPost = { () -> Void in
             Utilities.showHUD(self.view)
             let postToFacebook = self.switchButton.on
@@ -95,7 +105,6 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                     Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Error", message: "Your post could not be created. Please try again later.", error: error)
                 } else {
-                    print("error code is != 0")
                     if let result = result {
                         if let errorCode = result["error_code"]{
                             if(errorCode as? String == "error.invalidtoken"){
@@ -105,6 +114,8 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                                 XAppDelegate.socialManager.clearNotification()
                                 XAppDelegate.dataStore.clearData()
                             }
+                        } else { // no error
+                            XAppDelegate.dataStore.previousPostMessage = self.textView.text
                         }
                     }
                     
