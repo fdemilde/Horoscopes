@@ -19,5 +19,6 @@
 -(id) initWithDay:(int)day month:(int)month year:(int)year;
 -(NSString *)toString: (NSString *)dateFormat;
 -(NSString *)toStringWithDaySuffix;
++ (StandardDate *) resetDateBaseOnNSDate:(StandardDate *)date;
 
 @end

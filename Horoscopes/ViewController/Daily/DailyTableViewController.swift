@@ -83,7 +83,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         case 0:
             return 110
         case 2:
-            return 110
+            return 160
         default:
             var description = ""
             if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
@@ -342,6 +342,15 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyCommunity, label: nil)
         tabBarController?.selectedIndex = 1
     }
+    
+    func didTapViewOtherSignButton() {
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
+        shouldHideNumberOfLike = true
+        let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        controller.delegate = self
+        presentViewController(controller, animated: true, completion: nil)
+    }
+    
     
     func didSelectHoroscopeSign(selectedSign: Int) {
         presentedViewController?.dismissViewControllerAnimated(true, completion: nil)

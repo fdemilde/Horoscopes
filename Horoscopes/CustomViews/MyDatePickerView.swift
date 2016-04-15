@@ -128,15 +128,30 @@ class MyDatePickerView : UIView, UIPickerViewDataSource, UIPickerViewDelegate {
     
     
     func setCurrentBirthday(birthday : StandardDate){
-        //        println("setCurrentBirthdaySign setCurrentBirthdaySign ")
-        var currentDateArray = self.getMonthAndDayIndexByDate(birthday)
+        var checkedBirthday = birthday
+        var currentDateArray = self.getMonthAndDayIndexByDate(checkedBirthday)
         picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
         picker.selectRow(currentDateArray[1], inComponent: 1, animated: false)
         picker.selectRow(currentDateArray[2], inComponent: 2, animated: false)
         selectedDayIndex = currentDateArray[1]
         selectedMonthIndex = currentDateArray[0]
         selectedYearIndex = currentDateArray[2]
+        
+        if(selectedMonthIndex > monthArray.count || selectedYearIndex > yearStringArray.count){
+            checkedBirthday = StandardDate.resetDateBaseOnNSDate(birthday) // last version I stored the year with "month" key so the month now will be out of range, we should fix this by using nsDate in Stardard Date class
+            var currentDateArray = self.getMonthAndDayIndexByDate(checkedBirthday)
+            picker.selectRow(currentDateArray[0], inComponent: 0, animated: false)
+            picker.selectRow(currentDateArray[1], inComponent: 1, animated: false)
+            picker.selectRow(currentDateArray[2], inComponent: 2, animated: false)
+            selectedDayIndex = currentDateArray[1]
+            selectedMonthIndex = currentDateArray[0]
+            selectedYearIndex = currentDateArray[2]
+        }
+        
         dateArray = getDayArrayBaseOnMonthIndex(selectedMonthIndex)
+        
+        
+        
     }
     
     // MARK: helpers

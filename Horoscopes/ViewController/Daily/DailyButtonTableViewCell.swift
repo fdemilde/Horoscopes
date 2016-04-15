@@ -10,6 +10,7 @@ import UIKit
 
 protocol DailyButtonTableViewCellDelegate {
     func didTapJoinHoroscopesCommunityButton()
+    func didTapViewOtherSignButton()
 }
 
 class DailyButtonTableViewCell: UITableViewCell {
@@ -17,6 +18,7 @@ class DailyButtonTableViewCell: UITableViewCell {
     let inset: CGFloat = 8
     @IBOutlet weak var discoverFortuneCookieButton: UIButton!
     @IBOutlet weak var joinHoroscopesCommunityButton: UIButton!
+    @IBOutlet weak var viewOtherSignButton: UIButton!
     var delegate: DailyButtonTableViewCellDelegate!
 
     override func awakeFromNib() {
@@ -24,6 +26,7 @@ class DailyButtonTableViewCell: UITableViewCell {
         // Initialization code
         makeCorneredButton(discoverFortuneCookieButton)
         makeCorneredButton(joinHoroscopesCommunityButton)
+        makeCorneredButton(viewOtherSignButton)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -51,6 +54,10 @@ class DailyButtonTableViewCell: UITableViewCell {
     
     @IBAction func tapJoinHoroscopesCommunityButton(sender: UIButton) {
         delegate.didTapJoinHoroscopesCommunityButton()
+    }
+    
+    @IBAction func viewOtherSignTapped(sender: AnyObject) {
+        delegate.didTapViewOtherSignButton()
     }
 
 }
