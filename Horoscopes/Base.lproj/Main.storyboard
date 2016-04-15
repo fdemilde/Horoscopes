@@ -3195,6 +3195,7 @@ on news things</string>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
+                                    <outlet property="actionView" destination="R8Z-vP-1u1" id="IZm-Da-QLs"/>
                                     <outlet property="dateLabel" destination="Fxt-nK-Zss" id="67R-tq-NEg"/>
                                     <outlet property="dayLabel" destination="R1G-0n-uKd" id="7Rw-TD-StG"/>
                                     <outlet property="dislikeButton" destination="oTl-Bo-P8A" id="Obv-NH-Ygr"/>
@@ -3332,6 +3333,10 @@ on news things</string>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="efF-06-zfn" id="ZXF-0A-lyG"/>
+                            <outlet property="delegate" destination="efF-06-zfn" id="Map-q3-R5t"/>
+                        </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="EO8-xq-LXB"/>
                     <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="qeF-f4-12J">

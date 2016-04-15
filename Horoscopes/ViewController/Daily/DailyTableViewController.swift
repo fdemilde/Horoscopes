@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate, DailyButtonTableViewCellDelegate {
+class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewControllerDelegate, DailyContentTableViewCellDelegate, DailyButtonTableViewCellDelegate{
     
     var selectedSign = -1
     var collectedHoroscope = CollectedHoroscope()
@@ -23,13 +23,17 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     var textViewForCalculating = UITextView()
     var tableFooterView : UIView!
     var shouldHideNumberOfLike = false
+    var shouldShowTomorrowHoroscopes = false
+    
+    let tapToOpenString = "Tap to open"
+    var tapGesture = UITapGestureRecognizer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         if let parentViewController = self.tabBarController as? CustomTabBarController{
             selectedSign = parentViewController.selectedSign
         }
-        
+        tapGesture = UITapGestureRecognizer(target: self, action: #selector(DailyTableViewController.showTomorrowHoroscope))
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         tableView.backgroundView = UIImageView(image: backgroundImage)
@@ -93,7 +97,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                     }
                 } else {
                     if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
-                        description = horoscopeDescription
+                        if(shouldShowTomorrowHoroscopes){
+                            description = horoscopeDescription
+                        } else {
+                            description = tapToOpenString
+                        }
+                        
                     }
                     
                 }
@@ -136,21 +145,33 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                 
                 cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl, controller: self)
                 
+                cell.textView.text = description
+                
             } else {
                 
-                if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
-                    if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
-                        description = horoscopeDescription
+                if(shouldShowTomorrowHoroscopes){
+                    if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
+                        if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
+                            description = horoscopeDescription
+                        }
+                        if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
+                            shareUrl = permaLink
+                        }
                     }
-                    if let permaLink = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].permaLinks[1] as? String {
-                        shareUrl = permaLink
-                    }
+                    
+                    cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
+                    cell.textView.text = description
+                    cell.actionView.hidden = false
+                    cell.removeGestureRecognizer(tapGesture)
+                } else {
+                    cell.configureNumberOfLike(shouldHideNumberOfLike)
+                    cell.addGestureRecognizer(tapGesture)
+                    cell.textView.text = tapToOpenString
+                    cell.actionView.hidden = true
+                    
                 }
-                
-                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
             }
             
-            cell.textView.text = description
             return cell
         }
 
@@ -160,17 +181,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         tableView.tableFooterView = getFooterView()
         return 1
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print("didSelectRowAtIndexPath didSelectRowAtIndexPath")
-        switch indexPath.row {
-            case 3:
-                print("TAP ON TOMORROW!!!")
-                break
-            default:
-                break
-        }
     }
     
     /*
@@ -326,13 +336,15 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     @IBAction func handleRefresh(sender: UIRefreshControl) {
         XAppDelegate.horoscopesManager.getAllHoroscopes(true)
         self.shouldHideNumberOfLike = true
+        shouldShowTomorrowHoroscopes = false
         tableView.reloadData()
         sender.endRefreshing()
     }
 
     @IBAction func chooseHoroscopeSign(sender: UIButton) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
-        shouldHideNumberOfLike = true
+        self.shouldHideNumberOfLike = true
+        shouldShowTomorrowHoroscopes = false
         let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
         controller.delegate = self
         presentViewController(controller, animated: true, completion: nil)
@@ -345,6 +357,11 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             cookieViewController.parentVC = self
             self.navigationController!.pushViewController(cookieViewController, animated: true)
         })
+    }
+    
+    func showTomorrowHoroscope(){
+        shouldShowTomorrowHoroscopes = true
+        tableView.reloadData()
     }
     // MARK: - Delegate
     

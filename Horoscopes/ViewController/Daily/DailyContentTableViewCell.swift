@@ -24,6 +24,8 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var likedLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
     @IBOutlet weak var dislikeButton: UIButton!
+    @IBOutlet weak var actionView: UIView!
+    
     @IBOutlet var calendarButton : UIButton!
     
     @IBOutlet weak var header: UIView!
@@ -63,7 +65,7 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Configuration
     
-    private func configureNumberOfLike(shouldHideIt: Bool) {
+    func configureNumberOfLike(shouldHideIt: Bool) {
         if shouldHideIt {
             self.likedLabel.alpha = 0
             self.likedImageView.alpha = 0
@@ -86,8 +88,8 @@ class DailyContentTableViewCell: UITableViewCell {
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(5)), repeats: false)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
+        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(int: Int32(5)), repeats: false)
     }
     
     @IBAction func dislike(sender: UIButton) {
@@ -100,8 +102,8 @@ class DailyContentTableViewCell: UITableViewCell {
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "rateResultNotificationHandler:", name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: Selector("doRatingRequestWithRateValue:"), userInfo: NSNumber(int: Int32(1)), repeats: false)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
+        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(int: Int32(1)), repeats: false)
     }
     
     @IBAction func calendarTapped(sender:UIButton)
