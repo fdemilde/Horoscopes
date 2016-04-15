@@ -58,10 +58,10 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
-            return 5
+            return 6
         }
         // if not login, do not show log out
-        return 4
+        return 5
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -72,8 +72,6 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         var cell : SettingsTableCell!
         cell = tableView.dequeueReusableCellWithIdentifier("SettingsTableCell", forIndexPath: indexPath) as! SettingsTableCell
         switch (indexPath.row) {
-            case 2:
-                cell.setupCell(SettingsType.BugsReport, title: "Find Facebook friends")
             case 0:
                 cell.parentVC = self
                 cell.setupCell(SettingsType.Notification, title: "Daily Notification")
@@ -82,10 +80,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 cell.parentVC = self
                 cell.setupCell(SettingsType.ChangeDOB, title: "Birthday")
                 break
+            case 2:
+                cell.parentVC = self
+                cell.setupCell(SettingsType.ChangeSign, title: "Horoscope Sign")
+                break
             case 3:
-                cell.setupCell(SettingsType.BugsReport, title: "Report a problem")
+                cell.setupCell(SettingsType.BugsReport, title: "Find Facebook friends")
                 break
             case 4:
+                cell.setupCell(SettingsType.BugsReport, title: "Report a problem")
+                break
+            case 5:
                 cell.setupCell(SettingsType.Logout, title: "Logout")
                 break
             default:
@@ -96,7 +101,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         switch (indexPath.row) {
-            case 2:
+            case 3:
                 if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
                     XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbFriendsOpen, label: nil)
                     let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
@@ -121,11 +126,17 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
                 let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
                 presentViewController(loginVC, animated: true, completion: nil)
                 break
-            case 3:
+            case 2:
+                XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+                presentViewController(loginVC, animated: true, completion: nil)
+                break
+            case 4:
                 let bugsReportViewController = self.setupBugsReportViewController()
                 self.displayViewController(bugsReportViewController, type: SettingsType.BugsReport)
                 break
-            case 4:
+            case 5:
                 let logOutViewController = self.setupLogoutViewController()
                 self.displayViewController(logOutViewController, type: SettingsType.Logout)
                 break

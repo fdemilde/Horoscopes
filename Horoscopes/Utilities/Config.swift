@@ -198,6 +198,7 @@ enum PostCellType {
 enum SettingsType {
     case Notification
     case ChangeDOB
+    case ChangeSign
     case BugsReport
     case Logout
 }

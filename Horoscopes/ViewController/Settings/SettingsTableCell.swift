@@ -42,8 +42,16 @@ class SettingsTableCell : UITableViewCell {
             timeLabel.hidden = true
             switchButton.hidden = true
             timeUnderline.hidden = true
+            separator.hidden = true
             self.setupBirthday()
-        } else {
+        } else if self.type == SettingsType.ChangeSign {
+            birthdayLabel.hidden = false
+            birthdayUnderline.hidden = false
+            timeLabel.hidden = true
+            switchButton.hidden = true
+            timeUnderline.hidden = true
+            self.setupSign()
+        }else {
             timeLabel.hidden = true
             switchButton.hidden = true
             timeUnderline.hidden = true
@@ -77,6 +85,16 @@ class SettingsTableCell : UITableViewCell {
             dateString = Utilities.getDefaultBirthday().toStringWithDaySuffix()
         }
         birthdayLabel.text = dateString
+    }
+    
+    func setupSign(){
+        var sign = ""
+        if let birthday = parentVC.birthday {
+            sign = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
+        } else {
+            sign = XAppDelegate.horoscopesManager.getSignNameOfDate(Utilities.getDefaultBirthday())
+        }
+        birthdayLabel.text = sign
     }
     
     func checkAndChangeSwitchColor(){
