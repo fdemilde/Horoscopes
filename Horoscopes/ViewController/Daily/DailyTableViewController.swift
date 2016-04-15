@@ -162,6 +162,17 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         return 1
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("didSelectRowAtIndexPath didSelectRowAtIndexPath")
+        switch indexPath.row {
+            case 3:
+                print("TAP ON TOMORROW!!!")
+                break
+            default:
+                break
+        }
+    }
+    
     /*
     // MARK: - Navigation
 

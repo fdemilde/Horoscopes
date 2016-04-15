@@ -352,7 +352,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
         self.wheel.autoRollToSign(signName)
         birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        
         XAppDelegate.userSettings.birthday = birthday
         self.birthdayStringInServerFormat = dateString
         birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)

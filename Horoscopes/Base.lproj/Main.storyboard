@@ -2993,8 +2993,8 @@ on news things</string>
                                                         <action selector="chooseHoroscopeSign:" destination="efF-06-zfn" eventType="touchUpInside" id="R5c-jE-f5a"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
-                                                    <rect key="frame" x="548" y="25" width="44" height="44"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lzP-8H-CW4">
+                                                    <rect key="frame" x="548" y="23" width="44" height="44"/>
                                                     <state key="normal" image="daily_archive_icon">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -3069,11 +3069,11 @@ on news things</string>
                                                 <constraint firstItem="R1G-0n-uKd" firstAttribute="width" secondItem="4TX-cb-hRA" secondAttribute="width" id="sYx-Fx-OOf"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bPw-d4-eNH" userLabel="Body View">
-                                            <rect key="frame" x="0.0" y="40" width="600" height="159"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bPw-d4-eNH" userLabel="Body View">
+                                            <rect key="frame" x="0.0" y="40" width="600" height="47"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="--" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YXR-Up-cuM">
-                                                    <rect key="frame" x="8" y="8" width="584" height="151"/>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="--" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="YXR-Up-cuM">
+                                                    <rect key="frame" x="8" y="8" width="584" height="39"/>
                                                     <fontDescription key="fontDescription" name="BookAntiqua" family="Book Antiqua" pointSize="15"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -3086,8 +3086,8 @@ on news things</string>
                                                 <constraint firstAttribute="bottom" secondItem="YXR-Up-cuM" secondAttribute="bottom" id="x2b-yK-Ruj"/>
                                             </constraints>
                                         </view>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bWY-Wj-96L">
-                                            <rect key="frame" x="0.0" y="199" width="600" height="101"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bWY-Wj-96L">
+                                            <rect key="frame" x="0.0" y="87" width="600" height="101"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PxQ-4v-NdY">
                                                     <rect key="frame" x="10" y="10" width="30" height="30"/>
@@ -3211,16 +3211,17 @@ on news things</string>
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="177"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pD9-gY-YVP" userLabel="Container View">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="169"/>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pD9-gY-YVP" userLabel="Container View">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="177"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ph-7c-nwO">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ph-7c-nwO">
                                                     <rect key="frame" x="0.0" y="10" width="600" height="40"/>
                                                     <color key="backgroundColor" red="0.52156862745098043" green="0.48627450980392156" blue="0.67843137254901964" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="Dh5-p5-uZg"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <inset key="contentEdgeInsets" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="View Other Sign">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -3235,13 +3236,14 @@ on news things</string>
                                                         <constraint firstAttribute="height" constant="24" id="Fj8-Lm-rk3"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="use-dM-Hgq">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="use-dM-Hgq">
                                                     <rect key="frame" x="0.0" y="60" width="600" height="40"/>
                                                     <color key="backgroundColor" red="1" green="0.75686274509803919" blue="0.027450980392156862" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="Zag-FD-gEj"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <inset key="contentEdgeInsets" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="Discover Your Fortune Cookie">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3257,14 +3259,14 @@ on news things</string>
                                                         <constraint firstAttribute="width" constant="26" id="ZP3-KA-9t7"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OyI-lw-qa5">
                                                     <rect key="frame" x="0.0" y="110" width="600" height="40"/>
                                                     <color key="backgroundColor" red="0.54509803921568623" green="0.76470588235294112" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="BfT-b9-fJQ"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                    <inset key="contentEdgeInsets" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                    <inset key="contentEdgeInsets" minX="50" minY="0.0" maxX="0.0" maxY="0.0"/>
                                                     <state key="normal" title="Posts from the Horoscopes Community">
                                                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -3281,6 +3283,7 @@ on news things</string>
                                                     </constraints>
                                                 </imageView>
                                             </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="1Ph-7c-nwO" secondAttribute="trailing" id="3Tt-1o-joQ"/>
                                                 <constraint firstItem="AsA-Rt-gea" firstAttribute="top" secondItem="use-dM-Hgq" secondAttribute="bottom" constant="17" id="4gX-7K-9VZ"/>
@@ -3305,6 +3308,7 @@ on news things</string>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
+                                                    <exclude reference="ZQK-7S-ZET"/>
                                                     <exclude reference="LC0-mO-ySe"/>
                                                     <exclude reference="mW6-s3-Mep"/>
                                                     <exclude reference="PPU-W3-l4G"/>
@@ -3317,6 +3321,7 @@ on news things</string>
                                         <constraint firstItem="pD9-gY-YVP" firstAttribute="top" secondItem="5Ld-Gy-0Yd" secondAttribute="top" id="1dB-mn-vR6"/>
                                         <constraint firstItem="pD9-gY-YVP" firstAttribute="leading" secondItem="5Ld-Gy-0Yd" secondAttribute="leading" id="Sr6-SP-ghF"/>
                                         <constraint firstAttribute="trailing" secondItem="pD9-gY-YVP" secondAttribute="trailing" id="W8n-sd-WJE"/>
+                                        <constraint firstAttribute="bottom" secondItem="pD9-gY-YVP" secondAttribute="bottom" id="WaP-SR-QPG"/>
                                     </constraints>
                                 </tableViewCellContentView>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>

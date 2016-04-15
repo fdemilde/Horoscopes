@@ -14,19 +14,20 @@
 #import "StandardDate.h"
 
 @implementation StandardDate
-@synthesize nsDate;
+@synthesize nsDate = _nsDate;
 @synthesize day = _day;
 @synthesize month = _month;
 @synthesize year = _year;
 
 -(id) initWithDay:(int)day month:(int)month {
     if(self = [super init]){
+        _nsDate = [[NSDate alloc] init];
         NSString *dateString = [NSString stringWithFormat:@"%d/%d/1900", day, month];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"dd/MM/yyyy";
         dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-        nsDate = [dateFormatter dateFromString:dateString];
+        _nsDate = [dateFormatter dateFromString:dateString];
         _day = day;
         _month = month;
         _year = defaultYear;
@@ -37,13 +38,16 @@
 
 -(id) initWithDay:(int)day month:(int)month year:(int)year {
     if(self = [super init]){
-        nsDate = [[NSDate alloc] init];
+        if (year == 0){
+            year = defaultYear;
+        }
+        _nsDate = [[NSDate alloc] init];
         NSString *dateString = [NSString stringWithFormat:@"%d/%d/%d", day, month, year];
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         dateFormatter.dateFormat = @"dd/MM/yyyy";
         dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-        nsDate = [dateFormatter dateFromString:dateString];
+        _nsDate = [dateFormatter dateFromString:dateString];
         _day = day;
         _month = month;
         _year = year;
@@ -56,8 +60,8 @@
     dateFormatter.dateFormat = dateFormat;
     dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    if(nsDate != nil){
-        return [dateFormatter stringFromDate:nsDate];
+    if(_nsDate != nil){
+        return [dateFormatter stringFromDate:_nsDate];
     } else {
         return @"";
     }
@@ -68,15 +72,14 @@
     dateFormatter.dateFormat = @"MMMM d";
     dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
-    
-    NSString *dateString = [dateFormatter stringFromDate:nsDate];
+    NSString *dateString = [dateFormatter stringFromDate:_nsDate];
     
     NSDateFormatter *dayOfMonthFormatter = [[NSDateFormatter alloc] init];
     dayOfMonthFormatter.dateFormat = @"d";
     dayOfMonthFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
     [dayOfMonthFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"UTC"]];
     
-    NSString *dayOfMonthFormatterString = [dayOfMonthFormatter stringFromDate:nsDate];
+    NSString *dayOfMonthFormatterString = [dayOfMonthFormatter stringFromDate:_nsDate];
     int date_day = [dayOfMonthFormatterString intValue];
     NSString *suffix_string = @"|st|nd|rd|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|th|st|nd|rd|th|th|th|th|th|th|th|st";
     NSArray *suffixes = [suffix_string componentsSeparatedByString:@"|"];
@@ -101,7 +104,7 @@
 #pragma mark - encode/decode
 - (id)initWithCoder:(NSCoder *)aDecoder{
     if(self = [super init]){
-        nsDate = [aDecoder decodeObjectForKey:kNSDate];
+        _nsDate = [aDecoder decodeObjectForKey:kNSDate];
         _day = [aDecoder decodeIntForKey:kDay];
         _month = [aDecoder decodeIntForKey:kMonth];
         _year = [aDecoder decodeIntForKey:kYear];
