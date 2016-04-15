@@ -16,11 +16,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     @IBOutlet weak var signNameLabel: UILabel!
     @IBOutlet weak var signDateLabel: UILabel!
     @IBOutlet weak var DOBLabel: UILabel!
-    
-    @IBOutlet weak var starIcon: UIImageView!
     @IBOutlet var containerView: UIView!
     var birthdayStringInServerFormat : String!
-    
     
     @IBOutlet weak var fbLoginButtonTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var fbLoginLabelTopConstraint: NSLayoutConstraint!
@@ -29,7 +26,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     @IBOutlet weak var birthdayBgTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
     var startButton : UIButton!
     var popUp : CMPopTipView!
     var pickerView : MyDatePickerView!
@@ -71,7 +67,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         birthdayBgTopConstraint.constant = (birthdayBgTopConstraint.constant * ratio)
         signNameLabelTopConstraint.constant = (signNameLabelTopConstraint.constant * ratio)
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
-        starIconTopConstraint.constant = (starIconTopConstraint.constant * ratio)
         
         let startButtonImage = UIImage(named: "start_button")
         let startButtonFrame = CGRectMake((Utilities.getScreenSize().width - startButtonImage!.size.width)/2, Utilities.getScreenSize().height - startButtonImage!.size.height, startButtonImage!.size.width, startButtonImage!.size.height)
@@ -81,7 +76,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         startButton.setTitle("", forState: UIControlState.Normal)
 //        startButton.backgroundColor = UIColor.blueColor()
         self.view .addSubview(startButton)
-        startButton.addTarget(self, action: "startButtonTapped:", forControlEvents: UIControlEvents.TouchUpInside)
+        startButton.addTarget(self, action: #selector(LoginVC.startButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         birthdaySelectButton.layer.shadowColor = UIColor.blackColor().CGColor
         birthdaySelectButton.layer.shadowOffset = CGSizeMake(0, 2)
@@ -107,7 +102,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.view .bringSubviewToFront(signNameLabel)
         self.view .bringSubviewToFront(signDateLabel)
         self.view .bringSubviewToFront(DOBLabel)
-        self.view .bringSubviewToFront(starIcon)
         self.view .bringSubviewToFront(startButton)
     }
     
@@ -214,7 +208,6 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
                 }
                 self.selectedIndex = index!
             }
-            self.starIcon.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
             self.signNameLabel.alpha = 0
             UILabel.beginAnimations("Fade-in", context: nil)
             UILabel.setAnimationDuration(0.6)

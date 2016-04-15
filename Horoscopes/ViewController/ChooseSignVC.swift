@@ -18,18 +18,40 @@ class ChooseSignVC : SpinWheelVC {
     @IBOutlet weak var chooseSignButton: UIButton!
     @IBOutlet weak var signNameLabel: UILabel!
     @IBOutlet weak var signDateLabel: UILabel!
-    @IBOutlet weak var starImage: UIImageView!
     
     @IBOutlet weak var chooseSignButtonTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var chooseSignButtonWidthConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var chooseSignButtonHeightConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var signNameLabelTopConstraint: NSLayoutConstraint!
     @IBOutlet weak var signDateLabelTopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var starIconTopConstraint: NSLayoutConstraint!
+    
+    @IBOutlet weak var userSignImage: UIImageView!
+    @IBOutlet weak var userSignName: UILabel!
+    @IBOutlet weak var userSignDate: UILabel!
+    
+    @IBOutlet weak var userChangeSignButton: UIButton!
+    
+    
+    @IBOutlet weak var signViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var viewOtherSignTopConstraint: NSLayoutConstraint!
+    
+    var currentSign = -1
+    
     var delegate: ChooseSignViewControllerDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setupComponents()
+        userChangeSignButton.layer.cornerRadius = 4
+        userChangeSignButton.clipsToBounds = true
         
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.setupComponents()
     }
     
     func setupComponents(){
@@ -37,12 +59,31 @@ class ChooseSignVC : SpinWheelVC {
         chooseSignButtonTopConstraint.constant = (chooseSignButtonTopConstraint.constant * ratio)
         signNameLabelTopConstraint.constant = (signNameLabelTopConstraint.constant * ratio)
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
-        starIconTopConstraint.constant = (starIconTopConstraint.constant * ratio)
+        signViewTopConstraint.constant = (signViewTopConstraint.constant * ratio)
+        viewOtherSignTopConstraint.constant = (viewOtherSignTopConstraint.constant * ratio)
         
         self.view .bringSubviewToFront(chooseSignButton)
         self.view .bringSubviewToFront(signNameLabel)
         self.view .bringSubviewToFront(signDateLabel)
-        self.view .bringSubviewToFront(starImage)
+        
+        if(DeviceType.IS_IPHONE_4_OR_LESS){
+//            chooseSignButton.hidden = true
+            chooseSignButtonWidthConstraint.constant = 80
+            chooseSignButtonHeightConstraint.constant = 80
+        }
+        
+        currentSign = (Int)(XAppDelegate.userSettings.horoscopeSign)
+        if (currentSign == -1){
+            currentSign = 8
+        }
+        
+        let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[currentSign];
+        self.userSignName.text = horoscope.sign.uppercaseString
+        self.userSignDate.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
+        
+        let image = UIImage(named: String(format:"%@_selected",horoscope.sign))
+        userSignImage.image = image
+        
     }
     
     // MARK: Delegata methods
@@ -60,8 +101,6 @@ class ChooseSignVC : SpinWheelVC {
             
             let image = UIImage(named: String(format:"%@_selected",horoscope.sign))
             chooseSignButton.setImage(image, forState: UIControlState.Normal)
-            
-            self.starImage.hidden = (XAppDelegate.userSettings.horoscopeSign != Int32(self.selectedIndex))
             self.signNameLabel.alpha = 0
             UILabel.beginAnimations("Fade-in", context: nil)
             UILabel.setAnimationDuration(0.6)
@@ -87,4 +126,11 @@ class ChooseSignVC : SpinWheelVC {
     func dismissChooseSignViewController(){
         delegate.didSelectHoroscopeSign(selectedIndex)
     }
+    
+    @IBAction func userChangeSignTapped(sender: AnyObject) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
+        presentViewController(loginVC, animated: true, completion: nil)
+    }
+    
 }
