@@ -76,8 +76,8 @@ class ChooseSignVC : SpinWheelVC {
         if (currentSign == -1){
             currentSign = 8
         }
-        
         let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[currentSign];
+        wheel.autoRollToSign(horoscope.sign)
         self.userSignName.text = horoscope.sign.uppercaseString
         self.userSignDate.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
         

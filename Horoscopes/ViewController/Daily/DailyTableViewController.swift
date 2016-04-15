@@ -149,6 +149,8 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                 
             } else {
                 
+                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
+                
                 if(shouldShowTomorrowHoroscopes){
                     if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
                         if let horoscopeDescription = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign].horoscopes[1] as? String {
@@ -158,8 +160,6 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                             shareUrl = permaLink
                         }
                     }
-                    
-                    cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
                     cell.textView.text = description
                     cell.actionView.hidden = false
                     cell.removeGestureRecognizer(tapGesture)
