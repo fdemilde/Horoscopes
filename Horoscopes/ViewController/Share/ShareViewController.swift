@@ -338,27 +338,6 @@ class ShareViewController : UIViewController {
         return dateString
     }
     
-//    func getSharingURL() -> String{
-//        var urlString = ""
-//        switch (shareType) {
-//            case ShareType.ShareTypeDaily:
-//                let dateString = Utilities.getDateStringFromTimestamp(timeTag, dateFormat: "yyyy-MM-dd")
-//                urlString = String(format: "https://horoscopes.zwigglers.com/%@/%d", dateString, horoscopeSignIndex)
-////                print("urlString urlString = \(urlString)")
-//            break
-//            case ShareType.ShareTypeFortune:
-//                urlString = "http://apps.facebook.com/getyourfortune/?rf=nf_iphone"
-//            break
-//        case ShareType.ShareTypeNewsfeed:
-//            urlString = String(format: "https://horoscopes.zwigglers.com/post/%@", postId)
-////            print("urlString urlString = \(urlString)")
-//            break
-//        }
-//    
-//        
-//        return urlString
-//    }
-    
     func getTextIncludingTitle() -> String{
         var text = ""
         

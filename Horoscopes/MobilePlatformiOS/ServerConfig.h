@@ -9,8 +9,8 @@
 #ifndef EventsTracker_ServerConfig_h
 #define EventsTracker_ServerConfig_h
 
-#define BASE_URL @"http://dv7.zwigglers.com/mrest/rest/"
-#define UPLOAD_BASE_URL @"http://upload.dv7.zwigglers.com/mrest/rest/"
+#define BASE_URL @"https://horoscopes.zwigglers.com/mrest-dev/rest/"
+#define UPLOAD_BASE_URL @"http://upload.horoscopes.zwigglers.com/mrest-dev/rest/"
 #define TAG @"EventsTracker"
 
 /*
@@ -18,8 +18,8 @@
  
  testing ID --> need to update with the right one
  */
-#define DATA_CLIENT_ID 202
-#define EVENT_CLIENT_ID 200
+#define DATA_CLIENT_ID 9501
+#define EVENT_CLIENT_ID 9501
 
 /*
  END
