@@ -7,13 +7,26 @@
 //
 
 import Foundation
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
 class CacheManager {
     
 static let NOTIFICATION_SINCE_KEY = "NOTIFICATION_SINCE_KEY"
 static let GET_DATA_KEY = "GET_DATA_KEY"
     
-    class func cacheGet(url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : NSTimeInterval, forceExpiredKey: String?, ignoreCache : Bool = false, completionHandler: (result: NSDictionary?, error: NSError?) -> Void){
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+    class func cacheGet(_ url : String, postData : NSMutableDictionary?, loginRequired: LoginReq, expiredTime : TimeInterval, forceExpiredKey: String?, ignoreCache : Bool = false, completionHandler: @escaping (_ result: NSDictionary?, _ error: NSError?) -> Void){
+        DispatchQueue.main.async { () -> Void in
             var cacheValue = NSDictionary()
             var key = ""
             if(url == GET_DATA_METHOD || url == REFRESH_DATA_METHOD){
@@ -21,17 +34,17 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
             } else {
                 key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
             }
-            let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+            let cacheDict = UserDefaults.standard.dictionary(forKey: key)
             if(!ignoreCache){
                 if var cacheDict = cacheDict{
                     cacheDict = cacheDict as! Dictionary<String, NSObject>
                     cacheValue = cacheDict["CACHE_VALUE_KEY"] as! NSDictionary
                     let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
-                    if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
-                        completionHandler(result: cacheValue, error: nil) // return cache
+                    if(Date().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+                        completionHandler(cacheValue, nil) // return cache
                         return
                     }
-                    completionHandler(result: cacheValue, error: nil) // return expired cache but still call to server
+                    completionHandler(cacheValue, nil) // return expired cache but still call to server
                 }
             } else {
                 if(url == GET_DATA_METHOD || url == REFRESH_DATA_METHOD) {
@@ -77,17 +90,17 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
         }
     }
     
-    class func cachePut(key:String, value: NSObject, expiredTime : NSTimeInterval){
+    class func cachePut(_ key:String, value: NSObject, expiredTime : TimeInterval){
 //        print("cachePut key == \(key)")
         var cacheDict = Dictionary<String, NSObject>()
         cacheDict["CACHE_VALUE_KEY"] = value
-        cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] = String(expiredTime)
-        NSUserDefaults.standardUserDefaults().setValue(cacheDict, forKey: key)
+        cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] = String(expiredTime) as NSObject?
+        UserDefaults.standard.setValue(cacheDict, forKey: key)
     }
     
-    class func cacheExpire(url : String, postData : NSMutableDictionary?){
+    class func cacheExpire(_ url : String, postData : NSMutableDictionary?){
         let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
-        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+        let cacheDict = UserDefaults.standard.dictionary(forKey: key)
         if var cacheDict = cacheDict{
             cacheDict = cacheDict as! Dictionary<String, String>
             let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! String
@@ -95,9 +108,9 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
         }
     }
     
-    class func cacheExpire(key : String){
+    class func cacheExpire(_ key : String){
 //        print("cacheExpire key == \(key)")
-        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+        let cacheDict = UserDefaults.standard.dictionary(forKey: key)
         if var cacheDict = cacheDict{
 //            print("cacheExpire cacheDict == \(cacheDict)")
             cacheDict = cacheDict as! Dictionary<String, NSObject>
@@ -107,15 +120,15 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
     }
     
     // check if cache is expired or not
-    class func isCacheExpired(url : String, postData: NSMutableDictionary?) -> Bool{
+    class func isCacheExpired(_ url : String, postData: NSMutableDictionary?) -> Bool{
         
         let key = Utilities.getKeyFromUrlAndPostData(url, postData: postData)
         //            print("cacheGet key == \(key)")
-        let cacheDict = NSUserDefaults.standardUserDefaults().dictionaryForKey(key)
+        let cacheDict = UserDefaults.standard.dictionary(forKey: key)
         if var cacheDict = cacheDict{
             cacheDict = cacheDict as! Dictionary<String, NSObject>
             let cacheExpiredTime = cacheDict["CACHE_EXPIRED_TIMESTAMP_KEY"] as! String
-            if(NSDate().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
+            if(Date().timeIntervalSince1970 < Double(cacheExpiredTime)){ // valid
                 return false
             } else {
                 return true
@@ -132,14 +145,14 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
      + Update Notification data with new data from server and update Since timestamp
      ------------------------------------------------------------------ */
     
-    class func cacheGetNotification(completionHandler: (result: [NotificationObject]?) -> Void){
-        dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            var lastSince = NSUserDefaults.standardUserDefaults().integerForKey(NOTIFICATION_SINCE_KEY)
+    class func cacheGetNotification(_ completionHandler: @escaping (_ result: [NotificationObject]?) -> Void){
+        DispatchQueue.main.async { () -> Void in
+            var lastSince = UserDefaults.standard.integer(forKey: NOTIFICATION_SINCE_KEY)
             if lastSince == 0 { lastSince = 1 }
             var notificationDict = CacheManager.loadNotificationData()
             
             var resultArray = [NotificationObject]() // have cache
-            let currentTime = Int(NSDate().timeIntervalSince1970)
+            let currentTime = Int(Date().timeIntervalSince1970)
             for (expiredTime, notifications) in notificationDict {
                 let notificationArray = notifications as! [NotificationObject]
                 let expiredTimeInt = Int(expiredTime)!
@@ -150,22 +163,22 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                 }
             }
             
-            resultArray.sortInPlace({ $0.created > $1.created })
-            completionHandler(result: resultArray)
+            resultArray.sort(by: { $0.created > $1.created })
+            completionHandler(resultArray)
             
-            let newSince = Int(NSDate().timeIntervalSince1970)
-            XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andCompleteBlock: { (result) -> Void in
+            let newSince = Int(Date().timeIntervalSince1970)
+            XAppDelegate.mobilePlatform.platformNotiff.getAllwithSince(Int32(lastSince), andComplete: { (result) -> Void in
                 if let result = result {
                     let notifArray = result as! [NotificationObject]
                     CacheManager.addNotificationIdToReadList(notifArray)
-                    NSUserDefaults.standardUserDefaults().setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
+                    UserDefaults.standard.setValue(Int(newSince), forKey: NOTIFICATION_SINCE_KEY)
                     let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
                     if(checkArray.count > 0){ // has new data
                         let newExpireTime = String(newSince + (7 * 3600 * 24))
                         notificationDict[newExpireTime] = checkArray
                         resultArray += checkArray
                         CacheManager.saveNotificationsData(notificationDict)
-                        resultArray.sortInPlace({ $0.created > $1.created })
+                        resultArray.sort(by: { $0.created > $1.created })
                         completionHandler(result: resultArray)
                     }
                 }
@@ -175,7 +188,7 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
     
     // MARK: Helper
     // prevent duplicating notification
-    class func checkAndRemoveDuplicatingNotification(newArray : [NotificationObject], oldArray : [NotificationObject]) -> [NotificationObject]{
+    class func checkAndRemoveDuplicatingNotification(_ newArray : [NotificationObject], oldArray : [NotificationObject]) -> [NotificationObject]{
         var needRemoveArray = [NotificationObject]()
         var result = newArray
         for newNotif in result {
@@ -193,10 +206,10 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
         return result
     }
     
-    class func addNotificationIdToReadList(notifArray : [NotificationObject]){
+    class func addNotificationIdToReadList(_ notifArray : [NotificationObject]){
         var notificationIds = Set<String>()
-        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
-            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+        if let notifData = UserDefaults.standard.data(forKey: notificationKey) {
+            notificationIds = NSKeyedUnarchiver.unarchiveObject(with: notifData) as! Set<String>
         }
         // check if notification from server cleared or not, if they're cleared, add to cleared list
         for notif in notifArray {
@@ -206,28 +219,28 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                 }
             }
         }
-        let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+        let data = NSKeyedArchiver.archivedData(withRootObject: notificationIds)
+        UserDefaults.standard.set(data, forKey: notificationKey)
     }
     
-    class func saveNotificationsData(cacheDict : Dictionary<String, AnyObject>){
+    class func saveNotificationsData(_ cacheDict : Dictionary<String, AnyObject>){
         NSKeyedArchiver.archiveRootObject(cacheDict, toFile: NotificationObject.getFilePath())
     }
     
     class func loadNotificationData() -> Dictionary<String, AnyObject>{
-        let cacheDict = NSKeyedUnarchiver.unarchiveObjectWithFile(NotificationObject.getFilePath()) as? Dictionary<String, AnyObject> ?? Dictionary<String, AnyObject>()
+        let cacheDict = NSKeyedUnarchiver.unarchiveObject(withFile: NotificationObject.getFilePath()) as? Dictionary<String, AnyObject> ?? Dictionary<String, AnyObject>()
         return cacheDict
     }
     
     class func clearAllNotificationData() {
-        NSUserDefaults.standardUserDefaults().setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
-        let data = NSKeyedArchiver.archivedDataWithRootObject(Set<String>())
-        NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+        UserDefaults.standard.setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
+        let data = NSKeyedArchiver.archivedData(withRootObject: Set<String>())
+        UserDefaults.standard.set(data, forKey: notificationKey)
         NSKeyedArchiver.archiveRootObject(Dictionary<String, AnyObject>(), toFile: NotificationObject.getFilePath())
         XAppDelegate.lastGetAllNotificationsTs = 0
     }
     
     class func resetNotificationSinceTs() {
-        NSUserDefaults.standardUserDefaults().setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
+        UserDefaults.standard.setValue(Int(1), forKey: NOTIFICATION_SINCE_KEY)
     }
 }

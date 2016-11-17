@@ -23,15 +23,15 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         self.setupWheel()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let bgImageView = self.bgImageView{
-            self.view.sendSubviewToBack(bgImageView)
+            self.view.sendSubview(toBack: bgImageView)
         }
         view.addSubview(wheel)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         wheel.removeFromSuperview()
     }
@@ -42,7 +42,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
     
     func setupBackground(){
         let screenSize = Utilities.getScreenSize()
-        let rect = CGRectMake(0,0,screenSize.width,screenSize.height)
+        let rect = CGRect(x: 0,y: 0,width: screenSize.width,height: screenSize.height)
         bgImageView = UIImageView(frame: rect)
         if(DeviceType.IS_IPHONE_6){ // iP6
             bgImageView.image = UIImage(named: "bg-ip6@2x.png")
@@ -62,14 +62,14 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
             currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
             let index = setting.horoscopeSign
             if(index < 8){
-                for var i = 0; i < 8 - index; ++i {
-                    horoscopesSigns.insert(horoscopesSigns.last!, atIndex: 0)
+                for var i = 0; i < 8 - index; i += 1 {
+                    horoscopesSigns.insert(horoscopesSigns.last!, at: 0)
                     horoscopesSigns.removeLast()
                 }
             } else {
-                for var i = 0; i < index - 8; ++i {
+                for var i = 0; i < index - 8; i += 1 {
                     horoscopesSigns.append(horoscopesSigns[0] as Horoscope)
-                    horoscopesSigns.removeAtIndex(0)
+                    horoscopesSigns.remove(at: 0)
                 }
             }
         } else {
@@ -84,10 +84,10 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         let frame = getProperRotateFrame()
         wheel = RotateControl(frame: frame, andDelegate: self, withSections: Int32(allSignsArray.count), andArray: allSignsArray, andCurrentSign: currentSign)
         
-        self.wheel.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height + 15);
+        self.wheel.center = CGPoint(x: self.view.bounds.size.width/2, y: self.view.bounds.size.height + 15);
     }
     
-    func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
+    func wheelDidChangeValue(_ newValue: Horoscope!, becauseOf autoRoll: Bool) {
         
     }
     
@@ -100,7 +100,7 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
         // for 320px screen -> rotate width will be 450
         let screenWidth = self.view.bounds.size.width
         let result = 450 * screenWidth / 320
-        return CGRectMake(0, 0, result, result)
+        return CGRect(x: 0, y: 0, width: result, height: result)
     }
     
 }

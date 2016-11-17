@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol FollowTableViewCellDelegate {
-    optional func didTapFollowButton(cell: FollowTableViewCell)
+    @objc optional func didTapFollowButton(_ cell: FollowTableViewCell)
 }
 
 class FollowTableViewCell: UITableViewCell {
@@ -25,10 +25,10 @@ class FollowTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        selectionStyle = .None
+        selectionStyle = .none
         followButton = UIButton()
-        followButton.hidden = true
-        followButton.addTarget(self, action: "tapFollowButton:", forControlEvents: .TouchUpInside)
+        followButton.isHidden = true
+        followButton.addTarget(self, action: #selector(FollowTableViewCell.tapFollowButton(_:)), for: .touchUpInside)
         addSubview(followButton)
         self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width / 2
         profileImageView.clipsToBounds = true
@@ -39,36 +39,36 @@ class FollowTableViewCell: UITableViewCell {
 //        profileImageView.layer.cornerRadius = profileImageView.frame.width / 2
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    func configureCell(profile: UserProfile) {
+    func configureCell(_ profile: UserProfile) {
         profileNameLabel.text = profile.name
         horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: profile.sign)
         Utilities.getImageFromUrlString(profile.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 self.profileImageView?.image = image
             })
         })
     }
     
-    func configureFollowButton(isFollowed: Bool, showFollowButton: Bool) {
+    func configureFollowButton(_ isFollowed: Bool, showFollowButton: Bool) {
         if showFollowButton {
             if isFollowed {
-                followButton.hidden = true
+                followButton.isHidden = true
             } else {
-                followButton.setImage(UIImage(named: "follow_btn"), forState: .Normal)
-                followButton.hidden = false
+                followButton.setImage(UIImage(named: "follow_btn"), for: UIControlState())
+                followButton.isHidden = false
             }
         } else {
-            followButton.hidden = true
+            followButton.isHidden = true
         }
     }
     
-    func tapFollowButton(sender: UIButton) {
+    func tapFollowButton(_ sender: UIButton) {
         delegate?.didTapFollowButton?(self)
     }
 

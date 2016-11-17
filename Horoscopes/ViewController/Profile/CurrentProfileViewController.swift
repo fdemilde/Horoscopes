@@ -25,22 +25,22 @@ class CurrentProfileViewController: ProfileBaseViewController {
     var noPostView: PostButtonsView!
     var LOGIN_VIEW_PADDING: CGFloat = 10
     
-    let SETTINGS_BTN_SIZE = CGSizeMake(40,30)
+    let SETTINGS_BTN_SIZE = CGSize(width: 40,height: 30)
     
     // MARK: - Life cycle
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        horoscopeSignView.userInteractionEnabled = true
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "chooseHoroscopeSign:")
+        horoscopeSignView.isUserInteractionEnabled = true
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CurrentProfileViewController.chooseHoroscopeSign(_:)))
         horoscopeSignView.addGestureRecognizer(tapGestureRecognizer)
         noPostText = "You have not posted anything. Start posting something!"
         noUsersFollowingText = "You have not followed anyone. Start follow someone!"
         noFollowersText = "You do not have any follower."
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let isLoggedIn = XAppDelegate.socialManager.isLoggedInFacebook() ? 1 : 0
         let label = "logged_in \(isLoggedIn)"
@@ -52,12 +52,12 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 configureProfileView()
                 getData()
             } else {
-                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.current().tokenString, completionHandler: { (responseDict, error) -> Void in
                     if let error = error {
                         Utilities.showError(error, viewController: self)
                     } else {
                         self.userProfile = XAppDelegate.currentUser
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async(execute: { () -> Void in
                             self.removeLoginView()
                             self.configureProfileView()
                             self.getData()
@@ -85,29 +85,29 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     override func configureProfileView() {
         super.configureProfileView()
-        if profileView.hidden {
-            profileView.hidden = false
+        if profileView.isHidden {
+            profileView.isHidden = false
         }
         let sign = Int(XAppDelegate.userSettings.horoscopeSign)
         if sign >= 0 {
-            horoscopeSignLabel.hidden = false
-            horoscopeSignImageView.hidden = false
-            horoscopeSignView.hidden = false
+            horoscopeSignLabel.isHidden = false
+            horoscopeSignImageView.isHidden = false
+            horoscopeSignView.isHidden = false
             horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: sign)
             horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: sign)
             
         } else {
             settingsButtonLeadingSpace.constant -= 50
-            horoscopeSignLabel.hidden = true
-            horoscopeSignImageView.hidden = true
-            horoscopeSignView.hidden = true
+            horoscopeSignLabel.isHidden = true
+            horoscopeSignImageView.isHidden = true
+            horoscopeSignView.isHidden = true
         }
     }
     
     func configureLoginView() {
         if loginView == nil {
-            profileView.hidden = true
-            tableView.hidden = true
+            profileView.isHidden = true
+            tableView.isHidden = true
             
             let loginFrame = CGRect(x: view.frame.origin.x + LOGIN_VIEW_PADDING, y: view.frame.origin.y + ADMOD_HEIGHT + LOGIN_VIEW_PADDING, width: view.frame.width - LOGIN_VIEW_PADDING * 2, height: view.frame.height - ADMOD_HEIGHT - TABBAR_HEIGHT - LOGIN_VIEW_PADDING * 2)
             loginView = UIView(frame: loginFrame)
@@ -117,35 +117,35 @@ class CurrentProfileViewController: ProfileBaseViewController {
             loginView.layer.cornerRadius = 4
             
             // add shadow
-            loginView.layer.shadowColor = UIColor.blackColor().CGColor
-            loginView.layer.shadowOffset = CGSizeMake(0, 3)
+            loginView.layer.shadowColor = UIColor.black.cgColor
+            loginView.layer.shadowOffset = CGSize(width: 0, height: 3)
             loginView.layer.shadowRadius = 2
             loginView.layer.shadowOpacity = 0.3
             
             // Create setting button
             let buttonPadding: CGFloat = 10
-            let settingsButton = UIButton(frame: CGRectMake(loginFrame.size.width - buttonPadding - SETTINGS_BTN_SIZE.width, buttonPadding, SETTINGS_BTN_SIZE.width, SETTINGS_BTN_SIZE.height))
-            settingsButton.setImage(UIImage(named: "settings_btn"), forState: UIControlState.Normal)
-            settingsButton.addTarget(self, action: "openSettings:", forControlEvents: UIControlEvents.TouchUpInside)
+            let settingsButton = UIButton(frame: CGRect(x: loginFrame.size.width - buttonPadding - SETTINGS_BTN_SIZE.width, y: buttonPadding, width: SETTINGS_BTN_SIZE.width, height: SETTINGS_BTN_SIZE.height))
+            settingsButton.setImage(UIImage(named: "settings_btn"), for: UIControlState())
+            settingsButton.addTarget(self, action: #selector(CurrentProfileViewController.openSettings(_:)), for: UIControlEvents.touchUpInside)
             loginView.addSubview(settingsButton)
             let padding: CGFloat = 8
             
             let facebookLoginButton = UIButton()
             let facebookLoginImage = UIImage(named: "fb_login_icon")
-            facebookLoginButton.setImage(facebookLoginImage, forState: UIControlState.Normal)
+            facebookLoginButton.setImage(facebookLoginImage, for: UIControlState())
             facebookLoginButton.sizeToFit()
-            facebookLoginButton.frame = CGRectMake(loginFrame.width/2 - facebookLoginButton.frame.width/2, loginFrame.height/2 - facebookLoginButton.frame.height/2 - 20, facebookLoginButton.frame.width, facebookLoginButton.frame.height)
-            facebookLoginButton.addTarget(self, action: "login:", forControlEvents: UIControlEvents.TouchUpInside)
+            facebookLoginButton.frame = CGRect(x: loginFrame.width/2 - facebookLoginButton.frame.width/2, y: loginFrame.height/2 - facebookLoginButton.frame.height/2 - 20, width: facebookLoginButton.frame.width, height: facebookLoginButton.frame.height)
+            facebookLoginButton.addTarget(self, action: #selector(CurrentProfileViewController.login(_:)), for: UIControlEvents.touchUpInside)
             loginView.addSubview(facebookLoginButton)
             
             let facebookLoginLabel = UILabel()
             facebookLoginLabel.font = UIFont(name: "HelveticaNeue", size: 11)
             facebookLoginLabel.text = "Login via Facebook to unlock your Horoscopes profile"
-            facebookLoginLabel.textColor = UIColor.whiteColor()
+            facebookLoginLabel.textColor = UIColor.white
             facebookLoginLabel.numberOfLines = 2
             facebookLoginLabel.sizeToFit()
-            facebookLoginLabel.textAlignment = NSTextAlignment.Center
-            facebookLoginLabel.frame = CGRectMake(loginFrame.width/2 - facebookLoginLabel.frame.width/2, facebookLoginButton.frame.origin.y + facebookLoginButton.frame.height + padding, facebookLoginLabel.frame.width, facebookLoginLabel.frame.height)
+            facebookLoginLabel.textAlignment = NSTextAlignment.center
+            facebookLoginLabel.frame = CGRect(x: loginFrame.width/2 - facebookLoginLabel.frame.width/2, y: facebookLoginButton.frame.origin.y + facebookLoginButton.frame.height + padding, width: facebookLoginLabel.frame.width, height: facebookLoginLabel.frame.height)
             loginView.addSubview(facebookLoginLabel)
             
             view.addSubview(loginView)
@@ -154,21 +154,21 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Action
     
-    @IBAction func openSettings(sender: UIButton) {
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("SettingsViewController") as! SettingsViewController
+    @IBAction func openSettings(_ sender: UIButton) {
+        let controller = storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
         controller.parentVC = self
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func chooseHoroscopeSign(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    func chooseHoroscopeSign(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-            parentViewController!.presentViewController(loginVC, animated: true, completion: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            parent!.present(loginVC, animated: true, completion: nil)
         }
     }
     
-    func login(sender: UIButton) {
+    func login(_ sender: UIButton) {
         Utilities.showHUD()
         currentPostPage = 0;
         SocialManager.sharedInstance.login(self) { (error, permissionGranted) -> Void in
@@ -178,7 +178,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
             } else {
                 if permissionGranted {
                     self.userProfile = XAppDelegate.currentUser
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.removeLoginView()
                         self.configureProfileView()
                     })
@@ -194,18 +194,18 @@ class CurrentProfileViewController: ProfileBaseViewController {
     // MARK: - Helper
     
     func refreshPostAndScrollToTop() {
-        if currentScope != .Post {
-            currentScope = .Post
+        if currentScope != .post {
+            currentScope = .post
             tableView.allowsSelection = false
             tapScopeButton(postButton)
-            tableView.pagingEnabled = true
+            tableView.isPagingEnabled = true
         }
         currentPostPage = 0
         isLastPostPage = false
         if userProfile.uid != -1 {
             self.getUserProfileCounts()
             getFeed(true, completionHandler: { () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     self.scrollToTop()
                 })
             })
@@ -224,7 +224,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
 //        getFriends()
     }
     
-    override func getUsersFollowing(completionHandler: () -> Void) {
+    override func getUsersFollowing(_ completionHandler: () -> Void) {
         SocialManager.sharedInstance.getProfilesOfUsersFollowing { (result, error) -> Void in
             Utilities.hideHUD()
             if let error = error {
@@ -234,7 +234,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 self.noFollowingUser = result!.count == 0
                 if self.isDataUpdated(self.followingUsers, newData: result!) {
                     self.followingUsers = result!
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.tableView.reloadData()
                     })
                 }
@@ -243,7 +243,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
     }
     
-    override func getFollowers(completionHandler: () -> Void) {
+    override func getFollowers(_ completionHandler: @escaping () -> Void) {
         SocialManager.sharedInstance.getProfilesOfFollowers { (result, error) -> Void in
             Utilities.hideHUD()
             if let error = error {
@@ -254,7 +254,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 self.noFollower = followers.count == 0
                 if self.isDataUpdated(self.followers, newData: followers) {
                     self.followers = followers
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.tableView.reloadData()
                     })
                 }
@@ -263,7 +263,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                         Utilities.showError(error, viewController: self)
                     } else {
                         if shouldReload {
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            DispatchQueue.main.async(execute: { () -> Void in
                                 self.tableView.reloadData()
                             })
                         }
@@ -284,9 +284,9 @@ class CurrentProfileViewController: ProfileBaseViewController {
         }
     }
     
-    func configureNoPostTableViewCell(cell: UITableViewCell, index: Int) {
+    func configureNoPostTableViewCell(_ cell: UITableViewCell, index: Int) {
         cell.textLabel?.text = postTypeText[index]
-        cell.textLabel?.textColor = UIColor.grayColor()
+        cell.textLabel?.textColor = UIColor.gray
         cell.imageView?.image = UIImage(named: postTypeImages[index])
     }
     
@@ -294,30 +294,30 @@ class CurrentProfileViewController: ProfileBaseViewController {
         currentPostPage = 0
         isLastPostPage = false
         getFeed(true, completionHandler: { () -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
             })
         })
     }
     
     // MARK: - Table view data source
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         tableView.backgroundView = nil
-        if currentScope == .Post {
+        if currentScope == .post {
             if noPost {
                 tableView.backgroundView = noPostView
             } else {
             }
-        } else if currentScope == .Following && noFollowingUser {
+        } else if currentScope == .following && noFollowingUser {
             return friends.count
         }
         return super.tableView(tableView, numberOfRowsInSection: section)
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if currentScope != .Post {
-            if currentScope == .Following && noFollowingUser {
-                let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if currentScope != .post {
+            if currentScope == .following && noFollowingUser {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "FollowTableViewCell", for: indexPath) as! FollowTableViewCell
                 cell.delegate = self
                 let friend = friends[indexPath.row]
                 cell.configureCell(friend)
@@ -325,7 +325,7 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 // cell.configureFollowButton(friend.isFollowed, showFollowButton: true)
                 return cell
             } else {
-                let cell = super.tableView(tableView, cellForRowAtIndexPath: indexPath) as! FollowTableViewCell
+                let cell = super.tableView(tableView, cellForRowAt: indexPath) as! FollowTableViewCell
                 cell.delegate = self
                 // BINH modify: comment out all follow button, do not delete commented code
 //                if currentScope == .Following {
@@ -336,22 +336,22 @@ class CurrentProfileViewController: ProfileBaseViewController {
                 return cell
             }
         }
-        return super.tableView(tableView, cellForRowAtIndexPath: indexPath)
+        return super.tableView(tableView, cellForRowAt: indexPath)
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if currentScope != .Post {
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if currentScope != .post {
             var profile: UserProfile!
-            if currentScope == .Following {
+            if currentScope == .following {
                 if noFollowingUser {
                     profile = friends[indexPath.row]
                 } else {
                     profile = followingUsers[indexPath.row]
                 }
-            } else if currentScope == .Followers {
+            } else if currentScope == .followers {
                 profile = followers[indexPath.row]
             }
-            let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+            let controller = storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as! OtherProfileViewController
             controller.userProfile = profile!
             navigationController?.pushViewController(controller, animated: true)
         }
@@ -359,10 +359,10 @@ class CurrentProfileViewController: ProfileBaseViewController {
     
     // MARK: - Delegate
     
-    func didTapFollowButton(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
+    func didTapFollowButton(_ cell: FollowTableViewCell) {
+        let index = tableView.indexPath(for: cell)?.row
         var users: [UserProfile]!
-        if currentScope == .Followers {
+        if currentScope == .followers {
             users = followers
         } else {
             users = friends
@@ -376,8 +376,8 @@ class CurrentProfileViewController: ProfileBaseViewController {
             } else {
                 user.isFollowed = true
                 self.numberOfUsersFollowing += 1
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    cell.followButton.hidden = true
+                DispatchQueue.main.async(execute: { () -> Void in
+                    cell.followButton.isHidden = true
                     self.configureScopeButton()
                 })
                 Utilities.hideHUD()
@@ -388,11 +388,11 @@ class CurrentProfileViewController: ProfileBaseViewController {
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
         if segue.identifier == "searchFriend" {
-            let controller = segue.destinationViewController as! SearchViewController
+            let controller = segue.destination as! SearchViewController
             controller.delegate = self
         }
     }

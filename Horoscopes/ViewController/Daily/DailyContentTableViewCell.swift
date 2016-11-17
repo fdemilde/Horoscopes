@@ -9,8 +9,8 @@
 import UIKit
 
 @objc protocol DailyContentTableViewCellDelegate {
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String)
-    optional func didTapOnCalendar()
+    func didShare(_ horoscopeDescription: String, timeTag: TimeInterval, shareUrl : String)
+    @objc optional func didTapOnCalendar()
 }
 
 class DailyContentTableViewCell: UITableViewCell {
@@ -32,7 +32,7 @@ class DailyContentTableViewCell: UITableViewCell {
     @IBOutlet weak var footer: UIView!
     
     var delegate: DailyContentTableViewCellDelegate!
-    var timeTag = NSTimeInterval()
+    var timeTag = TimeInterval()
     var selectedSign: Int!
     var shareUrl = ""
     var parentViewController: UIViewController!
@@ -45,7 +45,7 @@ class DailyContentTableViewCell: UITableViewCell {
         textView.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -58,14 +58,14 @@ class DailyContentTableViewCell: UITableViewCell {
         set {
             var frame = newValue
             frame.origin.x = inset
-            frame.size.width = UIScreen.mainScreen().bounds.width - 2*inset
+            frame.size.width = UIScreen.main.bounds.width - 2*inset
             super.frame = frame
         }
     }
     
     // MARK: - Configuration
     
-    func configureNumberOfLike(shouldHideIt: Bool) {
+    func configureNumberOfLike(_ shouldHideIt: Bool) {
         if shouldHideIt {
             self.likedLabel.alpha = 0
             self.likedImageView.alpha = 0
@@ -74,55 +74,55 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Action
     
-    @IBAction func share(sender: UIButton) {
+    @IBAction func share(_ sender: UIButton) {
         delegate.didShare(textView.text, timeTag: timeTag, shareUrl: self.shareUrl)
     }
     
-    @IBAction func like(sender: UIButton) {
-        let df = NSDateFormatter()
-        df.dateStyle = .FullStyle
-        let date = NSDate(timeIntervalSince1970: timeTag)
-        let dateString = df.stringFromDate(date)
+    @IBAction func like(_ sender: UIButton) {
+        let df = DateFormatter()
+        df.dateStyle = .full
+        let date = Date(timeIntervalSince1970: timeTag)
+        let dateString = df.string(from: date)
         let label = "type = horoscope, like = 1, info = " + dateString
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(int: Int32(5)), repeats: false)
+        NotificationCenter.default.addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_RATE_HOROSCOPE_RESULT), object: nil)
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(value: Int32(5) as Int32), repeats: false)
     }
     
-    @IBAction func dislike(sender: UIButton) {
-        let df = NSDateFormatter()
-        df.dateStyle = .FullStyle
-        let date = NSDate(timeIntervalSince1970: timeTag)
-        let dateString = df.stringFromDate(date)
+    @IBAction func dislike(_ sender: UIButton) {
+        let df = DateFormatter()
+        df.dateStyle = .full
+        let date = Date(timeIntervalSince1970: timeTag)
+        let dateString = df.string(from: date)
         let label = "type = horoscope, like = 0, info = " + dateString
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
         if let controller = parentViewController as? DailyTableViewController {
             controller.shouldHideNumberOfLike = false
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
-        NSTimer.scheduledTimerWithTimeInterval(0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(int: Int32(1)), repeats: false)
+        NotificationCenter.default.addObserver(self, selector: #selector(DailyContentTableViewCell.rateResultNotificationHandler(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_RATE_HOROSCOPE_RESULT), object: nil)
+        Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(DailyContentTableViewCell.doRatingRequestWithRateValue(_:)), userInfo: NSNumber(value: Int32(1) as Int32), repeats: false)
     }
     
-    @IBAction func calendarTapped(sender:UIButton)
+    @IBAction func calendarTapped(_ sender:UIButton)
     {
         delegate.didTapOnCalendar?()
     }
     
     // MARK: Link delegate, support Hyper link in textview
     
-    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
+    func linkTextView(_ linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
         print("Tapped to link = \(value)")
     }
     
     // MARK: - Helper
     
-    func setUp(type: DailyHoroscopeType, selectedSign: Int, shareUrl : String, controller: UIViewController) {
+    func setUp(_ type: DailyHoroscopeType, selectedSign: Int, shareUrl : String, controller: UIViewController) {
         if selectedSign != -1 {
             self.selectedSign = selectedSign
-            if type == DailyHoroscopeType.TodayHoroscope {
+            if type == DailyHoroscopeType.todayHoroscope {
                 dayLabel.text = "Today"
             } else {
                 dayLabel.text = "Tomorrow"
@@ -136,27 +136,27 @@ class DailyContentTableViewCell: UITableViewCell {
         }
     }
     
-    func dateStringForType(type: DailyHoroscopeType) -> String {
-        if type == DailyHoroscopeType.TodayHoroscope {
+    func dateStringForType(_ type: DailyHoroscopeType) -> String {
+        if type == DailyHoroscopeType.todayHoroscope {
             
             if let dictionary = XAppDelegate.horoscopesManager.data["today"] as? Dictionary<String, AnyObject> {
                 if let string = dictionary["time_tag"] as? String {
-                    timeTag = NSTimeInterval((string as NSString).doubleValue)
+                    timeTag = TimeInterval((string as NSString).doubleValue)
                 }
             }
 
-            return Utilities.getDateStringFromTimestamp(NSDate().timeIntervalSince1970, dateFormat: "MMM dd, yyyy")
+            return Utilities.getDateStringFromTimestamp(Date().timeIntervalSince1970, dateFormat: "MMM dd, yyyy")
         } else {
             if let dictionary = XAppDelegate.horoscopesManager.data["tomorrow"] as? Dictionary<String, AnyObject> {
                 if let string = dictionary["time_tag"] as? String {
-                    timeTag = NSTimeInterval((string as NSString).doubleValue)
+                    timeTag = TimeInterval((string as NSString).doubleValue)
                 }
             }
-            return Utilities.getDateStringFromTimestamp((NSDate().timeIntervalSince1970 + 86400), dateFormat: "MMM dd, yyyy")
+            return Utilities.getDateStringFromTimestamp((Date().timeIntervalSince1970 + 86400), dateFormat: "MMM dd, yyyy")
         }
     }
     
-    func updateLikedLabel(votes : Int, likedPercentage: Int){
+    func updateLikedLabel(_ votes : Int, likedPercentage: Int){
         
         let likedString = String(format :"%d%% liked it \u{00B7}", likedPercentage)
         let voteString = String(format :"%d votes", votes)
@@ -168,14 +168,14 @@ class DailyContentTableViewCell: UITableViewCell {
         
         let voteStringLength = voteString.characters.count
         
-        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFontOfSize(11.0), range: NSMakeRange(0, likedStringLength))
+        attString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 11.0), range: NSMakeRange(0, likedStringLength))
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1), range: NSMakeRange(0, likedStringLength))
-        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFontOfSize(11.0), range: NSMakeRange(likedStringLength, (voteStringLength + 1))) // +1 for the space between
+        attString.addAttribute(NSFontAttributeName, value: UIFont.systemFont(ofSize: 11.0), range: NSMakeRange(likedStringLength, (voteStringLength + 1))) // +1 for the space between
         attString.addAttribute(NSForegroundColorAttributeName, value: UIColor(red: 153/255.0, green: 153/255.0, blue: 153/255.0, alpha: 1), range: NSMakeRange(likedStringLength, voteStringLength + 1))
         likedLabel.attributedText = attString
     }
     
-    func updateLikedImageView(likedPercentage: Int) {
+    func updateLikedImageView(_ likedPercentage: Int) {
         let images = likedImageArrayForLikedPercentage(likedPercentage)
         likedImageView.image = images.last
         likedImageView.animationImages = images
@@ -184,7 +184,7 @@ class DailyContentTableViewCell: UITableViewCell {
         likedImageView.startAnimating()
     }
     
-    func likedImageArrayForLikedPercentage(likedPercentage : Int) -> [UIImage]{
+    func likedImageArrayForLikedPercentage(_ likedPercentage : Int) -> [UIImage]{
         var result = [UIImage]()
         var lastImageNumber = 1
         
@@ -208,7 +208,7 @@ class DailyContentTableViewCell: UITableViewCell {
     }
     
     func animateLike() {
-        UIView.animateWithDuration(0.5, animations: { () -> Void in
+        UIView.animate(withDuration: 0.5, animations: { () -> Void in
             self.likedLabel.alpha = 1.0
             self.likedImageView.alpha = 1.0
         })
@@ -216,7 +216,7 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Convenience
     
-    func updateLikedPercentage(vote: Int, likedPercentage: Int) {
+    func updateLikedPercentage(_ vote: Int, likedPercentage: Int) {
         updateLikedLabel(vote, likedPercentage: likedPercentage)
         updateLikedImageView(likedPercentage)
         animateLike()
@@ -224,14 +224,14 @@ class DailyContentTableViewCell: UITableViewCell {
     
     // MARK: - Selector and handler
     
-    func doRatingRequestWithRateValue(timer: NSTimer){
+    func doRatingRequestWithRateValue(_ timer: Timer){
         let value = timer.userInfo as! NSNumber
         let time = timeTag as NSNumber
-        XAppDelegate.horoscopesManager.sendRateRequestWithTimeTag(time.integerValue, signIndex: selectedSign, rating: value.integerValue, viewcontroller: XAppDelegate.window!.rootViewController!)
+        XAppDelegate.horoscopesManager.sendRateRequestWithTimeTag(time.intValue, signIndex: selectedSign, rating: value.intValue, viewcontroller: XAppDelegate.window!.rootViewController!)
     }
     
-    func rateResultNotificationHandler(notif : NSNotification){
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_RATE_HOROSCOPE_RESULT, object: nil)
+    func rateResultNotificationHandler(_ notif : Notification){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: NOTIFICATION_RATE_HOROSCOPE_RESULT), object: nil)
         let rateResultDictionary = notif.object as! [String: AnyObject]
         var vote = 0
         var likedPercentage = 0

@@ -34,22 +34,22 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             selectedSign = parentViewController.selectedSign
         }
         tapGesture = UITapGestureRecognizer(target: self, action: #selector(DailyTableViewController.showTomorrowHoroscope))
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "finishLoadingAllSigns:", name: NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DailyTableViewController.finishLoadingAllSigns(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_ALL_SIGNS_LOADED), object: nil)
         let backgroundImage = Utilities.getImageToSupportSize("background", size: view.frame.size, frame: view.bounds)
         tableView.backgroundView = UIImageView(image: backgroundImage)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "refreshView", name: UIApplicationDidBecomeActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DailyTableViewController.refreshView), name: NSNotification.Name.UIApplicationDidBecomeActive, object: nil)
         refreshView()
         // if v1 update to v2, show login VC with previous selected sign
-        let didRegisterForV2 = NSUserDefaults.standardUserDefaults().boolForKey(V2_NOTIF_CHECK)
+        let didRegisterForV2 = UserDefaults.standard.bool(forKey: V2_NOTIF_CHECK)
         if !didRegisterForV2 {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-            parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            parent!.present(loginVC, animated: false, completion: nil)
             
             if (Utilities.isNotificationGranted()){
                 Utilities.registerForRemoteNotification()
             } else {
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: V2_NOTIF_CHECK)
+                UserDefaults.standard.set(true, forKey: V2_NOTIF_CHECK)
             }
             
             return
@@ -58,21 +58,21 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         // this shouldn't be running at all if logic is correct, code is here just in case v2 check is wrong
         if Utilities.isFirstTimeUsing() {
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-            parentViewController!.presentViewController(loginVC, animated: false, completion: nil)
+            let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+            parent!.present(loginVC, animated: false, completion: nil)
             return
         }
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let label = "sign = \(selectedSign)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyOpen, label: label)
     }
     
     deinit {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,7 +82,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
 
     // MARK: - Table view data source and delegate
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch indexPath.row {
         case 0:
             return 110
@@ -112,23 +112,23 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         }
     }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = isEmptyDataSource ? 0 : 4
         return rows
     }
 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         switch indexPath.row {
         case 0:
-            cell = tableView.dequeueReusableCellWithIdentifier("DailyHoroscopesTableViewCell", forIndexPath: indexPath)
+            cell = tableView.dequeueReusableCell(withIdentifier: "DailyHoroscopesTableViewCell", for: indexPath)
             configureDailyHoroscopesTableViewCell(cell as! DailyHoroscopesTableViewCell)
         case 2:
-            let cell = tableView.dequeueReusableCellWithIdentifier("DailyButtonTableViewCell", forIndexPath: indexPath) as! DailyButtonTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DailyButtonTableViewCell", for: indexPath) as! DailyButtonTableViewCell
             cell.delegate = self
             return cell
         default:
-            let cell = tableView.dequeueReusableCellWithIdentifier("DailyContentTableViewCell", forIndexPath: indexPath) as! DailyContentTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "DailyContentTableViewCell", for: indexPath) as! DailyContentTableViewCell
             cell.delegate = self
             var description = ""
             var shareUrl = ""
@@ -143,13 +143,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                     }
                 }
                 
-                cell.setUp(DailyHoroscopeType.TodayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl, controller: self)
+                cell.setUp(DailyHoroscopeType.todayHoroscope, selectedSign: selectedSign, shareUrl : shareUrl, controller: self)
                 
                 cell.textView.text = description
                 
             } else {
                 
-                cell.setUp(DailyHoroscopeType.TomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
+                cell.setUp(DailyHoroscopeType.tomorrowHoroscope, selectedSign: selectedSign, shareUrl: shareUrl, controller: self)
                 
                 if(shouldShowTomorrowHoroscopes){
                     if(selectedSign != -1 && selectedSign < XAppDelegate.horoscopesManager.horoscopesSigns.count){
@@ -161,13 +161,13 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
                         }
                     }
                     cell.textView.text = description
-                    cell.actionView.hidden = false
+                    cell.actionView.isHidden = false
                     cell.removeGestureRecognizer(tapGesture)
                 } else {
                     cell.configureNumberOfLike(shouldHideNumberOfLike)
                     cell.addGestureRecognizer(tapGesture)
                     cell.textView.text = tapToOpenString
-                    cell.actionView.hidden = true
+                    cell.actionView.isHidden = true
                     
                 }
             }
@@ -178,7 +178,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         return cell
     }
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         tableView.tableFooterView = getFooterView()
         return 1
     }
@@ -214,21 +214,21 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         if shouldCollectData {
             shouldCollectData = false
             
-            let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
-            let todayComp = defaultCalendar.components(components, fromDate: NSDate())
-            todayComp.calendar = defaultCalendar
+            let components: NSCalendar.Unit = [.year, .month, .day, .hour, .minute, .second]
+            var todayComp = (defaultCalendar as NSCalendar).components(components, from: Date())
+            (todayComp as NSDateComponents).calendar = defaultCalendar as Calendar
             todayComp.hour = 1
             todayComp.minute = 1
             todayComp.second = 1
-            collectedHoroscope.mySetLastDateOpenApp(todayComp.date)
+            collectedHoroscope.mySetLastDateOpenApp((todayComp as NSDateComponents).date)
             saveCollectedHoroscopeData()
         } else {
             let settings = XAppDelegate.userSettings
             let item = CollectedItem()
-            item.collectedDate = NSDate()
+            item.collectedDate = Date()
             if(settings.horoscopeSign >= 0 && Int(settings.horoscopeSign) < XAppDelegate.horoscopesManager.horoscopesSigns.count){
                 item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[Int(settings.horoscopeSign)]
-                collectedHoroscope.collectedData.replaceObjectAtIndex(0, withObject: item)
+                collectedHoroscope.collectedData.replaceObject(at: 0, with: item)
                 collectedHoroscope.saveCollectedData()
             }
             
@@ -237,20 +237,20 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func saveCollectedHoroscopeData(){
         let item = CollectedItem()
-        item.collectedDate = NSDate()
+        item.collectedDate = Date()
         item.horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedSign]
-        collectedHoroscope.collectedData.insertObject(item, atIndex: 0)
+        collectedHoroscope.collectedData.insert(item, at: 0)
         collectedHoroscope.saveCollectedData()
         
     }
     
     // MARK: - Helper
     
-    func configureDailyHoroscopesTableViewCell(cell: DailyHoroscopesTableViewCell) {
+    func configureDailyHoroscopesTableViewCell(_ cell: DailyHoroscopesTableViewCell) {
         if selectedSign != -1 {
             let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[selectedSign] as Horoscope
             let image = UIImage(named: String(format: "%@_selected", horoscope.sign))
-            cell.horoscopesSignButton.setImage(image, forState: .Normal)
+            cell.horoscopesSignButton.setImage(image, for: UIControlState())
             cell.horoscopesSignLabel.text = horoscope.sign
             cell.horoscopesDateLabel.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
             cell.collectedPercentageLabel.text = String(format:"%g%%", round(collectedHoroscope.getScore() * 100))
@@ -259,50 +259,50 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func daysPassed() -> Double {
         collectedHoroscope = CollectedHoroscope()
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+        let components: NSCalendar.Unit = [.year, .month, .day, .hour, .minute, .second]
         
-        let todayComp = defaultCalendar.components(components, fromDate: NSDate())
-        todayComp.calendar = defaultCalendar
+        var todayComp = (defaultCalendar as NSCalendar).components(components, from: Date())
+        (todayComp as NSDateComponents).calendar = defaultCalendar as Calendar
         
         todayComp.hour = 1
         todayComp.minute = 1
         todayComp.second = 1
         
-        let lastOpenComp = defaultCalendar.components(components, fromDate: collectedHoroscope.lastDateOpenApp)
-        lastOpenComp.calendar = defaultCalendar
+        var lastOpenComp = (defaultCalendar as NSCalendar).components(components, from: collectedHoroscope.lastDateOpenApp)
+        (lastOpenComp as NSDateComponents).calendar = defaultCalendar as Calendar
         lastOpenComp.hour = 1
         lastOpenComp.minute = 1
         lastOpenComp.second = 1
         
         
-        return fabs(round(todayComp.date!.timeIntervalSinceDate(lastOpenComp.date!) / (3600*24)))
+        return fabs(round((todayComp as NSDateComponents).date!.timeIntervalSince((lastOpenComp as NSDateComponents).date!) / (3600*24)))
     }
     
-    func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String) -> ShareViewController{
+    func prepareShareVC(_ horoscopeDescription: String, timeTag: TimeInterval, shareUrl : String) -> ShareViewController{
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        let shareVC = storyBoard.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
         let sharingText = String(format: "%@", horoscopeDescription)
         let pictureURL = String(format: "http://horoscopes.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
+        shareVC.populateDailyShareData( ShareViewType.shareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
         
         return shareVC
     }
     
     
     
-    func calculateBodyHeight(cell : DailyContentTableViewCell? ,text : String) -> CGFloat{
+    func calculateBodyHeight(_ cell : DailyContentTableViewCell? ,text : String) -> CGFloat{
         
         let font = UIFont(name: "Book Antiqua", size: 15)
-        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName as NSCopying)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = self.view.frame.width - PADDING * 4
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
         return TEXTVIEW_PADDING + textViewHeight
     }
     
-    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+    func calculateTextViewHeight(_ string: NSAttributedString, width: CGFloat) ->CGFloat {
         textViewForCalculating.attributedText = string
-        let size = textViewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let size = textViewForCalculating.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         let height = ceil(size.height)
         return height
     }
@@ -312,15 +312,15 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             
         } else {
             tableFooterView = UIView()
-            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
-            tableFooterView.backgroundColor = UIColor.clearColor()
+            tableFooterView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 8)
+            tableFooterView.backgroundColor = UIColor.clear
         }
         return tableFooterView
     }
     
     // MARK: - Notification Handler
     
-    func finishLoadingAllSigns(notification: NSNotification) {
+    func finishLoadingAllSigns(_ notification: Notification) {
         isEmptyDataSource = false
         self.reloadData()
     }
@@ -333,7 +333,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     // MARK: - Action
     
-    @IBAction func handleRefresh(sender: UIRefreshControl) {
+    @IBAction func handleRefresh(_ sender: UIRefreshControl) {
         XAppDelegate.horoscopesManager.getAllHoroscopes(true)
         self.shouldHideNumberOfLike = true
         shouldShowTomorrowHoroscopes = false
@@ -341,19 +341,19 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         sender.endRefreshing()
     }
 
-    @IBAction func chooseHoroscopeSign(sender: UIButton) {
+    @IBAction func chooseHoroscopeSign(_ sender: UIButton) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
         self.shouldHideNumberOfLike = true
         shouldShowTomorrowHoroscopes = false
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        let controller = storyboard?.instantiateViewController(withIdentifier: "ChooseSignVC") as! ChooseSignVC
         controller.delegate = self
-        presentViewController(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
     
     @IBAction func cookieTapped() {
 //        isCookieTapped = true
-        dispatch_async(dispatch_get_main_queue(),{
-            let cookieViewController = self.storyboard!.instantiateViewControllerWithIdentifier("CookieViewController") as! CookieViewController
+        DispatchQueue.main.async(execute: {
+            let cookieViewController = self.storyboard!.instantiateViewController(withIdentifier: "CookieViewController") as! CookieViewController
             cookieViewController.parentVC = self
             self.navigationController!.pushViewController(cookieViewController, animated: true)
         })
@@ -374,20 +374,20 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     func didTapViewOtherSignButton() {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
         shouldHideNumberOfLike = true
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("ChooseSignVC") as! ChooseSignVC
+        let controller = storyboard?.instantiateViewController(withIdentifier: "ChooseSignVC") as! ChooseSignVC
         controller.delegate = self
-        presentViewController(controller, animated: true, completion: nil)
+        present(controller, animated: true, completion: nil)
     }
     
     
-    func didSelectHoroscopeSign(selectedSign: Int) {
-        presentedViewController?.dismissViewControllerAnimated(true, completion: nil)
+    func didSelectHoroscopeSign(_ selectedSign: Int) {
+        presentedViewController?.dismiss(animated: true, completion: nil)
         self.selectedSign = selectedSign
         updateCollectedData()
         tableView.reloadData()
     }
     
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl : String) {
+    func didShare(_ horoscopeDescription: String, timeTag: TimeInterval, shareUrl : String) {
         let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag, shareUrl : shareUrl)
         Utilities.presentShareFormSheetController(self, shareViewController: controller)
     }

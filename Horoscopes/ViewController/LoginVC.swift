@@ -40,7 +40,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        fbLoginBtn.backgroundColor = UIColor.clearColor()
+        fbLoginBtn.backgroundColor = UIColor.clear
         fbLoginBtn.imageView!.clipsToBounds = true
         XAppDelegate.socialManager.delegate = self
         if Utilities.isFirstTimeUsing() {
@@ -54,8 +54,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func initialBirthday(){
         birthday = XAppDelegate.userSettings.birthday
-        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.center
+        birthdaySelectButton.setTitle(self.getBirthdayString(), for: UIControlState())
     }
     
     func setupComponents(){
@@ -69,48 +69,48 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         signDateLabelTopConstraint.constant = (signDateLabelTopConstraint.constant * ratio)
         
         let startButtonImage = UIImage(named: "start_button")
-        let startButtonFrame = CGRectMake((Utilities.getScreenSize().width - startButtonImage!.size.width)/2, Utilities.getScreenSize().height - startButtonImage!.size.height, startButtonImage!.size.width, startButtonImage!.size.height)
-        startButton = UIButton(type: UIButtonType.Custom)
+        let startButtonFrame = CGRect(x: (Utilities.getScreenSize().width - startButtonImage!.size.width)/2, y: Utilities.getScreenSize().height - startButtonImage!.size.height, width: startButtonImage!.size.width, height: startButtonImage!.size.height)
+        startButton = UIButton(type: UIButtonType.custom)
         startButton.frame = startButtonFrame
-        startButton.setImage(startButtonImage, forState: UIControlState.Normal)
-        startButton.setTitle("", forState: UIControlState.Normal)
+        startButton.setImage(startButtonImage, for: UIControlState())
+        startButton.setTitle("", for: UIControlState())
 //        startButton.backgroundColor = UIColor.blueColor()
         self.view .addSubview(startButton)
-        startButton.addTarget(self, action: #selector(LoginVC.startButtonTapped(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        startButton.addTarget(self, action: #selector(LoginVC.startButtonTapped(_:)), for: UIControlEvents.touchUpInside)
         
-        birthdaySelectButton.layer.shadowColor = UIColor.blackColor().CGColor
-        birthdaySelectButton.layer.shadowOffset = CGSizeMake(0, 2)
+        birthdaySelectButton.layer.shadowColor = UIColor.black.cgColor
+        birthdaySelectButton.layer.shadowOffset = CGSize(width: 0, height: 2)
         birthdaySelectButton.layer.shadowRadius = 2
         birthdaySelectButton.layer.shadowOpacity = 0.3
         birthdaySelectButton.layer.cornerRadius = 4
         
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
-            if let url = NSURL(string: XAppDelegate.currentUser.imgURL) {
+            if let url = URL(string: XAppDelegate.currentUser.imgURL) {
                 self.downloadImage(url)
             }
             loginLabel.text = XAppDelegate.currentUser.name
-            loginLabel.textColor = UIColor.whiteColor()
-            loginLabel.font = UIFont.boldSystemFontOfSize(18)
-            fbLoginBtn.userInteractionEnabled = false
+            loginLabel.textColor = UIColor.white
+            loginLabel.font = UIFont.boldSystemFont(ofSize: 18)
+            fbLoginBtn.isUserInteractionEnabled = false
         } else {
-            fbLoginBtn.userInteractionEnabled = true
+            fbLoginBtn.isUserInteractionEnabled = true
         }
         
-        self.view .bringSubviewToFront(fbLoginBtn)
-        self.view .bringSubviewToFront(loginLabel)
-        self.view .bringSubviewToFront(birthdaySelectButton)
-        self.view .bringSubviewToFront(signNameLabel)
-        self.view .bringSubviewToFront(signDateLabel)
-        self.view .bringSubviewToFront(DOBLabel)
-        self.view .bringSubviewToFront(startButton)
+        self.view .bringSubview(toFront: fbLoginBtn)
+        self.view .bringSubview(toFront: loginLabel)
+        self.view .bringSubview(toFront: birthdaySelectButton)
+        self.view .bringSubview(toFront: signNameLabel)
+        self.view .bringSubview(toFront: signDateLabel)
+        self.view .bringSubview(toFront: DOBLabel)
+        self.view .bringSubview(toFront: startButton)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.view .bringSubviewToFront(startButton)
+        self.view .bringSubview(toFront: startButton)
     }
     
-    @IBAction func loginTapped(sender: AnyObject) {
+    @IBAction func loginTapped(_ sender: AnyObject) {
         Utilities.showHUD(self.view)
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             self.fetchUserInfo()
@@ -126,7 +126,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
                         Utilities.showAlertView(self, title: "Permission denied", message: "Please grant permissions and try again")
                         return
                     } else {
-                        dispatch_async(dispatch_get_main_queue(),{
+                        DispatchQueue.main.async(execute: {
                             self.fetchUserInfo()
                         })
                     }
@@ -137,12 +137,12 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     func reloadView(){
         let image = UIImage(named: "default_avatar")
-        self.fbLoginBtn.setImage(image, forState: UIControlState.Normal)
+        self.fbLoginBtn.setImage(image, for: UIControlState())
         loginLabel.text = self.userFBName
-        loginLabel.textColor = UIColor.whiteColor()
-        loginLabel.font = UIFont.boldSystemFontOfSize(18)
+        loginLabel.textColor = UIColor.white
+        loginLabel.font = UIFont.boldSystemFont(ofSize: 18)
         
-        if let url = NSURL(string: userFBImageURL) {
+        if let url = URL(string: userFBImageURL) {
             self.downloadImage(url)
         }
     }
@@ -153,7 +153,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let permissionLabel = "additional permission = \(params["fields"])"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
         
-            FBSDKGraphRequest(graphPath: "me", parameters: params).startWithCompletionHandler({ (connection, result, error) -> Void in
+            FBSDKGraphRequest(graphPath: "me", parameters: params).start(completionHandler: { (connection, result, error) -> Void in
                 if(error == nil){
                     self.userFBID = result["id"] as! String
                     self.userFBName = result["name"] as! String
@@ -174,20 +174,20 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         alertView.delegate = self
         alertView.title = "Notify everyday"
         alertView.message = "Do you want to be notified of your horoscope every day?"
-        alertView.addButtonWithTitle("No")
-        alertView.addButtonWithTitle("Yes")
+        alertView.addButton(withTitle: "No")
+        alertView.addButton(withTitle: "Yes")
         alertView.tag = 1
         alertView.show()
     }
     
     // MARK: helpers
     
-    func downloadImage(url:NSURL){
+    func downloadImage(_ url:URL){
         Utilities.getDataFromUrl(url) { data in
-            dispatch_async(dispatch_get_main_queue()) {
+            DispatchQueue.main.async {
                 if let checkData = data {
                     let downloadedImage = UIImage(data: checkData)
-                    self.fbLoginBtn.setImage(downloadedImage, forState: UIControlState.Normal)
+                    self.fbLoginBtn.setImage(downloadedImage, for: UIControlState())
                     self.fbLoginBtn.imageView!.layer.cornerRadius = 0.5 * self.fbLoginBtn.bounds.size.width
                 }
                 
@@ -197,11 +197,11 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     // MARK: Delegata methods
     
-    override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
+    override func wheelDidChangeValue(_ newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
-            self.signNameLabel.text = newValue.sign.uppercaseString
+            self.signNameLabel.text = newValue.sign.uppercased()
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
-            let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
+            let index = XAppDelegate.horoscopesManager.horoscopesSigns.index(of: newValue)
             if(index != nil){
                 if(self.selectedIndex != index!){
                     XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobSignChange, label: "sign = \(index! + 1)")
@@ -224,7 +224,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         } else {
             self.signNameLabel.text = ""
             self.signDateLabel.text = ""
-            birthdaySelectButton.setTitle("", forState: UIControlState.Normal)
+            birthdaySelectButton.setTitle("", for: UIControlState())
             return
         }
     }
@@ -240,7 +240,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     
     // MARK: AlertView Delegate
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int) {
         if(alertView.tag == 1){
             var replyLabel = ""
             if(buttonIndex == 0){
@@ -255,7 +255,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             alertView.delegate = self
             alertView.title = "Did you know?"
             alertView.message = "You can change your horoscope sign and delivery preferences from your profile page"
-            alertView.addButtonWithTitle("OK, I get it")
+            alertView.addButton(withTitle: "OK, I get it")
             alertView.tag = 2
             alertView.show()
         }
@@ -270,17 +270,17 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         }
     }
     
-    func getNotificationFiredTime() -> NSDateComponents{
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+    func getNotificationFiredTime() -> DateComponents{
+        let components: NSCalendar.Unit = [.year, .month, .day, .hour, .minute, .second]
         // use local time to fire notification
-        let timeInterval = NSDate().timeIntervalSince1970 - 60 // set it 1 minute ealier to avoid firing immediately
-        let date = NSDate(timeIntervalSince1970: timeInterval)
-        return NSCalendar.currentCalendar().components(components, fromDate: date)
+        let timeInterval = Date().timeIntervalSince1970 - 60 // set it 1 minute ealier to avoid firing immediately
+        let date = Date(timeIntervalSince1970: timeInterval)
+        return (Calendar.current as NSCalendar).components(components, from: date)
     }
     
     // MARK: Button handlers
     
-    func startButtonTapped(sender:UIButton!)
+    func startButtonTapped(_ sender:UIButton!)
     {
         var trackerLabel = "sign = \(self.selectedIndex + 1)"
         if let dobString = birthdaySelectButton.titleLabel!.text {
@@ -298,7 +298,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         
         // update user birthday and sign
         if(self.birthdayStringInServerFormat != nil){
-            birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+            birthdaySelectButton.setTitle(self.getBirthdayString(), for: UIControlState())
             XAppDelegate.horoscopesManager.sendUpdateBirthdayRequest(self.birthdayStringInServerFormat, completionHandler: { (responseDict, error) -> Void in
             })
         }
@@ -308,7 +308,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             if(XAppDelegate.socialManager.isLoggedInZwigglers()){
                 sendUpdateSign()
             } else {
-                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.current().tokenString, completionHandler: { (responseDict, error) -> Void in
                     if let error = error {
                         Utilities.showError(error, viewController: self)
                     } else {
@@ -318,7 +318,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
             }
         }
 
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
 //        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
     }
         
@@ -338,23 +338,23 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         })
     }
     
-    @IBAction func birthdayButtonTapped(sender: AnyObject) {
+    @IBAction func birthdayButtonTapped(_ sender: AnyObject) {
         if(self.popUp == nil) {
             self.setupDatePickerPopup()
         } else {
-            popUp.dismissAnimated(true)
-            popTipViewWasDismissedByUser(popUp)
+            popUp.dismiss(animated: true)
+            popTipViewWasDismissed(byUser: popUp)
             popUp = nil
         }
     }
     
-    func finishedSelectingBirthday(dateString : String){
+    func finishedSelectingBirthday(_ dateString : String){
         let signName = XAppDelegate.horoscopesManager.getSignNameOfDate(birthday)
-        self.wheel.autoRollToSign(signName)
-        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        self.wheel.autoRoll(toSign: signName)
+        birthdaySelectButton.titleLabel?.textAlignment = NSTextAlignment.center
         XAppDelegate.userSettings.birthday = birthday
         self.birthdayStringInServerFormat = dateString
-        birthdaySelectButton.setTitle(self.getBirthdayString(), forState: UIControlState.Normal)
+        birthdaySelectButton.setTitle(self.getBirthdayString(), for: UIControlState())
     }
     
     // MARK: helpers
@@ -377,10 +377,10 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     }
     
     // MARK: Gesture Recognize
-    @IBAction func outsideTapped(sender : UITapGestureRecognizer){
+    @IBAction func outsideTapped(_ sender : UITapGestureRecognizer){
         if(popUp != nil) {
-            popUp.dismissAnimated(true)
-            popTipViewWasDismissedByUser(popUp)
+            popUp.dismiss(animated: true)
+            popTipViewWasDismissed(byUser: popUp)
             popUp = nil
         }
     }
@@ -388,7 +388,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     // MARK: Poptipview setip
     
     func setupDatePickerPopup(){
-        pickerView = MyDatePickerView(frame: CGRectMake(0, 0, 280, 80))
+        pickerView = MyDatePickerView(frame: CGRect(x: 0, y: 0, width: 280, height: 80))
         pickerView.delegate = self
         if let birthday = XAppDelegate.userSettings.birthday {
             pickerView.setCurrentBirthday(birthday)
@@ -399,23 +399,24 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         popUp = CMPopTipView(customView: pickerView)
         popUp.backgroundColor = UIColor(red:133.0/255, green:124.0/255, blue:173.0/255, alpha:1)
         popUp.delegate = self
-        popUp.presentPointingAtView(birthdaySelectButton, inView: self.view, animated: true)
-        popUp.borderColor = UIColor.clearColor()
+        popUp.presentPointing(at: birthdaySelectButton, in: self.view, animated: true)
+        popUp.borderColor = UIColor.clear
         popUp.borderWidth = 0
         popUp.cornerRadius = 4.0
-        popUp.preferredPointDirection = PointDirection.Down
+        popUp.preferredPointDirection = PointDirection.down
         popUp.hasGradientBackground = false
         popUp.has3DStyle = false
         popUp.hasShadow = true
     }
     
     // MARK: Poptipview delegate
-    func popTipViewWasDismissedByUser(popTipView: CMPopTipView!) {
+    func popTipViewWasDismissed(byUser popTipView: CMPopTipView!) {
         self.popUp = nil
     }
     
     // DatePickerView Delegate
-    func didFinishPickingDate(dayString: String, monthString: String, var yearString: String) {
+    func didFinishPickingDate(_ dayString: String, monthString: String, yearString: String) {
+        var yearString = yearString
         
         yearString = yearString == "" ? String(defaultYear) : yearString
         
@@ -430,7 +431,7 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         self.finishedSelectingBirthday(dateStringInNumberFormat)
     }
     
-    func getDateStringInNumberFormat(date : StandardDate) -> String{
+    func getDateStringInNumberFormat(_ date : StandardDate) -> String{
         let result = String(format:"%d/%02d/%04d", date.day, date.month, date.year)
         return result
     }

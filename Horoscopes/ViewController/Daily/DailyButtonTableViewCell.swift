@@ -29,7 +29,7 @@ class DailyButtonTableViewCell: UITableViewCell {
         makeCorneredButton(viewOtherSignButton)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
@@ -42,21 +42,21 @@ class DailyButtonTableViewCell: UITableViewCell {
         set {
             var frame = newValue
             frame.origin.x = inset
-            frame.size.width = UIScreen.mainScreen().bounds.width - 2*inset
+            frame.size.width = UIScreen.main.bounds.width - 2*inset
             super.frame = frame
         }
     }
     
-    func makeCorneredButton(button: UIButton) {
+    func makeCorneredButton(_ button: UIButton) {
         button.layer.cornerRadius = 5
         button.clipsToBounds = true
     }
     
-    @IBAction func tapJoinHoroscopesCommunityButton(sender: UIButton) {
+    @IBAction func tapJoinHoroscopesCommunityButton(_ sender: UIButton) {
         delegate.didTapJoinHoroscopesCommunityButton()
     }
     
-    @IBAction func viewOtherSignTapped(sender: AnyObject) {
+    @IBAction func viewOtherSignTapped(_ sender: AnyObject) {
         delegate.didTapViewOtherSignButton()
     }
 

@@ -8,17 +8,17 @@
 
 import Foundation
 
-let XAppDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+let XAppDelegate = UIApplication.shared.delegate as! AppDelegate
 
 
-var defaultCalendar : NSCalendar {
-    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
+var defaultCalendar : Calendar {
+    let calendar = Calendar(identifier: Calendar.Identifier.gregorian)
     return calendar
 }
 
-var calendarWithTimeOffset : NSCalendar {
-    let calendar = NSCalendar(calendarIdentifier: NSCalendarIdentifierGregorian)!
-    calendar.timeZone = NSTimeZone(forSecondsFromGMT: TIMEZONE_OFFSET)
+var calendarWithTimeOffset : Calendar {
+    var calendar = Calendar(identifier: Calendar.Identifier.gregorian)
+    calendar.timeZone = TimeZone(secondsFromGMT: TIMEZONE_OFFSET)!
     return calendar
 }
 
@@ -29,16 +29,16 @@ var yearArray : [Int] {
     var nineteenYearsToNow = 1925
     var thirteenYearsToNow = 2002
     if #available(iOS 8.0, *) {
-        nineteenYearsToNow = calendar.component(.Year, fromDate: calendar.dateByAddingUnit(.Year, value: -90, toDate: NSDate(), options: .MatchStrictly)!)
+        nineteenYearsToNow = (calendar as NSCalendar).component(.year, from: (calendar as NSCalendar).date(byAdding: .year, value: -90, to: Date(), options: .matchStrictly)!)
     } else {
         // Fallback on earlier versions
     }
     if #available(iOS 8.0, *) {
-        thirteenYearsToNow = calendar.component(.Year, fromDate: calendar.dateByAddingUnit(.Year, value: -13, toDate: NSDate(), options: .MatchStrictly)!)
+        thirteenYearsToNow = (calendar as NSCalendar).component(.year, from: (calendar as NSCalendar).date(byAdding: .year, value: -13, to: Date(), options: .matchStrictly)!)
     } else {
         // Fallback on earlier versions
     }
-    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; --year {
+    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; year -= 1 {
         result.append(year)
     }
     return result
@@ -145,80 +145,80 @@ let TIMEZONE_OFFSET = -28800
 // MARK: post type
 // postType: image name, label, server type
 let postTypes = [
-    NewsfeedType.HowHoroscope: ("post_type_horoscope", "How’s your horoscope?","howhoroscope"),
-    NewsfeedType.ShareAdvice: ("post_type_advice", "Share some daily advice","shareadvice"),
-    NewsfeedType.OnYourMind: ("post_type_mind", "What's on your mind today?","onyourmind"),
-    NewsfeedType.Fortune: ("post_type_fortune", "Write a fortune","fortune")
+    NewsfeedType.howHoroscope: ("post_type_horoscope", "How’s your horoscope?","howhoroscope"),
+    NewsfeedType.shareAdvice: ("post_type_advice", "Share some daily advice","shareadvice"),
+    NewsfeedType.onYourMind: ("post_type_mind", "What's on your mind today?","onyourmind"),
+    NewsfeedType.fortune: ("post_type_fortune", "Write a fortune","fortune")
 ]
 
 // MARK: Enum Type
 
 enum DailyHoroscopeType {
-    case TodayHoroscope
-    case TomorrowHoroscope
-    case CollectedHoroscope
+    case todayHoroscope
+    case tomorrowHoroscope
+    case collectedHoroscope
 }
 
 enum ShareViewType {
-    case ShareViewTypeDirect
-    case ShareViewTypeHybrid
+    case shareViewTypeDirect
+    case shareViewTypeHybrid
 }
 
 enum ShareType {
-    case ShareTypeDaily
-    case ShareTypeFortune
-    case ShareTypeNewsfeed
+    case shareTypeDaily
+    case shareTypeFortune
+    case shareTypeNewsfeed
 }
 
 // Newsfeed
 
 enum NewsfeedType {
-    case OnYourMind
-    case ShareAdvice
-    case HowHoroscope
-    case Fortune
-    case Invalid
+    case onYourMind
+    case shareAdvice
+    case howHoroscope
+    case fortune
+    case invalid
 }
 
 enum NewsfeedTabType {
-    case Global
-    case Following
-    case Both
+    case global
+    case following
+    case both
 }
 
 // Post cell type
 
 enum PostCellType {
-    case Newsfeed
-    case Profile
+    case newsfeed
+    case profile
 }
 
 // settings
 
 enum SettingsType {
-    case Notification
-    case ChangeDOB
-    case ChangeSign
-    case BugsReport
-    case Logout
+    case notification
+    case changeDOB
+    case changeSign
+    case bugsReport
+    case logout
 }
 
 enum BirthdayParentViewControllerType {
-    case LoginViewController
-    case SettingsViewController
+    case loginViewController
+    case settingsViewController
 }
 
 // server notification
 enum ServerNotificationType {
-    case SendHeart
-    case Follow
-    case Default
+    case sendHeart
+    case follow
+    case `default`
 }
 
 // Archive View
 enum ArchiveViewType {
-    case Calendar
-    case HoroscopeDetail
+    case calendar
+    case horoscopeDetail
 }
 
 // MARK: height
@@ -233,18 +233,18 @@ let ERROR_CODE_NO_INTERNET = 8008135
 
 struct ScreenSize
 {
-    static let SCREEN_WIDTH = UIScreen.mainScreen().bounds.size.width
-    static let SCREEN_HEIGHT = UIScreen.mainScreen().bounds.size.height
+    static let SCREEN_WIDTH = UIScreen.main.bounds.size.width
+    static let SCREEN_HEIGHT = UIScreen.main.bounds.size.height
     static let SCREEN_MAX_LENGTH = max(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
     static let SCREEN_MIN_LENGTH = min(ScreenSize.SCREEN_WIDTH, ScreenSize.SCREEN_HEIGHT)
 }
 
 struct DeviceType
 {
-    static let IS_IPHONE_4_OR_LESS =  UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
-    static let IS_IPHONE_5 = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
-    static let IS_IPHONE_6 = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
-    static let IS_IPHONE_6P = UIDevice.currentDevice().userInterfaceIdiom == .Phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
+    static let IS_IPHONE_4_OR_LESS =  UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH < 568.0
+    static let IS_IPHONE_5 = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 568.0
+    static let IS_IPHONE_6 = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 667.0
+    static let IS_IPHONE_6P = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
 // MARK: MAX NO LINES

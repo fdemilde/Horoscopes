@@ -9,7 +9,7 @@
 import UIKit
 
 protocol SearchViewControllerDelegate {
-    func didChooseUser(profile: UserProfile)
+    func didChooseUser(_ profile: UserProfile)
 }
 
 class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FollowTableViewCellDelegate {
@@ -29,24 +29,24 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         view.backgroundColor = UIColor(patternImage: backgroundImage)
         
         tableView.layer.cornerRadius = 4
-        tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "UITableViewHeaderFooterView")
+        tableView.register(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "UITableViewHeaderFooterView")
         
-        searchBar.tintColor = UIColor.whiteColor()
-        let textField = searchBar.valueForKey("searchField") as! UITextField
-        textField.textColor = UIColor.whiteColor()
+        searchBar.tintColor = UIColor.white
+        let textField = searchBar.value(forKey: "searchField") as! UITextField
+        textField.textColor = UIColor.white
         textField.layer.cornerRadius = 14
         
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SearchViewController.handleTap(_:)))
         gestureRecognizer.cancelsTouchesInView = false
         view.addGestureRecognizer(gestureRecognizer)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
         SocialManager.sharedInstance.retrieveFriendList { (result, error) -> Void in
             if let error = error {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     hud.hide(true)
                 })
                 Utilities.showError(error, viewController: self)
@@ -62,7 +62,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                         }
                     }
                 }
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     hud.hide(true)
                 })
             }
@@ -74,7 +74,7 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         searchBar.resignFirstResponder()
     }
@@ -97,30 +97,30 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
     
     // MARK: - Action
     
-    func handleTap(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    func handleTap(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             searchBar.resignFirstResponder()
         }
     }
     
     // MARK: - Table view data source and delegate
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredResult.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FollowTableViewCell", for: indexPath) as! FollowTableViewCell
         cell.delegate = self
         let friend = filteredResult[indexPath.row]
         cell.profileNameLabel.text = friend.name
         cell.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: friend.sign)
         Utilities.getImageFromUrlString(friend.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 cell.profileImageView?.image = image
             })
         })
@@ -130,38 +130,38 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let profile = filteredResult[indexPath.row]
         DataStore.sharedInstance.saveSearchedProfile(profile)
         delegate?.didChooseUser(profile)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if searchText == "" && filteredResult.count != 0 {
             return 26
         }
         return 0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("UITableViewHeaderFooterView")!
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "UITableViewHeaderFooterView")!
         view.textLabel!.text = "Recent Searches"
         return view
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         if section == 0 {
             let headerView = view as! UITableViewHeaderFooterView
-            headerView.textLabel!.font = UIFont.systemFontOfSize(11)
-            headerView.textLabel!.textColor = UIColor.grayColor()
-            headerView.contentView.backgroundColor = UIColor.whiteColor()
+            headerView.textLabel!.font = UIFont.systemFont(ofSize: 11)
+            headerView.textLabel!.textColor = UIColor.gray
+            headerView.contentView.backgroundColor = UIColor.white
         }
     }
     
     // MARK: - Delegate
     
-    func didTapFollowButton(cell: FollowTableViewCell) {
-        let index = tableView.indexPathForCell(cell)?.row
+    func didTapFollowButton(_ cell: FollowTableViewCell) {
+        let index = tableView.indexPath(for: cell)?.row
         let user = filteredResult[index!]
         Utilities.showHUD(self.view)
         SocialManager.sharedInstance.follow(user, completionHandler: { (error) -> Void in
@@ -169,9 +169,9 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
                 Utilities.hideHUD()
                 Utilities.showError(error, viewController: self)
             } else {
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     user.isFollowed = true
-                    cell.followButton.hidden = true
+                    cell.followButton.isHidden = true
                     self.tableView.reloadData()
                     Utilities.hideHUD(self.view)
                 })
@@ -179,19 +179,19 @@ class SearchViewController: ViewControllerWithAds, UITableViewDataSource, UITabl
         })
     }
     
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         self.searchText = searchText
-        filteredResult.removeAll(keepCapacity: false)
+        filteredResult.removeAll(keepingCapacity: false)
         if searchText == "" {
             filteredResult = DataStore.sharedInstance.recentSearchedProfile
         } else {
-            filteredResult = friends.filter({ $0.name.lowercaseString.rangeOfString(searchText.lowercaseString) != nil })
+            filteredResult = friends.filter({ $0.name.lowercased().range(of: searchText.lowercased()) != nil })
         }
         tableView.reloadData()
     }
     
-    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
-        dismissViewControllerAnimated(true, completion: nil)
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        dismiss(animated: true, completion: nil)
     }
 
 }

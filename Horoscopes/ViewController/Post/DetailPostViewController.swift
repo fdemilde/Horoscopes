@@ -33,15 +33,15 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         contentView.clipsToBounds = true
         // Do any additional setup after loading the view.
         let screenSize = Utilities.getScreenSize()
-        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRect(x: 0,y: 0,width: screenSize.width,height: screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
-        self.view.sendSubviewToBack(bgImageView)
+        self.view.sendSubview(toBack: bgImageView)
         postTitle.text = placeholder
         placeholderLabel.text = placeholder
         placeholderLabel.font = textView.font
-        placeholderLabel.frame.origin = CGPointMake(4, 7)
-        placeholderLabel.textColor = UIColor.grayColor()
+        placeholderLabel.frame.origin = CGPoint(x: 4, y: 7)
+        placeholderLabel.textColor = UIColor.gray
         placeholderLabel.sizeToFit()
         textView.addSubview(placeholderLabel)
         textView.layer.cornerRadius = 5
@@ -50,19 +50,19 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if let bgImageView = self.bgImageView{
-            self.view.sendSubviewToBack(bgImageView)
+            self.view.sendSubview(toBack: bgImageView)
         }
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(DetailPostViewController.keyboardWillChangeFrame(_:)), name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(DetailPostViewController.keyboardWillChangeFrame(_:)), name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         bottomSpaceConstraint = contentViewBottomSpaceConstraint.constant
         textView.becomeFirstResponder()
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIKeyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillChangeFrame, object: nil)
         textView.resignFirstResponder()
     }
     
@@ -71,10 +71,10 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func cancel(sender: UIButton) {
+    @IBAction func cancel(_ sender: UIButton) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postClose, label: nil)
         view.endEditing(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 
     @IBAction func post() {
@@ -90,8 +90,8 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         
         let createPost = { () -> Void in
             Utilities.showHUD(self.view)
-            let postToFacebook = self.switchButton.on
-            self.postButton.enabled = false
+            let postToFacebook = self.switchButton.isOn
+            self.postButton.isEnabled = false
             var trackerLabel = ""
             if let type = self.type {
                  trackerLabel += "type = \(type), strlen = \(self.textView.text.characters.count), post_to_facebook = \(postToFacebook)"
@@ -100,7 +100,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
             }
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postSend, label: trackerLabel)
             SocialManager.sharedInstance.createPost(self.type!, message: self.textView.text, postToFacebook: postToFacebook, completionHandler: { (result, error) -> Void in
-                self.postButton.enabled = true
+                self.postButton.isEnabled = true
                 if let error = error {
                     Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Error", message: "Your post could not be created. Please try again later.", error: error)
@@ -108,7 +108,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                     if let result = result {
                         if let errorCode = result["error_code"]{
                             if(errorCode as? String == "error.invalidtoken"){
-                                XAppDelegate.mobilePlatform.userCred.clearCreds()
+                                XAppDelegate.mobilePlatform.userCred.clear()
                                 let loginManager = FBSDKLoginManager()
                                 loginManager.logOut()
                                 XAppDelegate.socialManager.clearNotification()
@@ -127,7 +127,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
             if SocialManager.sharedInstance.isLoggedInZwigglers() {
                 createPost()
             } else {
-                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.currentAccessToken().tokenString, completionHandler: { (responseDict, error) -> Void in
+                SocialManager.sharedInstance.loginZwigglers(FBSDKAccessToken.current().tokenString, completionHandler: { (responseDict, error) -> Void in
                     if let error = error {
                         Utilities.showAlert(self, title: "Error", message: "An unknown error has occured. Please try again later.", error: error)
                     } else {
@@ -141,10 +141,10 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     }
     
     func finishPost() {
-        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+        DispatchQueue.main.async(execute: { () -> Void in
             Utilities.hideHUD(self.view)
             self.view.endEditing(true)
-            self.dismissViewControllerAnimated(true, completion: { () -> Void in
+            self.dismiss(animated: true, completion: { () -> Void in
                 
                 
                 if let profileViewController = Utilities.getViewController(CurrentProfileViewController.classForCoder()) as? CurrentProfileViewController {
@@ -156,7 +156,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
                     }
                 }
                 
-                if(XAppDelegate.window!.rootViewController!.isKindOfClass(UITabBarController)){
+                if(XAppDelegate.window!.rootViewController!.isKind(of: UITabBarController.self)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
                     rootVC?.selectedIndex = 4
                 }
@@ -167,7 +167,7 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
     
     func showLoginFormSheet() {
         self.view.endEditing(true)
-        let controller = self.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        let controller = self.storyboard?.instantiateViewController(withIdentifier: "PostLoginViewController") as! PostLoginViewController
         controller.delegate = self
         controller.titleString = "Login to Facebook to share this post"
         let formSheet = MZFormSheetController(viewController: controller)
@@ -175,31 +175,31 @@ class DetailPostViewController: ViewControllerWithAds, UITextViewDelegate, Login
         formSheet.cornerRadius = 5
         formSheet.shouldCenterVertically = true
         formSheet.presentedFormSheetSize = CGSize(width: formSheet.view.frame.width, height: 150)
-        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        self.mz_present(formSheet, animated: true, completionHandler: nil)
     }
     
     func didLoginSuccessfully() {
         post()
     }
     
-    func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = textView.text.characters.count != 0
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.text.characters.count != 0
     }
     
-    func keyboardWillChangeFrame(notification: NSNotification) {
+    func keyboardWillChangeFrame(_ notification: Notification) {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        contentViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.CGRectValue().height
+        contentViewBottomSpaceConstraint.constant = bottomSpaceConstraint + keyboardSize.cgRectValue.height
     }
     
-    @IBAction func toogleSwitch(sender: AnyObject) {
+    @IBAction func toogleSwitch(_ sender: AnyObject) {
         checkAndChangeSwitchColor()
     }
     
     // MARK: Helpers
     
     func checkAndChangeSwitchColor(){
-        if switchButton.on {
+        if switchButton.isOn {
             switchButton.thumbTintColor = UIColor(red: 108.0/255.0, green: 105.0/255.0, blue: 153.0/255.0, alpha: 1)
         } else {
             switchButton.thumbTintColor = UIColor(red: 201/255.0, green: 201/255.0, blue: 201/255.0, alpha: 1)

@@ -74,9 +74,9 @@ class HoroscopesManager : NSObject {
     
     // MARK: Network - Horoscope
     
-    func getAllHoroscopes(refreshOnly : Bool) {
+    func getAllHoroscopes(_ refreshOnly : Bool) {
         Utilities.showHUD()
-        let offset = NSTimeZone.systemTimeZone().secondsFromGMT/3600;
+        let offset = NSTimeZone.system.secondsFromGMT()/3600;
         let offsetString = String(format: "%d",offset)
         let postData = NSMutableDictionary()
         if(refreshOnly == false){
@@ -94,8 +94,8 @@ class HoroscopesManager : NSObject {
 
             }
             
-            let iOSVersion = UIDevice.currentDevice().systemVersion;
-            let devideType = UIDevice.currentDevice().model;
+            let iOSVersion = UIDevice.current.systemVersion;
+            let devideType = UIDevice.current.model;
             
             //get collected data
             let col = CollectedHoroscope();
@@ -105,23 +105,23 @@ class HoroscopesManager : NSObject {
             let loadCount = XAppDelegate.mobilePlatform.tracker.loadAppOpenCountervalue()
             let loadCountString = String(format: "%d",loadCount)
             
-            let version = NSBundle.mainBundle().infoDictionary?["CFBundleVersion"] as! String
+            let version = Bundle.main.infoDictionary?["CFBundleVersion"] as! String
             
             let sign = XAppDelegate.userSettings.horoscopeSign + 1
             let signString = String(format: "%d",sign)
             
             // sc.sendRequest need an NSMutableDictionary to process
             
-            postData.setObject(mccString, forKey: "mcc")
-            postData.setObject(mncString, forKey: "mnc")
-            postData.setObject(strScore, forKey: "score")
+            postData.setObject(mccString, forKey: "mcc" as NSCopying)
+            postData.setObject(mncString, forKey: "mnc" as NSCopying)
+            postData.setObject(strScore, forKey: "score" as NSCopying)
             postData.setObject(loadCountString, forKey: "load_count")
-            postData.setObject(version, forKey: "version")
+            postData.setObject(version, forKey: "version" as NSCopying)
             postData.setObject(signString, forKey: "sign")
-            postData.setObject(offsetString, forKey: "tz")
-            postData.setObject(iOSVersion, forKey: "device_systemVersion")
-            postData.setObject(devideType, forKey: "device_model")
-            let expiredTime = NSDate().timeIntervalSince1970 + 600
+            postData.setObject(offsetString, forKey: "tz" as NSCopying)
+            postData.setObject(iOSVersion, forKey: "device_systemVersion" as NSCopying)
+            postData.setObject(devideType, forKey: "device_model" as NSCopying)
+            let expiredTime = Date().timeIntervalSince1970 + 600
             CacheManager.cacheGet(GET_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true, completionHandler: { (result, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
@@ -148,8 +148,8 @@ class HoroscopesManager : NSObject {
                 Utilities.postNotification(NOTIFICATION_ALL_SIGNS_LOADED, object: nil)
             })
         } else {
-            let expiredTime = NSDate().timeIntervalSince1970 + 600
-            postData.setObject(offsetString, forKey: "tz")
+            let expiredTime = Date().timeIntervalSince1970 + 600
+            postData.setObject(offsetString, forKey: "tz" as NSCopying)
             CacheManager.cacheGet(REFRESH_DATA_METHOD, postData: postData, loginRequired: NOT_REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true, completionHandler: { (response, error) -> Void in
                 Utilities.hideHUD()
                 if(error != nil){
@@ -180,7 +180,7 @@ class HoroscopesManager : NSObject {
         
     }
     
-    func sendRateRequestWithTimeTag(timeTag: Int, signIndex: Int, rating: Int, viewcontroller : UIViewController){
+    func sendRateRequestWithTimeTag(_ timeTag: Int, signIndex: Int, rating: Int, viewcontroller : UIViewController){
         Utilities.showHUD()
         // our sign index is base 0-11 --> we should convert it to base 1-12
         let base1SignIndex = signIndex + 1
@@ -189,11 +189,11 @@ class HoroscopesManager : NSObject {
         let timeTagString = String(format:"%d",timeTag)
         let base1SignIndexString = String(format:"%d",base1SignIndex)
         let ratingString = String(format: "%d",rating)
-        postData.setObject(timeTagString, forKey: "time_tag")
-        postData.setObject(base1SignIndexString, forKey: "sign")
-        postData.setObject(ratingString, forKey: "rating")
-        dispatch_async(dispatch_get_main_queue(),{
-            XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+        postData.setObject(timeTagString, forKey: "time_tag" as NSCopying)
+        postData.setObject(base1SignIndexString, forKey: "sign" as NSCopying)
+        postData.setObject(ratingString, forKey: "rating" as NSCopying)
+        DispatchQueue.main.async(execute: {
+            XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andComplete: { (response,error) -> Void in
     //            print(response)
                 Utilities.hideHUD()
                 if error != nil {
@@ -212,12 +212,12 @@ class HoroscopesManager : NSObject {
         })
     }
     
-    func sendUpdateBirthdayRequest(birthdayString : String,completionHandler: ( responseDict : Dictionary<String, AnyObject>?, error : NSError?) -> Void){
+    func sendUpdateBirthdayRequest(_ birthdayString : String,completionHandler: @escaping ( _ responseDict : Dictionary<String, AnyObject>?, _ error : NSError?) -> Void){
         
         let postData = NSMutableDictionary()
         let birthday = String(format:"%@",birthdayString)
-        postData.setObject(birthday, forKey: "birthday")
-        XAppDelegate.mobilePlatform.sc.sendRequest(UPDATE_BIRTHDAY, andPostData: postData, andCompleteBlock: { (response,error) -> Void in
+        postData.setObject(birthday, forKey: "birthday" as NSCopying)
+        XAppDelegate.mobilePlatform.sc.sendRequest(UPDATE_BIRTHDAY, andPostData: postData, andComplete: { (response,error) -> Void in
             if(error != nil){
                 
             } else {
@@ -246,7 +246,7 @@ class HoroscopesManager : NSObject {
         var horoSigns = self.horoscopesSigns
         todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
         tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
-        for var index = 1; index <= 12; index++ {
+        for var index = 1; index <= 12; index += 1 {
             let indexString = "\(index)"
             let todayPermaLink = self.data["today"]!["permalinks"]![indexString] as! String
             let tomorrowPermaLink = self.data["tomorrow"]!["permalinks"]![indexString] as! String
@@ -254,10 +254,10 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].permaLinks.removeAllObjects()
             
-            horoSigns[index-1].horoscopes.addObject(todayReadings[String(format: "%d", index)]!)
-            horoSigns[index-1].horoscopes.addObject(tomorrowReadings[String(format: "%d", index)]!)
-            horoSigns[index-1].permaLinks.addObject(String(format: "%@", todayPermaLink))
-            horoSigns[index-1].permaLinks.addObject(String(format: "%@", tomorrowPermaLink))
+            horoSigns[index-1].horoscopes.add(todayReadings[String(format: "%d", index)]!)
+            horoSigns[index-1].horoscopes.add(tomorrowReadings[String(format: "%d", index)]!)
+            horoSigns[index-1].permaLinks.add(String(format: "%@", todayPermaLink))
+            horoSigns[index-1].permaLinks.add(String(format: "%@", tomorrowPermaLink))
         }
     }
     
@@ -265,36 +265,36 @@ class HoroscopesManager : NSObject {
         var horoSigns = self.horoscopesSigns
         hasNoData = true
         var todayTimeTagDict = Dictionary<String, String>()
-        todayTimeTagDict["time_tag"] = String(format:"%f", NSDate().timeIntervalSince1970)
-        self.data["today"] = todayTimeTagDict
+        todayTimeTagDict["time_tag"] = String(format:"%f", Date().timeIntervalSince1970)
+        self.data["today"] = todayTimeTagDict as AnyObject?
         
         var tomorrowTimeTagDict = Dictionary<String, String>()
-        tomorrowTimeTagDict["time_tag"] = String(format:"%f", NSDate().timeIntervalSince1970 + 60*60*24)
-        self.data["tomorrow"] = tomorrowTimeTagDict
-        for var index = 1; index <= 12; index++ {
+        tomorrowTimeTagDict["time_tag"] = String(format:"%f", Date().timeIntervalSince1970 + 60*60*24)
+        self.data["tomorrow"] = tomorrowTimeTagDict as AnyObject?
+        for var index = 1; index <= 12; index += 1 {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].permaLinks.removeAllObjects()
             
-            horoSigns[index-1].horoscopes.addObject("Network Error, please check your internet and pull down to refresh.")
-            horoSigns[index-1].horoscopes.addObject("")
-            horoSigns[index-1].permaLinks.addObject("")
-            horoSigns[index-1].permaLinks.addObject("")
+            horoSigns[index-1].horoscopes.add("Network Error, please check your internet and pull down to refresh.")
+            horoSigns[index-1].horoscopes.add("")
+            horoSigns[index-1].permaLinks.add("")
+            horoSigns[index-1].permaLinks.add("")
         }
     }
     
-    func getSignIndexOfDate(date : NSDate) -> Int{
+    func getSignIndexOfDate(_ date : Date) -> Int{
         for index in 0...11 {
             if(index == 9) { continue } // we ignore Capricorn since its start date is 22/12 and end date is 19/1, this case will return as the last sign
             let horoscope = self.horoscopesSigns[index]
-            if((date.compare(horoscope.startDate.nsDate) == NSComparisonResult.OrderedDescending ||   date.compare(horoscope.startDate.nsDate) == NSComparisonResult.OrderedSame)
-                && (date.compare(horoscope.endDate.nsDate) == NSComparisonResult.OrderedAscending || date.compare(horoscope.endDate.nsDate) == NSComparisonResult.OrderedSame)){
+            if((date.compare(horoscope.startDate.nsDate) == ComparisonResult.orderedDescending ||   date.compare(horoscope.startDate.nsDate) == ComparisonResult.orderedSame)
+                && (date.compare(horoscope.endDate.nsDate) == ComparisonResult.orderedAscending || date.compare(horoscope.endDate.nsDate) == ComparisonResult.orderedSame)){
                     return index
             }
         }
         return 9
     }
     
-    func getSignIndexOfSignName(name : String) -> Int{
+    func getSignIndexOfSignName(_ name : String) -> Int{
         
         for index in 0...11 {
             if(name == self.horoscopesSigns[index].sign){
@@ -304,7 +304,7 @@ class HoroscopesManager : NSObject {
         return -1
     }
     
-    func getSignNameOfDate(date : StandardDate) -> String{
+    func getSignNameOfDate(_ date : StandardDate) -> String{
         
         var sign = ""
         switch date.month {

@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func > <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l > r
+  default:
+    return rhs < lhs
+  }
+}
+
 
 class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, UITableViewDelegate, SearchViewControllerDelegate, FollowTableViewCellDelegate {
     
@@ -30,11 +54,11 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: - Property
     
     enum Scope {
-        case Post
-        case Following
-        case Followers
+        case post
+        case following
+        case followers
     }
-    var currentScope = Scope.Post
+    var currentScope = Scope.post
     var userProfile = UserProfile()
     var userPosts = [UserPost]()
     var followingUsers = [UserProfile]()
@@ -42,7 +66,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     var numberOfPosts = 0
     var numberOfUsersFollowing = 0
     var numberOfFollowers = 0
-    var baseDispatchGroup: dispatch_group_t!
+    var baseDispatchGroup: DispatchGroup!
     var noPost = false
     var noFollowingUser = false
     var noFollower = false
@@ -63,7 +87,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                         let isLastPage = result!.isLastPage
                         self.isLastPostPage = isLastPage
                         self.userPosts += posts
-                        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        DispatchQueue.main.async(execute: { () -> Void in
                             self.tableView.reloadData()
                             // TODO: remove this later
 //                            self.tableView.finishInfiniteScroll()
@@ -78,14 +102,14 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     let postTypeText = [
-        postTypes[NewsfeedType.HowHoroscope]!.1,
-        postTypes[NewsfeedType.ShareAdvice]!.1,
-        postTypes[NewsfeedType.OnYourMind]!.1
+        postTypes[NewsfeedType.howHoroscope]!.1,
+        postTypes[NewsfeedType.shareAdvice]!.1,
+        postTypes[NewsfeedType.onYourMind]!.1
     ]
     var isLastPostPage = false
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(ProfileBaseViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         return refreshControl
         }()
     var topCorner: CAShapeLayer!
@@ -109,37 +133,37 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         let centerPoint = CGPoint(x: avatarImageView.frame.origin.x + avatarImageView.frame.size.width/2, y: avatarImageView.frame.origin.y + avatarImageView.frame.height/2)
         let radius = avatarImageView.frame.size.width/2 + 5
         let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
-        circleLayer.fillColor = UIColor.clearColor().CGColor
+        circleLayer.fillColor = UIColor.clear.cgColor
         let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-        circleLayer.strokeColor = color.CGColor
+        circleLayer.strokeColor = color.cgColor
         profileView.layer.addSublayer(circleLayer)
         
         topCorner = CAShapeLayer()
         bottomCorner = CAShapeLayer()
         
-        postButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followingButton.titleLabel?.textAlignment = NSTextAlignment.Center
-        followersButton.titleLabel?.textAlignment = NSTextAlignment.Center
+        postButton.titleLabel?.textAlignment = NSTextAlignment.center
+        followingButton.titleLabel?.textAlignment = NSTextAlignment.center
+        followersButton.titleLabel?.textAlignment = NSTextAlignment.center
         highlightScopeButton(postButton)
         
         // Temporarily hide 2 button in header, disable post button
-        postButton.enabled = false
-        followingButton.hidden = true
-        followersButton.hidden = true
+        postButton.isEnabled = false
+        followingButton.isHidden = true
+        followersButton.isHidden = true
         
-        tableView.infiniteScrollIndicatorStyle = .White
+        tableView.infiniteScrollIndicatorStyle = .white
         tableView.addSubview(refreshControl)
         
-        tableView.registerClass(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
+        tableView.register(UITableViewHeaderFooterView.classForCoder(), forHeaderFooterViewReuseIdentifier: "HeaderFooterView")
         
         tableView.clipsToBounds = true
         tableView.layer.cornerRadius = 4
-        tableView.pagingEnabled = true
+        tableView.isPagingEnabled = true
         
         lastContentOffset = tableView.contentOffset.y
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if userProfile.uid != -1 {
             self.getUserProfileCounts()
@@ -153,7 +177,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.TopLeft.union(.TopRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        topCorner.path = UIBezierPath(roundedRect: profileView.bounds, byRoundingCorners: UIRectCorner.topLeft.union(.topRight), cornerRadii: CGSize(width: 4, height: 4)).cgPath
         profileView.layer.mask = topCorner
         
     }
@@ -166,12 +190,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: - Configure UI
     
     func scrollToTop() {
-        tableView.setContentOffset(CGPointZero, animated: true)
+        tableView.setContentOffset(CGPoint.zero, animated: true)
     }
     
     func configureProfileView() {
         Utilities.getImageFromUrlString(userProfile.imgURL, completionHandler: { (image) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 self.avatarImageView.image = image
             })
         })
@@ -180,23 +204,23 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     }
     
     func configureScopeButton() {
-        postButton.setAttributedTitle(stringForTitle("Post", number: numberOfPosts), forState: .Normal)
-        followingButton.setAttributedTitle(stringForTitle("Following", number: numberOfUsersFollowing), forState: .Normal)
-        followersButton.setAttributedTitle(stringForTitle("Followers", number: numberOfFollowers), forState: .Normal)
+        postButton.setAttributedTitle(stringForTitle("Post", number: numberOfPosts), for: UIControlState())
+        followingButton.setAttributedTitle(stringForTitle("Following", number: numberOfUsersFollowing), for: UIControlState())
+        followersButton.setAttributedTitle(stringForTitle("Followers", number: numberOfFollowers), for: UIControlState())
     }
     
-    private func stringForTitle(title: String, number: Int) -> NSMutableAttributedString {
+    fileprivate func stringForTitle(_ title: String, number: Int) -> NSMutableAttributedString {
         var font: UIFont
         if #available(iOS 8.2, *) {
-            font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+            font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
         } else {
-            font = UIFont.systemFontOfSize(11)
+            font = UIFont.systemFont(ofSize: 11)
         }
         var fontForNumber: UIFont
         if #available(iOS 8.2, *) {
-            fontForNumber = UIFont.systemFontOfSize(15, weight: UIFontWeightMedium)
+            fontForNumber = UIFont.systemFont(ofSize: 15, weight: UIFontWeightMedium)
         } else {
-            fontForNumber = UIFont.systemFontOfSize(15)
+            fontForNumber = UIFont.systemFont(ofSize: 15)
         }
         let attributes = [
             NSFontAttributeName: font
@@ -206,12 +230,12 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         return string
     }
     
-    func highlightScopeButton(sender: UIButton) {
+    func highlightScopeButton(_ sender: UIButton) {
         for button in [postButton, followersButton, followingButton] {
             if button == sender {
-                button.alpha = 1
+                button?.alpha = 1
             } else {
-                button.alpha = 0.5
+                button?.alpha = 0.5
             }
         }
     }
@@ -220,47 +244,47 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         tableLeadingSpaceLayoutConstraint.constant = 0
         tableTrailingSpaceLayoutConstraint.constant = 0
         tableBottomSpaceLayoutConstraint.constant = 0
-        tableView.backgroundColor = UIColor.clearColor()
+        tableView.backgroundColor = UIColor.clear
     }
     
     func changeToWhiteTableViewLayout() {
         tableLeadingSpaceLayoutConstraint.constant = 8
         tableTrailingSpaceLayoutConstraint.constant = 8
         tableBottomSpaceLayoutConstraint.constant = 8
-        tableView.backgroundColor = UIColor.whiteColor()
+        tableView.backgroundColor = UIColor.white
     }
     
     // MARK: - Action
     
-    func handleRefresh(refreshControl: UIRefreshControl) {
+    func handleRefresh(_ refreshControl: UIRefreshControl) {
         switch currentScope {
-        case .Post:
+        case .post:
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileReload, label: nil)
             currentPostPage = 0
             isLastPostPage = false
             getFeed(true, completionHandler: { () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     refreshControl.endRefreshing()
                 })
             })
-        case .Following:
+        case .following:
             getUsersFollowing({ () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     refreshControl.endRefreshing()
                 })
             })
-        case .Followers:
+        case .followers:
             getFollowers({ () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     refreshControl.endRefreshing()
                 })
             })
         }
     }
     
-    @IBAction func tapPostButton(sender: UIButton) {
-        if currentScope != .Post {
-            currentScope = .Post
+    @IBAction func tapPostButton(_ sender: UIButton) {
+        if currentScope != .post {
+            currentScope = .post
             tableView.allowsSelection = false
             tapScopeButton(sender)
             currentPostPage = 0
@@ -268,39 +292,39 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             getFeed(completionHandler: { () -> Void in
                 
             })
-            tableView.pagingEnabled = true
+            tableView.isPagingEnabled = true
         }
     }
     
-    @IBAction func tapFollowingButton(sender: UIButton) {
-        if currentScope != .Following {
-            currentScope = .Following
+    @IBAction func tapFollowingButton(_ sender: UIButton) {
+        if currentScope != .following {
+            currentScope = .following
             tableView.allowsSelection = true
             tapScopeButton(sender)
             getUsersFollowing({ () -> Void in
                 
             })
-            tableView.pagingEnabled = false
+            tableView.isPagingEnabled = false
         }
     }
     
-    @IBAction func tapFollowersButton(sender: UIButton) {
-        if currentScope != .Followers {
-            currentScope = .Followers
+    @IBAction func tapFollowersButton(_ sender: UIButton) {
+        if currentScope != .followers {
+            currentScope = .followers
             tableView.allowsSelection = true
             tapScopeButton(sender)
             getFollowers({ () -> Void in
                 
             })
-            tableView.pagingEnabled = false
+            tableView.isPagingEnabled = false
         }
     }
     
     // MARK: - Convenience
     
-    func tapScopeButton(sender: UIButton) {
+    func tapScopeButton(_ sender: UIButton) {
         highlightScopeButton(sender)
-        if currentScope != .Post {
+        if currentScope != .post {
             changeToWhiteTableViewLayout()
         } else {
             changeToClearTableViewLayout()
@@ -313,23 +337,23 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     func getData() {
         getUserProfileCounts()
         switch currentScope {
-        case .Post:
+        case .post:
             getFeed(needToRefreshFeed, completionHandler: { () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.hidden = false
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.tableView.isHidden = false
                     self.needToRefreshFeed = false
                 })
             })
-        case .Following:
+        case .following:
             getUsersFollowing({ () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.hidden = false
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.tableView.isHidden = false
                 })
             })
-        case .Followers:
+        case .followers:
             getFollowers({ () -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.tableView.hidden = false
+                DispatchQueue.main.async(execute: { () -> Void in
+                    self.tableView.isHidden = false
                 })
             })
         }
@@ -345,7 +369,7 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
                     self.numberOfPosts = count.numberOfPosts
                     self.numberOfUsersFollowing = count.numberOfUsersFollowing
                     self.numberOfFollowers = count.numberOfFollowers
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         self.configureScopeButton()
                     })
                 }
@@ -353,13 +377,13 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func getFeed(isRefreshed: Bool = false, completionHandler: () -> Void) {
+    func getFeed(_ isRefreshed: Bool = false, completionHandler: @escaping () -> Void) {
         if currentPostPage == 0 {
             SocialManager.sharedInstance.getUserFeed(userProfile.uid, page: currentPostPage, isRefreshed: isRefreshed, completionHandler: { (result, error) -> Void in
                 if let error = error {
                     Utilities.showError(error, viewController: self)
                 } else {
-                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    DispatchQueue.main.async(execute: { () -> Void in
                         let posts = result!.0
                         self.noPost = posts.count == 0
                         self.userPosts = posts
@@ -371,27 +395,27 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func getUsersFollowing(completionHandler: () -> Void) {
+    func getUsersFollowing(_ completionHandler: () -> Void) {
         if followingUsers.count != numberOfUsersFollowing {
             Utilities.showHUD()
         }
         preconditionFailure("This method must be overridden")
     }
     
-    func getFollowers(completionHandler: () -> Void) {
+    func getFollowers(_ completionHandler: () -> Void) {
         if followers.count != numberOfFollowers {
             Utilities.showHUD()
         }
         preconditionFailure("This method must be overridden")
     }
     
-    func isDataUpdated<T: SequenceType>(oldData: T, newData: T) -> Bool {
+    func isDataUpdated<T: Sequence>(_ oldData: T, newData: T) -> Bool {
         let oldDataIdSet = setOfDataId(oldData)
         let newDataIdSet = setOfDataId(newData)
         return oldDataIdSet != newDataIdSet
     }
     
-    private func setOfDataId<T: SequenceType>(data: T) -> Set<String> {
+    fileprivate func setOfDataId<T: Sequence>(_ data: T) -> Set<String> {
         var result = Set<String>()
         for item in data {
             if let post = item as? UserPost {
@@ -405,29 +429,29 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
 
     // MARK: - Table view data source
 
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tableView.scrollEnabled = true
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        tableView.isScrollEnabled = true
         switch currentScope {
-        case .Post:
+        case .post:
             if noPost {
-                tableView.scrollEnabled = false
+                tableView.isScrollEnabled = false
                 changeToWhiteTableViewLayout()
             } else {
                 changeToClearTableViewLayout()
             }
             return userPosts.count
-        case .Following:
+        case .following:
             return followingUsers.count
-        case .Followers:
+        case .followers:
             return followers.count
         }
     }
 
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch currentScope {
-        case .Post:
+        case .post:
             let post = userPosts[indexPath.row]
-            let cell = tableView.dequeueReusableCellWithIdentifier("PostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "PostTableViewCell", for: indexPath) as! PostTableViewCell
             cell.viewController = self
             cell.configureCellForProfile(post)
             if(indexPath.row == userPosts.count - 1){ // last row
@@ -435,10 +459,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
             }
             return cell
         default:
-            let cell = tableView.dequeueReusableCellWithIdentifier("FollowTableViewCell", forIndexPath: indexPath) as! FollowTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "FollowTableViewCell", for: indexPath) as! FollowTableViewCell
             var profile: UserProfile
             cell.delegate = self
-            if currentScope == .Following {
+            if currentScope == .following {
                 profile = followingUsers[indexPath.row]
             } else {
                 profile = followers[indexPath.row]
@@ -448,65 +472,65 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        if currentScope != .Post {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if currentScope != .post {
             return 70
         }
         return tableView.frame.height
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var profile: UserProfile!
-        if currentScope == .Following {
+        if currentScope == .following {
             profile = followingUsers[indexPath.row]
-        } else if currentScope == .Followers {
+        } else if currentScope == .followers {
             profile = followers[indexPath.row]
         }
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+        let controller = storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile!
         navigationController?.pushViewController(controller, animated: true)
     }
     
-    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if (currentScope == .Post && noPost) || (currentScope == .Following && noFollowingUser) || (currentScope == .Followers && noFollower) {
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if (currentScope == .post && noPost) || (currentScope == .following && noFollowingUser) || (currentScope == .followers && noFollower) {
             return 26
         }
         return 0
     }
     
-    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = tableView.dequeueReusableHeaderFooterViewWithIdentifier("HeaderFooterView")!
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = tableView.dequeueReusableHeaderFooterView(withIdentifier: "HeaderFooterView")!
         switch currentScope {
-        case .Post:
+        case .post:
             view.textLabel!.text = noPostText
-        case .Following:
+        case .following:
             view.textLabel!.text = noUsersFollowingText
-        case .Followers:
+        case .followers:
             view.textLabel!.text = noFollowersText
         }
         return view
     }
     
-    func tableView(tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
         let headerView = view as! UITableViewHeaderFooterView
-        headerView.textLabel!.font = UIFont.systemFontOfSize(11)
-        headerView.textLabel!.textColor = UIColor.grayColor()
-        headerView.contentView.backgroundColor = UIColor.whiteColor()
+        headerView.textLabel!.font = UIFont.systemFont(ofSize: 11)
+        headerView.textLabel!.textColor = UIColor.gray
+        headerView.contentView.backgroundColor = UIColor.white
     }
     
     // MARK: - Delegate
     
-    func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let isScrolledUp = lastContentOffset > scrollView.contentOffset.y ? 1 : 0
         let label = "up = \(isScrolledUp)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.profileSwipe, label: label)
         lastContentOffset = scrollView.contentOffset.y
     }
     
-    func didChooseUser(profile: UserProfile) {
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+    func didChooseUser(_ profile: UserProfile) {
+        let controller = storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as! OtherProfileViewController
         controller.userProfile = profile
-        presentedViewController?.dismissViewControllerAnimated(false, completion: { () -> Void in
+        presentedViewController?.dismiss(animated: false, completion: { () -> Void in
             self.navigationController?.pushViewController(controller, animated: true)
         })
     }
@@ -516,10 +540,10 @@ class ProfileBaseViewController: ViewControllerWithAds, UITableViewDataSource, U
     // MARK: Load Next Page
     
     func loadDataForNextPage(){
-        if self.isLastPostPage || self.currentScope != .Post {
+        if self.isLastPostPage || self.currentScope != .post {
             return
         }
-        self.currentPostPage++
+        self.currentPostPage += 1
     }
 
     /*

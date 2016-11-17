@@ -24,7 +24,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.singlePostOpen, label: label)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
     }
     
     // MARK: Setup View
@@ -37,20 +37,20 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: - Table view data source and delegate
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return getAboutCellHeight(userPost.message)
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SinglePostTableViewCell", forIndexPath: indexPath) as! PostTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SinglePostTableViewCell", for: indexPath) as! PostTableViewCell
         cell.configureCellForNewsfeed(userPost)
         cell.viewController = self
         return cell
@@ -58,30 +58,30 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     // MARK: Table Cell Helpers
     
-    func getAboutCellHeight(text : String) -> CGFloat {
+    func getAboutCellHeight(_ text : String) -> CGFloat {
         let font = UIFont(name: "Book Antiqua", size: 14)
-        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName as NSCopying)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - (PADDING * 2)
         let textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
         return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + PADDING * 3
     }
     
-    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+    func calculateTextViewHeight(_ string: NSAttributedString, width: CGFloat) ->CGFloat {
         let textviewForCalculating = UITextView()
         let style = NSMutableParagraphStyle()
         style.lineSpacing = 5
         let att = string.mutableCopy() as! NSMutableAttributedString
         att.addAttribute(NSParagraphStyleAttributeName, value: style, range: NSMakeRange(0, att.string.utf16.count))
         textviewForCalculating.attributedText = att
-        let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let size = textviewForCalculating.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         let height = ceil(size.height)
         return height
     }
     
     // MARK: Button Actions
     
-    @IBAction func backButtonTapped(sender: AnyObject) {
-        self.navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTapped(_ sender: AnyObject) {
+        self.navigationController?.popViewController(animated: true)
     }
 }

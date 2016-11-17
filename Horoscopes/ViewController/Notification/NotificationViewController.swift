@@ -19,11 +19,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
     var tableHeaderView : UIView!
     var tableFooterView : UIView!
     var noNotificationView : UIView!
-    var updateTimer : NSTimer!
+    var updateTimer : Timer!
     
     lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: #selector(NotificationViewController.handleRefresh(_:)), for: UIControlEvents.valueChanged)
         return refreshControl
         }()
     
@@ -40,11 +40,11 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         tableView.addSubview(refreshControl)
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        updateTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "update", userInfo: nil, repeats: true)
-        if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
-            notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+        updateTimer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: #selector(NotificationViewController.update), userInfo: nil, repeats: true)
+        if let notifData = UserDefaults.standard.data(forKey: notificationKey) {
+            notificationIds = NSKeyedUnarchiver.unarchiveObject(with: notifData) as! Set<String>
         }
         
         
@@ -54,16 +54,16 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             let retrieveLabel = "no_retrieved = \(XAppDelegate.badge)"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifRetrieved, label: retrieveLabel)
         }
-        UIApplication.sharedApplication().applicationIconBadgeNumber = 0
+        UIApplication.shared.applicationIconBadgeNumber = 0
         XAppDelegate.badge = 0
         Utilities.updateNotificationBadge()
-        let time = NSDate().timeIntervalSince1970 - XAppDelegate.lastGetAllNotificationsTs
+        let time = Date().timeIntervalSince1970 - XAppDelegate.lastGetAllNotificationsTs
         if(time > 60){
             self.getNotificationAndReloadData()
         }
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         updateTimer.invalidate()
         updateTimer = nil
     }
@@ -73,25 +73,25 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         if(notifArray.count != 0 ){
             self.tableView.backgroundView = nil
             return 1
         } else {
             self.tableView.backgroundView = nil
             // Display a message when the table is empty
-            let messageLabel = UILabel(frame:CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height))
+            let messageLabel = UILabel(frame:CGRect(x: 0, y: 0, width: self.view.bounds.size.width, height: self.view.bounds.size.height))
             // This is created to calculate label position
             messageLabel.text = "You have no notifications yet"
             messageLabel.font = UIFont(name: "HelveticaNeue-Light", size:15)
             messageLabel.sizeToFit()
-            let view = UIView(frame:CGRectMake(0, 0, tableView.bounds.size.width, tableView.bounds.size.height))
-            view.backgroundColor = UIColor.whiteColor()
+            let view = UIView(frame:CGRect(x: 0, y: 0, width: tableView.bounds.size.width, height: tableView.bounds.size.height))
+            view.backgroundColor = UIColor.white
             // real label
-            let fixedLabel = UILabel(frame:CGRectMake((tableView.bounds.size.width - messageLabel.frame.width) / 2, (tableView.bounds.size.height - ADMOD_HEIGHT - messageLabel.frame.height) / 2, messageLabel.frame.width, messageLabel.frame.height))
-            fixedLabel.textColor = UIColor.blackColor()
+            let fixedLabel = UILabel(frame:CGRect(x: (tableView.bounds.size.width - messageLabel.frame.width) / 2, y: (tableView.bounds.size.height - ADMOD_HEIGHT - messageLabel.frame.height) / 2, width: messageLabel.frame.width, height: messageLabel.frame.height))
+            fixedLabel.textColor = UIColor.black
             fixedLabel.numberOfLines = 0
-            fixedLabel.textAlignment = NSTextAlignment.Center
+            fixedLabel.textAlignment = NSTextAlignment.center
             fixedLabel.font = messageLabel.font
             fixedLabel.text = messageLabel.text
             view.addSubview(fixedLabel)
@@ -100,13 +100,13 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.notifArray.count
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : NotificationTableViewCell!
-        cell = tableView.dequeueReusableCellWithIdentifier("NotificationTableViewCell", forIndexPath: indexPath) as! NotificationTableViewCell
+        cell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
         if let cell = cell {
             cell.resetUI()
             self.resetCornerRadius(cell)
@@ -115,23 +115,23 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         return cell
     }
     
-    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         let id = notifArray[indexPath.row].notification_id
-        if notificationIds.contains(id) {
-            cell.backgroundColor = UIColor.whiteColor()
+        if notificationIds.contains(id!) {
+            cell.backgroundColor = UIColor.white
         } else {
             cell.backgroundColor = UIColor(red: 242/255, green: 242/255, blue: 242/255, alpha: 1)
         }
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let cell = tableView.cellForRowAtIndexPath(indexPath)
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.cellForRow(at: indexPath)
         if let cell = cell {
-            cell.backgroundColor = UIColor.whiteColor()
+            cell.backgroundColor = UIColor.white
             let id = notifArray[indexPath.row].notification_id
-            notificationIds.insert(id)
-            let data = NSKeyedArchiver.archivedDataWithRootObject(notificationIds)
-            NSUserDefaults.standardUserDefaults().setObject(data, forKey: notificationKey)
+            notificationIds.insert(id!)
+            let data = NSKeyedArchiver.archivedData(withRootObject: notificationIds)
+            UserDefaults.standard.set(data, forKey: notificationKey)
             SocialManager.sharedInstance.clearNotificationWithId(id)
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
@@ -139,7 +139,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                 let label = "notif_id = \(id) route = \(route)"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.notifSelect, label: label)
 //                print("didSelectRowAtIndexPath route == \(route)")
-                dispatch_async(dispatch_get_main_queue()) {
+                DispatchQueue.main.async {
                     XAppDelegate.mobilePlatform.router.handleRoute(notifCell.notification.route);
                 }
                 
@@ -147,23 +147,23 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         }
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 70
     }
     
     // MARK: Button actions
     
-    func handleRefresh(refreshControl: UIRefreshControl) {
+    func handleRefresh(_ refreshControl: UIRefreshControl) {
         CacheManager.clearAllNotificationData()
         self.getNotificationAndReloadData()
         refreshControl.endRefreshing()
     }
     
-    @IBAction func refreshButtonTapped(sender: AnyObject) {
+    @IBAction func refreshButtonTapped(_ sender: AnyObject) {
         self.getNotificationAndReloadData()
     }
     
-    @IBAction func clearAllTapped(sender: AnyObject) {
+    @IBAction func clearAllTapped(_ sender: AnyObject) {
         
     }
     
@@ -172,14 +172,14 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
         
         if(notifArray.count == 0){ // first load
             Utilities.showHUD()
-            tableView.backgroundColor = UIColor.whiteColor()
+            tableView.backgroundColor = UIColor.white
         }
         XAppDelegate.socialManager.getAllNotification(0, completionHandler: { (result) -> Void in
-            if let notifData = NSUserDefaults.standardUserDefaults().dataForKey(notificationKey) {
-                self.notificationIds = NSKeyedUnarchiver.unarchiveObjectWithData(notifData) as! Set<String>
+            if let notifData = UserDefaults.standard.data(forKey: notificationKey) {
+                self.notificationIds = NSKeyedUnarchiver.unarchiveObject(with: notifData) as! Set<String>
             }
-            XAppDelegate.lastGetAllNotificationsTs = NSDate().timeIntervalSince1970
-            dispatch_async(dispatch_get_main_queue(),{
+            XAppDelegate.lastGetAllNotificationsTs = Date().timeIntervalSince1970
+            DispatchQueue.main.async(execute: {
                 Utilities.hideHUD()
                 
                 self.tableView.beginUpdates()
@@ -188,10 +188,10 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                     let n2 = notif2 as! NotificationObject
                     return (n1.notification_id == n2.notification_id);
                 })
-                let delta = deltaCalculator.deltaFromOldArray(self.notifArray, toNewArray:result!)
-                delta.applyUpdatesToTableView(self.tableView,inSection:0,withRowAnimation:UITableViewRowAnimation.Fade)
+                let delta = deltaCalculator.delta(fromOldArray: self.notifArray, toNewArray:result!)
+                delta.applyUpdates(to: self.tableView,inSection:0,with:UITableViewRowAnimation.fade)
                 self.notifArray = result!
-                self.notifArray.sortInPlace({ $0.created > $1.created })
+                self.notifArray.sort(by: { $0.created > $1.created })
                 self.tableView.endUpdates()
                 
             })
@@ -204,8 +204,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             
         } else {
             tableHeaderView = UIView()
-            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width,PADDING)
-            tableHeaderView.backgroundColor = UIColor.clearColor()
+            tableHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width,height: PADDING)
+            tableHeaderView.backgroundColor = UIColor.clear
         }
         return tableHeaderView
     }
@@ -215,16 +215,16 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             
         } else {
             tableFooterView = UIView()
-            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, PADDING)
-            tableFooterView.backgroundColor = UIColor.clearColor()
+            tableFooterView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: PADDING)
+            tableFooterView.backgroundColor = UIColor.clear
             
         }
         return tableFooterView
     }
     
     // prevent corner radius from applying to middle rows
-    func resetCornerRadius(cell : NotificationTableViewCell){
-        dispatch_async(dispatch_get_main_queue(),{
+    func resetCornerRadius(_ cell : NotificationTableViewCell){
+        DispatchQueue.main.async(execute: {
             Utilities.makeCornerRadius(cell, maskFrame: cell.bounds, roundOptions: UIRectCorner(), radius: 4.0) as! NotificationTableViewCell
         })
     }

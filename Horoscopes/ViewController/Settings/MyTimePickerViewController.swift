@@ -16,8 +16,8 @@ class MyTimePickerViewController : UIViewController{
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        picker.datePickerMode = .Time
-        picker.backgroundColor = UIColor.clearColor()
+        picker.datePickerMode = .time
+        picker.backgroundColor = UIColor.clear
         if let parentVC = parentVC{
             let date = Utilities.getDateFromDateString(parentVC.lastSaveNotificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
             picker.date = date
@@ -30,7 +30,7 @@ class MyTimePickerViewController : UIViewController{
         super.init(coder: aDecoder)!
     }
    
-    @IBAction func timeChange(sender: AnyObject) {
+    @IBAction func timeChange(_ sender: AnyObject) {
         parentVC.doneSelectingTime(picker.date)
     }
     

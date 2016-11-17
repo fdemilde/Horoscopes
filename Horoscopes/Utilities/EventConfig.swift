@@ -123,7 +123,7 @@ class EventConfig {
         .dobDobChange,
     ]
     
-    class func getLogLevel(eventName : Event) -> Int32{
+    class func getLogLevel(_ eventName : Event) -> Int32{
         if LogLevel1.contains(eventName) {
             return Int32(1)
         }

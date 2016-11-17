@@ -8,10 +8,10 @@
 
 import Foundation
 
-public class UserPost : NSObject{
+open class UserPost : NSObject{
     var post_id : String = ""
     var uid : Int = -1
-    var type = NewsfeedType.Invalid
+    var type = NewsfeedType.invalid
     var message : String = ""
     var truncated : Int = 0
     var hearts : Int = 0
@@ -24,22 +24,22 @@ public class UserPost : NSObject{
     init?(data: NSDictionary){
         super.init()
         // if data doesn't have a type or type is invalid, ignore it
-        self.type = Utilities.getNewsfeedTypeByString(data.objectForKey("type") as! String)
-        self.uid = data.objectForKey("uid") as! Int
-        self.post_id = data.objectForKey("post_id") as! String
-        self.message = data.objectForKey("message") as! String
-        self.truncated = data.objectForKey("truncated") as! Int
-        self.hearts = data.objectForKey("hearts") as! Int
-        shares = data.objectForKey("shares") as! Int
-        self.ts = data.objectForKey("ts") as! Int
-        self.permalink = data.objectForKey("permalink") as! String
+        self.type = Utilities.getNewsfeedTypeByString(data.object(forKey: "type") as! String)
+        self.uid = data.object(forKey: "uid") as! Int
+        self.post_id = data.object(forKey: "post_id") as! String
+        self.message = data.object(forKey: "message") as! String
+        self.truncated = data.object(forKey: "truncated") as! Int
+        self.hearts = data.object(forKey: "hearts") as! Int
+        shares = data.object(forKey: "shares") as! Int
+        self.ts = data.object(forKey: "ts") as! Int
+        self.permalink = data.object(forKey: "permalink") as! String
         
-        if(self.type == NewsfeedType.Invalid){
+        if(self.type == NewsfeedType.invalid){
             return nil
         }
     }
     
-    static func postsFromResults(results: [NSDictionary]) -> [UserPost] {
+    static func postsFromResults(_ results: [NSDictionary]) -> [UserPost] {
         var posts = [UserPost]()
         for result in results {
             if (UserPost(data: result) != nil) {
@@ -49,7 +49,7 @@ public class UserPost : NSObject{
         return posts
     }
     
-    override public var description: String {
+    override open var description: String {
         let string = ("id = \(post_id) || desc = \(message) || ts = \(ts) \n")
         return string
     }

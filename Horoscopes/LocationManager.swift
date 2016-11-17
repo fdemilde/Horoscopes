@@ -34,7 +34,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBestForNavigation
         locationManager.distanceFilter = kCLDistanceFilterNone
-        if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.NotDetermined {
+        if CLLocationManager.authorizationStatus() != CLAuthorizationStatus.notDetermined {
             // TODO: handle if location service disable or denied
             if CLLocationManager.locationServicesEnabled() {
                 locationManager.startUpdatingLocation()
@@ -52,10 +52,10 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
     
     // MARK: CLLocationManagerDelegate
     
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
         var notificationInfo = "success = "
-        if status != CLAuthorizationStatus.NotDetermined && status != CLAuthorizationStatus.Denied{
+        if status != CLAuthorizationStatus.notDetermined && status != CLAuthorizationStatus.denied{
             notificationInfo += "1"
             manager.startUpdatingLocation()
         } else {
@@ -64,7 +64,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permLocation, label: notificationInfo)
     }
     
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         //stop updating location to save battery life
         locationManager.stopUpdatingLocation()
         if let location = manager.location {
@@ -72,7 +72,7 @@ class LocationManager : NSObject, CLLocationManagerDelegate {
         }
     }
     
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("Error while updating location " + error.localizedDescription)
         // get this error in simulator, on device what should we do?
 //        self.dismissViews()

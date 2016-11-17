@@ -17,8 +17,8 @@ class ShareViewController : UIViewController {
     let startPosY = 55.0 as CGFloat
     
     let paddingSeparator = 30.0 as CGFloat
-    var buttonDefaultSize = CGSizeMake(100, 100)
-    var timeTag = NSTimeInterval()
+    var buttonDefaultSize = CGSize(width: 100, height: 100)
+    var timeTag = TimeInterval()
     var sharingText = ""
     var pictureURL = ""
     var horoscopeSignName = ""
@@ -38,27 +38,27 @@ class ShareViewController : UIViewController {
     
     var currentButtonIndex = 0
     
-    var viewType = ShareViewType.ShareViewTypeDirect
-    var shareType = ShareType.ShareTypeDaily
+    var viewType = ShareViewType.shareViewTypeDirect
+    var shareType = ShareType.shareTypeDaily
     
     var separateLineView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.clearColor()
+        self.view.backgroundColor = UIColor.clear
         self.setupNumberOfButtonsAndPadding()
         self.setupShareButtons()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let label = "type = " + getTypeString() + ", info = " + getInfoString()
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareDialog, label: label)
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+        NotificationCenter.default.removeObserver(self)
     }
     
     func setupNumberOfButtonsAndPadding(){
@@ -66,15 +66,15 @@ class ShareViewController : UIViewController {
         if (DeviceType.IS_IPHONE_6){
             numberOfButtons = 3
             let paddingX = 18.0 as CGFloat
-            buttonDefaultSize = CGSizeMake(buttonDefaultSize.width + paddingX , buttonDefaultSize.height)
+            buttonDefaultSize = CGSize(width: buttonDefaultSize.width + paddingX , height: buttonDefaultSize.height)
         }  else if (DeviceType.IS_IPHONE_6P){
             numberOfButtons = 4
-            buttonDefaultSize = CGSizeMake(buttonDefaultSize.width - 2, buttonDefaultSize.height)
+            buttonDefaultSize = CGSize(width: buttonDefaultSize.width - 2, height: buttonDefaultSize.height)
         }
     }
     
     func setupShareButtons(){
-        if(self.viewType == ShareViewType.ShareViewTypeHybrid){
+        if(self.viewType == ShareViewType.shareViewTypeHybrid){
             // include Twitter and Facebook
             self.createFacebookButton()
             self.createTwitterButton()
@@ -87,7 +87,7 @@ class ShareViewController : UIViewController {
     }
     
     func createSeparatorLine(){
-        separateLineView = UIView(frame: CGRectMake(0, startPosY + buttonDefaultSize.height + paddingSeparator/2, self.view.frame.width, 1.0))
+        separateLineView = UIView(frame: CGRect(x: 0, y: startPosY + buttonDefaultSize.height + paddingSeparator/2, width: self.view.frame.width, height: 1.0))
         separateLineView.backgroundColor = UIColor(red: 204/255.0, green: 204/255.0, blue: 204/255.0, alpha: 1)
         self.shareView.addSubview(separateLineView)
     }
@@ -95,63 +95,63 @@ class ShareViewController : UIViewController {
      // MARK: create buttons
     
     func createTwitterButton(){
-        let twitterBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeTwitter)
+        let twitterBtn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeTwitter)
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTwTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleTwTap(_:)))
         twitterBtn.addGestureRecognizer(tap)
     }
     
     func createFacebookButton(){
-        let facebookBtn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFacebook)
+        let facebookBtn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeFacebook)
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleFBTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleFBTap(_:)))
         facebookBtn.addGestureRecognizer(tap)
     }
     
     func createMessageButton(){
-        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeMessages)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeMessages)
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleMessageTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleMessageTap(_:)))
         btn.addGestureRecognizer(tap)
     }
     
     func createEmailButton(){
-        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeEmail)
+        let btn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeEmail)
         
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleEmailTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleEmailTap(_:)))
         btn.addGestureRecognizer(tap)
     }
     
     func createFBMessageButton(){
-        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeFBMessenger)
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleFBMessageTap:"))
+        let btn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeFBMessenger)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleFBMessageTap(_:)))
         btn.addGestureRecognizer(tap)
     }
     
     func createWhatappsButton(){
-        let btn = self.createShareButton(ShareButton.ShareButtonType.ShareButtonTypeWhatsapp)
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleWhatsappTap:"))
+        let btn = self.createShareButton(ShareButton.ShareButtonType.shareButtonTypeWhatsapp)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ShareViewController.handleWhatsappTap(_:)))
         btn.addGestureRecognizer(tap)
     }
     
-    func createShareButton(type : ShareButton.ShareButtonType) -> ShareButton{
+    func createShareButton(_ type : ShareButton.ShareButtonType) -> ShareButton{
         let buttonFrame = self.getPosition(currentButtonIndex)
         let button = ShareButton(type: type, frame: buttonFrame)
         button.parentVC = self
         self.shareView.addSubview(button)
-        currentButtonIndex++
+        currentButtonIndex += 1
         
         return button
     }
     
-    func getPosition(index : Int) -> CGRect {
+    func getPosition(_ index : Int) -> CGRect {
         
         var posX = 0 as CGFloat
         var posY = startPosY
         var row = 0 as Int
         var col = 0 as Int
         
-        if(viewType == ShareViewType.ShareViewTypeHybrid){
+        if(viewType == ShareViewType.shareViewTypeHybrid){
             /*
             it should have FB and twitter button
             row 1: 1,2
@@ -184,11 +184,11 @@ class ShareViewController : UIViewController {
         posY += buttonDefaultSize.height * CGFloat(row)
         
         
-        return CGRectMake(posX,posY,buttonDefaultSize.width,buttonDefaultSize.height)
+        return CGRect(x: posX,y: posY,width: buttonDefaultSize.width,height: buttonDefaultSize.height)
     }
     
     // MARK: Populate sharing data
-    func populateShareData(viewType: ShareViewType, shareType: ShareType, timeTag: NSTimeInterval = 0, horoscopeSignName : String, sharingText: String, pictureURL : String) {
+    func populateShareData(_ viewType: ShareViewType, shareType: ShareType, timeTag: TimeInterval = 0, horoscopeSignName : String, sharingText: String, pictureURL : String) {
         self.viewType = viewType
         self.shareType = shareType
         self.timeTag = timeTag
@@ -197,9 +197,9 @@ class ShareViewController : UIViewController {
         self.pictureURL = pictureURL
     }
     
-    func populateDailyShareData(viewType: ShareViewType, timeTag: NSTimeInterval, horoscopeSign : Int, sharingText: String, pictureURL : String, shareUrl : String){
+    func populateDailyShareData(_ viewType: ShareViewType, timeTag: TimeInterval, horoscopeSign : Int, sharingText: String, pictureURL : String, shareUrl : String){
         self.viewType = viewType
-        self.shareType = ShareType.ShareTypeDaily
+        self.shareType = ShareType.shareTypeDaily
         self.timeTag = timeTag
         self.horoscopeSignName = Utilities.getHoroscopeNameWithIndex(horoscopeSign - 1)
         self.horoscopeSignIndex = horoscopeSign
@@ -210,9 +210,9 @@ class ShareViewController : UIViewController {
         }
     }
     
-    func populateCookieShareData(viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String, fortuneId : Int){
+    func populateCookieShareData(_ viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String, fortuneId : Int){
         self.viewType = viewType
-        self.shareType = ShareType.ShareTypeFortune
+        self.shareType = ShareType.shareTypeFortune
         self.sharingText = sharingText
         self.pictureURL = pictureURL
         self.shareUrl = shareUrl
@@ -221,9 +221,9 @@ class ShareViewController : UIViewController {
         }
     }
     
-    func populateNewsfeedShareData(postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
+    func populateNewsfeedShareData(_ postId : String, viewType: ShareViewType, sharingText: String, pictureURL : String, shareUrl : String){
         self.viewType = viewType
-        self.shareType = ShareType.ShareTypeNewsfeed
+        self.shareType = ShareType.shareTypeNewsfeed
         self.sharingText = sharingText
         self.pictureURL = pictureURL
         self.postId = postId
@@ -235,30 +235,30 @@ class ShareViewController : UIViewController {
     
     // MARK: Button Tapp gesture handlers
     
-    @IBAction func copyURLTapped(sender: AnyObject) {
-        UIPasteboard.generalPasteboard().string = self.shareUrl
-        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+    @IBAction func copyURLTapped(_ sender: AnyObject) {
+        UIPasteboard.general.string = self.shareUrl
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.mode = MBProgressHUDMode.text
+        hud.detailsLabelFont = UIFont.systemFont(ofSize: 11)
         hud.detailsLabelText = "Copied!"
         hud.hide(true, afterDelay: 2)
     }
     
-    func handleFBTap(sender: AnyObject){
+    func handleFBTap(_ sender: AnyObject){
         let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = facebook"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         shareController = ShareController(eventTrackerStr: label)
         shareController.shareFacebook(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
-    func handleTwTap(sender: AnyObject){
+    func handleTwTap(_ sender: AnyObject){
         let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = twitter"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         shareController = ShareController(eventTrackerStr: label)
         shareController.shareTwitter(self, text: self.getTextIncludingTitle(), pictureURL: pictureURL, url: self.shareUrl)
     }
     
-    func handleMessageTap(sender: AnyObject){
+    func handleMessageTap(_ sender: AnyObject){
         let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = messages"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         // Obtain a configured MFMessageComposeViewController
@@ -266,7 +266,7 @@ class ShareViewController : UIViewController {
         shareController.shareMessage(self,text: self.getTextIncludingTitle(), shareUrl: self.shareUrl)
     }
     
-    func handleEmailTap(sender: AnyObject){
+    func handleEmailTap(_ sender: AnyObject){
         let label = "type = " + getTypeString() + ", info = " + getInfoString() + ", method = email"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareSelect, label: label)
         // Obtain a configured MFMessageComposeViewController
@@ -274,14 +274,14 @@ class ShareViewController : UIViewController {
         shareController.shareMail(self,text: self.getTextIncludingTitle(),shareUrl: self.shareUrl)
     }
     
-    func handleFBMessageTap(sender: AnyObject){
+    func handleFBMessageTap(_ sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
         let title = self.getTitle()
         shareController = ShareController(eventTrackerStr: "")
         shareController.shareFbMessage(title, text: sharingText, url: self.shareUrl, pictureURL: pictureURL)
     }
     
-    func handleWhatsappTap(sender: AnyObject){
+    func handleWhatsappTap(_ sender: AnyObject){
         // Obtain a configured MFMessageComposeViewController
         shareController = ShareController(eventTrackerStr: "")
         shareController.shareWhatapps(self.getTextIncludingTitle(), url: self.shareUrl)
@@ -299,9 +299,9 @@ class ShareViewController : UIViewController {
     
     func isWhatsappAvailable() -> Bool {
         let url = "whatsapp://send?text=a"
-        let whatsappURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
+        let whatsappURL = URL(string: url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
         
-        return UIApplication.sharedApplication().canOpenURL(whatsappURL!)
+        return UIApplication.shared.canOpenURL(whatsappURL!)
     }
     
     /*
@@ -310,31 +310,31 @@ class ShareViewController : UIViewController {
     
     func isFBMessageAvailable() -> Bool {
         let url = "fb-messenger://compose"
-        let fbURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
-        return UIApplication.sharedApplication().canOpenURL(fbURL!)
+        let fbURL = URL(string: url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+        return UIApplication.shared.canOpenURL(fbURL!)
     }
     
     // MARK: Helpers
     
     func getTypeString() -> String {
         switch shareType {
-        case .ShareTypeDaily:
+        case .shareTypeDaily:
             return "horoscope"
-        case .ShareTypeFortune:
+        case .shareTypeFortune:
             return "fortune"
-        case .ShareTypeNewsfeed:
+        case .shareTypeNewsfeed:
             return "post"
         }
     }
     
     func getInfoString() -> String {
-        if shareType == .ShareTypeNewsfeed {
+        if shareType == .shareTypeNewsfeed {
             return postId
         }
-        let df = NSDateFormatter()
-        df.dateStyle = .FullStyle
-        let date = NSDate(timeIntervalSince1970: timeTag)
-        let dateString = df.stringFromDate(date)
+        let df = DateFormatter()
+        df.dateStyle = .full
+        let date = Date(timeIntervalSince1970: timeTag)
+        let dateString = df.string(from: date)
         return dateString
     }
     
@@ -342,13 +342,13 @@ class ShareViewController : UIViewController {
         var text = ""
         
         switch (shareType) {
-        case ShareType.ShareTypeDaily:
+        case ShareType.shareTypeDaily:
             text = String(format: "Daily %@ Horoscope \n %@",horoscopeSignName,sharingText)
             break
-        case ShareType.ShareTypeFortune:
+        case ShareType.shareTypeFortune:
             text = String(format: "I read my mobile fortune cookie! \n Lucky Numbers %@",sharingText)
             break
-        case ShareType.ShareTypeNewsfeed:
+        case ShareType.shareTypeNewsfeed:
             text = String(format: "%@",sharingText)
             break
         }
@@ -358,13 +358,13 @@ class ShareViewController : UIViewController {
     func getTitle() -> String{
         var title = ""
         switch (shareType) {
-        case ShareType.ShareTypeDaily:
+        case ShareType.shareTypeDaily:
             title = String(format: "Daily %@ Horoscope", horoscopeSignName)
             break
-        case ShareType.ShareTypeFortune:
+        case ShareType.shareTypeFortune:
             title = "Read your fortune cookie"
             break
-        case ShareType.ShareTypeNewsfeed:
+        case ShareType.shareTypeNewsfeed:
             title = ""
             break
         }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class UserProfile: NSObject, NSCoding {
+open class UserProfile: NSObject, NSCoding {
     var uid : Int = -1
     var name : String = ""
     var imgURL : String = ""
@@ -17,9 +17,9 @@ public class UserProfile: NSObject, NSCoding {
     
     var isFollowed = false
     static var filePath: String {
-        let manager = NSFileManager.defaultManager()
-        let url = manager.URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
-        return url.URLByAppendingPathComponent("userProfile").path!
+        let manager = FileManager.default
+        let url = manager.urls(for: .documentDirectory, in: .userDomainMask).first!
+        return url.appendingPathComponent("userProfile").path
     }
     struct Keys {
         static let uid = "uid"
@@ -30,13 +30,13 @@ public class UserProfile: NSObject, NSCoding {
     }
     
     init(data: NSDictionary){
-        self.uid = data.objectForKey("uid") as! Int
-        self.name = data.objectForKey("name") as! String
-        self.imgURL = data.objectForKey("img") as! String
-        let sign = data.objectForKey("sign") as! Int
+        self.uid = data.object(forKey: "uid") as! Int
+        self.name = data.object(forKey: "name") as! String
+        self.imgURL = data.object(forKey: "img") as! String
+        let sign = data.object(forKey: "sign") as! Int
         self.sign = sign - 1
         
-        self.location = data.objectForKey("location") as! String
+        self.location = data.object(forKey: "location") as! String
     }
 
     override init(){
@@ -44,22 +44,22 @@ public class UserProfile: NSObject, NSCoding {
     }
     
     required public init(coder aDecoder: NSCoder) {
-        uid = aDecoder.decodeIntegerForKey(Keys.uid)
-        name = aDecoder.decodeObjectForKey(Keys.name) as! String
-        imgURL = aDecoder.decodeObjectForKey(Keys.imgUrl) as! String
-        sign = aDecoder.decodeIntegerForKey(Keys.sign)
-        location = aDecoder.decodeObjectForKey(Keys.location) as! String
+        uid = aDecoder.decodeInteger(forKey: Keys.uid)
+        name = aDecoder.decodeObject(forKey: Keys.name) as! String
+        imgURL = aDecoder.decodeObject(forKey: Keys.imgUrl) as! String
+        sign = aDecoder.decodeInteger(forKey: Keys.sign)
+        location = aDecoder.decodeObject(forKey: Keys.location) as! String
     }
     
-    public func encodeWithCoder(aCoder: NSCoder) {
-        aCoder.encodeInteger(uid, forKey: Keys.uid)
-        aCoder.encodeObject(name, forKey: Keys.name)
-        aCoder.encodeObject(imgURL, forKey: Keys.imgUrl)
-        aCoder.encodeInteger(sign, forKey: Keys.sign)
-        aCoder.encodeObject(location, forKey: Keys.location)
+    open func encode(with aCoder: NSCoder) {
+        aCoder.encode(uid, forKey: Keys.uid)
+        aCoder.encode(name, forKey: Keys.name)
+        aCoder.encode(imgURL, forKey: Keys.imgUrl)
+        aCoder.encode(sign, forKey: Keys.sign)
+        aCoder.encode(location, forKey: Keys.location)
     }
     
-    override public var description: String {
+    override open var description: String {
         let string = ("name = \(name) || sign = \(sign)")
         return string
     }

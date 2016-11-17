@@ -26,50 +26,50 @@ class SettingsTableCell : UITableViewCell {
         super.awakeFromNib()
     }
     
-    func setupCell(type: SettingsType, title: String){
+    func setupCell(_ type: SettingsType, title: String){
         self.type = type
-        if(self.type == SettingsType.Notification){
-            timeLabel.hidden = false
-            switchButton.hidden = false
-            timeUnderline.hidden = false
-            birthdayLabel.hidden = true
-            birthdayUnderline.hidden = true
+        if(self.type == SettingsType.notification){
+            timeLabel.isHidden = false
+            switchButton.isHidden = false
+            timeUnderline.isHidden = false
+            birthdayLabel.isHidden = true
+            birthdayUnderline.isHidden = true
             switchButton.setOn(XAppDelegate.userSettings.notifyOfNewHoroscope, animated: true)
             self.setupNotificationTime()
-        } else if self.type == SettingsType.ChangeDOB {
-            birthdayLabel.hidden = false
-            birthdayUnderline.hidden = false
-            timeLabel.hidden = true
-            switchButton.hidden = true
-            timeUnderline.hidden = true
-            separator.hidden = true
+        } else if self.type == SettingsType.changeDOB {
+            birthdayLabel.isHidden = false
+            birthdayUnderline.isHidden = false
+            timeLabel.isHidden = true
+            switchButton.isHidden = true
+            timeUnderline.isHidden = true
+            separator.isHidden = true
             self.setupBirthday()
-        } else if self.type == SettingsType.ChangeSign {
-            birthdayLabel.hidden = false
-            birthdayUnderline.hidden = false
-            timeLabel.hidden = true
-            switchButton.hidden = true
-            timeUnderline.hidden = true
+        } else if self.type == SettingsType.changeSign {
+            birthdayLabel.isHidden = false
+            birthdayUnderline.isHidden = false
+            timeLabel.isHidden = true
+            switchButton.isHidden = true
+            timeUnderline.isHidden = true
             self.setupSign()
         }else {
-            timeLabel.hidden = true
-            switchButton.hidden = true
-            timeUnderline.hidden = true
-            birthdayLabel.hidden = true
-            birthdayUnderline.hidden = true
+            timeLabel.isHidden = true
+            switchButton.isHidden = true
+            timeUnderline.isHidden = true
+            birthdayLabel.isHidden = true
+            birthdayUnderline.isHidden = true
         }
         titleLabel.text = title
-        if type == .Logout {
+        if type == .logout {
             titleLabel.textColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
         }
         checkAndChangeSwitchColor()
         
     }
     
-    @IBAction func toogleNotification(sender: AnyObject) {
+    @IBAction func toogleNotification(_ sender: AnyObject) {
         let switchControl = sender as! UISwitch
         checkAndChangeSwitchColor()
-        XAppDelegate.userSettings.notifyOfNewHoroscope = switchControl.on
+        XAppDelegate.userSettings.notifyOfNewHoroscope = switchControl.isOn
         parentVC.saveNotificationSetting()
     }
     
@@ -98,7 +98,7 @@ class SettingsTableCell : UITableViewCell {
     }
     
     func checkAndChangeSwitchColor(){
-        if switchButton.on {
+        if switchButton.isOn {
             switchButton.thumbTintColor = UIColor(red: 108.0/255.0, green: 105.0/255.0, blue: 153.0/255.0, alpha: 1)
         } else {
             switchButton.thumbTintColor = UIColor(red: 201/255.0, green: 201/255.0, blue: 201/255.0, alpha: 1)

@@ -19,8 +19,8 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     
     @IBOutlet weak var footer: UIView!
     
-    var todayDate = NSDate()
-    var dateSelected : NSDate!
+    var todayDate = Date()
+    var dateSelected : Date!
     var eventsByDate = [String]()
     
     let CALENDAR_ICON_SPACE_HEIGHT = 50 as CGFloat
@@ -40,19 +40,19 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         set {
             var frame = newValue
             frame.origin.x = inset
-            frame.size.width = UIScreen.mainScreen().bounds.width - 2*inset
+            frame.size.width = UIScreen.main.bounds.width - 2*inset
             super.frame = frame
         }
     }
     
-    func setupCell(parentVC : ArchiveViewController){
+    func setupCell(_ parentVC : ArchiveViewController){
         parentViewController = parentVC
         createEvents()
         setupCalendar()
         // BINH BINH: temporary fix 
-        let delayTime = dispatch_time(DISPATCH_TIME_NOW, Int64(0.2 * Double(NSEC_PER_SEC)))
-        dispatch_after(delayTime, dispatch_get_main_queue()) {
-            self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.BottomLeft, .BottomRight], radius: 4.0)
+        let delayTime = DispatchTime.now() + Double(Int64(0.2 * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC)
+        DispatchQueue.main.asyncAfter(deadline: delayTime) {
+            self.footer = Utilities.makeCornerRadius(self.footer, maskFrame: self.bounds, roundOptions: [.bottomLeft, .bottomRight], radius: 4.0)
         }
         
         
@@ -74,10 +74,10 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
         calendarHolderView.addSubview(calendarContentView)
         calendarManager.contentView = calendarContentView
         
-        calendarManager.setDate(NSDate())
-        calendarMenuView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width - PADDING * 2, CALENDAR_MENU_HEIGHT)
+        calendarManager.setDate(Date())
+        calendarMenuView.frame = CGRect(x: 0, y: 0, width: Utilities.getScreenSize().width - PADDING * 2, height: CALENDAR_MENU_HEIGHT)
         let calendarHeight = max(self.getCalendarHeight(), MIN_CALENDAR_HEIGHT)
-        calendarContentView.frame = CGRectMake(0, calendarMenuView.frame.height, Utilities.getScreenSize().width - PADDING * 2, calendarHeight)
+        calendarContentView.frame = CGRect(x: 0, y: calendarMenuView.frame.height, width: Utilities.getScreenSize().width - PADDING * 2, height: calendarHeight)
     }
     
     // MARK: Helpers
@@ -87,17 +87,17 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     }
     
     // Used only to have a key for _eventsByDate
-    func dateFormatter() -> NSDateFormatter
+    func dateFormatter() -> DateFormatter
     {
-        var dateFormatter : NSDateFormatter!
-        dateFormatter = NSDateFormatter()
+        var dateFormatter : DateFormatter!
+        dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"
-        dateFormatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         return dateFormatter;
     }
     
-    func haveEventForDay(date : NSDate) -> Bool{
-        let key = self.dateFormatter().stringFromDate(date)
+    func haveEventForDay(_ date : Date) -> Bool{
+        let key = self.dateFormatter().string(from: date)
         for dateString in eventsByDate {
             if key == dateString { return true }
         }
@@ -107,28 +107,28 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     
     func createEvents(){
         // Generate 30 random dates between now and 60 days later
-        for (var i = 0; i < self.collectedHoroscopes.collectedData.count; ++i){
+        for (i in 0 ..< self.collectedHoroscopes.collectedData.count += 1){
             let item = collectedHoroscopes.collectedData[i] as! CollectedItem
-            let dateformatter = NSDateFormatter()
+            let dateformatter = DateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"
-            dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            dateformatter.locale = Locale(identifier: "en_US_POSIX")
             let date = item.collectedDate
-            let dateString = self.dateFormatter().stringFromDate(date);
+            let dateString = self.dateFormatter().string(from: date!);
             if !eventsByDate.contains(dateString) {
                 eventsByDate.append(dateString)
             }
         }
     }
     
-    func getHoroscopesItemWithDate(date : NSDate) -> CollectedItem {
-        for (var i = 0; i < self.collectedHoroscopes.collectedData.count; ++i){
+    func getHoroscopesItemWithDate(_ date : Date) -> CollectedItem {
+        for (i in 0 ..< self.collectedHoroscopes.collectedData.count += 1){
             let item = collectedHoroscopes.collectedData[i] as! CollectedItem
-            let dateformatter = NSDateFormatter()
+            let dateformatter = DateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"
-            dateformatter.locale = NSLocale(localeIdentifier: "en_US_POSIX")
+            dateformatter.locale = Locale(identifier: "en_US_POSIX")
             let collectDate = item.collectedDate
-            let collectDateString = self.dateFormatter().stringFromDate(collectDate)
-            let dateString = self.dateFormatter().stringFromDate(date)
+            let collectDateString = self.dateFormatter().string(from: collectDate!)
+            let dateString = self.dateFormatter().string(from: date)
             
             if(dateString == collectDateString){ return item }
         }
@@ -137,41 +137,41 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     
     // MARK: Calendar delegate
     
-    func calendar(calendar: JTCalendarManager!, prepareDayView dayView: UIView!) {
+    func calendar(_ calendar: JTCalendarManager!, prepareDayView dayView: UIView!) {
         
         if let dayView = dayView as? JTCalendarDayView { // casting
             // from now on, work with myDayView
             // Today
-            if(calendarManager.dateHelper.date(NSDate(), isTheSameDayThan: dayView.date)){
-                dayView.circleView.hidden = false
+            if(calendarManager.dateHelper.date(Date(), isTheSameDayThan: dayView.date)){
+                dayView.circleView.isHidden = false
                 dayView.circleView.backgroundColor = UIColor(red: 255.0/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1)
-                dayView.dotView.backgroundColor = UIColor.whiteColor()
-                dayView.textLabel.textColor = UIColor.whiteColor()
+                dayView.dotView.backgroundColor = UIColor.white
+                dayView.textLabel.textColor = UIColor.white
             }
                 // Other month
             else if (!calendarManager.dateHelper.date(calendarContentView.date, isTheSameMonthThan: dayView.date)){
-                dayView.circleView.hidden = true
+                dayView.circleView.isHidden = true
                 dayView.dotView.backgroundColor = UIColor(red: 255.0/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1)
                 dayView.textLabel.textColor = UIColor(red: 199/255.0, green: 199/255.0, blue: 199/255.0, alpha: 1)
             }
                 // Another day of the current month
             else {
-                dayView.circleView.hidden = true
+                dayView.circleView.isHidden = true
                 dayView.dotView.backgroundColor = UIColor(red: 255.0/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1)
-                dayView.textLabel.textColor = UIColor.blackColor()
+                dayView.textLabel.textColor = UIColor.black
             }
             
             if(self.haveEventForDay(dayView.date)){
-                dayView.dotView.hidden = false
+                dayView.dotView.isHidden = false
             }
             else{
-                dayView.dotView.hidden = true
+                dayView.dotView.isHidden = true
             }
             
         }
     }
     
-    func calendar(calendar: JTCalendarManager!, didTouchDayView dayView: UIView!) {
+    func calendar(_ calendar: JTCalendarManager!, didTouchDayView dayView: UIView!) {
         
         if let dayView = dayView as? JTCalendarDayView { // casting
             
@@ -182,7 +182,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
             
             // Load the previous or next page if touch a day from another month
             if(!(calendarManager.dateHelper.date(calendarContentView.date, isTheSameMonthThan: dayView.date))){
-                if(calendarContentView.date.compare(dayView.date) == NSComparisonResult.OrderedAscending){
+                if(calendarContentView.date.compare(dayView.date) == ComparisonResult.orderedAscending){
                     (calendarContentView.loadNextPageWithAnimation())
                 }
                 else{

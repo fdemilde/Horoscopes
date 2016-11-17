@@ -19,10 +19,10 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     
     // MARK: Facebook
     
-    func shareFacebook(parentVC : UIViewController, text : String, pictureURL : String ,  url : String ){
+    func shareFacebook(_ parentVC : UIViewController, text : String, pictureURL : String ,  url : String ){
         let composerVC = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
-        composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
-            if (result == SLComposeViewControllerResult.Cancelled) {
+        composerVC?.completionHandler = { (result : SLComposeViewControllerResult) in
+            if (result == SLComposeViewControllerResult.cancelled) {
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
                 print("Share FB Cancel!!")
             } else {
@@ -30,21 +30,21 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
                 print("Share FB OK!!")
             }
-            composerVC.dismissViewControllerAnimated(true, completion: nil)
+            composerVC?.dismiss(animated: true, completion: nil)
         }
-        composerVC.addURL(NSURL(string: url)!)
+        composerVC?.add(URL(string: url)!)
         if(pictureURL != ""){
-            composerVC.addImage(getImageFromURL(pictureURL))
+            composerVC?.add(getImageFromURL(pictureURL))
         }
-        parentVC.presentViewController(composerVC, animated: true, completion: nil)
+        parentVC.present(composerVC!, animated: true, completion: nil)
     }
     
     // MARK: Twitter
     
-    func shareTwitter(parentVC : UIViewController, text : String,pictureURL : String ,  url : String ){
+    func shareTwitter(_ parentVC : UIViewController, text : String,pictureURL : String ,  url : String ){
         let composerVC = SLComposeViewController(forServiceType: SLServiceTypeTwitter)
-        composerVC.completionHandler = { (result : SLComposeViewControllerResult) in
-            if (result == SLComposeViewControllerResult.Cancelled) {
+        composerVC?.completionHandler = { (result : SLComposeViewControllerResult) in
+            if (result == SLComposeViewControllerResult.cancelled) {
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
                 print("Share TW Cancel!!")
             } else {
@@ -52,20 +52,20 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
                 print("Share TW OK!!")
             }
-            composerVC.dismissViewControllerAnimated(true, completion: nil)
+            composerVC?.dismiss(animated: true, completion: nil)
         }
 //        composerVC.setInitialText(url)
-        composerVC.addURL(NSURL(string: url)!)
+        composerVC?.add(URL(string: url)!)
         if(pictureURL != ""){
-            composerVC.addImage(getImageFromURL(pictureURL))
+            composerVC?.add(getImageFromURL(pictureURL))
         }
         
-        parentVC.presentViewController(composerVC, animated: true, completion: nil)
+        parentVC.present(composerVC!, animated: true, completion: nil)
     }
     
     // Messages
     
-    func shareMessage(parentVC : UIViewController, text : String, shareUrl : String){
+    func shareMessage(_ parentVC : UIViewController, text : String, shareUrl : String){
         let messageComposeVC = MFMessageComposeViewController()
         messageComposeVC.messageComposeDelegate = self  //  Make sure to set this property to self, so that the controller can be dismissed!
         //        messageComposeVC.recipients
@@ -74,23 +74,23 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         // Present the configured MFMessageComposeViewController instance
         // Note that the dismissal of the VC will be handled by the messageComposer instance,
         // since it implements the appropriate delegate call-back
-        parentVC.presentViewController(messageComposeVC, animated: true, completion: nil)
+        parentVC.present(messageComposeVC, animated: true, completion: nil)
     }
     
     // MFMessageComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
-    func messageComposeViewController(controller: MFMessageComposeViewController, didFinishWithResult result: MessageComposeResult) {
-        if result.rawValue == MessageComposeResultCancelled.rawValue {
+    func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
+        if result.rawValue == MessageComposeResult.cancelled.rawValue {
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
-        } else if result.rawValue == MessageComposeResultSent.rawValue {
+        } else if result.rawValue == MessageComposeResult.sent.rawValue {
             self.eventTrackerString! += ", result = Sent"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
         }
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        controller.dismiss(animated: true, completion: nil)
     }
     
     // Mail
     
-    func shareMail(parentVC : UIViewController, text : String, shareUrl : String){
+    func shareMail(_ parentVC : UIViewController, text : String, shareUrl : String){
         let mailComposeVC = MFMailComposeViewController()
         mailComposeVC.mailComposeDelegate = self  //  Make sure to set this property to self, so that the controller can be dismissed!
         mailComposeVC.setSubject("Horoscopes - daily horoscope and fortune")
@@ -99,25 +99,25 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
         // Present the configured MFMessageComposeViewController instance
         // Note that the dismissal of the VC will be handled by the messageComposer instance,
         // since it implements the appropriate delegate call-back
-        parentVC.presentViewController(mailComposeVC, animated: true, completion: nil)
+        parentVC.present(mailComposeVC, animated: true, completion: nil)
     }
     
     // MFMailComposeViewControllerDelegate callback - dismisses the view controller when the user is finished with it
-    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
-        if result.rawValue == MFMailComposeResultCancelled.rawValue {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        if result.rawValue == MFMailComposeResult.cancelled.rawValue {
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareCancel, label: self.eventTrackerString)
-        } else if result.rawValue == MFMailComposeResultSent.rawValue {
+        } else if result.rawValue == MFMailComposeResult.sent.rawValue {
             self.eventTrackerString! += ", result = Sent"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.shareComplete, label: self.eventTrackerString)
         }
-        controller.dismissViewControllerAnimated(true, completion: nil)
+        controller.dismiss(animated: true, completion: nil)
     }
     
     // MARK: Whatsapp
-    func shareWhatapps(text : String, url: String){
-        let whatsappURL = NSURL(string: url.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!)
-        if(UIApplication.sharedApplication().canOpenURL(whatsappURL!)){
-            UIApplication.sharedApplication().openURL(whatsappURL!)
+    func shareWhatapps(_ text : String, url: String){
+        let whatsappURL = URL(string: url.addingPercentEncoding(withAllowedCharacters: CharacterSet.urlQueryAllowed)!)
+        if(UIApplication.shared.canOpenURL(whatsappURL!)){
+            UIApplication.shared.openURL(whatsappURL!)
         } else {
             print("Cannot open URL")
         }
@@ -125,22 +125,22 @@ class ShareController : NSObject, MFMessageComposeViewControllerDelegate, MFMail
     }
     
     // MARK: share FBMessage
-    func shareFbMessage(title : String, text : String, url: String, pictureURL : String){
+    func shareFbMessage(_ title : String, text : String, url: String, pictureURL : String){
         let content:FBSDKShareLinkContent = FBSDKShareLinkContent()
-        content.contentURL = NSURL(string: url)
+        content.contentURL = URL(string: url)
         content.contentTitle = title
         content.contentDescription = text
-        content.imageURL = NSURL(string: pictureURL)
+        content.imageURL = URL(string: pictureURL)
         
-        FBSDKMessageDialog.showWithContent(content, delegate:nil);
+        FBSDKMessageDialog.show(with: content, delegate:nil);
         
     }
     
     // MARK: Helpers
     
-    func getImageFromURL(urlString: String) -> UIImage{
-        let url = NSURL(string: urlString)
-        let data = NSData(contentsOfURL: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
+    func getImageFromURL(_ urlString: String) -> UIImage{
+        let url = URL(string: urlString)
+        let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check
         if let checkData = data {
             return UIImage(data: checkData)!
         }

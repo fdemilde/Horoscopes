@@ -30,16 +30,16 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
         container.layer.masksToBounds = true
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "keyboardWillShow:", name: UIKeyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(BugReportViewController.keyboardWillShow(_:)), name: NSNotification.Name.UIKeyboardWillShow, object: nil)
         
         textView.becomeFirstResponder()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
     
@@ -47,36 +47,36 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
         super.viewDidLayoutSubviews()
     }
     
-    override func viewWillDisappear(animated: Bool) {
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+    override func viewWillDisappear(_ animated: Bool) {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: Notification handlers
     
-    func keyboardWillShow(notification: NSNotification) {
+    func keyboardWillShow(_ notification: Notification) {
         var info = notification.userInfo
         let keyboardSize = info![UIKeyboardFrameEndUserInfoKey] as! NSValue
-        let frame = keyboardSize.CGRectValue()
+        let frame = keyboardSize.cgRectValue
         textViewBottomSpaceConstraint.constant = frame.height + bottomSpacePadding
     }
     
     // MARK: Textview delegate
     
-    func textViewDidChange(textView: UITextView) {
-        placeholderLabel.hidden = textView.text.characters.count != 0
+    func textViewDidChange(_ textView: UITextView) {
+        placeholderLabel.isHidden = textView.text.characters.count != 0
     }
     
-    @IBAction func closeButtonTapped(sender: AnyObject) {
+    @IBAction func closeButtonTapped(_ sender: AnyObject) {
         view.endEditing(true)
-        self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+        self.mz_dismissFormSheetController(animated: true, completionHandler:nil)
     }
     
     // MARK: alertview delegate
     
-    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int){
+    func alertView(_ alertView: UIAlertView, clickedButtonAt buttonIndex: Int){
         if(alertView.tag == 1){
             view.endEditing(true)
-            self.mz_dismissFormSheetControllerAnimated(true, completionHandler:nil)
+            self.mz_dismissFormSheetController(animated: true, completionHandler:nil)
         } else {
             return
         }
@@ -85,7 +85,7 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     
     // MARK: Action Handlers
     
-    @IBAction func sendButtonTapped(sender: AnyObject) {
+    @IBAction func sendButtonTapped(_ sender: AnyObject) {
         Utilities.showHUD()
         if(self.textView.text == ""){
             Utilities.hideHUD()
@@ -107,13 +107,13 @@ class BugReportViewController : ViewControllerWithAds, UITextViewDelegate, UIAle
     // MARK: Helpers
     func setupPlaceHolder(){
         let width = Utilities.getScreenSize().width - (textViewPadding * 2) - (textPaddingLeft * 2)
-        placeholderLabel = UILabel(frame: CGRectMake(textPaddingLeft, textPaddingTop, width, 100))
+        placeholderLabel = UILabel(frame: CGRect(x: textPaddingLeft, y: textPaddingTop, width: width, height: 100))
         placeholderLabel.text = "Please describe in as much detail as possible"
         placeholderLabel.numberOfLines = 0
-        placeholderLabel.lineBreakMode = NSLineBreakMode.ByWordWrapping
+        placeholderLabel.lineBreakMode = NSLineBreakMode.byWordWrapping
         placeholderLabel.font = textView.font
         placeholderLabel.sizeToFit()
-        placeholderLabel.textColor = UIColor.grayColor()
+        placeholderLabel.textColor = UIColor.gray
         textView.addSubview(placeholderLabel)
     }
     

@@ -32,24 +32,24 @@ class PostLoginViewController: UIViewController, SocialManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func loginFacebook(sender: UIButton) {
+    @IBAction func loginFacebook(_ sender: UIButton) {
         Utilities.showHUD(view)
         SocialManager.sharedInstance.login(self) { (error, permissionGranted) -> Void in
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 if let error = error {
                     Utilities.hideHUD(self.view)
                     Utilities.showAlert(self, title: "Error", message: "Could not log in to Facebook. Please try again later.", error: error)
-                    self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+                    self.mz_dismissFormSheetController(animated: true, completionHandler: nil)
                 } else {
                     if permissionGranted {
                         Utilities.hideHUD(self.view)
-                        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: { (formSheetController) -> Void in
+                        self.mz_dismissFormSheetController(animated: true, completionHandler: { (formSheetController) -> Void in
                             self.delegate.didLoginSuccessfully()
                         })
                     } else {
                         Utilities.hideHUD(self.view)
                         Utilities.showAlert(self, title: "Permission Denied", message: "Please grant permissions and try again", error: nil)
-                        self.mz_dismissFormSheetControllerAnimated(true, completionHandler: nil)
+                        self.mz_dismissFormSheetController(animated: true, completionHandler: nil)
                     }
                 }
             })

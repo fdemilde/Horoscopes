@@ -15,15 +15,15 @@ class ViewControllerWithAds : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        dispatch_async(dispatch_get_main_queue(),{
-            self.headerView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width,50)
-            self.headerView.backgroundColor = UIColor.clearColor()
+        DispatchQueue.main.async(execute: {
+            self.headerView.frame = CGRect(x: 0, y: 0, width: Utilities.getScreenSize().width,height: 50)
+            self.headerView.backgroundColor = UIColor.clear
             self.bannerView = GADBannerView()
-            self.bannerView?.frame = CGRectMake(0,0,Utilities.getScreenSize().width,50)
+            self.bannerView?.frame = CGRect(x: 0,y: 0,width: Utilities.getScreenSize().width,height: 50)
             self.bannerView?.adUnitID = ADMOD_ID
             self.bannerView?.rootViewController = XAppDelegate.window?.rootViewController
             let request = GADRequest()
-            self.bannerView?.loadRequest(request)
+            self.bannerView?.load(request)
             if let navigationController = self.navigationController {
                 navigationController.view.addSubview(self.bannerView)
             } else {

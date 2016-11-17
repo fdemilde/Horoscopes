@@ -25,36 +25,36 @@ class PostButtonsView: UIView {
         super.init(frame: frame)
         
         adviceButton = UIButton()
-        adviceButton.setImage(UIImage(named: "newsfeed_post_advice"), forState: .Normal)
-        adviceButton.addTarget(self, action: "adviceButtonTapped:", forControlEvents: .TouchUpInside)
+        adviceButton.setImage(UIImage(named: "newsfeed_post_advice"), for: UIControlState())
+        adviceButton.addTarget(self, action: #selector(PostButtonsView.adviceButtonTapped(_:)), for: .touchUpInside)
         addSubview(adviceButton)
         
         howButton = UIButton()
-        howButton.setImage(UIImage(named: "newsfeed_post_horoscope"), forState: .Normal)
-        howButton.addTarget(self, action: "feelButtonTapped:", forControlEvents: .TouchUpInside)
+        howButton.setImage(UIImage(named: "newsfeed_post_horoscope"), for: UIControlState())
+        howButton.addTarget(self, action: #selector(PostButtonsView.feelButtonTapped(_:)), for: .touchUpInside)
         addSubview(howButton)
         
         fortuneButton = UIButton()
-        fortuneButton.setImage(UIImage(named: "newsfeed_post_fortune"), forState: .Normal)
-        fortuneButton.addTarget(self, action: "fortuneButtonTapped:", forControlEvents: .TouchUpInside)
+        fortuneButton.setImage(UIImage(named: "newsfeed_post_fortune"), for: UIControlState())
+        fortuneButton.addTarget(self, action: #selector(PostButtonsView.fortuneButtonTapped(_:)), for: .touchUpInside)
         addSubview(fortuneButton)
         
         mindButton = UIButton()
-        mindButton.setImage(UIImage(named: "newsfeed_post_mind"), forState: .Normal)
-        mindButton.addTarget(self, action: "mindButtonTapped:", forControlEvents: .TouchUpInside)
+        mindButton.setImage(UIImage(named: "newsfeed_post_mind"), for: UIControlState())
+        mindButton.addTarget(self, action: #selector(PostButtonsView.mindButtonTapped(_:)), for: .touchUpInside)
         addSubview(mindButton)
         
         adviceLabel = UILabel()
-        configureLabel(adviceLabel, text: postTypes[NewsfeedType.ShareAdvice]!.1)
+        configureLabel(adviceLabel, text: postTypes[NewsfeedType.shareAdvice]!.1)
         
         howLabel = UILabel()
-        configureLabel(howLabel, text: postTypes[NewsfeedType.HowHoroscope]!.1)
+        configureLabel(howLabel, text: postTypes[NewsfeedType.howHoroscope]!.1)
         
         fortuneLabel = UILabel()
-        configureLabel(fortuneLabel, text: postTypes[NewsfeedType.Fortune]!.1)
+        configureLabel(fortuneLabel, text: postTypes[NewsfeedType.fortune]!.1)
         
         mindLabel = UILabel()
-        configureLabel(mindLabel, text: postTypes[NewsfeedType.OnYourMind]!.1)
+        configureLabel(mindLabel, text: postTypes[NewsfeedType.onYourMind]!.1)
     }
     
     convenience init(frame: CGRect, forceChangeButtonSize : Bool) {
@@ -86,28 +86,28 @@ class PostButtonsView: UIView {
         configureOriginOf(mindLabel, basedOn: mindButton)
     }
     
-    private func configureOriginOf(label: UILabel, basedOn button: UIButton) {
+    fileprivate func configureOriginOf(_ label: UILabel, basedOn button: UIButton) {
         label.frame.origin = CGPoint(x: button.frame.origin.x + (POST_BUTTON_SIZE.width - label.frame.width)/2, y: button.frame.origin.y + button.frame.height + 6)
     }
     
-    private func configureLabel(label: UILabel, text: String) {
+    fileprivate func configureLabel(_ label: UILabel, text: String) {
         label.text = text
-        label.textAlignment = .Center
+        label.textAlignment = .center
         label.numberOfLines = 0
         label.frame.size.width = POST_BUTTON_SIZE.width
-        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.Phone {
-            let size = UIScreen.mainScreen().bounds.size
+        if UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiom.phone {
+            let size = UIScreen.main.bounds.size
             if size.height == 480 {
                 if #available(iOS 8.2, *) {
-                    label.font = UIFont.systemFontOfSize(11, weight: UIFontWeightLight)
+                    label.font = UIFont.systemFont(ofSize: 11, weight: UIFontWeightLight)
                 } else {
-                    label.font = UIFont.systemFontOfSize(11)
+                    label.font = UIFont.systemFont(ofSize: 11)
                 }
             } else {
                 if #available(iOS 8.2, *) {
-                    label.font = UIFont.systemFontOfSize(14, weight: UIFontWeightLight)
+                    label.font = UIFont.systemFont(ofSize: 14, weight: UIFontWeightLight)
                 } else {
-                    label.font = UIFont.systemFontOfSize(14)
+                    label.font = UIFont.systemFont(ofSize: 14)
                 }
             }
         }
@@ -115,14 +115,14 @@ class PostButtonsView: UIView {
         label.sizeToFit()
     }
     
-    func setTextColor(color: UIColor) {
+    func setTextColor(_ color: UIColor) {
         adviceLabel.textColor = color
         howLabel.textColor = color
         fortuneLabel.textColor = color
         mindLabel.textColor = color
     }
     
-    func getPostButtonFrame(buttonIndex : Int) -> CGRect {
+    func getPostButtonFrame(_ buttonIndex : Int) -> CGRect {
         let screenWidth = frame.width
         let screenHeight = frame.height
         
@@ -136,40 +136,40 @@ class PostButtonsView: UIView {
         let buttonPositionX = paddingWidth * CGFloat(colNumber + 1) + (CGFloat(colNumber) * POST_BUTTON_SIZE.width)
         let paddingHeight = (screenHeight - (POST_BUTTON_SIZE.height * 2)) / 3
         let buttonPositionY = paddingHeight * CGFloat(rowNumber + 1) + (CGFloat(rowNumber) * POST_BUTTON_SIZE.height)
-        return CGRectMake(buttonPositionX, buttonPositionY, POST_BUTTON_SIZE.width, POST_BUTTON_SIZE.height)
+        return CGRect(x: buttonPositionX, y: buttonPositionY, width: POST_BUTTON_SIZE.width, height: POST_BUTTON_SIZE.height)
     }
     
-    private func configureViewController(type: String, placeholder: String) {
-        let controller = hostViewController.storyboard?.instantiateViewControllerWithIdentifier("DetailPostViewController") as! DetailPostViewController
+    fileprivate func configureViewController(_ type: String, placeholder: String) {
+        let controller = hostViewController.storyboard?.instantiateViewController(withIdentifier: "DetailPostViewController") as! DetailPostViewController
         controller.type = type
         controller.placeholder = placeholder
-        hostViewController.presentViewController(controller, animated: true, completion: nil)
-        if(hostViewController.isKindOfClass(CustomTabBarController)){
+        hostViewController.present(controller, animated: true, completion: nil)
+        if(hostViewController.isKind(of: CustomTabBarController.self)){
             let newsfeedViewController = hostViewController as! CustomTabBarController
            newsfeedViewController.overlayFadeout()
         }
     }
     
-    private func buttonTapped(type: String, placeholder: String) {
+    fileprivate func buttonTapped(_ type: String, placeholder: String) {
         let label = "type = \(type)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.postSelect, label: label)
         configureViewController(type, placeholder: placeholder)
     }
     
-    func adviceButtonTapped(sender: UIButton) {
-        buttonTapped("shareadvice", placeholder: postTypes[NewsfeedType.ShareAdvice]!.1)
+    func adviceButtonTapped(_ sender: UIButton) {
+        buttonTapped("shareadvice", placeholder: postTypes[NewsfeedType.shareAdvice]!.1)
     }
     
-    func feelButtonTapped(sender: UIButton) {
-        buttonTapped("howhoroscope", placeholder: postTypes[NewsfeedType.HowHoroscope]!.1)
+    func feelButtonTapped(_ sender: UIButton) {
+        buttonTapped("howhoroscope", placeholder: postTypes[NewsfeedType.howHoroscope]!.1)
     }
     
-    func fortuneButtonTapped(sender: UIButton) {
-        buttonTapped("fortune", placeholder: postTypes[NewsfeedType.Fortune]!.1)
+    func fortuneButtonTapped(_ sender: UIButton) {
+        buttonTapped("fortune", placeholder: postTypes[NewsfeedType.fortune]!.1)
     }
     
-    func mindButtonTapped(sender: UIButton) {
-        buttonTapped("onyourmind", placeholder: postTypes[NewsfeedType.OnYourMind]!.1)
+    func mindButtonTapped(_ sender: UIButton) {
+        buttonTapped("onyourmind", placeholder: postTypes[NewsfeedType.onYourMind]!.1)
     }
 
     /*

@@ -7,6 +7,30 @@
 //
 
 import UIKit
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func < <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l < r
+  case (nil, _?):
+    return true
+  default:
+    return false
+  }
+}
+
+// FIXME: comparison operators with optionals were removed from the Swift Standard Libary.
+// Consider refactoring the code to use the non-optional operators.
+fileprivate func >= <T : Comparable>(lhs: T?, rhs: T?) -> Bool {
+  switch (lhs, rhs) {
+  case let (l?, r?):
+    return l >= r
+  default:
+    return !(lhs < rhs)
+  }
+}
+
 
 class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDelegate, LoginViewControllerDelegate {
 
@@ -54,7 +78,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     // MARK: - Property
     let profileImageSize: CGFloat = 60
-    let minimumTextViewHeight = UIScreen.mainScreen().bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
+    let minimumTextViewHeight = UIScreen.main.bounds.height - TABBAR_HEIGHT - ADMOD_HEIGHT - 50 - 350
     var heightConstraint: NSLayoutConstraint!
     var horoscopeSignImageViewLeadingSpaceConstant: CGFloat = 10
     var horoscopeSignImageViewWidthConstant: CGFloat = 18
@@ -71,23 +95,23 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state
     }
     
-    override func drawRect(rect: CGRect) {
-        super.drawRect(rect)
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
         // should add circle here so it renders at right position
         if profileImageView != nil {
             if (alreadyAddCircle == false){
                 let centerPoint = CGPoint(x: profileImageView.frame.origin.x + profileImageView.frame.size.width/2, y: profileImageView.frame.origin.y + profileImageView.frame.height/2)
                 let radius = profileImageView.frame.size.width/2 + 5
                 let circleLayer = Utilities.layerForCircle(centerPoint, radius: radius, lineWidth: 1)
-                circleLayer.fillColor = UIColor.clearColor().CGColor
+                circleLayer.fillColor = UIColor.clear.cgColor
                 let color = UIColor(red: 227, green: 223, blue: 246, alpha: 1)
-                circleLayer.strokeColor = color.CGColor
+                circleLayer.strokeColor = color.cgColor
                 profileView.layer.addSublayer(circleLayer)
             }
         }
@@ -113,8 +137,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         self.profileImageView?.image = profilePicturePlaceholder
     }
     
-    private func configureCell(post: UserPost) {
-        dispatch_async(dispatch_get_main_queue(), {
+    fileprivate func configureCell(_ post: UserPost) {
+        DispatchQueue.main.async(execute: {
             self.post = post
             self.postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
             if let type = postTypes[post.type] {
@@ -126,7 +150,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             let att = stringWithWebLink
             let linkAttributes = [NSForegroundColorAttributeName: UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1),
                 NSUnderlineStyleAttributeName: 1
-            ]
+            ] as [String : Any]
             
             let style = NSMutableParagraphStyle()
             style.lineSpacing = 5
@@ -137,49 +161,49 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             
 //            self.likeNumberLabel.text = "\(post.hearts) Likes  \(post.shares) Shares"
             self.likeNumberLabel.text = "\(post.hearts) Likes"
-            if NSUserDefaults.standardUserDefaults().boolForKey(String(post.post_id)) {
-                self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-                self.likeButton.userInteractionEnabled = false
+            if UserDefaults.standard.bool(forKey: String(post.post_id)) {
+                self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), for: UIControlState())
+                self.likeButton.isUserInteractionEnabled = false
             } else {
-                self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), forState: .Normal)
-                self.likeButton.userInteractionEnabled = true
+                self.likeButton.setImage(UIImage(named: "newsfeed_heart_icon"), for: UIControlState())
+                self.likeButton.isUserInteractionEnabled = true
             }
             
             let likeLabelTapRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapLikeLable(_:)))
-            self.likeNumberLabel.userInteractionEnabled = true
+            self.likeNumberLabel.isUserInteractionEnabled = true
             self.likeNumberLabel.addGestureRecognizer(likeLabelTapRecognizer)
             
-            self.fakeReadmoreLabel?.userInteractionEnabled = true
+            self.fakeReadmoreLabel?.isUserInteractionEnabled = true
             let tapGesture = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.readmoreTapped))
             self.fakeReadmoreLabel?.addGestureRecognizer(tapGesture)
             self.fakeReadmoreLabel?.font = UIFont(name: "Book Antiqua", size: 14)
-            if(!self.viewController.isKindOfClass(SinglePostViewController.classForCoder())){
+            if(!self.viewController.isKind(of: SinglePostViewController.classForCoder())){
                 self.setupTextViewMaxLines()
             }
             
             // fake a read more button if it should be truncate on client side
             if(Utilities.shouldBeTruncatedOnClient(post.message)){
-                self.fakeReadmoreLabel?.hidden = false
+                self.fakeReadmoreLabel?.isHidden = false
             } else {
-                self.fakeReadmoreLabel?.hidden = true
+                self.fakeReadmoreLabel?.isHidden = true
             }
             self.textView.contentInset = UIEdgeInsets(top: 0, left: 2, bottom: 0,right: 2)
         })
     }
     
-    func configureCellForNewsfeed(post: UserPost) {
-        dispatch_async(dispatch_get_main_queue(),{
+    func configureCellForNewsfeed(_ post: UserPost) {
+        DispatchQueue.main.async(execute: {
             self.configureNewsfeedUi()
             self.configureCell(post)
             self.horoscopeSignLabel.text = Utilities.horoscopeSignString(fromSignNumber: (post.user?.sign)!)
             self.horoscopeSignImageView.image = Utilities.horoscopeSignIconImage(fromSignNumber: (post.user?.sign)!)
             if(post.user?.sign >= 0){
-                self.horoscopeSignView.hidden = false
+                self.horoscopeSignView.isHidden = false
             } else {
-                self.horoscopeSignView.hidden = true
+                self.horoscopeSignView.isHidden = true
             }
             Utilities.getImageFromUrlString(post.user!.imgURL, completionHandler: { (image) -> Void in
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                DispatchQueue.main.async(execute: { () -> Void in
                     self.profileImageView.image = image
                 })
             })
@@ -189,21 +213,21 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         })
     }
     
-    func configureCellForProfile(post: UserPost) {
+    func configureCellForProfile(_ post: UserPost) {
         isPostInProfileTab = true
         configureCell(post)
     }
     
-    private func configurePostUi() {
+    fileprivate func configurePostUi() {
         let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(roundedRect: containerView.bounds, byRoundingCorners: UIRectCorner.BottomLeft.union(.BottomRight), cornerRadii: CGSize(width: 4, height: 4)).CGPath
+        maskLayer.path = UIBezierPath(roundedRect: containerView.bounds, byRoundingCorners: UIRectCorner.bottomLeft.union(.bottomRight), cornerRadii: CGSize(width: 4, height: 4)).cgPath
         containerView.layer.mask = maskLayer
     }
     
     func configureNewsfeedUi() {
-        dispatch_async(dispatch_get_main_queue(), {
-            self.headerBackgroundImage = Utilities.makeCornerRadius(self.headerBackgroundImage, maskFrame: self.headerBackgroundImage.bounds, roundOptions: [.TopLeft , .TopRight], radius: 4) as! UIImageView
-            self.actionView = Utilities.makeCornerRadius(self.actionView, maskFrame: self.actionView.bounds, roundOptions: [.BottomLeft , .BottomRight], radius: 4)
+        DispatchQueue.main.async(execute: {
+            self.headerBackgroundImage = Utilities.makeCornerRadius(self.headerBackgroundImage, maskFrame: self.headerBackgroundImage.bounds, roundOptions: [.topLeft , .topRight], radius: 4) as! UIImageView
+            self.actionView = Utilities.makeCornerRadius(self.actionView, maskFrame: self.actionView.bounds, roundOptions: [.bottomLeft , .bottomRight], radius: 4)
             self.horoscopeSignView.layer.cornerRadius = 4
             self.horoscopeSignView.clipsToBounds = true
             
@@ -211,15 +235,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.profileImageView.clipsToBounds = true
             
             let nameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
-            self.profileNameLabel.userInteractionEnabled = true
+            self.profileNameLabel.isUserInteractionEnabled = true
             self.profileNameLabel.addGestureRecognizer(nameGestureRecognizer)
             
             let nameGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
-            self.locationLabel.userInteractionEnabled = true
+            self.locationLabel.isUserInteractionEnabled = true
             self.locationLabel.addGestureRecognizer(nameGestureRecognizer2)
             
             let nameGestureRecognizer3 = UITapGestureRecognizer(target: self, action: #selector(PostTableViewCell.tapProfile(_:)))
-            self.horoscopeSignView.userInteractionEnabled = true
+            self.horoscopeSignView.isUserInteractionEnabled = true
             self.horoscopeSignView.addGestureRecognizer(nameGestureRecognizer3)
         })
     }
@@ -239,11 +263,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         horoscopeSignLabelTrailingSpaceLayoutConstraint.constant = horoscopeSignLabelTrailingSpaceConstant
     }
     
-    func tapProfile(sender: UITapGestureRecognizer) {
-        if sender.state == .Ended {
+    func tapProfile(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
             if SocialManager.sharedInstance.isLoggedInFacebook() {
                 let profile = post.user
-                let controller = viewController.storyboard?.instantiateViewControllerWithIdentifier("OtherProfileViewController") as! OtherProfileViewController
+                let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "OtherProfileViewController") as! OtherProfileViewController
                 controller.userProfile = profile!
                 viewController.navigationController?.pushViewController(controller, animated: true)
             } else {
@@ -252,7 +276,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         }
     }
     
-    @IBAction func tapLikeButton(sender: UIButton) {
+    @IBAction func tapLikeButton(_ sender: UIButton) {
         if(!XAppDelegate.socialManager.isLoggedInFacebook()){
 //            Utilities.showAlertView(self, title: "", message: "Please login via Facebook to perform this action", tag: 1)
             showLoginFormSheet()
@@ -261,17 +285,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         likePost()
     }
 
-    @IBAction func tapShareButton(sender: UIButton) {
+    @IBAction func tapShareButton(_ sender: UIButton) {
         let name = post.user?.name
         let postContent = post.message
         let sharingText = String(format: "%@ \n %@", name!, postContent)
         let controller = Utilities.getShareViewController()
-        controller.populateNewsfeedShareData(post.post_id, viewType: ShareViewType.ShareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: post.permalink)
+        controller.populateNewsfeedShareData(post.post_id, viewType: ShareViewType.shareViewTypeHybrid, sharingText: sharingText, pictureURL: "", shareUrl: post.permalink)
         Utilities.presentShareFormSheetController(viewController, shareViewController: controller)
     }
     
-    func tapLikeLable(sender: UITapGestureRecognizer){
-        if sender.state == .Ended {
+    func tapLikeLable(_ sender: UITapGestureRecognizer){
+        if sender.state == .ended {
             
                 if SocialManager.sharedInstance.isLoggedInFacebook() {
                     let postId = self.post.post_id
@@ -282,7 +306,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                             Utilities.showAlert(self.viewController, title: "\(self.post.hearts) likes", message: "", error: nil)
                         } else {
                             let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-                            let viewController = storyBoard.instantiateViewControllerWithIdentifier("LikeDetailTableViewController") as! LikeDetailTableViewController
+                            let viewController = storyBoard.instantiateViewController(withIdentifier: "LikeDetailTableViewController") as! LikeDetailTableViewController
                             viewController.postId = postId
                             viewController.userProfile = result!.0
                             viewController.parentVC = self.viewController
@@ -299,28 +323,28 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     //     Notification handler
-    func sendHeartSuccessful(notif: NSNotification){
-        NSNotificationCenter.defaultCenter().removeObserver(self, name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+    func sendHeartSuccessful(_ notif: Notification){
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: NOTIFICATION_SEND_HEART_FINISHED), object: nil)
         post.hearts += 1
     }
     
     // MARK: link textview Delegate
-    func linkTextView(linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
+    func linkTextView(_ linkTextView: CCHLinkTextView!, didTapLinkWithValue value: AnyObject!) {
         let urlString = value as! String
         
         self.tapOnLink(urlString)
     }
     
     // MARK: display View controller
-    func displayViewController(viewController : UIViewController){
-        dispatch_async(dispatch_get_main_queue()) {
+    func displayViewController(_ viewController : UIViewController){
+        DispatchQueue.main.async {
         let paddingTop = (DeviceType.IS_IPHONE_4_OR_LESS) ? 50 : 70 as CGFloat
         let formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.fade
         formSheet.shouldDismissOnBackgroundViewTap = true
         formSheet.portraitTopInset = paddingTop;
-            formSheet.presentedFormSheetSize = CGSizeMake(Utilities.getScreenSize().width - 20, Utilities.getScreenSize().height - paddingTop * 2)
-        self.viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+            formSheet.presentedFormSheetSize = CGSize(width: Utilities.getScreenSize().width - 20, height: Utilities.getScreenSize().height - paddingTop * 2)
+        self.viewController.mz_present(formSheet, animated: true, completionHandler: nil)
         }
     }
     
@@ -335,7 +359,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         tapOnLink("readmore")
     }
     
-    func tapOnLink(urlString : String){
+    func tapOnLink(_ urlString : String){
         Utilities.showHUD()
         XAppDelegate.socialManager.getPost(post.post_id,ignoreCache: true, completionHandler: { (result, error) -> Void in
             Utilities.hideHUD()
@@ -345,17 +369,17 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 if(urlString == "readmore"){
                     if let result = result {
                         for post : UserPost in result {
-                            let controller = self.viewController.storyboard?.instantiateViewControllerWithIdentifier("SinglePostViewController") as! SinglePostViewController
+                            let controller = self.viewController.storyboard?.instantiateViewController(withIdentifier: "SinglePostViewController") as! SinglePostViewController
                             controller.userPost = post
-                            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            DispatchQueue.main.async(execute: { () -> Void in
                                 self.viewController.navigationController?.pushViewController(controller, animated: true)
                             })
                         }
                     }
                 } else {
                     print("urlString urlString = \(urlString)")
-                    if let url = NSURL(string: urlString) {
-                        UIApplication.sharedApplication().openURL(url)
+                    if let url = URL(string: urlString) {
+                        UIApplication.shared.openURL(url)
                     }
                     
                 }
@@ -367,7 +391,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     // MARK: FB Login dialog
     
     func showLoginFormSheet() {
-        let controller = viewController.storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+        let controller = viewController.storyboard?.instantiateViewController(withIdentifier: "PostLoginViewController") as! PostLoginViewController
         controller.delegate = self
         controller.titleString = "Login to Facebook to like this post"
         let formSheet = MZFormSheetController(viewController: controller)
@@ -375,7 +399,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         formSheet.cornerRadius = 5
         formSheet.shouldCenterVertically = true
         formSheet.presentedFormSheetSize = CGSize(width: formSheet.view.frame.width, height: 150)
-        viewController.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        viewController.mz_present(formSheet, animated: true, completionHandler: nil)
     }
     
     func didLoginSuccessfully() {
@@ -387,11 +411,11 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     func likePost(){
         let label = "type = post, like = 1, info = \(post.post_id)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.like, label: label)
-        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), forState: .Normal)
-        self.likeButton.userInteractionEnabled = false
+        self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), for: UIControlState())
+        self.likeButton.isUserInteractionEnabled = false
         //        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
         self.likeNumberLabel.text = "\(++post.hearts) Likes"
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "sendHeartSuccessful:", name: NOTIFICATION_SEND_HEART_FINISHED, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(PostTableViewCell.sendHeartSuccessful(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_SEND_HEART_FINISHED), object: nil)
         XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
 }

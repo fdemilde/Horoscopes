@@ -18,10 +18,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     var collectedHoroscopes = CollectedHoroscope()
     var collectedItem : CollectedItem!
     
-    var todayDate = NSDate()
-    var dateSelected : NSDate!
+    var todayDate = Date()
+    var dateSelected : Date!
     var eventsByDate = [String]()
-    var type = ArchiveViewType.Calendar
+    var type = ArchiveViewType.calendar
     
     let CALENDAR_ICON_SPACE_HEIGHT = 50 as CGFloat
     let PROGRESS_BAR_CONTAINER_SIZE = 120 as CGFloat
@@ -45,13 +45,13 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         super.viewDidLayoutSubviews()
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
     }
     
-    override func viewWillDisappear(animated: Bool) {
+    override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         if let bgImageView = self.bgImageView{
-            self.view.sendSubviewToBack(bgImageView)
+            self.view.sendSubview(toBack: bgImageView)
         }
 //        self.navigationController?.popToRootViewControllerAnimated(true)
     }
@@ -61,10 +61,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     func setupBackground(){
 //        containerView.layer.cornerRadius = 4
         let screenSize = Utilities.getScreenSize()
-        bgImageView = UIImageView(frame: CGRectMake(0,0,screenSize.width,screenSize.height))
+        bgImageView = UIImageView(frame: CGRect(x: 0,y: 0,width: screenSize.width,height: screenSize.height))
         bgImageView.image = UIImage(named: "background")
         self.view.addSubview(bgImageView)
-        self.view.sendSubviewToBack(bgImageView)
+        self.view.sendSubview(toBack: bgImageView)
     }
     
     func getHeaderView() -> UIView {
@@ -72,12 +72,12 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             
         } else {
             tableHeaderView = UIView()
-            tableHeaderView.frame = CGRectMake(0, 0, Utilities.getScreenSize().width, 150)
-            tableHeaderView.backgroundColor = UIColor.clearColor()
+            tableHeaderView.frame = CGRect(x: 0, y: 0, width: Utilities.getScreenSize().width, height: 150)
+            tableHeaderView.backgroundColor = UIColor.clear
             var pupleView = UIView()
-            pupleView.frame = CGRectMake(PADDING, 8, Utilities.getScreenSize().width - PADDING * 2, 142)
+            pupleView.frame = CGRect(x: PADDING, y: 8, width: Utilities.getScreenSize().width - PADDING * 2, height: 142)
             pupleView.backgroundColor = UIColor(red: 133.0/255.0, green: 124.0/255.0, blue: 173.0/255.0, alpha: 1.0)
-            pupleView = Utilities.makeCornerRadius(pupleView, maskFrame: self.view.bounds, roundOptions: [.TopLeft, .TopRight], radius: 4.0)
+            pupleView = Utilities.makeCornerRadius(pupleView, maskFrame: self.view.bounds, roundOptions: [.topLeft, .topRight], radius: 4.0)
             pupleView.addSubview(getProgressBar())
             tableHeaderView.addSubview(pupleView)
         }
@@ -90,25 +90,25 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
             
         } else {
             tableFooterView = UIView()
-            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
-            tableFooterView.backgroundColor = UIColor.clearColor()
+            tableFooterView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 8)
+            tableFooterView.backgroundColor = UIColor.clear
         }
         return tableFooterView
     }
     
     func getProgressBar() -> UIView {
         let progressBarContainer = UIView()
-        progressBarContainer.frame = CGRectMake((tableHeaderView.frame.width - PROGRESS_BAR_CONTAINER_SIZE)/2, (tableHeaderView.frame.height - PROGRESS_BAR_CONTAINER_SIZE)/2, PROGRESS_BAR_CONTAINER_SIZE, PROGRESS_BAR_CONTAINER_SIZE)
+        progressBarContainer.frame = CGRect(x: (tableHeaderView.frame.width - PROGRESS_BAR_CONTAINER_SIZE)/2, y: (tableHeaderView.frame.height - PROGRESS_BAR_CONTAINER_SIZE)/2, width: PROGRESS_BAR_CONTAINER_SIZE, height: PROGRESS_BAR_CONTAINER_SIZE)
         let collectedHoro = CollectedHoroscope()
         let collectedPercentLabel = UILabel()
         let percentage = round(collectedHoro.getScore() * 100)
         let label = "pc = \(percentage)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.archiveOpen, label: label)
         collectedPercentLabel.text = String(format:"%g%%", percentage)
-        collectedPercentLabel.font = UIFont.boldSystemFontOfSize(24)
-        collectedPercentLabel.textColor = UIColor.whiteColor()
+        collectedPercentLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        collectedPercentLabel.textColor = UIColor.white
         collectedPercentLabel.sizeToFit()
-        collectedPercentLabel.frame = CGRectMake((progressBarContainer.frame.width - collectedPercentLabel.frame.width)/2, (progressBarContainer.frame.height - collectedPercentLabel.frame.height)/2, collectedPercentLabel.frame.width, collectedPercentLabel.frame.height)
+        collectedPercentLabel.frame = CGRect(x: (progressBarContainer.frame.width - collectedPercentLabel.frame.width)/2, y: (progressBarContainer.frame.height - collectedPercentLabel.frame.height)/2, width: collectedPercentLabel.frame.width, height: collectedPercentLabel.frame.height)
         let centerPoint = CGPoint(x: 60, y: 60)
         let circularProgessBar = CircularProgressBar(center: centerPoint, radius: 40.0 as CGFloat, strokeWidth: 10.0 as CGFloat)
         progressBarContainer.layer.addSublayer(circularProgessBar)
@@ -119,33 +119,33 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     // MARK: TableView Delegate & Datasource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         tableView.tableHeaderView = getHeaderView()
         tableView.tableFooterView = getFooterView()
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let headerHeight = getTableHeaderHeight()
         let expectedHeight = Utilities.getScreenSize().height - ADMOD_HEIGHT - NAVIGATION_BAR_HEIGHT - headerHeight - PADDING - TABBAR_HEIGHT
-        if(type == .Calendar){
+        if(type == .calendar){
             return max(expectedHeight, MIN_CALENDAR_CELL_HEIGHT)
         }
         return max(getAboutCellHeight(), expectedHeight)
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        if(type == .Calendar){
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveCalendarCell", forIndexPath: indexPath) as! ArchiveCalendarCell
+        if(type == .calendar){
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ArchiveCalendarCell", for: indexPath) as! ArchiveCalendarCell
             cell.setupCell(self)
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("ArchiveDetailTableCell", forIndexPath: indexPath) as! ArchiveDetailTableCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ArchiveDetailTableCell", for: indexPath) as! ArchiveDetailTableCell
             if let _ = collectedItem{
                 cell.setUp(collectedItem)
                     cell.delegate = self
@@ -172,7 +172,7 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         }
         
         let font = UIFont(name: "Book Antiqua", size: 15)
-        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName)
+        let attrs = NSDictionary(object: font!, forKey: NSFontAttributeName as NSCopying)
         let string = NSMutableAttributedString(string: text, attributes: attrs as? [String : AnyObject])
         let textViewWidth = Utilities.getScreenSize().width - PADDING * 4
         var textViewHeight = self.calculateTextViewHeight(string, width: textViewWidth)
@@ -184,29 +184,29 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         return textViewHeight + HEADER_HEIGHT + FOOTER_HEIGHT + TEXTVIEW_PADDING
     }
     
-    func calculateTextViewHeight(string: NSAttributedString, width: CGFloat) ->CGFloat {
+    func calculateTextViewHeight(_ string: NSAttributedString, width: CGFloat) ->CGFloat {
         textviewForCalculating.attributedText = string
-        let size = textviewForCalculating.sizeThatFits(CGSizeMake(width, CGFloat.max))
+        let size = textviewForCalculating.sizeThatFits(CGSize(width: width, height: CGFloat.greatestFiniteMagnitude))
         return ceil(size.height)
     }
     
     // Calendar delegate
-    func didTapOnArchiveDate(item : CollectedItem){
-        let df = NSDateFormatter()
-        df.dateStyle = .FullStyle
-        let date = df.stringFromDate(item.collectedDate)
+    func didTapOnArchiveDate(_ item : CollectedItem){
+        let df = DateFormatter()
+        df.dateStyle = .full
+        let date = df.string(from: item.collectedDate)
         let label = "date = \(date)"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.archiveReading, label: label)
         collectedItem = item
-        type = .HoroscopeDetail
+        type = .horoscopeDetail
         tableView.reloadData()
     }
     
     // MARK: button Action
     
-    @IBAction func backTapped(sender: AnyObject) {
-        if type == .Calendar {
-            self.navigationController?.popToRootViewControllerAnimated(true)
+    @IBAction func backTapped(_ sender: AnyObject) {
+        if type == .calendar {
+            self.navigationController?.popToRootViewController(animated: true)
         } else {
             didTapOnCalendar()
         }
@@ -214,22 +214,22 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
     
     // MARK: daily Content Cell Delegate
     
-    func didShare(horoscopeDescription: String, timeTag: NSTimeInterval, shareUrl: String) {
+    func didShare(_ horoscopeDescription: String, timeTag: TimeInterval, shareUrl: String) {
         let controller = prepareShareVC(horoscopeDescription, timeTag: timeTag)
         let formSheet = MZFormSheetController(viewController: controller)
         formSheet.shouldDismissOnBackgroundViewTap = true
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.slideFromBottom
         formSheet.cornerRadius = 5.0
-        formSheet.presentedFormSheetSize = CGSizeMake(view.frame.width - 20, SHARE_HYBRID_HEIGHT)
-        mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        formSheet.presentedFormSheetSize = CGSize(width: view.frame.width - 20, height: SHARE_HYBRID_HEIGHT)
+        mz_present(formSheet, animated: true, completionHandler: nil)
     }
     
     func didTapOnCalendar() {
-        type = .Calendar
+        type = .calendar
         tableView.reloadData()
     }
     
-    func prepareShareVC(horoscopeDescription: String, timeTag: NSTimeInterval) -> ShareViewController{
+    func prepareShareVC(_ horoscopeDescription: String, timeTag: TimeInterval) -> ShareViewController{
         var selectedSign = 0
         var shareUrl = ""
         if let item = collectedItem{
@@ -240,10 +240,10 @@ class ArchiveViewController : ViewControllerWithAds, JTCalendarDelegate, UITable
         }
         
         let storyBoard = UIStoryboard(name: "Main", bundle: nil)
-        let shareVC = storyBoard.instantiateViewControllerWithIdentifier("ShareViewController") as! ShareViewController
+        let shareVC = storyBoard.instantiateViewController(withIdentifier: "ShareViewController") as! ShareViewController
         let sharingText = String(format: "%@", horoscopeDescription)
         let pictureURL = String(format: "https://horoscopes.zwigglers.com/mrest/pic/signs/%d.jpg", selectedSign + 1)
-        shareVC.populateDailyShareData( ShareViewType.ShareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
+        shareVC.populateDailyShareData( ShareViewType.shareViewTypeHybrid, timeTag: timeTag, horoscopeSign: selectedSign + 1, sharingText: sharingText, pictureURL: pictureURL, shareUrl: shareUrl)
         
         return shareVC
     }

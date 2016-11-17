@@ -18,10 +18,10 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
 //    var isNotificationOn = XAppDelegate.userSettings.notifyOfNewHoroscope
     @IBOutlet weak var titleBackgroundView: UIView!
     
-    let POPUP_NOTIFICATION_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
-    let POPUP_DOB_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 220)
+    let POPUP_NOTIFICATION_SIZE = CGSize(width: Utilities.getScreenSize().width - 40, height: 220)
+    let POPUP_DOB_SIZE = CGSize(width: Utilities.getScreenSize().width - 40, height: 220)
     let POPUP_BUG_REPORT_SIZE = Utilities.getScreenSize()
-    let POPUP_LOG_OUT_SIZE = CGSizeMake(Utilities.getScreenSize().width - 40, 190)
+    let POPUP_LOG_OUT_SIZE = CGSize(width: Utilities.getScreenSize().width - 40, height: 190)
     let TABLE_ROW_HEIGHT = 56 as CGFloat
     
     // we must save last value of notification setting so when user tap save we can check if it changes or not
@@ -34,29 +34,29 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         let image = Utilities.getImageToSupportSize("background", size: self.view.frame.size, frame: self.view.bounds)
         self.view.backgroundColor = UIColor(patternImage: image)
         
-        titleBackgroundView.layer.shadowOffset = CGSizeMake(0, 1)
+        titleBackgroundView.layer.shadowOffset = CGSize(width: 0, height: 1)
         titleBackgroundView.layer.shadowRadius = 2.0
-        titleBackgroundView.layer.shadowColor = UIColor.blackColor().CGColor
+        titleBackgroundView.layer.shadowColor = UIColor.black.cgColor
         titleBackgroundView.layer.shadowOpacity = 0.2
         tableView.layer.cornerRadius = 4
         tableView.clipsToBounds = true
         self.getNotificationFireTime()
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsOpen, label: "")
         self.birthday = XAppDelegate.userSettings.birthday
         self.tableView.reloadData()
     }
     
     // MARK: - Table view datasource and delegate
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         tableView.tableHeaderView = getHeaderView()
         tableView.tableFooterView = getFooterView()
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if(XAppDelegate.socialManager.isLoggedInFacebook()){
             return 6
         }
@@ -64,34 +64,34 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return 5
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return TABLE_ROW_HEIGHT
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell : SettingsTableCell!
-        cell = tableView.dequeueReusableCellWithIdentifier("SettingsTableCell", forIndexPath: indexPath) as! SettingsTableCell
+        cell = tableView.dequeueReusableCell(withIdentifier: "SettingsTableCell", for: indexPath) as! SettingsTableCell
         switch (indexPath.row) {
             case 0:
                 cell.parentVC = self
-                cell.setupCell(SettingsType.Notification, title: "Daily Notification")
+                cell.setupCell(SettingsType.notification, title: "Daily Notification")
                 break
             case 1:
                 cell.parentVC = self
-                cell.setupCell(SettingsType.ChangeDOB, title: "Birthday")
+                cell.setupCell(SettingsType.changeDOB, title: "Birthday")
                 break
             case 2:
                 cell.parentVC = self
-                cell.setupCell(SettingsType.ChangeSign, title: "Horoscope Sign")
+                cell.setupCell(SettingsType.changeSign, title: "Horoscope Sign")
                 break
             case 3:
-                cell.setupCell(SettingsType.BugsReport, title: "Find Facebook friends")
+                cell.setupCell(SettingsType.bugsReport, title: "Find Facebook friends")
                 break
             case 4:
-                cell.setupCell(SettingsType.BugsReport, title: "Report a problem")
+                cell.setupCell(SettingsType.bugsReport, title: "Report a problem")
                 break
             case 5:
-                cell.setupCell(SettingsType.Logout, title: "Logout")
+                cell.setupCell(SettingsType.logout, title: "Logout")
                 break
             default:
                 break
@@ -99,46 +99,46 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         return cell
     }
     
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch (indexPath.row) {
             case 3:
                 if SocialManager.sharedInstance.isLoggedInFacebook() && SocialManager.sharedInstance.isLoggedInZwigglers() {
                     XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbFriendsOpen, label: nil)
-                    let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
+                    let controller = storyboard?.instantiateViewController(withIdentifier: "FacebookFriendViewController") as! FacebookFriendViewController
                     navigationController?.pushViewController(controller, animated: true)
                 } else {
-                    let controller = storyboard?.instantiateViewControllerWithIdentifier("PostLoginViewController") as! PostLoginViewController
+                    let controller = storyboard?.instantiateViewController(withIdentifier: "PostLoginViewController") as! PostLoginViewController
                     controller.delegate = self
                     let formSheet = MZFormSheetController(viewController: controller)
                     formSheet.shouldDismissOnBackgroundViewTap = true
                     formSheet.cornerRadius = 5
                     formSheet.shouldCenterVertically = true
                     formSheet.presentedFormSheetSize = CGSize(width: formSheet.view.frame.width, height: 150)
-                    self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+                    self.mz_present(formSheet, animated: true, completionHandler: nil)
                 }
             case 0:
                 let timePickerViewController = self.setupNotificationTimePickerViewController()
-                self.displayViewController(timePickerViewController, type: SettingsType.Notification)
+                self.displayViewController(timePickerViewController, type: SettingsType.notification)
                 break
             case 1:
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-                presentViewController(loginVC, animated: true, completion: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+                present(loginVC, animated: true, completion: nil)
                 break
             case 2:
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dobOpen, label: nil)
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-                presentViewController(loginVC, animated: true, completion: nil)
+                let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+                present(loginVC, animated: true, completion: nil)
                 break
             case 4:
                 let bugsReportViewController = self.setupBugsReportViewController()
-                self.displayViewController(bugsReportViewController, type: SettingsType.BugsReport)
+                self.displayViewController(bugsReportViewController, type: SettingsType.bugsReport)
                 break
             case 5:
                 let logOutViewController = self.setupLogoutViewController()
-                self.displayViewController(logOutViewController, type: SettingsType.Logout)
+                self.displayViewController(logOutViewController, type: SettingsType.logout)
                 break
             default:
                 break
@@ -146,33 +146,33 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     }
     
     func didLoginSuccessfully() {
-        let controller = storyboard?.instantiateViewControllerWithIdentifier("FacebookFriendViewController") as! FacebookFriendViewController
+        let controller = storyboard?.instantiateViewController(withIdentifier: "FacebookFriendViewController") as! FacebookFriendViewController
         navigationController?.pushViewController(controller, animated: true)
     }
     
     // MARK: Setup and display View Controller
     
     func setupNotificationTimePickerViewController() -> UIViewController {
-        let timePickerVC = self.storyboard!.instantiateViewControllerWithIdentifier("MyTimePickerViewController") as! MyTimePickerViewController
+        let timePickerVC = self.storyboard!.instantiateViewController(withIdentifier: "MyTimePickerViewController") as! MyTimePickerViewController
         timePickerVC.parentVC = self
         return timePickerVC
     }
     
     func setupBugsReportViewController() -> UIViewController {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.settingsBug, label: nil)
-        let bugsReportViewController = self.storyboard!.instantiateViewControllerWithIdentifier("BugReportViewController") as! BugReportViewController
+        let bugsReportViewController = self.storyboard!.instantiateViewController(withIdentifier: "BugReportViewController") as! BugReportViewController
         return bugsReportViewController
     }
     
     func setupLogoutViewController() -> UIViewController {
-        let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("LogOutViewController") as! LogOutViewController
+        let viewController = self.storyboard!.instantiateViewController(withIdentifier: "LogOutViewController") as! LogOutViewController
         viewController.parentVC = self
         return viewController
     }
     
     // MARK: Button action
-    @IBAction func backButtonTapped(sender: UIButton) {
-        navigationController?.popViewControllerAnimated(true)
+    @IBAction func backButtonTapped(_ sender: UIButton) {
+        navigationController?.popViewController(animated: true)
     }
     
 //    @IBAction func searchButtonTapped(sender: UIButton) {
@@ -181,11 +181,11 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
 //        navigationController?.presentViewController(controller, animated: true, completion: nil)
 //    }
     
-    @IBAction func saveButtonTapped(sender: AnyObject) {
+    @IBAction func saveButtonTapped(_ sender: AnyObject) {
         self.saveNotificationSetting()
-        let hud = MBProgressHUD.showHUDAddedTo(view, animated: true)
-        hud.mode = MBProgressHUDMode.Text
-        hud.detailsLabelFont = UIFont.systemFontOfSize(11)
+        let hud = MBProgressHUD.showAdded(to: view, animated: true)
+        hud.mode = MBProgressHUDMode.text
+        hud.detailsLabelFont = UIFont.systemFont(ofSize: 11)
         hud.detailsLabelText = "Saved!"
         hud.hide(true, afterDelay: 2)
     }
@@ -193,7 +193,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     // MARK: save changes
     // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
     
-    func sendUpdateSign(newSign : Int32){
+    func sendUpdateSign(_ newSign : Int32){
         
         XAppDelegate.socialManager.sendUserUpdateSign(Int(newSign + 1), completionHandler: { (result, error) -> Void in
             let errorCode = result?["error"] as! Int
@@ -214,7 +214,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             Utilities.setLocalPush(self.getSelectedTime())
             label += "enabled = 1"
         } else {
-            UIApplication.sharedApplication().cancelAllLocalNotifications()
+            UIApplication.shared.cancelAllLocalNotifications()
             label += "enabled = 0"
         }
         
@@ -224,43 +224,43 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: Helpers
     // MARK: BINH: function is not used but the design is not finalize so let it here, remove later
-    func finishedSelectingBirthday(date : StandardDate){
+    func finishedSelectingBirthday(_ date : StandardDate){
         let dateStringInNumberFormat = self.getDateStringInNumberFormat(date)
         self.birthday = date
         self.birthdayString = dateStringInNumberFormat
         tableView.reloadData()
     }
     
-    func displayViewController(viewController : UIViewController, type : SettingsType){
+    func displayViewController(_ viewController : UIViewController, type : SettingsType){
         let formSheet = MZFormSheetController(viewController: viewController)
-        formSheet.transitionStyle = MZFormSheetTransitionStyle.Fade
+        formSheet.transitionStyle = MZFormSheetTransitionStyle.fade
         formSheet.cornerRadius = 0.0;
-        if (type == SettingsType.Notification) {
+        if (type == SettingsType.notification) {
             formSheet.presentedFormSheetSize = POPUP_NOTIFICATION_SIZE
             formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + TABLE_ROW_HEIGHT
-        } else if(type == SettingsType.ChangeDOB){
+        } else if(type == SettingsType.changeDOB){
             formSheet.presentedFormSheetSize = POPUP_DOB_SIZE
             formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + 2 * TABLE_ROW_HEIGHT
-        } else if(type == SettingsType.BugsReport){
-            formSheet.transitionStyle = MZFormSheetTransitionStyle.SlideFromBottom
+        } else if(type == SettingsType.bugsReport){
+            formSheet.transitionStyle = MZFormSheetTransitionStyle.slideFromBottom
             formSheet.presentedFormSheetSize = POPUP_BUG_REPORT_SIZE
             formSheet.portraitTopInset = 0.0;
         } else {
             formSheet.presentedFormSheetSize = POPUP_LOG_OUT_SIZE
             formSheet.portraitTopInset = ADMOD_HEIGHT + NAVIGATION_BAR_HEIGHT + 10 + TABLE_ROW_HEIGHT
         }
-        formSheet.view.layer.shadowColor = UIColor.blackColor().CGColor
-        formSheet.view.layer.shadowOffset = CGSizeMake(0, 19)
+        formSheet.view.layer.shadowColor = UIColor.black.cgColor
+        formSheet.view.layer.shadowOffset = CGSize(width: 0, height: 19)
         formSheet.view.layer.shadowRadius = 10
         formSheet.view.layer.shadowOpacity = 0.4
         formSheet.shouldDismissOnBackgroundViewTap = true
-        MZFormSheetController.sharedBackgroundWindow().backgroundColor = UIColor.clearColor()
-        self.mz_presentFormSheetController(formSheet, animated: true, completionHandler: nil)
+        MZFormSheetController.sharedBackgroundWindow().backgroundColor = UIColor.clear
+        self.mz_present(formSheet, animated: true, completionHandler: nil)
     }
     
     func getNotificationFireTime(){
         
-        let array = UIApplication.sharedApplication().scheduledLocalNotifications
+        let array = UIApplication.shared.scheduledLocalNotifications
         if let array = array {
             if(array.count > 0){ // have notification setup already
                 notificationFireTime = Utilities.getDateStringFromTimestamp(array[0].fireDate!.timeIntervalSince1970, dateFormat: NOTIFICATION_SETTING_DATE_FORMAT)
@@ -273,7 +273,7 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
         
     }
     
-    func doneSelectingTime(time : NSDate){
+    func doneSelectingTime(_ time : Date){
         if(XAppDelegate.userSettings.notifyOfNewHoroscope == false){
             XAppDelegate.userSettings.notifyOfNewHoroscope = true
         }
@@ -285,14 +285,14 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
     
     // MARK: helpers
     
-    func getSelectedTime() -> NSDateComponents{
-        let components: NSCalendarUnit = [.Year, .Month, .Day, .Hour, .Minute, .Second]
+    func getSelectedTime() -> DateComponents{
+        let components: NSCalendar.Unit = [.year, .month, .day, .hour, .minute, .second]
         let date = Utilities.getDateFromDateString(notificationFireTime, format: NOTIFICATION_SETTING_DATE_FORMAT)
         
-        return NSCalendar.currentCalendar().components(components, fromDate: date)
+        return (Calendar.current as NSCalendar).components(components, from: date)
     }
     
-    func sendSetNotificationTracker(label: String){
+    func sendSetNotificationTracker(_ label: String){
 //        XAppDelegate.sendTrackEventWithActionName(defaultChangeSetting, label: label, value: XAppDelegate.mobilePlatform.tracker.appOpenCounter)
     }
     
@@ -302,8 +302,8 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             
         } else {
             tableFooterView = UIView()
-            tableFooterView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
-            tableFooterView.backgroundColor = UIColor.clearColor()
+            tableFooterView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 8)
+            tableFooterView.backgroundColor = UIColor.clear
         }
         return tableFooterView
     }
@@ -313,13 +313,13 @@ class SettingsViewController: ViewControllerWithAds, UITableViewDataSource, UITa
             
         } else {
             tableHeaderView = UIView()
-            tableHeaderView.frame = CGRectMake(0, 0, tableView.frame.width, 8)
-            tableHeaderView.backgroundColor = UIColor.clearColor()
+            tableHeaderView.frame = CGRect(x: 0, y: 0, width: tableView.frame.width, height: 8)
+            tableHeaderView.backgroundColor = UIColor.clear
         }
         return tableHeaderView
     }
     
-    func getDateStringInNumberFormat(date : StandardDate) -> String{
+    func getDateStringInNumberFormat(_ date : StandardDate) -> String{
         let result = String(format:"%d/%02d", date.day, date.month)
         return result
     }

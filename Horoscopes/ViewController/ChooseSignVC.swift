@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 protocol ChooseSignViewControllerDelegate {
-    func didSelectHoroscopeSign(selectedSign: Int)
+    func didSelectHoroscopeSign(_ selectedSign: Int)
 }
 
 class ChooseSignVC : SpinWheelVC {
@@ -49,7 +49,7 @@ class ChooseSignVC : SpinWheelVC {
         
     }
     
-    override func viewWillAppear(animated: Bool) {
+    override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.setupComponents()
     }
@@ -62,9 +62,9 @@ class ChooseSignVC : SpinWheelVC {
         signViewTopConstraint.constant = (signViewTopConstraint.constant * ratio)
         viewOtherSignTopConstraint.constant = (viewOtherSignTopConstraint.constant * ratio)
         
-        self.view .bringSubviewToFront(chooseSignButton)
-        self.view .bringSubviewToFront(signNameLabel)
-        self.view .bringSubviewToFront(signDateLabel)
+        self.view .bringSubview(toFront: chooseSignButton)
+        self.view .bringSubview(toFront: signNameLabel)
+        self.view .bringSubview(toFront: signDateLabel)
         
         if(DeviceType.IS_IPHONE_4_OR_LESS){
 //            chooseSignButton.hidden = true
@@ -77,8 +77,8 @@ class ChooseSignVC : SpinWheelVC {
             currentSign = 8
         }
         let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[currentSign];
-        wheel.autoRollToSign(horoscope.sign)
-        self.userSignName.text = horoscope.sign.uppercaseString
+        wheel.autoRoll(toSign: horoscope.sign)
+        self.userSignName.text = horoscope.sign.uppercased()
         self.userSignDate.text = Utilities.getSignDateString(horoscope.startDate, endDate: horoscope.endDate)
         
         let image = UIImage(named: String(format:"%@_selected",horoscope.sign))
@@ -88,11 +88,11 @@ class ChooseSignVC : SpinWheelVC {
     
     // MARK: Delegata methods
     
-    override func wheelDidChangeValue(newValue: Horoscope!, becauseOf autoRoll: Bool) {
+    override func wheelDidChangeValue(_ newValue: Horoscope!, becauseOf autoRoll: Bool) {
         if let newValue = newValue {
-            self.signNameLabel.text = newValue.sign.uppercaseString
+            self.signNameLabel.text = newValue.sign.uppercased()
             self.signDateLabel.text = Utilities.getSignDateString(newValue.startDate, endDate: newValue.endDate)
-            let index = XAppDelegate.horoscopesManager.horoscopesSigns.indexOf(newValue)
+            let index = XAppDelegate.horoscopesManager.horoscopesSigns.index(of: newValue)
             if(index != nil){
                 self.selectedIndex = index!;
             }
@@ -100,7 +100,7 @@ class ChooseSignVC : SpinWheelVC {
             let horoscope = XAppDelegate.horoscopesManager.horoscopesSigns[self.selectedIndex] as Horoscope
             
             let image = UIImage(named: String(format:"%@_selected",horoscope.sign))
-            chooseSignButton.setImage(image, forState: UIControlState.Normal)
+            chooseSignButton.setImage(image, for: UIControlState())
             self.signNameLabel.alpha = 0
             UILabel.beginAnimations("Fade-in", context: nil)
             UILabel.setAnimationDuration(0.6)
@@ -115,7 +115,7 @@ class ChooseSignVC : SpinWheelVC {
     }
     
     
-    @IBAction func chooseSignTapped(sender: AnyObject) {
+    @IBAction func chooseSignTapped(_ sender: AnyObject) {
         self.dismissChooseSignViewController()
     }
     
@@ -127,10 +127,10 @@ class ChooseSignVC : SpinWheelVC {
         delegate.didSelectHoroscopeSign(selectedIndex)
     }
     
-    @IBAction func userChangeSignTapped(sender: AnyObject) {
+    @IBAction func userChangeSignTapped(_ sender: AnyObject) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let loginVC = storyboard.instantiateViewControllerWithIdentifier("LoginVC") as! LoginVC
-        presentViewController(loginVC, animated: true, completion: nil)
+        let loginVC = storyboard.instantiateViewController(withIdentifier: "LoginVC") as! LoginVC
+        present(loginVC, animated: true, completion: nil)
     }
     
 }

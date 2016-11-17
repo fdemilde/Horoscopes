@@ -15,7 +15,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     var lastSelectedIndex = 0
     
     let POST_BUTTON_PADDING = 35 as CGFloat
-    let CLOSE_BUTTON_SIZE = CGSizeMake(54,49)
+    let CLOSE_BUTTON_SIZE = CGSize(width: 54,height: 49)
     var postButtonsView: PostButtonsView!
     var overlay : UIView!
     
@@ -42,7 +42,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
 //        self.tabBar.frame = tabFrame
         
         // make tabbar transparent
-        self.tabBar.translucent = true
+        self.tabBar.isTranslucent = true
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
         setupAddPostButton()
@@ -58,16 +58,16 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         let notifItem = self.tabBar.items![3]
         let profileItem = self.tabBar.items![4]
         
-        dailyItem.image = UIImage(named: "tabbar_daily" )!.imageWithRenderingMode(.AlwaysOriginal)
-        discoveryItem.image = UIImage(named: "tabbar_community")!.imageWithRenderingMode(.AlwaysOriginal)
-        createPostItem.image = UIImage(named: "tabbar_create_post")!.imageWithRenderingMode(.AlwaysOriginal)
-        notifItem.image = UIImage(named: "tabbar_notification")!.imageWithRenderingMode(.AlwaysOriginal)
-        profileItem.image = UIImage(named: "tabbar_profile")!.imageWithRenderingMode(.AlwaysOriginal)
+        dailyItem.image = UIImage(named: "tabbar_daily" )!.withRenderingMode(.alwaysOriginal)
+        discoveryItem.image = UIImage(named: "tabbar_community")!.withRenderingMode(.alwaysOriginal)
+        createPostItem.image = UIImage(named: "tabbar_create_post")!.withRenderingMode(.alwaysOriginal)
+        notifItem.image = UIImage(named: "tabbar_notification")!.withRenderingMode(.alwaysOriginal)
+        profileItem.image = UIImage(named: "tabbar_profile")!.withRenderingMode(.alwaysOriginal)
         
-        dailyItem.selectedImage = UIImage(named: "selected_tabbar_daily" )!.imageWithRenderingMode(.AlwaysOriginal)
-        discoveryItem.selectedImage = UIImage(named: "selected_tabbar_community")!.imageWithRenderingMode(.AlwaysOriginal)
-        notifItem.selectedImage = UIImage(named: "selected_tabbar_notification")!.imageWithRenderingMode(.AlwaysOriginal)
-        profileItem.selectedImage = UIImage(named: "selected_tabbar_profile")!.imageWithRenderingMode(.AlwaysOriginal)
+        dailyItem.selectedImage = UIImage(named: "selected_tabbar_daily" )!.withRenderingMode(.alwaysOriginal)
+        discoveryItem.selectedImage = UIImage(named: "selected_tabbar_community")!.withRenderingMode(.alwaysOriginal)
+        notifItem.selectedImage = UIImage(named: "selected_tabbar_notification")!.withRenderingMode(.alwaysOriginal)
+        profileItem.selectedImage = UIImage(named: "selected_tabbar_profile")!.withRenderingMode(.alwaysOriginal)
         
         dailyItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
         discoveryItem.imageInsets = UIEdgeInsetsMake(5, 0, -5, 0)
@@ -77,21 +77,21 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    func tabBarController(tabBarController: UITabBarController, didSelectViewController viewController: UIViewController) {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         // if current selected tab is Daily, when user tap on Daily again, switch to user's favourite sign
         if let viewControllers = self.viewControllers {
             for viewController in viewControllers {
                 let nav = viewController as! UINavigationController
                 let vc = nav.viewControllers.first!
                 if(tabBarController.selectedIndex == 0){ // pop to root view controller which is daily view. This is to make sure when use go back to daily view it'll show daily view instead of Cookie or Archive view
-                    if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
-                        if(nav.viewControllers.count > 1) { nav.popToRootViewControllerAnimated(true) }
+                    if vc.isKind( of: DailyTableViewController.classForCoder()) {
+                        if(nav.viewControllers.count > 1) { nav.popToRootViewController(animated: true) }
                     }
                 }
                 
                 if lastSelectedIndex == tabBarController.selectedIndex {
                     if tabBarController.selectedIndex == 0 {
-                        if vc.isKindOfClass( DailyTableViewController.classForCoder()) {
+                        if vc.isKind( of: DailyTableViewController.classForCoder()) {
                             if XAppDelegate.userSettings.horoscopeSign != -1 {
                                 let dailyVC = vc as! DailyTableViewController
                                 self.selectedSign = Int(XAppDelegate.userSettings.horoscopeSign)
@@ -100,10 +100,10 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
                                 dailyVC.reloadData()
                             }
                         }
-                    } else if tabBarController.selectedIndex == viewControllers.count - 1 && vc.isKindOfClass(ProfileBaseViewController.classForCoder()) {
+                    } else if tabBarController.selectedIndex == viewControllers.count - 1 && vc.isKind(of: ProfileBaseViewController.classForCoder()) {
                         let controller = vc as! ProfileBaseViewController
                         controller.scrollToTop()
-                    } else if tabBarController.selectedIndex == 1 && vc.isKindOfClass(AlternateCommunityViewController.classForCoder()) {
+                    } else if tabBarController.selectedIndex == 1 && vc.isKind(of: AlternateCommunityViewController.classForCoder()) {
                         let controller = vc as! AlternateCommunityViewController
                         controller.scrollToTop()
                     }
@@ -118,7 +118,7 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
             for nav in viewControllers {
                 let nav = nav as! UINavigationController
                 let vc = nav.viewControllers.first!
-                if vc.isKindOfClass( DailyTableViewController.classForCoder() ) {
+                if vc.isKind( of: DailyTableViewController.classForCoder() ) {
                     let dailyVC = vc as! DailyTableViewController
                     dailyVC.selectedSign = self.selectedSign
                     dailyVC.reloadData()
@@ -138,10 +138,10 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    func tabBarController(tabBarController: UITabBarController, shouldSelectViewController viewController: UIViewController) -> Bool {
+    func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
         let nav = viewController as! UINavigationController
         let vc = nav.viewControllers.first!
-        if vc.isKindOfClass(DailyTableViewController.classForCoder())  || vc.isKindOfClass(AlternateCommunityViewController.classForCoder()) || vc.isKindOfClass(NotificationViewController.classForCoder()) || vc.isKindOfClass(ProfileBaseViewController.classForCoder()){
+        if vc.isKind(of: DailyTableViewController.classForCoder())  || vc.isKind(of: AlternateCommunityViewController.classForCoder()) || vc.isKind(of: NotificationViewController.classForCoder()) || vc.isKind(of: ProfileBaseViewController.classForCoder()){
             return true
         }
         postButtonTapped()
@@ -150,25 +150,25 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
     
     func setupAddPostButton() {
         // setup overlay
-        overlay = UIView(frame: CGRectMake(0, 0, Utilities.getScreenSize().width, Utilities.getScreenSize().height))
+        overlay = UIView(frame: CGRect(x: 0, y: 0, width: Utilities.getScreenSize().width, height: Utilities.getScreenSize().height))
         overlay.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.8)
         overlay.alpha = 0
         
         view.addSubview(overlay)
-        view.bringSubviewToFront(overlay)
+        view.bringSubview(toFront: overlay)
         
-        let overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: "overlayTapGestureRecognizer:")
+        let overlayTapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(CustomTabBarController.overlayTapGestureRecognizer(_:)))
         overlay.addGestureRecognizer(overlayTapGestureRecognizer)
-        let postButtonViewFrame = CGRectMake(0, POST_BUTTON_PADDING,  overlay.frame.size.width, overlay.frame.size.height - POST_BUTTON_PADDING*4)
+        let postButtonViewFrame = CGRect(x: 0, y: POST_BUTTON_PADDING,  width: overlay.frame.size.width, height: overlay.frame.size.height - POST_BUTTON_PADDING*4)
         postButtonsView = PostButtonsView(frame: postButtonViewFrame)
-        postButtonsView.setTextColor(UIColor.whiteColor())
+        postButtonsView.setTextColor(UIColor.white)
         postButtonsView.hostViewController = self
         overlay.addSubview(postButtonsView)
         
-        let closeButtonFrame = CGRectMake((overlay.frame.width - CLOSE_BUTTON_SIZE.width)/2, (overlay.frame.height - CLOSE_BUTTON_SIZE.height), CLOSE_BUTTON_SIZE.width, CLOSE_BUTTON_SIZE.height)
+        let closeButtonFrame = CGRect(x: (overlay.frame.width - CLOSE_BUTTON_SIZE.width)/2, y: (overlay.frame.height - CLOSE_BUTTON_SIZE.height), width: CLOSE_BUTTON_SIZE.width, height: CLOSE_BUTTON_SIZE.height)
         let closeButton = UIButton(frame: closeButtonFrame)
-        closeButton.setImage(UIImage(named: "tabbar_close_post"), forState: UIControlState.Normal)
-        closeButton.addTarget(self, action: "postButtonTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        closeButton.setImage(UIImage(named: "tabbar_close_post"), for: UIControlState())
+        closeButton.addTarget(self, action: #selector(CustomTabBarController.postButtonTapped), for: UIControlEvents.touchUpInside)
         overlay.addSubview(closeButton)
     }
     
@@ -186,18 +186,18 @@ class CustomTabBarController : UITabBarController, UITabBarControllerDelegate {
         
     }
     
-    func overlayTapGestureRecognizer(recognizer: UITapGestureRecognizer){
+    func overlayTapGestureRecognizer(_ recognizer: UITapGestureRecognizer){
         overlayFadeout()
     }
     
     func overlayFadeIn(){
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.overlay.alpha = 1.0
         })
     }
     
     func overlayFadeout(){
-        UIView.animateWithDuration(0.2, animations: {
+        UIView.animate(withDuration: 0.2, animations: {
             self.overlay.alpha = 0
         })
     }
