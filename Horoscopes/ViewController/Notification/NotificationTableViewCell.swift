@@ -78,10 +78,10 @@ class NotificationTableViewCell: UITableViewCell {
     // MARK: Helpers
     func setNotificationType(){
         
-        switch(self.alertObject?.type){
-            case ?"send_heart":
+        switch(self.alertObject!.type){
+            case "send_heart":
                 self.type = ServerNotificationType.sendHeart
-            case ?"follow":
+            case "follow":
                 self.type = ServerNotificationType.follow
             default:
                 self.type = ServerNotificationType.default

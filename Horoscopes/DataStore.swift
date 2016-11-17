@@ -48,7 +48,7 @@ class DataStore : NSObject{
     func updateUsersUnfollowing(_ notification: Notification) {
         let user = notification.object as! UserProfile
         if var _ = usersFollowing {
-            for index in 0 ..< usersFollowing!.count += 1 {
+            for index in 0 ..< usersFollowing!.count {
                 if (usersFollowing![index].uid == user.uid){
                     usersFollowing!.remove(at: index)
                     break
@@ -78,7 +78,7 @@ class DataStore : NSObject{
                 data = updateFollowingStatusForNewAddingData(data) // check with following users and update new adding post
                 updatedArray = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
                 }
             case NewsfeedTabType.global:
                 if(data.count == 0){
@@ -88,7 +88,7 @@ class DataStore : NSObject{
                 data = updateFollowingStatusForNewAddingData(data)
                 updatedArray = addData(newsfeedGlobal, newDataArray: data)
                 if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray)
+                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
             
                 }
             default:
@@ -100,7 +100,7 @@ class DataStore : NSObject{
                 updatedArray = addData(newsfeedFollowing, newDataArray: data)
                 if (newsfeedIsUpdated) {
                     
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
+                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
             }
             
         }
@@ -115,15 +115,15 @@ class DataStore : NSObject{
             case NewsfeedTabType.following:
                 updatedArray = data
                 updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
             case NewsfeedTabType.global:
                 updatedArray = data
                 updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray)
+                Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
             default:
                 updatedArray = data
                 updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray)
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
         }
         if(scrollToTop){
             Utilities.postNotification(NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object:nil)
@@ -238,11 +238,11 @@ class DataStore : NSObject{
         } else {
             SocialManager.sharedInstance.getProfilesOfUsersFollowing({ (result, error) -> Void in
                 if let error = error {
-                    completionHandler(error: error, shouldReload: shouldReload)
+                    completionHandler(error, shouldReload)
                 } else {
                     self.usersFollowing = result!
                     check()
-                    completionHandler(error: nil, shouldReload: shouldReload)
+                    completionHandler(nil, shouldReload)
                 }
             })
         }

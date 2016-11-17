@@ -169,7 +169,7 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
             todayComp.minute = 0
             todayComp.second = 1
             
-            let lastOpenComp = (defaultCalendar as NSCalendar).components(components, from: lastDateOpen)
+            var lastOpenComp = (defaultCalendar as NSCalendar).components(components, from: lastDateOpen)
             (lastOpenComp as NSDateComponents).calendar = defaultCalendar
             lastOpenComp.hour = 0
             lastOpenComp.minute = 0
@@ -340,9 +340,9 @@ class CookieViewController : ViewControllerWithAds, LoginViewControllerDelegate 
                 if let luckyNumbers = luckyNumbers {
                     for number in luckyNumbers {
                         if(self.luckyNumberLabel.text != ""){
-                            self.luckyNumberLabel.text = (self.luckyNumberLabel.text?)! + " "
+                            self.luckyNumberLabel.text = (self.luckyNumberLabel.text)! + " "
                         }
-                        self.luckyNumberLabel.text = (self.luckyNumberLabel.text?)! + String(format:"%d", number as! Int)
+                        self.luckyNumberLabel.text = (self.luckyNumberLabel.text)! + String(format:"%d", number as! Int)
                     }
                     XAppDelegate.dataStore.currentLuckyNumber = self.luckyNumberLabel.text!
                 }

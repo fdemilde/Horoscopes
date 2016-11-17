@@ -38,9 +38,16 @@ var yearArray : [Int] {
     } else {
         // Fallback on earlier versions
     }
-    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; year -= 1 {
+    
+    var year = thirteenYearsToNow
+    repeat {
         result.append(year)
-    }
+        year -= 1
+    } while(year >= nineteenYearsToNow)
+    
+//    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; year -= 1 {
+//        result.append(year)
+//    }
     return result
 }
 

@@ -62,12 +62,12 @@ class SpinWheelVC : UIViewController, SMRotaryProtocol{
             currentSign = horoscopesSigns[Int(setting.horoscopeSign)].sign;
             let index = setting.horoscopeSign
             if(index < 8){
-                for var i = 0; i < 8 - index; i += 1 {
+                for i in 0 ..< 8 - index {
                     horoscopesSigns.insert(horoscopesSigns.last!, at: 0)
                     horoscopesSigns.removeLast()
                 }
             } else {
-                for var i = 0; i < index - 8; i += 1 {
+                for i in 0 ..< index - 8 {
                     horoscopesSigns.append(horoscopesSigns[0] as Horoscope)
                     horoscopesSigns.remove(at: 0)
                 }

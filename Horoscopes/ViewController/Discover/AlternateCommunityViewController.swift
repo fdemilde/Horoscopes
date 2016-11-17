@@ -143,8 +143,8 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
             return (p1.post_id == p2.post_id);
         })
         
-        let delta = deltaCalculator.delta(fromOldArray: XAppDelegate.dataStore.newsfeedGlobal, toNewArray:newData)
-        delta.applyUpdates(to: self.tableView,inSection:0,with:UITableViewRowAnimation.middle)
+        let delta = deltaCalculator!.delta(fromOldArray: XAppDelegate.dataStore.newsfeedGlobal, toNewArray:newData)
+        delta!.applyUpdates(to: self.tableView,inSection:0,with:UITableViewRowAnimation.middle)
         XAppDelegate.dataStore.newsfeedGlobal = newData
         self.tableView.endUpdates()
         if let indexes = tableView.indexPathsForVisibleRows {

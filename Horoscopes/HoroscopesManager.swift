@@ -115,9 +115,9 @@ class HoroscopesManager : NSObject {
             postData.setObject(mccString, forKey: "mcc" as NSCopying)
             postData.setObject(mncString, forKey: "mnc" as NSCopying)
             postData.setObject(strScore, forKey: "score" as NSCopying)
-            postData.setObject(loadCountString, forKey: "load_count")
+            postData.setObject(loadCountString, forKey: "load_count" as NSCopying)
             postData.setObject(version, forKey: "version" as NSCopying)
-            postData.setObject(signString, forKey: "sign")
+            postData.setObject(signString, forKey: "sign" as NSCopying)
             postData.setObject(offsetString, forKey: "tz" as NSCopying)
             postData.setObject(iOSVersion, forKey: "device_systemVersion" as NSCopying)
             postData.setObject(devideType, forKey: "device_model" as NSCopying)
@@ -197,9 +197,9 @@ class HoroscopesManager : NSObject {
     //            print(response)
                 Utilities.hideHUD()
                 if error != nil {
-                    Utilities.showError(error)
+                    Utilities.showError(error as! NSError)
                 } else {
-                    if let errorCode = response["error_code"]{
+                    if let errorCode = response?["error_code"]{
                         if(errorCode as? String == "error.invalidtoken"){
                             XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                             return
@@ -228,10 +228,10 @@ class HoroscopesManager : NSObject {
                             return
                         }
                     }
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(responseDict: result,error: error)
+                    let result = Utilities.parseNSDictionaryToDictionary(response as NSDictionary)
+                    completionHandler(result,error as NSError?)
                 } else {
-                    completionHandler(responseDict: nil,error: error)
+                    completionHandler(nil,error as NSError?)
                 }
             }
         })
@@ -246,7 +246,9 @@ class HoroscopesManager : NSObject {
         var horoSigns = self.horoscopesSigns
         todayReadings = self.data["today"]!["readings"]! as! Dictionary<String,String>
         tomorrowReadings = self.data["tomorrow"]!["readings"]! as! Dictionary<String,String>
-        for var index = 1; index <= 12; index += 1 {
+        
+        var index = 1
+        repeat {
             let indexString = "\(index)"
             let todayPermaLink = self.data["today"]!["permalinks"]![indexString] as! String
             let tomorrowPermaLink = self.data["tomorrow"]!["permalinks"]![indexString] as! String
@@ -258,7 +260,9 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.add(tomorrowReadings[String(format: "%d", index)]!)
             horoSigns[index-1].permaLinks.add(String(format: "%@", todayPermaLink))
             horoSigns[index-1].permaLinks.add(String(format: "%@", tomorrowPermaLink))
-        }
+
+            index += 1
+        } while(index <= 12)
     }
     
     func setupNodata(){
@@ -271,7 +275,9 @@ class HoroscopesManager : NSObject {
         var tomorrowTimeTagDict = Dictionary<String, String>()
         tomorrowTimeTagDict["time_tag"] = String(format:"%f", Date().timeIntervalSince1970 + 60*60*24)
         self.data["tomorrow"] = tomorrowTimeTagDict as AnyObject?
-        for var index = 1; index <= 12; index += 1 {
+        
+        var index = 1
+        repeat {
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].permaLinks.removeAllObjects()
             
@@ -279,7 +285,8 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.add("")
             horoSigns[index-1].permaLinks.add("")
             horoSigns[index-1].permaLinks.add("")
-        }
+            index += 1
+        } while(index <= 12)
     }
     
     func getSignIndexOfDate(_ date : Date) -> Int{

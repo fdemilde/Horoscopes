@@ -414,7 +414,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         self.likeButton.setImage(UIImage(named: "newsfeed_red_heart_icon"), for: UIControlState())
         self.likeButton.isUserInteractionEnabled = false
         //        self.likeNumberLabel.text = "\(++post.hearts) Likes  \(post.shares) Shares"
-        self.likeNumberLabel.text = "\(++post.hearts) Likes"
+        self.likeNumberLabel.text = "\(post.hearts += 1) Likes"
         NotificationCenter.default.addObserver(self, selector: #selector(PostTableViewCell.sendHeartSuccessful(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_SEND_HEART_FINISHED), object: nil)
         XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }

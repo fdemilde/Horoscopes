@@ -132,7 +132,7 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
             notificationIds.insert(id!)
             let data = NSKeyedArchiver.archivedData(withRootObject: notificationIds)
             UserDefaults.standard.set(data, forKey: notificationKey)
-            SocialManager.sharedInstance.clearNotificationWithId(id)
+            SocialManager.sharedInstance.clearNotificationWithId(id!)
             let notifCell = cell as! NotificationTableViewCell
             let route = notifCell.notification.route
             if(route != nil && route != ""){
@@ -188,8 +188,8 @@ class NotificationViewController: ViewControllerWithAds, UITableViewDataSource, 
                     let n2 = notif2 as! NotificationObject
                     return (n1.notification_id == n2.notification_id);
                 })
-                let delta = deltaCalculator.delta(fromOldArray: self.notifArray, toNewArray:result!)
-                delta.applyUpdates(to: self.tableView,inSection:0,with:UITableViewRowAnimation.fade)
+                let delta = deltaCalculator?.delta(fromOldArray: self.notifArray, toNewArray:result!)
+                delta?.applyUpdates(to: self.tableView,inSection:0,with:UITableViewRowAnimation.fade)
                 self.notifArray = result!
                 self.notifArray.sort(by: { $0.created > $1.created })
                 self.tableView.endUpdates()

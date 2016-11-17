@@ -78,8 +78,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     
-                    if(isAddingData){
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.global, isLastPage: Bool(isLastAsNumber))
+                    if (isLastPage: Bool(isLastAsNumber == 1)) {
+                        
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.global, isLastPage: Bool(true))
                     } else {
                         
                         // because each time user goes to Community page, we have to check if it should reload or not
@@ -148,9 +149,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 if let errorCode = result["error"] as? Int {
                     if(errorCode != 0){
                         print("Error code = \(errorCode)")
-                        Utilities.showError(error)
+                        Utilities.showError(error as! NSError)
                     } else { // no error
-                        if let errorCode = response["error_code"]{
+                        if let errorCode = response?["error_code"]{
                             if(errorCode as? String == "error.invalidtoken"){
                                 XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                                 return
@@ -188,9 +189,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let createPost = { () -> () in
             XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData, andComplete: { (response, error) -> Void in
                 if let error = error {
-                    completionHandler(result: nil, error: error)
+                    completionHandler(nil, error as NSError?)
                 } else {
-                    if let errorCode = response["error_code"]{
+                    if let errorCode = response?["error_code"]{
                         if(errorCode as? String == "error.invalidtoken"){
                             XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                             return
@@ -233,7 +234,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let expiredKey = self.expiredKeyForPaging(isRefreshed, pageKey: "page", requestMethod: GET_USER_FEED, pageNumber: page, postData: postData)
                     CacheManager.cacheGet(GET_USER_FEED, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey, completionHandler: { (response, error) -> Void in
                         if let error = error {
-                            completionHandler(result: nil, error: error)
+                            completionHandler(nil, error)
                         } else {
                             let json = Utilities.parseNSDictionaryToDictionary(response!)
                             let last = json["last"] as! Int
@@ -243,7 +244,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                                 post.user = userProfile
                             }
                             let result = (posts, isLastPage: last == 1)
-                            completionHandler(result: result, error: nil)
+                            completionHandler(result, nil)
                         }
                     })
                 } else {
@@ -262,7 +263,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
 //            print("response response == \(response)")
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error)
             } else {
                 let results = Utilities.parseNSDictionaryToDictionary(response!)
                 let userDict = results["profiles"] as! Dictionary<String, AnyObject>
@@ -272,7 +273,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     postArray.append(post)
                 }
                 let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postArray)
-                completionHandler(result: feedsArray, error: nil)
+                completionHandler(feedsArray, nil)
             }
         }
     }
@@ -286,7 +287,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let expiredTime = Date().timeIntervalSince1970 + 600
         CacheManager.cacheGet(GET_PROFILE_COUNTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error)
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response!)
                 var result = [UserProfileCounts]()
@@ -294,7 +295,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     for count in dictionary.values {
                         result.append(UserProfileCounts(dictionary: count as! [String : AnyObject]))
                     }
-                    completionHandler(result: result, error: nil)
+                    completionHandler(result, nil)
                 }
             }
         }
@@ -305,9 +306,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(user.uid)", forKey: "uid" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(FOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
-                completionHandler(error: error)
+                completionHandler(error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -317,7 +318,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     NotificationCenter.default.post(name: Notification.Name(rawValue: NOTIFICATION_FOLLOW), object: user)
                 })
 //                SocialManager.sharedInstance.sendFollowNotification(user.uid)
-                completionHandler(error: nil)
+                completionHandler(nil)
             }
         }
     }
@@ -327,9 +328,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(user.uid)", forKey: "uid" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(UNFOLLOW, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
-                completionHandler(error: error)
+                completionHandler(error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -338,7 +339,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 DispatchQueue.main.async(execute: { () -> Void in
                     NotificationCenter.default.post(name: Notification.Name(rawValue: NOTIFICATION_UNFOLLOW), object: user)
                 })
-                completionHandler(error: nil)
+                completionHandler(nil)
             }
         }
     }
@@ -349,9 +350,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(followerId)", forKey: "follower" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(IS_FOLLOWING, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -369,7 +370,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let longExpiredTime = Date().timeIntervalSince1970 + 86400
         CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime, forceExpiredKey: nil, ignoreCache : ignoreCache) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error)
             } else {
                 if let response = response {
                     let json = Utilities.parseNSDictionaryToDictionary(response)
@@ -380,7 +381,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             result.append(userProfile)
                         }
                     }
-                    completionHandler(result: result, error: nil)
+                    completionHandler(result, nil)
                 }
                 
             }
@@ -434,13 +435,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(message, forKey: "user_message" as NSCopying)
         let systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
-        postData.setObject(systemMessage, forKey: "system_message")
+        postData.setObject(systemMessage, forKey: "system_message" as NSCopying)
         
         XAppDelegate.mobilePlatform.sc.sendRequest(REPORT_ISSUE_METHOD, andPostData: postData) { (result, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = result["error_code"]{
+                if let errorCode = result?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -499,13 +500,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         XAppDelegate.mobilePlatform.userModule.login(withParams: params, andComplete: { (responseDict, error) -> Void in
             Utilities.hideHUD()
             if let error = error {
-                completionHandler(responseDict: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
                 self.persistUserProfile(completionHandler: { (error) -> Void in
                     if let error = error {
-                        completionHandler(responseDict: nil, error: error)
+                        completionHandler(nil, error)
                     } else {
-                        completionHandler(responseDict: responseDict, error: nil)
+                        completionHandler(responseDict, nil)
                     }
                 })
                 
@@ -596,9 +597,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject(latlon, forKey: "latlon" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andComplete: { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -620,9 +621,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(sign!)", forKey: "sign" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(SEND_USER_UPDATE, withLoginRequired: REQUIRED, andPostData: postData, andComplete: { (result, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = result["error_code"]{
+                if let errorCode = result?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -648,8 +649,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let alert = Alert()
         let currentUser = XAppDelegate.currentUser
         alert?.title = "Send heart"
-        alert.body = "\(currentUser.name) sent you a heart"
-        alert.imageURL = "\(currentUser.imgURL)"
+        alert?.body = "\(currentUser?.name) sent you a heart"
+        alert?.imageURL = "\(currentUser?.imgURL)"
         alert?.priority = 5
         alert?.type = "send_heart"
         
@@ -664,18 +665,18 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let alert = Alert()
         alert?.title = "Follow"
         let currentUser = XAppDelegate.currentUser
-        alert.body = "\(currentUser.name) followed you"
-        alert.imageURL = "\(currentUser.imgURL)"
+        alert?.body = "\(currentUser?.name) followed you"
+        alert?.imageURL = "\(currentUser?.imgURL)"
         alert?.priority = 5
         alert?.type = "follow"
         
         let receiverIdString = "\(receiverId)"
-        let route = "/profile/\(currentUser.uid)/feed"
+        let route = "/profile/\(currentUser?.uid)/feed"
         XAppDelegate.mobilePlatform.platformNotiff.send(to: receiverIdString, withRoute: route, with: alert, withRef: "follow", withPush: 0, withData: "data") { (result) -> Void in
         }
     }
     
-    func getAllNotification(_ since : Int, completionHandler:(_ result : [NotificationObject]?) -> Void ){
+    func getAllNotification(_ since : Int, completionHandler:@escaping (_ result : [NotificationObject]?) -> Void ){
         
         CacheManager.cacheGetNotification { (result) -> Void in
             if let result = result {
@@ -713,9 +714,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func getCurrentUserFollowProfile(_ method: String, completionHandler: @escaping (_ result: [UserProfile]?, _ error: NSError?) -> Void) {
         XAppDelegate.mobilePlatform.sc.sendRequest(method, withLoginRequired: REQUIRED, andPostData: nil) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return
@@ -739,7 +740,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             }
                         })
                     } else {
-                        completionHandler(result: [UserProfile](), error: nil)
+                        completionHandler([UserProfile](), nil)
                     }
                 }
             }
@@ -761,13 +762,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
         CacheManager.cacheGet(method, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: expiredKey) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error)
             } else {
                 let json = Utilities.parseNSDictionaryToDictionary(response!)
                 let profiles: [UserProfile] = Array(Utilities.parseUsersArray(json["profiles"] as! Dictionary<String, AnyObject>).values)
                 let last = json["last"] as! Int
                 let result = (profiles, last == 1)
-                completionHandler(result: result, error: nil)
+                completionHandler(result, nil)
             }
         }
     }
@@ -788,16 +789,16 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let uid = XAppDelegate.mobilePlatform.userCred.getUid()
         self.getProfile("\(uid)",ignoreCache : ignoreCache, completionHandler: { (result, error) -> Void in
             if let error = error {
-                completionHandler(error: error)
+                completionHandler(error)
             } else {
                 if let userProfile = result?[0]{
                     
                     XAppDelegate.currentUser = userProfile
                     NSKeyedArchiver.archiveRootObject(userProfile, toFile: UserProfile.filePath)
-                    completionHandler(error: nil)
+                    completionHandler(nil)
                 } else {
                     print("Cannot save userProfile!!")
-                    completionHandler(error: nil)
+                    completionHandler(nil)
                 }
                 
             }
@@ -814,7 +815,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let expiredTime = Date().timeIntervalSince1970 + 600
         CacheManager.cacheGet(GET_FRIEND_LIST, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil) { (result, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error)
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(result!)
                 var userArray = [UserProfile]()
@@ -824,7 +825,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         userArray.append(user)
                     }
                 }
-                completionHandler(result: userArray, error: nil)
+                completionHandler(userArray, nil)
             }
         }
     }
@@ -837,11 +838,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let expiredTime = Date().timeIntervalSince1970 + 10
         CacheManager.cacheGet(GET_LIKED_USERS, postData: postData, loginRequired: REQUIRED, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: true) { (result, error) -> Void in
             if let _ = error {
-                completionHandler(result: nil, error: "Network Error")
+                completionHandler(nil, "Network Error")
             } else {
                 let result = Utilities.parseNSDictionaryToDictionary(result!)
                 if result["error"] as! Int == 1 {
-                    completionHandler(result: nil, error: result["error_message"] as! String)
+                    completionHandler(nil, result["error_message"] as! String)
                 } else {
                     var userArray = [UserProfile]()
                     let profiles = result["profiles"] as! Dictionary<String, AnyObject>
@@ -857,7 +858,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         }
                     }
                     let result = (userArray, isLastPage: last == 1)
-                    completionHandler(result: result, error: "")
+                    completionHandler(result, "")
                 }
                 
                 
@@ -883,9 +884,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         }
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SHARE, andPostData: postData) { (response, error) -> Void in
             if let error = error {
-                completionHandler(result: nil, error: error)
+                completionHandler(nil, error as NSError?)
             } else {
-                if let errorCode = response["error_code"]{
+                if let errorCode = response?["error_code"]{
                     if(errorCode as? String == "error.invalidtoken"){
                         XAppDelegate.socialManager.logoutWhenRetrieveInvalidToken()
                         return

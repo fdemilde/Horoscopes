@@ -245,7 +245,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
     
     // MARK: - Helper
     
-    override func getUsersFollowing(_ completionHandler: () -> Void) {
+    func getUsersFollowingNew(_ completionHandler: @escaping () -> Void) {
         SocialManager.sharedInstance.getProfilesOfUsersFollowing(forUser: userProfile.uid) { (result, error) -> Void in
             Utilities.hideHUD()
             if let error = error {
@@ -264,7 +264,7 @@ class OtherProfileViewController: ProfileBaseViewController, UISearchBarDelegate
         }
     }
     
-    override func getFollowers(_ completionHandler: () -> Void) {
+    func getFollowersNew(_ completionHandler: @escaping () -> Void) {
         SocialManager.sharedInstance.getProfilesOfFollowers(forUser: userProfile.uid) { (result, error) -> Void in
             Utilities.hideHUD()
             if let error = error {

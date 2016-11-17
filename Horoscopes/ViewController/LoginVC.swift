@@ -30,8 +30,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     var popUp : CMPopTipView!
     var pickerView : MyDatePickerView!
     
-    var userFBID = ""
-    var userFBName = ""
+    var userFBID: String = ""
+    var userFBName: String = ""
     var userFBImageURL = ""
     var userFBBirthdayString = ""
     var birthday : StandardDate!
@@ -155,8 +155,9 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         
             FBSDKGraphRequest(graphPath: "me", parameters: params).start(completionHandler: { (connection, result, error) -> Void in
                 if(error == nil){
-                    self.userFBID = result["id"] as! String
-                    self.userFBName = result["name"] as! String
+                    let json = result as! [String: AnyObject]
+                    self.userFBID = json["id"] as! String
+                    self.userFBName = json["name"] as! String
                     self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
                     self.reloadView()
                     Utilities.hideHUD(self.view)

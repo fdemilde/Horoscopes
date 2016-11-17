@@ -51,8 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locationManager.setupLocationService()
         }
         
-        if let launchOptions = launchOptions {
-            if let value = launchOptions["UIApplicationLaunchOptionsURLKey"] {
+        if let launchOptionsUnwrapped = launchOptions {
+            if let value = launchOptionsUnwrapped["UIApplicationLaunchOptionsURLKey"] {
                 let url = value as! URL
                 let label = "Type = web, Route = \(url.absoluteString)"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
             route += host
         }
-        if let path = url.path {
+        if let path = url.path as? String {
             route += path
         }
         let label = "Type = web, Route = \(route)"
@@ -132,7 +132,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let udid = XAppDelegate.mobilePlatform.userCred.getUDID()
         let dict = GAIDictionaryBuilder.createEvent(withCategory: udid, action: eventName.rawValue, label: label, value: NSNumber(value: Int32(_value) as Int32)).build() as NSDictionary
         
-        GAI.sharedInstance().defaultTracker.send(dict as [AnyHashable: Any])
+        GAI.sharedInstance().defaultTracker.send(dict as! [AnyHashable: Any])
         
         let priority = EventConfig.getLogLevel(eventName)
         if let label = label {

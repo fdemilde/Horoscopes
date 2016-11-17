@@ -107,7 +107,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     
     func createEvents(){
         // Generate 30 random dates between now and 60 days later
-        for (i in 0 ..< self.collectedHoroscopes.collectedData.count += 1){
+        for i in 0..<self.collectedHoroscopes.collectedData.count {
             let item = collectedHoroscopes.collectedData[i] as! CollectedItem
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"
@@ -121,7 +121,7 @@ class ArchiveCalendarCell : UITableViewCell, JTCalendarDelegate {
     }
     
     func getHoroscopesItemWithDate(_ date : Date) -> CollectedItem {
-        for (i in 0 ..< self.collectedHoroscopes.collectedData.count += 1){
+        for i in 0 ..< self.collectedHoroscopes.collectedData.count {
             let item = collectedHoroscopes.collectedData[i] as! CollectedItem
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "dd-MM-yyyy"

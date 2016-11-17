@@ -57,13 +57,13 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
             XAppDelegate.mobilePlatform.sc.sendRequest(url, withLoginRequired: loginRequired, andPostData: postData) { (response, error) -> Void in
                 if let error = error {
                     // error when retrieve from server, we get the last cache value to show, only apply to get data method since don't have enough time to test on the other
-                    if((url == GET_DATA_METHOD || url == REFRESH_DATA_METHOD) && error.code == 8008135){
+                    if((url == GET_DATA_METHOD || url == REFRESH_DATA_METHOD) && error._code == 8008135){
                         if(cacheValue.count != 0){
-                            completionHandler(result: cacheValue, error: nil)
+                            completionHandler(cacheValue, nil)
                             return
                         }
                     }
-                    completionHandler(result: nil, error: error)
+                    completionHandler(nil, error as NSError?)
                 } else {
                     if let forceExpiredKey = forceExpiredKey {
                         // use for supporting page, need to force next page expired if current page is expired
@@ -73,7 +73,7 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                     if let response = response {
                         if let errorRes = response["error"]{
                             if(errorRes as? Int == 0){
-                                CacheManager.cachePut(key, value:response, expiredTime: expiredTime)
+                                CacheManager.cachePut(key, value:response as NSObject, expiredTime: expiredTime)
                             } else {
                                 print("error code is != 0")
                                 if let errorCode = response["error_code"]{
@@ -84,7 +84,7 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                             }
                         }
                     }
-                    completionHandler(result: response, error: error)
+                    completionHandler(response as NSDictionary?, error as NSError?)
                 }
             }
         }
@@ -104,7 +104,7 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
         if var cacheDict = cacheDict{
             cacheDict = cacheDict as! Dictionary<String, String>
             let cacheValue = cacheDict["CACHE_VALUE_KEY"] as! String
-            CacheManager.cachePut(key , value: cacheValue, expiredTime: 0)
+            CacheManager.cachePut(key , value: cacheValue as NSObject, expiredTime: 0)
         }
     }
     
@@ -175,11 +175,11 @@ static let GET_DATA_KEY = "GET_DATA_KEY"
                     let checkArray = CacheManager.checkAndRemoveDuplicatingNotification(notifArray, oldArray: resultArray)
                     if(checkArray.count > 0){ // has new data
                         let newExpireTime = String(newSince + (7 * 3600 * 24))
-                        notificationDict[newExpireTime] = checkArray
+                        notificationDict[newExpireTime] = checkArray as AnyObject?
                         resultArray += checkArray
                         CacheManager.saveNotificationsData(notificationDict)
                         resultArray.sort(by: { $0.created > $1.created })
-                        completionHandler(result: resultArray)
+                        completionHandler(resultArray)
                     }
                 }
             })

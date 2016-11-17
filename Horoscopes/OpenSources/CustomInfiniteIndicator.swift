@@ -37,7 +37,7 @@ class CustomInfiniteIndicator: UIView {
         unregisterFromAppStateNotifications()
     }
     
-    override func layoutSublayersOfLayer(_ layer: CALayer) {
+    func layoutSublayersOfLayerNew(_ layer: CALayer) {
         setupBezierPaths()
     }
     
