@@ -633,8 +633,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-                let result = Utilities.parseNSDictionaryToDictionary(result)
-                completionHandler(result: result, error: nil)
+                let result = Utilities.parseNSDictionaryToDictionary(result! as NSDictionary)
+                completionHandler(result, nil)
             }
         })
         

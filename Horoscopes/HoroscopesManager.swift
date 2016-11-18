@@ -205,8 +205,8 @@ class HoroscopesManager : NSObject {
                             return
                         }
                     }
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result)
+                    let result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary )
+                    Utilities.postNotification(NOTIFICATION_RATE_HOROSCOPE_RESULT, object: result as AnyObject?)
                 }
             })
         })

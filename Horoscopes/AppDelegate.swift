@@ -53,13 +53,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         if let launchOptionsUnwrapped = launchOptions {
-            
-            if let value = launchOptionsUnwrapped["UIApplicationLaunchOptionsURLKey"] {
-                let url = value as! URL
+            if let url = launchOptions?[UIApplicationLaunchOptionsKey.url] as? NSURL {
+                // If we get here, we know launchOptions is not nil, we know
+                // UIApplicationLaunchOptionsURLKey was in the launchOptions
+                // dictionary, and we know that the type of the launchOptions
+                // was correctly identified as NSURL.  At this point, URL has
+                // the type NSURL and is ready to use.
                 let label = "Type = web, Route = \(url.absoluteString)"
                 XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
-                self.getRouteAndHandle(url.absoluteString)
+                self.getRouteAndHandle(url.absoluteString!)
             }
+            
         } else {
             let label = "Type = homescreen"
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
