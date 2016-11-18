@@ -251,7 +251,9 @@ class HoroscopesManager : NSObject {
         repeat {
             let indexString: String = "\(index)"
             
+            print("SOMETHING:", self.data)
             let today = self.data["today"] as! [String: Any]
+            print("TODAY", today)
             let todayPermaLinkNoIndex = today["permalinks"] as! [String: Any]
             let todayPermaLink = todayPermaLinkNoIndex[indexString] as! String
             

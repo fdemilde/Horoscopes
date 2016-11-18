@@ -259,23 +259,20 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     
     func daysPassed() -> Double {
         collectedHoroscope = CollectedHoroscope()
-        let components: NSCalendar.Unit = [.year, .month, .day, .hour, .minute, .second]
         
-        var todayComp = (defaultCalendar as NSCalendar).components(components, from: Date())
-        (todayComp as NSDateComponents).calendar = defaultCalendar as Calendar
-        
+        var todayComp = defaultCalendar.dateComponents([.day, .month, .year, .hour], from: Date())
+        todayComp.calendar = defaultCalendar
         todayComp.hour = 1
         todayComp.minute = 1
         todayComp.second = 1
-        
-        var lastOpenComp = (defaultCalendar as NSCalendar).components(components, from: collectedHoroscope.lastDateOpenApp)
-        (lastOpenComp as NSDateComponents).calendar = defaultCalendar as Calendar
+
+        var lastOpenComp = defaultCalendar.dateComponents([.day, .month, .year, .hour], from: collectedHoroscope.lastDateOpenApp)
+        lastOpenComp.calendar = defaultCalendar
         lastOpenComp.hour = 1
         lastOpenComp.minute = 1
         lastOpenComp.second = 1
         
-        
-        return fabs(round((todayComp as NSDateComponents).date!.timeIntervalSince((lastOpenComp as NSDateComponents).date!) / (3600*24)))
+        return fabs(round(todayComp.date!.timeIntervalSince(lastOpenComp.date!) / (3600*24)))
     }
     
     func prepareShareVC(_ horoscopeDescription: String, timeTag: TimeInterval, shareUrl : String) -> ShareViewController{
