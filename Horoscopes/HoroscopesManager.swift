@@ -254,11 +254,11 @@ class HoroscopesManager : NSObject {
             print("SOMETHING:", self.data)
             let today = self.data["today"] as! [String: Any]
             print("TODAY", today)
-            let todayPermaLinkNoIndex = today["permalinks"] as! [String: Any]
+            let todayPermaLinkNoIndex = today["readings"] as! [String: Any]
             let todayPermaLink = todayPermaLinkNoIndex[indexString] as! String
             
             let tomorrow = self.data["tomorrow"] as! [String: Any]
-            let tomorrowPermaLinkNoIndex = tomorrow["permalinks"] as! [String: Any]
+            let tomorrowPermaLinkNoIndex = tomorrow["readings"] as! [String: Any]
             let tomorrowPermaLink = tomorrowPermaLinkNoIndex[indexString] as! String
             
             horoSigns[index-1].horoscopes.removeAllObjects()
