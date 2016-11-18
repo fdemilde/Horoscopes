@@ -249,10 +249,16 @@ class HoroscopesManager : NSObject {
         
         var index = 1
         repeat {
-            let indexString = "\(index)"
-            let todayPermaLink = self.data["today"]!["permalinks"]![indexString] as! String
-            let tomorrowPermaLink = self.data["tomorrow"]!["permalinks"]![indexString] as! String
-            //
+            let indexString: String = "\(index)"
+            
+            let today = self.data["today"] as! [String: Any]
+            let todayPermaLinkNoIndex = today["permalinks"] as! [String: Any]
+            let todayPermaLink = todayPermaLinkNoIndex[indexString] as! String
+            
+            let tomorrow = self.data["tomorrow"] as! [String: Any]
+            let tomorrowPermaLinkNoIndex = tomorrow["permalinks"] as! [String: Any]
+            let tomorrowPermaLink = tomorrowPermaLinkNoIndex[indexString] as! String
+            
             horoSigns[index-1].horoscopes.removeAllObjects()
             horoSigns[index-1].permaLinks.removeAllObjects()
             
@@ -262,6 +268,7 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].permaLinks.add(String(format: "%@", tomorrowPermaLink))
 
             index += 1
+            
         } while(index <= 12)
     }
     

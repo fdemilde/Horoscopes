@@ -264,11 +264,12 @@ class Utilities {
             }) .resume()
     }
     
-    class func loadNIB(_ file:String) -> AnyObject{
-        var arr = Bundle.main.loadNibNamed(file, owner: nil, options: nil)
+    class func loadNIB(_ file:String) -> AnyObject {
+//        var arr = Bundle.main.loadNibNamed(file, owner: nil, options: nil)
+//        let ret: AnyObject = arr[0];
+        let ret = Bundle.main.loadNibNamed(file, owner: nil, options: nil)?[0]
         
-        let ret: AnyObject = arr[0];
-        return ret;
+        return ret as AnyObject;
     }
     
     class func getLabelSizeWithString(_ text : String, font: UIFont) -> CGSize {

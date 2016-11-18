@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreLocation
+import FirebaseCore
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         // hide status bar
+        
+        FIRApp.configure()
+        
         UIApplication.shared.isStatusBarHidden = true
         router = XAppDelegate.mobilePlatform.router
         setupRouter()
@@ -441,7 +445,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         router.addRoute("/post/:post_id") { (param: [AnyHashable : Any]?) in
             DispatchQueue.main.async(execute: {
-                self.gotoPost(param as! Dictionary<NSObject, AnyObject>)
+                self.gotoPost(param as! Dictionary<String, AnyObject>)
             })
         }
         
@@ -459,7 +463,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         router.addRoute("/post/:post_id/hearts") { (param: [AnyHashable : Any]?) in
             DispatchQueue.main.async(execute: {
-                self.gotoPost(param as! Dictionary<NSObject, AnyObject>, popUpLikeDetail: true)
+                self.gotoPost(param as! Dictionary<String, AnyObject>, popUpLikeDetail: true)
             })
         }
         
@@ -516,7 +520,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: Route Helper
     
-    func gotoPost(_ param : Dictionary<NSObject, AnyObject>, popUpLikeDetail : Bool? = false){
+    func gotoPost(_ param : Dictionary<String, AnyObject>, popUpLikeDetail : Bool? = false){
         DispatchQueue.main.async(execute: {
             
 //            print("Go to post param == \(param)")
@@ -526,7 +530,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
                 rootVC?.selectedIndex = 3
             }
-            if let postId = param["post_id"] as? String{
+            
+            if let postId = param["post_id"] as? String {
                 Utilities.showHUD()
                 XAppDelegate.socialManager.getPost(postId, ignoreCache: true, completionHandler: { (result, error) -> Void in
                     DispatchQueue.main.async(execute: {
