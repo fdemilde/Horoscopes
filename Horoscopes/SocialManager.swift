@@ -145,7 +145,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if(error != nil){
                 print("Error when get sendHeart = \(error)")
             } else {
-                var result = Utilities.parseNSDictionaryToDictionary(response)
+                var result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
                 if let errorCode = result["error"] as? Int {
                     if(errorCode != 0){
                         print("Error code = \(errorCode)")
@@ -187,6 +187,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             
         }
         let createPost = { () -> () in
+ 
             XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData, andComplete: { (response, error) -> Void in
                 if let error = error {
                     completionHandler(nil, error as NSError?)
@@ -197,8 +198,10 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             return
                         }
                     }
-                    let result = Utilities.parseNSDictionaryToDictionary(response)
-                    completionHandler(result: result, error: nil)
+//                    let userData = response
+//                    let result = Utilities.parseNSDictionaryToDictionary(response)
+                    let result = response as! [String: AnyObject]
+                    completionHandler(result, nil)
                 }
             })
         }
@@ -358,8 +361,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-                let result = Utilities.parseNSDictionaryToDictionary(response)
-                completionHandler(result: result, error: nil)
+//                let result = Utilities.parseNSDictionaryToDictionary(response)
+                let result = response as! [String: AnyObject]
+                completionHandler(result, nil)
             }
         }
     }
@@ -447,8 +451,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-                let result = Utilities.parseNSDictionaryToDictionary(result)
-                completionHandler(result: result, error: nil)
+                let result = Utilities.parseNSDictionaryToDictionary(result! as NSDictionary)
+                completionHandler(result, nil)
             }
         }
         
@@ -605,8 +609,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-                let result = Utilities.parseNSDictionaryToDictionary(response)
-                completionHandler(result: result, error: nil)
+                let result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary )
+                completionHandler(result, nil)
             }
         })
         
@@ -723,7 +727,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     }
                 }
 //                println("getCurrentUserFollowProfile == \(response)")
-                let json = Utilities.parseNSDictionaryToDictionary(response)
+                let json = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
                 var key = ""
                 if method == GET_CURRENT_USER_FOLLOWERS {
                     key = "followers"
@@ -734,9 +738,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     if !usersId.isEmpty {
                         self.getProfile(usersId, completionHandler: { (result, error) -> Void in
                             if let error = error {
-                                completionHandler(result: nil, error: error)
+                                completionHandler(nil, error)
                             } else {
-                                completionHandler(result: result, error: nil)
+                                completionHandler(result, nil)
                             }
                         })
                     } else {
@@ -892,8 +896,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-                let result = Utilities.parseNSDictionaryToDictionary(response)
-                completionHandler(result: result, error: nil)
+                let result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
+                completionHandler(result, nil)
             }
         }
     }

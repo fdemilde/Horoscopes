@@ -51,7 +51,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             locationManager.setupLocationService()
         }
         
+        
         if let launchOptionsUnwrapped = launchOptions {
+            
             if let value = launchOptionsUnwrapped["UIApplicationLaunchOptionsURLKey"] {
                 let url = value as! URL
                 let label = "Type = web, Route = \(url.absoluteString)"
