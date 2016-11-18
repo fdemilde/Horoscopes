@@ -78,9 +78,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     
-                    if (isLastPage: Bool(isLastAsNumber == 1)) {
+                    if (isAddingData) {
                         
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.global, isLastPage: Bool(true))
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.global, isLastPage: Bool(isLastAsNumber == 1))
                     } else {
                         
                         // because each time user goes to Community page, we have to check if it should reload or not
@@ -128,7 +128,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     let isLastAsNumber = result["last"] as! Int
                     let feedsArray = Utilities.parseFeedsArray(userDict, postsDataArray: postsArray)
                     if(isAddingData){
-                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.following, isLastPage: Bool(isLastAsNumber))
+                        XAppDelegate.dataStore.addDataArray(feedsArray, type: NewsfeedTabType.following, isLastPage: Bool(isLastAsNumber == 1))
                     } else {
                         XAppDelegate.dataStore.updateData(feedsArray, type: NewsfeedTabType.following)
                     }
@@ -435,7 +435,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         let postData = NSMutableDictionary()
         postData.setObject(message, forKey: "user_message" as NSCopying)
         let systemMessage = XAppDelegate.mobilePlatform.tracker.getDeviceInfo()
-        postData.setObject(systemMessage, forKey: "system_message" as NSCopying)
+        postData.setObject(systemMessage ?? "system_message", forKey: "system_message" as NSCopying)
         
         XAppDelegate.mobilePlatform.sc.sendRequest(REPORT_ISSUE_METHOD, andPostData: postData) { (result, error) -> Void in
             if let error = error {
