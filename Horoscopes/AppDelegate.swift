@@ -432,20 +432,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router.addRoute("/profile/me/facebookfriends", blockCode: { (param) -> Void in
             print("Route == profile facebookfriends param dict = \(param)")
         })
-        
-        router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
+            
+        router.addRoute("/post/:post_id") { (param: [AnyHashable : Any]?) in
             DispatchQueue.main.async(execute: {
-                self.gotoPost(param)
+                self.gotoPost(param as! Dictionary<NSObject, AnyObject>)
             })
-        })
+        }
         
-        router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
+        //router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
+        //    DispatchQueue.main.async(execute: {
+        //        self.gotoPost(param)
+        //    })
+        //})
+        
+        //router.addRoute("/post/:post_id", blockCode: { (param) -> Void in
+        //    DispatchQueue.main.async(execute: {
+        //        self.gotoPost(param)
+        //    })
+        //})
+        
+        router.addRoute("/post/:post_id/hearts") { (param: [AnyHashable : Any]?) in
             DispatchQueue.main.async(execute: {
-                self.gotoPost(param, popUpLikeDetail: true)
+                self.gotoPost(param as! Dictionary<NSObject, AnyObject>, popUpLikeDetail: true)
             })
-        })
+        }
         
-        router.addRoute("/settings", blockCode: { (param) -> Void in
+        //router.addRoute("/post/:post_id/hearts") { ([AnyHashable : Any]?) in
+        //    DispatchQueue.main.async(execute: {
+        //        self.gotoPost(param, popUpLikeDetail: true)
+        //    })
+        //}
+        
+        //router.addRoute("/post/:post_id/hearts", blockCode: { (param) -> Void in
+        //    DispatchQueue.main.async(execute: {
+        //        self.gotoPost(param, popUpLikeDetail: true)
+        //    })
+        //})
+        
+        self.router.addRoute("/settings", blockCode: { (param) -> Void in
             DispatchQueue.main.async(execute: {
                 if(!XAppDelegate.socialManager.isLoggedInFacebook()){
                     return
@@ -466,7 +490,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         })
         
         // set router default handler which will redirect to main page
-        router.addDefaultHandler { () -> Void in
+        self.router.addDefaultHandler { () -> Void in
             DispatchQueue.main.async(execute: {
                 if(XAppDelegate.window!.rootViewController!.isKind(of: UITabBarController.self)){
                     let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
@@ -559,4 +583,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 }
+
 
