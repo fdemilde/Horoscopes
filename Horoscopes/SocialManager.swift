@@ -16,9 +16,9 @@ import Foundation
 }
 
 class SocialManager: NSObject, UIAlertViewDelegate {
-
     
-//    var globalFeeds = []
+    
+    //    var globalFeeds = []
     static let sharedInstance = SocialManager()
     
     var delegate : SocialManagerDelegate!
@@ -67,7 +67,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
             } else {
                 var result = Utilities.parseNSDictionaryToDictionary(response!)
-//                print("getGlobalNewsfeed result = \(result)")
+                //                print("getGlobalNewsfeed result = \(result)")
                 let errorCode = result["error"] as! Int
                 if(errorCode != 0){
                     print("Error code = \(errorCode)")
@@ -115,7 +115,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 Utilities.showError(error!)
                 Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
             } else {
-//                                print("getFollowingNewsfeed == \(response)")
+                //                                print("getFollowingNewsfeed == \(response)")
                 var result = Utilities.parseNSDictionaryToDictionary(response!)
                 //                println("result when get getFollowingNewsfeed = \(result)")
                 let errorCode = result["error"] as! Int
@@ -175,7 +175,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     // MARK: Post
-
+    
     func createPost(_ type: String, message: String, postToFacebook : Bool = false, completionHandler: @escaping (_ result: [String: AnyObject]?, _ error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
         postData.setObject(type, forKey: "type" as NSCopying)
@@ -187,7 +187,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             
         }
         let createPost = { () -> () in
- 
+            
             XAppDelegate.mobilePlatform.sc.sendRequest(CREATE_POST, withLoginRequired: REQUIRED, andPostData: postData, andComplete: { (response, error) -> Void in
                 if let error = error {
                     completionHandler(nil, error as NSError?)
@@ -198,8 +198,8 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                             return
                         }
                     }
-//                    let userData = response
-//                    let result = Utilities.parseNSDictionaryToDictionary(response)
+                    //                    let userData = response
+                    //                    let result = Utilities.parseNSDictionaryToDictionary(response)
                     let result = response as! [String: AnyObject]
                     completionHandler(result, nil)
                 }
@@ -227,6 +227,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             if let error = error {
                 completionHandler(nil, error)
             } else {
+                print("RESULT:", result)
                 if let userProfile = result?[0]{
                     let postData = NSMutableDictionary()
                     postData.setObject("\(page)", forKey: "page" as NSCopying)
@@ -264,7 +265,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         postData.setObject("\(postIds)", forKey: "post_id" as NSCopying)
         let expiredTime = Date().timeIntervalSince1970 + 600
         CacheManager.cacheGet(GET_POST, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil, ignoreCache: ignoreCache) { (response, error) -> Void in
-//            print("response response == \(response)")
+            //            print("response response == \(response)")
             if let error = error {
                 completionHandler(nil, error)
             } else {
@@ -320,7 +321,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 DispatchQueue.main.async(execute: { () -> Void in
                     NotificationCenter.default.post(name: Notification.Name(rawValue: NOTIFICATION_FOLLOW), object: user)
                 })
-//                SocialManager.sharedInstance.sendFollowNotification(user.uid)
+                //                SocialManager.sharedInstance.sendFollowNotification(user.uid)
                 completionHandler(nil)
             }
         }
@@ -361,7 +362,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-//                let result = Utilities.parseNSDictionaryToDictionary(response)
+                //                let result = Utilities.parseNSDictionaryToDictionary(response)
                 let result = response as! [String: AnyObject]
                 completionHandler(result, nil)
             }
@@ -378,9 +379,11 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             } else {
                 if let response = response {
                     let json = Utilities.parseNSDictionaryToDictionary(response)
+                    print("THE JSON:", json)
                     var result = [UserProfile]()
                     for userId in usersIdString.components(separatedBy: ",") {
                         if let users = json["profiles"] as? Dictionary<String, AnyObject> {
+                            print("users profile json:", users)
                             let userProfile = UserProfile(data: users[userId] as! NSDictionary)
                             result.append(userProfile)
                         }
@@ -465,31 +468,31 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func loginFacebook(_ viewController: UIViewController, completionHandler: @escaping (_ error: NSError?, _ permissionGranted: Bool) -> Void) {
         
-            let loginManager = FBSDKLoginManager()
-            loginManager.loginBehavior = .systemAccount
-            let permissions = ["public_profile", "email", "user_friends"]
-            let permissionLabel = "permission = \(permissions)"
-            XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
-            
-            loginManager.logIn(withReadPermissions: permissions, from: viewController) { (result, error) -> Void in
-                if let error = error {
-                    completionHandler(error as NSError?, false)
+        let loginManager = FBSDKLoginManager()
+        loginManager.loginBehavior = .systemAccount
+        let permissions = ["public_profile", "email", "user_friends"]
+        let permissionLabel = "permission = \(permissions)"
+        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
+        
+        loginManager.logIn(withReadPermissions: permissions, from: viewController) { (result, error) -> Void in
+            if let error = error {
+                completionHandler(error as NSError?, false)
+            } else {
+                if (result?.isCancelled)! {
+                    completionHandler(nil, false)
                 } else {
-                    if (result?.isCancelled)! {
-                        completionHandler(nil, false)
-                    } else {
-                        let label = "granted = \(result?.grantedPermissions)"
-                        XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
-                        for permission in permissions {
-                            if (result?.declinedPermissions.contains(permission))! {
-                                completionHandler(nil, false)
-                                return
-                            }
+                    let label = "granted = \(result?.grantedPermissions)"
+                    XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginResult, label: label)
+                    for permission in permissions {
+                        if (result?.declinedPermissions.contains(permission))! {
+                            completionHandler(nil, false)
+                            return
                         }
-                        completionHandler(nil, true)
                     }
+                    completionHandler(nil, true)
                 }
             }
+        }
     }
     
     func isLoggedInZwigglers() -> Bool{
@@ -684,7 +687,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         
         CacheManager.cacheGetNotification { (result) -> Void in
             if let result = result {
-                let resultArray = result 
+                let resultArray = result
                 completionHandler(resultArray)
             } else {
                 let resultArray = [NotificationObject]()
@@ -726,7 +729,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                         return
                     }
                 }
-//                println("getCurrentUserFollowProfile == \(response)")
+                //                println("getCurrentUserFollowProfile == \(response)")
                 let json = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
                 var key = ""
                 if method == GET_CURRENT_USER_FOLLOWERS {
@@ -875,16 +878,16 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func registerShare(_ type : ShareType, postId : String? = "", timetag : TimeInterval? = 0, sign : Int? = 0, fortuneId : Int? = 0, completionHandler: @escaping (_ result: Dictionary<String,AnyObject>?, _ error: NSError?) -> Void ){
         let postData = NSMutableDictionary()
         switch type {
-            case .shareTypeDaily:
-                postData.setObject("horoscope", forKey: "type" as NSCopying)
-                postData.setObject("\(timetag!)", forKey: "time_tag" as NSCopying)
-                postData.setObject("\(sign!)", forKey: "sign" as NSCopying)
-            case .shareTypeFortune:
-                postData.setObject("fortune", forKey: "type" as NSCopying)
-                postData.setObject("\(fortuneId!)", forKey: "fortune_id" as NSCopying)
-            case .shareTypeNewsfeed:
-                postData.setObject("userpost", forKey: "type" as NSCopying)
-                postData.setObject("\(postId!)", forKey: "post_id" as NSCopying)
+        case .shareTypeDaily:
+            postData.setObject("horoscope", forKey: "type" as NSCopying)
+            postData.setObject("\(timetag!)", forKey: "time_tag" as NSCopying)
+            postData.setObject("\(sign!)", forKey: "sign" as NSCopying)
+        case .shareTypeFortune:
+            postData.setObject("fortune", forKey: "type" as NSCopying)
+            postData.setObject("\(fortuneId!)", forKey: "fortune_id" as NSCopying)
+        case .shareTypeNewsfeed:
+            postData.setObject("userpost", forKey: "type" as NSCopying)
+            postData.setObject("\(postId!)", forKey: "post_id" as NSCopying)
         }
         XAppDelegate.mobilePlatform.sc.sendRequest(REGISTER_SHARE, andPostData: postData) { (response, error) -> Void in
             if let error = error {

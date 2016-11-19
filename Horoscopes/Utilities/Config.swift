@@ -45,9 +45,6 @@ var yearArray : [Int] {
         year -= 1
     } while(year >= nineteenYearsToNow)
     
-//    for var year = thirteenYearsToNow; year >= nineteenYearsToNow; year -= 1 {
-//        result.append(year)
-//    }
     return result
 }
 

@@ -1,5 +1,6 @@
 platform :ios, '7.0'
 target 'Horoscopes' do
+    
 	pod 'GoogleAnalytics', '~> 3.13'
 	pod 'Reachability'
 	pod 'JSONKit-NoWarning'
@@ -16,14 +17,6 @@ target 'Horoscopes' do
     pod 'CustomIOSAlertView', '~> 0.9.3'
     pod 'CCHLinkTextView'
     pod 'DateTools'
-    pod 'Firebase/Core'
+    pod 'Firebase'
 
-end
-
-post_install do |installer|
-    installer.pods_project.targets.each do |target|
-        target.build_configurations.each do |config|
-            config.build_settings['SWIFT_VERSION'] = '3.0'
-        end
-    end
 end

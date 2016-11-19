@@ -5196,30 +5196,6 @@
 			};
 			name = Debug;
 		};
-		08F4E848CFE702338C6A4A7937E29866 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 48F1B16237F61DD1429E0358BC70F37C /* Pods-Horoscopes.debug.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Debug;
-		};
 		0DFF765D0BF8C04DEED342A3B8B66583 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 0C3CF585CA4EE96D87EDC3BCAD708275 /* WebASDKImageManager.xcconfig */;
@@ -5363,6 +5339,29 @@
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
+		};
+		3056E278864009CFE68EF8BC708BD5AE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 48F1B16237F61DD1429E0358BC70F37C /* Pods-Horoscopes.debug.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
 		};
 		36BC19C3BBA2E41A0CDEB09786EBE653 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -5692,6 +5691,29 @@
 			};
 			name = Debug;
 		};
+		8D9B01F734B3BBBF551A6D639FD9D38F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9B0A05AE2C158BEC8E4EA73FDFBB0EAE /* Pods-Horoscopes.release.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MACH_O_TYPE = staticlib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 		8E8F0FF2EEE1C311CB41B9B10A234498 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A285A8A762AD1116D507813D07AF9256 /* CCHLinkTextView.xcconfig */;
@@ -5835,30 +5857,6 @@
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
-		};
-		A69443FCBAB083F9CFFBB293ED2E742F /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9B0A05AE2C158BEC8E4EA73FDFBB0EAE /* Pods-Horoscopes.release.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				MACH_O_TYPE = staticlib;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
-			};
-			name = Release;
 		};
 		A78D2FBD25ADFC50D544D39CCA6EE86A /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -6384,8 +6382,8 @@
 		E0565D9CF3823A432989ABCC40008CD0 /* Build configuration list for PBXNativeTarget "Pods-Horoscopes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				08F4E848CFE702338C6A4A7937E29866 /* Debug */,
-				A69443FCBAB083F9CFFBB293ED2E742F /* Release */,
+				3056E278864009CFE68EF8BC708BD5AE /* Debug */,
+				8D9B01F734B3BBBF551A6D639FD9D38F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

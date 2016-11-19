@@ -70,37 +70,37 @@ class DataStore : NSObject{
         self.isLastPage = isLastPage
         var updatedArray = [UserPost]()
         switch type {
-            case NewsfeedTabType.following:
-                if(data.count == 0){
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-                    return // no new data
-                }
-                data = updateFollowingStatusForNewAddingData(data) // check with following users and update new adding post
-                updatedArray = addData(newsfeedFollowing, newDataArray: data)
-                if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
-                }
-            case NewsfeedTabType.global:
-                if(data.count == 0){
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
-                    return // no new data
-                }
-                data = updateFollowingStatusForNewAddingData(data)
-                updatedArray = addData(newsfeedGlobal, newDataArray: data)
-                if (newsfeedIsUpdated) {
-                    Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
-            
-                }
-            default:
-                if(data.count == 0){
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
-                    return // no new data
-                }
-                data = updateFollowingStatusForNewAddingData(data)
-                updatedArray = addData(newsfeedFollowing, newDataArray: data)
-                if (newsfeedIsUpdated) {
-                    
-                    Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+        case NewsfeedTabType.following:
+            if(data.count == 0){
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                return // no new data
+            }
+            data = updateFollowingStatusForNewAddingData(data) // check with following users and update new adding post
+            updatedArray = addData(newsfeedFollowing, newDataArray: data)
+            if (newsfeedIsUpdated) {
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+            }
+        case NewsfeedTabType.global:
+            if(data.count == 0){
+                Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: nil)
+                return // no new data
+            }
+            data = updateFollowingStatusForNewAddingData(data)
+            updatedArray = addData(newsfeedGlobal, newDataArray: data)
+            if (newsfeedIsUpdated) {
+                Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+                
+            }
+        default:
+            if(data.count == 0){
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: nil)
+                return // no new data
+            }
+            data = updateFollowingStatusForNewAddingData(data)
+            updatedArray = addData(newsfeedFollowing, newDataArray: data)
+            if (newsfeedIsUpdated) {
+                
+                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
             }
             
         }
@@ -112,18 +112,18 @@ class DataStore : NSObject{
         self.isLastPage = false // reset
         var updatedArray = [UserPost]()
         switch type {
-            case NewsfeedTabType.following:
-                updatedArray = data
-                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
-            case NewsfeedTabType.global:
-                updatedArray = data
-                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
-            default:
-                updatedArray = data
-                updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
-                Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+        case NewsfeedTabType.following:
+            updatedArray = data
+            updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
+            Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+        case NewsfeedTabType.global:
+            updatedArray = data
+            updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
+            Utilities.postNotification(NOTIFICATION_GET_GLOBAL_FEEDS_FINISHED, object: updatedArray as AnyObject?)
+        default:
+            updatedArray = data
+            updatedArray = updateFollowingStatusForNewAddingData(updatedArray)
+            Utilities.postNotification(NOTIFICATION_GET_FOLLOWING_FEEDS_FINISHED, object: updatedArray as AnyObject?)
         }
         if(scrollToTop){
             Utilities.postNotification(NOTIFICATION_TABLE_VIEW_SCROLL_TO_TOP, object:nil)
@@ -133,12 +133,12 @@ class DataStore : NSObject{
     func checkAndUpdateFeedData(_ newData : [UserPost], type : NewsfeedTabType) -> [UserPost]{
         var updatedArray = [UserPost]()
         switch type {
-            case NewsfeedTabType.following:
-                updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
-            case NewsfeedTabType.global:
-                updatedArray = compareAndUpdateArrayData(newsfeedGlobal, newDataArray: newData)
-            default:
-                updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
+        case NewsfeedTabType.following:
+            updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
+        case NewsfeedTabType.global:
+            updatedArray = compareAndUpdateArrayData(newsfeedGlobal, newDataArray: newData)
+        default:
+            updatedArray = compareAndUpdateArrayData(newsfeedFollowing, newDataArray: newData)
         }
         return updatedArray
     }
@@ -195,14 +195,14 @@ class DataStore : NSObject{
     
     func updateFollowingStatus(_ type : NewsfeedTabType){
         if let _ = usersFollowing {
-                if (type == .following) {
-                    updateFollowingForFollowingFeeds()
-                } else if (type == .global) {
-                    updateFollowingForGlobalFeeds()
-                } else {
-                    updateFollowingForFollowingFeeds()
-                    updateFollowingForGlobalFeeds()
-                }
+            if (type == .following) {
+                updateFollowingForFollowingFeeds()
+            } else if (type == .global) {
+                updateFollowingForGlobalFeeds()
+            } else {
+                updateFollowingForFollowingFeeds()
+                updateFollowingForGlobalFeeds()
+            }
         }
         NotificationCenter.default.post(name: Notification.Name(rawValue: NOTIFICATION_UPDATE_FOLLOWING_STATUS_FINISHED), object: nil)
         

@@ -30,8 +30,8 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
     var popUp : CMPopTipView!
     var pickerView : MyDatePickerView!
     
-    var userFBID: String = ""
-    var userFBName: String = ""
+    var userFBID = ""
+    var userFBName = ""
     var userFBImageURL = ""
     var userFBBirthdayString = ""
     var birthday : StandardDate!
@@ -153,19 +153,19 @@ class LoginVC : SpinWheelVC, SocialManagerDelegate, UIAlertViewDelegate, CMPopTi
         let permissionLabel = "additional permission = \(params["fields"])"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.fbLoginAsk, label: permissionLabel)
         
-            FBSDKGraphRequest(graphPath: "me", parameters: params).start(completionHandler: { (connection, result, error) -> Void in
-                if(error == nil){
-                    let json = result as! [String: AnyObject]
-                    self.userFBID = json["id"] as! String
-                    self.userFBName = json["name"] as! String
-                    self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
-                    self.reloadView()
-                    Utilities.hideHUD(self.view)
-                } else {
-                    Utilities.hideHUD(self.view)
-                    print("fetch Info Error = \(error)")
-                }
-            })
+        FBSDKGraphRequest(graphPath: "me", parameters: params).start(completionHandler: { (connection, result, error) -> Void in
+            if(error == nil){
+                let json = result as! [String: AnyObject]
+                self.userFBID = json["id"] as! String
+                self.userFBName = json["name"] as! String
+                self.userFBImageURL = "https://graph.facebook.com/\(self.userFBID)/picture?type=large&height=75&width=75"
+                self.reloadView()
+                Utilities.hideHUD(self.view)
+            } else {
+                Utilities.hideHUD(self.view)
+                print("fetch Info Error = \(error)")
+            }
+        })
         
     }
     

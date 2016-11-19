@@ -40,7 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.setupGAITracker()
         horoscopesManager.getHoroscopesSigns() // setup Horo array
         currentUser = NSKeyedUnarchiver.unarchiveObject(withFile: UserProfile.filePath) as? UserProfile ?? UserProfile()
-//        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
+        //        print("didFinishLaunchingWithOptions currentUser == \(currentUser.uid)")
         
         // reset icon bagde
         UIApplication.shared.applicationIconBadgeNumber = 0
@@ -75,27 +75,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
         UIApplication.shared.applicationIconBadgeNumber = 0
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
         FBSDKAppEvents.activateApp()
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
@@ -103,7 +103,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
         var route = "/"
         if let host = url.host { // if login with facebook in the app, it will redirect here
-//            print("application application login facebook in app")
+            //            print("application application login facebook in app")
             if host == "authorize" {
                 return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
             }
@@ -251,7 +251,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-//        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
+        //        print("didFailToRegisterForRemoteNotificationsWithError error === \(error)")
         UserDefaults.standard.set(true, forKey: V2_NOTIF_CHECK)
         let notificationInfo = "success = 0"
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.permNotification, label: notificationInfo)
@@ -261,7 +261,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     @available(iOS 8.0, *)
     func application(_ application: UIApplication, didRegister notificationSettings: UIUserNotificationSettings) {
-//        NSLog("didRegisterUserNotificationSettings notificationSettings = \(notificationSettings)")
+        //        NSLog("didRegisterUserNotificationSettings notificationSettings = \(notificationSettings)")
         application.registerForRemoteNotifications()
     }
     
@@ -442,7 +442,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         router.addRoute("/profile/me/facebookfriends", blockCode: { (param) -> Void in
             print("Route == profile facebookfriends param dict = \(param)")
         })
-            
+        
         router.addRoute("/post/:post_id") { (param: [AnyHashable : Any]?) in
             DispatchQueue.main.async(execute: {
                 self.gotoPost(param as! Dictionary<String, AnyObject>)
@@ -523,8 +523,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func gotoPost(_ param : Dictionary<String, AnyObject>, popUpLikeDetail : Bool? = false){
         DispatchQueue.main.async(execute: {
             
-//            print("Go to post param == \(param)")
-//            NSLog("gotoPost == %@", param)
+            //            print("Go to post param == \(param)")
+            //            NSLog("gotoPost == %@", param)
             Utilities.popCurrentViewControllerToTop()
             if(XAppDelegate.window!.rootViewController!.isKind(of: UITabBarController.self)){
                 let rootVC = XAppDelegate.window!.rootViewController! as? UITabBarController
@@ -541,7 +541,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                         } else {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             if let result = result {
-//                                print("result gotopost == \(result)")
+                                //                                print("result gotopost == \(result)")
                                 for post : UserPost in result {
                                     let controller = storyboard.instantiateViewController(withIdentifier: "SinglePostViewController") as! SinglePostViewController
                                     controller.userPost = post

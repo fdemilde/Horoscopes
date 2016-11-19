@@ -74,12 +74,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source and delegate
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -111,12 +111,12 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             return CELL_HEADER_HEIGHT + cellBodyHeight + CELL_FOOTER_HEIGHT
         }
     }
-
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let rows = isEmptyDataSource ? 0 : 4
         return rows
     }
-
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell: UITableViewCell!
         switch indexPath.row {
@@ -174,7 +174,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
             
             return cell
         }
-
+        
         return cell
     }
     
@@ -184,14 +184,14 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using [segue destinationViewController].
+     // Pass the selected object to the new view controller.
+     }
+     */
     
     // MARK: - Data handler
     
@@ -265,7 +265,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         todayComp.hour = 1
         todayComp.minute = 1
         todayComp.second = 1
-
+        
         var lastOpenComp = defaultCalendar.dateComponents([.day, .month, .year, .hour], from: collectedHoroscope.lastDateOpenApp)
         lastOpenComp.calendar = defaultCalendar
         lastOpenComp.hour = 1
@@ -337,7 +337,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
         tableView.reloadData()
         sender.endRefreshing()
     }
-
+    
     @IBAction func chooseHoroscopeSign(_ sender: UIButton) {
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyChooser, label: nil)
         self.shouldHideNumberOfLike = true
@@ -348,7 +348,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     }
     
     @IBAction func cookieTapped() {
-//        isCookieTapped = true
+        //        isCookieTapped = true
         DispatchQueue.main.async(execute: {
             let cookieViewController = self.storyboard!.instantiateViewController(withIdentifier: "CookieViewController") as! CookieViewController
             cookieViewController.parentVC = self
@@ -363,7 +363,7 @@ class DailyTableViewController: TableViewControllerWithAds, ChooseSignViewContro
     // MARK: - Delegate
     
     func didTapJoinHoroscopesCommunityButton() {
-    
+        
         XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.dailyCommunity, label: nil)
         tabBarController?.selectedIndex = 1
     }

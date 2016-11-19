@@ -38,6 +38,8 @@ PODS:
     - FBSDKCoreKit
   - FBSDKShareKit (4.17.0):
     - FBSDKCoreKit
+  - Firebase (3.9.0):
+    - Firebase/Core (= 3.9.0)
   - Firebase/Core (3.9.0):
     - FirebaseAnalytics (= 3.5.1)
     - FirebaseCore (= 3.4.4)
@@ -83,7 +85,7 @@ DEPENDENCIES:
   - FBSDKCoreKit (~> 4.7)
   - FBSDKLoginKit (~> 4.7)
   - FBSDKShareKit (~> 4.7)
-  - Firebase/Core
+  - Firebase
   - Google-Mobile-Ads-SDK (~> 7.5)
   - GoogleAnalytics (~> 3.13)
   - JSONKit-NoWarning
@@ -123,6 +125,6 @@ SPEC CHECKSUMS:
   UIImage+animatedGif: 21cff7203edfb45ca0dd035505a4988cc0156356
   WebASDKImageManager: 15f6abbac6b53b4b216e27fba0acf74c49a64d4c
 
-PODFILE CHECKSUM: ebf24d89d81225947e33ce4101d3fabc7d5bd153
+PODFILE CHECKSUM: 275a080afdbf696236616f579ba4a250c0f5eecb
 
 COCOAPODS: 1.1.1

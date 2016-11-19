@@ -23,50 +23,50 @@ class HoroscopesManager : NSObject {
         
         if horoscopesSigns.isEmpty {
             horoscopesSigns.append(Horoscope(sign:"Aries",
-                                        startFrom: StandardDate(day: 21, month: 3),
-                                               to: StandardDate(day: 19, month: 4)))
+                                             startFrom: StandardDate(day: 21, month: 3),
+                                             to: StandardDate(day: 19, month: 4)))
             horoscopesSigns.append(Horoscope(sign:"Taurus",
-                startFrom: StandardDate(day: 20, month: 4),
-                to:StandardDate(day: 20, month: 5)))
+                                             startFrom: StandardDate(day: 20, month: 4),
+                                             to:StandardDate(day: 20, month: 5)))
             horoscopesSigns.append(Horoscope(sign:"Gemini",
-                startFrom: StandardDate(day: 21, month: 5),
-                to:StandardDate(day: 21, month: 6)))
+                                             startFrom: StandardDate(day: 21, month: 5),
+                                             to:StandardDate(day: 21, month: 6)))
             
             horoscopesSigns.append(Horoscope(sign:"Cancer",
-                startFrom: StandardDate(day: 22, month: 6),
-                to:StandardDate(day: 22, month: 7)))
+                                             startFrom: StandardDate(day: 22, month: 6),
+                                             to:StandardDate(day: 22, month: 7)))
             
             horoscopesSigns.append(Horoscope(sign:"Leo",
-                startFrom: StandardDate(day: 23, month: 7),
-                to:StandardDate(day: 22, month: 8)))
+                                             startFrom: StandardDate(day: 23, month: 7),
+                                             to:StandardDate(day: 22, month: 8)))
             
             horoscopesSigns.append(Horoscope(sign:"Virgo",
-                startFrom: StandardDate(day: 23, month: 8),
-                to:StandardDate(day: 22, month: 9)))
+                                             startFrom: StandardDate(day: 23, month: 8),
+                                             to:StandardDate(day: 22, month: 9)))
             
             horoscopesSigns.append(Horoscope(sign:"Libra",
-                startFrom: StandardDate(day: 23, month: 9),
-                to:StandardDate(day: 22, month: 10)))
+                                             startFrom: StandardDate(day: 23, month: 9),
+                                             to:StandardDate(day: 22, month: 10)))
             
             horoscopesSigns.append(Horoscope(sign:"Scorpio",
-                startFrom: StandardDate(day: 23, month: 10),
-                to:StandardDate(day: 21, month: 11)))
+                                             startFrom: StandardDate(day: 23, month: 10),
+                                             to:StandardDate(day: 21, month: 11)))
             
             horoscopesSigns.append(Horoscope(sign:"Sagittarius",
-                startFrom: StandardDate(day: 22, month: 11),
-                to:StandardDate(day: 21, month: 12)))
+                                             startFrom: StandardDate(day: 22, month: 11),
+                                             to:StandardDate(day: 21, month: 12)))
             
             horoscopesSigns.append(Horoscope(sign:"Capricorn",
-                startFrom: StandardDate(day: 22, month: 12),
-                to:StandardDate(day: 19, month: 1)))
+                                             startFrom: StandardDate(day: 22, month: 12),
+                                             to:StandardDate(day: 19, month: 1)))
             
             horoscopesSigns.append(Horoscope(sign:"Aquarius",
-                startFrom: StandardDate(day: 20, month: 1),
-                to:StandardDate(day: 18, month: 2)))
+                                             startFrom: StandardDate(day: 20, month: 1),
+                                             to:StandardDate(day: 18, month: 2)))
             
             horoscopesSigns.append(Horoscope(sign:"Pisces",
-                startFrom: StandardDate(day: 19, month: 2),
-                to:StandardDate(day: 20, month: 3)))
+                                             startFrom: StandardDate(day: 19, month: 2),
+                                             to:StandardDate(day: 20, month: 3)))
         } else {
         }
         return horoscopesSigns
@@ -91,7 +91,7 @@ class HoroscopesManager : NSObject {
                 if(carrier.mobileNetworkCode != nil){
                     mncString = carrier.mobileNetworkCode!
                 }
-
+                
             }
             
             let iOSVersion = UIDevice.current.systemVersion;
@@ -159,7 +159,7 @@ class HoroscopesManager : NSObject {
                     if let result = response {
                         if let dataError = result["error"] {
                             let dataErrorAsInt = dataError as! Int
-                            if(dataErrorAsInt != 0){ // data error occured 
+                            if(dataErrorAsInt != 0){ // data error occured
                                 self.setupNodata()
                             } else {
                                 self.data = Utilities.parseNSDictionaryToDictionary(result)
@@ -194,7 +194,7 @@ class HoroscopesManager : NSObject {
         postData.setObject(ratingString, forKey: "rating" as NSCopying)
         DispatchQueue.main.async(execute: {
             XAppDelegate.mobilePlatform.sc.sendRequest(RATE_HOROSCOPE, andPostData: postData, andComplete: { (response,error) -> Void in
-    //            print(response)
+                //            print(response)
                 Utilities.hideHUD()
                 if error != nil {
                     Utilities.showError(error as! NSError)
@@ -254,11 +254,11 @@ class HoroscopesManager : NSObject {
             print("SOMETHING:", self.data)
             let today = self.data["today"] as! [String: Any]
             print("TODAY", today)
-            let todayPermaLinkNoIndex = today["readings"] as! [String: Any]
+            let todayPermaLinkNoIndex = today["permalinks"] as! [String: Any]
             let todayPermaLink = todayPermaLinkNoIndex[indexString] as! String
             
             let tomorrow = self.data["tomorrow"] as! [String: Any]
-            let tomorrowPermaLinkNoIndex = tomorrow["readings"] as! [String: Any]
+            let tomorrowPermaLinkNoIndex = tomorrow["permalinks"] as! [String: Any]
             let tomorrowPermaLink = tomorrowPermaLinkNoIndex[indexString] as! String
             
             horoSigns[index-1].horoscopes.removeAllObjects()
@@ -268,7 +268,7 @@ class HoroscopesManager : NSObject {
             horoSigns[index-1].horoscopes.add(tomorrowReadings[String(format: "%d", index)]!)
             horoSigns[index-1].permaLinks.add(String(format: "%@", todayPermaLink))
             horoSigns[index-1].permaLinks.add(String(format: "%@", tomorrowPermaLink))
-
+            
             index += 1
             
         } while(index <= 12)
@@ -304,7 +304,7 @@ class HoroscopesManager : NSObject {
             let horoscope = self.horoscopesSigns[index]
             if((date.compare(horoscope.startDate.nsDate) == ComparisonResult.orderedDescending ||   date.compare(horoscope.startDate.nsDate) == ComparisonResult.orderedSame)
                 && (date.compare(horoscope.endDate.nsDate) == ComparisonResult.orderedAscending || date.compare(horoscope.endDate.nsDate) == ComparisonResult.orderedSame)){
-                    return index
+                return index
             }
         }
         return 9
@@ -408,6 +408,3 @@ class HoroscopesManager : NSObject {
         Utilities.showAlertView(nil, title: "Error", message: "An error has occured, please try again later")
     }
 }
-
-
- 

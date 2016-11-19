@@ -194,9 +194,9 @@ class Utilities {
             if #available(iOS 8.0, *) {
                 if viewController.presentedViewController == nil {
                     let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//                    if let error = error {
-//                        alert.message = "\(message) \(error)"
-//                    }
+                    //                    if let error = error {
+                    //                        alert.message = "\(message) \(error)"
+                    //                    }
                     let action = UIAlertAction(title: "Okay", style: UIAlertActionStyle.default, handler: nil)
                     alert.addAction(action)
                     viewController.present(alert, animated: true, completion: nil)
@@ -261,12 +261,12 @@ class Utilities {
     class func getDataFromUrl(_ urL:URL, completion: @escaping ((_ data: Data?) -> Void)) {
         URLSession.shared.dataTask(with: urL, completionHandler: { (data, response, error) in
             completion(data)
-            }) .resume()
+        }) .resume()
     }
     
     class func loadNIB(_ file:String) -> AnyObject {
-//        var arr = Bundle.main.loadNibNamed(file, owner: nil, options: nil)
-//        let ret: AnyObject = arr[0];
+        //        var arr = Bundle.main.loadNibNamed(file, owner: nil, options: nil)
+        //        let ret: AnyObject = arr[0];
         let ret = Bundle.main.loadNibNamed(file, owner: nil, options: nil)?[0]
         
         return ret as AnyObject;
@@ -312,7 +312,7 @@ class Utilities {
         }
     }
     
-    // Corner Radius manipulation 
+    // Corner Radius manipulation
     class func makeCornerRadius(_ view : UIView, maskFrame : CGRect, roundOptions : UIRectCorner, radius : CGFloat) -> UIView {
         let maskPath = UIBezierPath(roundedRect: view.bounds, byRoundingCorners: roundOptions, cornerRadii: CGSize(width: radius, height: radius))
         
@@ -523,9 +523,9 @@ class Utilities {
             }
             
             var replacedText = regex.stringByReplacingMatches(in: text,
-                options: NSRegularExpression.MatchingOptions.reportCompletion,
-                range:NSMakeRange(0, text.utf16.count) ,
-                withTemplate: "")
+                                                              options: NSRegularExpression.MatchingOptions.reportCompletion,
+                                                              range:NSMakeRange(0, text.utf16.count) ,
+                                                              withTemplate: "")
             let readMorePhrase = "... Read more"
             // check if it's trucated by server
             if isTruncated {
@@ -608,7 +608,7 @@ class Utilities {
     
     class func getTextViewMaxLines() -> Int{
         if (DeviceType.IS_IPHONE_4_OR_LESS){
-             return Int(MAX_LINES_IP4)
+            return Int(MAX_LINES_IP4)
         }
         if (DeviceType.IS_IPHONE_5) {
             return Int(MAX_LINES_IP5)

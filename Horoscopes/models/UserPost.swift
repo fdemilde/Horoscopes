@@ -24,6 +24,7 @@ open class UserPost : NSObject{
     init?(data: NSDictionary){
         super.init()
         // if data doesn't have a type or type is invalid, ignore it
+        print("DATA", data)
         self.type = Utilities.getNewsfeedTypeByString(data.object(forKey: "type") as! String)
         self.uid = data.object(forKey: "uid") as! Int
         self.post_id = data.object(forKey: "post_id") as! String
