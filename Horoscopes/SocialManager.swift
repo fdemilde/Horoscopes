@@ -371,6 +371,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     
     func getProfile(_ usersIdString: String, ignoreCache : Bool = false, completionHandler: @escaping (_ result: [UserProfile]?, _ error: NSError?) -> Void) {
         let postData = NSMutableDictionary()
+        print(usersIdString)
         postData.setObject(usersIdString, forKey: "uid" as NSCopying)
         let longExpiredTime = Date().timeIntervalSince1970 + 86400
         CacheManager.cacheGet(GET_PROFILE, postData: postData, loginRequired: OPTIONAL, expiredTime: longExpiredTime, forceExpiredKey: nil, ignoreCache : ignoreCache) { (response, error) -> Void in
@@ -793,7 +794,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func persistUserProfile(_ ignoreCache : Bool = false, completionHandler: @escaping (_ error: NSError?) -> Void) {
-        let uid = XAppDelegate.mobilePlatform.userCred.getUid()
+        let uid = XAppDelegate.mobilePlatform.userCred.getUid()!
         self.getProfile("\(uid)",ignoreCache : ignoreCache, completionHandler: { (result, error) -> Void in
             if let error = error {
                 completionHandler(error)
