@@ -362,11 +362,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     func postCommentGet(comment_id: String) {
+        let postData = NSMutableDictionary()
+        postData.setObject(comment_id, forKey: "comment_id" as NSCopying)
         XAppDelegate.mobilePlatform.sc.sendRequest(POST_COMMENTS_GET, andPostData: postData) { (response, error) in
             if error != nil {
                 print("Error:", error)
             } else {
-                // Returns comment_id  <string> The ID of the comment created
+                
             }
         }
     }
