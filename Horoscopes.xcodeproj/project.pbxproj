@@ -1469,7 +1469,7 @@
 				DEVELOPMENT_TEAM = 3V8EPWEYFE;
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Horoscopes/Horoscopes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zwigglers.horoscopes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1496,7 +1496,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREFIX_HEADER = "Horoscopes/Horoscope-Prefix.pch";
 				INFOPLIST_FILE = "$(SRCROOT)/Horoscopes/Horoscopes-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.zwigglers.horoscopes;
 				PRODUCT_NAME = "$(TARGET_NAME)";
