@@ -7,6 +7,11 @@
     },
     {
       "idiom" : "iphone",
+      "subtype" : "retina4",
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "iphone",
       "filename" : "bg-640x960.png",
       "scale" : "2x"
     },
@@ -19,6 +24,11 @@
     {
       "idiom" : "iphone",
       "filename" : "bg-ip6plus.png",
+      "scale" : "3x"
+    },
+    {
+      "idiom" : "iphone",
+      "subtype" : "retina4",
       "scale" : "3x"
     }
   ],

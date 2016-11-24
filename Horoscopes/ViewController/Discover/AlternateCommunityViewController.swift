@@ -226,4 +226,7 @@ class AlternateCommunityViewController: ViewControllerWithAds, UITableViewDataSo
         }
         UserDefaults.standard.set(true, forKey: HAVE_SHOWN_WELCOME_SCREEN)
     }
+    
+    @IBAction func commentBtnDidTouch(_ sender: Any) {
+    }
 }
