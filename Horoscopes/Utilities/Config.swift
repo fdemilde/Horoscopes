@@ -81,6 +81,14 @@ let REGISTER_SHARE = "app.horoscopes.share.register"
 let CREATE_POST = "app.horoscopes.post.create"
 let GET_POST = "app.horoscopes.post.get"
 let DELETE_POST = "app.horoscopes.post.remove"
+let POST_REPORT = "app.horoscopes.post.report"
+let POST_GETCOMMENTS = "app.horoscopes.post.getcomments"
+
+// MARK: Comment Methods
+let POST_COMMENT_CREATE = "app.horoscopes.post.comment.create"
+let POST_COMMENTS_GET = "app.horoscopes.post.comment.get"
+let POST_COMMENT_REMOVE = "app.horoscopes.post.comment.remove"
+
 
 // MARK: Follow methods
 let FOLLOW = "user.follow"

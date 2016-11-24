@@ -73,6 +73,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             XAppDelegate.sendTrackEventWithActionName(EventConfig.Event.extLaunch, label: label)
         }
         
+        //Test New Methods
+        
+        
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     

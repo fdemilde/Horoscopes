@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		453246D31DE6B70F0050F767 /*  UserPostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453246D21DE6B70F0050F767 /*  UserPostComment.swift */; };
 		4578308A1DE027600076D199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457830891DE027600076D199 /* GoogleService-Info.plist */; };
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
@@ -195,6 +196,7 @@
 
 /* Begin PBXFileReference section */
 		0F853D0C0EAA2B0EAA674F14 /* libPods-Horoscopes.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Horoscopes.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		453246D21DE6B70F0050F767 /*  UserPostComment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = " UserPostComment.swift"; sourceTree = "<group>"; };
 		457830881DE010F30076D199 /* Horoscopes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Horoscopes.entitlements; sourceTree = "<group>"; };
 		457830891DE027600076D199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		4F2E8B8F34F7C0B0B660B186 /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
@@ -844,6 +846,7 @@
 				F49FAE461B42899700F38E0C /* UserPost.swift */,
 				F49FAE4A1B42E41000F38E0C /* UserProfile.swift */,
 				70EFC0291BB13E1800ECDC1C /* UserProfileCounts.swift */,
+				453246D21DE6B70F0050F767 /*  UserPostComment.swift */,
 				F45497801C947295005B07CA /* StandardDate.h */,
 				F45497811C947295005B07CA /* StandardDate.m */,
 			);
@@ -1288,6 +1291,7 @@
 				F4CACAD21B2010F2003C6301 /* CrossSellMessage.m in Sources */,
 				F4CACA941B2003E1003C6301 /* UserSettings.m in Sources */,
 				F4CACAD71B2010F2003C6301 /* NotificationObject.m in Sources */,
+				453246D31DE6B70F0050F767 /*  UserPostComment.swift in Sources */,
 				F4CACA8F1B2003E1003C6301 /* CollectedHoroscope.m in Sources */,
 				F430F4291BBA3969002DCAD5 /* ArchiveDetailTableCell.swift in Sources */,
 				F4CACAE01B2010F2003C6301 /* RegExCategories.m in Sources */,

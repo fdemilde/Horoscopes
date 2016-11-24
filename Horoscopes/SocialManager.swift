@@ -174,6 +174,39 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         })
     }
     
+    func heartPostComment(_ token: String, comment_id: String) {
+        let postData = NSMutableDictionary()
+        postData.setObject(token, forKey: "token" as NSCopying)
+        postData.setObject(comment_id, forKey: "comment_id" as NSCopying)
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_HEART, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("ERROR:", error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
+                print("Heart Post Response:", response)
+                
+            }
+        }
+    }
+    
+    func sendHeartFromPostComment(_ type: UserPostComment, token: String, comment_id: String) {
+        let postData = NSMutableDictionary()
+        postData.setObject(type, forKey: "type" as NSCopying)
+        postData.setObject(token, forKey: "token" as NSCopying)
+        postData.setObject(comment_id, forKey: "comment_id" as NSCopying)
+        
+        XAppDelegate.mobilePlatform.sc.sendRequest(SEND_HEART, withLoginRequired: REQUIRED, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("ERROR:", error)
+            } else {
+                let result = Utilities.parseNSDictionaryToDictionary(response! as NSDictionary)
+                print("Heart Post Response:", response)
+                
+            }
+        }
+    }
+    
     // MARK: Post
     
     func createPost(_ type: String, message: String, postToFacebook : Bool = false, completionHandler: @escaping (_ result: [String: AnyObject]?, _ error: NSError?) -> Void) {
@@ -281,6 +314,76 @@ class SocialManager: NSObject, UIAlertViewDelegate {
             }
         }
     }
+    
+    func postReport(_ token: String?, post_id: String, reason: String) {
+        let postData = NSMutableDictionary()
+        postData.setObject(post_id, forKey: "post_report" as NSCopying)
+        XAppDelegate.mobilePlatform.sc.sendRequest(POST_REPORT, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("REPORT POST ERROR:", error)
+            } else {
+                print("REPORT POST RESPONSE:", response)
+                let result = response as! [String: AnyObject]
+            }
+        }
+    }
+    
+    
+    func postGetComments(_ post_id: String, page: Int?) {
+        // retrieves comments for a post
+        let postData = NSMutableDictionary()
+        postData.setObject(post_id, forKey: "get_comments" as NSCopying)
+        let expiredTime = Date().timeIntervalSince1970 + 600
+        
+        CacheManager.cacheGet(POST_GETCOMMENTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) in
+            if error != nil {
+                print("GET POST COMMENTS ERROR:", error)
+            } else {
+                print("GET POST COMMENTS RESPONSE:", response)
+            }
+        }
+    }
+    
+    // MARK: Comment
+    
+    func postCommentCreate(_ token: String, post_id: String, comment: String) {
+        let postData = NSMutableDictionary()
+        postData.setObject(token, forKey: "token" as NSCopying)
+        postData.setObject(post_id, forKey: "post_id" as NSCopying)
+        postData.setObject(comment, forKey: "comment" as NSCopying)
+
+        XAppDelegate.mobilePlatform.sc.sendRequest(POST_COMMENT_CREATE, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("Error:", error)
+            } else {
+                // Returns comment_id  <string> The ID of the comment created
+            }
+        }
+    }
+    
+    func postCommentGet(comment_id: String) {
+        XAppDelegate.mobilePlatform.sc.sendRequest(POST_COMMENTS_GET, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("Error:", error)
+            } else {
+                // Returns comment_id  <string> The ID of the comment created
+            }
+        }
+    }
+    
+    func removePostComment(_ token: String, comment_id: String?) {
+        let postData = NSMutableDictionary()
+        //postData.setObject("\(postIds)", forKey: "post_id" as NSCopying)
+        XAppDelegate.mobilePlatform.sc.sendRequest(POST_COMMENT_REMOVE, andPostData: postData) { (response, error) in
+            if error != nil {
+                print("ERROR:", error)
+            } else {
+                print("RESPONSE:", response)
+            }
+        }
+    }
+    
+    
     
     // MARK: Profile
     
