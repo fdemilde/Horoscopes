@@ -49,6 +49,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var postTypeLabel: UILabel!
     
     @IBOutlet weak var headerBackgroundImage: UIImageView!
+    
+    @IBOutlet weak var btnDownArrow: UIButton!
+    @IBOutlet weak var viewContentFade: UIView!
+    @IBOutlet weak var viewOptions: UIView!
+    @IBOutlet weak var imgDropdownTopTriangle: UIImageView!
+    
     var viewController: UIViewController!
     var post: UserPost!
     var isPostInProfileTab = false
@@ -92,7 +98,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         // Initialization code
         textView.linkDelegate = self
         profilePicturePlaceholder = UIImage(named: "default_avatar")
+        self.hideOptions()
         
+        let selector: Selector = #selector(hideOptions)
+        let tapGesture = UITapGestureRecognizer(target: self, action: selector)
+        tapGesture.numberOfTapsRequired = 1
+        viewContentFade.addGestureRecognizer(tapGesture)
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -418,5 +429,23 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         NotificationCenter.default.addObserver(self, selector: #selector(PostTableViewCell.sendHeartSuccessful(_:)), name: NSNotification.Name(rawValue: NOTIFICATION_SEND_HEART_FINISHED), object: nil)
         XAppDelegate.socialManager.sendHeart(post.uid, postId: post.post_id, type: SEND_HEART_USER_POST_TYPE)
     }
+    
+    @IBAction func btnDownArrowDidTouch(_ sender: Any) {
+        self.showOptions()
+    }
+    
+    func showOptions() {
+        self.imgDropdownTopTriangle.isHidden = false
+        self.viewOptions.isHidden = false
+        self.viewContentFade.alpha = 0.7
+    }
+    
+    func hideOptions() {
+        self.imgDropdownTopTriangle.isHidden = true
+        self.viewOptions.isHidden = true
+        self.viewContentFade.alpha = 0
+    }
+    
+    
 }
 

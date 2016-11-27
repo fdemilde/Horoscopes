@@ -4939,6 +4939,9 @@ on news things</string>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlZ-h1-vcI">
                                                                                     <rect key="frame" x="332" y="9" width="17" height="22"/>
                                                                                     <state key="normal" image="arrow down"/>
+                                                                                    <connections>
+                                                                                        <action selector="btnDownArrowDidTouch:" destination="f93-iG-zEn" eventType="touchUpInside" id="UZF-kT-9cQ"/>
+                                                                                    </connections>
                                                                                 </button>
                                                                             </subviews>
                                                                             <color key="backgroundColor" red="0.52156862749999999" green="0.48627450979999998" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -5282,6 +5285,7 @@ on news things</string>
                                         <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                         <connections>
                                             <outlet property="actionView" destination="8e3-SI-1U5" id="sSb-qu-VJC"/>
+                                            <outlet property="btnDownArrow" destination="hlZ-h1-vcI" id="Rbc-hK-HP4"/>
                                             <outlet property="containerView" destination="SwM-Kx-wNs" id="svL-5F-g4b"/>
                                             <outlet property="fakeReadmoreLabel" destination="4LU-FO-ofe" id="8BA-iB-Nm5"/>
                                             <outlet property="headerBackgroundImage" destination="BvD-sc-LLi" id="oAu-iV-M9n"/>
@@ -5290,6 +5294,7 @@ on news things</string>
                                             <outlet property="horoscopeSignImageViewWidthLayoutConstraint" destination="WI6-Ms-HZ9" id="e81-Qe-CCf"/>
                                             <outlet property="horoscopeSignLabel" destination="S3V-ro-w8P" id="lfJ-5d-XRo"/>
                                             <outlet property="horoscopeSignView" destination="DX2-1L-hQG" id="XdC-AI-yxM"/>
+                                            <outlet property="imgDropdownTopTriangle" destination="4ss-iR-wJG" id="oO8-A4-ZpG"/>
                                             <outlet property="likeButton" destination="fXz-Su-OFm" id="B3v-fG-xbi"/>
                                             <outlet property="likeNumberLabel" destination="59m-gV-76g" id="0F0-5e-dx0"/>
                                             <outlet property="locationLabel" destination="ODc-bW-5a5" id="WtI-QV-ReX"/>
@@ -5300,6 +5305,8 @@ on news things</string>
                                             <outlet property="profileNameLabel" destination="lKu-SQ-dwT" id="6oF-y1-bjF"/>
                                             <outlet property="profileView" destination="D4D-R2-xSH" id="KPg-Qi-EDK"/>
                                             <outlet property="textView" destination="cMA-xp-PJI" id="AfS-Gn-V97"/>
+                                            <outlet property="viewContentFade" destination="3aY-m8-ia6" id="KaM-BI-QB6"/>
+                                            <outlet property="viewOptions" destination="w32-m1-ITq" id="bHd-UL-nTy"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
