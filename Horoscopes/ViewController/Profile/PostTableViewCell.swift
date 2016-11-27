@@ -51,9 +51,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBOutlet weak var headerBackgroundImage: UIImageView!
     
     @IBOutlet weak var btnDownArrow: UIButton!
+    
     @IBOutlet weak var viewContentFade: UIView!
     @IBOutlet weak var viewOptions: UIView!
     @IBOutlet weak var imgDropdownTopTriangle: UIImageView!
+    
+    @IBOutlet weak var lblNumberOfComments: UILabel!
     
     var viewController: UIViewController!
     var post: UserPost!
@@ -100,10 +103,12 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         profilePicturePlaceholder = UIImage(named: "default_avatar")
         self.hideOptions()
         
+        guard let viewContentFade = viewContentFade else { return }
         let selector: Selector = #selector(hideOptions)
         let tapGesture = UITapGestureRecognizer(target: self, action: selector)
         tapGesture.numberOfTapsRequired = 1
         viewContentFade.addGestureRecognizer(tapGesture)
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -199,6 +204,9 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
                 self.fakeReadmoreLabel?.isHidden = true
             }
             self.textView.contentInset = UIEdgeInsets(top: 0, left: 2, bottom: 0,right: 2)
+            
+            guard let lblNumberOfComments = self.lblNumberOfComments else { return }
+            lblNumberOfComments.text = "\(post.comments)"
         })
     }
     
@@ -435,12 +443,21 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     }
     
     func showOptions() {
+        guard let triangle = imgDropdownTopTriangle else { return }
         self.imgDropdownTopTriangle.isHidden = false
         self.viewOptions.isHidden = false
         self.viewContentFade.alpha = 0.7
+        
+        let rectShape = CAShapeLayer()
+        let radii = 4
+        rectShape.bounds = self.viewContentFade.frame
+        rectShape.position = self.viewContentFade.center
+        rectShape.path = UIBezierPath(roundedRect: self.viewContentFade.bounds, byRoundingCorners: [.bottomLeft , .bottomRight], cornerRadii: CGSize(width: radii, height: radii)).cgPath
+        self.viewContentFade.layer.mask = rectShape
     }
     
     func hideOptions() {
+        guard let triangle = imgDropdownTopTriangle else { return }
         self.imgDropdownTopTriangle.isHidden = true
         self.viewOptions.isHidden = true
         self.viewContentFade.alpha = 0

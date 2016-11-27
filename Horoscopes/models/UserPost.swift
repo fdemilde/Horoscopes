@@ -16,7 +16,7 @@ open class UserPost : NSObject{
     var truncated : Int = 0
     var hearts : Int = 0
     var shares: Int = 0
-    var comment: Int = 0
+    var comments: Int = 0
     var ts : Int = 0
     var permalink = ""
     
@@ -33,7 +33,7 @@ open class UserPost : NSObject{
         self.truncated = data.object(forKey: "truncated") as! Int
         self.hearts = data.object(forKey: "hearts") as! Int
         shares = data.object(forKey: "shares") as! Int
-        self.comment = data.object(forKey: "comment") as! Int
+        self.comments = data.object(forKey: "comments") as! Int
         self.ts = data.object(forKey: "ts") as! Int
         self.permalink = data.object(forKey: "permalink") as! String
         

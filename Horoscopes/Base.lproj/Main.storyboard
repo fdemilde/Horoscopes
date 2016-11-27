@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -1447,7 +1446,7 @@ on news things</string>
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ARCHIVE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Lc-hf-98l">
-                                        <rect key="frame" x="158.5" y="17" width="59" height="17"/>
+                                        <rect key="frame" x="158" y="17" width="59" height="17"/>
                                         <fontDescription key="fontDescription" type="system" weight="light" pointSize="14"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2327,7 +2326,7 @@ on news things</string>
                                         <rect key="frame" x="0.0" y="0.0" width="359" height="40"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRw-dl-9LQ">
-                                                <rect key="frame" x="161" y="11" width="37.5" height="18"/>
+                                                <rect key="frame" x="161" y="11" width="38" height="18"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -2584,7 +2583,7 @@ on news things</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VZL-Fc-pvy">
-                                        <rect key="frame" x="120.5" y="90" width="118" height="30"/>
+                                        <rect key="frame" x="121" y="90" width="118" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="Uc3-v2-If5"/>
                                         </constraints>
@@ -2597,7 +2596,7 @@ on news things</string>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Yk-Eh-gSg">
-                                        <rect key="frame" x="241.5" y="90" width="117.5" height="30"/>
+                                        <rect key="frame" x="241" y="90" width="118" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="dKB-ML-8fP"/>
                                         </constraints>
@@ -2670,12 +2669,6 @@ on news things</string>
                                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="July, 31, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nwp-lU-hV5">
-                                                                    <rect key="frame" x="279" y="13" width="70" height="14"/>
-                                                                    <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
-                                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.52156862745098043" green="0.48627450980392156" blue="0.67843137254901964" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
@@ -2683,9 +2676,7 @@ on news things</string>
                                                                 <constraint firstAttribute="bottom" secondItem="Di8-cG-cr2" secondAttribute="bottom" id="BuD-1r-PMe"/>
                                                                 <constraint firstAttribute="height" constant="40" id="IGc-fT-FIT"/>
                                                                 <constraint firstItem="eWB-k5-kB9" firstAttribute="leading" secondItem="Di8-cG-cr2" secondAttribute="trailing" constant="5" id="PNg-a9-WHh"/>
-                                                                <constraint firstItem="Nwp-lU-hV5" firstAttribute="centerY" secondItem="5a8-ye-rOT" secondAttribute="centerY" id="aue-hQ-3DX"/>
                                                                 <constraint firstItem="Di8-cG-cr2" firstAttribute="leading" secondItem="5a8-ye-rOT" secondAttribute="leading" constant="4" id="it7-Ib-eoV"/>
-                                                                <constraint firstAttribute="trailing" secondItem="Nwp-lU-hV5" secondAttribute="trailing" constant="10" id="ubt-7O-ei8"/>
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="327 Likes 20 Shares" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jpD-Vb-4Yh" userLabel="Heart Label">
@@ -2733,7 +2724,7 @@ on news things</string>
                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                         </textView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vfK-PY-OqC">
-                                                            <rect key="frame" x="11" y="203" width="81.5" height="17"/>
+                                                            <rect key="frame" x="11" y="203" width="82" height="17"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="... ">
                                                                     <attributes>
@@ -2751,6 +2742,12 @@ on news things</string>
                                                                     </attributes>
                                                                 </fragment>
                                                             </attributedString>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="July, 31, 2015" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nwp-lU-hV5">
+                                                            <rect key="frame" x="269" y="229" width="70" height="14"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="light" pointSize="11"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -2771,7 +2768,9 @@ on news things</string>
                                                         <constraint firstItem="jpD-Vb-4Yh" firstAttribute="top" secondItem="vfK-PY-OqC" secondAttribute="bottom" constant="8" id="ceB-NB-77X"/>
                                                         <constraint firstItem="Scw-Jy-u1H" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" constant="10" id="dX3-FZ-iw5"/>
                                                         <constraint firstItem="78V-Of-oqi" firstAttribute="leading" secondItem="dNx-cM-f6m" secondAttribute="leading" constant="8" id="iWL-mT-pwn"/>
+                                                        <constraint firstItem="vqQ-A2-nGf" firstAttribute="top" secondItem="Nwp-lU-hV5" secondAttribute="bottom" constant="7" id="lX5-IT-DUG"/>
                                                         <constraint firstAttribute="bottom" secondItem="vqQ-A2-nGf" secondAttribute="bottom" constant="49" id="myu-0P-awT"/>
+                                                        <constraint firstAttribute="trailing" secondItem="Nwp-lU-hV5" secondAttribute="trailing" constant="20" id="oPV-eW-ynB"/>
                                                         <constraint firstAttribute="bottom" secondItem="Scw-Jy-u1H" secondAttribute="bottom" id="pwR-jX-txa"/>
                                                         <constraint firstItem="vfK-PY-OqC" firstAttribute="top" secondItem="78V-Of-oqi" secondAttribute="bottom" id="tRs-XS-xM4"/>
                                                         <constraint firstItem="dDy-qm-Wlk" firstAttribute="bottom" secondItem="Scw-Jy-u1H" secondAttribute="bottom" id="ycA-EL-lwz"/>
@@ -5050,7 +5049,7 @@ on news things</string>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
                                                                     </subviews>
-                                                                    <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="trailing" secondItem="cMA-xp-PJI" secondAttribute="trailing" constant="8" id="7yE-Lr-pt3"/>
                                                                         <constraint firstItem="cMA-xp-PJI" firstAttribute="top" secondItem="5EY-yU-RX1" secondAttribute="top" constant="8" id="I3n-Ed-OXV"/>
@@ -5172,40 +5171,40 @@ on news things</string>
                                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                                             <nil key="highlightedColor"/>
                                                                         </label>
-                                                                        <view alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-m8-ia6">
-                                                                            <rect key="frame" x="0.0" y="-242" width="359" height="322"/>
-                                                                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                                                        </view>
                                                                     </subviews>
                                                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                     <constraints>
-                                                                        <constraint firstAttribute="trailing" secondItem="3aY-m8-ia6" secondAttribute="trailing" id="BzZ-fK-wbc"/>
-                                                                        <constraint firstItem="3aY-m8-ia6" firstAttribute="leading" secondItem="8e3-SI-1U5" secondAttribute="leading" id="Bzi-5u-HPW"/>
                                                                         <constraint firstAttribute="height" constant="80" id="C0T-lz-QL1"/>
                                                                         <constraint firstItem="6Nb-Am-S5h" firstAttribute="leading" secondItem="8e3-SI-1U5" secondAttribute="leading" id="HTV-na-3ny"/>
                                                                         <constraint firstAttribute="bottom" secondItem="6Nb-Am-S5h" secondAttribute="bottom" id="Lqk-Ur-IGw"/>
                                                                         <constraint firstItem="59m-gV-76g" firstAttribute="top" secondItem="8e3-SI-1U5" secondAttribute="top" constant="8" id="RMF-yZ-gvd"/>
                                                                         <constraint firstItem="6Nb-Am-S5h" firstAttribute="top" secondItem="59m-gV-76g" secondAttribute="bottom" constant="5" id="XaR-RS-1i1"/>
-                                                                        <constraint firstAttribute="bottom" secondItem="3aY-m8-ia6" secondAttribute="bottom" id="c7x-48-mRK"/>
                                                                         <constraint firstAttribute="trailing" secondItem="6Nb-Am-S5h" secondAttribute="trailing" id="ceZ-Pa-y8U"/>
                                                                         <constraint firstItem="6Nb-Am-S5h" firstAttribute="top" secondItem="NCY-4v-MQv" secondAttribute="bottom" constant="7" id="euc-ze-msS"/>
                                                                         <constraint firstItem="59m-gV-76g" firstAttribute="leading" secondItem="8e3-SI-1U5" secondAttribute="leading" constant="10" id="hH9-vn-yp7"/>
                                                                         <constraint firstAttribute="trailing" secondItem="NCY-4v-MQv" secondAttribute="trailing" constant="20" id="j5b-e3-gzr"/>
                                                                     </constraints>
                                                                 </view>
+                                                                <view clipsSubviews="YES" alpha="0.69999999999999996" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3aY-m8-ia6">
+                                                                    <rect key="frame" x="0.0" y="90" width="359" height="322"/>
+                                                                    <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                                </view>
                                                             </subviews>
                                                             <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="trailing" secondItem="D4D-R2-xSH" secondAttribute="trailing" id="0Sq-tj-aun"/>
-                                                                <constraint firstItem="3aY-m8-ia6" firstAttribute="top" secondItem="4Va-cQ-d7w" secondAttribute="top" id="1cl-kL-p9i"/>
                                                                 <constraint firstItem="D4D-R2-xSH" firstAttribute="top" secondItem="SwM-Kx-wNs" secondAttribute="top" id="3fX-pC-Zyz"/>
                                                                 <constraint firstItem="5EY-yU-RX1" firstAttribute="leading" secondItem="SwM-Kx-wNs" secondAttribute="leading" id="4z9-Im-Tmb"/>
+                                                                <constraint firstItem="3aY-m8-ia6" firstAttribute="top" secondItem="SwM-Kx-wNs" secondAttribute="top" constant="90" id="59S-G1-IG9"/>
                                                                 <constraint firstAttribute="bottom" secondItem="8e3-SI-1U5" secondAttribute="bottom" id="7Mf-bs-vwg"/>
                                                                 <constraint firstItem="8e3-SI-1U5" firstAttribute="top" secondItem="5EY-yU-RX1" secondAttribute="bottom" id="AdW-PZ-81v"/>
                                                                 <constraint firstItem="5EY-yU-RX1" firstAttribute="top" secondItem="D4D-R2-xSH" secondAttribute="bottom" id="N4B-6R-ajf"/>
                                                                 <constraint firstAttribute="trailing" secondItem="8e3-SI-1U5" secondAttribute="trailing" id="Qxk-DZ-VSP"/>
+                                                                <constraint firstAttribute="trailing" secondItem="3aY-m8-ia6" secondAttribute="trailing" id="WAk-tg-Sjz"/>
+                                                                <constraint firstAttribute="bottom" secondItem="3aY-m8-ia6" secondAttribute="bottom" id="Wcl-hq-ZYF"/>
                                                                 <constraint firstItem="8e3-SI-1U5" firstAttribute="leading" secondItem="SwM-Kx-wNs" secondAttribute="leading" id="bsg-Uy-NbG"/>
                                                                 <constraint firstItem="D4D-R2-xSH" firstAttribute="leading" secondItem="SwM-Kx-wNs" secondAttribute="leading" id="kyN-V9-meA"/>
+                                                                <constraint firstItem="3aY-m8-ia6" firstAttribute="leading" secondItem="SwM-Kx-wNs" secondAttribute="leading" id="ntl-1X-IZ8"/>
                                                                 <constraint firstAttribute="trailing" secondItem="5EY-yU-RX1" secondAttribute="trailing" id="uMg-2d-rOm"/>
                                                             </constraints>
                                                         </view>
@@ -5295,6 +5294,7 @@ on news things</string>
                                             <outlet property="horoscopeSignLabel" destination="S3V-ro-w8P" id="lfJ-5d-XRo"/>
                                             <outlet property="horoscopeSignView" destination="DX2-1L-hQG" id="XdC-AI-yxM"/>
                                             <outlet property="imgDropdownTopTriangle" destination="4ss-iR-wJG" id="oO8-A4-ZpG"/>
+                                            <outlet property="lblNumberOfComments" destination="Cxq-Or-BIT" id="pgE-5X-Sfc"/>
                                             <outlet property="likeButton" destination="fXz-Su-OFm" id="B3v-fG-xbi"/>
                                             <outlet property="likeNumberLabel" destination="59m-gV-76g" id="0F0-5e-dx0"/>
                                             <outlet property="locationLabel" destination="ODc-bW-5a5" id="WtI-QV-ReX"/>
@@ -5305,7 +5305,7 @@ on news things</string>
                                             <outlet property="profileNameLabel" destination="lKu-SQ-dwT" id="6oF-y1-bjF"/>
                                             <outlet property="profileView" destination="D4D-R2-xSH" id="KPg-Qi-EDK"/>
                                             <outlet property="textView" destination="cMA-xp-PJI" id="AfS-Gn-V97"/>
-                                            <outlet property="viewContentFade" destination="3aY-m8-ia6" id="KaM-BI-QB6"/>
+                                            <outlet property="viewContentFade" destination="3aY-m8-ia6" id="Ahj-Dt-Xdw"/>
                                             <outlet property="viewOptions" destination="w32-m1-ITq" id="bHd-UL-nTy"/>
                                         </connections>
                                     </tableViewCell>
