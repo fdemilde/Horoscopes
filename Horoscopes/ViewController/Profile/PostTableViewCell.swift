@@ -59,6 +59,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     @IBOutlet weak var lblNumberOfComments: UILabel!
     
+    @IBOutlet weak var lblNumberOfCommentsWidth: NSLayoutConstraint!
+    
     var viewController: UIViewController!
     var post: UserPost!
     var isPostInProfileTab = false
@@ -100,7 +102,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
-        self.numberOfCommentsView.layer.cornerRadius = 5
+        self.numberOfCommentsView.layer.cornerRadius = self.numberOfCommentsView.layer.frame.height/2
         self.viewOptions.layer.cornerRadius = 4
         textView.linkDelegate = self
         profilePicturePlaceholder = UIImage(named: "default_avatar")
@@ -209,7 +211,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.textView.contentInset = UIEdgeInsets(top: 0, left: 2, bottom: 0,right: 2)
             
             guard let lblNumberOfComments = self.lblNumberOfComments else { return }
-            lblNumberOfComments.text = "\(post.comments)"
+            let comments = post.comments
+            lblNumberOfComments.text = "\(comments)"
+            if comments > 9 {
+                self.lblNumberOfCommentsWidth.constant = 21
+                
+            } else {
+                self.lblNumberOfCommentsWidth.constant = 12
+            }
         })
     }
     
