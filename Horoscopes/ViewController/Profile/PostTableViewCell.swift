@@ -36,6 +36,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
 
     @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var headerView: UIView!
+    @IBOutlet weak var numberOfCommentsView: UIView!
     
     @IBOutlet weak var postTypeShadowUpper: UIView!
     @IBOutlet weak var postTypeShadowLower: UIView!
@@ -99,6 +100,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        self.numberOfCommentsView.layer.cornerRadius = 5
         textView.linkDelegate = self
         profilePicturePlaceholder = UIImage(named: "default_avatar")
         self.hideOptions()

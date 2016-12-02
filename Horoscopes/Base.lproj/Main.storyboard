@@ -2783,14 +2783,6 @@ on news things</string>
                                                                 <constraint firstItem="RYH-f9-1I9" firstAttribute="centerY" secondItem="kyk-69-AIm" secondAttribute="centerY" id="pTt-TA-ObR"/>
                                                                 <constraint firstItem="RYH-f9-1I9" firstAttribute="centerX" secondItem="kyk-69-AIm" secondAttribute="centerX" id="s15-U9-3OF"/>
                                                             </constraints>
-                                                            <userDefinedRuntimeAttributes>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                    <integer key="value" value="5"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                                <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                    <integer key="value" value="0"/>
-                                                                </userDefinedRuntimeAttribute>
-                                                            </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Sf-fK-Hr6">
                                                             <rect key="frame" x="136" y="253" width="87" height="44"/>
@@ -2918,6 +2910,7 @@ on news things</string>
                                             <outlet property="lblNumberOfComments" destination="RYH-f9-1I9" id="Q1m-Zj-Y5f"/>
                                             <outlet property="likeButton" destination="Scw-Jy-u1H" id="FCL-fa-sLq"/>
                                             <outlet property="likeNumberLabel" destination="jpD-Vb-4Yh" id="uQd-Lp-S1Q"/>
+                                            <outlet property="numberOfCommentsView" destination="kyk-69-AIm" id="sYV-gm-TdU"/>
                                             <outlet property="postDateLabel" destination="Nwp-lU-hV5" id="wLW-LE-tuk"/>
                                             <outlet property="postTypeImageView" destination="Di8-cG-cr2" id="087-VT-Z8o"/>
                                             <outlet property="postTypeLabel" destination="eWB-k5-kB9" id="HuB-jB-RBX"/>
@@ -5251,14 +5244,6 @@ on news things</string>
                                                                                         <constraint firstAttribute="width" constant="21" id="ocC-RF-osq"/>
                                                                                         <constraint firstItem="Cxq-Or-BIT" firstAttribute="centerX" secondItem="a6d-KP-fHN" secondAttribute="centerX" id="t6v-mL-Y9Y"/>
                                                                                     </constraints>
-                                                                                    <userDefinedRuntimeAttributes>
-                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                                                                            <integer key="value" value="5"/>
-                                                                                        </userDefinedRuntimeAttribute>
-                                                                                        <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                                                                            <integer key="value" value="0"/>
-                                                                                        </userDefinedRuntimeAttribute>
-                                                                                    </userDefinedRuntimeAttributes>
                                                                                 </view>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YyF-5Z-Uss">
                                                                                     <rect key="frame" x="136" y="5.5" width="87" height="44"/>
@@ -5428,6 +5413,7 @@ on news things</string>
                                             <outlet property="likeButton" destination="fXz-Su-OFm" id="B3v-fG-xbi"/>
                                             <outlet property="likeNumberLabel" destination="59m-gV-76g" id="0F0-5e-dx0"/>
                                             <outlet property="locationLabel" destination="ODc-bW-5a5" id="WtI-QV-ReX"/>
+                                            <outlet property="numberOfCommentsView" destination="a6d-KP-fHN" id="CC3-lC-h1x"/>
                                             <outlet property="postDateLabel" destination="NCY-4v-MQv" id="pvz-Q7-eB0"/>
                                             <outlet property="postTypeImageView" destination="R3U-Xk-Smm" id="yHz-Ql-kMw"/>
                                             <outlet property="postTypeLabel" destination="9sg-6B-bG2" id="Pmi-rA-Egx"/>
