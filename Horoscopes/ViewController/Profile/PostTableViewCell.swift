@@ -101,6 +101,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         super.awakeFromNib()
         // Initialization code
         self.numberOfCommentsView.layer.cornerRadius = 5
+        self.viewOptions.layer.cornerRadius = 4
         textView.linkDelegate = self
         profilePicturePlaceholder = UIImage(named: "default_avatar")
         self.hideOptions()
