@@ -2670,7 +2670,11 @@ on news things</string>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4LR-pX-9aS">
-                                                                    <rect key="frame" x="332" y="9" width="17" height="22"/>
+                                                                    <rect key="frame" x="322" y="0.0" width="37" height="40"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="37" id="mah-7A-GGb"/>
+                                                                        <constraint firstAttribute="height" constant="40" id="xCl-y7-3wO"/>
+                                                                    </constraints>
                                                                     <state key="normal" image="arrow down"/>
                                                                     <connections>
                                                                         <action selector="btnDownArrowDidTouch:" destination="t06-bA-bXf" eventType="touchUpInside" id="Dse-5S-SMv"/>
@@ -2683,7 +2687,7 @@ on news things</string>
                                                                 <constraint firstAttribute="bottom" secondItem="Di8-cG-cr2" secondAttribute="bottom" id="BuD-1r-PMe"/>
                                                                 <constraint firstAttribute="height" constant="40" id="IGc-fT-FIT"/>
                                                                 <constraint firstItem="eWB-k5-kB9" firstAttribute="leading" secondItem="Di8-cG-cr2" secondAttribute="trailing" constant="5" id="PNg-a9-WHh"/>
-                                                                <constraint firstAttribute="trailing" secondItem="4LR-pX-9aS" secondAttribute="trailing" constant="10" id="hkD-Ex-gwu"/>
+                                                                <constraint firstAttribute="trailing" secondItem="4LR-pX-9aS" secondAttribute="trailing" id="hkD-Ex-gwu"/>
                                                                 <constraint firstItem="Di8-cG-cr2" firstAttribute="leading" secondItem="5a8-ye-rOT" secondAttribute="leading" constant="4" id="it7-Ib-eoV"/>
                                                                 <constraint firstItem="4LR-pX-9aS" firstAttribute="centerY" secondItem="eWB-k5-kB9" secondAttribute="centerY" id="oBn-cr-7kC"/>
                                                             </constraints>
@@ -3041,7 +3045,7 @@ on news things</string>
                 <navigationController navigationBarHidden="YES" id="kgA-pd-j8g" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_newsfeed.png" id="IAg-4j-que"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="Gwt-DP-o2X">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Gwt-DP-o2X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4120,7 +4124,7 @@ on news things</string>
             <objects>
                 <navigationController id="pSb-aO-9wz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_create_post" id="rtn-Uf-qEv"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pka-ts-QWr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pka-ts-QWr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4157,7 +4161,7 @@ on news things</string>
                 <navigationController navigationBarHidden="YES" id="eGr-ah-kWW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_notification.png" id="dDu-iu-h6X"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qWW-Xw-VKT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qWW-Xw-VKT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4330,7 +4334,7 @@ on news things</string>
                     <tabBarItem key="tabBarItem" title="" image="settings_btn" id="COC-Kf-1C8"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="M52-aG-vum">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="M52-aG-vum">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4773,7 +4777,7 @@ on news things</string>
                                                             </constraints>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jmc-Xl-aAy">
-                                                            <rect key="frame" x="11" y="203" width="81.5" height="17"/>
+                                                            <rect key="frame" x="11" y="203" width="84.5" height="17"/>
                                                             <attributedString key="attributedText">
                                                                 <fragment content="... ">
                                                                     <attributes>
@@ -5054,7 +5058,11 @@ on news things</string>
                                                                                     <nil key="highlightedColor"/>
                                                                                 </label>
                                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hlZ-h1-vcI">
-                                                                                    <rect key="frame" x="332" y="9" width="17" height="22"/>
+                                                                                    <rect key="frame" x="322" y="0.0" width="37" height="40"/>
+                                                                                    <constraints>
+                                                                                        <constraint firstAttribute="height" constant="40" id="V4l-Nd-TzA"/>
+                                                                                        <constraint firstAttribute="width" constant="37" id="hKt-jJ-M9O"/>
+                                                                                    </constraints>
                                                                                     <state key="normal" image="arrow down"/>
                                                                                     <connections>
                                                                                         <action selector="btnDownArrowDidTouch:" destination="f93-iG-zEn" eventType="touchUpInside" id="UZF-kT-9cQ"/>
@@ -5063,7 +5071,7 @@ on news things</string>
                                                                             </subviews>
                                                                             <color key="backgroundColor" red="0.52156862749999999" green="0.48627450979999998" blue="0.67843137249999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                             <constraints>
-                                                                                <constraint firstAttribute="trailing" secondItem="hlZ-h1-vcI" secondAttribute="trailing" constant="10" id="Css-Ir-N7f"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="hlZ-h1-vcI" secondAttribute="trailing" id="Css-Ir-N7f"/>
                                                                                 <constraint firstItem="hlZ-h1-vcI" firstAttribute="centerY" secondItem="4Va-cQ-d7w" secondAttribute="centerY" id="M2R-8i-Z8U"/>
                                                                                 <constraint firstItem="R3U-Xk-Smm" firstAttribute="leading" secondItem="4Va-cQ-d7w" secondAttribute="leading" constant="4" id="d80-CT-WkS"/>
                                                                                 <constraint firstItem="9sg-6B-bG2" firstAttribute="centerY" secondItem="4Va-cQ-d7w" secondAttribute="centerY" id="dkw-SB-Nzl"/>
