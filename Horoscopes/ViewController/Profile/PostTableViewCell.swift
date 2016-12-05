@@ -99,6 +99,14 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     var alreadyAddCircle = false
     
+    //MARK: Option View
+    
+    @IBOutlet weak var btnEditPost: UIButton!
+    @IBOutlet weak var viewViewOptionLine: UIView!
+    @IBOutlet weak var btnDelete: UIButton!
+    @IBOutlet weak var btnReport: UIButton!
+    @IBOutlet weak var viewViewOptionHeight: NSLayoutConstraint!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -160,6 +168,15 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     fileprivate func configureCell(_ post: UserPost) {
         DispatchQueue.main.async(execute: {
+//            SocialManager.sharedInstance.
+            self.configureViewOptionForPost(isOwner: false)
+            if let userId = XAppDelegate.currentUser.uid as? Int {
+                if userId == post.uid {
+                    self.configureViewOptionForPost(isOwner: true)
+                } 
+            }
+                
+            
             self.post = post
             self.postTypeImageView.image = UIImage(named: postTypes[post.type]!.0)
             if let type = postTypes[post.type] {
@@ -219,6 +236,8 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             } else {
                 self.lblNumberOfCommentsWidth.constant = 12
             }
+            
+            
         })
     }
     
@@ -475,6 +494,30 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         self.viewContentFade.alpha = 0
     }
     
+    //Option View Buttons
+    @IBAction func btnEditDidTouch(_ sender: Any) {
+    }
     
+    @IBAction func btnDeleteDidTouch(_ sender: Any) {
+    }
+    
+    @IBAction func btnReportDidTouch(_ sender: Any) {
+    }
+    
+    func configureViewOptionForPost(isOwner: Bool) {
+        if !isOwner {
+            self.btnEditPost.isHidden = true
+            self.viewViewOptionLine.isHidden = true
+            self.btnDelete.isHidden = true
+            self.btnReport.isHidden = false
+            self.viewViewOptionHeight.constant = 60
+        } else {
+            self.btnEditPost.isHidden = false
+            self.viewViewOptionLine.isHidden = false
+            self.btnDelete.isHidden = false
+            self.btnReport.isHidden = true
+            self.viewViewOptionHeight.constant = 120
+        }
+    }
 }
 
