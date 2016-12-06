@@ -3049,7 +3049,7 @@ on news things</string>
                     <tabBarItem key="tabBarItem" title="" image="tabbar_daily.png" id="uTk-BA-Hfs"/>
                     <navigationItem key="navigationItem" id="0li-xK-ODY"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="ibR-oU-Vax">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ibR-oU-Vax">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4146,7 +4146,7 @@ on news things</string>
             <objects>
                 <navigationController id="pSb-aO-9wz" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_create_post" id="rtn-Uf-qEv"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="pka-ts-QWr">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="pka-ts-QWr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4165,7 +4165,7 @@ on news things</string>
                     <tabBarItem key="tabBarItem" title="" image="tabbar_community" id="xD3-ca-aSc"/>
                     <nil key="simulatedStatusBarMetrics"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="J1I-78-Y8l">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="J1I-78-Y8l">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4183,7 +4183,7 @@ on news things</string>
                 <navigationController navigationBarHidden="YES" id="eGr-ah-kWW" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_notification.png" id="dDu-iu-h6X"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="qWW-Xw-VKT">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qWW-Xw-VKT">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -4201,7 +4201,7 @@ on news things</string>
                 <navigationController navigationBarHidden="YES" id="hGq-DD-r5m" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="" image="tabbar_profile.png" id="G81-ft-g1Y"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="fst-5E-c5t">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="fst-5E-c5t">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
@@ -5176,7 +5176,7 @@ on news things</string>
                                                                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                                         </textView>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4LU-FO-ofe">
-                                                                            <rect key="frame" x="11" y="58" width="81.5" height="144"/>
+                                                                            <rect key="frame" x="11" y="58" width="84.5" height="144"/>
                                                                             <attributedString key="attributedText">
                                                                                 <fragment content="... ">
                                                                                     <attributes>

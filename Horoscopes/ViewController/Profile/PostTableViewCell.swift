@@ -121,7 +121,6 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
         let tapGesture = UITapGestureRecognizer(target: self, action: selector)
         tapGesture.numberOfTapsRequired = 1
         viewContentFade.addGestureRecognizer(tapGesture)
-        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -164,6 +163,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     
     override func prepareForReuse() {
         self.profileImageView?.image = profilePicturePlaceholder
+        self.hideOptions()
     }
     
     fileprivate func configureCell(_ post: UserPost) {
@@ -519,5 +519,7 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
             self.viewViewOptionHeight.constant = 120
         }
     }
+    
+    
 }
 
