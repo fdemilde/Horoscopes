@@ -43,7 +43,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         } else if indexPath.row == 1 {
             return 40
         } else {
-            return 80
+            return 160
         }
         
     }

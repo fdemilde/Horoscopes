@@ -10,6 +10,7 @@
 		453246D31DE6B70F0050F767 /*  UserPostComment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 453246D21DE6B70F0050F767 /*  UserPostComment.swift */; };
 		4578308A1DE027600076D199 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 457830891DE027600076D199 /* GoogleService-Info.plist */; };
 		45AA6C2C1DF6ECE70011B352 /* CommentBtnTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA6C2B1DF6ECE70011B352 /* CommentBtnTVC.swift */; };
+		45AA6C2E1DF70A890011B352 /* CommentTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45AA6C2D1DF70A890011B352 /* CommentTVC.swift */; };
 		701B8AFB1B94419800EE9097 /* FollowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */; };
 		702804F71B4B85B6001B8A1F /* DetailPostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */; };
 		704FF7481BB2BB92006A5A98 /* BugReportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 704FF7441BB2BB92006A5A98 /* BugReportViewController.swift */; };
@@ -201,6 +202,7 @@
 		457830881DE010F30076D199 /* Horoscopes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Horoscopes.entitlements; sourceTree = "<group>"; };
 		457830891DE027600076D199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		45AA6C2B1DF6ECE70011B352 /* CommentBtnTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentBtnTVC.swift; sourceTree = "<group>"; };
+		45AA6C2D1DF70A890011B352 /* CommentTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTVC.swift; sourceTree = "<group>"; };
 		4F2E8B8F34F7C0B0B660B186 /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 			isa = PBXGroup;
 			children = (
 				45AA6C2B1DF6ECE70011B352 /* CommentBtnTVC.swift */,
+				45AA6C2D1DF70A890011B352 /* CommentTVC.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1274,6 +1277,7 @@
 				F4CACADA1B2010F2003C6301 /* UserModule.m in Sources */,
 				F4122ADC1B980A8D00C78BA5 /* SinglePostViewController.swift in Sources */,
 				F4CACA811B200149003C6301 /* SMCLove.m in Sources */,
+				45AA6C2E1DF70A890011B352 /* CommentTVC.swift in Sources */,
 				70BCF75B1B8DAA9000875A76 /* PostTableViewCell.swift in Sources */,
 				F4DA35C51B4E2F1E00B6F165 /* TableViewControllerWithAds.swift in Sources */,
 				F4C44FA01B8EC58000910E56 /* BKDeltaCalculator.m in Sources */,
