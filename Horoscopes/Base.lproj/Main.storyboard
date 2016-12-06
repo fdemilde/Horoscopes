@@ -1076,9 +1076,8 @@
                                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jth-zd-oaa">
                                                                             <rect key="frame" x="153" y="40" width="21" height="12"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WIL-9O-5FX">
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="WIL-9O-5FX">
                                                                                     <rect key="frame" x="0.0" y="0.0" width="21" height="12"/>
-                                                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                                                     <fontDescription key="fontDescription" type="system" weight="thin" pointSize="7"/>
                                                                                     <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                                                     <nil key="highlightedColor"/>
@@ -1091,7 +1090,11 @@
                                                                             </subviews>
                                                                             <color key="backgroundColor" red="0.90588235289999997" green="0.29803921570000003" blue="0.23529411759999999" alpha="1" colorSpace="calibratedRGB"/>
                                                                             <constraints>
+                                                                                <constraint firstItem="WIL-9O-5FX" firstAttribute="top" secondItem="jth-zd-oaa" secondAttribute="top" id="0S5-Jd-grI"/>
+                                                                                <constraint firstItem="WIL-9O-5FX" firstAttribute="leading" secondItem="jth-zd-oaa" secondAttribute="leading" id="1fq-0g-XTY"/>
                                                                                 <constraint firstAttribute="width" constant="21" id="Ggd-6j-Ne7"/>
+                                                                                <constraint firstAttribute="bottom" secondItem="WIL-9O-5FX" secondAttribute="bottom" id="Saf-6c-m34"/>
+                                                                                <constraint firstAttribute="trailing" secondItem="WIL-9O-5FX" secondAttribute="trailing" id="bX1-5h-VD0"/>
                                                                                 <constraint firstAttribute="height" constant="12" id="mB5-ZS-sRp"/>
                                                                             </constraints>
                                                                         </view>
@@ -1250,7 +1253,7 @@
                                             <outlet property="horoscopeSignLabel" destination="VZH-Gw-nS6" id="kXJ-tO-4P8"/>
                                             <outlet property="horoscopeSignView" destination="tmf-al-m9h" id="UND-Ve-tyM"/>
                                             <outlet property="imgDropdownTopTriangle" destination="TaN-rh-yzW" id="Uuq-0F-gaN"/>
-                                            <outlet property="lblNumberOfComments" destination="WIL-9O-5FX" id="AG1-Du-5Xs"/>
+                                            <outlet property="lblNumberOfComments" destination="WIL-9O-5FX" id="2dP-a2-2yN"/>
                                             <outlet property="lblNumberOfCommentsWidth" destination="Ggd-6j-Ne7" id="Qif-PP-adj"/>
                                             <outlet property="likeButton" destination="D35-HS-YHx" id="cYj-Yj-F3z"/>
                                             <outlet property="likeNumberLabel" destination="ls0-i9-pYI" id="McG-Hj-qaJ"/>
