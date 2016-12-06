@@ -41,15 +41,15 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         if indexPath.row == 0 {
             return getAboutCellHeight(userPost.message)
         } else if indexPath.row == 1 {
-            return 40
+            return 50
         } else {
-            return 160
+            return 170
         }
         
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return 3
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,9 +67,10 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
             
             return cell
         } else {
-            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTVC", for: indexPath) as! CommentTVC
+            cell.configureCell(userComment: nil)
+            return cell
         }
-        return UITableViewCell()
         
     }
 

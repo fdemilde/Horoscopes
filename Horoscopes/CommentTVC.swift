@@ -17,10 +17,14 @@ class CommentTVC: UITableViewCell {
     @IBOutlet weak var lblUsername: UILabel!
     @IBOutlet weak var lblCommentDate: UILabel!
     @IBOutlet weak var lblLike: UILabel!
+    @IBOutlet weak var viewContainer: UIView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         hideOptions()
+        viewContainer.layer.cornerRadius = 4
+        imgViewProfile.layer.cornerRadius = imgViewProfile.layer.frame.height/2
+        
     }
     
     override func prepareForReuse() {
@@ -30,6 +34,13 @@ class CommentTVC: UITableViewCell {
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
+    }
+    
+    func configureCell(userComment: UserPostComment?) {
+        //lblUsername.text = userComment.uid
+        
+//        TvComment.text = userComment.comment
+        
     }
     
     func hideOptions() {
