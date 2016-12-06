@@ -504,6 +504,10 @@ class PostTableViewCell: UITableViewCell, UIAlertViewDelegate, CCHLinkTextViewDe
     @IBAction func btnReportDidTouch(_ sender: Any) {
     }
     
+    @IBAction func btnCommentDidTouch(_ sender: Any) {
+        self.tapOnLink("readmore")
+    }
+    
     func configureViewOptionForPost(isOwner: Bool) {
         if !isOwner {
             self.btnEditPost.isHidden = true
