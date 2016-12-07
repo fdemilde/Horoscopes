@@ -19,7 +19,7 @@ struct  UserPostComment {
     
     init(data: NSDictionary) {
         print("DATA", data)
-        self.comment_id = data.object(forKey: "user_id") as! String
+        self.comment_id = data.object(forKey: "comment_id") as! String
         self.uid = data.object(forKey: "uid") as! Int
         self.comment = data.object(forKey: "comment") as! String
         self.truncated = data.object(forKey: "truncated") as! Int

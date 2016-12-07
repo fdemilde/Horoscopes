@@ -345,9 +345,17 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     print("post comment response yes error")
                 } else {
                     print("post comment response no error")
+                    let results = response as! [String: AnyObject]
+                    print("RESULTS:", results)
+                    
+                    let arrayOfCommentDict = results["comments"] as! [AnyObject]
+
+                    for dict in arrayOfCommentDict {
+                        let userComment = UserPostComment(data: dict as! NSDictionary)
+                        print("User Comment:", userComment)
+                    }
+
                 }
-                
-                
             }
         }
     }
