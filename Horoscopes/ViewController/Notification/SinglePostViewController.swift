@@ -106,7 +106,17 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func getComments() {
         let post_id = self.userPost.post_id
-        XAppDelegate.socialManager.postGetComments(post_id, page: nil)
+        XAppDelegate.socialManager.postGetComments(post_id, page: 0) { (comments, error) in
+            if error != nil {
+                print(error)
+            } else {
+                guard let comments = comments else { return }
+                for comment in comments {
+                    print("THE COMMENT")
+                    print(comment)
+                }
+            }
+        }
         
     }
     

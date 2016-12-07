@@ -65,6 +65,7 @@ class DataStore : NSObject{
         }
     }
     
+    
     func addDataArray(_ data : [UserPost], type: NewsfeedTabType, isLastPage : Bool){
         var data = data
         newsfeedIsUpdated = false
