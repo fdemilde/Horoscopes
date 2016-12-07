@@ -13,6 +13,7 @@ class DataStore : NSObject{
     var newsfeedFollowing = [UserPost]()
     var newsfeedIsUpdated : Bool = false
     var usersFollowing: [UserProfile]?
+    var userPostComments = [UserPostComment]()
     
     var recentSearchedProfile = [UserProfile]()
     var isLastPage = false

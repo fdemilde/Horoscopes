@@ -27,9 +27,6 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     override func viewWillAppear(_ animated: Bool) {
-//        if isFirstPageExpired() {
-//            currentPage = 0
-//        }
         getComments()
     }
     
@@ -109,8 +106,8 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func getComments() {
         let post_id = self.userPost.post_id
-        
         XAppDelegate.socialManager.postGetComments(post_id, page: nil)
+        
     }
     
 //    // MARK: infinite scrolling support

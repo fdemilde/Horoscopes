@@ -337,10 +337,9 @@ class SocialManager: NSObject, UIAlertViewDelegate {
         print("post id:", post_id)
         CacheManager.cacheGet(POST_GETCOMMENTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) in
             if error != nil {
-                print("GET POST COMMENTS ERROR:", error)
+                print("ERROR:", error)
             } else {
                 guard let response = response else { return }
-                print("GET POST COMMENTS RESPONSE:", response)
                 if let error = response["error"] as? [String: Int] {
                     print("post comment response yes error")
                 } else {
@@ -349,11 +348,13 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                     print("RESULTS:", results)
                     
                     let arrayOfCommentDict = results["comments"] as! [AnyObject]
-
+                    var comments = [UserPostComment]()
                     for dict in arrayOfCommentDict {
-                        let userComment = UserPostComment(data: dict as! NSDictionary)
-                        print("User Comment:", userComment)
+                        let comment = UserPostComment(data: dict as! NSDictionary)
+                        comments.append(comment)
+                        print("User Comment:", comment)
                     }
+                    
 
                 }
             }
