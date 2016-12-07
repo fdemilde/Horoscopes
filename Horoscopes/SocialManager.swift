@@ -332,14 +332,22 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     func postGetComments(_ post_id: String, page: Int?) {
         // retrieves comments for a post
         let postData = NSMutableDictionary()
-        postData.setObject(post_id, forKey: "get_comments" as NSCopying)
+        postData.setObject(post_id, forKey: "post_id" as NSCopying)
         let expiredTime = Date().timeIntervalSince1970 + 600
-        
+        print("post id:", post_id)
         CacheManager.cacheGet(POST_GETCOMMENTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) in
             if error != nil {
                 print("GET POST COMMENTS ERROR:", error)
             } else {
+                guard let response = response else { return }
                 print("GET POST COMMENTS RESPONSE:", response)
+                if let error = response["error"] as? [String: Int] {
+                    print("post comment response yes error")
+                } else {
+                    print("post comment response no error")
+                }
+                
+                
             }
         }
     }
