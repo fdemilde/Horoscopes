@@ -16,6 +16,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     let FOOTER_HEIGHT: CGFloat = 80 as CGFloat
     
     let defaultEstimatedRowHeight: CGFloat = 400
+    var comments = [UserPostComment]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +27,12 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
         
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+
+    
+    override func viewDidAppear(_ animated: Bool) {
         getComments()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-    }
     
     // MARK: Setup View
     func setupView(){
@@ -55,7 +56,7 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 2 + comments.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,11 +71,11 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
             return cell
         } else if indexPath.row == 1 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentBtnTVC", for: indexPath) as! CommentBtnTVC
-            
             return cell
         } else {
             let cell = tableView.dequeueReusableCell(withIdentifier: "CommentTVC", for: indexPath) as! CommentTVC
-            cell.configureCell(userComment: nil)
+            let comment = comments[indexPath.row - 2]
+            cell.configureCell(userComment: comment)
             return cell
         }
         
@@ -106,15 +107,14 @@ class SinglePostViewController: ViewControllerWithAds, UITableViewDataSource, UI
     
     func getComments() {
         let post_id = self.userPost.post_id
-        XAppDelegate.socialManager.postGetComments(post_id, page: 0) { (comments, error) in
+        
+        SocialManager.sharedInstance.postGetComments(post_id, page: 0) { (comments, error) in
             if error != nil {
                 print(error)
             } else {
                 guard let comments = comments else { return }
-                for comment in comments {
-                    print("THE COMMENT")
-                    print(comment)
-                }
+                self.comments = comments
+                self.tableView.reloadData()
             }
         }
         

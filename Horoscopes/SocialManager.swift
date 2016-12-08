@@ -329,7 +329,7 @@ class SocialManager: NSObject, UIAlertViewDelegate {
     }
     
     
-//    func postGetComments(_ post_id: String, page: Int?) -> [UserPostComment] {
+//    func postGetComments(_ post_id: String) {
 //        // retrieves comments for a post
 //        let postData = NSMutableDictionary()
 //        postData.setObject(post_id, forKey: "post_id" as NSCopying)
@@ -338,7 +338,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
 //        CacheManager.cacheGet(POST_GETCOMMENTS, postData: postData, loginRequired: OPTIONAL, expiredTime: expiredTime, forceExpiredKey: nil) { (response, error) in
 //            if error != nil {
 //                print("ERROR:", error)
-//                return ()
 //            } else {
 //                guard let response = response else { return }
 //                if let error = response["error"] as? [String: Int] {
@@ -355,7 +354,6 @@ class SocialManager: NSObject, UIAlertViewDelegate {
 //                        comments.append(comment)
 //                        print("User Comment:", comment)
 //                    }
-//                    completionHandler(feedsArray, nil)
 //                }
 //            }
 //        }
@@ -377,14 +375,21 @@ class SocialManager: NSObject, UIAlertViewDelegate {
                 } else {
                     print("post comment response no error")
                     let results = response as! [String: AnyObject]
-                    print("RESULTS:", results)
-                    
+                    print(results)
                     let arrayOfCommentDict = results["comments"] as! [AnyObject]
                     var comments = [UserPostComment]()
-                    for dict in arrayOfCommentDict {
-                        let comment = UserPostComment(data: dict as! NSDictionary)
-                        comments.append(comment)
-                        print("User Comment:", comment)
+                    
+                    if arrayOfCommentDict.count != 0 {
+                        let profiles = results["profiles"] as! [String: AnyObject]
+                        for index in 0...arrayOfCommentDict.count - 1 {
+                            let dict = arrayOfCommentDict[index]
+                            let userId = dict["uid"] as! Int
+                            let profile = profiles["\(userId)"] as! [String: AnyObject]
+                            print("The \(index) Profile", profile)
+                            let user = UserProfile(data: profile as NSDictionary)
+                            let comment = UserPostComment(data: dict as! NSDictionary, user: user)
+                            comments.append(comment)
+                        }
                     }
                     completionHandler(comments, nil)
                 }

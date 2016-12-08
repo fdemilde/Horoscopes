@@ -23,23 +23,32 @@ class CommentTVC: UITableViewCell {
         super.awakeFromNib()
         hideOptions()
         viewContainer.layer.cornerRadius = 4
-        imgViewProfile.layer.cornerRadius = imgViewProfile.layer.frame.height/2
+        imgViewProfile.layer.cornerRadius = imgViewProfile.layer.frame.height / 2
+        imgViewProfile.clipsToBounds = true
         
     }
     
     override func prepareForReuse() {
         hideOptions()
     }
-
-    override func setSelected(_ selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-    }
     
-    func configureCell(userComment: UserPostComment?) {
-        //lblUsername.text = userComment.uid
+    func configureCell(userComment: UserPostComment) {
         
-//        TvComment.text = userComment.comment
+            self.TvComment.text = userComment.comment
+            self.lblLike.text = "\(userComment.hearts)"
+            let user = userComment.user
+            self.lblUsername.text = user.name
+            print("timestampe:", userComment.ts)
+
+        
+//        Utilities.getImageFromUrlString(user.imgURL, completionHandler: { (image) in
+//            if image != nil {
+//                DispatchQueue.main.async(execute: { () -> Void in
+//                    self.imgViewProfile.image = image
+//                })
+//                
+//            }
+//        })
         
     }
     
@@ -52,6 +61,7 @@ class CommentTVC: UITableViewCell {
     }
 
     @IBAction func btnDropdownDidTouch(_ sender: Any) {
+        showOptions()
     }
     
     @IBAction func btnLikeDidTouch(_ sender: Any) {

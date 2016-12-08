@@ -17,7 +17,9 @@ struct  UserPostComment {
     var ts: Int
     var permalink: String
     
-    init(data: NSDictionary) {
+    var user: UserProfile
+    
+    init(data: NSDictionary, user: UserProfile) {
         print("DATA", data)
         self.comment_id = data.object(forKey: "comment_id") as! String
         self.uid = data.object(forKey: "uid") as! Int
@@ -26,5 +28,7 @@ struct  UserPostComment {
         self.hearts = data.object(forKey: "hearts") as! Int
         self.ts = data.object(forKey: "ts") as! Int
         self.permalink = data.object(forKey: "permalink") as! String
+        self.user = user
+        
     }
 }
