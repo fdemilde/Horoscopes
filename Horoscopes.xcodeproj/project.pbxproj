@@ -202,7 +202,7 @@
 		457830881DE010F30076D199 /* Horoscopes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Horoscopes.entitlements; sourceTree = "<group>"; };
 		457830891DE027600076D199 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		45AA6C2B1DF6ECE70011B352 /* CommentBtnTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentBtnTVC.swift; sourceTree = "<group>"; };
-		45AA6C2D1DF70A890011B352 /* CommentTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommentTVC.swift; sourceTree = "<group>"; };
+		45AA6C2D1DF70A890011B352 /* CommentTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentTVC.swift; path = ../CommentTVC.swift; sourceTree = "<group>"; };
 		4F2E8B8F34F7C0B0B660B186 /* Pods-Horoscopes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Horoscopes.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Horoscopes/Pods-Horoscopes.debug.xcconfig"; sourceTree = "<group>"; };
 		701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FollowTableViewCell.swift; sourceTree = "<group>"; };
 		702804F61B4B85B6001B8A1F /* DetailPostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailPostViewController.swift; sourceTree = "<group>"; };
@@ -217,7 +217,7 @@
 		70AE131D1B8589E100E9E781 /* DailyContentTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyContentTableViewCell.swift; sourceTree = "<group>"; };
 		70AE131F1B8592FE00E9E781 /* DailyButtonTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyButtonTableViewCell.swift; sourceTree = "<group>"; };
 		70AE13211B85BF4700E9E781 /* DailyHoroscopesTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyHoroscopesTableViewCell.swift; sourceTree = "<group>"; };
-		70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
+		70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PostTableViewCell.swift; path = Profile/PostTableViewCell.swift; sourceTree = "<group>"; };
 		70C973101BA672E50059D77A /* ProfileBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileBaseViewController.swift; sourceTree = "<group>"; };
 		70C973121BA67EAA0059D77A /* CurrentProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentProfileViewController.swift; sourceTree = "<group>"; };
 		70C973141BA6893E0059D77A /* OtherProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherProfileViewController.swift; sourceTree = "<group>"; };
@@ -229,7 +229,7 @@
 		F40ECD731B99536C0047185F /* CMPopTipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CMPopTipView.h; sourceTree = "<group>"; };
 		F40ECD741B99536C0047185F /* CMPopTipView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CMPopTipView.m; sourceTree = "<group>"; };
 		F40ECD761B99575E0047185F /* MyDatePickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDatePickerView.swift; sourceTree = "<group>"; };
-		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePostViewController.swift; sourceTree = "<group>"; };
+		F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SinglePostViewController.swift; path = Notification/SinglePostViewController.swift; sourceTree = "<group>"; };
 		F41859BD1C64B21A00209CB1 /* bg-ip6@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "bg-ip6@2x.png"; sourceTree = "<group>"; };
 		F42078EC1B8D72CF00C0C979 /* moon_ani_06@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "moon_ani_06@2x.png"; sourceTree = "<group>"; };
 		F42099271BCE030300BF1736 /* CacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CacheManager.swift; sourceTree = "<group>"; };
@@ -255,7 +255,7 @@
 		F430F4281BBA3969002DCAD5 /* ArchiveDetailTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveDetailTableCell.swift; sourceTree = "<group>"; };
 		F4326A051B3A553E00334B56 /* ShareController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShareController.swift; sourceTree = "<group>"; };
 		F43D43201B6B31D800FB94A7 /* DataStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStore.swift; sourceTree = "<group>"; };
-		F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlternateCommunityViewController.swift; sourceTree = "<group>"; };
+		F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AlternateCommunityViewController.swift; path = Discover/AlternateCommunityViewController.swift; sourceTree = "<group>"; };
 		F45497801C947295005B07CA /* StandardDate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StandardDate.h; sourceTree = "<group>"; };
 		F45497811C947295005B07CA /* StandardDate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StandardDate.m; sourceTree = "<group>"; };
 		F456C8981B9F3F99009CED4D /* ArchiveViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArchiveViewController.swift; sourceTree = "<group>"; };
@@ -448,9 +448,20 @@
 			isa = PBXGroup;
 			children = (
 				45AA6C2B1DF6ECE70011B352 /* CommentBtnTVC.swift */,
-				45AA6C2D1DF70A890011B352 /* CommentTVC.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		45EA55E51DF92CBA00AB303D /* Work on */ = {
+			isa = PBXGroup;
+			children = (
+				F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */,
+				F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */,
+				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
+				45AA6C2D1DF70A890011B352 /* CommentTVC.swift */,
+			);
+			name = "Work on";
+			path = ViewController;
 			sourceTree = "<group>";
 		};
 		702804F31B4B7193001B8A1F /* Post */ = {
@@ -480,7 +491,6 @@
 			children = (
 				705E59D71B4CE65F00D1E613 /* NotificationViewController.swift */,
 				705E59D91B4CE75F00D1E613 /* NotificationTableViewCell.swift */,
-				F4122ADB1B980A8D00C78BA5 /* SinglePostViewController.swift */,
 			);
 			path = Notification;
 			sourceTree = "<group>";
@@ -488,7 +498,6 @@
 		70F31C121B4E15F300A8B3A2 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				70BCF75A1B8DAA9000875A76 /* PostTableViewCell.swift */,
 				701B8AFA1B94419800EE9097 /* FollowTableViewCell.swift */,
 				70DB1DD01B998E8300218063 /* SearchViewController.swift */,
 				70C973101BA672E50059D77A /* ProfileBaseViewController.swift */,
@@ -528,7 +537,6 @@
 		F411F09F1BF48206002B18A5 /* Discover */ = {
 			isa = PBXGroup;
 			children = (
-				F44174F01C0FFAC00007C5C0 /* AlternateCommunityViewController.swift */,
 				F4D9A9751C06C980007083A4 /* LikeDetailTableViewController.swift */,
 			);
 			path = Discover;
@@ -743,6 +751,7 @@
 			children = (
 				457830881DE010F30076D199 /* Horoscopes.entitlements */,
 				45AA6C2A1DF6ECB50011B352 /* Views */,
+				45EA55E51DF92CBA00AB303D /* Work on */,
 				F42099241BCDFCE500BF1736 /* CacheWrapper */,
 				F4C44F881B8EC58000910E56 /* OpenSources */,
 				F47BAB291B216050002031AB /* Utilities */,
